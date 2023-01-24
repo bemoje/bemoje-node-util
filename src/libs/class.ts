@@ -1,4 +1,4 @@
-export interface IOptions {
+export interface IClassOptions {
   options: Record<string, any>;
 }
 
@@ -9,7 +9,7 @@ export interface IDataStructure<T> {
   toArray(): Array<any>;
   isSameInstanceAs(other: T): boolean;
   deepEquals(other: T): boolean;
-  isImmutable(): boolean;
+  getImmutable(): boolean;
   setImmutable(immutable: boolean): T;
   clone(): T;
   forEach(f: (value: any, ...args: []) => void | boolean): T;

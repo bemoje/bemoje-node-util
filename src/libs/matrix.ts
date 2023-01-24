@@ -1,12 +1,8 @@
-import { IOptions, IDataStructure2D } from './class';
+import { IDataStructure2D } from './class';
 
-export class MatrixOptions {
-  public immutable = false;
-}
-
-export class Matrix implements IOptions, IDataStructure2D<Matrix> {
+export class Matrix implements IDataStructure2D<Matrix> {
   protected matrix: Array<Array<number>>;
-  public options = new MatrixOptions();
+  protected immutable = false;
 
   public static fromArray(array: Array<Array<number>>): Matrix {
     const cols = array[0].length;
@@ -59,12 +55,12 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
     return this === other;
   }
 
-  public isImmutable(): boolean {
-    return this.options.immutable;
+  public getImmutable(): boolean {
+    return this.immutable;
   }
 
   public setImmutable(immutable: boolean): Matrix {
-    this.options.immutable = immutable;
+    this.immutable = immutable;
     return this;
   }
 
@@ -81,7 +77,7 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
   }
 
   public set(row: number, col: number, value: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     m.matrix[row][col] = value;
     return m;
   }
@@ -109,7 +105,6 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
         clone.matrix[r][c] = this.matrix[r][c];
       }
     }
-    Object.assign(clone.options, this.options);
     return clone;
   }
 
@@ -162,7 +157,7 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
   }
 
   public map(f: (value: number, row: number, col: number) => number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {
         m.matrix[r][c] = f(this.matrix[r][c], r, c);
@@ -187,7 +182,7 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
     row: number,
     f: (value: number, col: number) => number,
   ): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     for (let c = 0; c < this.cols; c++) {
       m.matrix[row][c] = f(this.matrix[row][c], c);
     }
@@ -198,7 +193,7 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
     col: number,
     f: (value: number, row: number) => number,
   ): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     for (let r = 0; r < this.rows; r++) {
       m.matrix[r][col] = f(this.matrix[r][col], r);
     }
@@ -206,7 +201,7 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
   }
 
   public appendRow(row?: Array<number>): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     if (row) {
       if (row.length !== this.cols) {
         throw new Error('Row must have length ' + this.cols);
@@ -219,7 +214,7 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
   }
 
   public appendCol(col?: Array<number>): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     if (col) {
       if (col.length !== this.rows) {
         throw new Error('Col must have length ' + this.rows);
@@ -234,67 +229,67 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
   }
 
   public addBy(n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.map((value: number) => value + n);
   }
 
   public subtractBy(n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.map((value: number) => value - n);
   }
 
   public multiplyBy(n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.map((value: number) => value * n);
   }
 
   public divideBy(n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.map((value: number) => value / n);
   }
 
   public addRowBy(row: number, n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.mapRow(row, (value: number) => value + n);
   }
 
   public subtractRowBy(row: number, n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.mapRow(row, (value: number) => value - n);
   }
 
   public multiplyRowBy(row: number, n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.mapRow(row, (value: number) => value * n);
   }
 
   public divideRowBy(row: number, n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.mapRow(row, (value: number) => value / n);
   }
 
   public addColBy(col: number, n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.mapCol(col, (value: number) => value + n);
   }
 
   public subtractColBy(col: number, n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.mapCol(col, (value: number) => value - n);
   }
 
   public multiplyColBy(col: number, n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.mapCol(col, (value: number) => value * n);
   }
 
   public divideColBy(col: number, n: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     return m.mapCol(col, (value: number) => value / n);
   }
 
   public swapRows(row1: number, row2: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     const r1 = m.matrix[row1];
     const r2 = m.matrix[row2];
     m.matrix[row1] = r2;
@@ -303,7 +298,7 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
   }
 
   public swapCols(col1: number, col2: number): Matrix {
-    const m = this.options.immutable ? this.clone() : this;
+    const m = this.immutable ? this.clone() : this;
     for (let r = 0; r < this.rows; r++) {
       const v1 = m.matrix[r][col1];
       const v2 = m.matrix[r][col2];
@@ -363,5 +358,28 @@ export class Matrix implements IOptions, IDataStructure2D<Matrix> {
 
   public isZeroMatrix(): boolean {
     return this.every((value: number) => value === 0);
+  }
+
+  /**
+   * Performs dot product of the matrix with another given matrix.
+   */
+  public dotProduct(other: Matrix): Matrix {
+    if (this.cols !== other.rows) {
+      throw new Error(
+        'A*B dot product not possible unless the number of columns in A and number of rows in B are the same.',
+      );
+    }
+    const rows = this.rows;
+    const cols = other.cols;
+    const steps = this.cols;
+    const result = new Matrix(rows, cols);
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        for (let step = 0; step < steps; step++) {
+          result.matrix[r][c] += this.matrix[r][step] * other.matrix[step][c];
+        }
+      }
+    }
+    return result;
   }
 }
