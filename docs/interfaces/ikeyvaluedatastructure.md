@@ -6,289 +6,381 @@ Interface for indexed data structures, like hash maps
 
 ## Type parameters
 
-Name |
-:------ |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 ## Hierarchy
 
-* [*IDataStructure*](idatastructure.md)<T\>
+- [`IDataStructure`](IDataStructure.md)<`T`\>
 
-  ↳ **IKeyValueDataStructure**
+  ↳ **`IKeyValueDataStructure`**
 
 ## Table of contents
 
 ### Methods
 
-- [[Symbol.iterator]](ikeyvaluedatastructure.md#[symbol.iterator])
-- [clone](ikeyvaluedatastructure.md#clone)
-- [deepEquals](ikeyvaluedatastructure.md#deepequals)
-- [entries](ikeyvaluedatastructure.md#entries)
-- [every](ikeyvaluedatastructure.md#every)
-- [forEach](ikeyvaluedatastructure.md#foreach)
-- [get](ikeyvaluedatastructure.md#get)
-- [has](ikeyvaluedatastructure.md#has)
-- [isImmutable](ikeyvaluedatastructure.md#isimmutable)
-- [isSameInstanceAs](ikeyvaluedatastructure.md#issameinstanceas)
-- [keys](ikeyvaluedatastructure.md#keys)
-- [map](ikeyvaluedatastructure.md#map)
-- [set](ikeyvaluedatastructure.md#set)
-- [setImmutable](ikeyvaluedatastructure.md#setimmutable)
-- [some](ikeyvaluedatastructure.md#some)
-- [toArray](ikeyvaluedatastructure.md#toarray)
-- [values](ikeyvaluedatastructure.md#values)
+- [[iterator]](IKeyValueDataStructure.md#[iterator])
+- [clone](IKeyValueDataStructure.md#clone)
+- [deepEquals](IKeyValueDataStructure.md#deepequals)
+- [entries](IKeyValueDataStructure.md#entries)
+- [every](IKeyValueDataStructure.md#every)
+- [forEach](IKeyValueDataStructure.md#foreach)
+- [get](IKeyValueDataStructure.md#get)
+- [getImmutable](IKeyValueDataStructure.md#getimmutable)
+- [has](IKeyValueDataStructure.md#has)
+- [isSameInstanceAs](IKeyValueDataStructure.md#issameinstanceas)
+- [keys](IKeyValueDataStructure.md#keys)
+- [map](IKeyValueDataStructure.md#map)
+- [set](IKeyValueDataStructure.md#set)
+- [setImmutable](IKeyValueDataStructure.md#setimmutable)
+- [some](IKeyValueDataStructure.md#some)
+- [toArray](IKeyValueDataStructure.md#toarray)
+- [values](IKeyValueDataStructure.md#values)
 
 ## Methods
 
-### [Symbol.iterator]
+### [iterator]
 
-▸ **[Symbol.iterator]**(): *Generator*<any, any, unknown\>
+▸ **[iterator]**(): `Generator`<`any`, `any`, `unknown`\>
 
-**Returns:** *Generator*<any, any, unknown\>
+#### Returns
 
-Inherited from: [IDataStructure](idatastructure.md)
+`Generator`<`any`, `any`, `unknown`\>
 
-Defined in: libs/class.ts:19
+#### Inherited from
+
+[IDataStructure](IDataStructure.md).[[iterator]](IDataStructure.md#[iterator])
+
+#### Defined in
+
+[src/libs/class.ts:19](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L19)
 
 ___
 
 ### clone
 
-▸ **clone**(): T
+▸ **clone**(): `T`
 
-**Returns:** T
+#### Returns
 
-Inherited from: [IDataStructure](idatastructure.md)
+`T`
 
-Defined in: libs/class.ts:14
+#### Inherited from
+
+[IDataStructure](IDataStructure.md).[clone](IDataStructure.md#clone)
+
+#### Defined in
+
+[src/libs/class.ts:14](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L14)
 
 ___
 
 ### deepEquals
 
-▸ **deepEquals**(`other`: T): *boolean*
+▸ **deepEquals**(`other`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`other` | T |
+| Name | Type |
+| :------ | :------ |
+| `other` | `T` |
 
-**Returns:** *boolean*
+#### Returns
 
-Inherited from: [IDataStructure](idatastructure.md)
+`boolean`
 
-Defined in: libs/class.ts:11
+#### Inherited from
+
+[IDataStructure](IDataStructure.md).[deepEquals](IDataStructure.md#deepequals)
+
+#### Defined in
+
+[src/libs/class.ts:11](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L11)
 
 ___
 
 ### entries
 
-▸ **entries**(): *Generator*<[key: any, value: any], any, unknown\>
+▸ **entries**(): `Generator`<[key: any, value: any], `any`, `unknown`\>
 
-**Returns:** *Generator*<[key: any, value: any], any, unknown\>
+#### Returns
 
-Defined in: libs/class.ts:62
+`Generator`<[key: any, value: any], `any`, `unknown`\>
+
+#### Defined in
+
+[src/libs/class.ts:62](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L62)
 
 ___
 
 ### every
 
-▸ **every**(`f`: (`value`: *any*, `key`: *any*) => *boolean*): *boolean*
+▸ **every**(`f`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *any*, `key`: *any*) => *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `any`, `key`: `any`) => `boolean` |
 
-**Returns:** *boolean*
+#### Returns
 
-Overrides: [IDataStructure](idatastructure.md)
+`boolean`
 
-Defined in: libs/class.ts:60
+#### Overrides
+
+[IDataStructure](IDataStructure.md).[every](IDataStructure.md#every)
+
+#### Defined in
+
+[src/libs/class.ts:60](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L60)
 
 ___
 
 ### forEach
 
-▸ **forEach**(`f`: (`value`: *any*, `key`: *any*) => *boolean* \| *void*): T
+▸ **forEach**(`f`): `T`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *any*, `key`: *any*) => *boolean* \| *void* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `any`, `key`: `any`) => `boolean` \| `void` |
 
-**Returns:** T
+#### Returns
 
-Overrides: [IDataStructure](idatastructure.md)
+`T`
 
-Defined in: libs/class.ts:57
+#### Overrides
+
+[IDataStructure](IDataStructure.md).[forEach](IDataStructure.md#foreach)
+
+#### Defined in
+
+[src/libs/class.ts:57](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L57)
 
 ___
 
 ### get
 
-▸ **get**(`key`: *any*): *any*
+▸ **get**(`key`): `any`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`key` | *any* |
+| Name | Type |
+| :------ | :------ |
+| `key` | `any` |
 
-**Returns:** *any*
+#### Returns
 
-Defined in: libs/class.ts:55
+`any`
+
+#### Defined in
+
+[src/libs/class.ts:55](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L55)
+
+___
+
+### getImmutable
+
+▸ **getImmutable**(): `boolean`
+
+#### Returns
+
+`boolean`
+
+#### Inherited from
+
+[IDataStructure](IDataStructure.md).[getImmutable](IDataStructure.md#getimmutable)
+
+#### Defined in
+
+[src/libs/class.ts:12](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L12)
 
 ___
 
 ### has
 
-▸ **has**(`key`: *any*): *boolean*
+▸ **has**(`key`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`key` | *any* |
+| Name | Type |
+| :------ | :------ |
+| `key` | `any` |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/class.ts:56
+`boolean`
 
-___
+#### Defined in
 
-### isImmutable
-
-▸ **isImmutable**(): *boolean*
-
-**Returns:** *boolean*
-
-Inherited from: [IDataStructure](idatastructure.md)
-
-Defined in: libs/class.ts:12
+[src/libs/class.ts:56](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L56)
 
 ___
 
 ### isSameInstanceAs
 
-▸ **isSameInstanceAs**(`other`: T): *boolean*
+▸ **isSameInstanceAs**(`other`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`other` | T |
+| Name | Type |
+| :------ | :------ |
+| `other` | `T` |
 
-**Returns:** *boolean*
+#### Returns
 
-Inherited from: [IDataStructure](idatastructure.md)
+`boolean`
 
-Defined in: libs/class.ts:10
+#### Inherited from
+
+[IDataStructure](IDataStructure.md).[isSameInstanceAs](IDataStructure.md#issameinstanceas)
+
+#### Defined in
+
+[src/libs/class.ts:10](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L10)
 
 ___
 
 ### keys
 
-▸ **keys**(): *Generator*<any, any, unknown\>
+▸ **keys**(): `Generator`<`any`, `any`, `unknown`\>
 
-**Returns:** *Generator*<any, any, unknown\>
+#### Returns
 
-Defined in: libs/class.ts:61
+`Generator`<`any`, `any`, `unknown`\>
+
+#### Defined in
+
+[src/libs/class.ts:61](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L61)
 
 ___
 
 ### map
 
-▸ **map**(`f`: (`value`: *any*, `key`: *any*) => *any*): T
+▸ **map**(`f`): `T`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *any*, `key`: *any*) => *any* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `any`, `key`: `any`) => `any` |
 
-**Returns:** T
+#### Returns
 
-Overrides: [IDataStructure](idatastructure.md)
+`T`
 
-Defined in: libs/class.ts:58
+#### Overrides
+
+[IDataStructure](IDataStructure.md).[map](IDataStructure.md#map)
+
+#### Defined in
+
+[src/libs/class.ts:58](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L58)
 
 ___
 
 ### set
 
-▸ **set**(`key`: *any*, `value`: *any*): T
+▸ **set**(`key`, `value`): `T`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`key` | *any* |
-`value` | *any* |
+| Name | Type |
+| :------ | :------ |
+| `key` | `any` |
+| `value` | `any` |
 
-**Returns:** T
+#### Returns
 
-Defined in: libs/class.ts:54
+`T`
+
+#### Defined in
+
+[src/libs/class.ts:54](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L54)
 
 ___
 
 ### setImmutable
 
-▸ **setImmutable**(`immutable`: *boolean*): T
+▸ **setImmutable**(`immutable`): `T`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`immutable` | *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `immutable` | `boolean` |
 
-**Returns:** T
+#### Returns
 
-Inherited from: [IDataStructure](idatastructure.md)
+`T`
 
-Defined in: libs/class.ts:13
+#### Inherited from
+
+[IDataStructure](IDataStructure.md).[setImmutable](IDataStructure.md#setimmutable)
+
+#### Defined in
+
+[src/libs/class.ts:13](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L13)
 
 ___
 
 ### some
 
-▸ **some**(`f`: (`value`: *any*, `key`: *any*) => *boolean*): *boolean*
+▸ **some**(`f`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *any*, `key`: *any*) => *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `any`, `key`: `any`) => `boolean` |
 
-**Returns:** *boolean*
+#### Returns
 
-Overrides: [IDataStructure](idatastructure.md)
+`boolean`
 
-Defined in: libs/class.ts:59
+#### Overrides
+
+[IDataStructure](IDataStructure.md).[some](IDataStructure.md#some)
+
+#### Defined in
+
+[src/libs/class.ts:59](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L59)
 
 ___
 
 ### toArray
 
-▸ **toArray**(): *any*[]
+▸ **toArray**(): `any`[]
 
-**Returns:** *any*[]
+#### Returns
 
-Inherited from: [IDataStructure](idatastructure.md)
+`any`[]
 
-Defined in: libs/class.ts:9
+#### Inherited from
+
+[IDataStructure](IDataStructure.md).[toArray](IDataStructure.md#toarray)
+
+#### Defined in
+
+[src/libs/class.ts:9](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L9)
 
 ___
 
 ### values
 
-▸ **values**(): *Generator*<any, any, unknown\>
+▸ **values**(): `Generator`<`any`, `any`, `unknown`\>
 
-**Returns:** *Generator*<any, any, unknown\>
+#### Returns
 
-Inherited from: [IDataStructure](idatastructure.md)
+`Generator`<`any`, `any`, `unknown`\>
 
-Defined in: libs/class.ts:20
+#### Inherited from
+
+[IDataStructure](IDataStructure.md).[values](IDataStructure.md#values)
+
+#### Defined in
+
+[src/libs/class.ts:20](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L20)

@@ -88,3 +88,94 @@ export function strWrapInSingleQuotes(input: string): string {
 export function strWrapInDoubleQuotes(input: string): string {
   return '"' + input + '"';
 }
+
+/**
+ * Returns whether the string is lower case.
+ * @param input - input string
+ * @example
+ * ```js
+ * strIsLowerCase('abc')
+ * //=> true
+ *
+ * strIsLowerCase('ABC')
+ * //=> false
+ * ```
+ */
+export function strIsLowerCase(input: string): boolean {
+  return input === input.toLowerCase();
+}
+
+/**
+ * Returns whether the string is upper case.
+ * @param input - input string
+ * @example
+ * ```js
+ * strIsUpperCase('abc')
+ * //=> false
+ *
+ * strIsUpperCase('ABC')
+ * //=> true
+ * ```
+ */
+export function strIsUpperCase(input: string): boolean {
+  return input === input.toUpperCase();
+}
+
+/**
+ * Returns an array of words in the string
+ * @param input - input string
+ * @example
+ * ```js
+ * strToWords('How are you?')
+ * //=> ['How', 'are', 'you']
+ * ```
+ */
+export function strToWords(input: string): Array<string> {
+  return input.match(regexIsWord) || [];
+}
+
+const regexIsNumber = /\d((\.|\d)*)?/g;
+const regexIsWord = /\b[^\W]+/g;
+/**
+ * Returns an array of words in the string
+ * @param input - input string
+ * @example
+ * ```js
+ * strSplitWordByCamelCase('someCamelCase')
+ * //=> ['some', 'Camel', 'Case']
+ * ```
+ */
+export function strSplitWordByCamelCase(word: string): Array<string> {
+  function isCamelCaseWordBreakIndex(word: string, index: number) {
+    return (
+      strIsLowerCase(word[index - 1]) &&
+      strIsUpperCase(word[index]) &&
+      !regexIsNumber.test(word[index - 1]) &&
+      !regexIsNumber.test(word[index])
+    );
+  }
+  const result = [];
+  const lastCharIndex = word.length - 1;
+  let lastCamelCaseBreakIndex = 0;
+  let foundCamelCase = false;
+  for (let i = 1; i < word.length; i++) {
+    if (foundCamelCase && i === lastCharIndex) {
+      // last char
+      const sub = word.substring(lastCamelCaseBreakIndex);
+      if (sub) result.push(sub);
+      continue;
+    }
+    if (isCamelCaseWordBreakIndex(word, i)) {
+      const sub = word.substring(lastCamelCaseBreakIndex, i);
+      if (!sub) continue;
+      result.push(sub);
+      lastCamelCaseBreakIndex = i;
+      foundCamelCase = true;
+    }
+  }
+  // if no splits needed, just return the word as it was
+  if (!foundCamelCase) {
+    result.push(word);
+  }
+  return result;
+}

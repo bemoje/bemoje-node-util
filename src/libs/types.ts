@@ -6,3 +6,5 @@ export type primitive =
   | string
   | symbol
   | undefined;
+
+export type GenericFunction = (...args: any[]) => any;

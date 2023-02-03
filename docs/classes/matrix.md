@@ -2,815 +2,1051 @@
 
 # Class: Matrix
 
+Interface for 2-dimensional data structures, like matrices and tables
+
 ## Implements
 
-* [*IOptions*](../interfaces/ioptions.md)
-* [*IDataStructure2D*](../interfaces/idatastructure2d.md)<[*Matrix*](matrix.md)\>
+- [`IDataStructure2D`](../interfaces/IDataStructure2D.md)<[`Matrix`](Matrix.md)\>
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](matrix.md#constructor)
+- [constructor](Matrix.md#constructor)
 
 ### Properties
 
-- [matrix](matrix.md#matrix)
-- [options](matrix.md#options)
+- [immutable](Matrix.md#immutable)
+- [matrix](Matrix.md#matrix)
 
 ### Accessors
 
-- [cols](matrix.md#cols)
-- [rows](matrix.md#rows)
+- [cols](Matrix.md#cols)
+- [rows](Matrix.md#rows)
 
 ### Methods
 
-- [[Symbol.iterator]](matrix.md#[symbol.iterator])
-- [addBy](matrix.md#addby)
-- [addColBy](matrix.md#addcolby)
-- [addRowBy](matrix.md#addrowby)
-- [appendCol](matrix.md#appendcol)
-- [appendRow](matrix.md#appendrow)
-- [clone](matrix.md#clone)
-- [deepEquals](matrix.md#deepequals)
-- [divideBy](matrix.md#divideby)
-- [divideColBy](matrix.md#dividecolby)
-- [divideRowBy](matrix.md#dividerowby)
-- [every](matrix.md#every)
-- [forEach](matrix.md#foreach)
-- [forEachInCol](matrix.md#foreachincol)
-- [forEachInDiagonal](matrix.md#foreachindiagonal)
-- [forEachInRow](matrix.md#foreachinrow)
-- [get](matrix.md#get)
-- [has](matrix.md#has)
-- [hasDimensions](matrix.md#hasdimensions)
-- [isImmutable](matrix.md#isimmutable)
-- [isSameInstanceAs](matrix.md#issameinstanceas)
-- [isScalarMatrix](matrix.md#isscalarmatrix)
-- [isSquareMatrix](matrix.md#issquarematrix)
-- [isZeroMatrix](matrix.md#iszeromatrix)
-- [map](matrix.md#map)
-- [mapCol](matrix.md#mapcol)
-- [mapRow](matrix.md#maprow)
-- [multiplyBy](matrix.md#multiplyby)
-- [multiplyColBy](matrix.md#multiplycolby)
-- [multiplyRowBy](matrix.md#multiplyrowby)
-- [set](matrix.md#set)
-- [setImmutable](matrix.md#setimmutable)
-- [some](matrix.md#some)
-- [subtractBy](matrix.md#subtractby)
-- [subtractColBy](matrix.md#subtractcolby)
-- [subtractRowBy](matrix.md#subtractrowby)
-- [swapCols](matrix.md#swapcols)
-- [swapRows](matrix.md#swaprows)
-- [toArray](matrix.md#toarray)
-- [values](matrix.md#values)
-- [fromArray](matrix.md#fromarray)
-- [fromIterable](matrix.md#fromiterable)
-- [identity](matrix.md#identity)
+- [[iterator]](Matrix.md#[iterator])
+- [addBy](Matrix.md#addby)
+- [addColBy](Matrix.md#addcolby)
+- [addRowBy](Matrix.md#addrowby)
+- [appendCol](Matrix.md#appendcol)
+- [appendRow](Matrix.md#appendrow)
+- [clone](Matrix.md#clone)
+- [deepEquals](Matrix.md#deepequals)
+- [divideBy](Matrix.md#divideby)
+- [divideColBy](Matrix.md#dividecolby)
+- [divideRowBy](Matrix.md#dividerowby)
+- [dotProduct](Matrix.md#dotproduct)
+- [every](Matrix.md#every)
+- [forEach](Matrix.md#foreach)
+- [forEachInCol](Matrix.md#foreachincol)
+- [forEachInDiagonal](Matrix.md#foreachindiagonal)
+- [forEachInRow](Matrix.md#foreachinrow)
+- [get](Matrix.md#get)
+- [getImmutable](Matrix.md#getimmutable)
+- [has](Matrix.md#has)
+- [hasDimensions](Matrix.md#hasdimensions)
+- [isSameInstanceAs](Matrix.md#issameinstanceas)
+- [isScalarMatrix](Matrix.md#isscalarmatrix)
+- [isSquareMatrix](Matrix.md#issquarematrix)
+- [isZeroMatrix](Matrix.md#iszeromatrix)
+- [map](Matrix.md#map)
+- [mapCol](Matrix.md#mapcol)
+- [mapRow](Matrix.md#maprow)
+- [multiplyBy](Matrix.md#multiplyby)
+- [multiplyColBy](Matrix.md#multiplycolby)
+- [multiplyRowBy](Matrix.md#multiplyrowby)
+- [set](Matrix.md#set)
+- [setImmutable](Matrix.md#setimmutable)
+- [some](Matrix.md#some)
+- [subtractBy](Matrix.md#subtractby)
+- [subtractColBy](Matrix.md#subtractcolby)
+- [subtractRowBy](Matrix.md#subtractrowby)
+- [swapCols](Matrix.md#swapcols)
+- [swapRows](Matrix.md#swaprows)
+- [toArray](Matrix.md#toarray)
+- [values](Matrix.md#values)
+- [fromArray](Matrix.md#fromarray)
+- [fromIterable](Matrix.md#fromiterable)
+- [identity](Matrix.md#identity)
 
 ## Constructors
 
 ### constructor
 
-\+ **new Matrix**(`rows`: *number*, `cols`: *number*): [*Matrix*](matrix.md)
+• **new Matrix**(`rows`, `cols`)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`rows` | *number* |
-`cols` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `rows` | `number` |
+| `cols` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Defined in
 
-Defined in: libs/matrix.ts:39
+[src/libs/matrix.ts:37](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L37)
 
 ## Properties
 
-### matrix
+### immutable
 
-• `Protected` **matrix**: *number*[][]
+• `Protected` **immutable**: `boolean` = `false`
 
-Defined in: libs/matrix.ts:8
+#### Defined in
+
+[src/libs/matrix.ts:5](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L5)
 
 ___
 
-### options
+### matrix
 
-• **options**: [*MatrixOptions*](matrixoptions.md)
+• `Protected` **matrix**: `number`[][]
 
-Implementation of: [IOptions](../interfaces/ioptions.md).[options](../interfaces/ioptions.md#options)
+#### Defined in
 
-Defined in: libs/matrix.ts:9
+[src/libs/matrix.ts:4](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L4)
 
 ## Accessors
 
 ### cols
 
-• get **cols**(): *number*
+• `get` **cols**(): `number`
 
-**Returns:** *number*
+#### Returns
 
-Defined in: libs/matrix.ts:54
+`number`
+
+#### Defined in
+
+[src/libs/matrix.ts:50](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L50)
 
 ___
 
 ### rows
 
-• get **rows**(): *number*
+• `get` **rows**(): `number`
 
-**Returns:** *number*
+#### Returns
 
-Defined in: libs/matrix.ts:50
+`number`
+
+#### Defined in
+
+[src/libs/matrix.ts:46](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L46)
 
 ## Methods
 
-### [Symbol.iterator]
+### [iterator]
 
-▸ **[Symbol.iterator]**(): *Generator*<number, any, unknown\>
+▸ **[iterator]**(): `Generator`<`number`, `any`, `unknown`\>
 
-**Returns:** *Generator*<number, any, unknown\>
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+`Generator`<`number`, `any`, `unknown`\>
 
-Defined in: libs/matrix.ts:174
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[[iterator]](../interfaces/IDataStructure2D.md#[iterator])
+
+#### Defined in
+
+[src/libs/matrix.ts:169](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L169)
 
 ___
 
 ### addBy
 
-▸ **addBy**(`n`: *number*): [*Matrix*](matrix.md)
+▸ **addBy**(`n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:236
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:231](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L231)
 
 ___
 
 ### addColBy
 
-▸ **addColBy**(`col`: *number*, `n`: *number*): [*Matrix*](matrix.md)
+▸ **addColBy**(`col`, `n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`col` | *number* |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `col` | `number` |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:276
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:271](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L271)
 
 ___
 
 ### addRowBy
 
-▸ **addRowBy**(`row`: *number*, `n`: *number*): [*Matrix*](matrix.md)
+▸ **addRowBy**(`row`, `n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row` | *number* |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `row` | `number` |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:256
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:251](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L251)
 
 ___
 
 ### appendCol
 
-▸ **appendCol**(`col?`: *number*[]): [*Matrix*](matrix.md)
+▸ **appendCol**(`col?`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`col?` | *number*[] |
+| Name | Type |
+| :------ | :------ |
+| `col?` | `number`[] |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:221
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:216](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L216)
 
 ___
 
 ### appendRow
 
-▸ **appendRow**(`row?`: *number*[]): [*Matrix*](matrix.md)
+▸ **appendRow**(`row?`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row?` | *number*[] |
+| Name | Type |
+| :------ | :------ |
+| `row?` | `number`[] |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:208
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:203](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L203)
 
 ___
 
 ### clone
 
-▸ **clone**(): [*Matrix*](matrix.md)
+▸ **clone**(): [`Matrix`](Matrix.md)
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+[`Matrix`](Matrix.md)
 
-Defined in: libs/matrix.ts:105
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[clone](../interfaces/IDataStructure2D.md#clone)
+
+#### Defined in
+
+[src/libs/matrix.ts:101](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L101)
 
 ___
 
 ### deepEquals
 
-▸ **deepEquals**(`other`: [*Matrix*](matrix.md) \| *number*[][]): *boolean*
+▸ **deepEquals**(`other`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`other` | [*Matrix*](matrix.md) \| *number*[][] |
+| Name | Type |
+| :------ | :------ |
+| `other` | [`Matrix`](Matrix.md) \| `number`[][] |
 
-**Returns:** *boolean*
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+`boolean`
 
-Defined in: libs/matrix.ts:71
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[deepEquals](../interfaces/IDataStructure2D.md#deepequals)
+
+#### Defined in
+
+[src/libs/matrix.ts:67](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L67)
 
 ___
 
 ### divideBy
 
-▸ **divideBy**(`n`: *number*): [*Matrix*](matrix.md)
+▸ **divideBy**(`n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:251
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:246](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L246)
 
 ___
 
 ### divideColBy
 
-▸ **divideColBy**(`col`: *number*, `n`: *number*): [*Matrix*](matrix.md)
+▸ **divideColBy**(`col`, `n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`col` | *number* |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `col` | `number` |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:291
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:286](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L286)
 
 ___
 
 ### divideRowBy
 
-▸ **divideRowBy**(`row`: *number*, `n`: *number*): [*Matrix*](matrix.md)
+▸ **divideRowBy**(`row`, `n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row` | *number* |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `row` | `number` |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:271
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:266](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L266)
+
+___
+
+### dotProduct
+
+▸ **dotProduct**(`other`): [`Matrix`](Matrix.md)
+
+Performs dot product of the matrix with another given matrix.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `other` | [`Matrix`](Matrix.md) |
+
+#### Returns
+
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:366](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L366)
 
 ___
 
 ### every
 
-▸ **every**(`f`: (`value`: *number*, `row`: *number*, `col`: *number*) => *boolean*): *boolean*
+▸ **every**(`f`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *number*, `row`: *number*, `col`: *number*) => *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `number`, `row`: `number`, `col`: `number`) => `boolean` |
 
-**Returns:** *boolean*
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+`boolean`
 
-Defined in: libs/matrix.ts:329
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[every](../interfaces/IDataStructure2D.md#every)
+
+#### Defined in
+
+[src/libs/matrix.ts:324](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L324)
 
 ___
 
 ### forEach
 
-▸ **forEach**(`f`: (`value`: *number*, `row`: *number*, `col`: *number*) => *boolean* \| *void*): [*Matrix*](matrix.md)
+▸ **forEach**(`f`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *number*, `row`: *number*, `col`: *number*) => *boolean* \| *void* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `number`, `row`: `number`, `col`: `number`) => `boolean` \| `void` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+[`Matrix`](Matrix.md)
 
-Defined in: libs/matrix.ts:116
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[forEach](../interfaces/IDataStructure2D.md#foreach)
+
+#### Defined in
+
+[src/libs/matrix.ts:111](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L111)
 
 ___
 
 ### forEachInCol
 
-▸ **forEachInCol**(`col`: *number*, `f`: (`value`: *number*, `row`: *number*) => *boolean* \| *void*): [*Matrix*](matrix.md)
+▸ **forEachInCol**(`col`, `f`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`col` | *number* |
-`f` | (`value`: *number*, `row`: *number*) => *boolean* \| *void* |
+| Name | Type |
+| :------ | :------ |
+| `col` | `number` |
+| `f` | (`value`: `number`, `row`: `number`) => `boolean` \| `void` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:141
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:136](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L136)
 
 ___
 
 ### forEachInDiagonal
 
-▸ **forEachInDiagonal**(`f`: (`value`: *number*, `row`: *number*, `col`: *number*) => *boolean* \| *void*): [*Matrix*](matrix.md)
+▸ **forEachInDiagonal**(`f`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *number*, `row`: *number*, `col`: *number*) => *boolean* \| *void* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `number`, `row`: `number`, `col`: `number`) => `boolean` \| `void` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:153
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:148](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L148)
 
 ___
 
 ### forEachInRow
 
-▸ **forEachInRow**(`row`: *number*, `f`: (`value`: *number*, `col`: *number*) => *boolean* \| *void*): [*Matrix*](matrix.md)
+▸ **forEachInRow**(`row`, `f`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row` | *number* |
-`f` | (`value`: *number*, `col`: *number*) => *boolean* \| *void* |
+| Name | Type |
+| :------ | :------ |
+| `row` | `number` |
+| `f` | (`value`: `number`, `col`: `number`) => `boolean` \| `void` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:129
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:124](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L124)
 
 ___
 
 ### get
 
-▸ **get**(`row`: *number*, `col`: *number*): *number*
+▸ **get**(`row`, `col`): `number`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row` | *number* |
-`col` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `row` | `number` |
+| `col` | `number` |
 
-**Returns:** *number*
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+`number`
 
-Defined in: libs/matrix.ts:89
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[get](../interfaces/IDataStructure2D.md#get)
+
+#### Defined in
+
+[src/libs/matrix.ts:85](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L85)
+
+___
+
+### getImmutable
+
+▸ **getImmutable**(): `boolean`
+
+#### Returns
+
+`boolean`
+
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[getImmutable](../interfaces/IDataStructure2D.md#getimmutable)
+
+#### Defined in
+
+[src/libs/matrix.ts:58](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L58)
 
 ___
 
 ### has
 
-▸ **has**(`row`: *number*, `col`: *number*): *boolean*
+▸ **has**(`row`, `col`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row` | *number* |
-`col` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `row` | `number` |
+| `col` | `number` |
 
-**Returns:** *boolean*
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+`boolean`
 
-Defined in: libs/matrix.ts:93
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[has](../interfaces/IDataStructure2D.md#has)
+
+#### Defined in
+
+[src/libs/matrix.ts:89](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L89)
 
 ___
 
 ### hasDimensions
 
-▸ **hasDimensions**(`rows`: *number*, `cols`: *number*): *boolean*
+▸ **hasDimensions**(`rows`, `cols`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`rows` | *number* |
-`cols` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `rows` | `number` |
+| `cols` | `number` |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/matrix.ts:342
+`boolean`
 
-___
+#### Defined in
 
-### isImmutable
-
-▸ **isImmutable**(): *boolean*
-
-**Returns:** *boolean*
-
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
-
-Defined in: libs/matrix.ts:62
+[src/libs/matrix.ts:337](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L337)
 
 ___
 
 ### isSameInstanceAs
 
-▸ **isSameInstanceAs**(`other`: [*Matrix*](matrix.md)): *boolean*
+▸ **isSameInstanceAs**(`other`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`other` | [*Matrix*](matrix.md) |
+| Name | Type |
+| :------ | :------ |
+| `other` | [`Matrix`](Matrix.md) |
 
-**Returns:** *boolean*
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+`boolean`
 
-Defined in: libs/matrix.ts:58
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[isSameInstanceAs](../interfaces/IDataStructure2D.md#issameinstanceas)
+
+#### Defined in
+
+[src/libs/matrix.ts:54](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L54)
 
 ___
 
 ### isScalarMatrix
 
-▸ **isScalarMatrix**(): *boolean*
+▸ **isScalarMatrix**(): `boolean`
 
 Returns whether the matrix is a square matrix that has identical values on its diagonal.
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/matrix.ts:353
+`boolean`
+
+#### Defined in
+
+[src/libs/matrix.ts:348](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L348)
 
 ___
 
 ### isSquareMatrix
 
-▸ **isSquareMatrix**(): *boolean*
+▸ **isSquareMatrix**(): `boolean`
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/matrix.ts:346
+`boolean`
+
+#### Defined in
+
+[src/libs/matrix.ts:341](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L341)
 
 ___
 
 ### isZeroMatrix
 
-▸ **isZeroMatrix**(): *boolean*
+▸ **isZeroMatrix**(): `boolean`
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/matrix.ts:364
+`boolean`
+
+#### Defined in
+
+[src/libs/matrix.ts:359](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L359)
 
 ___
 
 ### map
 
-▸ **map**(`f`: (`value`: *number*, `row`: *number*, `col`: *number*) => *number*): [*Matrix*](matrix.md)
+▸ **map**(`f`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *number*, `row`: *number*, `col`: *number*) => *number* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `number`, `row`: `number`, `col`: `number`) => `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+[`Matrix`](Matrix.md)
 
-Defined in: libs/matrix.ts:164
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[map](../interfaces/IDataStructure2D.md#map)
+
+#### Defined in
+
+[src/libs/matrix.ts:159](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L159)
 
 ___
 
 ### mapCol
 
-▸ **mapCol**(`col`: *number*, `f`: (`value`: *number*, `row`: *number*) => *number*): [*Matrix*](matrix.md)
+▸ **mapCol**(`col`, `f`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`col` | *number* |
-`f` | (`value`: *number*, `row`: *number*) => *number* |
+| Name | Type |
+| :------ | :------ |
+| `col` | `number` |
+| `f` | (`value`: `number`, `row`: `number`) => `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:197
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:192](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L192)
 
 ___
 
 ### mapRow
 
-▸ **mapRow**(`row`: *number*, `f`: (`value`: *number*, `col`: *number*) => *number*): [*Matrix*](matrix.md)
+▸ **mapRow**(`row`, `f`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row` | *number* |
-`f` | (`value`: *number*, `col`: *number*) => *number* |
+| Name | Type |
+| :------ | :------ |
+| `row` | `number` |
+| `f` | (`value`: `number`, `col`: `number`) => `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:186
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:181](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L181)
 
 ___
 
 ### multiplyBy
 
-▸ **multiplyBy**(`n`: *number*): [*Matrix*](matrix.md)
+▸ **multiplyBy**(`n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:246
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:241](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L241)
 
 ___
 
 ### multiplyColBy
 
-▸ **multiplyColBy**(`col`: *number*, `n`: *number*): [*Matrix*](matrix.md)
+▸ **multiplyColBy**(`col`, `n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`col` | *number* |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `col` | `number` |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:286
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:281](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L281)
 
 ___
 
 ### multiplyRowBy
 
-▸ **multiplyRowBy**(`row`: *number*, `n`: *number*): [*Matrix*](matrix.md)
+▸ **multiplyRowBy**(`row`, `n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row` | *number* |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `row` | `number` |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:266
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:261](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L261)
 
 ___
 
 ### set
 
-▸ **set**(`row`: *number*, `col`: *number*, `value`: *number*): [*Matrix*](matrix.md)
+▸ **set**(`row`, `col`, `value`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row` | *number* |
-`col` | *number* |
-`value` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `row` | `number` |
+| `col` | `number` |
+| `value` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+[`Matrix`](Matrix.md)
 
-Defined in: libs/matrix.ts:83
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[set](../interfaces/IDataStructure2D.md#set)
+
+#### Defined in
+
+[src/libs/matrix.ts:79](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L79)
 
 ___
 
 ### setImmutable
 
-▸ **setImmutable**(`immutable`: *boolean*): [*Matrix*](matrix.md)
+▸ **setImmutable**(`immutable`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`immutable` | *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `immutable` | `boolean` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+[`Matrix`](Matrix.md)
 
-Defined in: libs/matrix.ts:66
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[setImmutable](../interfaces/IDataStructure2D.md#setimmutable)
+
+#### Defined in
+
+[src/libs/matrix.ts:62](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L62)
 
 ___
 
 ### some
 
-▸ **some**(`f`: (`value`: *number*, `row`: *number*, `col`: *number*) => *boolean*): *boolean*
+▸ **some**(`f`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *number*, `row`: *number*, `col`: *number*) => *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `number`, `row`: `number`, `col`: `number`) => `boolean` |
 
-**Returns:** *boolean*
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+`boolean`
 
-Defined in: libs/matrix.ts:316
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[some](../interfaces/IDataStructure2D.md#some)
+
+#### Defined in
+
+[src/libs/matrix.ts:311](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L311)
 
 ___
 
 ### subtractBy
 
-▸ **subtractBy**(`n`: *number*): [*Matrix*](matrix.md)
+▸ **subtractBy**(`n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:241
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:236](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L236)
 
 ___
 
 ### subtractColBy
 
-▸ **subtractColBy**(`col`: *number*, `n`: *number*): [*Matrix*](matrix.md)
+▸ **subtractColBy**(`col`, `n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`col` | *number* |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `col` | `number` |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:281
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:276](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L276)
 
 ___
 
 ### subtractRowBy
 
-▸ **subtractRowBy**(`row`: *number*, `n`: *number*): [*Matrix*](matrix.md)
+▸ **subtractRowBy**(`row`, `n`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row` | *number* |
-`n` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `row` | `number` |
+| `n` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:261
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:256](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L256)
 
 ___
 
 ### swapCols
 
-▸ **swapCols**(`col1`: *number*, `col2`: *number*): [*Matrix*](matrix.md)
+▸ **swapCols**(`col1`, `col2`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`col1` | *number* |
-`col2` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `col1` | `number` |
+| `col2` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:305
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:300](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L300)
 
 ___
 
 ### swapRows
 
-▸ **swapRows**(`row1`: *number*, `row2`: *number*): [*Matrix*](matrix.md)
+▸ **swapRows**(`row1`, `row2`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`row1` | *number* |
-`row2` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `row1` | `number` |
+| `row2` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:296
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:291](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L291)
 
 ___
 
 ### toArray
 
-▸ **toArray**(): *number*[][]
+▸ **toArray**(): `number`[][]
 
-**Returns:** *number*[][]
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+`number`[][]
 
-Defined in: libs/matrix.ts:97
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[toArray](../interfaces/IDataStructure2D.md#toarray)
+
+#### Defined in
+
+[src/libs/matrix.ts:93](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L93)
 
 ___
 
 ### values
 
-▸ **values**(): *Generator*<number, any, unknown\>
+▸ **values**(): `Generator`<`number`, `any`, `unknown`\>
 
-**Returns:** *Generator*<number, any, unknown\>
+#### Returns
 
-Implementation of: [IDataStructure2D](../interfaces/idatastructure2d.md)
+`Generator`<`number`, `any`, `unknown`\>
 
-Defined in: libs/matrix.ts:182
+#### Implementation of
+
+[IDataStructure2D](../interfaces/IDataStructure2D.md).[values](../interfaces/IDataStructure2D.md#values)
+
+#### Defined in
+
+[src/libs/matrix.ts:177](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L177)
 
 ___
 
 ### fromArray
 
-▸ `Static`**fromArray**(`array`: *number*[][]): [*Matrix*](matrix.md)
+▸ `Static` **fromArray**(`array`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`array` | *number*[][] |
+| Name | Type |
+| :------ | :------ |
+| `array` | `number`[][] |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:11
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:7](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L7)
 
 ___
 
 ### fromIterable
 
-▸ `Static`**fromIterable**(`iterable`: *Iterable*<Iterable<number\>\>): [*Matrix*](matrix.md)
+▸ `Static` **fromIterable**(`iterable`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`iterable` | *Iterable*<Iterable<number\>\> |
+| Name | Type |
+| :------ | :------ |
+| `iterable` | `Iterable`<`Iterable`<`number`\>\> |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:25
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:21](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L21)
 
 ___
 
 ### identity
 
-▸ `Static`**identity**(`size`: *number*): [*Matrix*](matrix.md)
+▸ `Static` **identity**(`size`): [`Matrix`](Matrix.md)
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`size` | *number* |
+| Name | Type |
+| :------ | :------ |
+| `size` | `number` |
 
-**Returns:** [*Matrix*](matrix.md)
+#### Returns
 
-Defined in: libs/matrix.ts:33
+[`Matrix`](Matrix.md)
+
+#### Defined in
+
+[src/libs/matrix.ts:29](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/matrix.ts#L29)

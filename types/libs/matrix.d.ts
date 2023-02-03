@@ -1,10 +1,7 @@
-import { IOptions, IDataStructure2D } from './class';
-export declare class MatrixOptions {
-    immutable: boolean;
-}
-export declare class Matrix implements IOptions, IDataStructure2D<Matrix> {
+import { IDataStructure2D } from './class';
+export declare class Matrix implements IDataStructure2D<Matrix> {
     protected matrix: Array<Array<number>>;
-    options: MatrixOptions;
+    protected immutable: boolean;
     static fromArray(array: Array<Array<number>>): Matrix;
     static fromIterable(iterable: Iterable<Iterable<number>>): Matrix;
     static identity(size: number): Matrix;
@@ -12,7 +9,7 @@ export declare class Matrix implements IOptions, IDataStructure2D<Matrix> {
     get rows(): number;
     get cols(): number;
     isSameInstanceAs(other: Matrix): boolean;
-    isImmutable(): boolean;
+    getImmutable(): boolean;
     setImmutable(immutable: boolean): Matrix;
     deepEquals(other: Matrix | Array<Array<number>>): boolean;
     set(row: number, col: number, value: number): Matrix;
@@ -26,6 +23,7 @@ export declare class Matrix implements IOptions, IDataStructure2D<Matrix> {
     forEachInDiagonal(f: (value: number, row: number, col: number) => void | boolean): Matrix;
     map(f: (value: number, row: number, col: number) => number): Matrix;
     [Symbol.iterator](): Generator<number>;
+    values(): Generator<number>;
     mapRow(row: number, f: (value: number, col: number) => number): Matrix;
     mapCol(col: number, f: (value: number, row: number) => number): Matrix;
     appendRow(row?: Array<number>): Matrix;
@@ -53,5 +51,9 @@ export declare class Matrix implements IOptions, IDataStructure2D<Matrix> {
      */
     isScalarMatrix(): boolean;
     isZeroMatrix(): boolean;
+    /**
+     * Performs dot product of the matrix with another given matrix.
+     */
+    dotProduct(other: Matrix): Matrix;
 }
 //# sourceMappingURL=matrix.d.ts.map

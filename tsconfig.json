@@ -27,7 +27,7 @@
     "lib": ["esnext", "dom"],
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "types": ["jest"]
+    "types": ["jest","node"]
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }

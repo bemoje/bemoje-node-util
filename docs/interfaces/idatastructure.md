@@ -6,195 +6,243 @@ Interface for data structures.
 
 ## Type parameters
 
-Name |
-:------ |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 ## Hierarchy
 
-* **IDataStructure**
+- **`IDataStructure`**
 
-  ↳ [*IDataStructure2D*](idatastructure2d.md)
+  ↳ [`IDataStructure2D`](IDataStructure2D.md)
 
-  ↳ [*IIndexedDataStructure*](iindexeddatastructure.md)
+  ↳ [`IIndexedDataStructure`](IIndexedDataStructure.md)
 
-  ↳ [*IKeyValueDataStructure*](ikeyvaluedatastructure.md)
+  ↳ [`IKeyValueDataStructure`](IKeyValueDataStructure.md)
 
 ## Table of contents
 
 ### Methods
 
-- [[Symbol.iterator]](idatastructure.md#[symbol.iterator])
-- [clone](idatastructure.md#clone)
-- [deepEquals](idatastructure.md#deepequals)
-- [every](idatastructure.md#every)
-- [forEach](idatastructure.md#foreach)
-- [isImmutable](idatastructure.md#isimmutable)
-- [isSameInstanceAs](idatastructure.md#issameinstanceas)
-- [map](idatastructure.md#map)
-- [setImmutable](idatastructure.md#setimmutable)
-- [some](idatastructure.md#some)
-- [toArray](idatastructure.md#toarray)
-- [values](idatastructure.md#values)
+- [[iterator]](IDataStructure.md#[iterator])
+- [clone](IDataStructure.md#clone)
+- [deepEquals](IDataStructure.md#deepequals)
+- [every](IDataStructure.md#every)
+- [forEach](IDataStructure.md#foreach)
+- [getImmutable](IDataStructure.md#getimmutable)
+- [isSameInstanceAs](IDataStructure.md#issameinstanceas)
+- [map](IDataStructure.md#map)
+- [setImmutable](IDataStructure.md#setimmutable)
+- [some](IDataStructure.md#some)
+- [toArray](IDataStructure.md#toarray)
+- [values](IDataStructure.md#values)
 
 ## Methods
 
-### [Symbol.iterator]
+### [iterator]
 
-▸ **[Symbol.iterator]**(): *Generator*<any, any, unknown\>
+▸ **[iterator]**(): `Generator`<`any`, `any`, `unknown`\>
 
-**Returns:** *Generator*<any, any, unknown\>
+#### Returns
 
-Defined in: libs/class.ts:19
+`Generator`<`any`, `any`, `unknown`\>
+
+#### Defined in
+
+[src/libs/class.ts:19](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L19)
 
 ___
 
 ### clone
 
-▸ **clone**(): T
+▸ **clone**(): `T`
 
-**Returns:** T
+#### Returns
 
-Defined in: libs/class.ts:14
+`T`
+
+#### Defined in
+
+[src/libs/class.ts:14](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L14)
 
 ___
 
 ### deepEquals
 
-▸ **deepEquals**(`other`: T): *boolean*
+▸ **deepEquals**(`other`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`other` | T |
+| Name | Type |
+| :------ | :------ |
+| `other` | `T` |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/class.ts:11
+`boolean`
+
+#### Defined in
+
+[src/libs/class.ts:11](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L11)
 
 ___
 
 ### every
 
-▸ **every**(`f`: (`value`: *any*, ...`args`: []) => *boolean*): *boolean*
+▸ **every**(`f`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *any*, ...`args`: []) => *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `any`, ...`args`: []) => `boolean` |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/class.ts:18
+`boolean`
+
+#### Defined in
+
+[src/libs/class.ts:18](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L18)
 
 ___
 
 ### forEach
 
-▸ **forEach**(`f`: (`value`: *any*, ...`args`: []) => *boolean* \| *void*): T
+▸ **forEach**(`f`): `T`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *any*, ...`args`: []) => *boolean* \| *void* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `any`, ...`args`: []) => `boolean` \| `void` |
 
-**Returns:** T
+#### Returns
 
-Defined in: libs/class.ts:15
+`T`
+
+#### Defined in
+
+[src/libs/class.ts:15](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L15)
 
 ___
 
-### isImmutable
+### getImmutable
 
-▸ **isImmutable**(): *boolean*
+▸ **getImmutable**(): `boolean`
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/class.ts:12
+`boolean`
+
+#### Defined in
+
+[src/libs/class.ts:12](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L12)
 
 ___
 
 ### isSameInstanceAs
 
-▸ **isSameInstanceAs**(`other`: T): *boolean*
+▸ **isSameInstanceAs**(`other`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`other` | T |
+| Name | Type |
+| :------ | :------ |
+| `other` | `T` |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/class.ts:10
+`boolean`
+
+#### Defined in
+
+[src/libs/class.ts:10](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L10)
 
 ___
 
 ### map
 
-▸ **map**(`f`: (`value`: *any*, ...`args`: []) => *any*): T
+▸ **map**(`f`): `T`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *any*, ...`args`: []) => *any* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `any`, ...`args`: []) => `any` |
 
-**Returns:** T
+#### Returns
 
-Defined in: libs/class.ts:16
+`T`
+
+#### Defined in
+
+[src/libs/class.ts:16](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L16)
 
 ___
 
 ### setImmutable
 
-▸ **setImmutable**(`immutable`: *boolean*): T
+▸ **setImmutable**(`immutable`): `T`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`immutable` | *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `immutable` | `boolean` |
 
-**Returns:** T
+#### Returns
 
-Defined in: libs/class.ts:13
+`T`
+
+#### Defined in
+
+[src/libs/class.ts:13](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L13)
 
 ___
 
 ### some
 
-▸ **some**(`f`: (`value`: *any*, ...`args`: []) => *boolean*): *boolean*
+▸ **some**(`f`): `boolean`
 
-#### Parameters:
+#### Parameters
 
-Name | Type |
-:------ | :------ |
-`f` | (`value`: *any*, ...`args`: []) => *boolean* |
+| Name | Type |
+| :------ | :------ |
+| `f` | (`value`: `any`, ...`args`: []) => `boolean` |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: libs/class.ts:17
+`boolean`
+
+#### Defined in
+
+[src/libs/class.ts:17](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L17)
 
 ___
 
 ### toArray
 
-▸ **toArray**(): *any*[]
+▸ **toArray**(): `any`[]
 
-**Returns:** *any*[]
+#### Returns
 
-Defined in: libs/class.ts:9
+`any`[]
+
+#### Defined in
+
+[src/libs/class.ts:9](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L9)
 
 ___
 
 ### values
 
-▸ **values**(): *Generator*<any, any, unknown\>
+▸ **values**(): `Generator`<`any`, `any`, `unknown`\>
 
-**Returns:** *Generator*<any, any, unknown\>
+#### Returns
 
-Defined in: libs/class.ts:20
+`Generator`<`any`, `any`, `unknown`\>
+
+#### Defined in
+
+[src/libs/class.ts:20](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L20)
