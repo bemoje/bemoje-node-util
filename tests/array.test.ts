@@ -1,4 +1,4 @@
-import * as util from './array';
+import * as util from '../src/libs/array';
 
 describe('arrMapMutable', () => {
   it('example', () => {
@@ -34,7 +34,8 @@ describe('arrShallowEquals', () => {
 
 describe('arrShuffle', () => {
   it('example', () => {
-    expect(util.arrShuffle([1, 2, 3, 4])).not.toStrictEqual([1, 3, 2, 4]);
+    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    expect(util.arrShuffle(arr.slice())).not.toStrictEqual(arr);
   });
 });
 

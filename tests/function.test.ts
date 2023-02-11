@@ -1,4 +1,4 @@
-import * as util from './function';
+import * as util from '../src/libs/function';
 
 describe('ExtensibleFunction', () => {
   it('example', () => {

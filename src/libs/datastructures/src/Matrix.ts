@@ -1,4 +1,4 @@
-import { IDataStructure2D } from './class';
+import { IDataStructure2D } from '../';
 
 export class Matrix implements IDataStructure2D<Matrix> {
   protected matrix: Array<Array<number>>;

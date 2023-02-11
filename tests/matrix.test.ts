@@ -1,4 +1,4 @@
-import * as util from './matrix';
+import * as util from '../src/libs/datastructures';
 
 describe('Matrix', () => {
   describe('static fromArray', () => {

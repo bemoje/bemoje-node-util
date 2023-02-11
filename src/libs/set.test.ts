@@ -1,5 +1,5 @@
 import * as util from './set';
-import { arrSortNumeric } from './array';
+import { arrSortNumeric } from './array/src/arrSortNumeric';
 
 describe('setIntersection', () => {
   it('example', () => {

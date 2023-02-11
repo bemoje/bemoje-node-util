@@ -27,7 +27,13 @@
     "lib": ["esnext", "dom"],
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "types": ["jest","node"]
+    "types": ["jest", "node"]
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "tests/array.test.ts",
+    "tests/function.test.ts",
+    "tests/matrix.test.ts"
+  ]
 }

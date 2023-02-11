@@ -38,12 +38,12 @@ export type RexecOutput = {
  * ```
  */
 export function* rexec(regex: RegExp, str: string): Generator<RexecOutput> {
-  let arr;
-  while ((arr = regex.exec(str)) !== null) {
+  let match;
+  while ((match = regex.exec(str)) !== null) {
     yield {
-      index: arr.index,
-      match: arr[0],
-      groups: Object.assign({}, arr.groups),
+      index: match.index,
+      match: match[0],
+      groups: Object.assign({}, match.groups),
       lastIndex: regex.lastIndex,
     };
   }
