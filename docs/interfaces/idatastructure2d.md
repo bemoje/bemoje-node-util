@@ -56,7 +56,7 @@ Interface for 2-dimensional data structures, like matrices and tables
 
 #### Defined in
 
-[src/libs/class.ts:19](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L19)
+[src/libs/datastructures/index.ts:19](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L19)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:14](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L14)
+[src/libs/datastructures/index.ts:14](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L14)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:11](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L11)
+[src/libs/datastructures/index.ts:11](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L11)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:33](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L33)
+[src/libs/datastructures/index.ts:33](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L33)
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:30](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L30)
+[src/libs/datastructures/index.ts:30](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L30)
 
 ___
 
@@ -167,7 +167,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:28](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L28)
+[src/libs/datastructures/index.ts:28](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L28)
 
 ___
 
@@ -185,7 +185,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:12](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L12)
+[src/libs/datastructures/index.ts:12](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L12)
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:29](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L29)
+[src/libs/datastructures/index.ts:29](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L29)
 
 ___
 
@@ -230,7 +230,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:10](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L10)
+[src/libs/datastructures/index.ts:10](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L10)
 
 ___
 
@@ -254,7 +254,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:31](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L31)
+[src/libs/datastructures/index.ts:31](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L31)
 
 ___
 
@@ -276,7 +276,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:27](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L27)
+[src/libs/datastructures/index.ts:27](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L27)
 
 ___
 
@@ -300,7 +300,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:13](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L13)
+[src/libs/datastructures/index.ts:13](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L13)
 
 ___
 
@@ -324,7 +324,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:32](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L32)
+[src/libs/datastructures/index.ts:32](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L32)
 
 ___
 
@@ -342,7 +342,7 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:9](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L9)
+[src/libs/datastructures/index.ts:9](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L9)
 
 ___
 
@@ -360,4 +360,4 @@ ___
 
 #### Defined in
 
-[src/libs/class.ts:20](https://github.com/bemoje/bemoje-node-util/blob/60d4c84/src/libs/class.ts#L20)
+[src/libs/datastructures/index.ts:20](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L20)

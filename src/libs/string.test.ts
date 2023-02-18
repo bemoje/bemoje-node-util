@@ -18,6 +18,12 @@ describe('strWrapInBrackets', () => {
   });
 });
 
+describe('strWrapInAngleBrackets', () => {
+  it('example', () => {
+    expect(util.strWrapInAngleBrackets('input')).toBe('<input>');
+  });
+});
+
 describe('strWrapInBraces', () => {
   it('example', () => {
     expect(util.strWrapInBraces('input')).toBe('{input}');
@@ -93,5 +99,17 @@ describe('strSplitWordByCamelCase', () => {
   });
   it('handles short strings', () => {
     expect(util.strSplitWordByCamelCase('aWo')).toStrictEqual(['a', 'Wo']);
+  });
+});
+
+describe('strTimes', () => {
+  it('single', () => {
+    expect(util.strTimes('a', 1)).toBe('a');
+  });
+  it('double', () => {
+    expect(util.strTimes('a', 2)).toBe('aa');
+  });
+  it('tripple', () => {
+    expect(util.strTimes('a', 3)).toBe('aaa');
   });
 });

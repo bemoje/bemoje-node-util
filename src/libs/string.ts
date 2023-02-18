@@ -42,6 +42,18 @@ export function strWrapInBrackets(input: string): string {
 }
 
 /**
+ * Wraps a string in angle brackets.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInAngleBrackets('input')).toBe('<input>');
+ * ```
+ */
+export function strWrapInAngleBrackets(input: string): string {
+  return '<' + input + '>';
+}
+
+/**
  * Wraps a string in braces.
  * @param input - input string
  * @example
@@ -196,6 +208,19 @@ export function strCountCharOccurances(input: string, char: string): number {
     if (c === char) {
       result++;
     }
+  }
+  return result;
+}
+
+/**
+ * Returns a given number of contatenations of a given input string.
+ * @param input - The string to search
+ * @param n - Number of repetitions of the input string
+ */
+export function strTimes(input: string, n: number): string {
+  let result = input;
+  for (let i = 1; i < n; i++) {
+    result += input;
   }
   return result;
 }

@@ -1,3 +1,4 @@
+export { arr2dToCSV } from './src/arr2dToCSV';
 export { arrEvery } from './src/arrEvery';
 export { arrFlatten } from './src/arrFlatten';
 export { arrIndexesOf } from './src/arrIndexesOf';

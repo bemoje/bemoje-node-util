@@ -1,4 +1,6 @@
 export { Matrix } from './src/Matrix';
+export { Table } from './src/Table';
+export { SortedArray } from './src/SortedArray';
 
 /**
  * Interface for data structures.

@@ -143,10 +143,11 @@ export function ensureValidWindowsPath(
     return throwOrFalse('Path string is length 0.');
   }
 
-  path = Path.normalize(path);
-  const isNetworkPath = path.indexOf('\\\\') === 0;
-  if (isNetworkPath) {
-    path = '\\' + path;
+  if (
+    strCountCharOccurances(path, '/') > 0 &&
+    strCountCharOccurances(path, '\\') > 0
+  ) {
+    return throwOrFalse('Path contains both backslash and forward slash.');
   }
 
   const maxLength = (options && options.extendedMaxLength ? 32767 : 260) - 12;
@@ -154,8 +155,8 @@ export function ensureValidWindowsPath(
     return throwOrFalse(`Maximum length of ${maxLength} exceeded`);
   }
 
-  let noDriveLetter = path + '';
-  if (/^\w:\\/g.test(path)) {
+  let noDriveLetter = path;
+  if (/^\w:(\\|\/)/g.test(path)) {
     noDriveLetter = path.substring(2);
   }
   if (/[<>"|?*:]/g.test(noDriveLetter)) {
@@ -164,9 +165,47 @@ export function ensureValidWindowsPath(
     );
   }
 
-  if (/\\(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(\\|$)/g.test(path)) {
+  if (/(\\|\/)(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])((\\|\/)|$)/g.test(path)) {
     return throwOrFalse('Illegal name in path string');
   }
 
   return true;
+}
+
+import { Readable } from 'stream';
+
+/**
+ * Extension of Node's native Readable class for converting a string into a Readable stream.
+ */
+export class StringStream extends Readable {
+  private str: string;
+  private ended: boolean;
+
+  constructor(str: string) {
+    super();
+    this.str = str;
+    this.ended = false;
+  }
+
+  _read(): void {
+    if (!this.ended) {
+      process.nextTick(() => {
+        this.push(Buffer.from(this.str));
+        this.push(null);
+      });
+      this.ended = true;
+    }
+  }
+}
+
+/**
+ * Drain a Readable into a string.
+ * @param stream - a Readable of string chunks
+ */
+export async function streamToString(stream: Readable): Promise<string> {
+  const chunks: string[] = [];
+  for await (const chunk of stream) {
+    chunks.push(Buffer.from(chunk).toString());
+  }
+  return chunks.join('');
 }

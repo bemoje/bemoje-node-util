@@ -95,18 +95,15 @@ describe('ensureValidWindowsPath', () => {
     // => true
   });
   it('accepts backslash', () => {
-    expect(
-      util.ensureValidWindowsPath(
-        'C:\\Users\\Benjamin\\Desktop\\lint-test\\src\\main\\util\\str-is-valid-path.js',
-      ),
-    ).toBe(true);
+    expect(util.ensureValidWindowsPath('C:\\Users\\Benjamin\\Desktop')).toBe(
+      true,
+    );
   });
   it('accepts forward slash', () => {
-    expect(
-      util.ensureValidWindowsPath(
-        'C:/Users/John/Desktop/cool-project/src/str-is-valid-path.js',
-      ),
-    ).toBe(true);
+    expect(util.ensureValidWindowsPath('C:/Users/John/Desktop')).toBe(true);
+  });
+  it('rejects on both forward and backward slash in same path', () => {
+    expect(util.ensureValidWindowsPath('C:/Users\\John')).toBe(false);
   });
   it('rejects when exceeding max length unless extendedMaxLength is enabled', () => {
     const longPath =
@@ -174,5 +171,13 @@ describe('ensureValidWindowsPath', () => {
     expect(() =>
       util.ensureValidWindowsPath('', { assert: true }),
     ).toThrowError();
+  });
+});
+
+describe('StringStream and streamToString', () => {
+  it('example', async () => {
+    const str = 'this is a string';
+    const stream = new util.StringStream(str);
+    expect(await util.streamToString(stream)).toBe(str);
   });
 });

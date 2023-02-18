@@ -34,6 +34,6 @@
     "./src/**/*.tsx",
     "tests/array.test.ts",
     "tests/function.test.ts",
-    "tests/matrix.test.ts"
+    "tests/Matrix.test.ts"
   ]
 }
