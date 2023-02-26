@@ -10,6 +10,7 @@ const options = {
   quoteProps: 'consistent',
   singleQuote: true,
   trailingComma: 'all',
+  printWidth: 120,
 };
 
 module.exports = options;

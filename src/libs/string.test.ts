@@ -102,14 +102,144 @@ describe('strSplitWordByCamelCase', () => {
   });
 });
 
-describe('strTimes', () => {
+describe('strCountCharOccurances', () => {
+  it('works with empty string', () => {
+    expect(util.strCountCharOccurances('', 'a')).toBe(0);
+  });
+  it('works with one match', () => {
+    expect(util.strCountCharOccurances('hi all', 'a')).toBe(1);
+  });
+  it('works with multiple matches', () => {
+    expect(util.strCountCharOccurances('hello world', 'l')).toBe(3);
+  });
+});
+
+describe('strRepeat', () => {
+  it('zero', () => {
+    expect(util.strRepeat('a', 0)).toBe('');
+  });
   it('single', () => {
-    expect(util.strTimes('a', 1)).toBe('a');
+    expect(util.strRepeat('a', 1)).toBe('a');
   });
   it('double', () => {
-    expect(util.strTimes('a', 2)).toBe('aa');
+    expect(util.strRepeat('a', 2)).toBe('aa');
   });
   it('tripple', () => {
-    expect(util.strTimes('a', 3)).toBe('aaa');
+    expect(util.strRepeat('a', 3)).toBe('aaa');
+  });
+});
+
+describe('strLinesTrimLeft', () => {
+  it('trims all lines', () => {
+    const str = [
+      'list:',
+      ' 1. some text',
+      ' 2. some text',
+      '   a. some text',
+      '   b. some text',
+    ].join('\n');
+    expect(util.strLinesTrimLeft(str)).toBe(
+      [
+        'list:',
+        '1. some text',
+        '2. some text',
+        'a. some text',
+        'b. some text',
+      ].join('\n'),
+    );
+  });
+});
+
+describe('strLinesTrimRight', () => {
+  it('trims all lines', () => {
+    const str = [
+      'list:',
+      ' 1. some text  ',
+      ' 2. some text\t',
+      '   a. some text   ',
+      '   b. some text',
+    ].join('\n');
+    expect(util.strLinesTrimRight(str)).toBe(
+      [
+        'list:',
+        ' 1. some text',
+        ' 2. some text',
+        '   a. some text',
+        '   b. some text',
+      ].join('\n'),
+    );
+  });
+});
+
+describe('strLinesRemoveEmpty', () => {
+  it('removes all lines that are empty or only contain whitespace', () => {
+    const str = [
+      '',
+      'list:',
+      ' 1. some text',
+      ' 2. some text',
+      '',
+      '\t\t ',
+      '   a. some text',
+      '   b. some text ',
+      '',
+      ' ',
+    ].join('\n');
+    expect(util.strLinesRemoveEmpty(str)).toBe(
+      [
+        'list:',
+        ' 1. some text',
+        ' 2. some text',
+        '   a. some text',
+        '   b. some text',
+      ].join('\n'),
+    );
+  });
+});
+
+describe('strPrettifyMinifiedCode', () => {
+  it('minifies code', () => {
+    const src = `object Outer {object ExampleVarDecAndAssin {   def main(args: Array[String]) {var (name: String, age: Int) = Pair("Mike",21);println("Name: "+name);  println("Age: "+age);if(true) {if(false){println("no way")}}var (address,mobile)=Pair("New Delhi, India",1234567890);  println("Address: "+address);println("Mobile: "+mobile);}}  }`;
+    expect(util.strPrettifyMinifiedCode(src)).toBe(
+      [
+        'object Outer {',
+        '  object ExampleVarDecAndAssin {',
+        '    def main(args: Array[String]) {',
+        '      var (name: String, age: Int) = Pair("Mike",21);',
+        '      println("Name: "+name);',
+        '      println("Age: "+age);',
+        '      if(true) {',
+        '        if(false){',
+        '          println("no way")',
+        '        }',
+        '      }',
+        '      var (address,mobile)=Pair("New Delhi, India",1234567890);',
+        '      println("Address: "+address);',
+        '      println("Mobile: "+mobile);',
+        '    }',
+        '  }',
+        '}',
+      ].join('\n'),
+    );
+  });
+});
+
+describe('strReplaceAll', () => {
+  it('replaces original string when nothing matches', () => {
+    expect(util.strReplaceAll('wow', 'i', 'o')).toBe('wow');
+  });
+  it('replaces single occurance', () => {
+    expect(util.strReplaceAll('wow', 'o', 'oo')).toBe('woow');
+  });
+  it('replaces multiple occurances', () => {
+    expect(util.strReplaceAll('this, is, some, text', ', ', ';')).toBe(
+      'this;is;some;text',
+    );
+  });
+  it('accepts regex flags', () => {
+    expect(util.strReplaceAll('wow', 'O', 'oo', 'gi')).toBe('woow');
+  });
+  it('regex-escapes input string', () => {
+    expect(util.strReplaceAll('func(3)', '(3)', '(4)')).toBe('func(4)');
   });
 });

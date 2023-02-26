@@ -4,29 +4,41 @@ export type Comparator = (a: any, b: any) => number;
  * @param comparator compare function
  * @param descending whether the input comparator sorts in descending order
  */
-export declare function compareArrays(comparator: Comparator, descending?: boolean): Comparator;
+export declare function compareArray(comparator: Comparator, descending?: boolean): Comparator;
 /**
- * Numeric comparator function (ascending)
+ * Number comparator function (ascending)
  * @param a first value to compare
  * @param b second value to compare
  */
-export declare function compareNumeric(a: number, b: number): number;
+export declare function compareNumber(a: number, b: number): number;
 /**
- * Numeric comparator function (descending)
+ * Number comparator function (descending)
  * @param a first value to compare
  * @param b second value to compare
  */
-export declare function compareNumericDescending(a: number, b: number): number;
+export declare function compareNumberDescending(a: number, b: number): number;
+/**
+ * number, bigint, boolean comparator function (ascending)
+ * @param a first value to compare
+ * @param b second value to compare
+ */
+export declare function compareNumeric(a: number | bigint | boolean, b: number | bigint | boolean): number;
+/**
+ * number, bigint, boolean comparator function (descending)
+ * @param a first value to compare
+ * @param b second value to compare
+ */
+export declare function compareNumericDescending(a: number | bigint | boolean, b: number | bigint | boolean): number;
 /**
  * Alpha numeric comparator function (ascending)
  * @param a first value to compare
  * @param b second value to compare
  */
-export declare function compareAlphaNumeric(a: string, b: string): number;
+export declare function compareString(a: string, b: string): number;
 /**
  * Alpha numeric comparator function (descending)
  * @param a first value to compare
  * @param b second value to compare
  */
-export declare function compareAlphaNumericDescending(a: string, b: string): number;
+export declare function compareStringDescending(a: string, b: string): number;
 //# sourceMappingURL=sort.d.ts.map

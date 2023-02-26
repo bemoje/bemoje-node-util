@@ -35,9 +35,7 @@
   },
   "scripts": {
     "docs": "rimraf docs && typedoc --excludeProtected --excludePrivate --out docs src/index.ts",
-    "test": "npm run test:lint && npm run test:unit",
-    "test:lint": "eslint \"*/**/*.{ts,js,json}\"",
-    "test:unit": "jest",
+    "test": "jest",
     "lint": "eslint \"*/**/*.{ts,js,json}\" --fix",
     "build": "rimraf dist && rimraf types && rollup --config ./rollup.config.js",
     "generators": "node repo-manager.js --generators",

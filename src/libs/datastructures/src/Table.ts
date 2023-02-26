@@ -1,5 +1,6 @@
-import { arr2dToCSV, arrEvery } from '../../array';
+import { arr2dToCSV, arrEvery, arrMapMutable } from '../../array';
 import { A1ToColRow } from '../../spreadsheet';
+import { letterToCol } from '../../spreadsheet/src/letterToCol';
 
 /**
  * Constructor options for class: Table
@@ -28,20 +29,12 @@ export class Table<T> {
   }
 
   private handleOptions(options: TableOptions<T>): void {
-    if (
-      options.extractColHeadersFromData &&
-      options.data &&
-      !options.colHeaders
-    ) {
+    if (options.extractColHeadersFromData && options.data && !options.colHeaders) {
       options.data = options.data.slice();
       options.colHeaders = options.data.splice(0, 1)[0].map((h) => h + '');
     }
 
-    if (
-      options.extractRowHeadersFromData &&
-      options.data &&
-      !options.rowHeaders
-    ) {
+    if (options.extractRowHeadersFromData && options.data && !options.rowHeaders) {
       options.data = options.data.map((row) => row.slice());
       options.rowHeaders = [];
       for (let i = 0; i < options.data.length; i++) {
@@ -102,9 +95,7 @@ export class Table<T> {
 
   private validateRowMin(rows: number): void {
     if (rows < 1) {
-      throw new Error(
-        'Expected rows to be integer larger than 0 but got: ' + rows,
-      );
+      throw new Error('Expected rows to be integer larger than 0 but got: ' + rows);
     }
     if (!Number.isInteger(rows)) {
       throw new Error('Expected rows to be integer and integer.');
@@ -113,9 +104,7 @@ export class Table<T> {
 
   private validateColMin(cols: number): void {
     if (cols < 1) {
-      throw new Error(
-        'Expected cols to be integer larger than 0 but got: ' + cols,
-      );
+      throw new Error('Expected cols to be integer larger than 0 but got: ' + cols);
     }
     if (!Number.isInteger(cols)) {
       throw new Error('Expected cols to be integer and integer.');
@@ -125,9 +114,7 @@ export class Table<T> {
   private ensureValidRowIndex(row: number | string): number {
     if (typeof row === 'string') {
       if (!this._rowHeaders) {
-        throw new Error(
-          'Cannot pass row as string when no rowHeaders are defined.',
-        );
+        throw new Error('Cannot pass row as string when no rowHeaders are defined.');
       }
       row = this._rowHeaders.indexOf(row);
       if (row === -1) {
@@ -140,9 +127,7 @@ export class Table<T> {
   private ensureValidColIndex(col: number | string): number {
     if (typeof col === 'string') {
       if (!this._colHeaders) {
-        throw new Error(
-          'Cannot pass col as string when no colHeaders are defined.',
-        );
+        throw new Error('Cannot pass col as string when no colHeaders are defined.');
       }
       col = this._colHeaders.indexOf(col) - (this._rowHeaders ? 1 : 0);
       if (col < 0) {
@@ -150,6 +135,27 @@ export class Table<T> {
       }
     } else this.validateColMin(col + 1);
     return col;
+  }
+
+  private normalizeCol(col: number | string, spreadsheetNotation: boolean): number {
+    if (spreadsheetNotation) {
+      col = letterToCol(String(col), true);
+    }
+    return this.ensureValidColIndex(col);
+  }
+
+  private normalizeRow(row: number | string, spreadsheetNotation: boolean): number {
+    if (spreadsheetNotation) {
+      row = Number(row);
+    }
+    return this.ensureValidRowIndex(row);
+  }
+
+  private normalizeColRow(col: number | string, row: number | string, spreadsheetNotation: boolean): number[] {
+    if (spreadsheetNotation) {
+      [col, row] = A1ToColRow(String(col) + String(row), true);
+    }
+    return [this.ensureValidColIndex(col), this.ensureValidRowIndex(row)];
   }
 
   /**
@@ -170,6 +176,9 @@ export class Table<T> {
    * Gets the row headers.
    */
   public get rowHeaders(): Array<string> {
+    if (!this._rowHeaders) {
+      throw new Error('No row headers are defined for this table.');
+    }
     return this._rowHeaders ? this._rowHeaders.slice() : [];
   }
 
@@ -177,6 +186,9 @@ export class Table<T> {
    * Gets the column headers.
    */
   public get colHeaders(): Array<string> {
+    if (!this._colHeaders) {
+      throw new Error('No column headers are defined for this table.');
+    }
     return this._colHeaders ? this._colHeaders.slice() : [];
   }
 
@@ -186,18 +198,8 @@ export class Table<T> {
    * @param row Row index
    * @param spreadsheetNotation enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22")
    */
-  public get(
-    col: number | string,
-    row: number | string,
-    spreadsheetNotation = false,
-  ): T {
-    if (spreadsheetNotation) {
-      const CR = A1ToColRow(String(col) + String(row));
-      col = CR[0] - 1;
-      row = CR[1] - 1;
-    }
-    col = this.ensureValidColIndex(col);
-    row = this.ensureValidRowIndex(row);
+  public get(col: number | string, row: number | string, spreadsheetNotation = false): T {
+    [col, row] = this.normalizeColRow(col, row, spreadsheetNotation);
     return this.data[row][col];
   }
 
@@ -209,21 +211,60 @@ export class Table<T> {
    * @param spreadsheetNotation enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22")
    * @returns self (chainable)
    */
-  public set(
-    col: number | string,
-    row: number | string,
-    value: T,
-    spreadsheetNotation = false,
-  ): Table<T> {
-    if (spreadsheetNotation) {
-      const CR = A1ToColRow(String(col) + String(row));
-      col = CR[0] - 1;
-      row = CR[1] - 1;
-    }
-    col = this.ensureValidColIndex(col);
-    row = this.ensureValidRowIndex(row);
+  public set(col: number | string, row: number | string, value: T, spreadsheetNotation = false): Table<T> {
+    [col, row] = this.normalizeColRow(col, row, spreadsheetNotation);
     this.data[row][col] = value;
     return this;
+  }
+
+  /**
+   * Deletes a column in the table.
+   * @param col Column index
+   * @param spreadsheetNotation enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22")
+   */
+  public deleteColumn(col: number | string, spreadsheetNotation = false): Table<T> {
+    col = this.normalizeCol(col, spreadsheetNotation);
+    arrMapMutable(this.data, (row) => {
+      row.splice(col, 1);
+      return row;
+    });
+    if (this._colHeaders) {
+      this._colHeaders.splice(col + (this._rowHeaders ? 1 : 0), 1);
+    }
+    return this;
+  }
+
+  /**
+   * Deletes a row in the table.
+   * @param row Row index
+   * @param spreadsheetNotation enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22")
+   */
+  public deleteRow(row: number | string, spreadsheetNotation = false): Table<T> {
+    row = this.normalizeRow(row, spreadsheetNotation);
+    this.data.splice(row, 1);
+    if (this._rowHeaders) this._rowHeaders.splice(row, 1);
+    return this;
+  }
+
+  /**
+   * Gets the index of a given column header.
+   * Even if row headers are defined, this is not considered a column and is ignored in this search.
+   */
+  public indexOfColHeader(header: string): number {
+    if (!this._colHeaders) {
+      throw new Error('No column headers are defined for this table.');
+    }
+    return this._colHeaders.indexOf(header) - (this._rowHeaders ? 1 : 0);
+  }
+
+  /**
+   * Gets the index of a given row header.
+   */
+  public indexOfRowHeader(header: string): number {
+    if (!this._rowHeaders) {
+      throw new Error('No row headers are defined for this table.');
+    }
+    return this._rowHeaders.indexOf(header);
   }
 
   /**
@@ -267,11 +308,7 @@ export class Table<T> {
    * @param delimiter csv delimiter
    * @param options TableOptions constructor options.
    */
-  public static fromCSV<T>(
-    csv: string,
-    delimiter = ';',
-    options: TableOptions<T | string> = {},
-  ): Table<T | string> {
+  public static fromCSV<T>(csv: string, delimiter = ';', options: TableOptions<T | string> = {}): Table<T | string> {
     options.data = csv
       .split('\n')
       .filter((line) => line.length)

@@ -3,5 +3,5 @@
  * @param input1 first array
  * @param input2 second array
  */
-export declare function arrShallowEquals(input1: Array<any>, input2: Array<any>): boolean;
+export declare function arrShallowEquals<T>(input1: Array<T>, input2: Array<T>): boolean;
 //# sourceMappingURL=arrShallowEquals.d.ts.map

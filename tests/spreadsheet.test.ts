@@ -1,7 +1,7 @@
 import * as util from '../src/libs/spreadsheet';
 
 describe('A1ToColRow', () => {
-  it('example', () => {
+  it('accepts simple string', () => {
     expect(util.A1ToColRow('C1')).toStrictEqual([3, 1]);
   });
   it('accepts long col letters', () => {
@@ -16,6 +16,9 @@ describe('A1ToColRow', () => {
   it('accepts long row numbers and col numbers simultaneously', () => {
     expect(util.A1ToColRow('AA33')).toStrictEqual([27, 33]);
     expect(util.A1ToColRow('AAA333')).toStrictEqual([703, 333]);
+  });
+  it('works with zero-index', () => {
+    expect(util.A1ToColRow('C1', true)).toStrictEqual([2, 0]);
   });
   it('throws on invalid A1 string', () => {
     expect(() => util.A1ToColRow('')).toThrowError();

@@ -5,7 +5,7 @@ export type Comparator = (a: any, b: any) => number;
  * @param comparator compare function
  * @param descending whether the input comparator sorts in descending order
  */
-export function compareArrays(
+export function compareArray(
   comparator: Comparator,
   descending = false,
 ): Comparator {
@@ -61,21 +61,49 @@ export function compareArrays(
 }
 
 /**
- * Numeric comparator function (ascending)
+ * Number comparator function (ascending)
  * @param a first value to compare
  * @param b second value to compare
  */
-export function compareNumeric(a: number, b: number): number {
+export function compareNumber(a: number, b: number): number {
   return a - b;
 }
 
 /**
- * Numeric comparator function (descending)
+ * Number comparator function (descending)
  * @param a first value to compare
  * @param b second value to compare
  */
-export function compareNumericDescending(a: number, b: number): number {
+export function compareNumberDescending(a: number, b: number): number {
   return b - a;
+}
+
+/**
+ * number, bigint, boolean comparator function (ascending)
+ * @param a first value to compare
+ * @param b second value to compare
+ */
+export function compareNumeric(
+  a: number | bigint | boolean,
+  b: number | bigint | boolean,
+): number {
+  if (a < b) return -1;
+  if (a > b) return 1;
+  return 0;
+}
+
+/**
+ * number, bigint, boolean comparator function (descending)
+ * @param a first value to compare
+ * @param b second value to compare
+ */
+export function compareNumericDescending(
+  a: number | bigint | boolean,
+  b: number | bigint | boolean,
+): number {
+  if (a > b) return -1;
+  if (a < b) return 1;
+  return 0;
 }
 
 /**
@@ -83,7 +111,7 @@ export function compareNumericDescending(a: number, b: number): number {
  * @param a first value to compare
  * @param b second value to compare
  */
-export function compareAlphaNumeric(a: string, b: string): number {
+export function compareString(a: string, b: string): number {
   return a.localeCompare(b);
 }
 
@@ -92,6 +120,6 @@ export function compareAlphaNumeric(a: string, b: string): number {
  * @param a first value to compare
  * @param b second value to compare
  */
-export function compareAlphaNumericDescending(a: string, b: string): number {
+export function compareStringDescending(a: string, b: string): number {
   return b.localeCompare(a);
 }

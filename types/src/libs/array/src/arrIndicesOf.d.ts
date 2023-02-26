@@ -3,5 +3,5 @@
  * @param input - The array to search
  * @param element - The element to find
  */
-export declare function arrIndexesOf(input: Array<any>, element: any): Array<number>;
-//# sourceMappingURL=arrIndexesOf.d.ts.map
+export declare function arrIndicesOf<T>(input: Array<T>, element: T): Array<number>;
+//# sourceMappingURL=arrIndicesOf.d.ts.map

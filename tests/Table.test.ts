@@ -257,6 +257,169 @@ describe('set', () => {
   });
 });
 
+describe('deleteColumn', () => {
+  it('can delete col', () => {
+    const t = new util.Table({
+      data: [
+        ['A1', 'B1'],
+        ['A2', 'B2'],
+      ],
+    });
+    t.deleteColumn(1);
+    expect(t.toArray()).toStrictEqual([['A1'], ['A2']]);
+  });
+  it('can delete col from table with col headers', () => {
+    const t = new util.Table({
+      data: [
+        ['A', 'B'],
+        ['A1', 'B1'],
+        ['A2', 'B2'],
+      ],
+      extractColHeadersFromData: true,
+    });
+    t.deleteColumn(0);
+    expect(t.toArray()).toStrictEqual([['B'], ['B1'], ['B2']]);
+  });
+  it('can delete col from table with col and row headers', () => {
+    const t = new util.Table({
+      data: [
+        ['#', 'A', 'B'],
+        ['1', 'A1', 'B1'],
+        ['2', 'A2', 'B2'],
+      ],
+      extractColHeadersFromData: true,
+      extractRowHeadersFromData: true,
+    });
+    t.deleteColumn(0);
+    expect(t.toArray()).toStrictEqual([
+      ['#', 'B'],
+      ['1', 'B1'],
+      ['2', 'B2'],
+    ]);
+  });
+});
+
+describe('deleteRow', () => {
+  it('can delete row', () => {
+    const t = new util.Table({
+      data: [
+        ['A1', 'B1'],
+        ['A2', 'B2'],
+      ],
+    });
+    t.deleteRow(1);
+    expect(t.toArray()).toStrictEqual([['A1', 'B1']]);
+  });
+  it('can delete row from table with row headers', () => {
+    const t = new util.Table({
+      data: [
+        ['1', 'A1', 'B1'],
+        ['2', 'A2', 'B2'],
+      ],
+      extractRowHeadersFromData: true,
+    });
+    t.deleteRow(0);
+    expect(t.toArray()).toStrictEqual([['2', 'A2', 'B2']]);
+  });
+  it('can delete row from table with row and col headers', () => {
+    const t = new util.Table({
+      data: [
+        ['#', 'A', 'B'],
+        ['1', 'A1', 'B1'],
+        ['2', 'A2', 'B2'],
+      ],
+      extractColHeadersFromData: true,
+      extractRowHeadersFromData: true,
+    });
+    t.deleteRow(0);
+    expect(t.toArray()).toStrictEqual([
+      ['#', 'A', 'B'],
+      ['2', 'A2', 'B2'],
+    ]);
+  });
+});
+
+describe('indexOfColHeader', () => {
+  it('finds column header index with no row headers defined', () => {
+    const t = new util.Table({
+      data: [
+        ['A', 'B'],
+        ['A1', 'B1'],
+        ['A2', 'B2'],
+      ],
+      extractColHeadersFromData: true,
+    });
+    expect(t.indexOfColHeader('A')).toBe(0);
+    expect(t.indexOfColHeader('B')).toBe(1);
+    expect(t.indexOfColHeader('C')).toBe(-1);
+  });
+  it('finds column header index with row headers defined', () => {
+    const t = new util.Table({
+      data: [
+        ['#', 'A', 'B'],
+        ['1', 'A1', 'B1'],
+        ['2', 'A2', 'B2'],
+      ],
+      extractColHeadersFromData: true,
+      extractRowHeadersFromData: true,
+    });
+    expect(t.indexOfColHeader('A')).toBe(0);
+    expect(t.indexOfColHeader('B')).toBe(1);
+    expect(t.indexOfColHeader('#')).toBe(-1);
+  });
+  it('throws when no col headers are defined', () => {
+    const t = new util.Table({
+      data: [
+        ['A1', 'B1'],
+        ['A2', 'B2'],
+      ],
+    });
+    expect(() => {
+      t.indexOfColHeader('A1');
+    }).toThrowError('No column headers are defined for this table.');
+  });
+});
+
+describe('indexOfRowHeader', () => {
+  it('finds row header index with no column headers defined', () => {
+    const t = new util.Table({
+      data: [
+        ['1', 'A1', 'B1'],
+        ['2', 'A2', 'B2'],
+      ],
+      extractRowHeadersFromData: true,
+    });
+    expect(t.indexOfRowHeader('1')).toBe(0);
+    expect(t.indexOfRowHeader('2')).toBe(1);
+    expect(t.indexOfRowHeader('3')).toBe(-1);
+  });
+  it('finds row header index with column headers defined', () => {
+    const t = new util.Table({
+      data: [
+        ['#', 'A', 'B'],
+        ['1', 'A1', 'B1'],
+        ['2', 'A2', 'B2'],
+      ],
+      extractColHeadersFromData: true,
+      extractRowHeadersFromData: true,
+    });
+    expect(t.indexOfRowHeader('1')).toBe(0);
+    expect(t.indexOfRowHeader('2')).toBe(1);
+    expect(t.indexOfRowHeader('#')).toBe(-1);
+  });
+  it('throws when no col headers are defined', () => {
+    const t = new util.Table({
+      data: [
+        ['A1', 'B1'],
+        ['A2', 'B2'],
+      ],
+    });
+    expect(() => {
+      t.indexOfRowHeader('A1');
+    }).toThrowError('No row headers are defined for this table.');
+  });
+});
+
 describe('toArray', () => {
   it('works on empty 1x1 table', () => {
     const t = new util.Table();

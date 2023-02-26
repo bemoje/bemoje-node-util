@@ -49,7 +49,7 @@ Interface for data structures.
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:19](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L19)
+[src/libs/datastructures/index.ts:19](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L19)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:14](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L14)
+[src/libs/datastructures/index.ts:14](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L14)
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:11](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L11)
+[src/libs/datastructures/index.ts:11](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L11)
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:18](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L18)
+[src/libs/datastructures/index.ts:18](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L18)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:15](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L15)
+[src/libs/datastructures/index.ts:15](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L15)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:12](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L12)
+[src/libs/datastructures/index.ts:12](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L12)
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:10](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L10)
+[src/libs/datastructures/index.ts:10](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L10)
 
 ___
 
@@ -177,7 +177,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:16](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L16)
+[src/libs/datastructures/index.ts:16](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L16)
 
 ___
 
@@ -197,7 +197,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:13](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L13)
+[src/libs/datastructures/index.ts:13](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L13)
 
 ___
 
@@ -217,7 +217,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:17](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L17)
+[src/libs/datastructures/index.ts:17](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L17)
 
 ___
 
@@ -231,7 +231,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:9](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L9)
+[src/libs/datastructures/index.ts:9](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L9)
 
 ___
 
@@ -245,4 +245,4 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:20](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/datastructures/index.ts#L20)
+[src/libs/datastructures/index.ts:20](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/index.ts#L20)

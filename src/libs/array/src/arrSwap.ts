@@ -4,12 +4,11 @@
  * @param from index of the first element
  * @param to index of the second element
  */
-
-export function arrSwap(
-  input: Array<any>,
+export function arrSwap<T>(
+  input: Array<T>,
   from: number,
   to: number,
-): Array<any> {
+): Array<T> {
   [input[from], input[to]] = [input[to], input[from]];
   return input;
 }

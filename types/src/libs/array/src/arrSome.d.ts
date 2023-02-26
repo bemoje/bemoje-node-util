@@ -4,5 +4,5 @@ import { Predicate } from '../';
  * @param input - The array
  * @param  predicate - A predicate callback function
  */
-export declare function arrSome(input: Array<any>, predicate: Predicate): boolean;
+export declare function arrSome<T>(input: Array<T>, predicate: Predicate): boolean;
 //# sourceMappingURL=arrSome.d.ts.map

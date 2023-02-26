@@ -8,7 +8,7 @@ describe('compareArrays', () => {
       [3, 0, 1],
       [0, 3, 1],
     ];
-    const compare = util.compareArrays(util.compareNumeric);
+    const compare = util.compareArray(util.compareNumber);
     expect(arr.sort(compare)).toStrictEqual([
       [0, 3, 1],
       [1, 2, 2],
@@ -23,7 +23,7 @@ describe('compareArrays', () => {
       [3, 0, 1],
       [0, 3, 1],
     ];
-    const compare = util.compareArrays(util.compareNumericDescending, true);
+    const compare = util.compareArray(util.compareNumberDescending, true);
     expect(arr.sort(compare)).toStrictEqual([
       [3, 0, 1],
       [1, 2, 3],
@@ -37,7 +37,7 @@ describe('compareArrays', () => {
       ['repo', 'src', ['compare', 'ts']],
       ['repo', 'src', ['compare', 'js']],
     ];
-    const compare = util.compareArrays(util.compareAlphaNumeric);
+    const compare = util.compareArray(util.compareString);
     expect(arr.sort(compare)).toStrictEqual([
       ['repo', 'src', ['compare', 'js']],
       ['repo', 'src', ['compare', 'json']],
@@ -50,10 +50,7 @@ describe('compareArrays', () => {
       ['repo', 'src', ['compare', 'ts']],
       ['repo', 'src', ['compare', 'js']],
     ];
-    const compare = util.compareArrays(
-      util.compareAlphaNumericDescending,
-      true,
-    );
+    const compare = util.compareArray(util.compareStringDescending, true);
     expect(arr.sort(compare)).toStrictEqual([
       ['repo', 'src', ['compare', 'ts']],
       ['repo', 'src', ['compare', 'json']],

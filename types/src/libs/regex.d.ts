@@ -42,4 +42,8 @@ export declare function rexec(regex: RegExp, str: string): Generator<RexecOutput
  * @param re RegExp instance to extract named groups from.
  */
 export declare function regexGetGroupNames(re: RegExp): Array<string>;
+/**
+ * Escapes a string so it can be used in a regular expression.
+ */
+export declare function regexEscapeString(str: string): string;
 //# sourceMappingURL=regex.d.ts.map

@@ -5,8 +5,7 @@ import { arrShallowEquals } from './arrShallowEquals';
  * Shuffle items in an array in-place. Guarantees that the array has changes.
  * @param input - The array to shuffle.
  */
-
-export function arrShuffle(input: Array<any>): Array<any> {
+export function arrShuffle<T>(input: Array<T>): Array<T> {
   const original = input.slice();
   let equal = true;
   while (equal) {

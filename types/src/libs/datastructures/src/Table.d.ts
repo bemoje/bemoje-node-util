@@ -25,6 +25,9 @@ export declare class Table<T> {
     private validateColMin;
     private ensureValidRowIndex;
     private ensureValidColIndex;
+    private normalizeCol;
+    private normalizeRow;
+    private normalizeColRow;
     /**
      * Gets the number of rows in the table, not including headers.
      */
@@ -57,6 +60,27 @@ export declare class Table<T> {
      * @returns self (chainable)
      */
     set(col: number | string, row: number | string, value: T, spreadsheetNotation?: boolean): Table<T>;
+    /**
+     * Deletes a column in the table.
+     * @param col Column index
+     * @param spreadsheetNotation enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22")
+     */
+    deleteColumn(col: number | string, spreadsheetNotation?: boolean): Table<T>;
+    /**
+     * Deletes a row in the table.
+     * @param row Row index
+     * @param spreadsheetNotation enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22")
+     */
+    deleteRow(row: number | string, spreadsheetNotation?: boolean): Table<T>;
+    /**
+     * Gets the index of a given column header.
+     * Even if row headers are defined, this is not considered a column and is ignored in this search.
+     */
+    indexOfColHeader(header: string): number;
+    /**
+     * Gets the index of a given row header.
+     */
+    indexOfRowHeader(header: string): number;
     /**
      * Returns the table as a two-dimensional array, including row and column headers..
      */

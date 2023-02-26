@@ -1,3 +1,5 @@
+import { regexEscapeString } from './regex';
+
 /**
  * Inserts a provided string before and after a string.
  * @param input - input string
@@ -214,13 +216,85 @@ export function strCountCharOccurances(input: string, char: string): number {
 
 /**
  * Returns a given number of contatenations of a given input string.
- * @param input - The string to search
+ * @param input - input string
  * @param n - Number of repetitions of the input string
  */
-export function strTimes(input: string, n: number): string {
-  let result = input;
-  for (let i = 1; i < n; i++) {
-    result += input;
-  }
-  return result;
+export function strRepeat(input: string, n: number): string {
+  return new Array(n).fill(input).join('');
+}
+
+/**
+ * Takes a multiline string and performs a left side trim of whitespace on each line.
+ * @param input - input string
+ */
+export function strLinesTrimLeft(input: string): string {
+  return input.replace(/\n\r?\s+/gm, '\n');
+}
+
+/**
+ * Takes a multiline string and performs a right side trim of whitespace on each line.
+ * @param input - input string
+ */
+export function strLinesTrimRight(input: string): string {
+  return input.replace(/\s+\n/gm, '\n');
+}
+
+/**
+ * Takes a multiline string and removes lines that are empty or only contain whitespace.
+ * @param input - input string
+ */
+export function strLinesRemoveEmpty(input: string): string {
+  return input
+    .replace(/\n\r?\s*\n\r?/gm, '\n')
+    .trimStart()
+    .trimEnd();
+}
+
+/**
+ * Very crude, simple, fast code formatting of minified code.
+ * Only works when input code:
+ * - is minified
+ * - is scoped with brackets
+ * - expressions end with semicolon
+ * - has no string literals containing any of these characters: '{', '}', ';'.
+ * @param input The minified source code
+ * @param indent The string to use as indentation
+ */
+export function strPrettifyMinifiedCode(input: string, indent = '  '): string {
+  const getIndents = (n: number) => strRepeat('\t', n);
+  const fixIndents = (s: string) => {
+    return s.replace(/\t +/g, '\t').replace(/\t/g, indent);
+  };
+  let depth = 0;
+  const arr = Array.from(input).map((c) => {
+    if (c === '{') {
+      depth++;
+      return '{\n' + getIndents(depth);
+    } else if (c === '}') {
+      depth--;
+      return '\n' + getIndents(depth) + '}\n' + getIndents(depth);
+    } else if (c === ';') {
+      return ';\n' + getIndents(depth);
+    } else return c;
+  });
+  return fixIndents(strLinesTrimRight(strLinesRemoveEmpty(arr.join(''))));
+}
+
+/**
+ * In a given string, replace all occurances of a given search string with a given replacement string.
+ * @param input input string
+ * @param replace string to find a replace
+ * @param replaceWith string to replace matches with
+ * @param flags RegExp flags as single string.
+ */
+export function strReplaceAll(
+  input: string,
+  replace: string,
+  replaceWith: string,
+  flags = 'g',
+): string {
+  return input.replace(
+    new RegExp(regexEscapeString(replace), flags),
+    replaceWith,
+  );
 }

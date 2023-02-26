@@ -6,7 +6,7 @@ import { Predicate } from '../';
  * @param  predicate - A predicate callback function
  */
 
-export function arrSome(input: Array<any>, predicate: Predicate): boolean {
+export function arrSome<T>(input: Array<T>, predicate: Predicate): boolean {
   for (let i = 0, len = input.length; i < len; i++) {
     if (predicate(input[i], i, input) === true) {
       return true;

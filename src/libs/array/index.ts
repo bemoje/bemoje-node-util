@@ -1,7 +1,10 @@
 export { arr2dToCSV } from './src/arr2dToCSV';
+export { arrAssignFrom } from './src/arrAssignFrom';
 export { arrEvery } from './src/arrEvery';
+export { arrFilterMutable } from './src/arrFilterMutable';
 export { arrFlatten } from './src/arrFlatten';
-export { arrIndexesOf } from './src/arrIndexesOf';
+export { arrFlattenMutable } from './src/arrFlattenMutable';
+export { arrIndicesOf } from './src/arrIndicesOf';
 export { arrMapMutable } from './src/arrMapMutable';
 export { arrShallowEquals } from './src/arrShallowEquals';
 export { arrShuffle } from './src/arrShuffle';

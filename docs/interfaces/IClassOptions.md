@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[src/libs/class.ts:2](https://github.com/bemoje/bemoje-node-util/blob/621ec28/src/libs/class.ts#L2)
+[src/libs/class.ts:2](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/class.ts#L2)
