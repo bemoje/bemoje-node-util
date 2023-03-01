@@ -10,6 +10,16 @@ Two-dimensional table class supporting column and row headers.
 | :------ |
 | `T` |
 
+## Hierarchy
+
+- [`Base`](Base.md)
+
+  ↳ **`Table`**
+
+## Implements
+
+- [`IRevivableJSON`](../interfaces/IRevivableJSON.md)<[`TableSerializedForm`](../modules.md#tableserializedform)<`T`\>\>
+
 ## Table of contents
 
 ### Constructors
@@ -18,19 +28,18 @@ Two-dimensional table class supporting column and row headers.
 
 ### Accessors
 
-- [colHeaders](Table.md#colheaders)
-- [cols](Table.md#cols)
+- [columnHeaders](Table.md#columnheaders)
+- [columns](Table.md#columns)
 - [rowHeaders](Table.md#rowheaders)
 - [rows](Table.md#rows)
 
 ### Methods
 
-- [deleteColumn](Table.md#deletecolumn)
-- [deleteRow](Table.md#deleterow)
 - [get](Table.md#get)
-- [indexOfColHeader](Table.md#indexofcolheader)
+- [indexOfColumnHeader](Table.md#indexofcolumnheader)
 - [indexOfRowHeader](Table.md#indexofrowheader)
-- [serialize](Table.md#serialize)
+- [removeColumn](Table.md#removecolumn)
+- [removeRow](Table.md#removerow)
 - [set](Table.md#set)
 - [toArray](Table.md#toarray)
 - [toArrayDataOnly](Table.md#toarraydataonly)
@@ -55,17 +64,21 @@ Two-dimensional table class supporting column and row headers.
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `TableOptions`<`T`\> |
+| `options` | [`ITableOptions`](../interfaces/ITableOptions.md)<`T`\> |
+
+#### Overrides
+
+[Base](Base.md).[constructor](Base.md#constructor)
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:26](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L26)
+[src/libs/datastructures/src/Table.ts:94](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L94)
 
 ## Accessors
 
-### colHeaders
+### columnHeaders
 
-• `get` **colHeaders**(): `string`[]
+• `get` **columnHeaders**(): `string`[]
 
 Gets the column headers.
 
@@ -75,13 +88,13 @@ Gets the column headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:188](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L188)
+[src/libs/datastructures/src/Table.ts:119](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L119)
 
 ___
 
-### cols
+### columns
 
-• `get` **cols**(): `number`
+• `get` **columns**(): `number`
 
 Gets the number of cols in the table, not including headers.
 
@@ -91,7 +104,7 @@ Gets the number of cols in the table, not including headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:171](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L171)
+[src/libs/datastructures/src/Table.ts:105](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L105)
 
 ___
 
@@ -107,7 +120,7 @@ Gets the row headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:178](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L178)
+[src/libs/datastructures/src/Table.ts:129](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L129)
 
 ___
 
@@ -123,69 +136,23 @@ Gets the number of rows in the table, not including headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:164](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L164)
+[src/libs/datastructures/src/Table.ts:112](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L112)
 
 ## Methods
 
-### deleteColumn
-
-▸ **deleteColumn**(`col`, `spreadsheetNotation?`): [`Table`](Table.md)<`T`\>
-
-Deletes a column in the table.
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `col` | `string` \| `number` | `undefined` | Column index |
-| `spreadsheetNotation` | `boolean` | `false` | enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22") |
-
-#### Returns
-
-[`Table`](Table.md)<`T`\>
-
-#### Defined in
-
-[src/libs/datastructures/src/Table.ts:225](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L225)
-
-___
-
-### deleteRow
-
-▸ **deleteRow**(`row`, `spreadsheetNotation?`): [`Table`](Table.md)<`T`\>
-
-Deletes a row in the table.
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `row` | `string` \| `number` | `undefined` | Row index |
-| `spreadsheetNotation` | `boolean` | `false` | enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22") |
-
-#### Returns
-
-[`Table`](Table.md)<`T`\>
-
-#### Defined in
-
-[src/libs/datastructures/src/Table.ts:242](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L242)
-
-___
-
 ### get
 
-▸ **get**(`col`, `row`, `spreadsheetNotation?`): `T`
+▸ **get**(`column`, `row`, `spreadsheetNotation?`): `T`
 
-Returns a value at the given (row, col) position.
+Returns a value at a given (row, col) position.
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `col` | `string` \| `number` | `undefined` | Column index |
+| `column` | `string` \| `number` | `undefined` | Column index |
 | `row` | `string` \| `number` | `undefined` | Row index |
-| `spreadsheetNotation` | `boolean` | `false` | enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22") |
+| `spreadsheetNotation` | `boolean` | `false` | Interpret row and col as spreadsheet coordinates, eg. ("A","1") |
 
 #### Returns
 
@@ -193,13 +160,13 @@ Returns a value at the given (row, col) position.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:201](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L201)
+[src/libs/datastructures/src/Table.ts:142](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L142)
 
 ___
 
-### indexOfColHeader
+### indexOfColumnHeader
 
-▸ **indexOfColHeader**(`header`): `number`
+▸ **indexOfColumnHeader**(`header`): `number`
 
 Gets the index of a given column header.
 Even if row headers are defined, this is not considered a column and is ignored in this search.
@@ -216,7 +183,7 @@ Even if row headers are defined, this is not considered a column and is ignored 
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:253](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L253)
+[src/libs/datastructures/src/Table.ts:193](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L193)
 
 ___
 
@@ -238,50 +205,78 @@ Gets the index of a given row header.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:263](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L263)
+[src/libs/datastructures/src/Table.ts:203](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L203)
 
 ___
 
-### serialize
+### removeColumn
 
-▸ **serialize**(): `string`
+▸ **removeColumn**(`column`, `spreadsheetNotation?`): [`Table`](Table.md)<`T`\>
 
-Override of the native toJSON method. When parsing the returned json string, it can be revived as a Table object when using the static Table.fromJSON method.
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[src/libs/datastructures/src/Table.ts:333](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L333)
-
-___
-
-### set
-
-▸ **set**(`col`, `row`, `value`, `spreadsheetNotation?`): [`Table`](Table.md)<`T`\>
-
-Inserts a given value at the given (row, col) position.
+Deletes a column in the table.
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `col` | `string` \| `number` | `undefined` | Column index |
-| `row` | `string` \| `number` | `undefined` | Row index |
-| `value` | `T` | `undefined` | The value to insert |
-| `spreadsheetNotation` | `boolean` | `false` | enable that row and col should be interpreted as spreadsheet coordinates, eg. ("A","22") |
+| `column` | `string` \| `number` | `undefined` | Column index |
+| `spreadsheetNotation` | `boolean` | `false` | Interpret row and col as spreadsheet coordinates, eg. ("A","1") |
 
 #### Returns
 
 [`Table`](Table.md)<`T`\>
 
-self (chainable)
+#### Defined in
+
+[src/libs/datastructures/src/Table.ts:165](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L165)
+
+___
+
+### removeRow
+
+▸ **removeRow**(`row`, `spreadsheetNotation?`): [`Table`](Table.md)<`T`\>
+
+Deletes a row in the table.
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `row` | `string` \| `number` | `undefined` | Row index |
+| `spreadsheetNotation` | `boolean` | `false` | Interpret row and col as spreadsheet coordinates, eg. ("A","1") |
+
+#### Returns
+
+[`Table`](Table.md)<`T`\>
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:214](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L214)
+[src/libs/datastructures/src/Table.ts:182](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L182)
+
+___
+
+### set
+
+▸ **set**(`column`, `row`, `value`, `spreadsheetNotation?`): [`Table`](Table.md)<`T`\>
+
+Inserts a given value at a given (row, col) position.
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `column` | `string` \| `number` | `undefined` | Column index |
+| `row` | `string` \| `number` | `undefined` | Row index |
+| `value` | `T` | `undefined` | The value to insert |
+| `spreadsheetNotation` | `boolean` | `false` | Interpret row and col as spreadsheet coordinates, eg. ("A","1") |
+
+#### Returns
+
+[`Table`](Table.md)<`T`\>
+
+#### Defined in
+
+[src/libs/datastructures/src/Table.ts:154](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L154)
 
 ___
 
@@ -297,7 +292,7 @@ Returns the table as a two-dimensional array, including row and column headers..
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:273](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L273)
+[src/libs/datastructures/src/Table.ts:213](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L213)
 
 ___
 
@@ -313,7 +308,7 @@ Returns the table as a two-dimensional array, without row and column headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:289](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L289)
+[src/libs/datastructures/src/Table.ts:229](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L229)
 
 ___
 
@@ -335,23 +330,27 @@ Returns the table as a CSV string.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:301](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L301)
+[src/libs/datastructures/src/Table.ts:241](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L241)
 
 ___
 
 ### toJSON
 
-▸ **toJSON**(): `TableOptions`<`T`\>
+▸ **toJSON**(): [`TableSerializedForm`](../modules.md#tableserializedform)<`T`\>
 
 Override of the native toJSON method. When parsing the returned json string, it can be revived as a Table object when using the static Table.fromJSON method.
 
 #### Returns
 
-`TableOptions`<`T`\>
+[`TableSerializedForm`](../modules.md#tableserializedform)<`T`\>
+
+#### Implementation of
+
+IRevivableJSON.toJSON
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:322](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L322)
+[src/libs/datastructures/src/Table.ts:248](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L248)
 
 ___
 
@@ -373,7 +372,7 @@ Creates a Table instance from CSV string data.
 | :------ | :------ | :------ | :------ |
 | `csv` | `string` | `undefined` | CSV data string |
 | `delimiter` | `string` | `';'` | csv delimiter |
-| `options` | `TableOptions`<`string` \| `T`\> | `{}` | TableOptions constructor options. |
+| `options` | [`ITableOptions`](../interfaces/ITableOptions.md)<`string` \| `T`\> | `{}` | TableOptions constructor options. |
 
 #### Returns
 
@@ -381,7 +380,7 @@ Creates a Table instance from CSV string data.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:311](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L311)
+[src/libs/datastructures/src/Table.ts:78](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L78)
 
 ___
 
@@ -409,4 +408,4 @@ Revive a stringified Table object.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:341](https://github.com/bemoje/bemoje-node-util/blob/f58c8db/src/libs/datastructures/src/Table.ts#L341)
+[src/libs/datastructures/src/Table.ts:90](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/Table.ts#L90)

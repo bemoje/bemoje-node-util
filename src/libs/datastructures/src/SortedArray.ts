@@ -1,23 +1,18 @@
 import { sort as timsort } from 'timsort';
-import {
-  Comparator,
-  compareString,
-  compareNumber,
-  compareNumeric,
-} from '../../sort';
+import { Comparator, compareString, compareNumber, compareNumeric } from '../../sort';
 
-export type SortedArrayOptions<T> = {
+export interface ISortedArrayOptions<T> {
   data?: Iterable<T>;
   compare?: Comparator;
   allowDuplicates?: boolean;
-};
+}
 
 export class SortedArray<T> extends Array {
   private compare: Comparator = compareString;
   private compareFound = false;
   private allowDuplicates = true;
 
-  constructor(options: SortedArrayOptions<T> = {}) {
+  constructor(options: ISortedArrayOptions<T> = {}) {
     super();
     Object.defineProperty(this, 'compare', { enumerable: false });
     Object.defineProperty(this, 'compareFound', { enumerable: false });

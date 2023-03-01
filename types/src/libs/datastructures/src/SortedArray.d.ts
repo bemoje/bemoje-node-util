@@ -1,14 +1,14 @@
 import { Comparator } from '../../sort';
-export type SortedArrayOptions<T> = {
+export interface ISortedArrayOptions<T> {
     data?: Iterable<T>;
     compare?: Comparator;
     allowDuplicates?: boolean;
-};
+}
 export declare class SortedArray<T> extends Array {
     private compare;
     private compareFound;
     private allowDuplicates;
-    constructor(options?: SortedArrayOptions<T>);
+    constructor(options?: ISortedArrayOptions<T>);
     /**
      * Convert to a normal Array instance
      */

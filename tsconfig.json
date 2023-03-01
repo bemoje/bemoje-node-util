@@ -8,7 +8,7 @@
     // Module settings.
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
 

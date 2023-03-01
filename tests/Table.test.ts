@@ -1,21 +1,25 @@
 import * as util from '../src/libs/datastructures';
 
 describe('constructor', () => {
+  it('instances have non-enumerable private properties', () => {
+    const t = new util.Table();
+    expect(Object.keys(t).filter((key) => key.charAt(0) === '_').length).toBe(0);
+  });
   it('creates a 1x1 table when no options passed', () => {
     const t = new util.Table();
     expect(t.rows).toBe(1);
-    expect(t.cols).toBe(1);
+    expect(t.columns).toBe(1);
   });
   it('creates empty table of given size', () => {
-    const t = new util.Table({ rows: 3, cols: 4 });
+    const t = new util.Table({ rows: 3, columns: 4 });
     expect(t.rows).toBe(3);
-    expect(t.cols).toBe(4);
+    expect(t.columns).toBe(4);
   });
   it('accepts row headers', () => {
     const rowHeaders = ['A', 'B'];
     const t = new util.Table({ rowHeaders });
     expect(t.rows).toBe(2);
-    expect(t.cols).toBe(1);
+    expect(t.columns).toBe(1);
     expect(t.rowHeaders).toStrictEqual(rowHeaders);
     expect(t.toArray()).toStrictEqual([
       ['A', undefined],
@@ -23,44 +27,44 @@ describe('constructor', () => {
     ]);
   });
   it('accepts col headers', () => {
-    const colHeaders = ['A', 'B'];
-    const t = new util.Table({ colHeaders });
+    const columnHeaders = ['A', 'B'];
+    const t = new util.Table({ columnHeaders });
     expect(t.rows).toBe(1);
-    expect(t.cols).toBe(2);
-    expect(t.colHeaders).toStrictEqual(colHeaders);
+    expect(t.columns).toBe(2);
+    expect(t.columnHeaders).toStrictEqual(columnHeaders);
     expect(t.toArray()).toStrictEqual([
       ['A', 'B'],
       [undefined, undefined],
     ]);
   });
   it('accepts row and col headers simultaneously', () => {
-    const colHeaders = ['#', 'A', 'B'];
+    const columnHeaders = ['#', 'A', 'B'];
     const rowHeaders = ['1', '2'];
-    const t = new util.Table({ rowHeaders, colHeaders });
+    const t = new util.Table({ rowHeaders, columnHeaders });
     expect(t.rows).toBe(2);
-    expect(t.cols).toBe(2);
+    expect(t.columns).toBe(2);
     expect(t.rowHeaders).toStrictEqual(rowHeaders);
-    expect(t.colHeaders).toStrictEqual(colHeaders);
+    expect(t.columnHeaders).toStrictEqual(columnHeaders);
   });
   it('accepts col headers with rows dimension option', () => {
-    const colHeaders = ['A', 'B'];
-    const t = new util.Table({ colHeaders, rows: 8 });
+    const columnHeaders = ['A', 'B'];
+    const t = new util.Table({ columnHeaders, rows: 8 });
     expect(t.rows).toBe(8);
-    expect(t.cols).toBe(2);
-    expect(t.colHeaders).toStrictEqual(colHeaders);
+    expect(t.columns).toBe(2);
+    expect(t.columnHeaders).toStrictEqual(columnHeaders);
   });
   it('accepts data', () => {
-    const colHeaders = ['#', 'A', 'B'];
+    const columnHeaders = ['#', 'A', 'B'];
     const rowHeaders = ['1', '2'];
     const data = [
       ['A1', 'B1'],
       ['A2', 'B2'],
     ];
-    const t = new util.Table({ rowHeaders, colHeaders, data });
+    const t = new util.Table({ rowHeaders, columnHeaders, data });
     expect(t.rows).toBe(2);
-    expect(t.cols).toBe(2);
+    expect(t.columns).toBe(2);
     expect(t.rowHeaders).toStrictEqual(rowHeaders);
-    expect(t.colHeaders).toStrictEqual(colHeaders);
+    expect(t.columnHeaders).toStrictEqual(columnHeaders);
   });
   it('can extract col headers from data', () => {
     const t = new util.Table({
@@ -69,11 +73,11 @@ describe('constructor', () => {
         ['A1', 'B1'],
         ['A2', 'B2'],
       ],
-      extractColHeadersFromData: true,
+      extractColumnHeaders: true,
     });
     expect(t.rows).toBe(2);
-    expect(t.cols).toBe(2);
-    expect(t.colHeaders).toStrictEqual(['A', 'B']);
+    expect(t.columns).toBe(2);
+    expect(t.columnHeaders).toStrictEqual(['A', 'B']);
   });
   it('can extract row headers from data', () => {
     const t = new util.Table({
@@ -81,10 +85,10 @@ describe('constructor', () => {
         ['1', 'A1', 'B1'],
         ['2', 'A2', 'B2'],
       ],
-      extractRowHeadersFromData: true,
+      extractRowHeaders: true,
     });
     expect(t.rows).toBe(2);
-    expect(t.cols).toBe(2);
+    expect(t.columns).toBe(2);
     expect(t.rowHeaders).toStrictEqual(['1', '2']);
   });
   it('can extract row and col headers from data simultaneously', () => {
@@ -94,86 +98,159 @@ describe('constructor', () => {
         ['1', 'A1', 'B1'],
         ['2', 'A2', 'B2'],
       ],
-      extractColHeadersFromData: true,
-      extractRowHeadersFromData: true,
+      extractColumnHeaders: true,
+      extractRowHeaders: true,
     });
     expect(t.rows).toBe(2);
-    expect(t.cols).toBe(2);
-    expect(t.colHeaders).toStrictEqual(['#', 'A', 'B']);
+    expect(t.columns).toBe(2);
+    expect(t.columnHeaders).toStrictEqual(['#', 'A', 'B']);
     expect(t.rowHeaders).toStrictEqual(['1', '2']);
   });
-  it('ignores extractColHeadersFromData and extractRowHeadersFromData options if headers are provided', () => {
-    const colHeaders = ['#', 'A', 'B'];
-    const rowHeaders = ['1', '2'];
-    const data = [
-      ['A1', 'B1'],
-      ['A2', 'B2'],
-    ];
-    const t = new util.Table({
-      rowHeaders,
-      colHeaders,
-      data,
-      extractColHeadersFromData: true,
-      extractRowHeadersFromData: true,
-    });
-    expect(t.colHeaders).toStrictEqual(['#', 'A', 'B']);
-    expect(t.rowHeaders).toStrictEqual(['1', '2']);
+});
+
+describe('constructor options validation', () => {
+  it('throws on columns less than 1', () => {
+    expect(() => {
+      new util.Table({ columns: 0 });
+    }).toThrowError('Expected columns to be integer larger than 0 but got: 0');
   });
-  it('throws on less than 1 dimensions', () => {
+  it('throws on rows less than 1', () => {
     expect(() => {
       new util.Table({ rows: 0 });
     }).toThrowError('Expected rows to be integer larger than 0 but got: 0');
-    expect(() => {
-      new util.Table({ cols: 0 });
-    }).toThrowError('Expected cols to be integer larger than 0 but got: 0');
   });
-  it('throws on non-integer dimensions', () => {
+  it('throws if columns is non-integer number', () => {
+    expect(() => {
+      new util.Table({ columns: 1.1 });
+    }).toThrowError('Expected columns to be integer an integer.');
+  });
+  it('throws if rows is non-integer number', () => {
     expect(() => {
       new util.Table({ rows: 1.1 });
-    }).toThrowError('Expected rows to be integer and integer.');
-    expect(() => {
-      new util.Table({ cols: 1.1 });
-    }).toThrowError('Expected cols to be integer and integer.');
+    }).toThrowError('Expected rows to be integer an integer.');
   });
   it('throws on invalid data dimensions: missing extra col when using row headers', () => {
     expect(() => {
-      const colHeaders = ['A', 'B'];
+      const columnHeaders = ['A', 'B'];
       const rowHeaders = ['1', '2'];
       const data = [
         ['A1', 'B1'],
         ['A2', 'B2'],
       ];
-      new util.Table({ rowHeaders, colHeaders, data });
+      new util.Table({ rowHeaders, columnHeaders, data });
     }).toThrowError('Expected all rows to be of same length.');
   });
-  it('throws on invalid data dimensions: number of cols in data do not match col headers', () => {
+  it('throws on invalid data dimensions: number of columns in data do not match col headers', () => {
     expect(() => {
-      const colHeaders = ['#', 'A', 'B'];
+      const columnHeaders = ['#', 'A', 'B'];
       const rowHeaders = ['1', '2'];
       const data = [['A1'], ['A2']];
-      new util.Table({ rowHeaders, colHeaders, data });
+      new util.Table({ rowHeaders, columnHeaders, data });
     }).toThrowError('Expected all rows to be of same length.');
   });
   it('throws on invalid data dimensions: number of rows in data do not match row headers', () => {
     expect(() => {
-      const colHeaders = ['#', 'A', 'B'];
+      const columnHeaders = ['#', 'A', 'B'];
       const rowHeaders = ['1', '2'];
       const data = [['A1', 'B1']];
-      new util.Table({ rowHeaders, colHeaders, data });
+      new util.Table({ rowHeaders, columnHeaders, data });
     }).toThrowError('Expected a row header for each row.');
+  });
+  it("Cannot use the 'extractColumnHeaders' option and the 'columnHeaders' option simultanously.", () => {
+    expect(() => {
+      new util.Table({ extractColumnHeaders: true, columnHeaders: ['a'] });
+    }).toThrowError("Cannot use the 'extractColumnHeaders' option and the 'columnHeaders' option simultanously.");
+  });
+  it("Cannot use the 'extractRowHeaders' option and the 'rowHeaders' option simultanously.", () => {
+    expect(() => {
+      new util.Table({ extractRowHeaders: true, rowHeaders: ['a'] });
+    }).toThrowError("Cannot use the 'extractRowHeaders' option and the 'rowHeaders' option simultanously.");
+  });
+  it("Cannot use the 'columns' option and the 'data' option simultanously.", () => {
+    expect(() => {
+      new util.Table({ columns: 1, data: [[0]] });
+    }).toThrowError("Cannot use the 'columns' option and the 'data' option simultanously.");
+  });
+  it("Cannot use the 'rows' option and the 'data' option simultanously.", () => {
+    expect(() => {
+      new util.Table({ rows: 1, data: [[0]] });
+    }).toThrowError("Cannot use the 'rows' option and the 'data' option simultanously.");
+  });
+  it("Cannot use the 'columns' option and the 'columnHeaders' option simultanously.", () => {
+    expect(() => {
+      new util.Table({ columns: 1, columnHeaders: ['a'] });
+    }).toThrowError("Cannot use the 'columns' option and the 'columnHeaders' option simultanously.");
+  });
+  it("Cannot use the 'rows' option and the 'rowHeaders' option simultanously.", () => {
+    expect(() => {
+      new util.Table({ rows: 1, rowHeaders: ['a'] });
+    }).toThrowError("Cannot use the 'rows' option and the 'rowHeaders' option simultanously.");
+  });
+  it("Cannot use the 'extractColumnHeaders' option without the 'data' option.", () => {
+    expect(() => {
+      new util.Table({ extractColumnHeaders: true });
+    }).toThrowError("Cannot use the 'extractColumnHeaders' option without the 'data' option.");
+  });
+  it("Cannot use the 'extractRowHeaders' option without the 'data' option.", () => {
+    expect(() => {
+      new util.Table({ extractRowHeaders: true });
+    }).toThrowError("Cannot use the 'extractRowHeaders' option without the 'data' option.");
+  });
+});
+
+describe('columnHeaders (getter)', () => {
+  it('returns correct column headers.', () => {
+    const columnHeaders = ['a', 'b'];
+    const t = new util.Table({ columnHeaders });
+    expect(t.columnHeaders).toStrictEqual(columnHeaders);
+  });
+  it('throws if no column headers are defined.', () => {
+    expect(() => {
+      new util.Table().columnHeaders;
+    }).toThrowError('No column headers are defined for this table.');
+  });
+});
+
+describe('rowHeaders (getter)', () => {
+  it('returns correct row headers.', () => {
+    const rowHeaders = ['a', 'b'];
+    const t = new util.Table({ rowHeaders });
+    expect(t.rowHeaders).toStrictEqual(rowHeaders);
+  });
+  it('throws if no row headers are defined.', () => {
+    expect(() => {
+      new util.Table().rowHeaders;
+    }).toThrowError('No row headers are defined for this table.');
+  });
+});
+
+describe('columns (getter)', () => {
+  it('returns correct number of columns.', () => {
+    const data = [[1, 2]];
+    const t = new util.Table({ data });
+
+    expect(t.columns).toBe(2);
+  });
+});
+
+describe('rows (getter)', () => {
+  it('returns correct number of rows.', () => {
+    const data = [[1], [2]];
+    const t = new util.Table({ data });
+    expect(t.rows).toBe(2);
   });
 });
 
 describe('get', () => {
   let t: util.Table<string>;
   beforeEach(() => {
-    const colHeaders = ['#', 'A', 'B'];
+    const columnHeaders = ['#', 'A', 'B'];
     const rowHeaders = ['1', '2'];
     const data = [
       ['A1', 'B1'],
       ['A2', 'B2'],
     ];
-    t = new util.Table({ rowHeaders, colHeaders, data });
+    t = new util.Table({ rowHeaders, columnHeaders, data });
   });
   it('works with row and col indices.', () => {
     expect(t.get(0, 0)).toBe('A1');
@@ -197,7 +274,7 @@ describe('get', () => {
   it('throws on non-existent header name', () => {
     expect(() => {
       t.get('C', '1');
-    }).toThrowError('Col not found in colHeaders.');
+    }).toThrowError('Col not found in columnHeaders.');
     expect(() => {
       t.get('A', '3');
     }).toThrowError('Row not found in rowHeaders.');
@@ -211,9 +288,7 @@ describe('get', () => {
         ],
       });
       t.get('A', 0);
-    }).toThrowError(
-      'Cannot pass col as string when no colHeaders are defined.',
-    );
+    }).toThrowError('Cannot pass col as string when no columnHeaders are defined.');
     expect(() => {
       t = new util.Table({
         data: [
@@ -222,22 +297,20 @@ describe('get', () => {
         ],
       });
       t.get(0, '1');
-    }).toThrowError(
-      'Cannot pass row as string when no rowHeaders are defined.',
-    );
+    }).toThrowError('Cannot pass row as string when no rowHeaders are defined.');
   });
 });
 
 describe('set', () => {
   let t: util.Table<string>;
   beforeEach(() => {
-    const colHeaders = ['#', 'A', 'B'];
+    const columnHeaders = ['#', 'A', 'B'];
     const rowHeaders = ['1', '2'];
     const data = [
       ['', 'B1'],
       ['A2', ''],
     ];
-    t = new util.Table({ rowHeaders, colHeaders, data });
+    t = new util.Table({ rowHeaders, columnHeaders, data });
   });
   it('works with row and col indices.', () => {
     expect(t.set(0, 0, 'A1')).toBe(t);
@@ -257,7 +330,7 @@ describe('set', () => {
   });
 });
 
-describe('deleteColumn', () => {
+describe('removeColumn', () => {
   it('can delete col', () => {
     const t = new util.Table({
       data: [
@@ -265,7 +338,7 @@ describe('deleteColumn', () => {
         ['A2', 'B2'],
       ],
     });
-    t.deleteColumn(1);
+    t.removeColumn(1);
     expect(t.toArray()).toStrictEqual([['A1'], ['A2']]);
   });
   it('can delete col from table with col headers', () => {
@@ -275,9 +348,9 @@ describe('deleteColumn', () => {
         ['A1', 'B1'],
         ['A2', 'B2'],
       ],
-      extractColHeadersFromData: true,
+      extractColumnHeaders: true,
     });
-    t.deleteColumn(0);
+    t.removeColumn(0);
     expect(t.toArray()).toStrictEqual([['B'], ['B1'], ['B2']]);
   });
   it('can delete col from table with col and row headers', () => {
@@ -287,10 +360,10 @@ describe('deleteColumn', () => {
         ['1', 'A1', 'B1'],
         ['2', 'A2', 'B2'],
       ],
-      extractColHeadersFromData: true,
-      extractRowHeadersFromData: true,
+      extractColumnHeaders: true,
+      extractRowHeaders: true,
     });
-    t.deleteColumn(0);
+    t.removeColumn(0);
     expect(t.toArray()).toStrictEqual([
       ['#', 'B'],
       ['1', 'B1'],
@@ -299,7 +372,7 @@ describe('deleteColumn', () => {
   });
 });
 
-describe('deleteRow', () => {
+describe('removeRow', () => {
   it('can delete row', () => {
     const t = new util.Table({
       data: [
@@ -307,7 +380,7 @@ describe('deleteRow', () => {
         ['A2', 'B2'],
       ],
     });
-    t.deleteRow(1);
+    t.removeRow(1);
     expect(t.toArray()).toStrictEqual([['A1', 'B1']]);
   });
   it('can delete row from table with row headers', () => {
@@ -316,9 +389,9 @@ describe('deleteRow', () => {
         ['1', 'A1', 'B1'],
         ['2', 'A2', 'B2'],
       ],
-      extractRowHeadersFromData: true,
+      extractRowHeaders: true,
     });
-    t.deleteRow(0);
+    t.removeRow(0);
     expect(t.toArray()).toStrictEqual([['2', 'A2', 'B2']]);
   });
   it('can delete row from table with row and col headers', () => {
@@ -328,10 +401,10 @@ describe('deleteRow', () => {
         ['1', 'A1', 'B1'],
         ['2', 'A2', 'B2'],
       ],
-      extractColHeadersFromData: true,
-      extractRowHeadersFromData: true,
+      extractColumnHeaders: true,
+      extractRowHeaders: true,
     });
-    t.deleteRow(0);
+    t.removeRow(0);
     expect(t.toArray()).toStrictEqual([
       ['#', 'A', 'B'],
       ['2', 'A2', 'B2'],
@@ -347,11 +420,11 @@ describe('indexOfColHeader', () => {
         ['A1', 'B1'],
         ['A2', 'B2'],
       ],
-      extractColHeadersFromData: true,
+      extractColumnHeaders: true,
     });
-    expect(t.indexOfColHeader('A')).toBe(0);
-    expect(t.indexOfColHeader('B')).toBe(1);
-    expect(t.indexOfColHeader('C')).toBe(-1);
+    expect(t.indexOfColumnHeader('A')).toBe(0);
+    expect(t.indexOfColumnHeader('B')).toBe(1);
+    expect(t.indexOfColumnHeader('C')).toBe(-1);
   });
   it('finds column header index with row headers defined', () => {
     const t = new util.Table({
@@ -360,12 +433,12 @@ describe('indexOfColHeader', () => {
         ['1', 'A1', 'B1'],
         ['2', 'A2', 'B2'],
       ],
-      extractColHeadersFromData: true,
-      extractRowHeadersFromData: true,
+      extractColumnHeaders: true,
+      extractRowHeaders: true,
     });
-    expect(t.indexOfColHeader('A')).toBe(0);
-    expect(t.indexOfColHeader('B')).toBe(1);
-    expect(t.indexOfColHeader('#')).toBe(-1);
+    expect(t.indexOfColumnHeader('A')).toBe(0);
+    expect(t.indexOfColumnHeader('B')).toBe(1);
+    expect(t.indexOfColumnHeader('#')).toBe(-1);
   });
   it('throws when no col headers are defined', () => {
     const t = new util.Table({
@@ -375,7 +448,7 @@ describe('indexOfColHeader', () => {
       ],
     });
     expect(() => {
-      t.indexOfColHeader('A1');
+      t.indexOfColumnHeader('A1');
     }).toThrowError('No column headers are defined for this table.');
   });
 });
@@ -387,7 +460,7 @@ describe('indexOfRowHeader', () => {
         ['1', 'A1', 'B1'],
         ['2', 'A2', 'B2'],
       ],
-      extractRowHeadersFromData: true,
+      extractRowHeaders: true,
     });
     expect(t.indexOfRowHeader('1')).toBe(0);
     expect(t.indexOfRowHeader('2')).toBe(1);
@@ -400,8 +473,8 @@ describe('indexOfRowHeader', () => {
         ['1', 'A1', 'B1'],
         ['2', 'A2', 'B2'],
       ],
-      extractColHeadersFromData: true,
-      extractRowHeadersFromData: true,
+      extractColumnHeaders: true,
+      extractRowHeaders: true,
     });
     expect(t.indexOfRowHeader('1')).toBe(0);
     expect(t.indexOfRowHeader('2')).toBe(1);
@@ -426,20 +499,20 @@ describe('toArray', () => {
     expect(t.toArray()).toStrictEqual([[undefined]]);
   });
   it('works on empty 2x2 table', () => {
-    const t = new util.Table({ rows: 2, cols: 2 });
+    const t = new util.Table({ rows: 2, columns: 2 });
     expect(t.toArray()).toStrictEqual([
       [undefined, undefined],
       [undefined, undefined],
     ]);
   });
   it('works with headers and data', () => {
-    const colHeaders = ['#', 'A', 'B'];
+    const columnHeaders = ['#', 'A', 'B'];
     const rowHeaders = ['1', '2'];
     const data = [
       ['A1', 'B1'],
       ['A2', 'B2'],
     ];
-    const t = new util.Table({ rowHeaders, colHeaders, data });
+    const t = new util.Table({ rowHeaders, columnHeaders, data });
     expect(t.toArray()).toStrictEqual([
       ['#', 'A', 'B'],
       ['1', 'A1', 'B1'],
@@ -454,20 +527,20 @@ describe('toArrayDataOnly', () => {
     expect(t.toArrayDataOnly()).toStrictEqual([[undefined]]);
   });
   it('works on empty 2x2 table', () => {
-    const t = new util.Table({ rows: 2, cols: 2 });
+    const t = new util.Table({ rows: 2, columns: 2 });
     expect(t.toArrayDataOnly()).toStrictEqual([
       [undefined, undefined],
       [undefined, undefined],
     ]);
   });
   it('works with headers and data', () => {
-    const colHeaders = ['#', 'A', 'B'];
+    const columnHeaders = ['#', 'A', 'B'];
     const rowHeaders = ['1', '2'];
     const data = [
       ['A1', 'B1'],
       ['A2', 'B2'],
     ];
-    const t = new util.Table({ rowHeaders, colHeaders, data });
+    const t = new util.Table({ rowHeaders, columnHeaders, data });
     expect(t.toArrayDataOnly()).toStrictEqual([
       ['A1', 'B1'],
       ['A2', 'B2'],
@@ -477,13 +550,13 @@ describe('toArrayDataOnly', () => {
 
 describe('toCSV', () => {
   it('works', () => {
-    const colHeaders = ['#', 'A', 'B'];
+    const columnHeaders = ['#', 'A', 'B'];
     const rowHeaders = ['1', '2'];
     const data = [
       ['A1', 'B1'],
       ['A2', 'B2'],
     ];
-    const t = new util.Table({ rowHeaders, colHeaders, data });
+    const t = new util.Table({ rowHeaders, columnHeaders, data });
     expect(t.toCSV(',')).toBe(['#,A,B', '1,A1,B1', '2,A2,B2'].join('\n'));
   });
 });
@@ -500,39 +573,21 @@ describe('fromCSV', () => {
 
 describe('toJSON', () => {
   it('gives identical output to JSON.stringify', () => {
-    const colHeaders = ['#', 'A', 'B'];
-    const rowHeaders = ['1', '2'];
-    const data = [
-      ['A1', 'B1'],
-      ['A2', 'B2'],
-    ];
-    const t = new util.Table({ rowHeaders, colHeaders, data });
-    expect(t.serialize()).toStrictEqual(JSON.stringify(t));
-  });
-});
-
-describe('serialize', () => {
-  it('produces expected json', () => {
-    const colHeaders = ['#', 'A'];
+    const columnHeaders = ['#', 'A'];
     const rowHeaders = ['1'];
     const data = [['A1']];
-    const t = new util.Table({ rowHeaders, colHeaders, data });
-    const expectedJSON =
-      '{"colHeaders":["#","A"],"rowHeaders":["1"],"data":[["A1"]]}';
-    expect(t.serialize()).toBe(expectedJSON);
+    const t = new util.Table({ rowHeaders, columnHeaders, data });
+    expect(JSON.stringify(t)).toBe('{"columnHeaders":["#","A"],"rowHeaders":["1"],"data":[["A1"]]}');
   });
 });
 
 describe('fromJSON', () => {
   it('correctly revives instance', () => {
-    const colHeaders = ['#', 'A', 'B'];
-    const rowHeaders = ['1', '2'];
-    const data = [
-      ['A1', 'B1'],
-      ['A2', 'B2'],
-    ];
-    const t1 = new util.Table({ rowHeaders, colHeaders, data });
-    const t2 = util.Table.fromJSON(t1.serialize());
+    const columnHeaders = ['#', 'A'];
+    const rowHeaders = ['1'];
+    const data = [['A1']];
+    const t1 = new util.Table({ rowHeaders, columnHeaders, data });
+    const t2 = util.Table.fromJSON('{"columnHeaders":["#","A"],"rowHeaders":["1"],"data":[["A1"]]}');
     expect(t1).toStrictEqual(t2);
     expect(t1.toArray()).toStrictEqual(t2.toArray());
   });
