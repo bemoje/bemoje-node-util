@@ -11,3 +11,4 @@ export * from './libs/set';
 export * from './libs/sort';
 export * from './libs/string';
 export * from './libs/time';
+export * from './libs/validation';

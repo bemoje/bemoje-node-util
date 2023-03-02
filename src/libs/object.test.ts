@@ -57,3 +57,30 @@ describe('setNonEnumerablePrivateProperties', () => {
     expect(Object.keys(o)).toStrictEqual(['c']);
   });
 });
+
+describe('iteratePrototypeChain', () => {
+  class A {}
+  class B extends A {}
+  class C extends B {}
+  const instance = new C();
+  it('iterates prototype chain for class constructor', () => {
+    expect([...util.iteratePrototypeChain(C)]).toStrictEqual([C, B, A, Function.prototype, Object.prototype]);
+  });
+  it('iterates prototype chain for class prototype', () => {
+    expect([...util.iteratePrototypeChain(C.prototype)]).toStrictEqual([
+      C.prototype,
+      B.prototype,
+      A.prototype,
+      Object.prototype,
+    ]);
+  });
+  it('iterates prototype chain for class instance', () => {
+    expect([...util.iteratePrototypeChain(instance)]).toStrictEqual([
+      instance,
+      C.prototype,
+      B.prototype,
+      A.prototype,
+      Object.prototype,
+    ]);
+  });
+});

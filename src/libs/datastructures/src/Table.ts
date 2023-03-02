@@ -254,7 +254,7 @@ export class Table<T> extends Base implements IRevivableJSON<TableSerializedForm
   }
 
   protected validateOptions(options: ITableOptions<T>) {
-    this.validateAmbiguousOptions(options, [
+    this.assertNoAmbiguousOptions(options, [
       ['extractColumnHeaders', 'columnHeaders'],
       ['extractRowHeaders', 'rowHeaders'],
       ['columns', 'data'],
@@ -262,7 +262,7 @@ export class Table<T> extends Base implements IRevivableJSON<TableSerializedForm
       ['columns', 'columnHeaders'],
       ['rows', 'rowHeaders'],
     ]);
-    this.validateOptionsRequireOtherOptions(options, [
+    this.assertNoOptionsRequireMissingOptions(options, [
       ['extractColumnHeaders', 'data'],
       ['extractRowHeaders', 'data'],
     ]);
