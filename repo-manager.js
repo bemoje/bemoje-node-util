@@ -215,9 +215,11 @@ Released under the [${CONFIG.package.license} License](./LICENSE).
 
 # Documentation
 ${fs
-  .readFileSync(path.join(__dirname, 'docs', 'README2.md'), 'utf8')
+  .readFileSync(path.join(__dirname, 'docs', 'README.md'), 'utf8')
   .toString()
-  .replace(/^(.|\n)*## Table of contents/gm, '')}
+  .replace(/^(.|\n)*## Table of contents/gm, '')
+  .replace(/\]\(classes/g, '](docs/classes')
+  .replace(/\]\(interfaces/g, '](docs/interfaces')}
 `;
 /**
  * Generator functions

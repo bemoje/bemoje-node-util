@@ -35,7 +35,7 @@ When using row headers simultaneously, this array will need to be of length one 
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:37](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/Table.ts#L37)
+[src/libs/datastructures/src/Table.ts:37](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/datastructures/src/Table.ts#L37)
 
 ___
 
@@ -49,7 +49,7 @@ TypeScript: Type safety consideration: Please note that when initializing an emp
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:49](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/Table.ts#L49)
+[src/libs/datastructures/src/Table.ts:49](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/datastructures/src/Table.ts#L49)
 
 ___
 
@@ -63,7 +63,7 @@ When using this option, the 'columns' and 'rows' options are not allowed.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:16](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/Table.ts#L16)
+[src/libs/datastructures/src/Table.ts:16](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/datastructures/src/Table.ts#L16)
 
 ___
 
@@ -78,7 +78,7 @@ If the 'columnHeaders' option is used, this option is not allowed.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:23](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/Table.ts#L23)
+[src/libs/datastructures/src/Table.ts:23](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/datastructures/src/Table.ts#L23)
 
 ___
 
@@ -93,7 +93,7 @@ If the 'rowHeaders' option is used, this option is not allowed.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:30](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/Table.ts#L30)
+[src/libs/datastructures/src/Table.ts:30](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/datastructures/src/Table.ts#L30)
 
 ___
 
@@ -107,7 +107,7 @@ When performing lookups in the table from indices or coordinates, headers are ig
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:43](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/Table.ts#L43)
+[src/libs/datastructures/src/Table.ts:43](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/datastructures/src/Table.ts#L43)
 
 ___
 
@@ -121,4 +121,4 @@ TypeScript: Type safety consideration: Please note that when initializing an emp
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:55](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/Table.ts#L55)
+[src/libs/datastructures/src/Table.ts:55](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/datastructures/src/Table.ts#L55)

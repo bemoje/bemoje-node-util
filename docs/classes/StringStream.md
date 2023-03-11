@@ -95,7 +95,7 @@ Readable.constructor
 
 #### Defined in
 
-[src/libs/node.ts:184](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/node.ts#L184)
+[src/libs/node.ts:184](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/node.ts#L184)
 
 ## Properties
 
@@ -490,7 +490,7 @@ Readable.\_read
 
 #### Defined in
 
-[src/libs/node.ts:190](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/node.ts#L190)
+[src/libs/node.ts:190](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/node.ts#L190)
 
 ___
 
