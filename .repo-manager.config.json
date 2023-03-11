@@ -5,7 +5,7 @@
   },
   "package": {
     "scope": "bemoje",
-    "name": "bemoje-node-util",
+    "name": "node-util",
     "description": "Various utilities for node-js development",
     "license": "MIT"
   },
@@ -19,13 +19,8 @@
   },
   "keywords": {
     "generate": true,
-    "include": [
-      "typescript",
-      "library"
-    ],
-    "ignore": [
-      "works"
-    ]
+    "include": ["typescript", "library"],
+    "ignore": ["works"]
   },
   "readme": {
     "repoDisplayName": "Node Utilities"
@@ -33,9 +28,7 @@
   "bundler": {
     "exports": {
       "default": "util",
-      "named": [
-        "util"
-      ]
+      "named": ["util"]
     },
     "output": {
       "commonjs": true,

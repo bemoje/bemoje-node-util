@@ -12,9 +12,7 @@ const CWD = process.cwd();
 const CONFIG = require(path.join(CWD, '.repo-manager.config.json'));
 
 // all keywords to ignore to lower case.
-CONFIG.keywords.ignore = CONFIG.keywords.ignore.map((keyword) =>
-  keyword.toLowerCase(),
-);
+CONFIG.keywords.ignore = CONFIG.keywords.ignore.map((keyword) => keyword.toLowerCase());
 
 // Ensure scope starts with "@".
 CONFIG.package.scope = CONFIG.package.scope
@@ -24,9 +22,7 @@ CONFIG.package.scope = CONFIG.package.scope
   : '';
 
 // generate full package name including scope if defined.
-CONFIG.package.fullName =
-  (CONFIG.package.scope ? CONFIG.package.scope + '/' : '') +
-  CONFIG.package.name;
+CONFIG.package.fullName = (CONFIG.package.scope ? CONFIG.package.scope + '/' : '') + CONFIG.package.name;
 
 /**
  * Takes filepaths and reads the files' contents and returns an array of found block comments.
@@ -112,33 +108,34 @@ const exec = async (cmd) => {
 const README = `# ${CONFIG.readme.repoDisplayName}
 ${CONFIG.package.description}
 
-![GitHub Top Language](https://img.shields.io/github/languages/top/${CONFIG.github.user
-  }/${CONFIG.github.repository})
+![GitHub Top Language](https://img.shields.io/github/languages/top/${CONFIG.github.user}/${CONFIG.github.repository})
 
 ##### Github
-![GitHub Last Commit](https://img.shields.io/github/last-commit/${CONFIG.github.user
-  }/${CONFIG.github.repository}?color=red)
-![GitHub Stars](https://img.shields.io/github/stars/${CONFIG.github.user}/${CONFIG.github.repository
-  })
-![GitHub Forks](https://img.shields.io/github/forks/${CONFIG.github.user}/${CONFIG.github.repository
-  })
-![GitHub Watchers](https://img.shields.io/github/watchers/${CONFIG.github.user
-  }/${CONFIG.github.repository})
-![GitHub Repo Size](https://img.shields.io/github/repo-size/${CONFIG.github.user
-  }/${CONFIG.github.repository})
+![GitHub Last Commit](https://img.shields.io/github/last-commit/${CONFIG.github.user}/${
+  CONFIG.github.repository
+}?color=red)
+![GitHub Stars](https://img.shields.io/github/stars/${CONFIG.github.user}/${CONFIG.github.repository})
+![GitHub Forks](https://img.shields.io/github/forks/${CONFIG.github.user}/${CONFIG.github.repository})
+![GitHub Watchers](https://img.shields.io/github/watchers/${CONFIG.github.user}/${CONFIG.github.repository})
+![GitHub Repo Size](https://img.shields.io/github/repo-size/${CONFIG.github.user}/${CONFIG.github.repository})
 
 ##### NPM
-<span><a href="https://npmjs.org/${CONFIG.package.fullName
-  }" title="View this project on NPM"><img src="https://img.shields.io/npm/v/${CONFIG.package.fullName
-  }" alt="NPM Version" /></a></span>
-<span><a href="https://npmjs.org/${CONFIG.package.fullName
-  }" title="NPM Downloads"><img src="https://img.shields.io/npm/dt/${CONFIG.package.fullName
-  }" alt="NPM Downloads" /></a></span>
+<span><a href="https://npmjs.org/${
+  CONFIG.package.fullName
+}" title="View this project on NPM"><img src="https://img.shields.io/npm/v/${
+  CONFIG.package.fullName
+}" alt="NPM Version" /></a></span>
+<span><a href="https://npmjs.org/${
+  CONFIG.package.fullName
+}" title="NPM Downloads"><img src="https://img.shields.io/npm/dt/${
+  CONFIG.package.fullName
+}" alt="NPM Downloads" /></a></span>
 ##### Travis CI
-<span><a href="https://npmjs.org/${CONFIG.package.fullName
-  }" title="View this project on NPM"><img src="https://www.travis-ci.com/${CONFIG.github.user
-  }/${CONFIG.github.repository
-  }.svg?branch=main" alt="dependencies" /></a></span>
+<span><a href="https://npmjs.org/${
+  CONFIG.package.fullName
+}" title="View this project on NPM"><img src="https://www.travis-ci.com/${CONFIG.github.user}/${
+  CONFIG.github.repository
+}.svg?branch=main" alt="dependencies" /></a></span>
 
 ##### Donate
 <span><a href="${`https://www.patreon.com/user?u=${CONFIG.patreon.user}`}" title="Donate using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon Donation" /></a></span>
@@ -169,8 +166,7 @@ Get minified ES6 UMD bundle from either of the popular CND's, UNPKG or JSDelivr.
 <script src="https://cdn.jsdelivr.net/npm/${CONFIG.package.fullName}"></script>
 
 <script>
-  // UMD module is exposed through the "${CONFIG.bundler.exports.default
-  }" global variable.
+  // UMD module is exposed through the "${CONFIG.bundler.exports.default}" global variable.
   console.log(${CONFIG.bundler.exports.default});
 </script>
 \`\`\`
@@ -181,27 +177,22 @@ Get minified ES6 UMD bundle from either of the popular CND's, UNPKG or JSDelivr.
 import ${CONFIG.bundler.exports.default} from '${CONFIG.package.fullName}'
 
 // named exports
-import {${CONFIG.bundler.exports.named.join(', ')}} from '${CONFIG.package.fullName
-  }'
+import {${CONFIG.bundler.exports.named.join(', ')}} from '${CONFIG.package.fullName}'
 \`\`\`
-
-## Documentation
-- [Full Documentation with usage examples](/docs/modules.md)
 
 ## Distribution
 This library is written in **TypeScript** compiled to ES6 JavaScript.
 
 #### ES6 Module Bundles
 ${(() => {
-    const bundles = [];
-    const CFG = CONFIG.bundler.output;
-    if (CFG.commonjs) bundles.push('- [CommonJS](/dist/index.js)');
-    if (CFG.esm) bundles.push('- [ESM](/dist/index.esm.js)');
-    if (CFG.umd) bundles.push('- [UMD](/dist/index.umd.js)');
-    if (CFG.umdMinified.enabled)
-      bundles.push('- [UMD Minified](/dist/index.umd.min.js)');
-    return bundles.join('\n');
-  })()}
+  const bundles = [];
+  const CFG = CONFIG.bundler.output;
+  if (CFG.commonjs) bundles.push('- [CommonJS](/dist/index.js)');
+  if (CFG.esm) bundles.push('- [ESM](/dist/index.esm.js)');
+  if (CFG.umd) bundles.push('- [UMD](/dist/index.umd.js)');
+  if (CFG.umdMinified.enabled) bundles.push('- [UMD Minified](/dist/index.umd.min.js)');
+  return bundles.join('\n');
+})()}
 
 #### Type Declarations
 See the [declarations entry point](/types/index.d.ts).
@@ -221,8 +212,13 @@ Contributors are welcome to open a [pull request](${`https://github.com/${CONFIG
 
 ## License
 Released under the [${CONFIG.package.license} License](./LICENSE).
-`;
 
+# Documentation
+${fs
+  .readFileSync(path.join(__dirname, 'docs', 'README2.md'), 'utf8')
+  .toString()
+  .replace(/^(.|\n)*## Table of contents/gm, '')}
+`;
 /**
  * Generator functions
  */
@@ -230,7 +226,7 @@ class RepoManager {
   /**
    * Update to the next patch version in the package.json file.
    */
-  static versionPatch () {
+  static versionPatch() {
     updatePackageJson((PKG) => {
       const [major, minor, patch] = PKG.version.split('.');
       PKG.version = [major, minor, Number(patch) + 1].join('.');
@@ -241,7 +237,7 @@ class RepoManager {
   /**
    * Update to the next minor version in the package.json file.
    */
-  static versionMinor () {
+  static versionMinor() {
     updatePackageJson((PKG) => {
       const [major, minor] = PKG.version.split('.');
       PKG.version = [major, Number(minor) + 1, 0].join('.');
@@ -252,7 +248,7 @@ class RepoManager {
   /**
    * Update to the next major version in the package.json file.
    */
-  static versionMajor () {
+  static versionMajor() {
     updatePackageJson((PKG) => {
       const [major] = PKG.version.split('.');
       PKG.version = [Number(major) + 1, 0, 0].join('.');
@@ -263,7 +259,7 @@ class RepoManager {
   /**
    * Updates the package.json file
    */
-  static generators () {
+  static generators() {
     updatePackageJson((PKG) => {
       // NAME
       PKG.name = CONFIG.package.fullName;
@@ -305,9 +301,7 @@ class RepoManager {
 
       // KEYWORDS
       if (!CONFIG.keywords.generate) {
-        PKG.keywords = [
-          ...new Set(cleanStringArray(CONFIG.keywords.include)),
-        ].sort();
+        PKG.keywords = [...new Set(cleanStringArray(CONFIG.keywords.include))].sort();
       } else {
         // Parses the 'src' dir block comments for its descriptions from which keywords are generated and injected into the
         // package.json file.
@@ -322,19 +316,17 @@ class RepoManager {
                 .extract(
                   getSourceCommentDescriptions(
                     getSourceFileComments(
-                      ...fs
-                        .readdirSync(path.join(CWD, 'src'))
-                        .reduce((accum, filename) => {
-                          if (
-                            // skip test files
-                            !/\.(test|spec)\./.test(filename) &&
-                            // only use ts or js files
-                            /\.(ts|tsx|js|jsx)$/.test(filename)
-                          ) {
-                            accum.push(path.join(CWD, 'src', filename));
-                          }
-                          return accum;
-                        }, []),
+                      ...fs.readdirSync(path.join(CWD, 'src')).reduce((accum, filename) => {
+                        if (
+                          // skip test files
+                          !/\.(test|spec)\./.test(filename) &&
+                          // only use ts or js files
+                          /\.(ts|tsx|js|jsx)$/.test(filename)
+                        ) {
+                          accum.push(path.join(CWD, 'src', filename));
+                        }
+                        return accum;
+                      }, []),
                     ),
                   ).join('\n'),
                   {
@@ -344,8 +336,7 @@ class RepoManager {
                 )
                 .map((keyword) => {
                   // remove keywords to ignore (case-insensitive)
-                  if (CONFIG.keywords.ignore.includes(keyword.toLowerCase()))
-                    return;
+                  if (CONFIG.keywords.ignore.includes(keyword.toLowerCase())) return;
                   // remove keywords with length <= 1
                   if (keyword.length <= 1) return;
                   // remove non WORD characters
@@ -368,7 +359,7 @@ class RepoManager {
   /**
    * Github commit to main.
    */
-  static async npmPublish () {
+  static async npmPublish() {
     try {
       const cmd = 'npm publish --access public';
       console.log('Executing command: ' + cmd);

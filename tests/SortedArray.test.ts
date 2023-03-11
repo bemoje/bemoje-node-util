@@ -123,9 +123,7 @@ describe('insertionIndex', () => {
 
 describe('firstInsertionIndex', () => {
   it('works when array is empty', () => {
-    const [index, foundIdentical] = new util.SortedArray().firstInsertionIndex(
-      'a',
-    );
+    const [index, foundIdentical] = new util.SortedArray().firstInsertionIndex('a');
     expect(index).toBe(0);
     expect(foundIdentical).toBe(false);
   });
@@ -210,9 +208,7 @@ describe('firstInsertionIndex', () => {
 
 describe('lastInsertionIndex', () => {
   it('works when array is empty', () => {
-    const [index, foundIdentical] = new util.SortedArray().lastInsertionIndex(
-      'a',
-    );
+    const [index, foundIdentical] = new util.SortedArray().lastInsertionIndex('a');
     expect(index).toBe(0);
     expect(foundIdentical).toBe(false);
   });

@@ -1,4 +1,4 @@
-[@bemoje/bemoje-node-util](../README.md) / [Exports](../modules.md) / ISortedArrayOptions
+[@bemoje/node-util](../README.md) / ISortedArrayOptions
 
 # Interface: ISortedArrayOptions<T\>
 
@@ -24,17 +24,17 @@
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/SortedArray.ts#L7)
+[src/libs/datastructures/src/SortedArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/SortedArray.ts#L7)
 
 ___
 
 ### compare
 
-• `Optional` **compare**: [`Comparator`](../modules.md#comparator)
+• `Optional` **compare**: [`Comparator`](../README.md#comparator)
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/SortedArray.ts#L6)
+[src/libs/datastructures/src/SortedArray.ts:6](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/SortedArray.ts#L6)
 
 ___
 
@@ -44,4 +44,4 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/src/SortedArray.ts#L5)
+[src/libs/datastructures/src/SortedArray.ts:5](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/src/SortedArray.ts#L5)

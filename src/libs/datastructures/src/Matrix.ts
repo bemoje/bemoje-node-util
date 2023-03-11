@@ -1,6 +1,4 @@
-import { IDataStructure2D } from '../';
-
-export class Matrix implements IDataStructure2D<Matrix> {
+export class Matrix {
   protected matrix: Array<Array<number>>;
   protected immutable = false;
 
@@ -108,9 +106,7 @@ export class Matrix implements IDataStructure2D<Matrix> {
     return clone;
   }
 
-  public forEach(
-    f: (value: number, row: number, col: number) => void | boolean,
-  ): Matrix {
+  public forEach(f: (value: number, row: number, col: number) => void | boolean): Matrix {
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {
         if (f(this.matrix[r][c], r, c) === false) {
@@ -121,10 +117,7 @@ export class Matrix implements IDataStructure2D<Matrix> {
     return this;
   }
 
-  public forEachInRow(
-    row: number,
-    f: (value: number, col: number) => void | boolean,
-  ): Matrix {
+  public forEachInRow(row: number, f: (value: number, col: number) => void | boolean): Matrix {
     for (let c = 0; c < this.cols; c++) {
       if (f(this.matrix[row][c], c) === false) {
         return this;
@@ -133,10 +126,7 @@ export class Matrix implements IDataStructure2D<Matrix> {
     return this;
   }
 
-  public forEachInCol(
-    col: number,
-    f: (value: number, row: number) => void | boolean,
-  ): Matrix {
+  public forEachInCol(col: number, f: (value: number, row: number) => void | boolean): Matrix {
     for (let r = 0; r < this.rows; r++) {
       if (f(this.matrix[r][col], r) === false) {
         return this;
@@ -145,9 +135,7 @@ export class Matrix implements IDataStructure2D<Matrix> {
     return this;
   }
 
-  public forEachInDiagonal(
-    f: (value: number, row: number, col: number) => void | boolean,
-  ): Matrix {
+  public forEachInDiagonal(f: (value: number, row: number, col: number) => void | boolean): Matrix {
     for (let i = 0; i < Math.min(this.rows, this.cols); i++) {
       if (f(this.matrix[i][i], i, i) === false) {
         return this;
@@ -178,10 +166,7 @@ export class Matrix implements IDataStructure2D<Matrix> {
     yield* this;
   }
 
-  public mapRow(
-    row: number,
-    f: (value: number, col: number) => number,
-  ): Matrix {
+  public mapRow(row: number, f: (value: number, col: number) => number): Matrix {
     const m = this.immutable ? this.clone() : this;
     for (let c = 0; c < this.cols; c++) {
       m.matrix[row][c] = f(this.matrix[row][c], c);
@@ -189,10 +174,7 @@ export class Matrix implements IDataStructure2D<Matrix> {
     return m;
   }
 
-  public mapCol(
-    col: number,
-    f: (value: number, row: number) => number,
-  ): Matrix {
+  public mapCol(col: number, f: (value: number, row: number) => number): Matrix {
     const m = this.immutable ? this.clone() : this;
     for (let r = 0; r < this.rows; r++) {
       m.matrix[r][col] = f(this.matrix[r][col], r);
@@ -308,9 +290,7 @@ export class Matrix implements IDataStructure2D<Matrix> {
     return m;
   }
 
-  public some(
-    f: (value: number, row: number, col: number) => boolean,
-  ): boolean {
+  public some(f: (value: number, row: number, col: number) => boolean): boolean {
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {
         if (f(this.matrix[r][c], r, c)) {
@@ -321,9 +301,7 @@ export class Matrix implements IDataStructure2D<Matrix> {
     return false;
   }
 
-  public every(
-    f: (value: number, row: number, col: number) => boolean,
-  ): boolean {
+  public every(f: (value: number, row: number, col: number) => boolean): boolean {
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.cols; c++) {
         if (!f(this.matrix[r][c], r, c)) {

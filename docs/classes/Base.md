@@ -1,6 +1,8 @@
-[@bemoje/bemoje-node-util](../README.md) / [Exports](../modules.md) / Base
+[@bemoje/node-util](../README.md) / Base
 
 # Class: Base
+
+Abstract class that other classes can inherit from to gain various handy functionality.
 
 ## Hierarchy
 
@@ -22,4 +24,4 @@
 
 #### Defined in
 
-src/libs/Base.ts:6
+[src/libs/Base.ts:9](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/Base.ts#L9)

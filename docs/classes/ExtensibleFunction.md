@@ -1,4 +1,4 @@
-[@bemoje/bemoje-node-util](../README.md) / [Exports](../modules.md) / ExtensibleFunction
+[@bemoje/node-util](../README.md) / ExtensibleFunction
 
 # Class: ExtensibleFunction
 
@@ -66,7 +66,7 @@ Function.constructor
 
 #### Defined in
 
-[src/libs/function/src/ExtensibleFunction.ts:18](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/function/src/ExtensibleFunction.ts#L18)
+[src/libs/function/src/ExtensibleFunction.ts:18](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/function/src/ExtensibleFunction.ts#L18)
 
 ## Properties
 

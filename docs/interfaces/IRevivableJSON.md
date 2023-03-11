@@ -1,4 +1,4 @@
-[@bemoje/bemoje-node-util](../README.md) / [Exports](../modules.md) / IRevivableJSON
+[@bemoje/node-util](../README.md) / IRevivableJSON
 
 # Interface: IRevivableJSON<SerializedForm\>
 
@@ -34,4 +34,4 @@
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7e4c5ea/src/libs/datastructures/index.ts#L6)
+[src/libs/datastructures/index.ts:6](https://github.com/bemoje/bemoje-node-util/blob/4b6a37a/src/libs/datastructures/index.ts#L6)

@@ -1,5 +1,4 @@
-import { IDataStructure2D } from '../';
-export declare class Matrix implements IDataStructure2D<Matrix> {
+export declare class Matrix {
     protected matrix: Array<Array<number>>;
     protected immutable: boolean;
     static fromArray(array: Array<Array<number>>): Matrix;
