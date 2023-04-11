@@ -46,4 +46,15 @@ export declare function regexGetGroupNames(re: RegExp): Array<string>;
  * Escapes a string so it can be used in a regular expression.
  */
 export declare function regexEscapeString(str: string): string;
+/**
+ * Convert a regex for matching to a regex for validation.
+ * @example ```js
+ * const regexMatchDigits = /\d/g;
+ * const regexIsDigit = regexMatcherToValidater(regexMatchDigits); //=> /^\d$/
+ * const isDigit = (str) => regexIsDigit.test(str)
+ * isDigit('1') //=> true
+ * isDigit('a') //=> false
+ * ```
+ */
+export declare function regexMatcherToValidater(regex: RegExp): RegExp;
 //# sourceMappingURL=regex.d.ts.map

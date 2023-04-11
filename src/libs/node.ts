@@ -1,6 +1,7 @@
 import Path from 'path';
 import fs from 'fs';
-import { numFormatEU, numFormatUS } from './number';
+import { numFormatUS } from './number';
+import { numFormatEU } from './number';
 import { strCountCharOccurances } from './string';
 
 export type MemoryUsageValues = {
@@ -19,9 +20,7 @@ export type MemoryUsageValuesFormatted = {
 
 const toIntMB = (n: number) => Math.floor(n * 0.000001);
 
-const getMemoryUsageFormatted = (
-  format: (n: number) => string,
-): MemoryUsageValuesFormatted => {
+const getMemoryUsageFormatted = (format: (n: number) => string): MemoryUsageValuesFormatted => {
   const data = process.memoryUsage();
   return {
     processAllocationMB: format(data.rss),
@@ -49,9 +48,7 @@ export function getMemoryUsage(): MemoryUsageValues {
  * The values are formatted strings in the style of 5.000,00
  */
 export function getMemoryUsageFormattedEU(): MemoryUsageValuesFormatted {
-  return getMemoryUsageFormatted(
-    (bytes: number) => `${numFormatEU(bytes * 0.000001, 2)} MB`,
-  );
+  return getMemoryUsageFormatted((bytes: number) => `${numFormatEU(bytes * 0.000001, 2)} MB`);
 }
 
 /**
@@ -59,9 +56,7 @@ export function getMemoryUsageFormattedEU(): MemoryUsageValuesFormatted {
  * The values are formatted strings in the style of 5,000.00
  */
 export function getMemoryUsageFormattedUS(): MemoryUsageValuesFormatted {
-  return getMemoryUsageFormatted(
-    (bytes: number) => `${numFormatUS(bytes * 0.000001, 2)} MB`,
-  );
+  return getMemoryUsageFormatted((bytes: number) => `${numFormatUS(bytes * 0.000001, 2)} MB`);
 }
 
 /**
@@ -88,9 +83,7 @@ export function readFileStringSync(path: string): string {
 export function normalizeFileExtension(ext: string): string {
   if (ext === '' || ext === '.') return '';
   if (/[<>"|?*:]/g.test(ext)) {
-    throw new Error(
-      `Illegal characters in file extension: ${ext}  |  Illegal characters are: <>"|?:*`,
-    );
+    throw new Error(`Illegal characters in file extension: ${ext}  |  Illegal characters are: <>"|?:*`);
   }
   if (strCountCharOccurances(ext, '.') === 0) return '.' + ext;
   return ext.substring(ext.lastIndexOf('.'));
@@ -100,9 +93,7 @@ export function normalizeFileExtension(ext: string): string {
  * Takes a list of file extensions and returns a filter function that returns true if a filepath/filename passed to it contains one of the given file extensions.
  * @param fileExtensions file extensions
  */
-export function createFileExtensionFilter(
-  ...fileExtensions: Array<string>
-): (filepath: string) => boolean {
+export function createFileExtensionFilter(...fileExtensions: Array<string>): (filepath: string) => boolean {
   if (!fileExtensions.length) return () => true;
   return (filepath: string) => {
     for (const ext of fileExtensions.map(normalizeFileExtension)) {
@@ -126,15 +117,10 @@ export type ensureValidWindowsPathOptions = {
  * @param extendedMaxLength On most versions of windows, the max allowed length of paths has been
  * raised.
  */
-export function ensureValidWindowsPath(
-  path: string,
-  options?: ensureValidWindowsPathOptions,
-): boolean {
+export function ensureValidWindowsPath(path: string, options?: ensureValidWindowsPathOptions): boolean {
   const throwOrFalse = (msg: string) => {
     if (options && options.assert === true) {
-      throw new Error(
-        `Invalid windows path. ${msg}  |  input received: ${path}`,
-      );
+      throw new Error(`Invalid windows path. ${msg}  |  input received: ${path}`);
     }
     return false;
   };
@@ -143,10 +129,7 @@ export function ensureValidWindowsPath(
     return throwOrFalse('Path string is length 0.');
   }
 
-  if (
-    strCountCharOccurances(path, '/') > 0 &&
-    strCountCharOccurances(path, '\\') > 0
-  ) {
+  if (strCountCharOccurances(path, '/') > 0 && strCountCharOccurances(path, '\\') > 0) {
     return throwOrFalse('Path contains both backslash and forward slash.');
   }
 
@@ -160,9 +143,7 @@ export function ensureValidWindowsPath(
     noDriveLetter = path.substring(2);
   }
   if (/[<>"|?*:]/g.test(noDriveLetter)) {
-    return throwOrFalse(
-      `Illegal characters in: ${path}  |  Illegal characters are: <>"|?:*`,
-    );
+    return throwOrFalse(`Illegal characters in: ${path}  |  Illegal characters are: <>"|?:*`);
   }
 
   if (/(\\|\/)(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])((\\|\/)|$)/g.test(path)) {

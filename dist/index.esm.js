@@ -6,9 +6,9 @@
  */
 
 import { sort } from 'timsort';
+import numberFormat from 'format-number';
 import Path from 'path';
 import fs from 'fs';
-import numberFormat from 'format-number';
 import { Readable } from 'stream';
 
 /**
@@ -292,6 +292,82 @@ function compareStringDescending(a, b) {
  */
 function arrSortNumeric(input) {
     return input.sort(compareNumeric);
+}
+
+/**
+ * Converts a positive integer to a byte array.
+ * Throws Error if the input is larger than 256^5 or not a positive integer.
+ */
+function intToBytes(int) {
+    if (!Number.isInteger(int) || int < 0)
+        throw new Error(`input must be a positive integer. Got ${int}`);
+    if (int > 1099511627776)
+        throw new Error(`input must be less than or equal to 256^5. Got ${int}`);
+    const x = int - 251;
+    return int < 251
+        ? [int]
+        : x < 256
+            ? [251, x]
+            : x < 65536
+                ? [252, Math.floor(x / 256), x % 256]
+                : x < 16777216
+                    ? [253, Math.floor(x / 65536), Math.floor(x / 256) % 256, x % 256]
+                    : x < 4294967296
+                        ? [254, Math.floor(x / 16777216), Math.floor(x / 65536) % 256, Math.floor(x / 256) % 256, x % 256]
+                        : (() => {
+                            const exp = Math.floor(Math.log(x) / Math.log(2)) - 32;
+                            const bytes = [255, ...intToBytes(exp)];
+                            const y = Math.floor(x / Math.pow(2, exp - 11));
+                            for (let i = 5, d = 1099511627776; i >= 0; i--, d /= 256) {
+                                bytes.push(Math.floor(y / d) % 256);
+                            }
+                            return bytes;
+                        })();
+}
+
+/**
+ * Converts a byte-array to an integer.
+ * Throws Error if the input is an invalid byte-array or corresponds to an integer value larger than 256^5.
+ */
+function bytesToInt(bytes) {
+    return bytes.length === 1 && bytes[0] < 251
+        ? bytes[0]
+        : bytes.length === 2 && bytes[0] === 251
+            ? 251 + bytes[1]
+            : bytes.length === 3 && bytes[0] === 252
+                ? 251 + 256 * bytes[1] + bytes[2]
+                : bytes.length === 4 && bytes[0] === 253
+                    ? 251 + 65536 * bytes[1] + 256 * bytes[2] + bytes[3]
+                    : bytes.length === 5 && bytes[0] === 254
+                        ? 251 + 16777216 * bytes[1] + 65536 * bytes[2] + 256 * bytes[3] + bytes[4]
+                        : bytes.length > 5 && bytes[0] === 255
+                            ? (() => {
+                                let m = 0;
+                                let x = 1;
+                                const pivot = Math.max(2, bytes.length - 6);
+                                for (let i = bytes.length - 1; i >= pivot; i--) {
+                                    m += x * bytes[i];
+                                    x *= 256;
+                                }
+                                const n = bytes[1] + 32 < 251
+                                    ? bytesToInt([bytes[1] + 32]) - 11
+                                    : bytes[0] === 255 && bytes[1] < 251
+                                        ? bytes[1] + 21
+                                        : pivot === 3
+                                            ? bytesToInt([bytes[1], bytes[2] + 21])
+                                            : pivot === 4
+                                                ? bytesToInt([bytes[1], bytes[2], bytes[3] + 21])
+                                                : 0;
+                                const int = 251 + m / Math.pow(2, 32 - n);
+                                if (!Number.isInteger(int))
+                                    throw new Error(`Invalid bytes. Got [${bytes.join(', ')}] = ${int}`);
+                                if (int > 1099511627776)
+                                    throw new Error(`Bytes must correspond to an integer less than or equal to 256^5. Got [${bytes.join(', ')}] = ${int}`);
+                                return int;
+                            })()
+                            : (() => {
+                                throw new Error(`Invalid first byte. Got length: ${bytes.length}, and bytes: [${bytes.join(', ')}]`);
+                            })();
 }
 
 /**
@@ -638,8 +714,17 @@ class Matrix {
 }
 
 /**
+ * Determine wheter the argument is a Object (is typeof object but not null).
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+function isObject(value) {
+    return value !== null && typeof value === 'object';
+}
+
+/**
  * Determine wheter a given object is a prototype-object (obj.constructor.prototype === obj).
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function isPrototype(value) {
     if (!isObject(value))
         return false;
@@ -647,15 +732,11 @@ function isPrototype(value) {
         return false;
     return value.constructor.prototype === value;
 }
-/**
- * Determine wheter the argument is a Object (is typeof object but not null).
- */
-function isObject(value) {
-    return value !== null && typeof value === 'object';
-}
+
 /**
  * Determine if value is a constructor function
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function isConstructor(value) {
     return (typeof value === 'function' &&
         'prototype' in value &&
@@ -664,6 +745,30 @@ function isConstructor(value) {
 }
 
 /**
+ * Determine whether a string is a hexadecimal string.
+ */
+function isHex(s) {
+    return /[\da-f]+$/i.test(s);
+}
+
+/**
+ * Determine whether a string is either a hexadecimal or a '\u' or '0x' prepended unicode hex string.
+ */
+function isHexOrUnicode(s) {
+    return /^(\\\\?u|0x)?[\da-f]+$/i.test(s);
+}
+
+/**
+ * Set multiple 'enumerable' property descriptor attributes of the target object to true.
+ * @param object The target object.
+ * @param propertyName The property names to be affected.
+ */
+function setEnumerable(object, ...propertyNames) {
+    for (const propertyName of propertyNames) {
+        Object.defineProperty(object, propertyName, { enumerable: true });
+    }
+}
+/**
  * Set multiple 'enumerable' property descriptor attributes of the target object to false.
  * @param object The target object.
  * @param propertyName The property names to be affected.
@@ -671,6 +776,36 @@ function isConstructor(value) {
 function setNonEnumerable(object, ...propertyNames) {
     for (const propertyName of propertyNames) {
         Object.defineProperty(object, propertyName, { enumerable: false });
+    }
+}
+/**
+ * Set multiple 'writable' property descriptor attributes of the target object to true.
+ * @param object The target object.
+ * @param propertyName The property names to be affected.
+ */
+function setWritable(object, ...propertyNames) {
+    for (const propertyName of propertyNames) {
+        Object.defineProperty(object, propertyName, { writable: true });
+    }
+}
+/**
+ * Set multiple 'writable' property descriptor attributes of the target object to false.
+ * @param object The target object.
+ * @param propertyName The property names to be affected.
+ */
+function setNonWritable(object, ...propertyNames) {
+    for (const propertyName of propertyNames) {
+        Object.defineProperty(object, propertyName, { writable: false });
+    }
+}
+/**
+ * Set multiple 'configurable' property descriptor attributes of the target object to false.
+ * @param object The target object.
+ * @param propertyName The property names to be affected.
+ */
+function setNonConfigurable(object, ...propertyNames) {
+    for (const propertyName of propertyNames) {
+        Object.defineProperty(object, propertyName, { configurable: false });
     }
 }
 /**
@@ -720,7 +855,8 @@ function* iteratePrototypeChain(object) {
 }
 // G:\My Drive\dev\dev\dev\src\object\iterate-object.js
 
-const hasCreatedFirstInstance = new WeakSet();
+// eslint-disable-next-line @typescript-eslint/ban-types
+const hasCreatedFirstInstance = new Set();
 /**
  * Abstract class that other classes can inherit from to gain various handy functionality.
  */
@@ -835,6 +971,19 @@ function regexGetGroupNames(re) {
  */
 function regexEscapeString(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+/**
+ * Convert a regex for matching to a regex for validation.
+ * @example ```js
+ * const regexMatchDigits = /\d/g;
+ * const regexIsDigit = regexMatcherToValidater(regexMatchDigits); //=> /^\d$/
+ * const isDigit = (str) => regexIsDigit.test(str)
+ * isDigit('1') //=> true
+ * isDigit('a') //=> false
+ * ```
+ */
+function regexMatcherToValidater(regex) {
+    return new RegExp(`^${regex.source}$`, regex.flags.replace('g', ''));
 }
 
 // const REGEX_VALID_A = /^[A-Z]+$/g;
@@ -1463,6 +1612,95 @@ class SortedArray extends Array {
 }
 
 /**
+ * Check if a given month number is valid.
+ */
+function isValidDateMonth(month) {
+    return Number.isInteger(month) && month >= 1 && month <= 12;
+}
+
+/**
+ * Throws error if the given month is invalid.
+ */
+function assertValidDateMonth(month) {
+    if (!isValidDateMonth(month))
+        throw new Error(`Invalid month: ${month}.`);
+}
+
+/**
+ * Checks if the given year is a valid year > 0.
+ */
+function isValidDateYear(year) {
+    return Number.isInteger(year) && year >= 0;
+}
+
+/**
+ * Throws if the given year is invalid.
+ */
+function assertValidDateYear(year) {
+    if (!isValidDateYear(year))
+        throw new Error(`Invalid year: ${year}.`);
+}
+
+/**
+ * Check whether a given year is a leap year.
+ */
+function isLeapYear(year) {
+    assertValidDateYear(year);
+    return (0 == year % 4 && 0 != year % 100) || 0 == year % 400;
+}
+
+const DAYS_IN_MONTH = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+/**
+ * Get number of days that there are in a given month of a given year.
+ * Note: The number of days in february depends on whether it is leap year. If no year is given, it is assumed that it is not leap year.
+ */
+function numDaysInMonth(month, year) {
+    assertValidDateMonth(month);
+    return month === 2 && year !== undefined && isLeapYear(year) ? 29 : DAYS_IN_MONTH[month];
+}
+
+/**
+ * Returns whether a day of month is a valid date for the given month and year.
+ */
+function isValidDateDay(day, month, year) {
+    if (!Number.isInteger(day))
+        return false;
+    if (day < 1)
+        return false;
+    if (day > numDaysInMonth(month, year))
+        return false;
+    return true;
+}
+
+/**
+ * Throws an error if the day of the month is invalid.
+ */
+function assertValidDateDay(day, month, year) {
+    if (!isValidDateDay(day, month, year))
+        throw new Error(`Invalid day of the month: ${day}.`);
+}
+
+/**
+ * Get century from year.
+ * @example
+ * ```js
+ * getCentury(2009);
+ * //=> 21
+ * ```
+ */
+function getCentury(year) {
+    assertValidDateYear(year);
+    return Math.floor(year / 100) + 1;
+}
+
+/**
+ * Returns the current year (UTC full year).
+ */
+function getCurrentYear() {
+    return new Date().getUTCFullYear();
+}
+
+/**
  * Converts the table element's data content to a 2-dimensional array.
  * @param {HTMLElement} element - The table element
  * @param {boolean} headers - Whether to extract table column header data from <th> elements.
@@ -1489,6 +1727,361 @@ function htmlTableTo2dArray(element, headers = true) {
         }
     }
     return result;
+}
+
+class Sudoku {
+    constructor(sudoku, candidates, isGuess = false) {
+        if (!isGuess) {
+            if (sudoku.length !== 9)
+                throw Error('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
+            for (const row of sudoku) {
+                if (row.length !== 9)
+                    throw Error('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
+                for (const cell of row) {
+                    if (cell !== undefined && (!Number.isInteger(cell) || cell < 1 || cell > 9)) {
+                        throw Error('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
+                    }
+                }
+            }
+        }
+        this.sudoku = [];
+        for (let i = 0; i <= 8; i++) {
+            this.sudoku[i] = sudoku[i].slice();
+        }
+        if (candidates) {
+            this.candidates = candidates.map((row) => row.map((set) => new Set(set)));
+        }
+        else {
+            this.candidates = [];
+            for (let r = 0; r <= 8; r++) {
+                this.candidates[r] = [];
+                for (let c = 0; c <= 8; c++) {
+                    if (this.sudoku[r][c] === undefined) {
+                        this.candidates[r][c] = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+                    }
+                    else {
+                        this.candidates[r][c] = new Set([]);
+                    }
+                }
+            }
+        }
+        this.isGuess = isGuess;
+    }
+    *itRow(r) {
+        for (let c = 0; c <= 8; c++) {
+            yield this.sudoku[r][c];
+        }
+    }
+    *itRows() {
+        for (let r = 0; r <= 8; r++) {
+            yield this.itRow(r);
+        }
+    }
+    *itCol(c) {
+        for (let r = 0; r <= 8; r++) {
+            yield this.sudoku[r][c];
+        }
+    }
+    *itCols() {
+        for (let c = 0; c <= 8; c++) {
+            yield this.itCol(c);
+        }
+    }
+    *itNonant(r, c) {
+        const row = r < 3 ? 0 : r < 6 ? 3 : 6;
+        const col = c < 3 ? 0 : c < 6 ? 3 : 6;
+        for (let r = row; r < row + 3; r++) {
+            for (let c = col; c < col + 3; c++) {
+                yield this.sudoku[r][c];
+            }
+        }
+    }
+    *itNonants() {
+        yield this.itNonant(0, 0);
+        yield this.itNonant(0, 3);
+        yield this.itNonant(0, 6);
+        yield this.itNonant(3, 0);
+        yield this.itNonant(3, 3);
+        yield this.itNonant(3, 6);
+        yield this.itNonant(6, 0);
+        yield this.itNonant(6, 3);
+        yield this.itNonant(6, 6);
+    }
+    *itAllSeries() {
+        yield* this.itRows();
+        yield* this.itCols();
+        yield* this.itNonants();
+    }
+    isCompleteSeries(itSeries) {
+        const seen = new Set();
+        for (const v of itSeries) {
+            if (v === undefined)
+                return false;
+            if (!seen.has(v)) {
+                seen.add(v);
+            }
+            else {
+                return false;
+            }
+        }
+        return true;
+    }
+    isCompleteSudoku() {
+        for (const itSeries of this.itAllSeries()) {
+            if (!this.isCompleteSeries(itSeries)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    solveAt(row, col) {
+        if (this.sudoku[row][col] !== undefined)
+            return false;
+        const candidates = this.candidates[row][col];
+        for (let i = 0; i <= 8; i++) {
+            const v1 = this.sudoku[row][i];
+            if (v1 !== undefined) {
+                candidates.delete(v1);
+            }
+            const v2 = this.sudoku[i][col];
+            if (v2 !== undefined) {
+                candidates.delete(v2);
+            }
+        }
+        for (const v of this.itNonant(row, col)) {
+            if (v !== undefined) {
+                candidates.delete(v);
+            }
+        }
+        if (candidates.size === 1) {
+            this.sudoku[row][col] = candidates.values().next().value;
+            const v = this.sudoku[row][col];
+            if (v !== undefined) {
+                candidates.delete(v);
+            }
+            return true;
+        }
+        return false;
+    }
+    solve() {
+        let foundAnswer = false;
+        const tryAll = () => {
+            for (let r = 0; r <= 8; r++) {
+                for (let c = 0; c <= 8; c++) {
+                    if (this.solveAt(r, c)) {
+                        foundAnswer = true;
+                    }
+                }
+            }
+        };
+        tryAll();
+        tryAll();
+        if (foundAnswer) {
+            return this.solve();
+        }
+        else if (!this.isCompleteSudoku()) {
+            for (let maxCandidates = 2; maxCandidates <= 9; maxCandidates++) {
+                for (let r = 0; r <= 8; r++) {
+                    for (let c = 0; c <= 8; c++) {
+                        if (this.candidates[r][c].size === maxCandidates) {
+                            const guess = this.candidates[r][c].values().next().value;
+                            this.candidates[r][c].delete(guess);
+                            const newSudoku = new Sudoku(this.sudoku, this.candidates, true);
+                            newSudoku.sudoku[r][c] = guess;
+                            newSudoku.candidates[r][c] = new Set();
+                            const successful = newSudoku.solve();
+                            if (successful) {
+                                this.sudoku = newSudoku.sudoku;
+                                this.candidates = newSudoku.candidates;
+                            }
+                            return this.solve();
+                        }
+                    }
+                }
+            }
+            if (!this.isGuess) {
+                this.print();
+                throw Error('Sudoku is invalid and cannot be solved.');
+            }
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    print() {
+        console.log('-------------------');
+        for (let r = 0; r <= 8; r++) {
+            console.log('|' + this.sudoku[r].map((v) => (v === undefined ? ' ' : v)).join('|') + '|');
+        }
+        console.log('-------------------');
+    }
+}
+function solveSudoku(sudoku) {
+    const instance = new Sudoku(sudoku);
+    instance.solve();
+    return instance;
+}
+
+/**
+ * Returns true if a given interger is even.
+ */
+function isEven(n) {
+    if (!Number.isInteger(n))
+        throw new Error(`Expected integer. Got ${n}`);
+    return n % 2 === 0;
+}
+
+/**
+ * Returns true if a given interger is odd.
+ */
+function isOdd(n) {
+    if (!Number.isInteger(n))
+        throw new Error(`Expected integer. Got ${n}`);
+    return n % 2 !== 0;
+}
+
+const POW10 = [1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9];
+/**
+ * Approximate the logarithm base 10 of a small integer.
+ */
+function numApproximateLog10(n) {
+    if (!Number.isInteger(n) || n < 0 || n >= 1e10) {
+        throw new Error(`Expected positive integer smaller than 10^10. Got ${n}`);
+    }
+    if (n < POW10[5]) {
+        if (n < POW10[2]) {
+            return n < POW10[1] ? 0 : 1;
+        }
+        if (n < POW10[4]) {
+            return n < POW10[3] ? 2 : 3;
+        }
+        return 4;
+    }
+    if (n < POW10[7]) {
+        return n < POW10[6] ? 5 : 6;
+    }
+    if (n < POW10[9]) {
+        return n < POW10[8] ? 7 : 8;
+    }
+    return 9;
+}
+
+const eu = new Map();
+/**
+ * Formats a number input to a string representation in the style of 5.000.000,00
+ * @param input number to format
+ * @param decimalPlaces number of decimal places to return. Will pad string with zeroes to ensure this length.
+ */
+function numFormatEU(input, decimalPlaces = 0) {
+    let formatter = eu.get(decimalPlaces);
+    if (!formatter) {
+        formatter = numberFormat({
+            truncate: decimalPlaces,
+            padRight: decimalPlaces,
+            integerSeparator: '.',
+            decimal: ',',
+        });
+        eu.set(decimalPlaces, formatter);
+    }
+    return formatter(input);
+}
+
+const us = new Map();
+/**
+ * Formats a number input to a string representation in the style of 5,000,000.00
+ * @param input number to format
+ * @param decimalPlaces number of decimal places to return. Will pad string with zeroes to ensure this length.
+ */
+function numFormatUS(input, decimalPlaces = 0) {
+    let formatter = us.get(decimalPlaces);
+    if (!formatter) {
+        formatter = numberFormat({
+            truncate: decimalPlaces,
+            padRight: decimalPlaces,
+            integerSeparator: ',',
+            decimal: '.',
+        });
+        us.set(decimalPlaces, formatter);
+    }
+    return formatter(input);
+}
+
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive).
+ * @param min The lower bound integer.
+ * @param max The upper bound integer.
+ */
+function randomIntBetween(min, max) {
+    if (!Number.isInteger(min))
+        throw new Error(`min must be an integer. Got ${min}`);
+    if (!Number.isInteger(max))
+        throw new Error(`max must be an integer. Got ${max}`);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+/**
+ * Round value with a given number of decimal points.
+ * @param n the number to round.
+ * @param decimalPoints the number of decimal points.
+ */
+function round(n, decimalPoints = 0) {
+    return Math.round(n * Math.pow(10, decimalPoints)) / Math.pow(10, decimalPoints) + 0;
+}
+
+/**
+ * Round number down to the nearest integer.
+ */
+function roundDown(n) {
+    return Math.floor(n);
+}
+
+/**
+ * Round number up to the nearest integer.
+ */
+function roundUp(n) {
+    return Math.ceil(n) + 0;
+}
+
+const regexMatchSocialSecurityNumberDK = /(?<dd>[0-3][0-9])(?<mm>[0-1][0-9])(?<yy>[0-9]{2}).?(?<id>[0-9]{4})/g;
+/**
+ * Extract birthdate (yyyy,mm,dd), four digit id and sex from a Danish social security number.
+ * Assumes birth dates are at most 100 years in the past.
+ */
+function parseSocialSecurityNumberDK(ssn) {
+    const match = ssn.match(regexMatcherToValidater(regexMatchSocialSecurityNumberDK));
+    if (!match || !match.groups)
+        throw new Error(`Invalid Danish social security number format. Expected ddmmyy[-]xxxx. Got: ${ssn}`);
+    const { dd, mm, yy, id } = match.groups;
+    const intDay = parseInt(dd);
+    const intMon = parseInt(mm);
+    const curYear = getCurrentYear();
+    const intYear = parseInt(yy) > parseInt(String(curYear).substring(2))
+        ? parseInt(`${getCentury(curYear) - 2}${yy}`)
+        : parseInt(`${getCentury(curYear) - 1}${yy}`);
+    assertValidDateDay(intDay, intMon, intYear);
+    assertValidDateMonth(intMon);
+    const intId = parseInt(id);
+    const sex = isEven(parseInt(id.substring(3))) ? 'F' : 'M';
+    return {
+        year: intYear,
+        month: intMon,
+        day: intDay,
+        id: intId,
+        sex,
+    };
+}
+/**
+ * Determine whether a string is a valid Danish social security number.
+ */
+function isSocialSecurityNumberDK(s) {
+    try {
+        parseSocialSecurityNumberDK(s);
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
 }
 
 /*! *****************************************************************************
@@ -1534,68 +2127,6 @@ function __asyncValues(o) {
     return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-}
-
-const eu = new Map();
-const us = new Map();
-/**
- * Formats a number input to a string representation in the style of 5.000.000,00
- * @param input number to format
- * @param decimalPlaces number of decimal places to return. Will pad string with zeroes to ensure this length.
- */
-function numFormatEU(input, decimalPlaces = 0) {
-    let formatter = eu.get(decimalPlaces);
-    if (!formatter) {
-        formatter = numberFormat({
-            truncate: decimalPlaces,
-            padRight: decimalPlaces,
-            integerSeparator: '.',
-            decimal: ',',
-        });
-        eu.set(decimalPlaces, formatter);
-    }
-    return formatter(input);
-}
-/**
- * Formats a number input to a string representation in the style of 5,000,000.00
- * @param input number to format
- * @param decimalPlaces number of decimal places to return. Will pad string with zeroes to ensure this length.
- */
-function numFormatUS(input, decimalPlaces = 0) {
-    let formatter = us.get(decimalPlaces);
-    if (!formatter) {
-        formatter = numberFormat({
-            truncate: decimalPlaces,
-            padRight: decimalPlaces,
-            integerSeparator: ',',
-            decimal: '.',
-        });
-        us.set(decimalPlaces, formatter);
-    }
-    return formatter(input);
-}
-const POW10 = [1, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9];
-/**
- * Approximate the logarithm base 10 of a small integer.
- * @param x - The integer to approximate the logarithm of.
- */
-function numApproximateLog10(x) {
-    if (x < POW10[5]) {
-        if (x < POW10[2]) {
-            return x < POW10[1] ? 0 : 1;
-        }
-        if (x < POW10[4]) {
-            return x < POW10[3] ? 2 : 3;
-        }
-        return 4;
-    }
-    if (x < POW10[7]) {
-        return x < POW10[6] ? 5 : 6;
-    }
-    if (x < POW10[9]) {
-        return x < POW10[8] ? 7 : 8;
-    }
-    return 9;
 }
 
 /**
@@ -1967,8 +2498,7 @@ function ensureValidWindowsPath(path, options) {
     if (path.length === 0) {
         return throwOrFalse('Path string is length 0.');
     }
-    if (strCountCharOccurances(path, '/') > 0 &&
-        strCountCharOccurances(path, '\\') > 0) {
+    if (strCountCharOccurances(path, '/') > 0 && strCountCharOccurances(path, '\\') > 0) {
         return throwOrFalse('Path contains both backslash and forward slash.');
     }
     const maxLength = (options && options.extendedMaxLength ? 32767 : 260) - 12;
@@ -2083,5 +2613,5 @@ class Timer {
     }
 }
 
-export { A1ToColRow, Base, ExtensibleFunction, Matrix, SortedArray, StringStream, Table, Timer, letterToCol as alphaToCol, arr2dToCSV, arrAssignFrom, arrEvery, arrFilterMutable, arrFlatten, arrFlattenMutable, arrIndicesOf, arrMapMutable, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSwap, colRowToA1, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createFileExtensionFilter, ensureValidWindowsPath, getMemoryUsage, getMemoryUsageFormattedEU, getMemoryUsageFormattedUS, getWorkingDirPath, htmlTableTo2dArray, isConstructor, isObject, isPrototype, normalizeFileExtension, numApproximateLog10, numFormatEU, numFormatUS, readFileStringSync, regexEscapeString, regexGetGroupNames, rexec, setIntersection, setUnion, strCountCharOccurances, strIsLowerCase, strIsUpperCase, strLinesRemoveEmpty, strLinesTrimLeft, strLinesTrimRight, strPrettifyMinifiedCode, strRepeat, strReplaceAll, strSplitWordByCamelCase, strToWords, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString };
+export { A1ToColRow, Base, ExtensibleFunction, Matrix, SortedArray, StringStream, Table, Timer, letterToCol as alphaToCol, arr2dToCSV, arrAssignFrom, arrEvery, arrFilterMutable, arrFlatten, arrFlattenMutable, arrIndicesOf, arrMapMutable, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSwap, assertValidDateDay, assertValidDateMonth, assertValidDateYear, bytesToInt, colRowToA1, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createFileExtensionFilter, ensureValidWindowsPath, getCentury, getCurrentYear, getMemoryUsage, getMemoryUsageFormattedEU, getMemoryUsageFormattedUS, getWorkingDirPath, htmlTableTo2dArray, intToBytes, isConstructor, isEven, isHex, isHexOrUnicode, isLeapYear, isObject, isOdd, isPrototype, isSocialSecurityNumberDK, isValidDateDay, isValidDateMonth, isValidDateYear, iteratePrototypeChain, normalizeFileExtension, numApproximateLog10, numDaysInMonth, numFormatEU, numFormatUS, parseSocialSecurityNumberDK, randomIntBetween, readFileStringSync, regexEscapeString, regexGetGroupNames, regexMatchSocialSecurityNumberDK, regexMatcherToValidater, rexec, round, roundDown, roundUp, setEnumerable, setIntersection, setNonConfigurable, setNonEnumerable, setNonEnumerablePrivateProperties, setNonWritable, setUnion, setWritable, solveSudoku, strCountCharOccurances, strIsLowerCase, strIsUpperCase, strLinesRemoveEmpty, strLinesTrimLeft, strLinesTrimRight, strPrettifyMinifiedCode, strRepeat, strReplaceAll, strSplitWordByCamelCase, strToWords, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString };
 //# sourceMappingURL=index.esm.js.map

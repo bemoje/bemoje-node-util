@@ -1,6 +1,7 @@
 import { iteratePrototypeChain, setNonEnumerablePrivateProperties } from './object';
 
-const hasCreatedFirstInstance: WeakSet<Function> = new WeakSet();
+// eslint-disable-next-line @typescript-eslint/ban-types
+const hasCreatedFirstInstance: Set<Function> = new Set();
 
 /**
  * Abstract class that other classes can inherit from to gain various handy functionality.
@@ -51,7 +52,7 @@ export abstract class Base {
     setNonEnumerablePrivateProperties(this);
   }
 
-  protected assertNoAmbiguousOptions(options: Record<string, any>, optionKeyPairs: Array<[string, string]>) {
+  protected assertNoAmbiguousOptions(options: Record<string, any>, optionKeyPairs: Array<[string, string]>): void {
     for (const [key1, key2] of optionKeyPairs) {
       if (options[key1] !== undefined && options[key2] !== undefined) {
         throw new Error(`Cannot use the '${key1}' option and the '${key2}' option simultanously.`);
@@ -62,7 +63,7 @@ export abstract class Base {
   protected assertNoOptionsRequireMissingOptions(
     options: Record<string, any>,
     optionKeyPairs: Array<[string, string]>,
-  ) {
+  ): void {
     for (const [key1, key2] of optionKeyPairs) {
       if (options[key1] !== undefined && options[key2] === undefined) {
         throw new Error(`Cannot use the '${key1}' option without the '${key2}' option.`);

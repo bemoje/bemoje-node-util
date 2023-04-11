@@ -59,7 +59,7 @@ describe('validateOptionsRequireOtherOptions', () => {
 describe('IRevivableJSON', () => {
   it('correctly detects missing static method fromJSON', () => {
     expect(() => {
-      class C extends util.Base implements IRevivableJSON<{}> {
+      class C extends util.Base implements IRevivableJSON<Record<string, any>> {
         constructor() {
           super();
         }
@@ -82,7 +82,7 @@ describe('IRevivableJSON', () => {
   });
   it('does not throw when not implementing interface correctly', () => {
     expect(() => {
-      class C extends util.Base implements IRevivableJSON<{}> {
+      class C extends util.Base implements IRevivableJSON<Record<string, any>> {
         static fromJSON() {
           return new this();
         }
@@ -90,7 +90,7 @@ describe('IRevivableJSON', () => {
           super();
         }
         toJSON() {
-          return '{}';
+          return {};
         }
       }
       new C();

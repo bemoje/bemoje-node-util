@@ -41,13 +41,21 @@ describe('regexGetGroupNames', () => {
 
 describe('regexEscapeString', () => {
   it('escapes correctly', () => {
-    expect(util.regexEscapeString('[click](google.com)')).toBe(
-      '\\[click\\]\\(google\\.com\\)',
-    );
+    expect(util.regexEscapeString('[click](google.com)')).toBe('\\[click\\]\\(google\\.com\\)');
   });
   it('works when creating RegExp object', () => {
     expect(() => {
       new RegExp(util.regexEscapeString('[.^$()]*(wow)+'), 'g');
     }).not.toThrowError();
+  });
+});
+
+describe('regexMatcherToValidater', () => {
+  it('works', () => {
+    const regexMatchDigits = /\d/g;
+    const regexIsDigit = util.regexMatcherToValidater(regexMatchDigits); //=> /^\d$/
+    const isDigit = (str: string) => regexIsDigit.test(str);
+    expect(isDigit('1')).toBe(true);
+    expect(isDigit('a')).toBe(false);
   });
 });

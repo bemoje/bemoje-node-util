@@ -66,7 +66,7 @@ Function.constructor
 
 #### Defined in
 
-[src/libs/function/src/ExtensibleFunction.ts:18](https://github.com/bemoje/bemoje-node-util/blob/48d9471/src/libs/function/src/ExtensibleFunction.ts#L18)
+[src/libs/function/src/ExtensibleFunction.ts:18](https://github.com/bemoje/bemoje-node-util/blob/32b3db2/src/libs/function/src/ExtensibleFunction.ts#L18)
 
 ## Properties
 
@@ -164,7 +164,7 @@ A constructor function can control which objects are recognized as its instances
 
 #### Inherited from
 
-Function.\_\_@hasInstance@316
+Function.\_\_@hasInstance@352
 
 #### Defined in
 
