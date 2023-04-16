@@ -26,7 +26,7 @@ For recording time passed since constructor was invoked and until the stop() met
 
 #### Defined in
 
-[src/libs/time.ts:10](https://github.com/bemoje/bemoje-node-util/blob/32b3db2/src/libs/time.ts#L10)
+src/libs/performance/src/Timer.ts:10
 
 ## Properties
 
@@ -38,7 +38,7 @@ The initial time
 
 #### Defined in
 
-[src/libs/time.ts:8](https://github.com/bemoje/bemoje-node-util/blob/32b3db2/src/libs/time.ts#L8)
+src/libs/performance/src/Timer.ts:8
 
 ## Methods
 
@@ -54,4 +54,4 @@ Returns the time passed since constructor was invoked in milliseconds.
 
 #### Defined in
 
-[src/libs/time.ts:17](https://github.com/bemoje/bemoje-node-util/blob/32b3db2/src/libs/time.ts#L17)
+src/libs/performance/src/Timer.ts:17

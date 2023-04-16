@@ -1,7 +1,9 @@
-export { Matrix } from './src/Matrix';
-export { Table, ITableOptions, TableSerializedForm } from './src/Table';
-export { SortedArray, ISortedArrayOptions } from './src/SortedArray';
+export * from './src/Base'
+export * from './src/Matrix'
+export * from './src/Queue'
+export * from './src/SortedArray'
+export * from './src/Table'
 
-export interface IRevivableJSON<SerializedForm> {
-  toJSON: () => SerializedForm;
+export interface IRevivable<SerializedForm> {
+  toJSON: () => SerializedForm
 }

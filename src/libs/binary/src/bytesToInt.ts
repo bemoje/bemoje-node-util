@@ -15,12 +15,12 @@ export function bytesToInt(bytes: Array<number>): number {
     ? 251 + 16777216 * bytes[1] + 65536 * bytes[2] + 256 * bytes[3] + bytes[4]
     : bytes.length > 5 && bytes[0] === 255
     ? (() => {
-        let m = 0;
-        let x = 1;
-        const pivot = Math.max(2, bytes.length - 6);
+        let m = 0
+        let x = 1
+        const pivot = Math.max(2, bytes.length - 6)
         for (let i = bytes.length - 1; i >= pivot; i--) {
-          m += x * bytes[i];
-          x *= 256;
+          m += x * bytes[i]
+          x *= 256
         }
         const n =
           bytes[1] + 32 < 251
@@ -31,16 +31,16 @@ export function bytesToInt(bytes: Array<number>): number {
             ? bytesToInt([bytes[1], bytes[2] + 21])
             : pivot === 4
             ? bytesToInt([bytes[1], bytes[2], bytes[3] + 21])
-            : 0;
-        const int = 251 + m / Math.pow(2, 32 - n);
-        if (!Number.isInteger(int)) throw new Error(`Invalid bytes. Got [${bytes.join(', ')}] = ${int}`);
+            : 0
+        const int = 251 + m / Math.pow(2, 32 - n)
+        if (!Number.isInteger(int)) throw new Error(`Invalid bytes. Got [${bytes.join(', ')}] = ${int}`)
         if (int > 1099511627776)
           throw new Error(
             `Bytes must correspond to an integer less than or equal to 256^5. Got [${bytes.join(', ')}] = ${int}`,
-          );
-        return int;
+          )
+        return int
       })()
     : (() => {
-        throw new Error(`Invalid first byte. Got length: ${bytes.length}, and bytes: [${bytes.join(', ')}]`);
-      })();
+        throw new Error(`Invalid first byte. Got length: ${bytes.length}, and bytes: [${bytes.join(', ')}]`)
+      })()
 }

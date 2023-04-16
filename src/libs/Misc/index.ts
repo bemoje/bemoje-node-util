@@ -1,1 +1,1 @@
-export { solveSudoku } from './src/solveSudoku';
+export { solveSudoku } from './src/solveSudoku'

@@ -11,6 +11,7 @@ const options = {
   singleQuote: true,
   trailingComma: 'all',
   printWidth: 120,
-};
+  semi: false,
+}
 
-module.exports = options;
+module.exports = options

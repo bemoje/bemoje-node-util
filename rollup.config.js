@@ -1,10 +1,10 @@
 // @ts-check
 
-import { terser } from 'rollup-plugin-terser';
-import typescript2 from 'rollup-plugin-typescript2';
+import { terser } from 'rollup-plugin-terser'
+import typescript2 from 'rollup-plugin-typescript2'
 
-import PKG from './package.json';
-import CONFIG from './.repo-manager.config.json';
+import PKG from './package.json'
+import CONFIG from './.repo-manager.config.json'
 
 const banner = `/*!
  * ${PKG.name} v${PKG.version}
@@ -12,7 +12,7 @@ const banner = `/*!
  * Homepage: ${PKG.homepage}
  * Released under the ${PKG.license} License.
  */
-`;
+`
 
 const options = {
   input: './src/index.ts',
@@ -24,17 +24,17 @@ const options = {
         exports: 'named',
         sourcemap: true,
         ...options,
-      };
-    };
-    const options = CONFIG.bundler.output;
-    const output = [];
+      }
+    }
+    const options = CONFIG.bundler.output
+    const output = []
     if (options.commonjs) {
       output.push(
         createOutputOptions({
           file: './dist/index.js',
           format: 'commonjs',
         }),
-      );
+      )
     }
     if (options.esm) {
       output.push(
@@ -42,7 +42,7 @@ const options = {
           file: './dist/index.esm.js',
           format: 'esm',
         }),
-      );
+      )
     }
     if (options.umd) {
       output.push(
@@ -50,7 +50,7 @@ const options = {
           file: './dist/index.umd.js',
           format: 'umd',
         }),
-      );
+      )
     }
     if (options.umdMinified.enabled) {
       output.push(
@@ -59,9 +59,9 @@ const options = {
           format: 'umd',
           plugins: [terser(options.umdMinified.options)],
         }),
-      );
+      )
     }
-    return output;
+    return output
   })(),
   plugins: [
     typescript2({
@@ -70,6 +70,6 @@ const options = {
       tsconfig: './tsconfig.bundle.json',
     }),
   ],
-};
+}
 
-export default options;
+export default options

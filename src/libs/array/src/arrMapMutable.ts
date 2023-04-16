@@ -1,4 +1,4 @@
-import { Callback } from '../../array';
+import { Callback } from '../../array'
 
 /**
  * Same as Array.prototype.map but performs operations in palce (not immutable).
@@ -16,7 +16,7 @@ import { Callback } from '../../array';
 
 export function arrMapMutable(input: Array<any>, f: Callback): Array<any> {
   for (let i = 0; i < input.length; i++) {
-    input[i] = f(input[i], i, input);
+    input[i] = f(input[i], i, input)
   }
-  return input;
+  return input
 }

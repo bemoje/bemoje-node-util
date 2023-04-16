@@ -1,0 +1,2 @@
+export declare function isValidDate(year?: number | string, month?: number | string, day?: number | string, hour?: number | string, minute?: number | string, second?: number | string, millisecond?: number | string): boolean;
+//# sourceMappingURL=isValidDate.d.ts.map

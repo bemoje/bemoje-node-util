@@ -95,7 +95,7 @@ Readable.constructor
 
 #### Defined in
 
-[src/libs/node.ts:165](https://github.com/bemoje/bemoje-node-util/blob/32b3db2/src/libs/node.ts#L165)
+src/libs/node/src/StringStream.ts:10
 
 ## Properties
 
@@ -419,7 +419,7 @@ node_modules/@types/node/events.d.ts:327
 
 #### Inherited from
 
-Readable.\_\_@asyncIterator@2182
+Readable.\_\_@asyncIterator@21670
 
 #### Defined in
 
@@ -490,7 +490,7 @@ Readable.\_read
 
 #### Defined in
 
-[src/libs/node.ts:171](https://github.com/bemoje/bemoje-node-util/blob/32b3db2/src/libs/node.ts#L171)
+src/libs/node/src/StringStream.ts:16
 
 ___
 
@@ -2581,7 +2581,7 @@ v17.0.0
 | Name | Type |
 | :------ | :------ |
 | `readableStream` | `ReadableStream`<`any`\> |
-| `options?` | `Pick`<`ReadableOptions`, ``"encoding"`` \| ``"highWaterMark"`` \| ``"objectMode"`` \| ``"signal"``\> |
+| `options?` | `Pick`<`ReadableOptions`, ``"signal"`` \| ``"encoding"`` \| ``"highWaterMark"`` \| ``"objectMode"``\> |
 
 #### Returns
 

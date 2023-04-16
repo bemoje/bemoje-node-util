@@ -4,5 +4,5 @@
  * @param delimiter csv delimiter
  */
 export function arr2dToCSV<T>(input: Array<Array<T>>, delimiter = ';'): string {
-  return input.map((row) => row.join(delimiter)).join('\n');
+  return input.map((row) => row.join(delimiter)).join('\n')
 }

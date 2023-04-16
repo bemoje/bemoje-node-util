@@ -4,5 +4,5 @@
  * @param decimalPoints the number of decimal points.
  */
 export function round(n: number, decimalPoints = 0): number {
-  return Math.round(n * Math.pow(10, decimalPoints)) / Math.pow(10, decimalPoints) + 0;
+  return Math.round(n * Math.pow(10, decimalPoints)) / Math.pow(10, decimalPoints) + 0
 }

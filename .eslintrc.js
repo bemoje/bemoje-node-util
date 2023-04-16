@@ -1,7 +1,7 @@
 // @ts-check
 /* eslint-env node */
 
-'use strict';
+'use strict'
 
 /**
  * An object with ESLint options.
@@ -22,13 +22,17 @@ const options = {
   ],
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-locals': 'off',
+    '@typescript-eslint/no-unused-parameters': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
     'prettier/prettier': [
-      'error',
+      'warn',
       {
         endOfLine: 'auto',
+        semi: false,
       },
     ],
   },
-};
+}
 
-module.exports = options;
+module.exports = options

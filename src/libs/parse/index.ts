@@ -1,5 +1,1 @@
-export {
-  regexMatchSocialSecurityNumberDK,
-  parseSocialSecurityNumberDK,
-  isSocialSecurityNumberDK,
-} from './src/socialSecurityNumberDK';
+export * from './src/socialSecurityNumberDK'

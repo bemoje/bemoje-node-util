@@ -8,6 +8,8 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 - **`Base`**
 
+  ↳ [`Queue`](Queue.md)
+
   ↳ [`Table`](Table.md)
 
 ## Table of contents
@@ -24,4 +26,4 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 #### Defined in
 
-[src/libs/Base.ts:10](https://github.com/bemoje/bemoje-node-util/blob/32b3db2/src/libs/Base.ts#L10)
+src/libs/datastructures/src/Base.ts:10

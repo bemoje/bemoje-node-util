@@ -1,4 +1,4 @@
-import { assertValidDateYear } from './assertValidDateYear';
+import { assertValidDateYear } from './assertValidDateYear'
 
 /**
  * Get century from year.
@@ -9,6 +9,6 @@ import { assertValidDateYear } from './assertValidDateYear';
  * ```
  */
 export function getCentury(year: number): number {
-  assertValidDateYear(year);
-  return Math.floor(year / 100) + 1;
+  assertValidDateYear(year)
+  return Math.floor(year / 100) + 1
 }

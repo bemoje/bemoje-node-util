@@ -15,9 +15,10 @@
  * ```
  */
 export class ExtensibleFunction extends Function {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(name: string, f: any) {
-    Object.defineProperty(f, 'name', { value: name });
-    super(f);
-    return Object.setPrototypeOf(f, new.target.prototype);
+    Object.defineProperty(f, 'name', { value: name })
+    super(f)
+    return Object.setPrototypeOf(f, new.target.prototype)
   }
 }

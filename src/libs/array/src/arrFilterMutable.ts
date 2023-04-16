@@ -1,4 +1,4 @@
-import { arrAssignFrom, Predicate } from '../../array';
+import { arrAssignFrom, Predicate } from '../../array'
 
 /**
  * Same as Array.prototype.filter but performs operations in palce (not immutable).
@@ -6,5 +6,5 @@ import { arrAssignFrom, Predicate } from '../../array';
  * @param f - predicate
  */
 export function arrFilterMutable<T>(input: Array<T>, f: Predicate): Array<T> {
-  return arrAssignFrom(input, input.filter(f));
+  return arrAssignFrom(input, input.filter(f))
 }

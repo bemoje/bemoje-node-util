@@ -1,5 +1,7 @@
-export { isConstructor } from './src/isConstructor';
-export { isHex } from './src/isHex';
-export { isHexOrUnicode } from './src/isHexOrUnicode';
-export { isObject } from './src/isObject';
-export { isPrototype } from './src/isPrototype';
+export * from './src/isConstructor'
+export * from './src/isHex'
+export * from './src/isHexOrUnicode'
+export * from './src/isIterable'
+export * from './src/isNumericString'
+export * from './src/isObject'
+export * from './src/isPrototype'

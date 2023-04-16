@@ -1,1 +1,1 @@
-export { ExtensibleFunction } from './src/ExtensibleFunction';
+export * from './src/ExtensibleFunction'

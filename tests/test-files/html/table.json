@@ -1,40 +1,20 @@
 [
   ["Ext.", "Description", "Used by"],
   ["A", "Archive file", "ar (Unix)"],
-  [
-    "AAC",
-    "Advanced Audio Coding file",
-    "iOS, Nintendo DSi, Nintendo 3DS, YouTube Music"
-  ],
-  [
-    "ACCDB[1]",
-    "Microsoft Access Database",
-    "Microsoft Access Database (Open XML)"
-  ],
+  ["AAC", "Advanced Audio Coding file", "iOS, Nintendo DSi, Nintendo 3DS, YouTube Music"],
+  ["ACCDB[1]", "Microsoft Access Database", "Microsoft Access Database (Open XML)"],
   ["ACCFT[2]", "Microsoft Access Data Type Template", "Microsoft Access"],
-  [
-    "ADT",
-    "Abrechnungsdatentransfer, an xDT application",
-    "Healthcare providers in Germany"
-  ],
+  ["ADT", "Abrechnungsdatentransfer, an xDT application", "Healthcare providers in Germany"],
   ["ADX", "Document", "Archetype Designer"],
   ["ADZ", "Amiga Disk Zipped (See Amiga Disk File)", "GZip"],
-  [
-    "AGDA",
-    "Agda (programming language) source file",
-    "Agda typechecker/compiler"
-  ],
+  ["AGDA", "Agda (programming language) source file", "Agda typechecker/compiler"],
   ["AGR", "ArcView ASCII grid", ""],
   ["AHK", "AutoHotkey script file", "AutoHotkey"],
   ["AI[3]", "Adobe Illustrator Artwork", "Adobe Illustrator"],
   ["AIFF[4]", "Audio Interchange File Format", ""],
   ["AIFC[4]", "Compressed Audio Interchange File Format", ""],
   ["AIO", "APL programming language file transfer format file", ""],
-  [
-    "AMF[5][6]",
-    "Additive Manufacturing File Format",
-    "Computer Aided Design Software"
-  ],
+  ["AMF[5][6]", "Additive Manufacturing File Format", "Computer Aided Design Software"],
   ["AMG", "System image file", "ACTOR"],
   ["AML[7]", "AutomationML", "AutomationML Group"],
   ["AMLX[7]", "Compressed and packed AutomationML file", "AutomationML Group"],
@@ -50,31 +30,15 @@
   ["ART[10]", "Gerber format", "Cadence Allegro, EAGLE"],
   ["ASAX[11]", "ASP.NET global application file", ""],
   ["ASCX[11]", "ASP.NET User Control", ""],
-  [
-    "ASF[12]",
-    "Advanced Streaming Format (Compressed Windows audio/video)",
-    "Microsoft Corporation"
-  ],
+  ["ASF[12]", "Advanced Streaming Format (Compressed Windows audio/video)", "Microsoft Corporation"],
   ["ASHX[11]", "ASP.NET handler file", ""],
   ["ASM", "Assembler language source", "TASM, MASM, NASM, FASM"],
   ["ASPX", "Active server page extended file", "Microsoft Corporation"],
-  [
-    "ASX[13]",
-    "Advanced Stream Redirector file, redirects to an ASF file (see ASF)",
-    "Microsoft Corporation"
-  ],
+  ["ASX[13]", "Advanced Stream Redirector file, redirects to an ASF file (see ASF)", "Microsoft Corporation"],
   ["ATG[14]", "Coco/R LL(1) formal grammar", "Coco/R"],
-  [
-    "AT3[15]",
-    "Atrac 3 Sound/music file",
-    "All Sony devices and programs with the Atrac 3+ specification"
-  ],
+  ["AT3[15]", "Atrac 3 Sound/music file", "All Sony devices and programs with the Atrac 3+ specification"],
   ["AVI[16][17]", "Audio Video Interleave", "Video for Windows"],
-  [
-    "AWK",
-    "AWK script/program",
-    "awk, GNU Awk, mawk, nawk, MKS AWK, Awka (compiler)"
-  ],
+  ["AWK", "AWK script/program", "awk, GNU Awk, mawk, nawk, MKS AWK, Awka (compiler)"],
   ["AX", "DirectShow Filter", "Microsoft Corporation (Video Players)"],
   ["AXF[18]", "lightweight geodatabase", "ESRI ArcPad"]
 ]

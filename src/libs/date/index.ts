@@ -1,10 +1,12 @@
-export { assertValidDateDay } from './src/assertValidDateDay';
-export { assertValidDateMonth } from './src/assertValidDateMonth';
-export { assertValidDateYear } from './src/assertValidDateYear';
-export { getCentury } from './src/getCentury';
-export { getCurrentYear } from './src/getCurrentYear';
-export { isLeapYear } from './src/isLeapYear';
-export { isValidDateDay } from './src/isValidDateDay';
-export { isValidDateMonth } from './src/isValidDateMonth';
-export { isValidDateYear } from './src/isValidDateYear';
-export { numDaysInMonth } from './src/numDaysInMonth';
+export * from './src/assertValidDateDay'
+export * from './src/assertValidDateMonth'
+export * from './src/assertValidDateYear'
+export * from './src/assertValidDate'
+export * from './src/getCentury'
+export * from './src/getCurrentYear'
+export * from './src/isLeapYear'
+export * from './src/isValidDate'
+export * from './src/isValidDateDay'
+export * from './src/isValidDateMonth'
+export * from './src/isValidDateYear'
+export * from './src/numDaysInMonth'

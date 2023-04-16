@@ -4,28 +4,25 @@
  * @param {boolean} headers - Whether to extract table column header data from <th> elements.
  * @returns {Array<Array<string>>} Data table which is an arrays of row-arrays of cell content (string).
  */
-export function htmlTableTo2dArray(
-  element: HTMLTableElement,
-  headers = true,
-): Array<Array<string>> {
-  const result = [];
-  const htmlRows = element.querySelectorAll('tr');
+export function htmlTableTo2dArray(element: HTMLTableElement, headers = true): Array<Array<string>> {
+  const result = []
+  const htmlRows = element.querySelectorAll('tr')
   for (let i = 0; i < htmlRows.length; i++) {
-    const htmlRow = htmlRows[i];
-    const row = [];
-    const htmlCells = htmlRow.querySelectorAll(headers ? 'th,td' : 'td');
+    const htmlRow = htmlRows[i]
+    const row = []
+    const htmlCells = htmlRow.querySelectorAll(headers ? 'th,td' : 'td')
     for (let j = 0; j < htmlCells.length; j++) {
-      const htmlCell = htmlCells[j] as HTMLElement;
-      row.push(htmlCell.innerText.trim());
+      const htmlCell = htmlCells[j] as HTMLElement
+      row.push(htmlCell.innerText.trim())
     }
     if (!headers) {
       if (htmlRow.querySelectorAll('th').length) {
-        continue;
+        continue
       }
     }
     if (row.length) {
-      result.push(row);
+      result.push(row)
     }
   }
-  return result;
+  return result
 }

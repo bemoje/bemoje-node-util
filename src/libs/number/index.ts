@@ -1,9 +1,9 @@
-export { isEven } from './src/isEven';
-export { isOdd } from './src/isOdd';
-export { numApproximateLog10 } from './src/numApproximateLog10';
-export { numFormatEU } from './src/numFormatEU';
-export { numFormatUS } from './src/numFormatUS';
-export { randomIntBetween } from './src/randomIntBetween';
-export { round } from './src/round';
-export { roundDown } from './src/roundDown';
-export { roundUp } from './src/roundUp';
+export * from './src/isEven'
+export * from './src/isOdd'
+export * from './src/numApproximateLog10'
+export * from './src/numFormatEU'
+export * from './src/numFormatUS'
+export * from './src/randomIntBetween'
+export * from './src/round'
+export * from './src/roundDown'
+export * from './src/roundUp'

@@ -1,7 +1,7 @@
-import { solveSudoku } from './solveSudoku';
+import { solveSudoku } from './solveSudoku'
 
 describe('solveSudoku', () => {
-  const _ = undefined;
+  const _ = undefined
   /* it('Solves easy sudoku', () => {
     const sudokuEasy = [
       [_, _, _, _, 8, _, 9, 6, 2],
@@ -174,10 +174,10 @@ describe('solveSudoku', () => {
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
-      ];
-      solveSudoku(sudokuInvalid);
-    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
-  });
+      ]
+      solveSudoku(sudokuInvalid)
+    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.')
+  })
   it('throws on invalid sudoku - wrong number of rows', () => {
     expect(() => {
       const sudokuInvalid = [
@@ -189,10 +189,10 @@ describe('solveSudoku', () => {
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
-      ];
-      solveSudoku(sudokuInvalid);
-    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
-  });
+      ]
+      solveSudoku(sudokuInvalid)
+    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.')
+  })
   it('throws on invalid sudoku - Not integer', () => {
     expect(() => {
       const sudokuInvalid = [
@@ -205,10 +205,10 @@ describe('solveSudoku', () => {
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
-      ];
-      solveSudoku(sudokuInvalid);
-    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
-  });
+      ]
+      solveSudoku(sudokuInvalid)
+    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.')
+  })
   it('throws on invalid sudoku - numbers below 1.', () => {
     expect(() => {
       const sudokuInvalid = [
@@ -221,10 +221,10 @@ describe('solveSudoku', () => {
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
-      ];
-      solveSudoku(sudokuInvalid);
-    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
-  });
+      ]
+      solveSudoku(sudokuInvalid)
+    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.')
+  })
   it('throws on invalid sudoku - numbers not above 9.', () => {
     expect(() => {
       const sudokuInvalid = [
@@ -237,8 +237,8 @@ describe('solveSudoku', () => {
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
         [_, _, _, _, _, _, _, _, _],
-      ];
-      solveSudoku(sudokuInvalid);
-    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
-  });
-});
+      ]
+      solveSudoku(sudokuInvalid)
+    }).toThrowError('Expected sudoku to be a 9x9 array of integers between 1 and 9.')
+  })
+})

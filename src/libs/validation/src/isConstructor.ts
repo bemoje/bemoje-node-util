@@ -1,4 +1,4 @@
-import { isPrototype } from './isPrototype';
+import { isPrototype } from './isPrototype'
 
 /**
  * Determine if value is a constructor function
@@ -10,5 +10,5 @@ export function isConstructor(value: any): boolean {
     'prototype' in value &&
     isPrototype(value.prototype) &&
     value === value.prototype.constructor
-  );
+  )
 }
