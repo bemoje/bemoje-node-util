@@ -59,7 +59,7 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 #### Defined in
 
-[src/libs/datastructures/src/Base.ts:10](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/datastructures/src/Base.ts#L10)
+[src/libs/datastructures/src/Base.ts:10](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Base.ts#L10)
 
 ## Accessors
 
@@ -73,7 +73,7 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:28](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/datastructures/src/Queue.ts#L28)
+[src/libs/datastructures/src/Queue.ts:28](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Queue.ts#L28)
 
 ## Methods
 
@@ -91,7 +91,7 @@ Iterable.\_\_@iterator@87
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:40](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/datastructures/src/Queue.ts#L40)
+[src/libs/datastructures/src/Queue.ts:40](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Queue.ts#L40)
 
 ___
 
@@ -105,7 +105,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:22](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/datastructures/src/Queue.ts#L22)
+[src/libs/datastructures/src/Queue.ts:22](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Queue.ts#L22)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:17](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/datastructures/src/Queue.ts#L17)
+[src/libs/datastructures/src/Queue.ts:17](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Queue.ts#L17)
 
 ___
 
@@ -139,7 +139,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:32](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/datastructures/src/Queue.ts#L32)
+[src/libs/datastructures/src/Queue.ts:32](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Queue.ts#L32)
 
 ___
 
@@ -157,7 +157,7 @@ IRevivable.toJSON
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:36](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/datastructures/src/Queue.ts#L36)
+[src/libs/datastructures/src/Queue.ts:36](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Queue.ts#L36)
 
 ___
 
@@ -183,7 +183,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/datastructures/src/Queue.ts#L7)
+[src/libs/datastructures/src/Queue.ts:7](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Queue.ts#L7)
 
 ___
 
@@ -209,4 +209,4 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/datastructures/src/Queue.ts#L13)
+[src/libs/datastructures/src/Queue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Queue.ts#L13)
