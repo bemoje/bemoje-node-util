@@ -15,4 +15,4 @@ export declare function parseSocialSecurityNumberDK(ssn: string): {
  * @param s - String to test
  */
 export declare function isSocialSecurityNumberDK(s: string): boolean;
-//# sourceMappingURL=socialSecurityNumberDK.d.ts.map
+//# sourceMappingURL=parseSocialSecurityNumberDK.d.ts.map

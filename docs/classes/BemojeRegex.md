@@ -24,6 +24,7 @@ A RegExp class extension with extra features.
 - [ignoreCase](BemojeRegex.md#ignorecase)
 - [lastIndex](BemojeRegex.md#lastindex)
 - [multiline](BemojeRegex.md#multiline)
+- [options](BemojeRegex.md#options)
 - [source](BemojeRegex.md#source)
 - [sticky](BemojeRegex.md#sticky)
 - [unicode](BemojeRegex.md#unicode)
@@ -88,7 +89,7 @@ RegExp.constructor
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:32
+[src/libs/regex/src/BemojeRegex.ts:34](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L34)
 
 ## Properties
 
@@ -193,6 +194,16 @@ RegExp.multiline
 #### Defined in
 
 node_modules/typescript/lib/lib.es5.d.ts:993
+
+___
+
+### options
+
+• **options**: [`BemojeRegexOptions`](../README.md#bemojeregexoptions)
+
+#### Defined in
+
+[src/libs/regex/src/BemojeRegex.ts:32](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L32)
 
 ___
 
@@ -534,7 +545,7 @@ Takes a string of RegExp flags and returns a string guaranteed to be valid.
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:61
+[src/libs/regex/src/BemojeRegex.ts:64](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L64)
 
 ___
 
@@ -554,7 +565,7 @@ Returns an array of all valid flags for a regular expression.
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:66
+[src/libs/regex/src/BemojeRegex.ts:69](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L69)
 
 ___
 
@@ -598,7 +609,7 @@ Checks if a string is a valid regex flags string.
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:55
+[src/libs/regex/src/BemojeRegex.ts:58](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L58)
 
 ___
 
@@ -855,7 +866,7 @@ Returns true if the RegExp instance has same source and flags.
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:72
+[src/libs/regex/src/BemojeRegex.ts:75](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L75)
 
 ___
 
@@ -877,7 +888,7 @@ Returns true if the RegExp instance is a also BemojeRegex instance and both have
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:80
+[src/libs/regex/src/BemojeRegex.ts:83](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L83)
 
 ___
 
@@ -948,7 +959,7 @@ Returns an array of named groups defined inside the RegExp instance.
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:87
+[src/libs/regex/src/BemojeRegex.ts:90](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L90)
 
 ___
 
@@ -970,7 +981,7 @@ Easily perform regex 'exec' on a string. An iterable is returned which steps thr
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:94
+[src/libs/regex/src/BemojeRegex.ts:97](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L97)
 
 ___
 
@@ -1012,7 +1023,7 @@ Convert the BemojeRegex instance to a RegExp instance.
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:108
+[src/libs/regex/src/BemojeRegex.ts:111](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L111)
 
 ___
 
@@ -1028,4 +1039,4 @@ Convert a regex for matching to a regex for validation.
 
 #### Defined in
 
-src/libs/regex/src/BemojeRegex.ts:101
+[src/libs/regex/src/BemojeRegex.ts:104](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/regex/src/BemojeRegex.ts#L104)

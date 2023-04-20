@@ -35,4 +35,4 @@
 
 #### Defined in
 
-[src/libs/datastructures/index.ts:8](https://github.com/bemoje/bemoje-node-util/blob/a56603a/src/libs/datastructures/index.ts#L8)
+[src/libs/types/index.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c56d820/src/libs/types/index.ts#L6)

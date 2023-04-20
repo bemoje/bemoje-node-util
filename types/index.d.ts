@@ -6,7 +6,6 @@ export * from './libs/date';
 export * from './libs/function';
 export * from './libs/html';
 export * from './libs/map';
-export * from './libs/Misc';
 export * from './libs/nlp';
 export * from './libs/node';
 export * from './libs/number';

@@ -1,4 +1,4 @@
-import { IRevivable } from '../';
+import { IRevivable } from '../../../';
 import { Base } from './Base';
 /**
  * Constructor options for the Table class.

@@ -1,49 +1,49 @@
-'use strict';
+'use strict'
 
-const fs = require('fs');
-const path = require('path');
-const childProcess = require('child_process');
-const readline = require('readline');
+const fs = require('fs')
+const path = require('path')
+const childProcess = require('child_process')
+const readline = require('readline')
 
-const extractComments = require('extract-comments');
-const keywordExtractor = require('keyword-extractor');
+const extractComments = require('extract-comments')
+const keywordExtractor = require('keyword-extractor')
 
-const CWD = process.cwd();
-const CONFIG = require(path.join(CWD, '.repo-manager.config.json'));
+const CWD = process.cwd()
+const CONFIG = require(path.join(CWD, 'scripts', '.repo-manager.config.json'))
 
 // all keywords to ignore to lower case.
-CONFIG.keywords.ignore = CONFIG.keywords.ignore.map((keyword) => keyword.toLowerCase());
+CONFIG.keywords.ignore = CONFIG.keywords.ignore.map((keyword) => keyword.toLowerCase())
 
 // Ensure scope starts with "@".
 CONFIG.package.scope = CONFIG.package.scope
   ? CONFIG.package.scope.startsWith('@')
     ? CONFIG.package.scope
     : '@' + CONFIG.package.scope
-  : '';
+  : ''
 
 // generate full package name including scope if defined.
-CONFIG.package.fullName = (CONFIG.package.scope ? CONFIG.package.scope + '/' : '') + CONFIG.package.name;
+CONFIG.package.fullName = (CONFIG.package.scope ? CONFIG.package.scope + '/' : '') + CONFIG.package.name
 
 /**
  * Takes filepaths and reads the files' contents and returns an array of found block comments.
  */
 const getSourceFileComments = (...filepaths) => {
   return filepaths.reduce((accum, filepath) => {
-    const source = fs.readFileSync(filepath, 'utf8');
-    accum.push(...extractComments(source).map((o) => o.value));
-    return accum;
-  }, []);
-};
+    const source = fs.readFileSync(filepath, 'utf8')
+    accum.push(...extractComments(source).map((o) => o.value))
+    return accum
+  }, [])
+}
 
 /**
  * Removes array elements that evaluate to false.
  */
 const cleanStringArray = (arr) => {
   return arr.reduce((accum, elem) => {
-    if (elem) accum.push(elem);
-    return accum;
-  }, []);
-};
+    if (elem) accum.push(elem)
+    return accum
+  }, [])
+}
 
 /**
  * Takes an array of block comments (wihout *'s at beginning of lines) and returns an array of only the description parts.
@@ -51,22 +51,22 @@ const cleanStringArray = (arr) => {
 const getSourceCommentDescriptions = (arrSourceComments) => {
   return cleanStringArray(
     arrSourceComments.map((comment) => {
-      const match = comment.match(/^[^@]+/);
-      if (!match) return '';
-      return match[0].trim();
+      const match = comment.match(/^[^@]+/)
+      if (!match) return ''
+      return match[0].trim()
     }),
-  );
-};
+  )
+}
 
 /**
  * Takes a function that is invoked with the package.json as an object, makes desired changes to it and returns it.
  * The returned object is then stringified and then used to replace the original package.json.
  */
 const updatePackageJson = (update) => {
-  const PKG_PATH = path.join(CWD, 'package.json');
-  const PKG = require(PKG_PATH);
-  fs.writeFileSync(PKG_PATH, JSON.stringify(update(PKG), null, 2), 'utf8');
-};
+  const PKG_PATH = path.join(CWD, 'package.json')
+  const PKG = require(PKG_PATH)
+  fs.writeFileSync(PKG_PATH, JSON.stringify(update(PKG), null, 2), 'utf8')
+}
 
 /**
  * Execute a command line in terminal.
@@ -75,32 +75,32 @@ const exec = async (cmd) => {
   return new Promise((resolve, reject) => {
     try {
       childProcess.exec(cmd, (e, stdout, stderr) => {
-        if (e) reject(e);
+        if (e) reject(e)
         const data = {
           cmd: cmd,
           stdout: stdout.split(/\r?\n/),
           stderr: stderr.split(/\r?\n/),
           print: () => {
-            console.log(data.cmd);
+            console.log(data.cmd)
             if (data.stdout) {
               for (let out of data.stdout) {
-                console.log(out);
+                console.log(out)
               }
             }
             if (data.stderr) {
               for (let err of data.stderr) {
-                console.error(err);
+                console.error(err)
               }
             }
           },
-        };
-        resolve(data);
-      });
+        }
+        resolve(data)
+      })
     } catch (e) {
-      reject(e);
+      reject(e)
     }
-  });
-};
+  })
+}
 
 /**
  * Populate README.md file template.
@@ -185,13 +185,13 @@ This library is written in **TypeScript** compiled to ES6 JavaScript.
 
 #### ES6 Module Bundles
 ${(() => {
-  const bundles = [];
-  const CFG = CONFIG.bundler.output;
-  if (CFG.commonjs) bundles.push('- [CommonJS](/dist/index.js)');
-  if (CFG.esm) bundles.push('- [ESM](/dist/index.esm.js)');
-  if (CFG.umd) bundles.push('- [UMD](/dist/index.umd.js)');
-  if (CFG.umdMinified.enabled) bundles.push('- [UMD Minified](/dist/index.umd.min.js)');
-  return bundles.join('\n');
+  const bundles = []
+  const CFG = CONFIG.bundler.output
+  if (CFG.commonjs) bundles.push('- [CommonJS](/dist/index.js)')
+  if (CFG.esm) bundles.push('- [ESM](/dist/index.esm.js)')
+  if (CFG.umd) bundles.push('- [UMD](/dist/index.umd.js)')
+  if (CFG.umdMinified.enabled) bundles.push('- [UMD Minified](/dist/index.umd.min.js)')
+  return bundles.join('\n')
 })()}
 
 #### Type Declarations
@@ -215,12 +215,12 @@ Released under the [${CONFIG.package.license} License](./LICENSE).
 
 # Documentation
 ${fs
-  .readFileSync(path.join(__dirname, 'docs', 'README.md'), 'utf8')
+  .readFileSync(path.join(CWD, 'docs', 'README.md'), 'utf8')
   .toString()
   .replace(/^(.|\n)*## Table of contents/gm, '')
   .replace(/\]\(classes/g, '](docs/classes')
   .replace(/\]\(interfaces/g, '](docs/interfaces')}
-`;
+`
 /**
  * Generator functions
  */
@@ -230,10 +230,10 @@ class RepoManager {
    */
   static versionPatch() {
     updatePackageJson((PKG) => {
-      const [major, minor, patch] = PKG.version.split('.');
-      PKG.version = [major, minor, Number(patch) + 1].join('.');
-      return PKG;
-    });
+      const [major, minor, patch] = PKG.version.split('.')
+      PKG.version = [major, minor, Number(patch) + 1].join('.')
+      return PKG
+    })
   }
 
   /**
@@ -241,10 +241,10 @@ class RepoManager {
    */
   static versionMinor() {
     updatePackageJson((PKG) => {
-      const [major, minor] = PKG.version.split('.');
-      PKG.version = [major, Number(minor) + 1, 0].join('.');
-      return PKG;
-    });
+      const [major, minor] = PKG.version.split('.')
+      PKG.version = [major, Number(minor) + 1, 0].join('.')
+      return PKG
+    })
   }
 
   /**
@@ -252,10 +252,10 @@ class RepoManager {
    */
   static versionMajor() {
     updatePackageJson((PKG) => {
-      const [major] = PKG.version.split('.');
-      PKG.version = [Number(major) + 1, 0, 0].join('.');
-      return PKG;
-    });
+      const [major] = PKG.version.split('.')
+      PKG.version = [Number(major) + 1, 0, 0].join('.')
+      return PKG
+    })
   }
 
   /**
@@ -264,46 +264,46 @@ class RepoManager {
   static generators() {
     updatePackageJson((PKG) => {
       // NAME
-      PKG.name = CONFIG.package.fullName;
+      PKG.name = CONFIG.package.fullName
 
       // DESCRIPTION
-      PKG.description = CONFIG.package.description;
+      PKG.description = CONFIG.package.description
 
       // LICENSE
-      PKG.license = CONFIG.package.license;
+      PKG.license = CONFIG.package.license
 
       // REPOSITORY
       PKG.repository = {
         type: 'git',
         url: `git+https://github.com/${CONFIG.github.user}/${CONFIG.github.repository}.git`,
-      };
+      }
 
       // AUTHOR
       PKG.author = {
         name: CONFIG.author.name,
         email: CONFIG.author.email,
         url: `https://github.com/${CONFIG.github.user}/`,
-      };
+      }
 
       // FUNDING
       if (CONFIG.patreon.enabled) {
         PKG.funding = {
           type: 'patreon',
           url: `https://www.patreon.com/user?u=${CONFIG.patreon.user}`,
-        };
+        }
       }
 
       // HOMEPAGE
-      PKG.homepage = `https://github.com/${CONFIG.github.user}/${CONFIG.github.repository}`;
+      PKG.homepage = `https://github.com/${CONFIG.github.user}/${CONFIG.github.repository}`
 
       // BUGS
       PKG.bugs = {
         url: `https://github.com/${CONFIG.github.user}/${CONFIG.github.repository}/issues`,
-      };
+      }
 
       // KEYWORDS
       if (!CONFIG.keywords.generate) {
-        PKG.keywords = [...new Set(cleanStringArray(CONFIG.keywords.include))].sort();
+        PKG.keywords = [...new Set(cleanStringArray(CONFIG.keywords.include))].sort()
       } else {
         // Parses the 'src' dir block comments for its descriptions from which keywords are generated and injected into the
         // package.json file.
@@ -325,9 +325,9 @@ class RepoManager {
                           // only use ts or js files
                           /\.(ts|tsx|js|jsx)$/.test(filename)
                         ) {
-                          accum.push(path.join(CWD, 'src', filename));
+                          accum.push(path.join(CWD, 'src', filename))
                         }
-                        return accum;
+                        return accum
                       }, []),
                     ),
                   ).join('\n'),
@@ -338,24 +338,24 @@ class RepoManager {
                 )
                 .map((keyword) => {
                   // remove keywords to ignore (case-insensitive)
-                  if (CONFIG.keywords.ignore.includes(keyword.toLowerCase())) return;
+                  if (CONFIG.keywords.ignore.includes(keyword.toLowerCase())) return
                   // remove keywords with length <= 1
-                  if (keyword.length <= 1) return;
+                  if (keyword.length <= 1) return
                   // remove non WORD characters
-                  return keyword.replace(/[^\w]+/g, '');
+                  return keyword.replace(/[^\w]+/g, '')
                 })
                 // add custom keywords to include
                 .concat(...CONFIG.keywords.include),
             ),
           ),
-        ].sort();
+        ].sort()
       }
 
-      return PKG;
-    });
+      return PKG
+    })
 
     // README
-    fs.writeFileSync(path.join(CWD, 'README.md'), README, 'utf8');
+    fs.writeFileSync(path.join(CWD, 'README.md'), README, 'utf8')
   }
 
   /**
@@ -363,12 +363,12 @@ class RepoManager {
    */
   static async npmPublish() {
     try {
-      const cmd = 'npm publish --access public';
-      console.log('Executing command: ' + cmd);
-      const data = await exec(cmd);
-      data.print();
+      const cmd = 'npm publish --access public'
+      console.log('Executing command: ' + cmd)
+      const data = await exec(cmd)
+      data.print()
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
   }
 }
@@ -378,5 +378,5 @@ const args = process.argv
   .splice(2)
   .map((str) => str.replace('--', ''))
   .forEach((arg) => {
-    RepoManager[arg]();
-  });
+    RepoManager[arg]()
+  })

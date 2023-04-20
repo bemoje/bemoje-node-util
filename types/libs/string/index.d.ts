@@ -1,4 +1,3 @@
-export * from './src/BemojeString';
 export * from './src/strCountCharOccurances';
 export * from './src/strCountChars';
 export * from './src/strIsLowerCase';

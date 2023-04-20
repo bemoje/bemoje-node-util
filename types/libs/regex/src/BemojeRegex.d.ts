@@ -6,17 +6,18 @@ export type BemojeRegexOptions = {
     /**
      * Whether to insert escape characters into the source string.
      */
-    escapeSourceString: boolean;
+    escapeSourceString?: boolean;
     /**
      * Whether to repair the flags string if it is not valid.
      */
-    fixFlags: boolean;
+    fixFlags?: boolean;
 };
 /**
  * A RegExp class extension with extra features.
  */
 export declare class BemojeRegex extends RegExp {
     protected static defaultOptions: BemojeRegexOptions;
+    options: BemojeRegexOptions;
     constructor(source: string | RegExp, flags?: string, options?: BemojeRegexOptions);
     /**
      * Checks if a string is a valid regex flags string.

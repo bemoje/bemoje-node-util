@@ -9,9 +9,11 @@ import { sort } from 'timsort';
 import { split } from 'sentence-splitter';
 import { words as words$1 } from 'lodash';
 import date from 'date-and-time';
-import Path from 'path';
-import numberFormat from 'format-number';
+import 'dotenv/config';
+import { OpenAIApi, Configuration } from 'openai';
 import fs from 'fs';
+import path from 'path';
+import numberFormat from 'format-number';
 import { Readable } from 'stream';
 
 /**
@@ -49,261 +51,6 @@ function arrEvery(input, predicate) {
 }
 
 /**
- * Same as Array.prototype.filter but performs operations in palce (not immutable).
- * @param input - input array
- * @param f - predicate
- */
-function arrFilterMutable(input, f) {
-    return arrAssignFrom(input, input.filter(f));
-}
-
-/**
- * Flattens the passed array recursively to a specified depth. Immutable.
- * @param input - the array to flatten
- * @param maxDepth - the maximum recursive flattening depth.
- */
-function arrFlatten(input, maxDepth = Number.MAX_SAFE_INTEGER) {
-    const accum = [];
-    (function recurse(arr = input, depth = 0) {
-        for (let i = 0; i < arr.length; i++) {
-            if (Array.isArray(arr[i]) && depth < maxDepth) {
-                recurse(arr[i], depth + 1);
-            }
-            else {
-                accum.push(arr[i]);
-            }
-        }
-    })();
-    return accum;
-}
-
-/**
- * Flattens the passed array recursively. Mutable.
- * @param input - the array to flatten
- * @param maxDepth - the maximum recursive flattening depth.
- */
-function arrFlattenMutable(input, maxDepth = Number.MAX_SAFE_INTEGER) {
-    return arrAssignFrom(input, arrFlatten(input, maxDepth));
-}
-
-/**
- * Returns all indexes at which an element is found.
- * @param input - The array to search
- * @param element - The element to find
- */
-function arrIndicesOf(input, element) {
-    const result = [];
-    for (let i = 0; i < input.length; i++) {
-        if (element === input[i]) {
-            result.push(i);
-        }
-    }
-    return result;
-}
-
-/**
- * Same as Array.prototype.map but performs operations in palce (not immutable).
- * @param input - input array
- * @param f - iterator
- * @example
- * ```js
- * expect(
- *   util.arrMapMutable([1, 2, 3, 4, 5], (value: number) => {
- *     return value + 1;
- *   }),
- * ).toStrictEqual([2, 3, 4, 5, 6]);
- * ```
- */
-function arrMapMutable(input, f) {
-    for (let i = 0; i < input.length; i++) {
-        input[i] = f(input[i], i, input);
-    }
-    return input;
-}
-
-/**
- * Returns whether or not two arrays shallow equal each other.
- * @param input1 first array
- * @param input2 second array
- */
-function arrShallowEquals(input1, input2) {
-    if (input1.length !== input2.length)
-        return false;
-    return arrEvery(input1, (value, i) => value === input2[i]);
-}
-
-/**
- * Swap array elements in place. Runtime: O(1)
- * @param input to be modified
- * @param from index of the first element
- * @param to index of the second element
- */
-function arrSwap(input, from, to) {
-    [input[from], input[to]] = [input[to], input[from]];
-    return input;
-}
-
-/**
- * Shuffle items in an array in-place. Guarantees that the array has changes.
- * @param input - The array to shuffle.
- */
-function arrShuffle(input) {
-    const original = input.slice();
-    let equal = true;
-    while (equal) {
-        for (let i = 0, len = input.length; i < len; i++) {
-            const newIndex = Math.floor(Math.random() * len);
-            arrSwap(input, i, newIndex);
-        }
-        equal = arrShallowEquals(input, original);
-    }
-    return input;
-}
-
-/**
- * Check whether a condition is true for any element of an array. The condition check is in the form of a callback.
- * @param input - The array
- * @param  predicate - A predicate callback function
- */
-function arrSome(input, predicate) {
-    for (let i = 0, len = input.length; i < len; i++) {
-        if (predicate(input[i], i, input) === true) {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * Returns a given comparator as an array compatible comparator. Behaves as if the array to sort was recursively flattened.
- * @param comparator compare function
- * @param descending whether the input comparator sorts in descending order
- */
-function compareArray(comparator, descending = false) {
-    const orderMultiplier = descending ? -1 : 1;
-    function recursiveCompare(a, b, _lenCompareParent) {
-        const aIsArr = Array.isArray(a);
-        const bIsArr = Array.isArray(b);
-        if (aIsArr) {
-            if (bIsArr) {
-                const aLen = a.length;
-                const bLen = b.length;
-                let lenShortest, lenCompare;
-                if (aLen > bLen) {
-                    lenShortest = aLen;
-                    lenCompare = 1 * orderMultiplier;
-                }
-                else if (aLen < bLen) {
-                    lenShortest = bLen;
-                    lenCompare = -1 * orderMultiplier;
-                }
-                else {
-                    lenShortest = aLen;
-                    lenCompare = 0;
-                }
-                for (let i = 0, len = lenShortest; i < len; i++) {
-                    const res = recursiveCompare(a[i], b[i], lenCompare);
-                    if (res !== 0) {
-                        return res;
-                    }
-                }
-            }
-            else {
-                return 1 * orderMultiplier;
-            }
-        }
-        else {
-            if (bIsArr) {
-                return -1 * orderMultiplier;
-            }
-            else {
-                const res = comparator(a, b);
-                if (res === 0) {
-                    return _lenCompareParent || res;
-                }
-                else {
-                    return res;
-                }
-            }
-        }
-        return 0;
-    }
-    return (a, b) => {
-        return recursiveCompare(a, b);
-    };
-}
-
-/**
- * Number comparator function (ascending)
- * @param a first value to compare
- * @param b second value to compare
- */
-function compareNumber(a, b) {
-    return a - b;
-}
-
-/**
- * Number comparator function (descending)
- * @param a first value to compare
- * @param b second value to compare
- */
-function compareNumberDescending(a, b) {
-    return b - a;
-}
-
-/**
- * number, bigint, boolean comparator function (ascending)
- * @param a first value to compare
- * @param b second value to compare
- */
-function compareNumeric(a, b) {
-    if (a < b)
-        return -1;
-    if (a > b)
-        return 1;
-    return 0;
-}
-
-/**
- * number, bigint, boolean comparator function (descending)
- * @param a first value to compare
- * @param b second value to compare
- */
-function compareNumericDescending(a, b) {
-    if (a > b)
-        return -1;
-    if (a < b)
-        return 1;
-    return 0;
-}
-
-/**
- * Alpha numeric comparator function (ascending)
- * @param a first value to compare
- * @param b second value to compare
- */
-function compareString(a, b) {
-    return a.localeCompare(b);
-}
-
-/**
- * Alpha numeric comparator function (descending)
- * @param a first value to compare
- * @param b second value to compare
- */
-function compareStringDescending(a, b) {
-    return b.localeCompare(a);
-}
-
-/**
- * Uses Array.prototype.sort but sorts numbers.
- * @param input - input array
- */
-function arrSortNumeric(input) {
-    return input.sort(compareNumeric);
-}
-
-/**
  * Executes an async task with a timeout.
  * @param timeout The timeout in milliseconds.
  * @param task The async task to execute.
@@ -328,34 +75,17 @@ function asyncWithTimeout(timeout, task, ...args) {
 }
 
 /**
- * Converts a positive integer to a byte array.
- * Throws Error if the input is larger than 256^5 or not a positive integer.
+ * Converts a base64 buffer to a string
  */
-function intToBytes(int) {
-    if (!Number.isInteger(int) || int < 0)
-        throw new Error(`input must be a positive integer. Got ${int}`);
-    if (int > 1099511627776)
-        throw new Error(`input must be less than or equal to 256^5. Got ${int}`);
-    const x = int - 251;
-    return int < 251
-        ? [int]
-        : x < 256
-            ? [251, x]
-            : x < 65536
-                ? [252, Math.floor(x / 256), x % 256]
-                : x < 16777216
-                    ? [253, Math.floor(x / 65536), Math.floor(x / 256) % 256, x % 256]
-                    : x < 4294967296
-                        ? [254, Math.floor(x / 16777216), Math.floor(x / 65536) % 256, Math.floor(x / 256) % 256, x % 256]
-                        : (() => {
-                            const exp = Math.floor(Math.log(x) / Math.log(2)) - 32;
-                            const bytes = [255, ...intToBytes(exp)];
-                            const y = Math.floor(x / Math.pow(2, exp - 11));
-                            for (let i = 5, d = 1099511627776; i >= 0; i--, d /= 256) {
-                                bytes.push(Math.floor(y / d) % 256);
-                            }
-                            return bytes;
-                        })();
+function atob(str) {
+    return Buffer.from(str, 'base64');
+}
+
+/**
+ * Converts a string to a base64 buffer
+ */
+function btoa(buf) {
+    return buf.toString('base64');
 }
 
 /**
@@ -404,20 +134,75 @@ function bytesToInt(bytes) {
 }
 
 /**
- * Trims an array of bytes on the right
+ * Converts an integer to an array of bytes
  */
-function trimArrayBytesRight(a) {
-    if (a[3] === 0) {
-        if (a[2] === 0) {
-            if (a[1] === 0) {
-                return [a[0]];
-            }
-            return [a[0], a[1]];
-        }
-        return [a[0], a[1], a[2]];
-    }
-    return a;
+function intToArrayBytes(int) {
+    if (int < 256)
+        return [int];
+    const bin = new Uint8Array(new Uint32Array([int]).buffer);
+    if (int < 65536)
+        return [bin[0], bin[1]];
+    if (int < 16777216)
+        return [bin[0], bin[1], bin[2]];
+    if (int < 4294967296)
+        return [bin[0], bin[1], bin[2], bin[3]];
+    return [256, 256, 256, 256];
 }
+
+/**
+ * Converts an integer to a buffer
+ */
+function intToBuffer(int) {
+    return Buffer.from(intToArrayBytes(int));
+}
+
+/**
+ * Converts a positive integer to a byte array.
+ * Throws Error if the input is larger than 256^5 or not a positive integer.
+ */
+function intToBytes(int) {
+    if (!Number.isInteger(int) || int < 0)
+        throw new Error(`input must be a positive integer. Got ${int}`);
+    if (int > 1099511627776)
+        throw new Error(`input must be less than or equal to 256^5. Got ${int}`);
+    const x = int - 251;
+    return int < 251
+        ? [int]
+        : x < 256
+            ? [251, x]
+            : x < 65536
+                ? [252, Math.floor(x / 256), x % 256]
+                : x < 16777216
+                    ? [253, Math.floor(x / 65536), Math.floor(x / 256) % 256, x % 256]
+                    : x < 4294967296
+                        ? [254, Math.floor(x / 16777216), Math.floor(x / 65536) % 256, Math.floor(x / 256) % 256, x % 256]
+                        : (() => {
+                            const exp = Math.floor(Math.log(x) / Math.log(2)) - 32;
+                            const bytes = [255, ...intToBytes(exp)];
+                            const y = Math.floor(x / Math.pow(2, exp - 11));
+                            for (let i = 5, d = 1099511627776; i >= 0; i--, d /= 256) {
+                                bytes.push(Math.floor(y / d) % 256);
+                            }
+                            return bytes;
+                        })();
+}
+
+/**
+ * Pads an array of bytes on the left
+ */
+function padArrayBytesLeft(a) {
+    const l = a.length;
+    return l === 4 ? a : l === 1 ? [0, 0, 0, a[0]] : l === 2 ? [0, 0, a[0], a[1]] : [0, a[0], a[1], a[2]];
+}
+
+/**
+ * Pads an array of bytes on the right
+ */
+function padArrayBytesRight(a) {
+    const l = a.length;
+    return l === 4 ? a : l === 1 ? [a[0], 0, 0, 0] : l === 2 ? [a[0], a[1], 0, 0] : [a[0], a[1], a[2], 0];
+}
+
 /**
  * Trims an array of bytes on the left
  */
@@ -433,64 +218,21 @@ function trimArrayBytesLeft(a) {
     }
     return a;
 }
+
 /**
- * Pads an array of bytes on the right
+ * Trims an array of bytes on the right
  */
-function padArrayBytesRight(a) {
-    const l = a.length;
-    return l === 4 ? a : l === 1 ? [a[0], 0, 0, 0] : l === 2 ? [a[0], a[1], 0, 0] : [a[0], a[1], a[2], 0];
-}
-/**
- * Pads an array of bytes on the left
- */
-function padArrayBytesLeft(a) {
-    const l = a.length;
-    return l === 4 ? a : l === 1 ? [0, 0, 0, a[0]] : l === 2 ? [0, 0, a[0], a[1]] : [0, a[0], a[1], a[2]];
-}
-/**
- * Converts an array of bytes to an integer
- */
-function arrayBytesToInt(bytes) {
-    return new Uint32Array(new Uint8Array(padArrayBytesRight(bytes)).buffer)[0];
-}
-/**
- * Converts an integer to an array of bytes
- */
-function intToArrayBytes(int) {
-    if (int < 256)
-        return [int];
-    const bin = new Uint8Array(new Uint32Array([int]).buffer);
-    if (int < 65536)
-        return [bin[0], bin[1]];
-    if (int < 16777216)
-        return [bin[0], bin[1], bin[2]];
-    if (int < 4294967296)
-        return [bin[0], bin[1], bin[2], bin[3]];
-    return [256, 256, 256, 256];
-}
-/**
- * Converts an integer to a buffer
- */
-function intToBuffer(int) {
-    return Buffer.from(intToArrayBytes(int));
-}
-/**
- * Converts a buffer to an integer
- */
-function bufferToInt(buf) {
-    return arrayBytesToInt(Array.from(buf.values()));
-}
-/**
- * Converts a string to a base64 buffer
- */
-function btoa(buf) {
-    return buf.toString('base64');
-}
-/**
- * Converts a base64 buffer to a string
- */
-function atob(str) {
-    return Buffer.from(str, 'base64');
+function trimArrayBytesRight(a) {
+    if (a[3] === 0) {
+        if (a[2] === 0) {
+            if (a[1] === 0) {
+                return [a[0]];
+            }
+            return [a[0], a[1]];
+        }
+        return [a[0], a[1], a[2]];
+    }
+    return a;
 }
 
 /**
@@ -538,6 +280,10 @@ function isHexOrUnicode(s) {
     return /^(\\\\?u|0x)?[\da-f]+$/i.test(s);
 }
 
+/**
+ * Check if an object is iterable
+ * @param o The object to check
+ */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function isIterable(o) {
     return (typeof Symbol !== 'undefined' &&
@@ -549,14 +295,10 @@ function isIterable(o) {
 
 /**
  * Checks if a string is a number.
- * @param str - input string
+ * @param string - input string
  */
-function isNumericString(str) {
-    str = str.trim();
-    let n = Number(str);
-    if (isNaN(n) || !isFinite(n)) {
-        n = parseFloat(str);
-    }
+function isNumericString(string) {
+    const n = Number(string.trim());
     return !isNaN(n) && isFinite(n);
 }
 
@@ -1080,6 +822,147 @@ class Queue extends Base {
 // const q2 = Queue.fromJSON(str)
 // console.log(q2)
 
+/**
+ * Returns a given comparator as an array compatible comparator. Behaves as if the array to sort was recursively flattened.
+ * @param comparator compare function
+ * @param descending whether the input comparator sorts in descending order
+ */
+function compareArray(comparator, descending = false) {
+    const orderMultiplier = descending ? -1 : 1;
+    function recursiveCompare(a, b, _lenCompareParent) {
+        const aIsArr = Array.isArray(a);
+        const bIsArr = Array.isArray(b);
+        if (aIsArr) {
+            if (bIsArr) {
+                const aLen = a.length;
+                const bLen = b.length;
+                let lenShortest, lenCompare;
+                if (aLen > bLen) {
+                    lenShortest = aLen;
+                    lenCompare = 1 * orderMultiplier;
+                }
+                else if (aLen < bLen) {
+                    lenShortest = bLen;
+                    lenCompare = -1 * orderMultiplier;
+                }
+                else {
+                    lenShortest = aLen;
+                    lenCompare = 0;
+                }
+                for (let i = 0, len = lenShortest; i < len; i++) {
+                    const res = recursiveCompare(a[i], b[i], lenCompare);
+                    if (res !== 0) {
+                        return res;
+                    }
+                }
+            }
+            else {
+                return 1 * orderMultiplier;
+            }
+        }
+        else {
+            if (bIsArr) {
+                return -1 * orderMultiplier;
+            }
+            else {
+                const res = comparator(a, b);
+                if (res === 0) {
+                    return _lenCompareParent || res;
+                }
+                else {
+                    return res;
+                }
+            }
+        }
+        return 0;
+    }
+    return (a, b) => {
+        return recursiveCompare(a, b);
+    };
+}
+
+/**
+ * Number comparator function (ascending)
+ * @param a first value to compare
+ * @param b second value to compare
+ * @example
+ * ```ts
+ * const arr = [3, 1, 4, 1, 5]
+ * arr.sort(compareNumber) // [1, 1, 3, 4, 5]
+ * ```
+ */
+function compareNumber(a, b) {
+    return a - b;
+}
+
+/**
+ * Number comparator function (descending)
+ * @param a first value to compare
+ * @param b second value to compare
+ * @example
+ * ```ts
+ * const arr = [3, 1, 4, 1, 5]
+ * arr.sort(compareNumberDescending) // [5, 4, 3, 1, 1]
+ * ```
+ */
+function compareNumberDescending(a, b) {
+    return b - a;
+}
+
+/**
+ * number, bigint, boolean comparator function (ascending)
+ * @param a first value to compare
+ * @param b second value to compare
+ * @example
+ * ```ts
+ * const arr = [3n, true, -2n, false]
+ * arr.sort(compareNumeric) // [-2n, false, true, 3n]
+ * ```
+ */
+function compareNumeric(a, b) {
+    if (a < b)
+        return -1;
+    if (a > b)
+        return 1;
+    return 0;
+}
+
+/**
+ * number, bigint, boolean comparator function (descending)
+ * @param a first value to compare
+ * @param b second value to compare
+ * @example
+ * ```ts
+ * const arr = [true, 3n, -2n, false]
+ * arr.sort(compareNumericDescending) // [3n, true, false, -2n]
+ * ```
+ */
+function compareNumericDescending(a, b) {
+    if (a > b)
+        return -1;
+    if (a < b)
+        return 1;
+    return 0;
+}
+
+/**
+ * Alpha numeric comparator function (ascending)
+ * @param a first value to compare
+ * @param b second value to compare
+ */
+function compareString(a, b) {
+    return a.localeCompare(b);
+}
+
+/**
+ * Alpha numeric comparator function (descending)
+ * @param a first value to compare
+ * @param b second value to compare
+ */
+function compareStringDescending(a, b) {
+    return b.localeCompare(a);
+}
+
 class SortedArray extends Array {
     constructor(options = {}) {
         super();
@@ -1316,721 +1199,6 @@ class SortedArray extends Array {
 }
 
 /**
- * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
- * @param regex - The regular expression object
- * @param string - The string to perform the operation on
- * @example
- * ```js
- * const regex = /(?<g1>a)/g
- * const str = 'Anthony wants a girlfriend.'
- * console.log([...rexec(regex, str)])
- * // [
- * // 	{
- * //     index: 9,
- * //     match: 'a',
- * //     groups: { g1: 'a' },
- * //     lastIndex: 10,
- * //   },
- * //   {
- * //     index: 14,
- * //     match: 'a',
- * //     groups: { g1: 'a' },
- * //     lastIndex: 15,
- * //   },
- * // ]
- * ```
- */
-function* rexec(regex, string) {
-    let match;
-    while ((match = regex.exec(string)) !== null) {
-        yield {
-            index: match.index,
-            match: match[0],
-            groups: Object.assign({}, match.groups),
-            lastIndex: regex.lastIndex,
-        };
-    }
-}
-
-/**
- * Returns an array of named groups defined inside a RegExp instance.
- * @param re RegExp instance to extract named groups from.
- */
-function regexGetGroupNames(re) {
-    const names = [];
-    for (const res of rexec(/\(\?<(?<name>\w+)>/g, re.toString())) {
-        names.push(res.groups.name);
-    }
-    return names;
-}
-
-/**
- * Escapes a string so it can be used in a regular expression.
- */
-function regexEscapeString(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
-
-/**
- * Convert a regex for matching to a regex for validation.
- * @param regex - The regex to convert
- * @example ```js
- * const regexMatchDigits = /\d+/gi;
- * const regexIsDigit = regexMatcherToValidater(regexMatchDigits); //=> /^\d+$/i
- * const isDigit = (str) => regexIsDigit.test(str)
- * isDigit('1') //=> true
- * isDigit('a') //=> false
- * ```
- */
-function regexMatcherToValidater(regex) {
-    return new RegExp(`^${regex.source}$`, regex.flags.replace('g', ''));
-}
-
-/**
- * A String class extension with extra features.
- */
-class BemojeString extends String {
-    static get [Symbol.species]() {
-        return String;
-    }
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    constructor(thing) {
-        super(thing);
-    }
-    get string() {
-        return this.toString();
-    }
-    get _() {
-        return this.toString();
-    }
-    countCharOccurances(char) {
-        return strCountCharOccurances(this._, char);
-    }
-    countChars() {
-        return strCountChars(this._);
-    }
-    isLowerCase() {
-        return strIsLowerCase(this._);
-    }
-    isUpperCase() {
-        return strIsUpperCase(this._);
-    }
-    linesRemoveEmpty() {
-        return new BemojeString(strLinesRemoveEmpty(this._));
-    }
-    linesTrimLeft() {
-        return new BemojeString(strLinesTrimLeft(this._));
-    }
-    linesTrimRight() {
-        return new BemojeString(strLinesTrimRight(this._));
-    }
-    prettifyMinifiedCode(indent = '') {
-        return new BemojeString(strPrettifyMinifiedCode(this._, indent));
-    }
-    removeDuplicateChars() {
-        return new BemojeString(strRemoveDuplicateChars(this._));
-    }
-    sortChars() {
-        return new BemojeString(strSortChars(this._));
-    }
-    splitCamelCase() {
-        return strSplitCamelCase(this._);
-    }
-    toCharCodes() {
-        return strToCharCodes(this._);
-    }
-    toCharSet() {
-        return new BemojeString(strToCharSet(this._));
-    }
-    toSentences() {
-        return strToSentences(this._);
-    }
-    toWords() {
-        return strToWords(this._);
-    }
-    unwrap(left, right, flags) {
-        return new BemojeString(strUnwrap(this._, left, right, flags));
-    }
-    wrapBetween(left, right) {
-        return new BemojeString(strWrapBetween(this._, left, right));
-    }
-    wrapIn(wrap) {
-        return new BemojeString(strWrapIn(this._, wrap));
-    }
-    wrapInAngleBrackets() {
-        return new BemojeString(strWrapInAngleBrackets(this._));
-    }
-    wrapInBraces() {
-        return new BemojeString(strWrapInBraces(this._));
-    }
-    wrapInBrackets() {
-        return new BemojeString(strWrapInBrackets(this._));
-    }
-    wrapInDoubleQuotes() {
-        return new BemojeString(strWrapInDoubleQuotes(this._));
-    }
-    wrapInParenthesis() {
-        return new BemojeString(strWrapInParenthesis(this._));
-    }
-    wrapInSingleQuotes() {
-        return new BemojeString(strWrapInSingleQuotes(this._));
-    }
-}
-// declare global {
-//   interface String {
-//     /**
-//      * Convert the String instance to a BemojeString instance.
-//      */
-//     get bemoje(): BemojeString
-//   }
-// }
-// Object.defineProperty(String.prototype, 'bemoje', {
-//   get: function () {
-//     return Object.setPrototypeOf(this, BemojeString.prototype)
-//   },
-// })
-// console.log(new BemojeString('helloThereAgain').splitCamelCase())
-// console.log(new BemojeString('Hi, my name is Benjamin.').toWords())
-// console.log(new BemojeString('Hi, my name is Benjamin.').wrapInAngleBrackets().wrapInBraces().wrapInDoubleQuotes())
-// console.log(typeof new BemojeString('Hi, my name is Benjamin.')._)
-
-/**
- * Count occurances of a character within a given string.
- * @param input - The string to search
- * @param char - The character to find
- */
-function strCountCharOccurances(input, char) {
-    if (char.length !== 1) {
-        throw new Error('Expected char to be a single character string of length 1.');
-    }
-    let result = 0;
-    for (const c of input) {
-        if (c === char) {
-            result++;
-        }
-    }
-    return result;
-}
-
-/**
- * Count the number of occurrences of each character in a string.
- */
-function strCountChars(string) {
-    const result = new Map();
-    for (const char of string) {
-        const count = result.get(char);
-        result.set(char, count ? count + 1 : 1);
-    }
-    return result;
-}
-
-/**
- * Returns whether the string is lower case.
- * @param input - input string
- * @example
- * ```js
- * strIsLowerCase('abc')
- * //=> true
- *
- * strIsLowerCase('ABC')
- * //=> false
- * ```
- */
-function strIsLowerCase(input) {
-    return input === input.toLowerCase();
-}
-
-/**
- * Returns whether the string is upper case.
- * @param input - input string
- * @example
- * ```js
- * strIsUpperCase('abc')
- * //=> false
- *
- * strIsUpperCase('ABC')
- * //=> true
- * ```
- */
-function strIsUpperCase(input) {
-    return input === input.toUpperCase();
-}
-
-/**
- * Takes a multiline string and removes lines that are empty or only contain whitespace.
- * @param input - input string
- */
-function strLinesRemoveEmpty(input) {
-    return input
-        .replace(/\r?\n\s*\r?\n/gm, '\n')
-        .trimStart()
-        .trimEnd();
-}
-
-/**
- * Takes a multiline string and performs a left side trim of whitespace on each line.
- * @param input - input string
- */
-function strLinesTrimLeft(input) {
-    return input.replace(/\n\r?\s+/gm, '\n');
-}
-
-/**
- * Takes a multiline string and performs a right side trim of whitespace on each line.
- * @param input - input string
- */
-function strLinesTrimRight(input) {
-    return input.replace(/\s+\n/gm, '\n');
-}
-
-/**
- * Very crude, simple, fast code formatting of minified code.
- * Only works when input code:
- * - is minified
- * - is scoped with brackets
- * - expressions end with semicolon
- * - has no string literals containing any of these characters: '{', '}', ';'.
- * @param input The minified source code
- * @param indent The string to use as indentation
- */
-function strPrettifyMinifiedCode(input, indent = '  ') {
-    const getIndents = (n) => strRepeat('\t', n);
-    const fixIndents = (s) => {
-        return s.replace(/\t +/g, '\t').replace(/\t/g, indent);
-    };
-    let depth = 0;
-    const arr = Array.from(input).map((c) => {
-        if (c === '{') {
-            depth++;
-            return '{\n' + getIndents(depth);
-        }
-        else if (c === '}') {
-            depth--;
-            return '\n' + getIndents(depth) + '}\n' + getIndents(depth);
-        }
-        else if (c === ';') {
-            return ';\n' + getIndents(depth);
-        }
-        else
-            return c;
-    });
-    return fixIndents(strLinesTrimRight(strLinesRemoveEmpty(arr.join(''))));
-}
-
-/**
- * Remove duplicate characters from a string.
- */
-function strRemoveDuplicateChars(string) {
-    return Array.from(new Set(string)).join('');
-}
-
-/**
- * Returns a given number of contatenations of a given input string.
- * @param input - input string
- * @param n - Number of repetitions of the input string
- */
-function strRepeat(input, n) {
-    return new Array(n).fill(input).join('');
-}
-
-/**
- * In a given string, replace all occurances of a given search string with a given replacement string.
- * @param input input string
- * @param replace string to find a replace
- * @param replaceWith string to replace matches with
- * @param flags RegExp flags as single string.
- */
-function strReplaceAll(input, replace, replaceWith, flags = 'g') {
-    return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith);
-}
-
-/**
- * Sorts the characters in a string.
- */
-function strSortChars(string) {
-    return Array.from(string).sort().join('');
-}
-
-function isCamelCaseWordBreakIndex(word, index) {
-    return (strIsLowerCase(word[index - 1]) &&
-        strIsUpperCase(word[index]) &&
-        !isNumericString(word[index - 1]) &&
-        !isNumericString(word[index]));
-}
-/**
- * Returns an array of words in the string
- * @param input - input string
- * @example
- * ```js
- * strSplitCamelCase('someCamelCase')
- * //=> ['some', 'Camel', 'Case']
- * ```
- */
-function strSplitCamelCase(word) {
-    const result = [];
-    const lastCharIndex = word.length - 1;
-    let lastCamelCaseBreakIndex = 0;
-    let foundCamelCase = false;
-    for (let i = 1; i < word.length; i++) {
-        if (foundCamelCase && i === lastCharIndex) {
-            // last char
-            const sub = word.substring(lastCamelCaseBreakIndex);
-            if (sub)
-                result.push(sub);
-            continue;
-        }
-        if (isCamelCaseWordBreakIndex(word, i)) {
-            const sub = word.substring(lastCamelCaseBreakIndex, i);
-            if (!sub)
-                continue;
-            result.push(sub);
-            lastCamelCaseBreakIndex = i;
-            foundCamelCase = true;
-        }
-    }
-    // if no splits needed, just return the word as it was
-    if (!foundCamelCase) {
-        result.push(word);
-    }
-    return result;
-}
-
-/**
- * Converts a string to an array of char codes
- */
-function strToCharCodes(str) {
-    const len = str.length;
-    const ret = new Array(len);
-    for (let i = 0; i < len; i++) {
-        ret[i] = str.charCodeAt(i);
-    }
-    return ret;
-}
-
-/**
- * Returns a string containing the set of all unique characters in a string.
- */
-function strToCharSet(string) {
-    return Array.from(new Set(string)).sort().join('');
-}
-
-/**
- * Intelligently split a string into sentences. Uses AST parsing to determine sentence boundaries.
- * @param text Text to split into sentences
- */
-function strToSentences(text) {
-    return split(text)
-        .map((node) => {
-        const [start, end] = node.range;
-        return text.substring(start, end).replace(repeatingWhiteSpace, ' ').trim();
-    })
-        .filter((s) => !!s);
-}
-
-/**
- * Returns an array of words in the string
- * @param input - input string
- * @example
- * ```js
- * strToWords('How are you?')
- * //=> ['How', 'are', 'you']
- * ```
- */
-function strToWords(input) {
-    return words$1(input);
-}
-
-/**
- * Inserts provided strings before and after a string.
- * @param input - input string
- * @param left - string to place before
- * @param right - string to place after
- * @param flags - regex flags
- */
-function strUnwrap(input, left, right, flags = '') {
-    return input
-        .replace(new RegExp('^' + regexEscapeString(left), flags), '')
-        .replace(new RegExp(regexEscapeString(right) + '$', flags), '');
-}
-// const str = 'hello'
-// const wrapped = strWrapBetween(str, '(', ')')
-// const unwrapped = strUnwrap(wrapped, '(', ')')
-// console.log({ str, wrapped, unwrapped })
-
-/**
- * Inserts provided strings before and after a string.
- * @param input - input string
- * @param left - string to place before
- * @param right - string to place after
- * @example
- * ```js
- * expect(util.strWrapBetween('input', '#', '&')).toBe('#input&');
- * ```
- */
-function strWrapBetween(input, left, right) {
-    return left + input + right;
-}
-
-/**
- * Inserts a provided string before and after a string.
- * @param input - input string
- * @param wrap - string to place before and after
- * @example
- * ```js
- * expect(util.strWrapIn('input', '#')).toBe('#input#');
- * ```
- */
-function strWrapIn(input, wrap) {
-    return wrap + input + wrap;
-}
-
-/**
- * Wraps a string in angle brackets.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInAngleBrackets('input')).toBe('<input>');
- * ```
- */
-function strWrapInAngleBrackets(input) {
-    return '<' + input + '>';
-}
-
-/**
- * Wraps a string in braces.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInBraces('input')).toBe('{input}');
- * ```
- */
-function strWrapInBraces(input) {
-    return '{' + input + '}';
-}
-
-/**
- * Wraps a string in brackets.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInBrackets('input')).toBe('[input]');
- * ```
- */
-function strWrapInBrackets(input) {
-    return '[' + input + ']';
-}
-
-/**
- * Wraps a string in parenthesis.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInDoubleQuotes('input')).toBe('"input"');
- * ```
- */
-function strWrapInDoubleQuotes(input) {
-    return '"' + input + '"';
-}
-
-/**
- * Wraps a string in parenthesis.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInParenthesis('input')).toBe('(input)');
- * ```
- */
-function strWrapInParenthesis(input) {
-    return '(' + input + ')';
-}
-
-/**
- * Wraps a string in parenthesis.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInSingleQuotes('input')).toBe("'input'");
- * ```
- */
-function strWrapInSingleQuotes(input) {
-    return "'" + input + "'";
-}
-
-/**
- * Checks if a string is a valid regex flags string.
- */
-function regexIsValidFlags(flags) {
-    return /^[gimsuy]*$/.test(flags) && strRemoveDuplicateChars(flags).length === flags.length;
-}
-
-/**
- * Takes a string of RegExp flags and returns a string guaranteed to be valid.
- * @param flags - string of RegExp flags
- */
-function regexFixFlags(flags) {
-    if (!flags)
-        return flags;
-    return strSortChars(strRemoveDuplicateChars(flags).replace(/[^gimsuy]/gi, ''));
-}
-
-/**
- * Returns an array of all valid flags for a regular expression.
- */
-function regexValidFlags() {
-    return ['g', 'i', 'm', 's', 'u', 'y'];
-}
-
-/**
- * A RegExp class extension with extra features.
- */
-class BemojeRegex extends RegExp {
-    constructor(source, flags = '', options) {
-        if (source instanceof RegExp && !flags) {
-            super(source);
-        }
-        else {
-            options = Object.assign({}, BemojeRegex.defaultOptions, options);
-            if (source instanceof RegExp) {
-                flags = flags ? flags : source.flags;
-                source = source.source;
-            }
-            else if (options === null || options === void 0 ? void 0 : options.escapeSourceString) {
-                source = regexEscapeString(source);
-            }
-            if (options.fixFlags) {
-                flags = regexFixFlags(flags);
-            }
-            else {
-                flags = strSortChars(flags);
-            }
-            super(source, flags);
-        }
-    }
-    /**
-     * Returns true if the RegExp instance has same source and flags.
-     * @param regex - RegExp instance to compare to.
-     */
-    compareTo(regex) {
-        return this.source === regex.source && this.flags === regex.flags;
-    }
-    /**
-     * Returns true if the RegExp instance is a also BemojeRegex instance and both have the same source and flags.
-     * @param regex - RegExp instance to compare to.
-     */
-    compareToStrict(regex) {
-        return regex instanceof BemojeRegex && this.source === regex.source && this.flags === regex.flags;
-    }
-    /**
-     * Returns an array of named groups defined inside the RegExp instance.
-     */
-    getGroupNames() {
-        return regexGetGroupNames(this);
-    }
-    /**
-     * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
-     */
-    *rexec(string) {
-        yield* rexec(this, string);
-    }
-    /**
-     * Convert a regex for matching to a regex for validation.
-     */
-    toValidator() {
-        return bemoje(regexMatcherToValidater(this));
-    }
-    /**
-     * Convert the BemojeRegex instance to a RegExp instance.
-     */
-    toRegExp() {
-        return Object.setPrototypeOf(this, RegExp.prototype);
-    }
-}
-BemojeRegex.defaultOptions = {
-    escapeSourceString: false,
-    fixFlags: false,
-};
-/**
- * Checks if a string is a valid regex flags string.
- */
-BemojeRegex.isValidFlags = regexIsValidFlags;
-/**
- * Takes a string of RegExp flags and returns a string guaranteed to be valid.
- * @param flags - string of RegExp flags
- */
-BemojeRegex.fixFlags = regexFixFlags;
-/**
- * Returns an array of all valid flags for a regular expression.
- */
-BemojeRegex.getValidFlags = regexValidFlags;
-function bemoje(regex) {
-    return Object.setPrototypeOf(regex, BemojeRegex.prototype);
-}
-// declare global {
-//   interface RegExp {
-//     /**
-//      * Convert the RegExp instance to a BemojeRegex instance.
-//      */
-//     get bemoje(): BemojeRegex
-//   }
-// }
-// Object.defineProperty(RegExp.prototype, 'bemoje', {
-//   get: function () {
-//     return Object.setPrototypeOf(this, BemojeRegex.prototype)
-//   },
-// })
-// const reg = new BemojeRegex(/(?<asd>\/\*\*)(?<aga3>.*?)(?=\*\/)(?<ahfdtr>\*\/)/gi)
-// console.log(reg.getGroupNames())
-// console.log(reg.getGroupNames())
-// console.log(reg.toValidator())
-// console.log(reg.toRegExp())
-// const reg2 = new BemojeRegex(/abc/g)
-// const str2 = 'lala abc lalala abc ...'
-// console.log([...reg2.rexec(str2)])
-
-/**
- * Builds a regex that matches a string between two strings. Supports regex instead of string.
- * @param left - string or regex to match before
- * @param right - string or regex to match after
- * @param flags - regex flags - 'g' and 's' are always added to whatever flags are passed.
- */
-function buildRegexBetween(left, right, flags) {
-    left = typeof left === 'string' ? regexEscapeString(left) : left.source;
-    right = typeof right === 'string' ? regexEscapeString(right) : right.source;
-    flags = flags ? strRemoveDuplicateChars('gs' + flags) : 'gs';
-    return new RegExp(`(?<left>${left})(?<mid>.*?)(?=${right})(?<right>${right})`, flags);
-}
-// const code = `
-// import { regexEscapeString } from '../../regex'
-// /**
-//  * Inserts provided strings before and after a string.
-//  * @param input - input string
-//  * @param before - string to place before
-//  * @param after - string to place after
-//  * @example
-//  */
-// export function strUnwrap(input: string, before: string, after: string, caseSensitive = true): string {
-//   const flags = caseSensitive ? '' : 'i'
-//   return input
-//     .replace(new RegExp('^' + regexEscapeString(before), flags), '')
-//     .replace(new RegExp(regexEscapeString(after) + '$', flags), '')
-// }
-// /**
-//  * asdasdsad
-//  * @param input - input string
-//  * @param before - string to place before
-//  * @param after - string to place after
-//  * @example
-//  */
-// `
-// import { rexec } from './rexec'
-// const left = '/**'
-// const right = ' */'
-// const regex = buildRegexBetween(left, right)
-// for (const match of rexec(regex, code)) {
-//   console.log(match)
-// }
-
-/**
  * Matches 2 or more consecutive whitespace characters, including line terminators, tabs, etc.
  */
 const repeatingWhiteSpace = /((\r?\r?\n)|\s|\t){2,}/g;
@@ -2167,10 +1335,636 @@ var regexLibrary = /*#__PURE__*/Object.freeze({
 });
 
 /**
+ * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
+ * @param regex - The regular expression object
+ * @param string - The string to perform the operation on
+ * @example
+ * ```js
+ * const regex = /(?<g1>a)/g
+ * const str = 'Anthony wants a girlfriend.'
+ * console.log([...rexec(regex, str)])
+ * // [
+ * // 	{
+ * //     index: 9,
+ * //     match: 'a',
+ * //     groups: { g1: 'a' },
+ * //     lastIndex: 10,
+ * //   },
+ * //   {
+ * //     index: 14,
+ * //     match: 'a',
+ * //     groups: { g1: 'a' },
+ * //     lastIndex: 15,
+ * //   },
+ * // ]
+ * ```
+ */
+function* rexec(regex, string) {
+    let match;
+    while ((match = regex.exec(string)) !== null) {
+        yield {
+            index: match.index,
+            match: match[0],
+            groups: Object.assign({}, match.groups),
+            lastIndex: regex.lastIndex,
+        };
+    }
+}
+
+/**
+ * Returns an array of named groups defined inside a RegExp instance.
+ * @param re RegExp instance to extract named groups from.
+ */
+function regexGetGroupNames(re) {
+    const names = [];
+    for (const res of rexec(/\(\?<(?<name>\w+)>/g, re.toString())) {
+        names.push(res.groups.name);
+    }
+    return names;
+}
+
+/**
+ * Escapes a string so it can be used in a regular expression.
+ */
+function regexEscapeString(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+/**
+ * Convert a regex for matching to a regex for validation.
+ * @param regex - The regex to convert
+ * @example ```js
+ * const regexMatchDigits = /\d+/gi;
+ * const regexIsDigit = regexMatcherToValidater(regexMatchDigits); //=> /^\d+$/i
+ * const isDigit = (str) => regexIsDigit.test(str)
+ * isDigit('1') //=> true
+ * isDigit('a') //=> false
+ * ```
+ */
+function regexMatcherToValidater(regex) {
+    return new RegExp(`^${regex.source}$`, regex.flags.replace('g', ''));
+}
+
+/**
+ * Count occurances of a character within a given string.
+ * @param input - The string to search
+ * @param char - The character to find
+ */
+function strCountCharOccurances(input, char) {
+    if (char.length !== 1) {
+        throw new Error('Expected char to be a single character string of length 1.');
+    }
+    let result = 0;
+    for (const c of input) {
+        if (c === char) {
+            result++;
+        }
+    }
+    return result;
+}
+
+/**
+ * Count the number of occurrences of each character in a string.
+ * @example
+ * ```ts
+ * strCountChars('Hello!') // Map(9) { 'H' => 1, 'e' => 1, 'l' => 2, 'o' => 1, '!' => 1 }
+ * ```
+ */
+function strCountChars(string) {
+    const result = new Map();
+    for (const char of string) {
+        const count = result.get(char);
+        result.set(char, count ? count + 1 : 1);
+    }
+    return result;
+}
+
+/**
+ * Returns whether the string is lower case.
+ * @param input - input string
+ * @example
+ * ```js
+ * strIsLowerCase('abc')
+ * //=> true
+ *
+ * strIsLowerCase('ABC')
+ * //=> false
+ * ```
+ */
+function strIsLowerCase(input) {
+    return input === input.toLowerCase();
+}
+
+/**
+ * Returns whether the string is upper case.
+ * @param input - input string
+ * @example
+ * ```js
+ * strIsUpperCase('abc')
+ * //=> false
+ *
+ * strIsUpperCase('ABC')
+ * //=> true
+ * ```
+ */
+function strIsUpperCase(input) {
+    return input === input.toUpperCase();
+}
+
+/**
+ * Takes a multiline string and removes lines that are empty or only contain whitespace.
+ * @param input - input string
+ */
+function strLinesRemoveEmpty(input) {
+    return input
+        .replace(/\r?\n\s*\r?\n/gm, '\n')
+        .trimStart()
+        .trimEnd();
+}
+
+/**
+ * Takes a multiline string and performs a left side trim of whitespace on each line.
+ * @param input - input string
+ */
+function strLinesTrimLeft(input) {
+    return input.replace(/\n\r?\s+/gm, '\n');
+}
+
+/**
+ * Takes a multiline string and performs a right side trim of whitespace on each line.
+ * @param input - input string
+ */
+function strLinesTrimRight(input) {
+    return input.replace(/\s+\n/gm, '\n');
+}
+
+/**
+ * Very crude, simple, fast code formatting of minified code.
+ * Only works when input code:
+ * - is minified
+ * - is scoped with brackets
+ * - expressions end with semicolon
+ * - has no string literals containing any of these characters: '{', '}', ';'.
+ * @param input The minified source code
+ * @param indent The string to use as indentation
+ */
+function strPrettifyMinifiedCode(input, indent = '  ') {
+    const getIndents = (n) => strRepeat('\t', n);
+    const fixIndents = (s) => {
+        return s.replace(/\t +/g, '\t').replace(/\t/g, indent);
+    };
+    let depth = 0;
+    const arr = Array.from(input).map((c) => {
+        if (c === '{') {
+            depth++;
+            return '{\n' + getIndents(depth);
+        }
+        else if (c === '}') {
+            depth--;
+            return '\n' + getIndents(depth) + '}\n' + getIndents(depth);
+        }
+        else if (c === ';') {
+            return ';\n' + getIndents(depth);
+        }
+        else
+            return c;
+    });
+    return fixIndents(strLinesTrimRight(strLinesRemoveEmpty(arr.join(''))));
+}
+
+/**
+ * Remove duplicate characters from a string.
+ * ```ts
+ * strRemoveDuplicateChars('Hello world!') // 'Helo wrd!'
+ * ```
+ */
+function strRemoveDuplicateChars(string) {
+    return Array.from(new Set(string)).join('');
+}
+
+/**
+ * Returns a given number of contatenations of a given input string.
+ * @param input - input string
+ * @param n - Number of repetitions of the input string
+ */
+function strRepeat(input, n) {
+    return new Array(n).fill(input).join('');
+}
+
+/**
+ * In a given string, replace all occurances of a given search string with a given replacement string.
+ * @param input input string
+ * @param replace string to find a replace
+ * @param replaceWith string to replace matches with
+ * @param flags RegExp flags as single string.
+ */
+function strReplaceAll(input, replace, replaceWith, flags = 'g') {
+    return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith);
+}
+
+/**
+ * Sorts the characters in a string.
+ * @example
+ * ```ts
+ * strSortChars('hello') // 'ehllo'
+ * ```
+ */
+function strSortChars(string) {
+    return Array.from(string).sort().join('');
+}
+
+function isCamelCaseWordBreakIndex(word, index) {
+    return (strIsLowerCase(word[index - 1]) &&
+        strIsUpperCase(word[index]) &&
+        !isNumericString(word[index - 1]) &&
+        !isNumericString(word[index]));
+}
+/**
+ * Returns an array of words in the string
+ * @param input - input string
+ * @example
+ * ```js
+ * strSplitCamelCase('someCamelCase')
+ * //=> ['some', 'Camel', 'Case']
+ * ```
+ */
+function strSplitCamelCase(word) {
+    const result = [];
+    const lastCharIndex = word.length - 1;
+    let lastCamelCaseBreakIndex = 0;
+    let foundCamelCase = false;
+    for (let i = 1; i < word.length; i++) {
+        if (foundCamelCase && i === lastCharIndex) {
+            // last char
+            const sub = word.substring(lastCamelCaseBreakIndex);
+            if (sub)
+                result.push(sub);
+            continue;
+        }
+        if (isCamelCaseWordBreakIndex(word, i)) {
+            const sub = word.substring(lastCamelCaseBreakIndex, i);
+            if (!sub)
+                continue;
+            result.push(sub);
+            lastCamelCaseBreakIndex = i;
+            foundCamelCase = true;
+        }
+    }
+    // if no splits needed, just return the word as it was
+    if (!foundCamelCase) {
+        result.push(word);
+    }
+    return result;
+}
+
+/**
+ * Converts a string to an array of char codes
+ * @example
+ * ```ts
+ * strToCharCodes('hello') // [104, 101, 108, 108, 111]
+ * ```
+ */
+function strToCharCodes(str) {
+    const len = str.length;
+    const ret = new Array(len);
+    for (let i = 0; i < len; i++) {
+        ret[i] = str.charCodeAt(i);
+    }
+    return ret;
+}
+
+/**
+ * Returns a string containing the set of all unique characters in a string.
+ * @example
+ * ```ts
+ * strToCharSet('hello') // 'ehlo'
+ * ```
+ */
+function strToCharSet(string) {
+    return Array.from(new Set(string)).sort().join('');
+}
+
+/**
+ * Intelligently split a string into sentences. Uses NLP with parse tree to determine sentence boundaries.
+ * @param text Text to split into sentences
+ * @example
+ * ```ts
+ * strToSentences('Hello world. How are you?') // ['Hello world.', 'How are you?']
+ * ```
+ */
+function strToSentences(text) {
+    return split(text)
+        .map((node) => {
+        const [start, end] = node.range;
+        return text.substring(start, end).replace(repeatingWhiteSpace, ' ').trim();
+    })
+        .filter((s) => !!s);
+}
+
+/**
+ * Returns an array of words in the string
+ * @param input - input string
+ * @example
+ * ```js
+ * strToWords('How are you?')
+ * //=> ['How', 'are', 'you']
+ * ```
+ */
+function strToWords(input) {
+    return words$1(input);
+}
+
+/**
+ * Inserts provided strings before and after a string.
+ * @param input - input string
+ * @param left - string to place before
+ * @param right - string to place after
+ * @param flags - regex flags
+ */
+function strUnwrap(input, left, right, flags = '') {
+    return input
+        .replace(new RegExp('^' + regexEscapeString(left), flags), '')
+        .replace(new RegExp(regexEscapeString(right) + '$', flags), '');
+}
+
+/**
+ * Inserts provided strings before and after a string.
+ * @param input - input string
+ * @param left - string to place before
+ * @param right - string to place after
+ * @example
+ * ```js
+ * expect(util.strWrapBetween('input', '#', '&')).toBe('#input&');
+ * ```
+ */
+function strWrapBetween(input, left, right) {
+    return left + input + right;
+}
+
+/**
+ * Inserts a provided string before and after a string.
+ * @param input - input string
+ * @param wrap - string to place before and after
+ * @example
+ * ```js
+ * expect(util.strWrapIn('input', '#')).toBe('#input#');
+ * ```
+ */
+function strWrapIn(input, wrap) {
+    return wrap + input + wrap;
+}
+
+/**
+ * Wraps a string in angle brackets.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInAngleBrackets('input')).toBe('<input>');
+ * ```
+ */
+function strWrapInAngleBrackets(input) {
+    return '<' + input + '>';
+}
+
+/**
+ * Wraps a string in braces.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInBraces('input')).toBe('{input}');
+ * ```
+ */
+function strWrapInBraces(input) {
+    return '{' + input + '}';
+}
+
+/**
+ * Wraps a string in brackets.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInBrackets('input')).toBe('[input]');
+ * ```
+ */
+function strWrapInBrackets(input) {
+    return '[' + input + ']';
+}
+
+/**
+ * Wraps a string in parenthesis.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInDoubleQuotes('input')).toBe('"input"');
+ * ```
+ */
+function strWrapInDoubleQuotes(input) {
+    return '"' + input + '"';
+}
+
+/**
+ * Wraps a string in parenthesis.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInParenthesis('input')).toBe('(input)');
+ * ```
+ */
+function strWrapInParenthesis(input) {
+    return '(' + input + ')';
+}
+
+/**
+ * Wraps a string in parenthesis.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInSingleQuotes('input')).toBe("'input'");
+ * ```
+ */
+function strWrapInSingleQuotes(input) {
+    return "'" + input + "'";
+}
+
+/**
+ * Checks if a string is a valid regex flags string.
+ * @example
+ * ```ts
+ * regexIsValidFlags('gim') // true
+ * regexIsValidFlags('gmisuy') // false
+ * ```
+ */
+function regexIsValidFlags(flags) {
+    return /^[gimsuy]*$/.test(flags) && strRemoveDuplicateChars(flags).length === flags.length;
+}
+
+/**
+ * Takes a string of RegExp flags and returns a string guaranteed to be valid.
+ * @param flags - string of RegExp flags
+ * @example
+ * ```ts
+ * regexFixFlags('ggim') // 'gim'
+ * regexFixFlags('?gim*') // 'gim'
+ * ```
+ */
+function regexFixFlags(flags) {
+    if (!flags)
+        return flags;
+    return strSortChars(strRemoveDuplicateChars(flags).replace(/[^gimsuy]/gi, ''));
+}
+
+/**
+ * Returns an array of all valid flags for a regular expression.
+ * @example
+ * ```ts
+ * regexValidFlags() //=> ['g', 'i', 'm', 's', 'u', 'y']
+ * ```
+ */
+function regexValidFlags() {
+    return ['g', 'i', 'm', 's', 'u', 'y'];
+}
+
+/**
+ * A RegExp class extension with extra features.
+ */
+class BemojeRegex extends RegExp {
+    constructor(source, flags = '', options) {
+        if (source instanceof RegExp && !flags) {
+            super(source);
+        }
+        else {
+            options = Object.assign({}, BemojeRegex.defaultOptions, options);
+            if (source instanceof RegExp) {
+                flags = flags ? flags : source.flags;
+                source = source.source;
+            }
+            else if (options === null || options === void 0 ? void 0 : options.escapeSourceString) {
+                source = regexEscapeString(source);
+            }
+            if (options.fixFlags) {
+                flags = regexFixFlags(flags);
+            }
+            else {
+                flags = strSortChars(flags);
+            }
+            super(source, flags);
+        }
+        this.options = options || BemojeRegex.defaultOptions;
+    }
+    /**
+     * Returns true if the RegExp instance has same source and flags.
+     * @param regex - RegExp instance to compare to.
+     */
+    compareTo(regex) {
+        return this.source === regex.source && this.flags === regex.flags;
+    }
+    /**
+     * Returns true if the RegExp instance is a also BemojeRegex instance and both have the same source and flags.
+     * @param regex - RegExp instance to compare to.
+     */
+    compareToStrict(regex) {
+        return regex instanceof BemojeRegex && this.source === regex.source && this.flags === regex.flags;
+    }
+    /**
+     * Returns an array of named groups defined inside the RegExp instance.
+     */
+    getGroupNames() {
+        return regexGetGroupNames(this);
+    }
+    /**
+     * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
+     */
+    *rexec(string) {
+        yield* rexec(this, string);
+    }
+    /**
+     * Convert a regex for matching to a regex for validation.
+     */
+    toValidator() {
+        return Object.setPrototypeOf(regexMatcherToValidater(this), BemojeRegex.prototype);
+    }
+    /**
+     * Convert the BemojeRegex instance to a RegExp instance.
+     */
+    toRegExp() {
+        return Object.setPrototypeOf(this, RegExp.prototype);
+    }
+}
+BemojeRegex.defaultOptions = {
+    escapeSourceString: false,
+    fixFlags: false,
+};
+/**
+ * Checks if a string is a valid regex flags string.
+ */
+BemojeRegex.isValidFlags = regexIsValidFlags;
+/**
+ * Takes a string of RegExp flags and returns a string guaranteed to be valid.
+ * @param flags - string of RegExp flags
+ */
+BemojeRegex.fixFlags = regexFixFlags;
+/**
+ * Returns an array of all valid flags for a regular expression.
+ */
+BemojeRegex.getValidFlags = regexValidFlags;
+// declare global {
+//   interface RegExp {
+//     /**
+//      * Convert the RegExp instance to a BemojeRegex instance.
+//      */
+//     get bemoje(): BemojeRegex
+//   }
+// }
+// Object.defineProperty(RegExp.prototype, 'bemoje', {
+//   get: function () {
+//     return Object.setPrototypeOf(this, BemojeRegex.prototype)
+//   },
+// })
+// const reg = new BemojeRegex(/(?<asd>\/\*\*)(?<aga3>.*?)(?=\*\/)(?<ahfdtr>\*\/)/gi)
+// console.log(reg.getGroupNames())
+// console.log(reg.getGroupNames())
+// console.log(reg.toValidator())
+// console.log(reg.toRegExp())
+// const reg2 = new BemojeRegex(/abc/g)
+// const str2 = 'lala abc lalala abc ...'
+// console.log([...reg2.rexec(str2)])
+
+/**
+ * Builds a regex that matches a string between two strings. Supports regex instead of string.
+ * @param left - string or regex to match before
+ * @param right - string or regex to match after
+ * @param flags - regex flags - 'g' and 's' are always added to whatever flags are passed.
+ * @example
+ * ```ts
+ * const regex = buildRegexBetween(/a/, /b/)
+ * 'abc'.match(regex)?.groups?.mid // 'c'
+ * ```
+ */
+function buildRegexBetween(left, right, flags) {
+    left = typeof left === 'string' ? regexEscapeString(left) : left.source;
+    right = typeof right === 'string' ? regexEscapeString(right) : right.source;
+    flags = flags ? strRemoveDuplicateChars('gs' + flags) : 'gs';
+    return new RegExp(`(?<left>${left})(?<mid>.*?)(?=${right})(?<right>${right})`, flags);
+}
+
+/**
  * Returns a function that matches a string between two given strings or regexes.
  * @param left - string or regex to match before
  * @param right - string or regex to match after
  * @param flags - regex flags - 'g' and 's' are always added to whatever flags are passed.
+ * @example
+ * ```ts
+ * const input = 'Hello world! This is a test string.'
+ * const matchBetween = regexMatchBetween('Hello', 'test')
+ * [...matchBetween(input)]
+ * // [
+ * //   {
+ * //     left: { index: 0, match: 'Hello', groups: {}, lastIndex: 5 },
+ * //     mid: { index: 12, match: ' world! This is a ', groups: {}, lastIndex: 31 },
+ * //     right: { index: 36, match: 'test', groups: {}, lastIndex: 40 },
+ * //   },
+ * // ]
+ * ```
  */
 function regexMatchBetween(left, right, flags) {
     left = typeof left === 'string' ? regexEscapeString(left) : left.source;
@@ -2196,37 +1990,8 @@ function regexMatchBetween(left, right, flags) {
         }
     };
 }
-// const code = `
-// import { regexEscapeString } from '../../regex'
-// /**
-//  * Inserts provided strings before and after a string.
-//  * @param input - input string
-//  * @param before - string to place before
-//  * @param after - string to place after
-//  * @example
-//  */
-// export function strUnwrap(input: string, before: string, after: string, caseSensitive = true): string {
-//   const flags = caseSensitive ? '' : 'i'
-//   return input
-//     .replace(new RegExp('^' + regexEscapeString(before), flags), '')
-//     .replace(new RegExp(regexEscapeString(after) + '$', flags), '')
-// }
-// /**
-//  * asdasdsad
-//  * @param input - input string
-//  * @param before - string to place before
-//  * @param after - string to place after
-//  * @example
-//  */
-// `
-// const left = '/**'
-// const right = ' */'
-// const matchBlockComment = regexMatchBetween(left, right)
-// for (const match of matchBlockComment(code)) {
-//   console.log(match)
-// }
 
-// const REGEX_VALID_A = /^[A-Z]+$/g;
+const REGEX_VALID_A = /^[A-Z]*$/i;
 const alphaToColMap = new Map();
 /**
  * Convert spreadsheet column letter(s) to column-number
@@ -2238,7 +2003,8 @@ function letterToCol(A, zeroIndexed = false) {
     const fromMem = alphaToColMap.get(A);
     if (fromMem)
         return fromMem;
-    // if (REGEX_VALID_A.test(A)) throw new Error(`Invalid column letter: ${A}`);
+    if (!REGEX_VALID_A.test(A))
+        throw new Error(`Invalid column letter: ${A}`);
     let col = 0;
     const length = A.length;
     for (let i = 0; i < length; i++) {
@@ -2613,6 +2379,57 @@ class Table extends Base {
     }
 }
 
+function isValidDate(year, month, day, hour, minute, second, millisecond) {
+    let str = '';
+    let format = '';
+    if (year !== undefined) {
+        format += 'YYYY';
+        str += `${year.toString().padStart(4, '0')}`;
+    }
+    if (month !== undefined) {
+        format += '-MM';
+        str += `-${month.toString().padStart(2, '0')}`;
+    }
+    if (day !== undefined) {
+        format += '-DD';
+        str += `-${day.toString().padStart(2, '0')}`;
+    }
+    if (hour !== undefined) {
+        format += ' HH';
+        str += ` ${hour.toString().padStart(2, '0')}`;
+    }
+    if (minute !== undefined) {
+        format += ':mm';
+        str += `:${minute.toString().padStart(2, '0')}`;
+    }
+    if (second !== undefined) {
+        format += ':ss';
+        str += `:${second.toString().padStart(2, '0')}`;
+    }
+    if (millisecond !== undefined) {
+        format += ':SSS';
+        str += `:${millisecond.toString().padStart(3, '0')}`;
+    }
+    return date.isValid(str, format);
+}
+
+/**
+ * Throws if the given year is invalid.
+ */
+function assertValidDate(year, month, day, hour, minute, second, millisecond) {
+    if (!isValidDate(year, month, day, hour, minute, second, millisecond)) {
+        throw new Error(`Expected valid date. Got: ${JSON.stringify({
+            year,
+            month,
+            day,
+            hour,
+            minute,
+            second,
+            millisecond,
+        })}.`);
+    }
+}
+
 /**
  * Check if a given month number is valid.
  */
@@ -2672,57 +2489,6 @@ function isValidDateYear(year) {
 function assertValidDateYear(year) {
     if (!isValidDateYear(year))
         throw new Error(`Invalid year: ${year}.`);
-}
-
-function isValidDate(year, month, day, hour, minute, second, millisecond) {
-    let str = '';
-    let format = '';
-    if (year !== undefined) {
-        format += 'YYYY';
-        str += `${year.toString().padStart(4, '0')}`;
-    }
-    if (month !== undefined) {
-        format += '-MM';
-        str += `-${month.toString().padStart(2, '0')}`;
-    }
-    if (day !== undefined) {
-        format += '-DD';
-        str += `-${day.toString().padStart(2, '0')}`;
-    }
-    if (hour !== undefined) {
-        format += ' HH';
-        str += ` ${hour.toString().padStart(2, '0')}`;
-    }
-    if (minute !== undefined) {
-        format += ':mm';
-        str += `:${minute.toString().padStart(2, '0')}`;
-    }
-    if (second !== undefined) {
-        format += ':ss';
-        str += `:${second.toString().padStart(2, '0')}`;
-    }
-    if (millisecond !== undefined) {
-        format += ':SSS';
-        str += `:${millisecond.toString().padStart(3, '0')}`;
-    }
-    return date.isValid(str, format);
-}
-
-/**
- * Throws if the given year is invalid.
- */
-function assertValidDate(year, month, day, hour, minute, second, millisecond) {
-    if (!isValidDate(year, month, day, hour, minute, second, millisecond)) {
-        throw new Error(`Expected valid date. Got: ${JSON.stringify({
-            year,
-            month,
-            day,
-            hour,
-            minute,
-            second,
-            millisecond,
-        })}.`);
-    }
 }
 
 /**
@@ -2785,6 +2551,7 @@ class ExtensibleFunction extends Function {
  * @returns {Array<Array<string>>} Data table which is an arrays of row-arrays of cell content (string).
  */
 function htmlTableTo2dArray(element, headers = true) {
+    var _a;
     const result = [];
     const htmlRows = element.querySelectorAll('tr');
     for (let i = 0; i < htmlRows.length; i++) {
@@ -2793,7 +2560,9 @@ function htmlTableTo2dArray(element, headers = true) {
         const htmlCells = htmlRow.querySelectorAll(headers ? 'th,td' : 'td');
         for (let j = 0; j < htmlCells.length; j++) {
             const htmlCell = htmlCells[j];
-            row.push(htmlCell.innerText.trim());
+            if (htmlCell) {
+                row.push(((_a = htmlCell === null || htmlCell === void 0 ? void 0 : htmlCell.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || '');
+            }
         }
         if (!headers) {
             if (htmlRow.querySelectorAll('th').length) {
@@ -2812,6 +2581,13 @@ function htmlTableTo2dArray(element, headers = true) {
  * @param map - map to get value from
  * @param key - key to get value for
  * @param defaultValue - default value to set if key is not present
+ * @example
+ * ```ts
+ * const map = new Map<string, number>()
+ * map.set('key', 1)
+ * mapGetOrDefault(map, 'key', 2) // Output: 1
+ * mapGetOrDefault(map, 'nonexistentKey', 2) // Output: 2
+ * ```
  */
 function mapGetOrDefault(map, key, defaultValue) {
     const value = map.get(key);
@@ -2826,6 +2602,13 @@ function mapGetOrDefault(map, key, defaultValue) {
  * @param map - map to get value from
  * @param key - key to get value for
  * @param fun - function to update value with
+ * @example
+ * ```ts
+ * const map = new Map<string, number>()
+ * map.set('key', 1)
+ * mapUpdate(map, 'key', (value) => value! + 1) // Output: Map { 'key' => 2 }
+ * mapUpdate(map, 'nonexistentKey', (value) => value! + 1) // Output: Map {}
+ * ```
  */
 function mapUpdate(map, key, fun) {
     const value = map.get(key);
@@ -2861,199 +2644,118 @@ function mapUpdateDefault(map, key, defaultValue, fun) {
     return map;
 }
 
-class Sudoku {
-    constructor(sudoku, candidates, isGuess = false) {
-        if (!isGuess) {
-            if (sudoku.length !== 9)
-                throw Error('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
-            for (const row of sudoku) {
-                if (row.length !== 9)
-                    throw Error('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
-                for (const cell of row) {
-                    if (cell !== undefined && (!Number.isInteger(cell) || cell < 1 || cell > 9)) {
-                        throw Error('Expected sudoku to be a 9x9 array of integers between 1 and 9.');
-                    }
-                }
-            }
-        }
-        this.sudoku = [];
-        for (let i = 0; i <= 8; i++) {
-            this.sudoku[i] = sudoku[i].slice();
-        }
-        if (candidates) {
-            this.candidates = candidates.map((row) => row.map((set) => new Set(set)));
-        }
-        else {
-            this.candidates = [];
-            for (let r = 0; r <= 8; r++) {
-                this.candidates[r] = [];
-                for (let c = 0; c <= 8; c++) {
-                    if (this.sudoku[r][c] === undefined) {
-                        this.candidates[r][c] = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-                    }
-                    else {
-                        this.candidates[r][c] = new Set([]);
-                    }
-                }
-            }
-        }
-        this.isGuess = isGuess;
-    }
-    *itRow(r) {
-        for (let c = 0; c <= 8; c++) {
-            yield this.sudoku[r][c];
-        }
-    }
-    *itRows() {
-        for (let r = 0; r <= 8; r++) {
-            yield this.itRow(r);
-        }
-    }
-    *itCol(c) {
-        for (let r = 0; r <= 8; r++) {
-            yield this.sudoku[r][c];
-        }
-    }
-    *itCols() {
-        for (let c = 0; c <= 8; c++) {
-            yield this.itCol(c);
-        }
-    }
-    *itNonant(r, c) {
-        const row = r < 3 ? 0 : r < 6 ? 3 : 6;
-        const col = c < 3 ? 0 : c < 6 ? 3 : 6;
-        for (let r = row; r < row + 3; r++) {
-            for (let c = col; c < col + 3; c++) {
-                yield this.sudoku[r][c];
-            }
-        }
-    }
-    *itNonants() {
-        yield this.itNonant(0, 0);
-        yield this.itNonant(0, 3);
-        yield this.itNonant(0, 6);
-        yield this.itNonant(3, 0);
-        yield this.itNonant(3, 3);
-        yield this.itNonant(3, 6);
-        yield this.itNonant(6, 0);
-        yield this.itNonant(6, 3);
-        yield this.itNonant(6, 6);
-    }
-    *itAllSeries() {
-        yield* this.itRows();
-        yield* this.itCols();
-        yield* this.itNonants();
-    }
-    isCompleteSeries(itSeries) {
-        const seen = new Set();
-        for (const v of itSeries) {
-            if (v === undefined)
-                return false;
-            if (!seen.has(v)) {
-                seen.add(v);
-            }
-            else {
-                return false;
-            }
-        }
-        return true;
-    }
-    isCompleteSudoku() {
-        for (const itSeries of this.itAllSeries()) {
-            if (!this.isCompleteSeries(itSeries)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    solveAt(row, col) {
-        if (this.sudoku[row][col] !== undefined)
-            return false;
-        const candidates = this.candidates[row][col];
-        for (let i = 0; i <= 8; i++) {
-            const v1 = this.sudoku[row][i];
-            if (v1 !== undefined) {
-                candidates.delete(v1);
-            }
-            const v2 = this.sudoku[i][col];
-            if (v2 !== undefined) {
-                candidates.delete(v2);
-            }
-        }
-        for (const v of this.itNonant(row, col)) {
-            if (v !== undefined) {
-                candidates.delete(v);
-            }
-        }
-        if (candidates.size === 1) {
-            this.sudoku[row][col] = candidates.values().next().value;
-            const v = this.sudoku[row][col];
-            if (v !== undefined) {
-                candidates.delete(v);
-            }
-            return true;
-        }
-        return false;
-    }
-    solve() {
-        let foundAnswer = false;
-        const tryAll = () => {
-            for (let r = 0; r <= 8; r++) {
-                for (let c = 0; c <= 8; c++) {
-                    if (this.solveAt(r, c)) {
-                        foundAnswer = true;
-                    }
-                }
-            }
-        };
-        tryAll();
-        tryAll();
-        if (foundAnswer) {
-            return this.solve();
-        }
-        else if (!this.isCompleteSudoku()) {
-            for (let maxCandidates = 2; maxCandidates <= 9; maxCandidates++) {
-                for (let r = 0; r <= 8; r++) {
-                    for (let c = 0; c <= 8; c++) {
-                        if (this.candidates[r][c].size === maxCandidates) {
-                            const guess = this.candidates[r][c].values().next().value;
-                            this.candidates[r][c].delete(guess);
-                            const newSudoku = new Sudoku(this.sudoku, this.candidates, true);
-                            newSudoku.sudoku[r][c] = guess;
-                            newSudoku.candidates[r][c] = new Set();
-                            const successful = newSudoku.solve();
-                            if (successful) {
-                                this.sudoku = newSudoku.sudoku;
-                                this.candidates = newSudoku.candidates;
-                            }
-                            return this.solve();
-                        }
-                    }
-                }
-            }
-            if (!this.isGuess) {
-                this.print();
-                throw Error('Sudoku is invalid and cannot be solved.');
-            }
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-    print() {
-        console.log('-------------------');
-        for (let r = 0; r <= 8; r++) {
-            console.log('|' + this.sudoku[r].map((v) => (v === undefined ? ' ' : v)).join('|') + '|');
-        }
-        console.log('-------------------');
-    }
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 }
-function solveSudoku(sudoku) {
-    const instance = new Sudoku(sudoku);
-    instance.solve();
-    return instance;
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 }
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+const openai = new OpenAIApi(new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+}));
+// type t = { data: CreateChatCompletionResponse; text: string }
+function gptHttpRequester(temperature = 0, instructions) {
+    return function (prompt) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield openai.createChatCompletion({
+                model: 'gpt-3.5-turbo',
+                temperature,
+                // top_p: 0.1,
+                messages: [
+                    {
+                        role: 'system',
+                        content: instructions,
+                    },
+                    { role: 'user', content: prompt },
+                ],
+            });
+            const data = response.data;
+            const text = ((_c = (_b = (_a = data === null || data === void 0 ? void 0 : data.choices[0]) === null || _a === void 0 ? void 0 : _a.message) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.toString()) || '';
+            return { data, text };
+        });
+    };
+}
+const generateUnitTestsGPT = gptHttpRequester(0, [
+    'You are a helpful assistant who will help write tests for TypeScript code.',
+    'The tests need to be written using the Jest testing framwork.',
+    'Use the Jest framework methods called "describe" and "it".',
+    'Your reply should only be the code. No comments or other text.',
+].join('\n'));
+function generateUnitTests(sourceCode, dirname, exportName, append = true) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const testFilepath = path.join(process.cwd(), 'tests', dirname + '.test.ts');
+        const testFileExists = fs.existsSync(testFilepath);
+        if (!append && testFileExists)
+            return console.log('test already exists: ' + testFilepath);
+        if (append && !testFileExists)
+            append = false;
+        let testFileCurrentCode = '';
+        if (append) {
+            testFileCurrentCode = fs.readFileSync(testFilepath).toString();
+            if (testFileCurrentCode.includes(exportName)) {
+                return console.log('tests already exists in the file: ' + testFilepath);
+            }
+        }
+        const result = yield generateUnitTestsGPT(sourceCode.replace(/import .+\n/gm, '').trim());
+        const data = result.data;
+        const text = (append ? '' : `import * as util from '../src/libs/${dirname}'\n\n`) +
+            result.text
+                .trim()
+                .replace(/^```(\w+)?/, '')
+                .replace(/```$/, '')
+                .replace(/import .+\n/gm, '')
+                .split(exportName)
+                .join('util.' + exportName)
+                .replace(`describe('util.`, `describe('`)
+                .replace(`describe("util.`, `describe("`)
+                .trim();
+        yield fs.promises.writeFile(testFilepath, append ? testFileCurrentCode + '\n\n' + text : text);
+        return { data, text };
+    });
+}
+// generateUnitTests(code1, 'object', 'iteratePrototypeChain')
+// generateUnitTests(code2, 'node', 'createFileExtensionFilter', true)
+// generateUnitTests(code3, 'regex', 'rexec')
 
 function singlePass(sentences, lowerBound, upperBound) {
     // determine lower and upper bounds if not given
@@ -3123,7 +2825,7 @@ function createFileExtensionFilter(...fileExtensions) {
         return () => true;
     return (filepath) => {
         for (const ext of fileExtensions.map(normalizeFileExtension)) {
-            if (Path.extname(filepath) === ext) {
+            if (path.extname(filepath) === ext) {
                 return true;
             }
         }
@@ -3330,7 +3032,7 @@ function memoryUsageUsFormat() {
  * @param dirs directory names from the current working directory.
  */
 function pathFromCwd(...dirs) {
-    return Path.join(process.cwd(), ...dirs);
+    return path.join(process.cwd(), ...dirs);
 }
 
 /**
@@ -3339,51 +3041,6 @@ function pathFromCwd(...dirs) {
  */
 function readFileStringSync(path) {
     return fs.readFileSync(path, 'utf8').toString();
-}
-
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-}
-
-function __values(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-}
-
-function __asyncValues(o) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var m = o[Symbol.asyncIterator], i;
-    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 }
 
 /**
@@ -3527,5 +3184,178 @@ function setUnion(sets) {
     return result;
 }
 
-export { A1ToColRow, Base, BemojeRegex, BemojeString, ExtensibleFunction, Matrix, Queue, SortedArray, StringStream, Table, Timer, arr2dToCSV, arrAssignFrom, arrEvery, arrFilterMutable, arrFlatten, arrFlattenMutable, arrIndicesOf, arrMapMutable, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSwap, arrayBytesToInt, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, asyncWithTimeout, atob, btoa, bufferToInt, buildRegexBetween, bytesToInt, colRowToA1, colToLetter, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createFileExtensionFilter, ensureValidWindowsPath, getCentury, getCurrentYear, htmlTableTo2dArray, intToArrayBytes, intToBuffer, intToBytes, isConstructor, isEven, isHex$1 as isHex, isHexOrUnicode, isIterable, isLeapYear, isNumericString, isObject, isOdd, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, iteratePrototypeChain, letterToCol, mapGetOrDefault, mapUpdate, mapUpdateDefault, memoryUsage, memoryUsageEuFormat, memoryUsageUsFormat, normalizeFileExtension, normalizeLineLengths, numApproximateLog10, numDaysInMonth, numFormatEU, numFormatUS, padArrayBytesLeft, padArrayBytesRight, parseSocialSecurityNumberDK, pathFromCwd, randomIntBetween, readFileStringSync, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexLibrary, regexMatchBetween, regexMatcherToValidater, regexValidFlags, rexec, round, roundDown, roundUp, setEnumerable, setIntersection, setNonConfigurable, setNonEnumerable, setNonEnumerablePrivateProperties, setNonWritable, setUnion, setWritable, solveSudoku, strCountCharOccurances, strCountChars, strIsLowerCase, strIsUpperCase, strLinesRemoveEmpty, strLinesTrimLeft, strLinesTrimRight, strPrettifyMinifiedCode, strRemoveDuplicateChars, strRepeat, strReplaceAll, strSortChars, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToWords, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, trimArrayBytesLeft, trimArrayBytesRight };
+/**
+ * Returns a new set with all elements that are in the first set but not in the second set.
+ */
+function setDifference(setA, setB) {
+    const _difference = new Set(setA);
+    for (const elem of setB) {
+        _difference.delete(elem);
+    }
+    return _difference;
+}
+
+/**
+ * Returns true if the first set is a superset of the second set.
+ */
+function setIsSuperset(set, subset) {
+    for (const elem of subset) {
+        if (!set.has(elem)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * Returns the symmetric difference between two sets.
+ */
+function setSymmetricDifference(setA, setB) {
+    const _difference = new Set(setA);
+    for (const elem of setB) {
+        if (_difference.has(elem)) {
+            _difference.delete(elem);
+        }
+        else {
+            _difference.add(elem);
+        }
+    }
+    return _difference;
+}
+
+/**
+ * Same as Array.prototype.filter but performs operations in palce (not immutable).
+ * @param input - input array
+ * @param f - predicate
+ */
+function arrFilterMutable(input, f) {
+    return arrAssignFrom(input, input.filter(f));
+}
+
+/**
+ * Flattens the passed array recursively to a specified depth. Immutable.
+ * @param input - the array to flatten
+ * @param maxDepth - the maximum recursive flattening depth.
+ */
+function arrFlatten(input, maxDepth = Number.MAX_SAFE_INTEGER) {
+    const accum = [];
+    (function recurse(arr = input, depth = 0) {
+        for (let i = 0; i < arr.length; i++) {
+            if (Array.isArray(arr[i]) && depth < maxDepth) {
+                recurse(arr[i], depth + 1);
+            }
+            else {
+                accum.push(arr[i]);
+            }
+        }
+    })();
+    return accum;
+}
+
+/**
+ * Flattens the passed array recursively. Mutable.
+ * @param input - the array to flatten
+ * @param maxDepth - the maximum recursive flattening depth.
+ */
+function arrFlattenMutable(input, maxDepth = Number.MAX_SAFE_INTEGER) {
+    return arrAssignFrom(input, arrFlatten(input, maxDepth));
+}
+
+/**
+ * Returns all indexes at which an element is found.
+ * @param input - The array to search
+ * @param element - The element to find
+ */
+function arrIndicesOf(input, element) {
+    const result = [];
+    for (let i = 0; i < input.length; i++) {
+        if (element === input[i]) {
+            result.push(i);
+        }
+    }
+    return result;
+}
+
+/**
+ * Same as Array.prototype.map but performs operations in palce (not immutable).
+ * @param input - input array
+ * @param f - iterator
+ * @example
+ * ```js
+ * expect(
+ *   util.arrMapMutable([1, 2, 3, 4, 5], (value: number) => {
+ *     return value + 1;
+ *   }),
+ * ).toStrictEqual([2, 3, 4, 5, 6]);
+ * ```
+ */
+function arrMapMutable(input, f) {
+    for (let i = 0; i < input.length; i++) {
+        input[i] = f(input[i], i, input);
+    }
+    return input;
+}
+
+/**
+ * Returns whether or not two arrays shallow equal each other.
+ * @param input1 first array
+ * @param input2 second array
+ */
+function arrShallowEquals(input1, input2) {
+    if (input1.length !== input2.length)
+        return false;
+    return arrEvery(input1, (value, i) => value === input2[i]);
+}
+
+/**
+ * Swap array elements in place. Runtime: O(1)
+ * @param input to be modified
+ * @param from index of the first element
+ * @param to index of the second element
+ */
+function arrSwap(input, from, to) {
+    [input[from], input[to]] = [input[to], input[from]];
+    return input;
+}
+
+/**
+ * Shuffle items in an array in-place. Guarantees that the array has changes.
+ * @param input - The array to shuffle.
+ */
+function arrShuffle(input) {
+    const original = input.slice();
+    let equal = true;
+    while (equal) {
+        for (let i = 0, len = input.length; i < len; i++) {
+            const newIndex = Math.floor(Math.random() * len);
+            arrSwap(input, i, newIndex);
+        }
+        equal = arrShallowEquals(input, original);
+    }
+    return input;
+}
+
+/**
+ * Check whether a condition is true for any element of an array. The condition check is in the form of a callback.
+ * @param input - The array
+ * @param  predicate - A predicate callback function
+ */
+function arrSome(input, predicate) {
+    for (let i = 0, len = input.length; i < len; i++) {
+        if (predicate(input[i], i, input) === true) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Uses Array.prototype.sort but sorts numbers.
+ * @param input - input array
+ */
+function arrSortNumeric(input) {
+    return input.sort(compareNumeric);
+}
+
+export { A1ToColRow, Base, BemojeRegex, ExtensibleFunction, Matrix, Queue, SortedArray, StringStream, Table, Timer, arr2dToCSV, arrAssignFrom, arrEvery, arrFilterMutable, arrFlatten, arrFlattenMutable, arrIndicesOf, arrMapMutable, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSwap, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, asyncWithTimeout, atob, btoa, buildRegexBetween, bytesToInt, colRowToA1, colToLetter, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createFileExtensionFilter, ensureValidWindowsPath, generateUnitTests, getCentury, getCurrentYear, htmlTableTo2dArray, intToArrayBytes, intToBuffer, intToBytes, isConstructor, isEven, isHex$1 as isHex, isHexOrUnicode, isIterable, isLeapYear, isNumericString, isObject, isOdd, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, iteratePrototypeChain, letterToCol, mapGetOrDefault, mapUpdate, mapUpdateDefault, memoryUsage, memoryUsageEuFormat, memoryUsageUsFormat, normalizeFileExtension, normalizeLineLengths, numApproximateLog10, numDaysInMonth, numFormatEU, numFormatUS, padArrayBytesLeft, padArrayBytesRight, parseSocialSecurityNumberDK, pathFromCwd, randomIntBetween, readFileStringSync, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexLibrary, regexMatchBetween, regexMatcherToValidater, regexValidFlags, rexec, round, roundDown, roundUp, setDifference, setEnumerable, setIntersection, setIsSuperset, setNonConfigurable, setNonEnumerable, setNonEnumerablePrivateProperties, setNonWritable, setSymmetricDifference, setUnion, setWritable, strCountCharOccurances, strCountChars, strIsLowerCase, strIsUpperCase, strLinesRemoveEmpty, strLinesTrimLeft, strLinesTrimRight, strPrettifyMinifiedCode, strRemoveDuplicateChars, strRepeat, strReplaceAll, strSortChars, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToWords, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, trimArrayBytesLeft, trimArrayBytesRight };
 //# sourceMappingURL=index.esm.js.map

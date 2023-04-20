@@ -1,6 +1,6 @@
 {
   "name": "@bemoje/node-util",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Various utilities for node-js development",
   "cdn": "dist/index.umd.min.js",
   "main": "dist/index.js",
@@ -27,7 +27,6 @@
     "eslint-plugin-prettier": "^3.4.1",
     "extract-comments": "^1.1.0",
     "jest": "^26.6.3",
-    "jsdom": "^21.1.1",
     "keyword-extractor": "^0.0.25",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
@@ -37,7 +36,8 @@
     "ts-jest": "^26.5.6",
     "typedoc": "^0.23.24",
     "typedoc-plugin-markdown": "^3.14.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "walkdir": "^0.4.1"
   },
   "scripts": {
     "docs": "rimraf docs && typedoc --readme none --plugin typedoc-plugin-markdown --theme markdown --excludeProtected --excludePrivate src/index.ts",
@@ -45,12 +45,12 @@
     "test": "npm run untested && npm run lint && jest",
     "lint": "eslint \"*/**/*.{ts,js,json}\" --fix",
     "build": "npm run lint && rimraf dist && rimraf types && rollup --config ./rollup.config.js",
-    "generators": "node repo-manager.js --generators",
-    "versionPatch": "node repo-manager.js --versionPatch",
-    "versionMinor": "node repo-manager.js --versionMinor",
-    "versionMajor": "node repo-manager.js --versionMajor",
+    "generators": "node scripts/repo-manager.js --generators",
+    "versionPatch": "node scripts/repo-manager.js --versionPatch",
+    "versionMinor": "node scripts/repo-manager.js --versionMinor",
+    "versionMajor": "node scripts/repo-manager.js --versionMajor",
     "prePublish": "npm run build && npm run test && npm run docs && npm run generators",
-    "npmPublish": "node repo-manager.js --npmPublish"
+    "npmPublish": "node scripts/repo-manager.js --npmPublish"
   },
   "repository": {
     "type": "git",
@@ -80,7 +80,6 @@
     "lodash": "^4.17.21",
     "openai": "^3.2.1",
     "sentence-splitter": "^4.2.0",
-    "timsort": "^0.3.0",
-    "walkdir": "^0.4.1"
+    "timsort": "^0.3.0"
   }
 }

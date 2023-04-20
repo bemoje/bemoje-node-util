@@ -4,5 +4,5 @@
  * @param {boolean} headers - Whether to extract table column header data from <th> elements.
  * @returns {Array<Array<string>>} Data table which is an arrays of row-arrays of cell content (string).
  */
-export declare function htmlTableTo2dArray(element: HTMLTableElement, headers?: boolean): Array<Array<string>>;
+export declare function htmlTableTo2dArray(element: HTMLElement, headers?: boolean): Array<Array<string>>;
 //# sourceMappingURL=htmlTableTo2dArray.d.ts.map

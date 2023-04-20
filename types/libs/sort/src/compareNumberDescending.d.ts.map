@@ -1,1 +1,1 @@
-{"version":3,"file":"compareNumberDescending.d.ts","sourceRoot":"","sources":["../../../../src/libs/sort/src/compareNumberDescending.ts"],"names":[],"mappings":"AAAA;;;;GAIG;AACH,wBAAgB,uBAAuB,CAAC,CAAC,EAAE,MAAM,EAAE,CAAC,EAAE,MAAM,GAAG,MAAM,CAEpE"}
+{"version":3,"file":"compareNumberDescending.d.ts","sourceRoot":"","sources":["../../../../src/libs/sort/src/compareNumberDescending.ts"],"names":[],"mappings":"AAAA;;;;;;;;;GASG;AACH,wBAAgB,uBAAuB,CAAC,CAAC,EAAE,MAAM,EAAE,CAAC,EAAE,MAAM,GAAG,MAAM,CAEpE"}

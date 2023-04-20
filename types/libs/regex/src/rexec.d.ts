@@ -1,4 +1,9 @@
-import { RexecYield } from '../';
+export type RexecYield = {
+    index: number;
+    match: string;
+    groups: Record<string, string>;
+    lastIndex: number;
+};
 /**
  * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
  * @param regex - The regular expression object

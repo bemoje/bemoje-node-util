@@ -1,6 +1,6 @@
 /**
  * Checks if a string is a number.
- * @param str - input string
+ * @param string - input string
  */
-export declare function isNumericString(str: string): boolean;
+export declare function isNumericString(string: string): boolean;
 //# sourceMappingURL=isNumericString.d.ts.map
