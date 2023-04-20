@@ -26,4 +26,4 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 #### Defined in
 
-[src/libs/datastructures/src/Base.ts:10](https://github.com/bemoje/bemoje-node-util/blob/8cff27d/src/libs/datastructures/src/Base.ts#L10)
+[src/libs/datastructures/src/Base.ts:10](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Base.ts#L10)

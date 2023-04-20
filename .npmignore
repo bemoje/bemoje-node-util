@@ -2,8 +2,6 @@ coverage
 node_modules
 notes
 scripts
-src
-tests
 .editorconfig
 .env
 .eslintignore

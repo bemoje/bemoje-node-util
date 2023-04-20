@@ -6,7 +6,7 @@
   "package": {
     "scope": "bemoje",
     "name": "node-util",
-    "description": "Various utilities for node-js development",
+    "description": "Various utilities for development in node-js",
     "license": "MIT"
   },
   "github": {

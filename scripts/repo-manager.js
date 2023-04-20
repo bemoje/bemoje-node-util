@@ -130,15 +130,6 @@ ${CONFIG.package.description}
 }" title="NPM Downloads"><img src="https://img.shields.io/npm/dt/${
   CONFIG.package.fullName
 }" alt="NPM Downloads" /></a></span>
-##### Travis CI
-<span><a href="https://npmjs.org/${
-  CONFIG.package.fullName
-}" title="View this project on NPM"><img src="https://www.travis-ci.com/${CONFIG.github.user}/${
-  CONFIG.github.repository
-}.svg?branch=main" alt="dependencies" /></a></span>
-
-##### Donate
-<span><a href="${`https://www.patreon.com/user?u=${CONFIG.patreon.user}`}" title="Donate using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon Donation" /></a></span>
 
 ## Installation
 This library is published in the NPM registry and can be installed using any compatible package manager.
@@ -173,15 +164,12 @@ Get minified ES6 UMD bundle from either of the popular CND's, UNPKG or JSDelivr.
 
 ## Usage
 \`\`\`js
-// default export
-import ${CONFIG.bundler.exports.default} from '${CONFIG.package.fullName}'
-
-// named exports
-import {${CONFIG.bundler.exports.named.join(', ')}} from '${CONFIG.package.fullName}'
+import ${'* as util'} from '${CONFIG.package.fullName}'
+import {${'SortedArray'}} from '${CONFIG.package.fullName}'
 \`\`\`
 
 ## Distribution
-This library is written in **TypeScript** compiled to ES6 JavaScript.
+This library is written in **TypeScript**.
 
 #### ES6 Module Bundles
 ${(() => {

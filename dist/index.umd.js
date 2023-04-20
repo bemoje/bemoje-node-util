@@ -1,5 +1,5 @@
 /*!
- * @bemoje/node-util v0.1.0
+ * @bemoje/node-util v0.1.1
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.

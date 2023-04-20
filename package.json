@@ -1,7 +1,7 @@
 {
   "name": "@bemoje/node-util",
-  "version": "0.1.1",
-  "description": "Various utilities for node-js development",
+  "version": "0.1.3",
+  "description": "Various utilities for development in node-js",
   "cdn": "dist/index.umd.min.js",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
