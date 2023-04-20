@@ -89,3 +89,36 @@ describe('isHexOrUnicode', () => {
     expect(util.isHexOrUnicode('\\\\ug')).toBe(false)
   })
 })
+
+describe('isNumericString', () => {
+  it('should return true for numeric strings', () => {
+    expect(util.isNumericString('123')).toBe(true)
+    expect(util.isNumericString('123.45')).toBe(true)
+    expect(util.isNumericString('-123')).toBe(true)
+    expect(util.isNumericString('-123.45')).toBe(true)
+  })
+
+  it('should return false for non-numeric strings', () => {
+    expect(util.isNumericString('abc')).toBe(false)
+    expect(util.isNumericString('123abc')).toBe(false)
+    expect(util.isNumericString('abc123')).toBe(false)
+    expect(util.isNumericString('12-3')).toBe(false)
+    expect(util.isNumericString('12.3.4')).toBe(false)
+  })
+})
+
+describe('isIterable', () => {
+  it('should return true for iterable objects', () => {
+    expect(util.isIterable([])).toBe(true)
+    expect(util.isIterable(new Set())).toBe(true)
+    expect(util.isIterable(new Map())).toBe(true)
+    expect(util.isIterable('abc')).toBe(true)
+  })
+
+  it('should return false for non-iterable objects', () => {
+    expect(util.isIterable(null)).toBe(false)
+    expect(util.isIterable(undefined)).toBe(false)
+    expect(util.isIterable(123)).toBe(false)
+    expect(util.isIterable({})).toBe(false)
+  })
+})

@@ -11,7 +11,3 @@ export * from './src/arrShuffle'
 export * from './src/arrSome'
 export * from './src/arrSortNumeric'
 export * from './src/arrSwap'
-
-export type Callback = (value: any, index: number, array: Array<any>) => void
-
-export type Predicate = (value: any, index: number, array: Array<any>) => boolean

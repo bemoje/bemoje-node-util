@@ -1,4 +1,4 @@
-import { IRevivable } from '../'
+import { IRevivable } from '../../../'
 import { Base } from './Base'
 
 export class Queue<T> extends Base implements IRevivable<Array<T>>, Iterable<T> {

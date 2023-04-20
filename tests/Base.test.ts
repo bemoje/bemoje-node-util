@@ -1,5 +1,5 @@
 import * as util from '../src/libs/datastructures/src/Base'
-import { IRevivable } from '../src/libs/datastructures'
+import { IRevivable } from '../src/libs/types'
 
 describe('setNonEnumerablePrivateProperties', () => {
   it('identifies underscored property names correctly', () => {

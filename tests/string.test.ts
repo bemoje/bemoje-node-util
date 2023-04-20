@@ -72,17 +72,17 @@ describe('strToWords', () => {
   })
 })
 
-describe('strSplitWordByCamelCase', () => {
+describe('strSplitCamelCase', () => {
   it('example', () => {
-    expect(util.strSplitWordByCamelCase('someCamelCase')).toStrictEqual(['some', 'Camel', 'Case'])
+    expect(util.strSplitCamelCase('someCamelCase')).toStrictEqual(['some', 'Camel', 'Case'])
   })
   it('handles numbers', () => {
-    expect(util.strSplitWordByCamelCase('camelCase18')).toStrictEqual(['camel', 'Case18'])
-    expect(util.strSplitWordByCamelCase('camel18Case')).toStrictEqual(['camel18Case'])
-    expect(util.strSplitWordByCamelCase('camel18case')).toStrictEqual(['camel18case'])
+    expect(util.strSplitCamelCase('camelCase18')).toStrictEqual(['camel', 'Case18'])
+    expect(util.strSplitCamelCase('camel18Case')).toStrictEqual(['camel18Case'])
+    expect(util.strSplitCamelCase('camel18case')).toStrictEqual(['camel18case'])
   })
   it('handles short strings', () => {
-    expect(util.strSplitWordByCamelCase('aWo')).toStrictEqual(['a', 'Wo'])
+    expect(util.strSplitCamelCase('aWo')).toStrictEqual(['a', 'Wo'])
   })
 })
 
@@ -193,5 +193,90 @@ describe('strReplaceAll', () => {
   })
   it('regex-escapes input string', () => {
     expect(util.strReplaceAll('func(3)', '(3)', '(4)')).toBe('func(4)')
+  })
+})
+
+describe('strUnwrap', () => {
+  it('should remove the left and right strings from the input string', () => {
+    expect(util.strUnwrap('Hello, world!', 'Hello, ', '!')).toBe('world')
+    expect(util.strUnwrap('Hello, world!', 'Hello, ', '!', 'g')).toBe('world')
+    expect(util.strUnwrap('Hello, world!', 'Goodbye, ', '!')).toBe('Hello, world')
+    expect(util.strUnwrap('Hello, world!', 'Goodbye, ', '!', 'g')).toBe('Hello, world')
+  })
+
+  it('should remove the left and right strings from the input string with special characters', () => {
+    expect(util.strUnwrap('<p>Hello, world!</p>', '<p>', '</p>')).toBe('Hello, world!')
+    expect(util.strUnwrap('<p>Hello, world!</p>', '<P>', '</P>', 'i')).toBe('Hello, world!')
+    expect(util.strUnwrap('<p>Hello, world!</p>', '<div>', '</div>')).toBe('<p>Hello, world!</p>')
+  })
+})
+
+describe('strSortChars', () => {
+  it('should sort the characters in a string', () => {
+    expect(util.strSortChars('hello')).toBe('ehllo')
+    expect(util.strSortChars('world')).toBe('dlorw')
+    expect(util.strSortChars('')).toBe('')
+  })
+})
+
+describe('strToCharCodes', () => {
+  it('should convert a string to an array of char codes', () => {
+    expect(util.strToCharCodes('hello')).toEqual([104, 101, 108, 108, 111])
+    expect(util.strToCharCodes('world')).toEqual([119, 111, 114, 108, 100])
+    expect(util.strToCharCodes('')).toEqual([])
+  })
+})
+
+describe('strToCharSet', () => {
+  it('should return a string containing the set of all unique characters in a string', () => {
+    expect(util.strToCharSet('hello')).toBe('ehlo')
+    expect(util.strToCharSet('world')).toBe('dlorw')
+    expect(util.strToCharSet('')).toBe('')
+  })
+})
+
+describe('strToSentences', () => {
+  it('should split a string into sentences', () => {
+    expect(util.strToSentences('Hello world. How are you?')).toEqual(['Hello world.', 'How are you?'])
+    expect(util.strToSentences('Well, this is a sentence! And this - is another sentence.')).toEqual([
+      'Well, this is a sentence!',
+      'And this - is another sentence.',
+    ])
+    expect(util.strToSentences('')).toEqual([])
+  })
+})
+
+describe('strRemoveDuplicateChars', () => {
+  it('should remove duplicate characters from a string', () => {
+    expect(util.strRemoveDuplicateChars('Hello world!')).toEqual('Helo wrd!')
+    expect(util.strRemoveDuplicateChars('Hello')).toEqual('Helo')
+    expect(util.strRemoveDuplicateChars('')).toEqual('')
+  })
+})
+
+describe('strCountChars', () => {
+  it('should count the number of occurrences of each character in a string', () => {
+    expect(util.strCountChars('Hello world!')).toEqual(
+      new Map([
+        ['H', 1],
+        ['e', 1],
+        ['l', 3],
+        ['o', 2],
+        [' ', 1],
+        ['w', 1],
+        ['r', 1],
+        ['d', 1],
+        ['!', 1],
+      ]),
+    )
+    expect(util.strCountChars('Hello')).toEqual(
+      new Map([
+        ['H', 1],
+        ['e', 1],
+        ['l', 2],
+        ['o', 1],
+      ]),
+    )
+    expect(util.strCountChars('')).toEqual(new Map())
   })
 })

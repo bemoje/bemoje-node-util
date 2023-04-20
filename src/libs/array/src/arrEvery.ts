@@ -1,4 +1,4 @@
-import { Predicate } from '../../array'
+import { Predicate } from '../../../'
 
 /**
  * Returns true if the predicate is satisfied for every element of the passed array; otherwise false.

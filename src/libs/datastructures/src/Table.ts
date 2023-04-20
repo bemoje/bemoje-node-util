@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-extra-semi */
-import { IRevivable } from '../'
+import { IRevivable } from '../../../'
 import { arr2dToCSV, arrEvery, arrMapMutable } from '../../array'
 import { Base } from './Base'
 import { A1ToColRow } from '../../spreadsheet'

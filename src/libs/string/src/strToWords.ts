@@ -1,4 +1,4 @@
-import { regMatchWords } from '../../regex'
+import { words } from 'lodash'
 
 /**
  * Returns an array of words in the string
@@ -10,5 +10,5 @@ import { regMatchWords } from '../../regex'
  * ```
  */
 export function strToWords(input: string): Array<string> {
-  return input.match(regMatchWords) || []
+  return words(input)
 }

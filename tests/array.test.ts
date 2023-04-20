@@ -1,4 +1,5 @@
 import * as util from '../src/libs/array'
+import { Callback, Predicate } from '../src/libs/types'
 
 describe('arr2dToCSV', () => {
   it('works for 2D array', () => {
@@ -204,5 +205,109 @@ describe('arrSortNumeric', () => {
 describe('arrSwap', () => {
   it('example', () => {
     expect(util.arrSwap([1, 2, 3, 4], 1, 2)).toStrictEqual([1, 3, 2, 4])
+  })
+})
+
+describe('Callback', () => {
+  it('should call the callback function with the correct arguments', () => {
+    const callback: Callback = jest.fn()
+    const array = [1, 2, 3]
+    array.forEach(callback)
+    expect(callback).toHaveBeenCalledTimes(3)
+    expect(callback).toHaveBeenCalledWith(1, 0, array)
+    expect(callback).toHaveBeenCalledWith(2, 1, array)
+    expect(callback).toHaveBeenCalledWith(3, 2, array)
+  })
+})
+
+describe('Predicate', () => {
+  it('should return true if the predicate function returns true for any element in the array', () => {
+    const predicate: Predicate = (value) => value > 2
+    const array = [1, 2, 3]
+    expect(array.some(predicate)).toBe(true)
+  })
+
+  it('should return false if the predicate function returns false for all elements in the array', () => {
+    const predicate: Predicate = (value) => value > 3
+    const array = [1, 2, 3]
+    expect(array.some(predicate)).toBe(false)
+  })
+})
+
+describe('Callback', () => {
+  it('should call the callback function with the correct arguments', () => {
+    const callback: Callback = jest.fn()
+    const array = [1, 2, 3]
+    array.forEach(callback)
+    expect(callback).toHaveBeenCalledTimes(3)
+    expect(callback).toHaveBeenCalledWith(1, 0, array)
+    expect(callback).toHaveBeenCalledWith(2, 1, array)
+    expect(callback).toHaveBeenCalledWith(3, 2, array)
+  })
+})
+
+describe('Predicate', () => {
+  it('should return true if the predicate function returns true for any element in the array', () => {
+    const predicate: Predicate = (value) => value > 2
+    const array = [1, 2, 3]
+    expect(array.some(predicate)).toBe(true)
+  })
+
+  it('should return false if the predicate function returns false for all elements in the array', () => {
+    const predicate: Predicate = (value) => value > 3
+    const array = [1, 2, 3]
+    expect(array.some(predicate)).toBe(false)
+  })
+})
+
+describe('Callback', () => {
+  it('should call the callback function with the correct arguments', () => {
+    const callback: Callback = jest.fn()
+    const array = [1, 2, 3]
+    array.forEach(callback)
+    expect(callback).toHaveBeenCalledTimes(3)
+    expect(callback).toHaveBeenCalledWith(1, 0, array)
+    expect(callback).toHaveBeenCalledWith(2, 1, array)
+    expect(callback).toHaveBeenCalledWith(3, 2, array)
+  })
+})
+
+describe('Predicate', () => {
+  it('should return true if the predicate function returns true for any element in the array', () => {
+    const predicate: Predicate = (value) => value > 2
+    const array = [1, 2, 3]
+    expect(array.some(predicate)).toBe(true)
+  })
+
+  it('should return false if the predicate function returns false for all elements in the array', () => {
+    const predicate: Predicate = (value) => value > 3
+    const array = [1, 2, 3]
+    expect(array.some(predicate)).toBe(false)
+  })
+})
+
+describe('Callback', () => {
+  it('should call the callback function with the correct arguments', () => {
+    const callback: Callback = jest.fn()
+    const array = [1, 2, 3]
+    array.forEach(callback)
+    expect(callback).toHaveBeenCalledTimes(3)
+    expect(callback).toHaveBeenCalledWith(1, 0, array)
+    expect(callback).toHaveBeenCalledWith(2, 1, array)
+    expect(callback).toHaveBeenCalledWith(3, 2, array)
+  })
+})
+
+describe('Predicate', () => {
+  it('should return true if the predicate function returns true for any element in the array', () => {
+    const predicate: Predicate = (value) => value > 2
+    const array = [1, 2, 3]
+    expect(array.some(predicate)).toBe(true)
+  })
+
+  it('should return false if the predicate function returns false for all elements in the array', () => {
+    const predicate: Predicate = (value) => value > 3
+    const array = [1, 2, 3]
+    expect(array.some(predicate)).toBe(false)
   })
 })

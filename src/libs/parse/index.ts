@@ -1,1 +1,1 @@
-export * from './src/socialSecurityNumberDK'
+export * from './src/parseSocialSecurityNumberDK'

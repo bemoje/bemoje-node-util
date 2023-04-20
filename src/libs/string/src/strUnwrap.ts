@@ -12,8 +12,3 @@ export function strUnwrap(input: string, left: string, right: string, flags = ''
     .replace(new RegExp('^' + regexEscapeString(left), flags), '')
     .replace(new RegExp(regexEscapeString(right) + '$', flags), '')
 }
-
-// const str = 'hello'
-// const wrapped = strWrapBetween(str, '(', ')')
-// const unwrapped = strUnwrap(wrapped, '(', ')')
-// console.log({ str, wrapped, unwrapped })

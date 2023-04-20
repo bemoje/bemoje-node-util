@@ -1,4 +1,4 @@
-// const REGEX_VALID_A = /^[A-Z]+$/g;
+const REGEX_VALID_A = /^[A-Z]*$/i
 const alphaToColMap: Map<string, number> = new Map()
 
 /**
@@ -10,7 +10,7 @@ export function letterToCol(A: string, zeroIndexed = false): number {
   A = A.toUpperCase()
   const fromMem = alphaToColMap.get(A)
   if (fromMem) return fromMem
-  // if (REGEX_VALID_A.test(A)) throw new Error(`Invalid column letter: ${A}`);
+  if (!REGEX_VALID_A.test(A)) throw new Error(`Invalid column letter: ${A}`)
   let col = 0
   const length = A.length
   for (let i = 0; i < length; i++) {

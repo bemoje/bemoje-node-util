@@ -1,4 +1,4 @@
-import Path from 'path'
+import path from 'path'
 import { normalizeFileExtension } from './normalizeFileExtension'
 
 /**
@@ -9,7 +9,7 @@ export function createFileExtensionFilter(...fileExtensions: Array<string>): (fi
   if (!fileExtensions.length) return () => true
   return (filepath: string) => {
     for (const ext of fileExtensions.map(normalizeFileExtension)) {
-      if (Path.extname(filepath) === ext) {
+      if (path.extname(filepath) === ext) {
         return true
       }
     }

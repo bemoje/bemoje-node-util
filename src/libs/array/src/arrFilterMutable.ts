@@ -1,4 +1,4 @@
-import { arrAssignFrom, Predicate } from '../../array'
+import { arrAssignFrom, Predicate } from '../../../'
 
 /**
  * Same as Array.prototype.filter but performs operations in palce (not immutable).

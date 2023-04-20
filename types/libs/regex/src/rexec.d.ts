@@ -1,35 +1,28 @@
-import type { rexecYield } from '../';
+import { RexecYield } from '../';
 /**
- * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all
- * the details you might need.
+ * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
  * @param regex - The regular expression object
- * @param str - The string to perform the operation on
+ * @param string - The string to perform the operation on
  * @example
  * ```js
- * const regex = /(?<group1>a)|(?<group2>d)/g
+ * const regex = /(?<g1>a)/g
  * const str = 'Anthony wants a girlfriend.'
  * console.log([...rexec(regex, str)])
  * // [
  * // 	{
  * //     index: 9,
  * //     match: 'a',
- * //     groups: { g1: 'a', g2: undefined },
+ * //     groups: { g1: 'a' },
  * //     lastIndex: 10,
  * //   },
  * //   {
  * //     index: 14,
  * //     match: 'a',
- * //     groups: { g1: 'a', g2: undefined },
+ * //     groups: { g1: 'a' },
  * //     lastIndex: 15,
- * //   },
- * //   {
- * //     index: 25,
- * //     match: 'd',
- * //     groups: { g1: undefined, g2: 'd' },
- * //     lastIndex: 26,
  * //   },
  * // ]
  * ```
  */
-export declare function rexec(regex: RegExp, str: string): Generator<rexecYield>;
+export declare function rexec(regex: RegExp, string: string): Generator<RexecYield>;
 //# sourceMappingURL=rexec.d.ts.map

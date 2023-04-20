@@ -63,3 +63,59 @@ describe('colRowToA1', () => {
     expect(() => util.colRowToA1([1, 1.1])).toThrowError()
   })
 })
+
+describe('colToLetter', () => {
+  it('should return the correct letter for column numbers', () => {
+    expect(util.colToLetter(1)).toBe('A')
+    expect(util.colToLetter(2)).toBe('B')
+    expect(util.colToLetter(26)).toBe('Z')
+    expect(util.colToLetter(27)).toBe('AA')
+    expect(util.colToLetter(28)).toBe('AB')
+    expect(util.colToLetter(52)).toBe('AZ')
+    expect(util.colToLetter(53)).toBe('BA')
+  })
+  it('should throw an error for invalid input', () => {
+    expect(() => util.colToLetter(-1)).toThrow()
+    expect(() => util.colToLetter(0)).toThrow()
+    expect(() => util.colToLetter(1.5)).toThrow()
+  })
+  it('should return the correct letter for zero-indexed column numbers', () => {
+    expect(util.colToLetter(0, true)).toBe('A')
+    expect(util.colToLetter(1, true)).toBe('B')
+    expect(util.colToLetter(25, true)).toBe('Z')
+    expect(util.colToLetter(26, true)).toBe('AA')
+    expect(util.colToLetter(27, true)).toBe('AB')
+  })
+})
+
+describe('letterToCol', () => {
+  it('should return the correct column number for column letters', () => {
+    expect(util.letterToCol('A')).toBe(1)
+    expect(util.letterToCol('B')).toBe(2)
+    expect(util.letterToCol('Z')).toBe(26)
+    expect(util.letterToCol('AA')).toBe(27)
+    expect(util.letterToCol('AB')).toBe(28)
+    expect(util.letterToCol('AZ')).toBe(52)
+    expect(util.letterToCol('BA')).toBe(53)
+  })
+  it('should return the correct column number for column letters with different cases', () => {
+    expect(util.letterToCol('a')).toBe(1)
+    expect(util.letterToCol('b')).toBe(2)
+    expect(util.letterToCol('z')).toBe(26)
+    expect(util.letterToCol('aa')).toBe(27)
+    expect(util.letterToCol('ab')).toBe(28)
+    expect(util.letterToCol('az')).toBe(52)
+    expect(util.letterToCol('ba')).toBe(53)
+  })
+  it('should throw an error for invalid input', () => {
+    expect(() => util.letterToCol('-1')).toThrow()
+    expect(() => util.letterToCol('0')).toThrow()
+  })
+  it('should return the correct column number for zero-indexed column letters', () => {
+    expect(util.letterToCol('A', true)).toBe(0)
+    expect(util.letterToCol('B', true)).toBe(1)
+    expect(util.letterToCol('Z', true)).toBe(25)
+    expect(util.letterToCol('AA', true)).toBe(26)
+    expect(util.letterToCol('AB', true)).toBe(27)
+  })
+})

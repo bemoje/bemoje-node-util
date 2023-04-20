@@ -32,3 +32,35 @@ describe('setUnion', () => {
     expect(Array.from(util.setUnion([new Set([]), new Set([])]))).toStrictEqual([])
   })
 })
+
+describe('setIsSuperset', () => {
+  it('should return true if the first set is a superset of the second set', () => {
+    const set1 = new Set([1, 2, 3, 4, 5])
+    const set2 = new Set([2, 4])
+    expect(util.setIsSuperset(set1, set2)).toBe(true)
+  })
+
+  it('should return false if the first set is not a superset of the second set', () => {
+    const set1 = new Set([1, 2, 3, 4, 5])
+    const set2 = new Set([2, 4, 6])
+    expect(util.setIsSuperset(set1, set2)).toBe(false)
+  })
+})
+
+describe('setDifference', () => {
+  it('should return a new set with elements that are in the first set but not in the second set', () => {
+    const setA = new Set([1, 2, 3, 4])
+    const setB = new Set([2, 4])
+    const result = util.setDifference(setA, setB)
+    expect(result).toEqual(new Set([1, 3]))
+  })
+})
+
+describe('setSymmetricDifference', () => {
+  it('returns the symmetric difference between two sets', () => {
+    const setA = new Set([1, 2, 3])
+    const setB = new Set([2, 3, 4])
+    const result = util.setSymmetricDifference(setA, setB)
+    expect(result).toEqual(new Set([1, 4]))
+  })
+})

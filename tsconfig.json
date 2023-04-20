@@ -27,7 +27,7 @@
     "lib": ["esnext", "dom"],
     "skipDefaultLibCheck": false,
     "skipLibCheck": false,
-    "types": ["jest", "node"],
+    "types": ["jest", "node", "jsdom"],
 
     "declaration": true
   },

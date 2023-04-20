@@ -10,9 +10,12 @@
   "jsdelivr": "dist/index.umd.min.js",
   "umd:main": "dist/index.umd.js",
   "devDependencies": {
+    "@types/date-and-time": "^0.13.0",
+    "@types/dotenv": "^8.2.0",
     "@types/format-number": "^3.0.0",
     "@types/jest": "^26.0.24",
-    "@types/jsdom": "^21.1.0",
+    "@types/jsdom": "^21.1.1",
+    "@types/lodash": "^4.14.194",
     "@types/node": "^18.11.18",
     "@types/prettier": "^2.7.2",
     "@types/timsort": "^0.3.0",
@@ -24,6 +27,7 @@
     "eslint-plugin-prettier": "^3.4.1",
     "extract-comments": "^1.1.0",
     "jest": "^26.6.3",
+    "jsdom": "^21.1.1",
     "keyword-extractor": "^0.0.25",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
@@ -37,7 +41,8 @@
   },
   "scripts": {
     "docs": "rimraf docs && typedoc --readme none --plugin typedoc-plugin-markdown --theme markdown --excludeProtected --excludePrivate src/index.ts",
-    "test": "jest",
+    "untested": "ts-node scripts/find-untested.ts",
+    "test": "npm run untested && npm run lint && jest",
     "lint": "eslint \"*/**/*.{ts,js,json}\" --fix",
     "build": "npm run lint && rimraf dist && rimraf types && rollup --config ./rollup.config.js",
     "generators": "node repo-manager.js --generators",
@@ -71,8 +76,11 @@
   "homepage": "https://github.com/bemoje/bemoje-node-util",
   "dependencies": {
     "date-and-time": "^2.4.3",
-    "format-number": "^3.0.0",
+    "dotenv": "^16.0.3",
+    "lodash": "^4.17.21",
+    "openai": "^3.2.1",
     "sentence-splitter": "^4.2.0",
-    "timsort": "^0.3.0"
+    "timsort": "^0.3.0",
+    "walkdir": "^0.4.1"
   }
 }

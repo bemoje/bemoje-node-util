@@ -1,4 +1,4 @@
-import { Callback } from '../../array'
+import { Callback } from '../../../'
 
 /**
  * Same as Array.prototype.map but performs operations in palce (not immutable).
