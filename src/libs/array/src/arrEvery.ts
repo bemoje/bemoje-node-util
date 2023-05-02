@@ -1,4 +1,4 @@
-import { Predicate } from '../../../'
+import { Predicate } from '../../..'
 
 /**
  * Returns true if the predicate is satisfied for every element of the passed array; otherwise false.
@@ -6,7 +6,7 @@ import { Predicate } from '../../../'
  * @param  predicate - A predicate callback function
  */
 
-export function arrEvery<T>(input: Array<T>, predicate: Predicate): boolean {
+export function arrEvery<T>(input: Array<T>, predicate: Predicate<T>): boolean {
   for (let i = 0, len = input.length; i < len; i++) {
     if (predicate(input[i], i, input) === false) {
       return false

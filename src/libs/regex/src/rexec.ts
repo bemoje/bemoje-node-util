@@ -1,8 +1,8 @@
 export type RexecYield = {
   index: number
-  match: string
-  groups: Record<string, string>
   lastIndex: number
+  groups: Record<string, string>
+  match: string
 }
 
 /**
@@ -17,15 +17,15 @@ export type RexecYield = {
  * // [
  * // 	{
  * //     index: 9,
- * //     match: 'a',
- * //     groups: { g1: 'a' },
  * //     lastIndex: 10,
+ * //     groups: { g1: 'a' },
+ * //     match: 'a',
  * //   },
  * //   {
  * //     index: 14,
- * //     match: 'a',
- * //     groups: { g1: 'a' },
  * //     lastIndex: 15,
+ * //     groups: { g1: 'a' },
+ * //     match: 'a',
  * //   },
  * // ]
  * ```
@@ -35,9 +35,9 @@ export function* rexec(regex: RegExp, string: string): Generator<RexecYield> {
   while ((match = regex.exec(string)) !== null) {
     yield {
       index: match.index,
-      match: match[0],
-      groups: Object.assign({}, match.groups),
       lastIndex: regex.lastIndex,
+      groups: Object.assign({}, match.groups),
+      match: match[0],
     }
   }
 }

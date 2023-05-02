@@ -2,6 +2,8 @@
 
 # Interface: IRevivable<SerializedForm\>
 
+Guarantees that class instances are serializable and have a static revive function.
+
 ## Type parameters
 
 | Name |
@@ -35,4 +37,4 @@
 
 #### Defined in
 
-[src/libs/types/index.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/types/index.ts#L6)
+src/libs/mixins/src/interfaces.ts:7

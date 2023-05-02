@@ -1,4 +1,5 @@
 import * as util from '../src/libs/string'
+import { createHash } from 'crypto'
 
 describe('strWrapIn', () => {
   it('example', () => {
@@ -278,5 +279,79 @@ describe('strCountChars', () => {
       ]),
     )
     expect(util.strCountChars('')).toEqual(new Map())
+  })
+})
+
+describe('strHash', () => {
+  describe('toBuffer', () => {
+    it('should hash a string into a buffer with a given algorithm', () => {
+      const string = 'hello'
+      const algorithm = 'sha256'
+      const result = util.strHash.toBuffer(string, algorithm)
+      expect(Array.from(result)).toEqual([
+        44, 242, 77, 186, 95, 176, 163, 14, 38, 232, 59, 42, 197, 185, 226, 158, 27, 22, 30, 92, 31, 167, 66, 94, 115,
+        4, 51, 98, 147, 139, 152, 36,
+      ])
+    })
+  })
+
+  describe('toUint32Array', () => {
+    it('should hash a string into an array of unsigned 32-bit integers', () => {
+      const string = 'hello'
+      const algorithm = 'sha256'
+      const result = util.strHash.toUint32Array(string, algorithm)
+      const expected = new Uint32Array([
+        3125670444, 245608543, 708569126, 2665658821, 1545475611, 1581426463, 1647510643, 613976979,
+      ])
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('toString', () => {
+    it('should hash a string into a buffer with a given algorithm and encoding', () => {
+      const string = 'hello'
+      const algorithm = 'sha256'
+      const encoding = 'hex'
+      const result = util.strHash.toString(string, algorithm, encoding)
+      const expected = '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824'
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('listAlgorithms', () => {
+    it('should list all available hash algorithms', () => {
+      const result = util.strHash.listAlgorithms()
+      expect(result.includes('sha1')).toBe(true)
+      expect(result.includes('sha256')).toBe(true)
+      expect(result.includes('sha512')).toBe(true)
+      expect(result.includes('md5')).toBe(true)
+      expect(result.includes('')).toBe(false)
+    })
+  })
+})
+
+describe('strParseBoolean', () => {
+  it('should return true when given "true"', () => {
+    expect(util.strParseBoolean('true')).toBe(true)
+  })
+
+  it('should return false when given "false"', () => {
+    expect(util.strParseBoolean('false')).toBe(false)
+  })
+
+  it('should return false when given any other string', () => {
+    expect(util.strParseBoolean('hello')).toBe(false)
+    expect(util.strParseBoolean('123')).toBe(false)
+    expect(util.strParseBoolean('')).toBe(false)
+  })
+})
+
+describe('strFirstCharToUpperCase', () => {
+  it('should capitalize the first character of a string', () => {
+    expect(util.strFirstCharToUpperCase('hello')).toBe('Hello')
+    expect(util.strFirstCharToUpperCase('world')).toBe('World')
+  })
+  it('should return an empty string if an empty string is passed', () => {
+    expect(util.strFirstCharToUpperCase('')).toBe('')
   })
 })

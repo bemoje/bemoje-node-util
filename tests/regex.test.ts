@@ -140,21 +140,6 @@ describe('regexValidFlags', () => {
   })
 })
 
-describe('regexMatchBetween', () => {
-  it('should match a string between two given strings or regexes', () => {
-    const input = 'Hello world! This is a test string.'
-    const matchBetween = util.regexMatchBetween('Hello', 'test')
-    const result = [...matchBetween(input)]
-    expect(result).toEqual([
-      {
-        left: { index: 0, match: 'Hello', groups: {}, lastIndex: 5 },
-        mid: { index: 5, match: ' world! This is a ', groups: {}, lastIndex: 23 },
-        right: { index: 23, match: 'test', groups: {}, lastIndex: 27 },
-      },
-    ])
-  })
-})
-
 describe('regexIsValidFlags', () => {
   it('should return true for valid flags', () => {
     expect(util.regexIsValidFlags('g')).toBe(true)
@@ -221,5 +206,48 @@ describe('buildRegexBetween', () => {
   it('should add flags passed as argument', () => {
     const regex = util.buildRegexBetween('a', 'b', 'i')
     expect(regex.flags).toBe('gis')
+  })
+})
+
+describe('regexScopeTree', () => {
+  const parenthesesTree = util.regexScopeTree('Parentheses', '(', ')')
+  const string = '((3+(2))+(1))'
+  const resExample = {
+    type: 'Parentheses',
+    depth: 2,
+    left: {
+      index: 4,
+      lastIndex: 5,
+      groups: {},
+      match: '(',
+    },
+    right: {
+      index: 6,
+      lastIndex: 7,
+      groups: {},
+      match: ')',
+    },
+    between: {
+      index: 5,
+      lastIndex: 6,
+      groups: {},
+      match: '2',
+    },
+    children: [],
+  }
+
+  it('should return only root nodes when yieldOnlyRootNodes is true', () => {
+    const result = [...parenthesesTree(string, true)]
+    expect(result).toHaveLength(1)
+    expect(result[0].type).toBe('Parentheses')
+    expect(result[0].depth).toBe(0)
+    expect(result[0].between.match).toBe('(3+(2))+(1)')
+    expect(result[0].children[1].children[0]).toEqual(resExample)
+  })
+
+  it('should return an array of scope nodes', () => {
+    const result = [...parenthesesTree(string, false)]
+    expect(result).toHaveLength(4)
+    expect(result[0]).toEqual(resExample)
   })
 })

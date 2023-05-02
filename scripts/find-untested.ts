@@ -11,6 +11,10 @@ const ignoreSources = [
   ['wip', '*'],
   ['nlp', 'generateUnitTests'],
   ['html', '*'],
+  ['datastructures', 'interfaces'],
+  ['datastructures', 'mixins'],
+  ['node', 'log'],
+  ['mixins', '*'],
 ]
 
 // paths

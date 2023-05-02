@@ -11,7 +11,7 @@ const options = {
   root: true,
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 'latest',
   },
   plugins: ['@typescript-eslint'],
   extends: [

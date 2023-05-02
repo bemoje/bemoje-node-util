@@ -1,3 +1,4 @@
+import path from 'path'
 import * as util from '../src/libs/node'
 
 describe('getMemoryUsage', () => {
@@ -154,5 +155,14 @@ describe('StringStream and streamToString', () => {
     const str = 'this is a string'
     const stream = new util.StringStream(str)
     expect(await util.streamToString(stream)).toBe(str)
+  })
+})
+
+describe('absolutCwdPathToRelative', () => {
+  it('should convert an absolute path to a relative path', () => {
+    const filepath = path.join(process.cwd(), 'src', 'index.ts')
+    const expected = 'src/index.ts'
+    const result = util.absolutCwdPathToRelative(filepath)
+    expect(result).toEqual(expected)
   })
 })

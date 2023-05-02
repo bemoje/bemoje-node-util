@@ -10,4 +10,5 @@ export * from './src/isValidDateDay';
 export * from './src/isValidDateMonth';
 export * from './src/isValidDateYear';
 export * from './src/numDaysInMonth';
+export * from './src/isoDateTimestamp';
 //# sourceMappingURL=index.d.ts.map

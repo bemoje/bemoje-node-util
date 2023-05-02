@@ -1,4 +1,4 @@
-import { Callback } from '../../../';
+import { MapIterator } from '../../..';
 /**
  * Same as Array.prototype.map but performs operations in palce (not immutable).
  * @param input - input array
@@ -12,5 +12,5 @@ import { Callback } from '../../../';
  * ).toStrictEqual([2, 3, 4, 5, 6]);
  * ```
  */
-export declare function arrMapMutable(input: Array<any>, f: Callback): Array<any>;
+export declare function arrMapMutable<T>(input: Array<T>, f: MapIterator<T>): Array<T>;
 //# sourceMappingURL=arrMapMutable.d.ts.map

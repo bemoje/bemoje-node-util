@@ -1,15 +1,10 @@
 {
   "compilerOptions": {
-    // React.js JSX settings.
-    "jsx": "react",
-    "jsxFactory": "React.createElement",
-    "jsxFragmentFactory": "React.Fragment",
-
     // Module settings.
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "isolatedModules": false,
-    "moduleResolution": "node",
+    "isolatedModules": true,
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
 
     // Strictness and quality settings.
@@ -23,8 +18,8 @@
     "downlevelIteration": true,
 
     // Type-checking settings.
-    "target": "ES6",
-    "lib": ["esnext", "dom"],
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
     "skipDefaultLibCheck": false,
     "skipLibCheck": false,
     "types": ["jest", "node"],

@@ -1,15 +1,15 @@
 /*!
- * @bemoje/node-util v0.1.1
+ * @bemoje/node-util v0.1.3
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('timsort'), require('sentence-splitter'), require('lodash'), require('date-and-time'), require('dotenv/config'), require('openai'), require('fs'), require('path'), require('format-number'), require('stream')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'timsort', 'sentence-splitter', 'lodash', 'date-and-time', 'dotenv/config', 'openai', 'fs', 'path', 'format-number', 'stream'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.util = {}, global.timsort, global.sentenceSplitter, global.lodash, global.date, null, global.openai$1, global.fs, global.path, global.numberFormat, global.stream));
-})(this, (function (exports, timsort, sentenceSplitter, lodash, date, config, openai$1, fs, path, numberFormat, stream) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('timsort'), require('sentence-splitter'), require('lodash'), require('crypto'), require('date-and-time'), require('dotenv/config'), require('openai'), require('fs'), require('path'), require('format-number'), require('stream'), require('winston'), require('cli-color')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'timsort', 'sentence-splitter', 'lodash', 'crypto', 'date-and-time', 'dotenv/config', 'openai', 'fs', 'path', 'format-number', 'stream', 'winston', 'cli-color'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.util = {}, global.timsort, global.sentenceSplitter, global.lodash, global.crypto, global.date, null, global.openai$1, global.fs, global.path, global.numberFormat, global.stream, global.winston, global.clc));
+})(this, (function (exports, timsort, sentenceSplitter, lodash, crypto, date, config, openai$1, fs, path, numberFormat, stream, winston, clc) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -17,6 +17,8 @@
   var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
   var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
   var numberFormat__default = /*#__PURE__*/_interopDefaultLegacy(numberFormat);
+  var winston__default = /*#__PURE__*/_interopDefaultLegacy(winston);
+  var clc__default = /*#__PURE__*/_interopDefaultLegacy(clc);
 
   /**
    * Converts a 2-dimensional array into a CSV string.
@@ -74,6 +76,24 @@
               reject(error);
           });
       });
+  }
+
+  /**
+   * Run async tasks in parallel.
+   */
+  async function asyncParallel(tasks) {
+      return await Promise.all(tasks.map((task) => task()));
+  }
+
+  /**
+   * Run async tasks serially, each task waiting for the previous one to complete.
+   */
+  async function asyncSerial(tasks) {
+      const results = [];
+      for (const task of tasks) {
+          results.push(await task());
+      }
+      return results;
   }
 
   /**
@@ -260,7 +280,6 @@
   /**
    * Determine if value is a constructor function
    */
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   function isConstructor(value) {
       return (typeof value === 'function' &&
           'prototype' in value &&
@@ -371,8 +390,18 @@
    * @param propertyName The property names to be affected.
    */
   function setNonEnumerable(object, ...propertyNames) {
+      if (!object || typeof object !== 'object') {
+          throw new Error(`setValueAsGetter() requires an object as the first argument.`);
+      }
       for (const propertyName of propertyNames) {
-          Object.defineProperty(object, propertyName, { enumerable: false });
+          if (!Object.hasOwn(object, propertyName)) {
+              throw new Error(`Property '${propertyName}' does not exist on object.`);
+          }
+          const des = Object.getOwnPropertyDescriptor(object, propertyName);
+          if (!des)
+              throw new Error(`Property '${propertyName}' does not have a descriptor.`);
+          des.enumerable = false;
+          Object.defineProperty(object, propertyName, des);
       }
   }
 
@@ -406,38 +435,106 @@
       }
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  const hasCreatedFirstInstance = new Set();
+  /**
+   * Copy static members from source to target.
+   */
+  function inheritStaticMembers(target, source, ignoreKeys = []) {
+      const ignore = new Set([...Reflect.ownKeys(target), ...ignoreKeys, 'prototype', 'name', 'constructor']);
+      for (const key of Reflect.ownKeys(source)) {
+          if (ignore.has(key))
+              continue;
+          const des = Object.getOwnPropertyDescriptor(source, key);
+          if (!des)
+              continue;
+          Object.defineProperty(target, key, des);
+      }
+      return target;
+  }
+
+  /**
+   * Returns the class constructor object belonging to a given object's class of origin.
+   */
+  function getConstructor(o) {
+      return Object.getPrototypeOf(o).constructor;
+  }
+
+  /**
+   * Returns the prototype object belonging to a given object.
+   * @param o - The object to get the prototype of.
+   */
+  function getPrototype(o) {
+      return Object.getPrototypeOf(o);
+  }
+
+  /**
+   * Set multiple 'enumerable' property descriptor attributes of the target object to false.
+   * @param object The target object.
+   * @param propertyName The property names to be affected.
+   */
+  function setValueAsGetter(object, ...propertyNames) {
+      if (!object || typeof object !== 'object') {
+          throw new Error(`setValueAsGetter() requires an object as the first argument.`);
+      }
+      for (const propertyName of propertyNames) {
+          if (!Object.hasOwn(object, propertyName)) {
+              throw new Error(`Property '${propertyName}' does not exist on object.`);
+          }
+          const des = Object.getOwnPropertyDescriptor(object, propertyName);
+          if (!des)
+              throw new Error(`Property '${propertyName}' does not have a descriptor.`);
+          const { value, enumerable, configurable } = des;
+          Object.defineProperty(object, propertyName, { configurable, enumerable, get: () => value });
+      }
+      return object;
+  }
+
+  const interfaceDefinitions = new Map();
+  interfaceDefinitions.set('IRevivable', [['toJSON'], ['fromJSON']]);
+  interfaceDefinitions.set('IOptions', [['options', 'defaultOptions', 'handleOptions'], ['defaultOptions']]);
+
+  const hasSeenFirstInstance = new WeakSet();
   /**
    * Abstract class that other classes can inherit from to gain various handy functionality.
    */
   class Base {
-      constructor() {
-          this.onFirstInstance();
+      constructor(options) {
+          // this.init()
       }
-      onFirstInstance() {
-          if (!hasCreatedFirstInstance.has(this.constructor)) {
-              hasCreatedFirstInstance.add(this.constructor);
-              this.assertInterfaceStaticMembers('IRevivable', ['toJSON'], ['fromJSON']);
+      get klass() {
+          return Object.getPrototypeOf(this).constructor;
+      }
+      get proto() {
+          return Object.getPrototypeOf(this);
+      }
+      init() {
+          if (!hasSeenFirstInstance.has(this.constructor)) {
+              hasSeenFirstInstance.add(this.constructor);
+              this.inheritAllStatic();
+              this.checkInterfaces();
           }
       }
-      assertInterfaceStaticMembers(interfaceName, requiredPropertyNames, requiredStaticProperties) {
-          const found = new Set();
-          for (const proto of iteratePrototypeChain(this)) {
-              if (proto !== Object.prototype) {
-                  for (const key of requiredPropertyNames) {
-                      if (Object.hasOwn(proto, key)) {
-                          found.add(key);
-                      }
-                  }
+      inheritAllStatic() {
+          const ctors = [...iteratePrototypeChain(this.klass)].reverse();
+          for (const ctor of ctors) {
+              if (typeof ctor !== 'object' && Object.hasOwn(ctor, 'prototype')) {
+                  inheritStaticMembers(this.klass, ctor);
               }
           }
-          const implementsInterface = found.size === requiredPropertyNames.length;
-          if (implementsInterface) {
-              for (const staticMember of requiredStaticProperties) {
-                  if (!Object.hasOwn(this.constructor, staticMember)) {
-                      throw new Error(`Interface ${interfaceName} requires class ${this.constructor.name} to implement static member: ${staticMember}`);
-                  }
+      }
+      checkInterfaces() {
+          for (const [interfaceName, [instanceMembers, staticMembers]] of interfaceDefinitions) {
+              if (this.hasInterfaceInstanceMembers(instanceMembers)) {
+                  this.assertInterfaceStaticMembers(interfaceName, staticMembers);
+              }
+          }
+      }
+      hasInterfaceInstanceMembers(instanceMembers) {
+          return instanceMembers.length === instanceMembers.filter((key) => key in this).length;
+      }
+      assertInterfaceStaticMembers(interfaceName, staticMembers) {
+          for (const key of staticMembers) {
+              if (!Object.hasOwn(this.constructor, key)) {
+                  throw new Error(`Interface ${interfaceName} requires class ${this.constructor.name} to implement static member: ${key}`);
               }
           }
       }
@@ -464,6 +561,8 @@
   }
 
   class Matrix {
+      matrix;
+      immutable = false;
       static fromArray(array) {
           const cols = array[0].length;
           const m = new this(array.length, cols);
@@ -492,7 +591,6 @@
           return m;
       }
       constructor(rows, cols) {
-          this.immutable = false;
           if (rows < 1)
               throw new Error('Expected rows to be greater than zero.');
           if (cols < 1)
@@ -783,10 +881,7 @@
   }
 
   class Queue extends Base {
-      constructor() {
-          super(...arguments);
-          this.queue = [];
-      }
+      queue = [];
       static from(o) {
           const instance = new Queue();
           instance.queue = [...o];
@@ -826,10 +921,10 @@
 
   /**
    * Returns a given comparator as an array compatible comparator. Behaves as if the array to sort was recursively flattened.
-   * @param comparator compare function
+   * @param compareAt shallow compare function that compares two elements of an array
    * @param descending whether the input comparator sorts in descending order
    */
-  function compareArray(comparator, descending = false) {
+  function compareArray(compareAt, descending = false) {
       const orderMultiplier = descending ? -1 : 1;
       function recursiveCompare(a, b, _lenCompareParent) {
           const aIsArr = Array.isArray(a);
@@ -867,7 +962,7 @@
                   return -1 * orderMultiplier;
               }
               else {
-                  const res = comparator(a, b);
+                  const res = compareAt(a, b);
                   if (res === 0) {
                       return _lenCompareParent || res;
                   }
@@ -966,11 +1061,11 @@
   }
 
   class SortedArray extends Array {
+      compare = compareString;
+      compareFound = false;
+      allowDuplicates = true;
       constructor(options = {}) {
           super();
-          this.compare = compareString;
-          this.compareFound = false;
-          this.allowDuplicates = true;
           Object.defineProperty(this, 'compare', { enumerable: false });
           Object.defineProperty(this, 'compareFound', { enumerable: false });
           Object.defineProperty(this, 'allowDuplicates', { enumerable: false });
@@ -1348,15 +1443,15 @@
    * // [
    * // 	{
    * //     index: 9,
-   * //     match: 'a',
-   * //     groups: { g1: 'a' },
    * //     lastIndex: 10,
+   * //     groups: { g1: 'a' },
+   * //     match: 'a',
    * //   },
    * //   {
    * //     index: 14,
-   * //     match: 'a',
-   * //     groups: { g1: 'a' },
    * //     lastIndex: 15,
+   * //     groups: { g1: 'a' },
+   * //     match: 'a',
    * //   },
    * // ]
    * ```
@@ -1366,9 +1461,9 @@
       while ((match = regex.exec(string)) !== null) {
           yield {
               index: match.index,
-              match: match[0],
-              groups: Object.assign({}, match.groups),
               lastIndex: regex.lastIndex,
+              groups: Object.assign({}, match.groups),
+              match: match[0],
           };
       }
   }
@@ -1789,6 +1884,77 @@
   }
 
   /**
+   * String hashing
+   */
+  const strHash = {
+      /**
+       * Hash a string into a buffer with a given algorithm
+       * @param string The string to hash
+       * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
+       * @see strHashListAlgorithms for a list of accepted strings for 'algorithm'
+       * @example
+       * ```ts
+       * strHash.toBuffer('hello')
+       * //=> <Buffer 2c f2 4d ba 5f b0 a3 0e 26 e8 3b 2a c5 b9 e2 9e 1b 16 1e 5c 1f a7 42 5e 73 04 33 62 93 8b 98 24>
+       * ```
+       */
+      toBuffer(string, algorithm = 'sha256') {
+          return crypto.createHash(algorithm).update(string).digest();
+      },
+      /**
+       * Hash a string into an array of unsigned 32-bit integers.
+       * @param string The string to hash
+       * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
+       * @see strHashListAlgorithms for a list of accepted strings for 'algorithm'
+       * @example
+       * ```ts
+       * strHash.toUint32Array('hello')
+       * //=> Uint32Array(8) [3125670444,  245608543, 708569126, 2665658821, 1545475611, 1581426463, 1647510643, 613976979]
+       * ```
+       */
+      toUint32Array(string, algorithm = 'sha256') {
+          return new Uint32Array(this.toBuffer(string, algorithm).buffer);
+      },
+      /**
+       * Hash a string into a buffer with a given algorithm
+       * @param string The string to hash
+       * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
+       * @see strHashListAlgorithms for a list of accepted strings for 'algorithm'
+       * @param encoding base64 | base64url | hex | binary | utf8 | utf-8 | utf16le | latin1 | ascii | binary | ucs2 | ucs-2
+       * @example
+       * ```ts
+       * strHash.toString('hello', 'sha256', 'hex')
+       * //=> 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+       * ```
+       */
+      toString(string, algorithm = 'sha256', encoding = 'base64') {
+          return this.toBuffer(string, algorithm).toString(encoding);
+      },
+      /**
+       * List all available hash algorithms (node-js crypto library)
+       */
+      listAlgorithms() {
+          return crypto.getHashes();
+      },
+  };
+
+  /**
+   * Returns the string as is, except the first character is capitalized.
+   * @param string The string to capitalize the first character of.
+   */
+  function strFirstCharToUpperCase(string) {
+      return string.charAt(0).toUpperCase() + string.substring(1);
+  }
+
+  /**
+   * Tries to parse strings such as "false" and "true" into corresponding booleans.
+   * @param string The string to parse.
+   */
+  function strParseBoolean(string) {
+      return string.toLowerCase() === 'true';
+  }
+
+  /**
    * Checks if a string is a valid regex flags string.
    * @example
    * ```ts
@@ -1830,6 +1996,11 @@
    * A RegExp class extension with extra features.
    */
   class BemojeRegex extends RegExp {
+      static defaultOptions = {
+          escapeSourceString: false,
+          fixFlags: false,
+      };
+      options;
       constructor(source, flags = '', options) {
           if (source instanceof RegExp && !flags) {
               super(source);
@@ -1840,7 +2011,7 @@
                   flags = flags ? flags : source.flags;
                   source = source.source;
               }
-              else if (options === null || options === void 0 ? void 0 : options.escapeSourceString) {
+              else if (options?.escapeSourceString) {
                   source = regexEscapeString(source);
               }
               if (options.fixFlags) {
@@ -1853,6 +2024,19 @@
           }
           this.options = options || BemojeRegex.defaultOptions;
       }
+      /**
+       * Checks if a string is a valid regex flags string.
+       */
+      static isValidFlags = regexIsValidFlags;
+      /**
+       * Takes a string of RegExp flags and returns a string guaranteed to be valid.
+       * @param flags - string of RegExp flags
+       */
+      static fixFlags = regexFixFlags;
+      /**
+       * Returns an array of all valid flags for a regular expression.
+       */
+      static getValidFlags = regexValidFlags;
       /**
        * Returns true if the RegExp instance has same source and flags.
        * @param regex - RegExp instance to compare to.
@@ -1892,23 +2076,6 @@
           return Object.setPrototypeOf(this, RegExp.prototype);
       }
   }
-  BemojeRegex.defaultOptions = {
-      escapeSourceString: false,
-      fixFlags: false,
-  };
-  /**
-   * Checks if a string is a valid regex flags string.
-   */
-  BemojeRegex.isValidFlags = regexIsValidFlags;
-  /**
-   * Takes a string of RegExp flags and returns a string guaranteed to be valid.
-   * @param flags - string of RegExp flags
-   */
-  BemojeRegex.fixFlags = regexFixFlags;
-  /**
-   * Returns an array of all valid flags for a regular expression.
-   */
-  BemojeRegex.getValidFlags = regexValidFlags;
   // declare global {
   //   interface RegExp {
   //     /**
@@ -1950,48 +2117,90 @@
   }
 
   /**
-   * Returns a function that matches a string between two given strings or regexes.
+   * Sets the name of a function.
+   * @param name The name to set.
+   * @param fun The function to set the name of.
+   */
+  function funSetName(name, fun) {
+      Object.defineProperty(fun, 'name', { value: name, configurable: true });
+      return fun;
+  }
+
+  function parseParam(param) {
+      const isString = typeof param === 'string';
+      const reg = isString
+          ? new RegExp(regexEscapeString(param), 'g')
+          : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'));
+      const regValidate = new RegExp('^' + reg.source + '$', '');
+      return [reg, regValidate];
+  }
+  /**
+   * Builds a regex that matches a string between two strings. Supports regex instead of string.
+   * @param type - type of scope being matched
    * @param left - string or regex to match before
    * @param right - string or regex to match after
    * @param flags - regex flags - 'g' and 's' are always added to whatever flags are passed.
    * @example
    * ```ts
-   * const input = 'Hello world! This is a test string.'
-   * const matchBetween = regexMatchBetween('Hello', 'test')
-   * [...matchBetween(input)]
-   * // [
-   * //   {
-   * //     left: { index: 0, match: 'Hello', groups: {}, lastIndex: 5 },
-   * //     mid: { index: 12, match: ' world! This is a ', groups: {}, lastIndex: 31 },
-   * //     right: { index: 36, match: 'test', groups: {}, lastIndex: 40 },
-   * //   },
-   * // ]
+   * const regex = buildRegexBetween(/a/, /b/)
+   * 'abc'.match(regex)?.groups?.mid // 'c'
    * ```
    */
-  function regexMatchBetween(left, right, flags) {
-      left = typeof left === 'string' ? regexEscapeString(left) : left.source;
-      right = typeof right === 'string' ? regexEscapeString(right) : right.source;
-      flags = flags ? strRemoveDuplicateChars('gs' + flags) : 'gs';
-      const reLeft = new RegExp(`${left}`, flags);
-      const reRight = new RegExp(`${right}`, flags);
-      return function* (input) {
-          const matchesRight = [...rexec(reRight, input)];
-          for (const left of rexec(reLeft, input)) {
-              for (const right of matchesRight) {
-                  if (left.lastIndex > right.index)
+  function regexScopeTree(type, left, right) {
+      const [regLeft, regLeftValidate] = parseParam(left);
+      const [regRight, regRightValidate] = parseParam(right);
+      return funSetName(type, function* (string, yieldOnlyRootNodes = false) {
+          const matches = [...rexec(regLeft, string)].concat([...rexec(regRight, string)]);
+          matches.sort(compareArray((a, b) => a.index - b.index));
+          const nodes = [];
+          const stack = [];
+          for (const match of matches) {
+              if (regLeftValidate.test(match.match)) {
+                  stack.push(match);
+              }
+              else if (regRightValidate.test(match.match)) {
+                  const left = stack.pop();
+                  if (!left)
                       continue;
-                  const mid = {
-                      index: left.lastIndex,
-                      match: input.substring(left.lastIndex, right.index),
-                      groups: Object.create(null),
-                      lastIndex: right.index,
+                  const right = match;
+                  const depth = stack.length;
+                  const node = {
+                      type,
+                      parent: null,
+                      depth,
+                      left,
+                      right,
+                      between: {
+                          index: left.lastIndex,
+                          lastIndex: right.index,
+                          groups: {},
+                          match: string.substring(left.lastIndex, right.index),
+                      },
+                      children: [],
                   };
-                  yield { left, mid, right };
-                  break;
+                  setNonEnumerable(node, 'parent');
+                  for (let i = nodes.length - 1; i >= 0; i--) {
+                      if (left.index >= nodes[i].left.index || right.lastIndex <= nodes[i].right.lastIndex)
+                          break;
+                      node.children.push(nodes[i]);
+                      if (nodes[i].parent !== null)
+                          continue;
+                      nodes[i].parent = node;
+                  }
+                  nodes.push(node);
+                  if (yieldOnlyRootNodes && depth > 0)
+                      continue;
+                  yield node;
+              }
+              else {
+                  throw new Error('Match does not recognize itself as neither left nor right, which should be impossible.');
               }
           }
-      };
+      });
   }
+  // const parenthesesTree = regexScopeTree('Parentheses', '(', ')')
+  // const string = '(1+((3)+(1)))+(15+(21-(521))))'
+  // console.dir([...parenthesesTree(string, true)], { depth: null })
 
   const REGEX_VALID_A = /^[A-Z]*$/i;
   const alphaToColMap = new Map();
@@ -2075,6 +2284,9 @@
    * Two-dimensional table class supporting column and row headers.
    */
   class Table extends Base {
+      _columnHeaders;
+      _rowHeaders;
+      _data = [];
       /**
        * Creates a Table instance from CSV string data.
        * @param csv CSV data string
@@ -2097,7 +2309,6 @@
       }
       constructor(options = {}) {
           super();
-          this._data = [];
           this.validateOptions(options);
           this.handleOptions(options);
           this.validateData();
@@ -2522,6 +2733,15 @@
   }
 
   /**
+   * Returns an ISO date string but only digits remaining.
+   * This will correctly sort in chronological order.
+   * @param date - The date to convert to an ISO date string.
+   */
+  function isoDateTimestamp(date = new Date()) {
+      return date.toISOString().replace(/\D/g, '');
+  }
+
+  /**
    * A Function class that can be extended.
    * @example
    * ```ts
@@ -2553,7 +2773,6 @@
    * @returns {Array<Array<string>>} Data table which is an arrays of row-arrays of cell content (string).
    */
   function htmlTableTo2dArray(element, headers = true) {
-      var _a;
       const result = [];
       const htmlRows = element.querySelectorAll('tr');
       for (let i = 0; i < htmlRows.length; i++) {
@@ -2563,7 +2782,7 @@
           for (let j = 0; j < htmlCells.length; j++) {
               const htmlCell = htmlCells[j];
               if (htmlCell) {
-                  row.push(((_a = htmlCell === null || htmlCell === void 0 ? void 0 : htmlCell.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || '');
+                  row.push(htmlCell?.textContent?.trim() || '');
               }
           }
           if (!headers) {
@@ -2646,75 +2865,185 @@
       return map;
   }
 
-  /*! *****************************************************************************
-  Copyright (c) Microsoft Corporation.
-
-  Permission to use, copy, modify, and/or distribute this software for any
-  purpose with or without fee is hereby granted.
-
-  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-  REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-  AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-  INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-  LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-  PERFORMANCE OF THIS SOFTWARE.
-  ***************************************************************************** */
-
-  function __awaiter(thisArg, _arguments, P, generator) {
-      function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-      return new (P || (P = Promise))(function (resolve, reject) {
-          function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-          function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-          function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-          step((generator = generator.apply(thisArg, _arguments || [])).next());
-      });
+  /**
+   * Returns a value from a map, while setting a given default value before returning it, if the key is not present.
+   * @param map - map to get value from
+   * @param key - key to get value for
+   * @param callback - callback to set the value if key is not present
+   * @example
+   * ```ts
+   * const map = new Map<string, number>()
+   * map.set('key', 1)
+   * mapGetOrElse(map, 'nonexistentKey', () => 2) // Output: 2
+   * ```
+   */
+  function mapGetOrElse(map, key, callback) {
+      let value = map.get(key);
+      if (value !== undefined)
+          return value;
+      value = callback(key);
+      map.set(key, value);
+      return value;
   }
 
-  function __values(o) {
-      var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-      if (m) return m.call(o);
-      if (o && typeof o.length === "number") return {
-          next: function () {
-              if (o && i >= o.length) o = void 0;
-              return { value: o && o[i++], done: !o };
+  const allIndexedInstances = [];
+  const allIndexedClasses = [];
+  let nextClassIndex = -1;
+  function Indexed(BaseConstructor) {
+      const classIndex = ++nextClassIndex;
+      allIndexedInstances[classIndex] = [];
+      let nextInstanceIndex = -1;
+      const Class = class Indexed extends BaseConstructor {
+          static instances = allIndexedInstances[classIndex];
+          static clsId = classIndex;
+          id;
+          constructor(...args) {
+              super(...args);
+              this.id = [classIndex, ++nextInstanceIndex];
+              this.klass.instances[this.insId] = this;
+          }
+          get clsId() {
+              return this.id[0];
+          }
+          get insId() {
+              return this.id[1];
+          }
+          get uidString() {
+              return this.clsId.toString(16) + '-' + this.insId.toString(16);
+          }
+          get guidHashMd5() {
+              return strHash.toString(this.uidString, 'md5', 'base64url');
+          }
+          get guidHashSha256() {
+              return strHash.toString(this.uidString, 'sha256', 'base64url');
+          }
+          get klass() {
+              return this.constructor.prototype.constructor;
           }
       };
-      throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+      allIndexedClasses[classIndex] = Class;
+      return Class;
+  }
+  function IndexedGetClass(classIndex) {
+      return allIndexedClasses[classIndex];
+  }
+  function IndexedGetInstance(classIndex, instanceIndex) {
+      return allIndexedInstances[classIndex][instanceIndex];
   }
 
-  function __asyncValues(o) {
-      if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-      var m = o[Symbol.asyncIterator], i;
-      return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-      function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-      function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+  function Timestamped(BaseConstructor) {
+      const t0 = Date.now();
+      return class Timestamped extends BaseConstructor {
+          static timestamp = t0;
+          timestamp = Date.now();
+      };
   }
+
+  function Options(BaseConstructor) {
+      const wmap = new WeakMap();
+      return class Options extends BaseConstructor {
+          constructor(...args) {
+              let options = args.shift();
+              super(...args);
+              options = Object.assign({}, this.defaultOptions, options);
+              wmap.set(this, options);
+              this.handleOptions(options);
+          }
+          handleOptions(options) {
+              Object.assign(this, options);
+          }
+          get options() {
+              return wmap.get(this) || {};
+          }
+          get defaultOptions() {
+              return this.klass.defaultOptions;
+          }
+          get klass() {
+              return this.constructor.prototype.constructor;
+          }
+      };
+  }
+
+  function Revivable(BaseConstructor) {
+      const serializeIgnoreKeys = [];
+      return class Revivable extends BaseConstructor {
+          /**
+           * Ignore a key when serializing to JSON.
+           */
+          static ignoreKeyWhenSerializing(key) {
+              serializeIgnoreKeys.push(key);
+          }
+          /**
+           * Revive an instance from a JSON string.
+           */
+          static fromJSON(json) {
+              return Object.setPrototypeOf(JSON.parse(json), this.prototype);
+          }
+          constructor(...args) {
+              super(...args);
+              setNonEnumerable(this, ...serializeIgnoreKeys);
+          }
+          /**
+           * Invoked by JSON.stringify when serializing.
+           */
+          toJSON() {
+              return this;
+          }
+          /**
+           * Stringify an instance into JSON.
+           */
+          stringify(indent = 0) {
+              return JSON.stringify(this, null, indent);
+          }
+      };
+  }
+
+  class User extends Revivable(Options(Timestamped(Indexed(Base)))) {
+      static defaultOptions = {
+          wow: 'cool',
+          dam: 2,
+      };
+      constructor(options) {
+          super(options);
+          this.init();
+      }
+  }
+  // new User({ wow: 'yeah' })
+  // new User({ dam: 6 })
+  // console.log(Reflect.ownKeys(User))
+  // console.log(Reflect.ownKeys(User.prototype))
+  // console.log(User)
+
+  const Mixins = {
+      Base,
+      Indexed,
+      IndexedGetClass,
+      IndexedGetInstance,
+      Timestamped,
+      Options,
+  };
 
   const openai = new openai$1.OpenAIApi(new openai$1.Configuration({
       apiKey: process.env.OPENAI_API_KEY,
   }));
   // type t = { data: CreateChatCompletionResponse; text: string }
   function gptHttpRequester(temperature = 0, instructions) {
-      return function (prompt) {
-          var _a, _b, _c;
-          return __awaiter(this, void 0, void 0, function* () {
-              const response = yield openai.createChatCompletion({
-                  model: 'gpt-3.5-turbo',
-                  temperature,
-                  // top_p: 0.1,
-                  messages: [
-                      {
-                          role: 'system',
-                          content: instructions,
-                      },
-                      { role: 'user', content: prompt },
-                  ],
-              });
-              const data = response.data;
-              const text = ((_c = (_b = (_a = data === null || data === void 0 ? void 0 : data.choices[0]) === null || _a === void 0 ? void 0 : _a.message) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c.toString()) || '';
-              return { data, text };
+      return async function (prompt) {
+          const response = await openai.createChatCompletion({
+              model: 'gpt-3.5-turbo',
+              temperature,
+              // top_p: 0.1,
+              messages: [
+                  {
+                      role: 'system',
+                      content: instructions,
+                  },
+                  { role: 'user', content: prompt },
+              ],
           });
+          const data = response.data;
+          const text = data?.choices[0]?.message?.content?.toString() || '';
+          return { data, text };
       };
   }
   const generateUnitTestsGPT = gptHttpRequester(0, [
@@ -2723,37 +3052,35 @@
       'Use the Jest framework methods called "describe" and "it".',
       'Your reply should only be the code. No comments or other text.',
   ].join('\n'));
-  function generateUnitTests(sourceCode, dirname, exportName, append = true) {
-      return __awaiter(this, void 0, void 0, function* () {
-          const testFilepath = path__default["default"].join(process.cwd(), 'tests', dirname + '.test.ts');
-          const testFileExists = fs__default["default"].existsSync(testFilepath);
-          if (!append && testFileExists)
-              return console.log('test already exists: ' + testFilepath);
-          if (append && !testFileExists)
-              append = false;
-          let testFileCurrentCode = '';
-          if (append) {
-              testFileCurrentCode = fs__default["default"].readFileSync(testFilepath).toString();
-              if (testFileCurrentCode.includes(exportName)) {
-                  return console.log('tests already exists in the file: ' + testFilepath);
-              }
+  async function generateUnitTests(sourceCode, dirname, exportName, append = true) {
+      const testFilepath = path__default["default"].join(process.cwd(), 'tests', dirname + '.test.ts');
+      const testFileExists = fs__default["default"].existsSync(testFilepath);
+      if (!append && testFileExists)
+          return console.log('test already exists: ' + testFilepath);
+      if (append && !testFileExists)
+          append = false;
+      let testFileCurrentCode = '';
+      if (append) {
+          testFileCurrentCode = fs__default["default"].readFileSync(testFilepath).toString();
+          if (testFileCurrentCode.includes(exportName)) {
+              return console.log('tests already exists in the file: ' + testFilepath);
           }
-          const result = yield generateUnitTestsGPT(sourceCode.replace(/import .+\n/gm, '').trim());
-          const data = result.data;
-          const text = (append ? '' : `import * as util from '../src/libs/${dirname}'\n\n`) +
-              result.text
-                  .trim()
-                  .replace(/^```(\w+)?/, '')
-                  .replace(/```$/, '')
-                  .replace(/import .+\n/gm, '')
-                  .split(exportName)
-                  .join('util.' + exportName)
-                  .replace(`describe('util.`, `describe('`)
-                  .replace(`describe("util.`, `describe("`)
-                  .trim();
-          yield fs__default["default"].promises.writeFile(testFilepath, append ? testFileCurrentCode + '\n\n' + text : text);
-          return { data, text };
-      });
+      }
+      const result = await generateUnitTestsGPT(sourceCode.replace(/import .+\n/gm, '').trim());
+      const data = result.data;
+      const text = (append ? '' : `import * as util from '../src/libs/${dirname}'\n\n`) +
+          result.text
+              .trim()
+              .replace(/^```(\w+)?/, '')
+              .replace(/```$/, '')
+              .replace(/import .+\n/gm, '')
+              .split(exportName)
+              .join('util.' + exportName)
+              .replace(`describe('util.`, `describe('`)
+              .replace(`describe("util.`, `describe("`)
+              .trim();
+      await fs__default["default"].promises.writeFile(testFilepath, append ? testFileCurrentCode + '\n\n' + text : text);
+      return { data, text };
   }
   // generateUnitTests(code1, 'object', 'iteratePrototypeChain')
   // generateUnitTests(code2, 'node', 'createFileExtensionFilter', true)
@@ -3049,39 +3376,20 @@
    * Drain a Readable into a string.
    * @param stream - a Readable of string chunks
    */
-  function streamToString(stream) {
-      var _a, stream_1, stream_1_1;
-      var _b, e_1, _c, _d;
-      return __awaiter(this, void 0, void 0, function* () {
-          const chunks = [];
-          try {
-              for (_a = true, stream_1 = __asyncValues(stream); stream_1_1 = yield stream_1.next(), _b = stream_1_1.done, !_b;) {
-                  _d = stream_1_1.value;
-                  _a = false;
-                  try {
-                      const chunk = _d;
-                      chunks.push(Buffer.from(chunk).toString());
-                  }
-                  finally {
-                      _a = true;
-                  }
-              }
-          }
-          catch (e_1_1) { e_1 = { error: e_1_1 }; }
-          finally {
-              try {
-                  if (!_a && !_b && (_c = stream_1.return)) yield _c.call(stream_1);
-              }
-              finally { if (e_1) throw e_1.error; }
-          }
-          return chunks.join('');
-      });
+  async function streamToString(stream) {
+      const chunks = [];
+      for await (const chunk of stream) {
+          chunks.push(Buffer.from(chunk).toString());
+      }
+      return chunks.join('');
   }
 
   /**
    * Extension of Node's native Readable class for converting a string into a Readable stream.
    */
   class StringStream extends stream.Readable {
+      str;
+      ended;
       constructor(str) {
           super();
           this.str = str;
@@ -3096,6 +3404,49 @@
               this.ended = true;
           }
       }
+  }
+
+  /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+  const logger = winston__default["default"].createLogger({
+      format: winston__default["default"].format.combine(winston__default["default"].format.timestamp(), winston__default["default"].format.json()),
+      transports: [new winston__default["default"].transports.File({ filename: 'logs/app.log' })],
+  });
+  const log = {
+      info: (message) => {
+          logger.info(message);
+          if (typeof message === 'object') {
+              console.log(message);
+          }
+          else {
+              console.log(clc__default["default"].magenta(new Date().toISOString()) + ' [' + clc__default["default"].green('INFO') + ']: ' + clc__default["default"].cyan(message));
+          }
+      },
+      warn: (message) => {
+          logger.warn(message);
+          if (typeof message === 'object') {
+              console.log(message);
+          }
+          else {
+              console.log(clc__default["default"].magenta(new Date().toISOString()) + ' [' + clc__default["default"].yellow('WARN') + ']: ' + clc__default["default"].yellow(message));
+          }
+      },
+      error: (message) => {
+          logger.error(message);
+          if (typeof message === 'object') {
+              console.error(message);
+          }
+          else {
+              console.error(clc__default["default"].magenta(new Date().toISOString()) + ' [' + clc__default["default"].red('ERROR') + ']: ' + clc__default["default"].red(message));
+          }
+      },
+  };
+
+  /**
+   * If the filepath is somewhere in the current working directory, it can be converted into a relative path.
+   * @param filepath - the absolute filepath to convert.
+   */
+  function absolutCwdPathToRelative(filepath) {
+      return filepath.replace(process.cwd(), '').replace(/\\/g, '/').replace(/^\//, '');
   }
 
   /**
@@ -3145,6 +3496,10 @@
    * For recording time passed since constructor was invoked and until the stop() method i called.
    */
   class Timer {
+      /**
+       * The initial time
+       */
+      t0;
       constructor() {
           this.t0 = Date.now();
       }
@@ -3359,18 +3714,43 @@
       return input.sort(compareNumeric);
   }
 
+  /**
+   * Calculates the sum of an array of numbers.
+   * @param array - The array of numbers to sum.
+   */
+  function arrSum(array) {
+      return array.reduce((acc, cur) => acc + cur, 0);
+  }
+
+  /**
+   * Calculates the average of an array of numbers.
+   * @param array - The array of numbers to average.
+   */
+  function arrAverage(array) {
+      return arrSum(array) / array.length;
+  }
+
   exports.A1ToColRow = A1ToColRow;
   exports.Base = Base;
   exports.BemojeRegex = BemojeRegex;
   exports.ExtensibleFunction = ExtensibleFunction;
+  exports.Indexed = Indexed;
+  exports.IndexedGetClass = IndexedGetClass;
+  exports.IndexedGetInstance = IndexedGetInstance;
   exports.Matrix = Matrix;
+  exports.Mixins = Mixins;
+  exports.Options = Options;
   exports.Queue = Queue;
+  exports.Revivable = Revivable;
   exports.SortedArray = SortedArray;
   exports.StringStream = StringStream;
   exports.Table = Table;
   exports.Timer = Timer;
+  exports.Timestamped = Timestamped;
+  exports.absolutCwdPathToRelative = absolutCwdPathToRelative;
   exports.arr2dToCSV = arr2dToCSV;
   exports.arrAssignFrom = arrAssignFrom;
+  exports.arrAverage = arrAverage;
   exports.arrEvery = arrEvery;
   exports.arrFilterMutable = arrFilterMutable;
   exports.arrFlatten = arrFlatten;
@@ -3381,11 +3761,14 @@
   exports.arrShuffle = arrShuffle;
   exports.arrSome = arrSome;
   exports.arrSortNumeric = arrSortNumeric;
+  exports.arrSum = arrSum;
   exports.arrSwap = arrSwap;
   exports.assertValidDate = assertValidDate;
   exports.assertValidDateDay = assertValidDateDay;
   exports.assertValidDateMonth = assertValidDateMonth;
   exports.assertValidDateYear = assertValidDateYear;
+  exports.asyncParallel = asyncParallel;
+  exports.asyncSerial = asyncSerial;
   exports.asyncWithTimeout = asyncWithTimeout;
   exports.atob = atob;
   exports.btoa = btoa;
@@ -3402,13 +3785,18 @@
   exports.compareStringDescending = compareStringDescending;
   exports.createFileExtensionFilter = createFileExtensionFilter;
   exports.ensureValidWindowsPath = ensureValidWindowsPath;
+  exports.funSetName = funSetName;
   exports.generateUnitTests = generateUnitTests;
   exports.getCentury = getCentury;
+  exports.getConstructor = getConstructor;
   exports.getCurrentYear = getCurrentYear;
+  exports.getPrototype = getPrototype;
   exports.htmlTableTo2dArray = htmlTableTo2dArray;
+  exports.inheritStaticMembers = inheritStaticMembers;
   exports.intToArrayBytes = intToArrayBytes;
   exports.intToBuffer = intToBuffer;
   exports.intToBytes = intToBytes;
+  exports.interfaceDefinitions = interfaceDefinitions;
   exports.isConstructor = isConstructor;
   exports.isEven = isEven;
   exports.isHex = isHex$1;
@@ -3424,9 +3812,12 @@
   exports.isValidDateDay = isValidDateDay;
   exports.isValidDateMonth = isValidDateMonth;
   exports.isValidDateYear = isValidDateYear;
+  exports.isoDateTimestamp = isoDateTimestamp;
   exports.iteratePrototypeChain = iteratePrototypeChain;
   exports.letterToCol = letterToCol;
+  exports.log = log;
   exports.mapGetOrDefault = mapGetOrDefault;
+  exports.mapGetOrElse = mapGetOrElse;
   exports.mapUpdate = mapUpdate;
   exports.mapUpdateDefault = mapUpdateDefault;
   exports.memoryUsage = memoryUsage;
@@ -3449,8 +3840,8 @@
   exports.regexGetGroupNames = regexGetGroupNames;
   exports.regexIsValidFlags = regexIsValidFlags;
   exports.regexLibrary = regexLibrary;
-  exports.regexMatchBetween = regexMatchBetween;
   exports.regexMatcherToValidater = regexMatcherToValidater;
+  exports.regexScopeTree = regexScopeTree;
   exports.regexValidFlags = regexValidFlags;
   exports.rexec = rexec;
   exports.round = round;
@@ -3466,14 +3857,18 @@
   exports.setNonWritable = setNonWritable;
   exports.setSymmetricDifference = setSymmetricDifference;
   exports.setUnion = setUnion;
+  exports.setValueAsGetter = setValueAsGetter;
   exports.setWritable = setWritable;
   exports.strCountCharOccurances = strCountCharOccurances;
   exports.strCountChars = strCountChars;
+  exports.strFirstCharToUpperCase = strFirstCharToUpperCase;
+  exports.strHash = strHash;
   exports.strIsLowerCase = strIsLowerCase;
   exports.strIsUpperCase = strIsUpperCase;
   exports.strLinesRemoveEmpty = strLinesRemoveEmpty;
   exports.strLinesTrimLeft = strLinesTrimLeft;
   exports.strLinesTrimRight = strLinesTrimRight;
+  exports.strParseBoolean = strParseBoolean;
   exports.strPrettifyMinifiedCode = strPrettifyMinifiedCode;
   exports.strRemoveDuplicateChars = strRemoveDuplicateChars;
   exports.strRepeat = strRepeat;

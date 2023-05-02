@@ -1,5 +1,5 @@
 import * as util from '../src/libs/array'
-import { Callback, Predicate } from '../src/libs/types'
+import { Callback, Predicate } from '../src/libs/interfaces'
 
 describe('arr2dToCSV', () => {
   it('works for 2D array', () => {
@@ -210,7 +210,7 @@ describe('arrSwap', () => {
 
 describe('Callback', () => {
   it('should call the callback function with the correct arguments', () => {
-    const callback: Callback = jest.fn()
+    const callback = jest.fn()
     const array = [1, 2, 3]
     array.forEach(callback)
     expect(callback).toHaveBeenCalledTimes(3)
@@ -222,13 +222,13 @@ describe('Callback', () => {
 
 describe('Predicate', () => {
   it('should return true if the predicate function returns true for any element in the array', () => {
-    const predicate: Predicate = (value) => value > 2
+    const predicate = (value: number) => value > 2
     const array = [1, 2, 3]
     expect(array.some(predicate)).toBe(true)
   })
 
   it('should return false if the predicate function returns false for all elements in the array', () => {
-    const predicate: Predicate = (value) => value > 3
+    const predicate = (value: number) => value > 3
     const array = [1, 2, 3]
     expect(array.some(predicate)).toBe(false)
   })
@@ -236,7 +236,7 @@ describe('Predicate', () => {
 
 describe('Callback', () => {
   it('should call the callback function with the correct arguments', () => {
-    const callback: Callback = jest.fn()
+    const callback = jest.fn()
     const array = [1, 2, 3]
     array.forEach(callback)
     expect(callback).toHaveBeenCalledTimes(3)
@@ -248,13 +248,13 @@ describe('Callback', () => {
 
 describe('Predicate', () => {
   it('should return true if the predicate function returns true for any element in the array', () => {
-    const predicate: Predicate = (value) => value > 2
+    const predicate = (value: number) => value > 2
     const array = [1, 2, 3]
     expect(array.some(predicate)).toBe(true)
   })
 
   it('should return false if the predicate function returns false for all elements in the array', () => {
-    const predicate: Predicate = (value) => value > 3
+    const predicate = (value: number) => value > 3
     const array = [1, 2, 3]
     expect(array.some(predicate)).toBe(false)
   })
@@ -262,7 +262,7 @@ describe('Predicate', () => {
 
 describe('Callback', () => {
   it('should call the callback function with the correct arguments', () => {
-    const callback: Callback = jest.fn()
+    const callback = jest.fn()
     const array = [1, 2, 3]
     array.forEach(callback)
     expect(callback).toHaveBeenCalledTimes(3)
@@ -274,13 +274,13 @@ describe('Callback', () => {
 
 describe('Predicate', () => {
   it('should return true if the predicate function returns true for any element in the array', () => {
-    const predicate: Predicate = (value) => value > 2
+    const predicate = (value: number) => value > 2
     const array = [1, 2, 3]
     expect(array.some(predicate)).toBe(true)
   })
 
   it('should return false if the predicate function returns false for all elements in the array', () => {
-    const predicate: Predicate = (value) => value > 3
+    const predicate = (value: number) => value > 3
     const array = [1, 2, 3]
     expect(array.some(predicate)).toBe(false)
   })
@@ -288,7 +288,7 @@ describe('Predicate', () => {
 
 describe('Callback', () => {
   it('should call the callback function with the correct arguments', () => {
-    const callback: Callback = jest.fn()
+    const callback = jest.fn()
     const array = [1, 2, 3]
     array.forEach(callback)
     expect(callback).toHaveBeenCalledTimes(3)
@@ -300,14 +300,40 @@ describe('Callback', () => {
 
 describe('Predicate', () => {
   it('should return true if the predicate function returns true for any element in the array', () => {
-    const predicate: Predicate = (value) => value > 2
+    const predicate = (value: number) => value > 2
     const array = [1, 2, 3]
     expect(array.some(predicate)).toBe(true)
   })
 
   it('should return false if the predicate function returns false for all elements in the array', () => {
-    const predicate: Predicate = (value) => value > 3
+    const predicate = (value: number) => value > 3
     const array = [1, 2, 3]
     expect(array.some(predicate)).toBe(false)
+  })
+})
+
+describe('arrSum', () => {
+  it('should return 0 for an empty array', () => {
+    expect(util.arrSum([])).toBe(0)
+  })
+
+  it('should return the sum of an array of positive numbers', () => {
+    expect(util.arrSum([1, 2, 3])).toBe(6)
+  })
+
+  it('should return the sum of an array of negative numbers', () => {
+    expect(util.arrSum([-1, -2, -3])).toBe(-6)
+  })
+
+  it('should return the sum of an array of mixed positive and negative numbers', () => {
+    expect(util.arrSum([-1, 2, -3, 4])).toBe(2)
+  })
+})
+
+describe('arrAverage', () => {
+  it('should return the average of an array of numbers', () => {
+    expect(util.arrAverage([1, 2, 3, 4, 5])).toBe(3)
+    expect(util.arrAverage([0, 0, 0, 0, 0])).toBe(0)
+    expect(util.arrAverage([-1, 1])).toBe(0)
   })
 })

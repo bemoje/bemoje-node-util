@@ -95,7 +95,7 @@ Readable.constructor
 
 #### Defined in
 
-[src/libs/node/src/StringStream.ts:10](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/StringStream.ts#L10)
+[src/libs/node/src/StringStream.ts:10](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/StringStream.ts#L10)
 
 ## Properties
 
@@ -419,7 +419,7 @@ node_modules/@types/node/events.d.ts:327
 
 #### Inherited from
 
-Readable.\_\_@asyncIterator@21673
+Readable.\_\_@asyncIterator@21675
 
 #### Defined in
 
@@ -490,7 +490,7 @@ Readable.\_read
 
 #### Defined in
 
-[src/libs/node/src/StringStream.ts:16](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/StringStream.ts#L16)
+[src/libs/node/src/StringStream.ts:16](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/StringStream.ts#L16)
 
 ___
 

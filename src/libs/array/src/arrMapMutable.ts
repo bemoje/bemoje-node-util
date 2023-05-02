@@ -1,4 +1,4 @@
-import { Callback } from '../../../'
+import { MapIterator } from '../../..'
 
 /**
  * Same as Array.prototype.map but performs operations in palce (not immutable).
@@ -14,7 +14,7 @@ import { Callback } from '../../../'
  * ```
  */
 
-export function arrMapMutable(input: Array<any>, f: Callback): Array<any> {
+export function arrMapMutable<T>(input: Array<T>, f: MapIterator<T>): Array<T> {
   for (let i = 0; i < input.length; i++) {
     input[i] = f(input[i], i, input)
   }

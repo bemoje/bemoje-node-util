@@ -154,3 +154,17 @@ describe('numDaysInMonth', () => {
     expect(() => util.numDaysInMonth(1.1)).toThrowError()
   })
 })
+
+describe('isoDateTimestamp', () => {
+  it('should return a string', () => {
+    expect(typeof util.isoDateTimestamp()).toBe('string')
+  })
+
+  it('should return a string with only digits', () => {
+    expect(util.isoDateTimestamp()).toMatch(/^\d+$/)
+  })
+
+  it('should return a string with length 17', () => {
+    expect(util.isoDateTimestamp().length).toBe(17)
+  })
+})

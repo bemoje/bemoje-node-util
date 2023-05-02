@@ -1,5 +1,5 @@
-import { IRevivable } from '../../../';
-import { Base } from './Base';
+import { IRevivable } from '../../mixins/src/interfaces';
+import { Base } from '../../mixins/src/Base';
 /**
  * Constructor options for the Table class.
  */

@@ -24,3 +24,68 @@ describe('asyncWithTimeout', () => {
     ).resolves.toBe('Waited ' + 10 + 'ms')
   })
 })
+
+describe('asyncSerial', () => {
+  it('should run async tasks serially', async () => {
+    const tasks = [
+      async () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(1)
+          }, 200)
+        })
+      },
+      async () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(2)
+          }, 100)
+        })
+      },
+      async () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(3)
+          }, 10)
+        })
+      },
+    ]
+    const results = await util.asyncSerial(tasks)
+    expect(results).toEqual([1, 2, 3])
+  })
+})
+
+describe('asyncParallel', () => {
+  it('should run async tasks in parallel', async () => {
+    const resultsInOrder: Array<number> = []
+    const tasks = [
+      async () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resultsInOrder.push(1)
+            resolve(1)
+          }, 200)
+        })
+      },
+      async () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resultsInOrder.push(2)
+            resolve(2)
+          }, 100)
+        })
+      },
+      async () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resultsInOrder.push(3)
+            resolve(3)
+          }, 10)
+        })
+      },
+    ]
+    const results = await util.asyncParallel(tasks)
+    expect(results).toEqual([1, 2, 3])
+    expect(resultsInOrder).toEqual([3, 2, 1])
+  })
+})

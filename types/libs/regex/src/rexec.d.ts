@@ -1,8 +1,8 @@
 export type RexecYield = {
     index: number;
-    match: string;
-    groups: Record<string, string>;
     lastIndex: number;
+    groups: Record<string, string>;
+    match: string;
 };
 /**
  * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
@@ -16,15 +16,15 @@ export type RexecYield = {
  * // [
  * // 	{
  * //     index: 9,
- * //     match: 'a',
- * //     groups: { g1: 'a' },
  * //     lastIndex: 10,
+ * //     groups: { g1: 'a' },
+ * //     match: 'a',
  * //   },
  * //   {
  * //     index: 14,
- * //     match: 'a',
- * //     groups: { g1: 'a' },
  * //     lastIndex: 15,
+ * //     groups: { g1: 'a' },
+ * //     match: 'a',
  * //   },
  * // ]
  * ```

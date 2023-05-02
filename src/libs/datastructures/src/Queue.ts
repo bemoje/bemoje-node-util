@@ -1,5 +1,5 @@
-import { IRevivable } from '../../../'
-import { Base } from './Base'
+import { IRevivable } from '../../mixins/src/interfaces'
+import { Base } from '../../mixins/src/Base'
 
 export class Queue<T> extends Base implements IRevivable<Array<T>>, Iterable<T> {
   protected queue: Array<T> = []

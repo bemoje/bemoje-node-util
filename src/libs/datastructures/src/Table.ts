@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-extra-semi */
-import { IRevivable } from '../../../'
+import { IRevivable } from '../../mixins/src/interfaces'
 import { arr2dToCSV, arrEvery, arrMapMutable } from '../../array'
-import { Base } from './Base'
+import { Base } from '../../mixins/src/Base'
 import { A1ToColRow } from '../../spreadsheet'
 import { letterToCol } from '../../spreadsheet/src/letterToCol'
 
@@ -166,7 +166,7 @@ export class Table<T> extends Base implements IRevivable<TableSerializedForm<T>>
   public removeColumn(column: number | string, spreadsheetNotation = false): Table<T> {
     column = this.normalizeCol(column, spreadsheetNotation)
     arrMapMutable(this._data, (row) => {
-      row.splice(column, 1)
+      row.splice(column as number, 1)
       return row
     })
     if (this._columnHeaders) {

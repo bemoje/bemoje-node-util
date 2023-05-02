@@ -1,9 +1,14 @@
 /**
  * Abstract class that other classes can inherit from to gain various handy functionality.
  */
-export declare abstract class Base {
-    constructor();
-    private onFirstInstance;
+export declare class Base {
+    constructor(options?: Record<string, any>);
+    get klass(): typeof Base;
+    get proto(): Record<string, any>;
+    protected init(): void;
+    private inheritAllStatic;
+    private checkInterfaces;
+    private hasInterfaceInstanceMembers;
     private assertInterfaceStaticMembers;
     /**
      * Make the properties with property names that start with an underscore non-enumerable.

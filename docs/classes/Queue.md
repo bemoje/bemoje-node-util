@@ -2,7 +2,7 @@
 
 # Class: Queue<T\>
 
-Abstract class that other classes can inherit from to gain various handy functionality.
+Guarantees that class instances are serializable and have a static revive function.
 
 ## Type parameters
 
@@ -29,6 +29,8 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 ### Accessors
 
+- [klass](Queue.md#klass)
+- [proto](Queue.md#proto)
 - [size](Queue.md#size)
 
 ### Methods
@@ -45,7 +47,7 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 ### constructor
 
-• **new Queue**<`T`\>()
+• **new Queue**<`T`\>(`options?`)
 
 #### Type parameters
 
@@ -53,15 +55,57 @@ Abstract class that other classes can inherit from to gain various handy functio
 | :------ |
 | `T` |
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Record`<`string`, `any`\> |
+
 #### Inherited from
 
 [Base](Base.md).[constructor](Base.md#constructor)
 
 #### Defined in
 
-[src/libs/datastructures/src/Base.ts:10](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Base.ts#L10)
+src/libs/mixins/src/Base.ts:10
 
 ## Accessors
+
+### klass
+
+• `get` **klass**(): typeof [`Base`](Base.md)
+
+#### Returns
+
+typeof [`Base`](Base.md)
+
+#### Inherited from
+
+Base.klass
+
+#### Defined in
+
+src/libs/mixins/src/Base.ts:14
+
+___
+
+### proto
+
+• `get` **proto**(): `Record`<`string`, `any`\>
+
+#### Returns
+
+`Record`<`string`, `any`\>
+
+#### Inherited from
+
+Base.proto
+
+#### Defined in
+
+src/libs/mixins/src/Base.ts:18
+
+___
 
 ### size
 
@@ -73,7 +117,7 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:28](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Queue.ts#L28)
+[src/libs/datastructures/src/Queue.ts:28](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L28)
 
 ## Methods
 
@@ -91,7 +135,7 @@ Iterable.\_\_@iterator@87
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:40](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Queue.ts#L40)
+[src/libs/datastructures/src/Queue.ts:40](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L40)
 
 ___
 
@@ -105,7 +149,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:22](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Queue.ts#L22)
+[src/libs/datastructures/src/Queue.ts:22](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L22)
 
 ___
 
@@ -125,7 +169,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:17](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Queue.ts#L17)
+[src/libs/datastructures/src/Queue.ts:17](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L17)
 
 ___
 
@@ -139,7 +183,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:32](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Queue.ts#L32)
+[src/libs/datastructures/src/Queue.ts:32](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L32)
 
 ___
 
@@ -157,7 +201,7 @@ IRevivable.toJSON
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:36](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Queue.ts#L36)
+[src/libs/datastructures/src/Queue.ts:36](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L36)
 
 ___
 
@@ -183,7 +227,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Queue.ts#L7)
+[src/libs/datastructures/src/Queue.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L7)
 
 ___
 
@@ -209,4 +253,4 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Queue.ts#L13)
+[src/libs/datastructures/src/Queue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L13)

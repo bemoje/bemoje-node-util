@@ -2,8 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     // Transpilation settings.
-    "module": "ES6",
-    "target": "ES6",
+    "module": "ESNext",
+    "target": "ESNext",
 
     // Output settings.
     "charset": "utf-8",

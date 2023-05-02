@@ -52,3 +52,19 @@ describe('mapUpdateDefault', () => {
     expect(util.mapUpdateDefault(map, 'key', 0, (value) => value + 1)).toEqual(new Map([['key', 2]]))
   })
 })
+
+describe('mapGetOrElse', () => {
+  it('should return the value from the map if the key is present', () => {
+    const map = new Map<string, number>()
+    map.set('key', 1)
+    const result = util.mapGetOrElse(map, 'key', () => 2)
+    expect(result).toBe(1)
+  })
+
+  it('should set the default value and return it if the key is not present', () => {
+    const map = new Map<string, number>()
+    const result = util.mapGetOrElse(map, 'nonexistentKey', () => 2)
+    expect(result).toBe(2)
+    expect(map.get('nonexistentKey')).toBe(2)
+  })
+})

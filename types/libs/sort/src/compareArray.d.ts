@@ -1,7 +1,8 @@
+import { Comparator } from '../../interfaces';
 /**
  * Returns a given comparator as an array compatible comparator. Behaves as if the array to sort was recursively flattened.
- * @param comparator compare function
+ * @param compareAt shallow compare function that compares two elements of an array
  * @param descending whether the input comparator sorts in descending order
  */
-export declare function compareArray(comparator: (a: any, b: any) => number, descending?: boolean): (a: any, b: any) => number;
+export declare function compareArray(compareAt: Comparator, descending?: boolean): Comparator;
 //# sourceMappingURL=compareArray.d.ts.map

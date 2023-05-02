@@ -10,6 +10,7 @@
   "jsdelivr": "dist/index.umd.min.js",
   "umd:main": "dist/index.umd.js",
   "devDependencies": {
+    "@types/cli-color": "^2.0.2",
     "@types/date-and-time": "^0.13.0",
     "@types/dotenv": "^8.2.0",
     "@types/format-number": "^3.0.0",
@@ -65,22 +66,24 @@
     "email": "bemoje@bemoje.net",
     "url": "https://github.com/bemoje/"
   },
-  "funding": {
-    "type": "patreon",
-    "url": "https://www.patreon.com/user?u=40752770"
-  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bemoje/bemoje-node-util/issues"
   },
   "homepage": "https://github.com/bemoje/bemoje-node-util",
   "dependencies": {
+    "cli-color": "^2.0.3",
     "date-and-time": "^2.4.3",
     "dotenv": "^16.0.3",
     "format-number": "^3.0.0",
     "lodash": "^4.17.21",
     "openai": "^3.2.1",
     "sentence-splitter": "^4.2.0",
-    "timsort": "^0.3.0"
+    "timsort": "^0.3.0",
+    "winston": "^3.8.2"
+  },
+  "funding": {
+    "type": "patreon",
+    "url": "https://www.patreon.com/user?u=40752770"
   }
 }

@@ -22,30 +22,54 @@
 
 ### Interfaces
 
+- [IHandledOptions](interfaces/IHandledOptions.md)
 - [IRevivable](interfaces/IRevivable.md)
+- [IScopeNode](interfaces/IScopeNode.md)
 - [ISortedArrayOptions](interfaces/ISortedArrayOptions.md)
 - [ITableOptions](interfaces/ITableOptions.md)
 
 ### Type Aliases
 
 - [BemojeRegexOptions](README.md#bemojeregexoptions)
+- [Bit](README.md#bit)
+- [BitArray](README.md#bitarray)
+- [ByteArray](README.md#bytearray)
+- [ByteInt](README.md#byteint)
 - [Callback](README.md#callback)
+- [Comparator](README.md#comparator)
+- [Constructor](README.md#constructor)
 - [GenericFunction](README.md#genericfunction)
+- [MapIterator](README.md#mapiterator)
 - [MemoryUsageValues](README.md#memoryusagevalues)
 - [MemoryUsageValuesFormatted](README.md#memoryusagevaluesformatted)
+- [PositiveIntegerLessThan](README.md#positiveintegerlessthan)
 - [Predicate](README.md#predicate)
+- [RGB](README.md#rgb)
 - [RexecYield](README.md#rexecyield)
 - [TableSerializedForm](README.md#tableserializedform)
 - [ensureValidWindowsPathOptions](README.md#ensurevalidwindowspathoptions)
-- [matchBetweenFunction](README.md#matchbetweenfunction)
-- [matchBetweenYield](README.md#matchbetweenyield)
 - [primitive](README.md#primitive)
+
+### Variables
+
+- [Mixins](README.md#mixins)
+- [interfaceDefinitions](README.md#interfacedefinitions)
+- [log](README.md#log)
+- [strHash](README.md#strhash)
 
 ### Functions
 
 - [A1ToColRow](README.md#a1tocolrow)
+- [Indexed](README.md#indexed)
+- [IndexedGetClass](README.md#indexedgetclass)
+- [IndexedGetInstance](README.md#indexedgetinstance)
+- [Options](README.md#options)
+- [Revivable](README.md#revivable)
+- [Timestamped](README.md#timestamped)
+- [absolutCwdPathToRelative](README.md#absolutcwdpathtorelative)
 - [arr2dToCSV](README.md#arr2dtocsv)
 - [arrAssignFrom](README.md#arrassignfrom)
+- [arrAverage](README.md#arraverage)
 - [arrEvery](README.md#arrevery)
 - [arrFilterMutable](README.md#arrfiltermutable)
 - [arrFlatten](README.md#arrflatten)
@@ -56,11 +80,14 @@
 - [arrShuffle](README.md#arrshuffle)
 - [arrSome](README.md#arrsome)
 - [arrSortNumeric](README.md#arrsortnumeric)
+- [arrSum](README.md#arrsum)
 - [arrSwap](README.md#arrswap)
 - [assertValidDate](README.md#assertvaliddate)
 - [assertValidDateDay](README.md#assertvaliddateday)
 - [assertValidDateMonth](README.md#assertvaliddatemonth)
 - [assertValidDateYear](README.md#assertvaliddateyear)
+- [asyncParallel](README.md#asyncparallel)
+- [asyncSerial](README.md#asyncserial)
 - [asyncWithTimeout](README.md#asyncwithtimeout)
 - [atob](README.md#atob)
 - [btoa](README.md#btoa)
@@ -77,10 +104,14 @@
 - [compareStringDescending](README.md#comparestringdescending)
 - [createFileExtensionFilter](README.md#createfileextensionfilter)
 - [ensureValidWindowsPath](README.md#ensurevalidwindowspath)
+- [funSetName](README.md#funsetname)
 - [generateUnitTests](README.md#generateunittests)
 - [getCentury](README.md#getcentury)
+- [getConstructor](README.md#getconstructor)
 - [getCurrentYear](README.md#getcurrentyear)
+- [getPrototype](README.md#getprototype)
 - [htmlTableTo2dArray](README.md#htmltableto2darray)
+- [inheritStaticMembers](README.md#inheritstaticmembers)
 - [intToArrayBytes](README.md#inttoarraybytes)
 - [intToBuffer](README.md#inttobuffer)
 - [intToBytes](README.md#inttobytes)
@@ -99,9 +130,11 @@
 - [isValidDateDay](README.md#isvaliddateday)
 - [isValidDateMonth](README.md#isvaliddatemonth)
 - [isValidDateYear](README.md#isvaliddateyear)
+- [isoDateTimestamp](README.md#isodatetimestamp)
 - [iteratePrototypeChain](README.md#iterateprototypechain)
 - [letterToCol](README.md#lettertocol)
 - [mapGetOrDefault](README.md#mapgetordefault)
+- [mapGetOrElse](README.md#mapgetorelse)
 - [mapUpdate](README.md#mapupdate)
 - [mapUpdateDefault](README.md#mapupdatedefault)
 - [memoryUsage](README.md#memoryusage)
@@ -123,8 +156,8 @@
 - [regexFixFlags](README.md#regexfixflags)
 - [regexGetGroupNames](README.md#regexgetgroupnames)
 - [regexIsValidFlags](README.md#regexisvalidflags)
-- [regexMatchBetween](README.md#regexmatchbetween)
 - [regexMatcherToValidater](README.md#regexmatchertovalidater)
+- [regexScopeTree](README.md#regexscopetree)
 - [regexValidFlags](README.md#regexvalidflags)
 - [rexec](README.md#rexec)
 - [round](README.md#round)
@@ -140,14 +173,17 @@
 - [setNonWritable](README.md#setnonwritable)
 - [setSymmetricDifference](README.md#setsymmetricdifference)
 - [setUnion](README.md#setunion)
+- [setValueAsGetter](README.md#setvalueasgetter)
 - [setWritable](README.md#setwritable)
 - [strCountCharOccurances](README.md#strcountcharoccurances)
 - [strCountChars](README.md#strcountchars)
+- [strFirstCharToUpperCase](README.md#strfirstchartouppercase)
 - [strIsLowerCase](README.md#strislowercase)
 - [strIsUpperCase](README.md#strisuppercase)
 - [strLinesRemoveEmpty](README.md#strlinesremoveempty)
 - [strLinesTrimLeft](README.md#strlinestrimleft)
 - [strLinesTrimRight](README.md#strlinestrimright)
+- [strParseBoolean](README.md#strparseboolean)
 - [strPrettifyMinifiedCode](README.md#strprettifyminifiedcode)
 - [strRemoveDuplicateChars](README.md#strremoveduplicatechars)
 - [strRepeat](README.md#strrepeat)
@@ -186,13 +222,59 @@
 
 #### Defined in
 
-[src/libs/regex/src/BemojeRegex.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/BemojeRegex.ts#L11)
+[src/libs/regex/src/BemojeRegex.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/BemojeRegex.ts#L11)
+
+___
+
+### Bit
+
+Ƭ **Bit**: ``0`` \| ``1``
+
+#### Defined in
+
+src/libs/interfaces/index.ts:14
+
+___
+
+### BitArray
+
+Ƭ **BitArray**: [`Bit`](README.md#bit)[]
+
+#### Defined in
+
+src/libs/interfaces/index.ts:15
+
+___
+
+### ByteArray
+
+Ƭ **ByteArray**: [`ByteInt`](README.md#byteint)[]
+
+#### Defined in
+
+src/libs/interfaces/index.ts:18
+
+___
+
+### ByteInt
+
+Ƭ **ByteInt**: [`PositiveIntegerLessThan`](README.md#positiveintegerlessthan)<``256``\>
+
+#### Defined in
+
+src/libs/interfaces/index.ts:17
 
 ___
 
 ### Callback
 
-Ƭ **Callback**: (`value`: `any`, `index`: `number`, `array`: `any`[]) => `void`
+Ƭ **Callback**<`T`\>: (`value`: `T`, `index`: `number`, `array`: `T`[]) => `void`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Type declaration
 
@@ -202,9 +284,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `value` | `any` |
+| `value` | `T` |
 | `index` | `number` |
-| `array` | `any`[] |
+| `array` | `T`[] |
 
 ##### Returns
 
@@ -212,7 +294,58 @@ ___
 
 #### Defined in
 
-[src/libs/types/index.ts:3](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/types/index.ts#L3)
+src/libs/interfaces/index.ts:3
+
+___
+
+### Comparator
+
+Ƭ **Comparator**: (`a`: `any`, `b`: `any`) => `number`
+
+#### Type declaration
+
+▸ (`a`, `b`): `number`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `any` |
+| `b` | `any` |
+
+##### Returns
+
+`number`
+
+#### Defined in
+
+src/libs/interfaces/index.ts:6
+
+___
+
+### Constructor
+
+Ƭ **Constructor**<`T`\>: (...`args`: `any`[]) => `T`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `Record`<`string`, `any`\> |
+
+#### Type declaration
+
+• (`...args`)
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...args` | `any`[] |
+
+#### Defined in
+
+src/libs/interfaces/index.ts:7
 
 ___
 
@@ -236,7 +369,39 @@ ___
 
 #### Defined in
 
-[src/libs/types/index.ts:2](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/types/index.ts#L2)
+src/libs/interfaces/index.ts:2
+
+___
+
+### MapIterator
+
+Ƭ **MapIterator**<`T`\>: (`value`: `T`, `index`: `number`, `array`: `T`[]) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+▸ (`value`, `index`, `array`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `index` | `number` |
+| `array` | `T`[] |
+
+##### Returns
+
+`T`
+
+#### Defined in
+
+src/libs/interfaces/index.ts:4
 
 ___
 
@@ -255,7 +420,7 @@ ___
 
 #### Defined in
 
-[src/libs/node/index.ts:1](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/index.ts#L1)
+[src/libs/node/index.ts:1](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/index.ts#L1)
 
 ___
 
@@ -274,13 +439,37 @@ ___
 
 #### Defined in
 
-[src/libs/node/index.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/index.ts#L7)
+[src/libs/node/index.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/index.ts#L7)
+
+___
+
+### PositiveIntegerLessThan
+
+Ƭ **PositiveIntegerLessThan**<`L`, `T`, `Z`\>: `T` extends { `length`: `L`  } ? `Z` : [`PositiveIntegerLessThan`](README.md#positiveintegerlessthan)<`L`, [...T, `any`], `Z` \| `Length`<`T`\>\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `L` | extends `number` |
+| `T` | extends `any`[] = [] |
+| `Z` | ``0`` |
+
+#### Defined in
+
+src/libs/interfaces/index.ts:10
 
 ___
 
 ### Predicate
 
-Ƭ **Predicate**: (`value`: `any`, `index`: `number`, `array`: `any`[]) => `boolean`
+Ƭ **Predicate**<`T`\>: (`value`: `T`, `index`: `number`, `array`: `T`[]) => `boolean`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Type declaration
 
@@ -290,9 +479,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `value` | `any` |
+| `value` | `T` |
 | `index` | `number` |
-| `array` | `any`[] |
+| `array` | `T`[] |
 
 ##### Returns
 
@@ -300,7 +489,17 @@ ___
 
 #### Defined in
 
-[src/libs/types/index.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/types/index.ts#L4)
+src/libs/interfaces/index.ts:5
+
+___
+
+### RGB
+
+Ƭ **RGB**: [[`ByteInt`](README.md#byteint), [`ByteInt`](README.md#byteint), [`ByteInt`](README.md#byteint)]
+
+#### Defined in
+
+src/libs/interfaces/index.ts:20
 
 ___
 
@@ -319,7 +518,7 @@ ___
 
 #### Defined in
 
-[src/libs/regex/index.ts:1](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/index.ts#L1)
+[src/libs/regex/src/rexec.ts:1](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/rexec.ts#L1)
 
 ___
 
@@ -343,7 +542,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:59](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/datastructures/src/Table.ts#L59)
+[src/libs/datastructures/src/Table.ts:59](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Table.ts#L59)
 
 ___
 
@@ -360,49 +559,7 @@ ___
 
 #### Defined in
 
-[src/libs/node/src/ensureValidWindowsPath.ts:3](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/ensureValidWindowsPath.ts#L3)
-
-___
-
-### matchBetweenFunction
-
-Ƭ **matchBetweenFunction**: (`input`: `string`) => `Generator`<[`matchBetweenYield`](README.md#matchbetweenyield)\>
-
-#### Type declaration
-
-▸ (`input`): `Generator`<[`matchBetweenYield`](README.md#matchbetweenyield)\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `input` | `string` |
-
-##### Returns
-
-`Generator`<[`matchBetweenYield`](README.md#matchbetweenyield)\>
-
-#### Defined in
-
-[src/libs/regex/index.ts:12](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/index.ts#L12)
-
-___
-
-### matchBetweenYield
-
-Ƭ **matchBetweenYield**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `left` | [`RexecYield`](README.md#rexecyield) |
-| `mid` | [`RexecYield`](README.md#rexecyield) |
-| `right` | [`RexecYield`](README.md#rexecyield) |
-
-#### Defined in
-
-[src/libs/regex/index.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/index.ts#L7)
+[src/libs/node/src/ensureValidWindowsPath.ts:3](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/ensureValidWindowsPath.ts#L3)
 
 ___
 
@@ -412,7 +569,77 @@ ___
 
 #### Defined in
 
-[src/libs/types/index.ts:1](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/types/index.ts#L1)
+src/libs/interfaces/index.ts:1
+
+## Variables
+
+### Mixins
+
+• `Const` **Mixins**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `Base` | typeof [`Base`](classes/Base.md) |
+| `Indexed` | <TBase\>(`BaseConstructor`: `TBase`) => [`Constructor`](README.md#constructor) |
+| `IndexedGetClass` | (`classIndex`: `number`) => [`Constructor`](README.md#constructor) |
+| `IndexedGetInstance` | (`classIndex`: `number`, `instanceIndex`: `number`) => [`Base`](classes/Base.md) |
+| `Options` | <TBase\>(`BaseConstructor`: `TBase`) => [`Constructor`](README.md#constructor) |
+| `Timestamped` | <TBase\>(`BaseConstructor`: `TBase`) => [`Constructor`](README.md#constructor) |
+
+#### Defined in
+
+src/libs/mixins/index.ts:7
+
+___
+
+### interfaceDefinitions
+
+• `Const` **interfaceDefinitions**: `Map`<`string`, [`string`[], `string`[]]\>
+
+#### Defined in
+
+src/libs/mixins/src/interfaces.ts:1
+
+___
+
+### log
+
+• `Const` **log**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `error` | (`message`: `any`) => `void` |
+| `info` | (`message`: `any`) => `void` |
+| `warn` | (`message`: `any`) => `void` |
+
+#### Defined in
+
+src/libs/node/src/log.ts:10
+
+___
+
+### strHash
+
+• `Const` **strHash**: `Object`
+
+String hashing
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `listAlgorithms` | () => `string`[] |
+| `toBuffer` | (`string`: `string`, `algorithm`: `string`) => `Buffer` |
+| `toString` | (`string`: `string`, `algorithm`: `string`, `encoding`: `Encoding`) => `string` |
+| `toUint32Array` | (`string`: `string`, `algorithm`: `string`) => `Uint32Array` |
+
+#### Defined in
+
+src/libs/string/src/strHash.ts:6
 
 ## Functions
 
@@ -435,7 +662,174 @@ Convert spreadsheet A1-notation to [column, row].
 
 #### Defined in
 
-[src/libs/spreadsheet/src/A1ToColRow.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/spreadsheet/src/A1ToColRow.ts#L11)
+[src/libs/spreadsheet/src/A1ToColRow.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/spreadsheet/src/A1ToColRow.ts#L11)
+
+___
+
+### Indexed
+
+▸ **Indexed**<`TBase`\>(`BaseConstructor`): [`Constructor`](README.md#constructor)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TBase` | extends [`Constructor`](README.md#constructor)<`Record`<`string`, `any`\>\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `BaseConstructor` | `TBase` |
+
+#### Returns
+
+[`Constructor`](README.md#constructor)
+
+#### Defined in
+
+src/libs/mixins/src/Indexed.ts:10
+
+___
+
+### IndexedGetClass
+
+▸ **IndexedGetClass**(`classIndex`): [`Constructor`](README.md#constructor)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `classIndex` | `number` |
+
+#### Returns
+
+[`Constructor`](README.md#constructor)
+
+#### Defined in
+
+src/libs/mixins/src/Indexed.ts:51
+
+___
+
+### IndexedGetInstance
+
+▸ **IndexedGetInstance**(`classIndex`, `instanceIndex`): [`Base`](classes/Base.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `classIndex` | `number` |
+| `instanceIndex` | `number` |
+
+#### Returns
+
+[`Base`](classes/Base.md)
+
+#### Defined in
+
+src/libs/mixins/src/Indexed.ts:55
+
+___
+
+### Options
+
+▸ **Options**<`TBase`\>(`BaseConstructor`): [`Constructor`](README.md#constructor)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TBase` | extends [`Constructor`](README.md#constructor)<`Record`<`string`, `any`\>\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `BaseConstructor` | `TBase` |
+
+#### Returns
+
+[`Constructor`](README.md#constructor)
+
+#### Defined in
+
+src/libs/mixins/src/Options.ts:4
+
+___
+
+### Revivable
+
+▸ **Revivable**<`TBase`\>(`BaseConstructor`): [`Constructor`](README.md#constructor)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TBase` | extends [`Constructor`](README.md#constructor)<`Record`<`string`, `any`\>\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `BaseConstructor` | `TBase` |
+
+#### Returns
+
+[`Constructor`](README.md#constructor)
+
+#### Defined in
+
+src/libs/mixins/src/Revivable.ts:6
+
+___
+
+### Timestamped
+
+▸ **Timestamped**<`TBase`\>(`BaseConstructor`): [`Constructor`](README.md#constructor)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TBase` | extends [`Constructor`](README.md#constructor)<`Record`<`string`, `any`\>\> |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `BaseConstructor` | `TBase` |
+
+#### Returns
+
+[`Constructor`](README.md#constructor)
+
+#### Defined in
+
+src/libs/mixins/src/Timestamped.ts:3
+
+___
+
+### absolutCwdPathToRelative
+
+▸ **absolutCwdPathToRelative**(`filepath`): `string`
+
+If the filepath is somewhere in the current working directory, it can be converted into a relative path.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `filepath` | `string` | the absolute filepath to convert. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/libs/node/src/absolutCwdPathToRelative.ts:5
 
 ___
 
@@ -464,7 +858,7 @@ Converts a 2-dimensional array into a CSV string.
 
 #### Defined in
 
-[src/libs/array/src/arr2dToCSV.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arr2dToCSV.ts#L6)
+[src/libs/array/src/arr2dToCSV.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arr2dToCSV.ts#L6)
 
 ___
 
@@ -493,7 +887,29 @@ Mutably assigns the values of source array to target array. Lengths will also be
 
 #### Defined in
 
-[src/libs/array/src/arrAssignFrom.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrAssignFrom.ts#L4)
+[src/libs/array/src/arrAssignFrom.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrAssignFrom.ts#L4)
+
+___
+
+### arrAverage
+
+▸ **arrAverage**(`array`): `number`
+
+Calculates the average of an array of numbers.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `array` | `number`[] | The array of numbers to average. |
+
+#### Returns
+
+`number`
+
+#### Defined in
+
+src/libs/array/src/arrAverage.ts:7
 
 ___
 
@@ -514,7 +930,7 @@ Returns true if the predicate is satisfied for every element of the passed array
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `input` | `T`[] | The array |
-| `predicate` | [`Predicate`](README.md#predicate) | A predicate callback function |
+| `predicate` | [`Predicate`](README.md#predicate)<`T`\> | A predicate callback function |
 
 #### Returns
 
@@ -522,7 +938,7 @@ Returns true if the predicate is satisfied for every element of the passed array
 
 #### Defined in
 
-[src/libs/array/src/arrEvery.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrEvery.ts#L9)
+[src/libs/array/src/arrEvery.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrEvery.ts#L9)
 
 ___
 
@@ -543,7 +959,7 @@ Same as Array.prototype.filter but performs operations in palce (not immutable).
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `input` | `T`[] | input array |
-| `f` | [`Predicate`](README.md#predicate) | predicate |
+| `f` | [`Predicate`](README.md#predicate)<`T`\> | predicate |
 
 #### Returns
 
@@ -551,7 +967,7 @@ Same as Array.prototype.filter but performs operations in palce (not immutable).
 
 #### Defined in
 
-[src/libs/array/src/arrFilterMutable.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrFilterMutable.ts#L8)
+[src/libs/array/src/arrFilterMutable.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrFilterMutable.ts#L8)
 
 ___
 
@@ -580,7 +996,7 @@ Flattens the passed array recursively to a specified depth. Immutable.
 
 #### Defined in
 
-[src/libs/array/src/arrFlatten.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrFlatten.ts#L6)
+[src/libs/array/src/arrFlatten.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrFlatten.ts#L6)
 
 ___
 
@@ -609,7 +1025,7 @@ Flattens the passed array recursively. Mutable.
 
 #### Defined in
 
-[src/libs/array/src/arrFlattenMutable.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrFlattenMutable.ts#L9)
+[src/libs/array/src/arrFlattenMutable.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrFlattenMutable.ts#L9)
 
 ___
 
@@ -638,13 +1054,13 @@ Returns all indexes at which an element is found.
 
 #### Defined in
 
-[src/libs/array/src/arrIndicesOf.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrIndicesOf.ts#L7)
+[src/libs/array/src/arrIndicesOf.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrIndicesOf.ts#L7)
 
 ___
 
 ### arrMapMutable
 
-▸ **arrMapMutable**(`input`, `f`): `any`[]
+▸ **arrMapMutable**<`T`\>(`input`, `f`): `T`[]
 
 Same as Array.prototype.map but performs operations in palce (not immutable).
 
@@ -658,20 +1074,26 @@ expect(
 ).toStrictEqual([2, 3, 4, 5, 6]);
 ```
 
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `any`[] | input array |
-| `f` | [`Callback`](README.md#callback) | iterator |
+| `input` | `T`[] | input array |
+| `f` | [`MapIterator`](README.md#mapiterator)<`T`\> | iterator |
 
 #### Returns
 
-`any`[]
+`T`[]
 
 #### Defined in
 
-[src/libs/array/src/arrMapMutable.ts:17](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrMapMutable.ts#L17)
+[src/libs/array/src/arrMapMutable.ts:17](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrMapMutable.ts#L17)
 
 ___
 
@@ -700,7 +1122,7 @@ Returns whether or not two arrays shallow equal each other.
 
 #### Defined in
 
-[src/libs/array/src/arrShallowEquals.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrShallowEquals.ts#L8)
+[src/libs/array/src/arrShallowEquals.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrShallowEquals.ts#L8)
 
 ___
 
@@ -728,7 +1150,7 @@ Shuffle items in an array in-place. Guarantees that the array has changes.
 
 #### Defined in
 
-[src/libs/array/src/arrShuffle.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrShuffle.ts#L8)
+[src/libs/array/src/arrShuffle.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrShuffle.ts#L8)
 
 ___
 
@@ -749,7 +1171,7 @@ Check whether a condition is true for any element of an array. The condition che
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `input` | `T`[] | The array |
-| `predicate` | [`Predicate`](README.md#predicate) | A predicate callback function |
+| `predicate` | [`Predicate`](README.md#predicate)<`T`\> | A predicate callback function |
 
 #### Returns
 
@@ -757,7 +1179,7 @@ Check whether a condition is true for any element of an array. The condition che
 
 #### Defined in
 
-[src/libs/array/src/arrSome.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrSome.ts#L9)
+[src/libs/array/src/arrSome.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrSome.ts#L9)
 
 ___
 
@@ -779,7 +1201,29 @@ Uses Array.prototype.sort but sorts numbers.
 
 #### Defined in
 
-[src/libs/array/src/arrSortNumeric.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrSortNumeric.ts#L7)
+[src/libs/array/src/arrSortNumeric.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrSortNumeric.ts#L7)
+
+___
+
+### arrSum
+
+▸ **arrSum**(`array`): `number`
+
+Calculates the sum of an array of numbers.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `array` | `number`[] | The array of numbers to sum. |
+
+#### Returns
+
+`number`
+
+#### Defined in
+
+src/libs/array/src/arrSum.ts:5
 
 ___
 
@@ -809,7 +1253,7 @@ Swap array elements in place. Runtime: O(1)
 
 #### Defined in
 
-[src/libs/array/src/arrSwap.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/array/src/arrSwap.ts#L7)
+[src/libs/array/src/arrSwap.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/array/src/arrSwap.ts#L7)
 
 ___
 
@@ -837,7 +1281,7 @@ Throws if the given year is invalid.
 
 #### Defined in
 
-[src/libs/date/src/assertValidDate.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/assertValidDate.ts#L6)
+[src/libs/date/src/assertValidDate.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/assertValidDate.ts#L6)
 
 ___
 
@@ -861,7 +1305,7 @@ Throws an error if the day of the month is invalid.
 
 #### Defined in
 
-[src/libs/date/src/assertValidDateDay.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/assertValidDateDay.ts#L6)
+[src/libs/date/src/assertValidDateDay.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/assertValidDateDay.ts#L6)
 
 ___
 
@@ -883,7 +1327,7 @@ Throws error if the given month is invalid.
 
 #### Defined in
 
-[src/libs/date/src/assertValidDateMonth.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/assertValidDateMonth.ts#L6)
+[src/libs/date/src/assertValidDateMonth.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/assertValidDateMonth.ts#L6)
 
 ___
 
@@ -905,7 +1349,63 @@ Throws if the given year is invalid.
 
 #### Defined in
 
-[src/libs/date/src/assertValidDateYear.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/assertValidDateYear.ts#L6)
+[src/libs/date/src/assertValidDateYear.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/assertValidDateYear.ts#L6)
+
+___
+
+### asyncParallel
+
+▸ **asyncParallel**<`T`\>(`tasks`): `Promise`<`T`[]\>
+
+Run async tasks in parallel.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `tasks` | () => `Promise`<`T`\>[] |
+
+#### Returns
+
+`Promise`<`T`[]\>
+
+#### Defined in
+
+src/libs/async/src/asyncParallel.ts:4
+
+___
+
+### asyncSerial
+
+▸ **asyncSerial**<`T`\>(`tasks`): `Promise`<`T`[]\>
+
+Run async tasks serially, each task waiting for the previous one to complete.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `tasks` | () => `Promise`<`T`\>[] |
+
+#### Returns
+
+`Promise`<`T`[]\>
+
+#### Defined in
+
+src/libs/async/src/asyncSerial.ts:4
 
 ___
 
@@ -937,7 +1437,7 @@ A promise that resolves with the task's result or rejects with an error.
 
 #### Defined in
 
-[src/libs/async/src/asyncWithTimeout.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/async/src/asyncWithTimeout.ts#L8)
+[src/libs/async/src/asyncWithTimeout.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/async/src/asyncWithTimeout.ts#L8)
 
 ___
 
@@ -959,7 +1459,7 @@ Converts a base64 buffer to a string
 
 #### Defined in
 
-[src/libs/binary/src/atob.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/atob.ts#L4)
+[src/libs/binary/src/atob.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/atob.ts#L4)
 
 ___
 
@@ -981,7 +1481,7 @@ Converts a string to a base64 buffer
 
 #### Defined in
 
-[src/libs/binary/src/btoa.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/btoa.ts#L4)
+[src/libs/binary/src/btoa.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/btoa.ts#L4)
 
 ___
 
@@ -1012,7 +1512,7 @@ const regex = buildRegexBetween(/a/, /b/)
 
 #### Defined in
 
-[src/libs/regex/src/buildRegexBetween.ts:15](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/buildRegexBetween.ts#L15)
+[src/libs/regex/src/buildRegexBetween.ts:15](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/buildRegexBetween.ts#L15)
 
 ___
 
@@ -1035,7 +1535,7 @@ Throws Error if the input is an invalid byte-array or corresponds to an integer 
 
 #### Defined in
 
-[src/libs/binary/src/bytesToInt.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/bytesToInt.ts#L5)
+[src/libs/binary/src/bytesToInt.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/bytesToInt.ts#L5)
 
 ___
 
@@ -1058,7 +1558,7 @@ Convert spreadsheet [column, row] to A1-notation.
 
 #### Defined in
 
-[src/libs/spreadsheet/src/colRowToA1.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/spreadsheet/src/colRowToA1.ts#L8)
+[src/libs/spreadsheet/src/colRowToA1.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/spreadsheet/src/colRowToA1.ts#L8)
 
 ___
 
@@ -1081,13 +1581,13 @@ Convert a spreadsheet column number to a column letter.
 
 #### Defined in
 
-[src/libs/spreadsheet/src/colToLetter.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/spreadsheet/src/colToLetter.ts#L8)
+[src/libs/spreadsheet/src/colToLetter.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/spreadsheet/src/colToLetter.ts#L8)
 
 ___
 
 ### compareArray
 
-▸ **compareArray**(`comparator`, `descending?`): (`a`: `any`, `b`: `any`) => `number`
+▸ **compareArray**(`compareAt`, `descending?`): [`Comparator`](README.md#comparator)
 
 Returns a given comparator as an array compatible comparator. Behaves as if the array to sort was recursively flattened.
 
@@ -1095,29 +1595,16 @@ Returns a given comparator as an array compatible comparator. Behaves as if the 
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `comparator` | (`a`: `any`, `b`: `any`) => `number` | `undefined` | compare function |
+| `compareAt` | [`Comparator`](README.md#comparator) | `undefined` | shallow compare function that compares two elements of an array |
 | `descending` | `boolean` | `false` | whether the input comparator sorts in descending order |
 
 #### Returns
 
-`fn`
-
-▸ (`a`, `b`): `number`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | `any` |
-| `b` | `any` |
-
-##### Returns
-
-`number`
+[`Comparator`](README.md#comparator)
 
 #### Defined in
 
-[src/libs/sort/src/compareArray.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/sort/src/compareArray.ts#L6)
+[src/libs/sort/src/compareArray.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/sort/src/compareArray.ts#L8)
 
 ___
 
@@ -1147,7 +1634,7 @@ arr.sort(compareNumber) // [1, 1, 3, 4, 5]
 
 #### Defined in
 
-[src/libs/sort/src/compareNumber.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/sort/src/compareNumber.ts#L11)
+[src/libs/sort/src/compareNumber.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/sort/src/compareNumber.ts#L11)
 
 ___
 
@@ -1177,7 +1664,7 @@ arr.sort(compareNumberDescending) // [5, 4, 3, 1, 1]
 
 #### Defined in
 
-[src/libs/sort/src/compareNumberDescending.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/sort/src/compareNumberDescending.ts#L11)
+[src/libs/sort/src/compareNumberDescending.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/sort/src/compareNumberDescending.ts#L11)
 
 ___
 
@@ -1207,7 +1694,7 @@ arr.sort(compareNumeric) // [-2n, false, true, 3n]
 
 #### Defined in
 
-[src/libs/sort/src/compareNumeric.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/sort/src/compareNumeric.ts#L11)
+[src/libs/sort/src/compareNumeric.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/sort/src/compareNumeric.ts#L11)
 
 ___
 
@@ -1237,7 +1724,7 @@ arr.sort(compareNumericDescending) // [3n, true, false, -2n]
 
 #### Defined in
 
-[src/libs/sort/src/compareNumericDescending.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/sort/src/compareNumericDescending.ts#L11)
+[src/libs/sort/src/compareNumericDescending.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/sort/src/compareNumericDescending.ts#L11)
 
 ___
 
@@ -1260,7 +1747,7 @@ Alpha numeric comparator function (ascending)
 
 #### Defined in
 
-[src/libs/sort/src/compareString.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/sort/src/compareString.ts#L6)
+[src/libs/sort/src/compareString.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/sort/src/compareString.ts#L6)
 
 ___
 
@@ -1283,7 +1770,7 @@ Alpha numeric comparator function (descending)
 
 #### Defined in
 
-[src/libs/sort/src/compareStringDescending.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/sort/src/compareStringDescending.ts#L6)
+[src/libs/sort/src/compareStringDescending.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/sort/src/compareStringDescending.ts#L6)
 
 ___
 
@@ -1317,7 +1804,7 @@ Takes a list of file extensions and returns a filter function that returns true 
 
 #### Defined in
 
-[src/libs/node/src/createFileExtensionFilter.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/createFileExtensionFilter.ts#L8)
+[src/libs/node/src/createFileExtensionFilter.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/createFileExtensionFilter.ts#L8)
 
 ___
 
@@ -1341,7 +1828,36 @@ https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
 
 #### Defined in
 
-[src/libs/node/src/ensureValidWindowsPath.ts:15](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/ensureValidWindowsPath.ts#L15)
+[src/libs/node/src/ensureValidWindowsPath.ts:15](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/ensureValidWindowsPath.ts#L15)
+
+___
+
+### funSetName
+
+▸ **funSetName**<`T`\>(`name`, `fun`): `T`
+
+Sets the name of a function.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name to set. |
+| `fun` | `T` | The function to set the name of. |
+
+#### Returns
+
+`T`
+
+#### Defined in
+
+src/libs/function/src/funSetName.ts:6
 
 ___
 
@@ -1364,7 +1880,7 @@ ___
 
 #### Defined in
 
-[src/libs/nlp/src/generateUnitTests.ts:46](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/nlp/src/generateUnitTests.ts#L46)
+[src/libs/nlp/src/generateUnitTests.ts:46](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/nlp/src/generateUnitTests.ts#L46)
 
 ___
 
@@ -1393,7 +1909,29 @@ getCentury(2009);
 
 #### Defined in
 
-[src/libs/date/src/getCentury.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/getCentury.ts#L11)
+[src/libs/date/src/getCentury.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/getCentury.ts#L11)
+
+___
+
+### getConstructor
+
+▸ **getConstructor**(`o`): [`Constructor`](README.md#constructor)
+
+Returns the class constructor object belonging to a given object's class of origin.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `o` | `string` \| `number` \| `boolean` \| `Record`<`string`, `any`\> |
+
+#### Returns
+
+[`Constructor`](README.md#constructor)
+
+#### Defined in
+
+src/libs/object/src/getConstructor.ts:6
 
 ___
 
@@ -1409,7 +1947,29 @@ Returns the current year (UTC full year).
 
 #### Defined in
 
-[src/libs/date/src/getCurrentYear.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/getCurrentYear.ts#L4)
+[src/libs/date/src/getCurrentYear.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/getCurrentYear.ts#L4)
+
+___
+
+### getPrototype
+
+▸ **getPrototype**(`o`): typeof `Object.prototype`
+
+Returns the prototype object belonging to a given object.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `o` | `string` \| `number` \| `boolean` \| `Record`<`string`, `any`\> | The object to get the prototype of. |
+
+#### Returns
+
+typeof `Object.prototype`
+
+#### Defined in
+
+src/libs/object/src/getPrototype.ts:5
 
 ___
 
@@ -1434,7 +1994,31 @@ Data table which is an arrays of row-arrays of cell content (string).
 
 #### Defined in
 
-[src/libs/html/src/htmlTableTo2dArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/html/src/htmlTableTo2dArray.ts#L7)
+[src/libs/html/src/htmlTableTo2dArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/html/src/htmlTableTo2dArray.ts#L7)
+
+___
+
+### inheritStaticMembers
+
+▸ **inheritStaticMembers**(`target`, `source`, `ignoreKeys?`): [`Constructor`](README.md#constructor)
+
+Copy static members from source to target.
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `target` | [`Constructor`](README.md#constructor)<`Record`<`string`, `any`\>\> | `undefined` |
+| `source` | [`Constructor`](README.md#constructor)<`Record`<`string`, `any`\>\> | `undefined` |
+| `ignoreKeys` | `never`[] | `[]` |
+
+#### Returns
+
+[`Constructor`](README.md#constructor)
+
+#### Defined in
+
+src/libs/object/src/inheritStaticMembers.ts:6
 
 ___
 
@@ -1456,7 +2040,7 @@ Converts an integer to an array of bytes
 
 #### Defined in
 
-[src/libs/binary/src/intToArrayBytes.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/intToArrayBytes.ts#L4)
+[src/libs/binary/src/intToArrayBytes.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/intToArrayBytes.ts#L4)
 
 ___
 
@@ -1478,7 +2062,7 @@ Converts an integer to a buffer
 
 #### Defined in
 
-[src/libs/binary/src/intToBuffer.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/intToBuffer.ts#L6)
+[src/libs/binary/src/intToBuffer.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/intToBuffer.ts#L6)
 
 ___
 
@@ -1501,21 +2085,27 @@ Throws Error if the input is larger than 256^5 or not a positive integer.
 
 #### Defined in
 
-[src/libs/binary/src/intToBytes.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/intToBytes.ts#L5)
+[src/libs/binary/src/intToBytes.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/intToBytes.ts#L5)
 
 ___
 
 ### isConstructor
 
-▸ **isConstructor**(`value`): `boolean`
+▸ **isConstructor**<`T`\>(`value`): `boolean`
 
 Determine if value is a constructor function
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `value` | `any` |
+| `value` | `T` |
 
 #### Returns
 
@@ -1523,7 +2113,7 @@ Determine if value is a constructor function
 
 #### Defined in
 
-[src/libs/validation/src/isConstructor.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/validation/src/isConstructor.ts#L7)
+[src/libs/validation/src/isConstructor.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/validation/src/isConstructor.ts#L7)
 
 ___
 
@@ -1545,7 +2135,7 @@ Returns true if a given interger is even.
 
 #### Defined in
 
-[src/libs/number/src/isEven.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/number/src/isEven.ts#L4)
+[src/libs/number/src/isEven.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/number/src/isEven.ts#L4)
 
 ___
 
@@ -1567,7 +2157,7 @@ Determine whether a string is a hexadecimal string.
 
 #### Defined in
 
-[src/libs/validation/src/isHex.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/validation/src/isHex.ts#L4)
+[src/libs/validation/src/isHex.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/validation/src/isHex.ts#L4)
 
 ___
 
@@ -1589,7 +2179,7 @@ Determine whether a string is either a hexadecimal or a '\u' or '0x' prepended u
 
 #### Defined in
 
-[src/libs/validation/src/isHexOrUnicode.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/validation/src/isHexOrUnicode.ts#L4)
+[src/libs/validation/src/isHexOrUnicode.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/validation/src/isHexOrUnicode.ts#L4)
 
 ___
 
@@ -1611,7 +2201,7 @@ Check if an object is iterable
 
 #### Defined in
 
-[src/libs/validation/src/isIterable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/validation/src/isIterable.ts#L6)
+[src/libs/validation/src/isIterable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/validation/src/isIterable.ts#L6)
 
 ___
 
@@ -1633,7 +2223,7 @@ Check whether a given year is a leap year.
 
 #### Defined in
 
-[src/libs/date/src/isLeapYear.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/isLeapYear.ts#L6)
+[src/libs/date/src/isLeapYear.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/isLeapYear.ts#L6)
 
 ___
 
@@ -1655,7 +2245,7 @@ Checks if a string is a number.
 
 #### Defined in
 
-[src/libs/validation/src/isNumericString.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/validation/src/isNumericString.ts#L5)
+[src/libs/validation/src/isNumericString.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/validation/src/isNumericString.ts#L5)
 
 ___
 
@@ -1677,7 +2267,7 @@ Determine wheter the argument is a Object (is typeof object but not null).
 
 #### Defined in
 
-[src/libs/validation/src/isObject.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/validation/src/isObject.ts#L5)
+[src/libs/validation/src/isObject.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/validation/src/isObject.ts#L5)
 
 ___
 
@@ -1699,7 +2289,7 @@ Returns true if a given interger is odd.
 
 #### Defined in
 
-[src/libs/number/src/isOdd.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/number/src/isOdd.ts#L4)
+[src/libs/number/src/isOdd.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/number/src/isOdd.ts#L4)
 
 ___
 
@@ -1721,7 +2311,7 @@ Determine wheter a given object is a prototype-object (obj.constructor.prototype
 
 #### Defined in
 
-[src/libs/validation/src/isPrototype.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/validation/src/isPrototype.ts#L7)
+[src/libs/validation/src/isPrototype.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/validation/src/isPrototype.ts#L7)
 
 ___
 
@@ -1743,7 +2333,7 @@ Determine whether a string is a valid Danish social security number.
 
 #### Defined in
 
-[src/libs/parse/src/parseSocialSecurityNumberDK.ts:47](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/parse/src/parseSocialSecurityNumberDK.ts#L47)
+[src/libs/parse/src/parseSocialSecurityNumberDK.ts:47](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/parse/src/parseSocialSecurityNumberDK.ts#L47)
 
 ___
 
@@ -1769,7 +2359,7 @@ ___
 
 #### Defined in
 
-[src/libs/date/src/isValidDate.ts:3](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/isValidDate.ts#L3)
+[src/libs/date/src/isValidDate.ts:3](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/isValidDate.ts#L3)
 
 ___
 
@@ -1793,7 +2383,7 @@ Returns whether a day of month is a valid date for the given month and year.
 
 #### Defined in
 
-[src/libs/date/src/isValidDateDay.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/isValidDateDay.ts#L6)
+[src/libs/date/src/isValidDateDay.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/isValidDateDay.ts#L6)
 
 ___
 
@@ -1815,7 +2405,7 @@ Check if a given month number is valid.
 
 #### Defined in
 
-[src/libs/date/src/isValidDateMonth.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/isValidDateMonth.ts#L4)
+[src/libs/date/src/isValidDateMonth.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/isValidDateMonth.ts#L4)
 
 ___
 
@@ -1837,7 +2427,30 @@ Checks if the given year is a valid year > 0.
 
 #### Defined in
 
-[src/libs/date/src/isValidDateYear.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/isValidDateYear.ts#L4)
+[src/libs/date/src/isValidDateYear.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/isValidDateYear.ts#L4)
+
+___
+
+### isoDateTimestamp
+
+▸ **isoDateTimestamp**(`date?`): `string`
+
+Returns an ISO date string but only digits remaining.
+This will correctly sort in chronological order.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `Date` | The date to convert to an ISO date string. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/libs/date/src/isoDateTimestamp.ts:6
 
 ___
 
@@ -1877,7 +2490,7 @@ iteratePrototypeChain(instance)
 
 #### Defined in
 
-[src/libs/object/src/iteratePrototypeChain.ts:22](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/object/src/iteratePrototypeChain.ts#L22)
+[src/libs/object/src/iteratePrototypeChain.ts:22](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/object/src/iteratePrototypeChain.ts#L22)
 
 ___
 
@@ -1900,7 +2513,7 @@ Convert spreadsheet column letter(s) to column-number
 
 #### Defined in
 
-[src/libs/spreadsheet/src/letterToCol.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/spreadsheet/src/letterToCol.ts#L9)
+[src/libs/spreadsheet/src/letterToCol.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/spreadsheet/src/letterToCol.ts#L9)
 
 ___
 
@@ -1930,7 +2543,7 @@ mapGetOrDefault(map, 'nonexistentKey', 2) // Output: 2
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `map` | `Map`<`K`, `V`\> | map to get value from |
+| `map` | `Map`<`K`, `V`\> \| `WeakMap`<`any`, `V`\> | map to get value from |
 | `key` | `K` | key to get value for |
 | `defaultValue` | `V` | default value to set if key is not present |
 
@@ -1940,7 +2553,46 @@ mapGetOrDefault(map, 'nonexistentKey', 2) // Output: 2
 
 #### Defined in
 
-[src/libs/map/src/mapGetOrDefault.ts:14](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/map/src/mapGetOrDefault.ts#L14)
+[src/libs/map/src/mapGetOrDefault.ts:14](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/map/src/mapGetOrDefault.ts#L14)
+
+___
+
+### mapGetOrElse
+
+▸ **mapGetOrElse**<`K`, `V`\>(`map`, `key`, `callback`): `V`
+
+Returns a value from a map, while setting a given default value before returning it, if the key is not present.
+
+**`Example`**
+
+```ts
+const map = new Map<string, number>()
+map.set('key', 1)
+mapGetOrElse(map, 'nonexistentKey', () => 2) // Output: 2
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `K` |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `map` | `Map`<`K`, `V`\> \| `WeakMap`<`any`, `V`\> | map to get value from |
+| `key` | `K` | key to get value for |
+| `callback` | (`key`: `K`) => `V` | callback to set the value if key is not present |
+
+#### Returns
+
+`V`
+
+#### Defined in
+
+src/libs/map/src/mapGetOrElse.ts:13
 
 ___
 
@@ -1980,7 +2632,7 @@ mapUpdate(map, 'nonexistentKey', (value) => value! + 1) // Output: Map {}
 
 #### Defined in
 
-[src/libs/map/src/mapUpdate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/map/src/mapUpdate.ts#L14)
+[src/libs/map/src/mapUpdate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/map/src/mapUpdate.ts#L14)
 
 ___
 
@@ -2027,7 +2679,7 @@ console.log(m)
 
 #### Defined in
 
-[src/libs/map/src/mapUpdateDefault.ts:21](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/map/src/mapUpdateDefault.ts#L21)
+[src/libs/map/src/mapUpdateDefault.ts:21](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/map/src/mapUpdateDefault.ts#L21)
 
 ___
 
@@ -2043,7 +2695,7 @@ Returns an object about the process memory usage for: process allocation, heap a
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/memoryUsage.ts#L9)
+[src/libs/node/src/memoryUsage.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/memoryUsage.ts#L9)
 
 ___
 
@@ -2060,7 +2712,7 @@ The values are formatted strings in the style of 5.000,00
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:34](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/memoryUsage.ts#L34)
+[src/libs/node/src/memoryUsage.ts:34](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/memoryUsage.ts#L34)
 
 ___
 
@@ -2077,7 +2729,7 @@ The values are formatted strings in the style of 5,000.00
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:42](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/memoryUsage.ts#L42)
+[src/libs/node/src/memoryUsage.ts:42](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/memoryUsage.ts#L42)
 
 ___
 
@@ -2100,7 +2752,7 @@ Anything before the last "." is not returned.
 
 #### Defined in
 
-[src/libs/node/src/normalizeFileExtension.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/normalizeFileExtension.ts#L8)
+[src/libs/node/src/normalizeFileExtension.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/normalizeFileExtension.ts#L8)
 
 ___
 
@@ -2124,7 +2776,7 @@ Normalize line lengths. Tries to merge sentences with its neighboring sentences 
 
 #### Defined in
 
-[src/libs/nlp/src/normalizeLineLengths.ts:33](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/nlp/src/normalizeLineLengths.ts#L33)
+[src/libs/nlp/src/normalizeLineLengths.ts:33](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/nlp/src/normalizeLineLengths.ts#L33)
 
 ___
 
@@ -2146,7 +2798,7 @@ Approximate the logarithm base 10 of a small integer.
 
 #### Defined in
 
-[src/libs/number/src/numApproximateLog10.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/number/src/numApproximateLog10.ts#L6)
+[src/libs/number/src/numApproximateLog10.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/number/src/numApproximateLog10.ts#L6)
 
 ___
 
@@ -2170,7 +2822,7 @@ Note: The number of days in february depends on whether it is leap year. If no y
 
 #### Defined in
 
-[src/libs/date/src/numDaysInMonth.ts:10](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/date/src/numDaysInMonth.ts#L10)
+[src/libs/date/src/numDaysInMonth.ts:10](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/date/src/numDaysInMonth.ts#L10)
 
 ___
 
@@ -2193,7 +2845,7 @@ Formats a number input to a string representation in the style of 5.000.000,00
 
 #### Defined in
 
-[src/libs/number/src/numFormatEU.ts:10](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/number/src/numFormatEU.ts#L10)
+[src/libs/number/src/numFormatEU.ts:10](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/number/src/numFormatEU.ts#L10)
 
 ___
 
@@ -2216,7 +2868,7 @@ Formats a number input to a string representation in the style of 5,000,000.00
 
 #### Defined in
 
-[src/libs/number/src/numFormatUS.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/number/src/numFormatUS.ts#L9)
+[src/libs/number/src/numFormatUS.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/number/src/numFormatUS.ts#L9)
 
 ___
 
@@ -2238,7 +2890,7 @@ Pads an array of bytes on the left
 
 #### Defined in
 
-[src/libs/binary/src/padArrayBytesLeft.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/padArrayBytesLeft.ts#L4)
+[src/libs/binary/src/padArrayBytesLeft.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/padArrayBytesLeft.ts#L4)
 
 ___
 
@@ -2260,7 +2912,7 @@ Pads an array of bytes on the right
 
 #### Defined in
 
-[src/libs/binary/src/padArrayBytesRight.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/padArrayBytesRight.ts#L4)
+[src/libs/binary/src/padArrayBytesRight.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/padArrayBytesRight.ts#L4)
 
 ___
 
@@ -2291,7 +2943,7 @@ Assumes birth dates are at most 100 years in the past.
 
 #### Defined in
 
-[src/libs/parse/src/parseSocialSecurityNumberDK.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/parse/src/parseSocialSecurityNumberDK.ts#L11)
+[src/libs/parse/src/parseSocialSecurityNumberDK.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/parse/src/parseSocialSecurityNumberDK.ts#L11)
 
 ___
 
@@ -2313,7 +2965,7 @@ Takes a directory path as a list of directory/folder names from the current work
 
 #### Defined in
 
-[src/libs/node/src/pathFromCwd.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/pathFromCwd.ts#L7)
+[src/libs/node/src/pathFromCwd.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/pathFromCwd.ts#L7)
 
 ___
 
@@ -2336,7 +2988,7 @@ Returns a random integer between min (inclusive) and max (inclusive).
 
 #### Defined in
 
-[src/libs/number/src/randomIntBetween.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/number/src/randomIntBetween.ts#L6)
+[src/libs/number/src/randomIntBetween.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/number/src/randomIntBetween.ts#L6)
 
 ___
 
@@ -2358,7 +3010,7 @@ Takes a filepath and returns its utf8 contents as a single string.
 
 #### Defined in
 
-[src/libs/node/src/readFileStringSync.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/readFileStringSync.ts#L7)
+[src/libs/node/src/readFileStringSync.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/readFileStringSync.ts#L7)
 
 ___
 
@@ -2380,7 +3032,7 @@ Escapes a string so it can be used in a regular expression.
 
 #### Defined in
 
-[src/libs/regex/src/regexEscapeString.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/regexEscapeString.ts#L4)
+[src/libs/regex/src/regexEscapeString.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexEscapeString.ts#L4)
 
 ___
 
@@ -2409,7 +3061,7 @@ regexFixFlags('?gim*') // 'gim'
 
 #### Defined in
 
-[src/libs/regex/src/regexFixFlags.ts:12](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/regexFixFlags.ts#L12)
+[src/libs/regex/src/regexFixFlags.ts:12](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexFixFlags.ts#L12)
 
 ___
 
@@ -2431,7 +3083,7 @@ Returns an array of named groups defined inside a RegExp instance.
 
 #### Defined in
 
-[src/libs/regex/src/regexGetGroupNames.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/regexGetGroupNames.ts#L7)
+[src/libs/regex/src/regexGetGroupNames.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexGetGroupNames.ts#L7)
 
 ___
 
@@ -2460,46 +3112,7 @@ regexIsValidFlags('gmisuy') // false
 
 #### Defined in
 
-[src/libs/regex/src/regexIsValidFlags.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/regexIsValidFlags.ts#L11)
-
-___
-
-### regexMatchBetween
-
-▸ **regexMatchBetween**(`left`, `right`, `flags?`): `matchBetweenFunction`
-
-Returns a function that matches a string between two given strings or regexes.
-
-**`Example`**
-
-```ts
-const input = 'Hello world! This is a test string.'
-const matchBetween = regexMatchBetween('Hello', 'test')
-[...matchBetween(input)]
-// [
-//   {
-//     left: { index: 0, match: 'Hello', groups: {}, lastIndex: 5 },
-//     mid: { index: 12, match: ' world! This is a ', groups: {}, lastIndex: 31 },
-//     right: { index: 36, match: 'test', groups: {}, lastIndex: 40 },
-//   },
-// ]
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `left` | `string` \| `RegExp` | string or regex to match before |
-| `right` | `string` \| `RegExp` | string or regex to match after |
-| `flags?` | `string` | regex flags - 'g' and 's' are always added to whatever flags are passed. |
-
-#### Returns
-
-`matchBetweenFunction`
-
-#### Defined in
-
-[src/libs/regex/src/regexMatchBetween.ts:30](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/regexMatchBetween.ts#L30)
+[src/libs/regex/src/regexIsValidFlags.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexIsValidFlags.ts#L11)
 
 ___
 
@@ -2531,7 +3144,51 @@ isDigit('a') //=> false
 
 #### Defined in
 
-[src/libs/regex/src/regexMatcherToValidater.ts:12](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/regexMatcherToValidater.ts#L12)
+[src/libs/regex/src/regexMatcherToValidater.ts:12](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexMatcherToValidater.ts#L12)
+
+___
+
+### regexScopeTree
+
+▸ **regexScopeTree**(`type`, `left`, `right`): (`string`: `string`, `yieldOnlyRootNodes?`: `boolean`) => `Generator`<[`IScopeNode`](interfaces/IScopeNode.md)\>
+
+Builds a regex that matches a string between two strings. Supports regex instead of string.
+
+**`Example`**
+
+```ts
+const regex = buildRegexBetween(/a/, /b/)
+'abc'.match(regex)?.groups?.mid // 'c'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | type of scope being matched |
+| `left` | `string` \| `RegExp` | string or regex to match before |
+| `right` | `string` \| `RegExp` | string or regex to match after |
+
+#### Returns
+
+`fn`
+
+▸ (`string`, `yieldOnlyRootNodes?`): `Generator`<[`IScopeNode`](interfaces/IScopeNode.md)\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `string` | `string` |
+| `yieldOnlyRootNodes?` | `boolean` |
+
+##### Returns
+
+`Generator`<[`IScopeNode`](interfaces/IScopeNode.md)\>
+
+#### Defined in
+
+src/libs/regex/src/regexScopeTree.ts:39
 
 ___
 
@@ -2553,13 +3210,13 @@ regexValidFlags() //=> ['g', 'i', 'm', 's', 'u', 'y']
 
 #### Defined in
 
-[src/libs/regex/src/regexValidFlags.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/regexValidFlags.ts#L8)
+[src/libs/regex/src/regexValidFlags.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexValidFlags.ts#L8)
 
 ___
 
 ### rexec
 
-▸ **rexec**(`regex`, `string`): `Generator`<`RexecYield`\>
+▸ **rexec**(`regex`, `string`): `Generator`<[`RexecYield`](README.md#rexecyield)\>
 
 Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
 
@@ -2572,15 +3229,15 @@ console.log([...rexec(regex, str)])
 // [
 // 	{
 //     index: 9,
-//     match: 'a',
-//     groups: { g1: 'a' },
 //     lastIndex: 10,
+//     groups: { g1: 'a' },
+//     match: 'a',
 //   },
 //   {
 //     index: 14,
-//     match: 'a',
-//     groups: { g1: 'a' },
 //     lastIndex: 15,
+//     groups: { g1: 'a' },
+//     match: 'a',
 //   },
 // ]
 ```
@@ -2594,11 +3251,11 @@ console.log([...rexec(regex, str)])
 
 #### Returns
 
-`Generator`<`RexecYield`\>
+`Generator`<[`RexecYield`](README.md#rexecyield)\>
 
 #### Defined in
 
-[src/libs/regex/src/rexec.ts:33](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/regex/src/rexec.ts#L33)
+[src/libs/regex/src/rexec.ts:33](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/rexec.ts#L33)
 
 ___
 
@@ -2621,7 +3278,7 @@ Round value with a given number of decimal points.
 
 #### Defined in
 
-[src/libs/number/src/round.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/number/src/round.ts#L6)
+[src/libs/number/src/round.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/number/src/round.ts#L6)
 
 ___
 
@@ -2643,7 +3300,7 @@ Round number down to the nearest integer.
 
 #### Defined in
 
-[src/libs/number/src/roundDown.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/number/src/roundDown.ts#L4)
+[src/libs/number/src/roundDown.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/number/src/roundDown.ts#L4)
 
 ___
 
@@ -2665,7 +3322,7 @@ Round number up to the nearest integer.
 
 #### Defined in
 
-[src/libs/number/src/roundUp.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/number/src/roundUp.ts#L4)
+[src/libs/number/src/roundUp.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/number/src/roundUp.ts#L4)
 
 ___
 
@@ -2694,7 +3351,7 @@ Returns a new set with all elements that are in the first set but not in the sec
 
 #### Defined in
 
-[src/libs/set/src/setDifference.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/set/src/setDifference.ts#L4)
+[src/libs/set/src/setDifference.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/set/src/setDifference.ts#L4)
 
 ___
 
@@ -2723,7 +3380,7 @@ Set multiple 'enumerable' property descriptor attributes of the target object to
 
 #### Defined in
 
-[src/libs/object/src/setEnumerable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/object/src/setEnumerable.ts#L6)
+[src/libs/object/src/setEnumerable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/object/src/setEnumerable.ts#L6)
 
 ___
 
@@ -2745,7 +3402,7 @@ Returns the set intersection of a provded array of Set instances.
 
 #### Defined in
 
-[src/libs/set/src/setIntersection.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/set/src/setIntersection.ts#L5)
+[src/libs/set/src/setIntersection.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/set/src/setIntersection.ts#L5)
 
 ___
 
@@ -2774,7 +3431,7 @@ Returns true if the first set is a superset of the second set.
 
 #### Defined in
 
-[src/libs/set/src/setIsSuperset.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/set/src/setIsSuperset.ts#L4)
+[src/libs/set/src/setIsSuperset.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/set/src/setIsSuperset.ts#L4)
 
 ___
 
@@ -2803,7 +3460,7 @@ Set multiple 'configurable' property descriptor attributes of the target object 
 
 #### Defined in
 
-[src/libs/object/src/setNonConfigurable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/object/src/setNonConfigurable.ts#L6)
+[src/libs/object/src/setNonConfigurable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/object/src/setNonConfigurable.ts#L6)
 
 ___
 
@@ -2832,7 +3489,7 @@ Set multiple 'enumerable' property descriptor attributes of the target object to
 
 #### Defined in
 
-[src/libs/object/src/setNonEnumerable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/object/src/setNonEnumerable.ts#L6)
+[src/libs/object/src/setNonEnumerable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/object/src/setNonEnumerable.ts#L6)
 
 ___
 
@@ -2854,7 +3511,7 @@ Set the 'enumerable' property descriptor attributes on the target object to fals
 
 #### Defined in
 
-[src/libs/object/src/setNonEnumerablePrivateProperties.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/object/src/setNonEnumerablePrivateProperties.ts#L6)
+[src/libs/object/src/setNonEnumerablePrivateProperties.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/object/src/setNonEnumerablePrivateProperties.ts#L6)
 
 ___
 
@@ -2883,7 +3540,7 @@ Set multiple 'writable' property descriptor attributes of the target object to f
 
 #### Defined in
 
-[src/libs/object/src/setNonWritable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/object/src/setNonWritable.ts#L6)
+[src/libs/object/src/setNonWritable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/object/src/setNonWritable.ts#L6)
 
 ___
 
@@ -2912,7 +3569,7 @@ Returns the symmetric difference between two sets.
 
 #### Defined in
 
-[src/libs/set/src/setSymmetricDifference.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/set/src/setSymmetricDifference.ts#L4)
+[src/libs/set/src/setSymmetricDifference.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/set/src/setSymmetricDifference.ts#L4)
 
 ___
 
@@ -2934,7 +3591,36 @@ Returns the set union of a provded array of Set instances.
 
 #### Defined in
 
-[src/libs/set/src/setUnion.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/set/src/setUnion.ts#L5)
+[src/libs/set/src/setUnion.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/set/src/setUnion.ts#L5)
+
+___
+
+### setValueAsGetter
+
+▸ **setValueAsGetter**<`T`\>(`object`, `...propertyNames`): `T`
+
+Set multiple 'enumerable' property descriptor attributes of the target object to false.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `object` | `T` | The target object. |
+| `...propertyNames` | `string`[] | - |
+
+#### Returns
+
+`T`
+
+#### Defined in
+
+src/libs/object/src/setValueAsGetter.ts:6
 
 ___
 
@@ -2963,7 +3649,7 @@ Set multiple 'writable' property descriptor attributes of the target object to t
 
 #### Defined in
 
-[src/libs/object/src/setWritable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/object/src/setWritable.ts#L6)
+[src/libs/object/src/setWritable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/object/src/setWritable.ts#L6)
 
 ___
 
@@ -2986,7 +3672,7 @@ Count occurances of a character within a given string.
 
 #### Defined in
 
-[src/libs/string/src/strCountCharOccurances.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strCountCharOccurances.ts#L6)
+[src/libs/string/src/strCountCharOccurances.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strCountCharOccurances.ts#L6)
 
 ___
 
@@ -3014,7 +3700,29 @@ strCountChars('Hello!') // Map(9) { 'H' => 1, 'e' => 1, 'l' => 2, 'o' => 1, '!' 
 
 #### Defined in
 
-[src/libs/string/src/strCountChars.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strCountChars.ts#L8)
+[src/libs/string/src/strCountChars.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strCountChars.ts#L8)
+
+___
+
+### strFirstCharToUpperCase
+
+▸ **strFirstCharToUpperCase**(`string`): `string`
+
+Returns the string as is, except the first character is capitalized.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to capitalize the first character of. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/libs/string/src/strFirstCharToUpperCase.ts:5
 
 ___
 
@@ -3046,7 +3754,7 @@ strIsLowerCase('ABC')
 
 #### Defined in
 
-[src/libs/string/src/strIsLowerCase.ts:13](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strIsLowerCase.ts#L13)
+[src/libs/string/src/strIsLowerCase.ts:13](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strIsLowerCase.ts#L13)
 
 ___
 
@@ -3078,7 +3786,7 @@ strIsUpperCase('ABC')
 
 #### Defined in
 
-[src/libs/string/src/strIsUpperCase.ts:13](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strIsUpperCase.ts#L13)
+[src/libs/string/src/strIsUpperCase.ts:13](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strIsUpperCase.ts#L13)
 
 ___
 
@@ -3100,7 +3808,7 @@ Takes a multiline string and removes lines that are empty or only contain whites
 
 #### Defined in
 
-[src/libs/string/src/strLinesRemoveEmpty.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strLinesRemoveEmpty.ts#L5)
+[src/libs/string/src/strLinesRemoveEmpty.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strLinesRemoveEmpty.ts#L5)
 
 ___
 
@@ -3122,7 +3830,7 @@ Takes a multiline string and performs a left side trim of whitespace on each lin
 
 #### Defined in
 
-[src/libs/string/src/strLinesTrimLeft.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strLinesTrimLeft.ts#L5)
+[src/libs/string/src/strLinesTrimLeft.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strLinesTrimLeft.ts#L5)
 
 ___
 
@@ -3144,7 +3852,29 @@ Takes a multiline string and performs a right side trim of whitespace on each li
 
 #### Defined in
 
-[src/libs/string/src/strLinesTrimRight.ts:5](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strLinesTrimRight.ts#L5)
+[src/libs/string/src/strLinesTrimRight.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strLinesTrimRight.ts#L5)
+
+___
+
+### strParseBoolean
+
+▸ **strParseBoolean**(`string`): `boolean`
+
+Tries to parse strings such as "false" and "true" into corresponding booleans.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to parse. |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+src/libs/string/src/strParseBoolean.ts:5
 
 ___
 
@@ -3172,7 +3902,7 @@ Only works when input code:
 
 #### Defined in
 
-[src/libs/string/src/strPrettifyMinifiedCode.ts:13](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strPrettifyMinifiedCode.ts#L13)
+[src/libs/string/src/strPrettifyMinifiedCode.ts:13](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strPrettifyMinifiedCode.ts#L13)
 
 ___
 
@@ -3197,7 +3927,7 @@ strRemoveDuplicateChars('Hello world!') // 'Helo wrd!'
 
 #### Defined in
 
-[src/libs/string/src/strRemoveDuplicateChars.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strRemoveDuplicateChars.ts#L7)
+[src/libs/string/src/strRemoveDuplicateChars.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strRemoveDuplicateChars.ts#L7)
 
 ___
 
@@ -3220,7 +3950,7 @@ Returns a given number of contatenations of a given input string.
 
 #### Defined in
 
-[src/libs/string/src/strRepeat.ts:6](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strRepeat.ts#L6)
+[src/libs/string/src/strRepeat.ts:6](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strRepeat.ts#L6)
 
 ___
 
@@ -3245,7 +3975,7 @@ In a given string, replace all occurances of a given search string with a given 
 
 #### Defined in
 
-[src/libs/string/src/strReplaceAll.ts:10](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strReplaceAll.ts#L10)
+[src/libs/string/src/strReplaceAll.ts:10](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strReplaceAll.ts#L10)
 
 ___
 
@@ -3273,7 +4003,7 @@ strSortChars('hello') // 'ehllo'
 
 #### Defined in
 
-[src/libs/string/src/strSortChars.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strSortChars.ts#L8)
+[src/libs/string/src/strSortChars.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strSortChars.ts#L8)
 
 ___
 
@@ -3302,7 +4032,7 @@ strSplitCamelCase('someCamelCase')
 
 #### Defined in
 
-[src/libs/string/src/strSplitCamelCase.ts:23](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strSplitCamelCase.ts#L23)
+[src/libs/string/src/strSplitCamelCase.ts:23](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strSplitCamelCase.ts#L23)
 
 ___
 
@@ -3330,7 +4060,7 @@ strToCharCodes('hello') // [104, 101, 108, 108, 111]
 
 #### Defined in
 
-[src/libs/string/src/strToCharCodes.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strToCharCodes.ts#L8)
+[src/libs/string/src/strToCharCodes.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strToCharCodes.ts#L8)
 
 ___
 
@@ -3358,7 +4088,7 @@ strToCharSet('hello') // 'ehlo'
 
 #### Defined in
 
-[src/libs/string/src/strToCharSet.ts:8](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strToCharSet.ts#L8)
+[src/libs/string/src/strToCharSet.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strToCharSet.ts#L8)
 
 ___
 
@@ -3386,7 +4116,7 @@ strToSentences('Hello world. How are you?') // ['Hello world.', 'How are you?']
 
 #### Defined in
 
-[src/libs/string/src/strToSentences.ts:12](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strToSentences.ts#L12)
+[src/libs/string/src/strToSentences.ts:12](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strToSentences.ts#L12)
 
 ___
 
@@ -3415,7 +4145,7 @@ strToWords('How are you?')
 
 #### Defined in
 
-[src/libs/string/src/strToWords.ts:12](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strToWords.ts#L12)
+[src/libs/string/src/strToWords.ts:12](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strToWords.ts#L12)
 
 ___
 
@@ -3440,7 +4170,7 @@ Inserts provided strings before and after a string.
 
 #### Defined in
 
-[src/libs/string/src/strUnwrap.ts:10](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strUnwrap.ts#L10)
+[src/libs/string/src/strUnwrap.ts:10](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strUnwrap.ts#L10)
 
 ___
 
@@ -3470,7 +4200,7 @@ expect(util.strWrapBetween('input', '#', '&')).toBe('#input&');
 
 #### Defined in
 
-[src/libs/string/src/strWrapBetween.ts:11](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strWrapBetween.ts#L11)
+[src/libs/string/src/strWrapBetween.ts:11](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strWrapBetween.ts#L11)
 
 ___
 
@@ -3499,7 +4229,7 @@ expect(util.strWrapIn('input', '#')).toBe('#input#');
 
 #### Defined in
 
-[src/libs/string/src/strWrapIn.ts:10](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strWrapIn.ts#L10)
+[src/libs/string/src/strWrapIn.ts:10](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strWrapIn.ts#L10)
 
 ___
 
@@ -3527,7 +4257,7 @@ expect(util.strWrapInAngleBrackets('input')).toBe('<input>');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInAngleBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strWrapInAngleBrackets.ts#L9)
+[src/libs/string/src/strWrapInAngleBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strWrapInAngleBrackets.ts#L9)
 
 ___
 
@@ -3555,7 +4285,7 @@ expect(util.strWrapInBraces('input')).toBe('{input}');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInBraces.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strWrapInBraces.ts#L9)
+[src/libs/string/src/strWrapInBraces.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strWrapInBraces.ts#L9)
 
 ___
 
@@ -3583,7 +4313,7 @@ expect(util.strWrapInBrackets('input')).toBe('[input]');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strWrapInBrackets.ts#L9)
+[src/libs/string/src/strWrapInBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strWrapInBrackets.ts#L9)
 
 ___
 
@@ -3611,7 +4341,7 @@ expect(util.strWrapInDoubleQuotes('input')).toBe('"input"');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInDoubleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strWrapInDoubleQuotes.ts#L9)
+[src/libs/string/src/strWrapInDoubleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strWrapInDoubleQuotes.ts#L9)
 
 ___
 
@@ -3639,7 +4369,7 @@ expect(util.strWrapInParenthesis('input')).toBe('(input)');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInParenthesis.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strWrapInParenthesis.ts#L9)
+[src/libs/string/src/strWrapInParenthesis.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strWrapInParenthesis.ts#L9)
 
 ___
 
@@ -3667,7 +4397,7 @@ expect(util.strWrapInSingleQuotes('input')).toBe("'input'");
 
 #### Defined in
 
-[src/libs/string/src/strWrapInSingleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/string/src/strWrapInSingleQuotes.ts#L9)
+[src/libs/string/src/strWrapInSingleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/string/src/strWrapInSingleQuotes.ts#L9)
 
 ___
 
@@ -3689,7 +4419,7 @@ Drain a Readable into a string.
 
 #### Defined in
 
-[src/libs/node/src/streamToString.ts:7](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/node/src/streamToString.ts#L7)
+[src/libs/node/src/streamToString.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/streamToString.ts#L7)
 
 ___
 
@@ -3711,7 +4441,7 @@ Trims an array of bytes on the left
 
 #### Defined in
 
-[src/libs/binary/src/trimArrayBytesLeft.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/trimArrayBytesLeft.ts#L4)
+[src/libs/binary/src/trimArrayBytesLeft.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/trimArrayBytesLeft.ts#L4)
 
 ___
 
@@ -3733,4 +4463,4 @@ Trims an array of bytes on the right
 
 #### Defined in
 
-[src/libs/binary/src/trimArrayBytesRight.ts:4](https://github.com/bemoje/bemoje-node-util/blob/7a9246e/src/libs/binary/src/trimArrayBytesRight.ts#L4)
+[src/libs/binary/src/trimArrayBytesRight.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/binary/src/trimArrayBytesRight.ts#L4)

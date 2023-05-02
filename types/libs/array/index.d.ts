@@ -11,4 +11,6 @@ export * from './src/arrShuffle';
 export * from './src/arrSome';
 export * from './src/arrSortNumeric';
 export * from './src/arrSwap';
+export * from './src/arrAverage';
+export * from './src/arrSum';
 //# sourceMappingURL=index.d.ts.map

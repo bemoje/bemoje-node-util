@@ -24,4 +24,7 @@ export * from './src/strWrapInBrackets';
 export * from './src/strWrapInDoubleQuotes';
 export * from './src/strWrapInParenthesis';
 export * from './src/strWrapInSingleQuotes';
+export * from './src/strHash';
+export * from './src/strFirstCharToUpperCase';
+export * from './src/strParseBoolean';
 //# sourceMappingURL=index.d.ts.map

@@ -5,7 +5,9 @@ export * from './libs/datastructures';
 export * from './libs/date';
 export * from './libs/function';
 export * from './libs/html';
+export * from './libs/interfaces';
 export * from './libs/map';
+export * from './libs/mixins';
 export * from './libs/nlp';
 export * from './libs/node';
 export * from './libs/number';
@@ -17,6 +19,5 @@ export * from './libs/set';
 export * from './libs/sort';
 export * from './libs/spreadsheet';
 export * from './libs/string';
-export * from './libs/types';
 export * from './libs/validation';
 //# sourceMappingURL=index.d.ts.map

@@ -19,3 +19,12 @@ describe('ExtensibleFunction', () => {
     ).toBe(true)
   })
 })
+
+describe('funSetName', () => {
+  it('should set the name of a function', () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    expect(util.funSetName('myFunc', function () {}).name).toBe('myFunc')
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    expect(util.funSetName('myFunc', () => {}).name).toBe('myFunc')
+  })
+})

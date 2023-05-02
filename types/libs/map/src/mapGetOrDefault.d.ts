@@ -11,5 +11,5 @@
  * mapGetOrDefault(map, 'nonexistentKey', 2) // Output: 2
  * ```
  */
-export declare function mapGetOrDefault<K, V>(map: Map<K, V>, key: K, defaultValue: V): V;
+export declare function mapGetOrDefault<K, V>(map: Map<K, V> | WeakMap<any, V>, key: K, defaultValue: V): V;
 //# sourceMappingURL=mapGetOrDefault.d.ts.map
