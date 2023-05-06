@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / SortedArray
+[@bemoje/node-util](/docs/index.md) / SortedArray
 
 # Class: SortedArray<T\>
 
@@ -18,64 +18,67 @@
 
 ### Constructors
 
-- [constructor](SortedArray.md#constructor)
+- [constructor](/docs/classes/SortedArray.md#constructor)
 
 ### Properties
 
-- [length](SortedArray.md#length)
-- [[species]](SortedArray.md#[species])
+- [allowDuplicates](/docs/classes/SortedArray.md#allowduplicates)
+- [compare](/docs/classes/SortedArray.md#compare)
+- [compareFound](/docs/classes/SortedArray.md#comparefound)
+- [length](/docs/classes/SortedArray.md#length)
+- [[species]](/docs/classes/SortedArray.md#[species])
 
 ### Methods
 
-- [[iterator]](SortedArray.md#[iterator])
-- [[unscopables]](SortedArray.md#[unscopables])
-- [add](SortedArray.md#add)
-- [addMany](SortedArray.md#addmany)
-- [at](SortedArray.md#at)
-- [concat](SortedArray.md#concat)
-- [copyWithin](SortedArray.md#copywithin)
-- [entries](SortedArray.md#entries)
-- [every](SortedArray.md#every)
-- [fill](SortedArray.md#fill)
-- [filter](SortedArray.md#filter)
-- [find](SortedArray.md#find)
-- [findIndex](SortedArray.md#findindex)
-- [firstIndexOfCompare](SortedArray.md#firstindexofcompare)
-- [firstInsertionIndex](SortedArray.md#firstinsertionindex)
-- [flat](SortedArray.md#flat)
-- [flatMap](SortedArray.md#flatmap)
-- [forEach](SortedArray.md#foreach)
-- [includes](SortedArray.md#includes)
-- [indexOf](SortedArray.md#indexof)
-- [indexOfCompare](SortedArray.md#indexofcompare)
-- [indicesOfCompare](SortedArray.md#indicesofcompare)
-- [insertionIndex](SortedArray.md#insertionindex)
-- [intersection](SortedArray.md#intersection)
-- [join](SortedArray.md#join)
-- [keys](SortedArray.md#keys)
-- [lastIndexOf](SortedArray.md#lastindexof)
-- [lastIndexOfCompare](SortedArray.md#lastindexofcompare)
-- [lastInsertionIndex](SortedArray.md#lastinsertionindex)
-- [map](SortedArray.md#map)
-- [pop](SortedArray.md#pop)
-- [push](SortedArray.md#push)
-- [reduce](SortedArray.md#reduce)
-- [reduceRight](SortedArray.md#reduceright)
-- [reverse](SortedArray.md#reverse)
-- [shift](SortedArray.md#shift)
-- [slice](SortedArray.md#slice)
-- [some](SortedArray.md#some)
-- [sort](SortedArray.md#sort)
-- [splice](SortedArray.md#splice)
-- [toArray](SortedArray.md#toarray)
-- [toLocaleString](SortedArray.md#tolocalestring)
-- [toString](SortedArray.md#tostring)
-- [unique](SortedArray.md#unique)
-- [unshift](SortedArray.md#unshift)
-- [values](SortedArray.md#values)
-- [from](SortedArray.md#from)
-- [isArray](SortedArray.md#isarray)
-- [of](SortedArray.md#of)
+- [[iterator]](/docs/classes/SortedArray.md#[iterator])
+- [[unscopables]](/docs/classes/SortedArray.md#[unscopables])
+- [add](/docs/classes/SortedArray.md#add)
+- [addMany](/docs/classes/SortedArray.md#addmany)
+- [at](/docs/classes/SortedArray.md#at)
+- [concat](/docs/classes/SortedArray.md#concat)
+- [copyWithin](/docs/classes/SortedArray.md#copywithin)
+- [entries](/docs/classes/SortedArray.md#entries)
+- [every](/docs/classes/SortedArray.md#every)
+- [fill](/docs/classes/SortedArray.md#fill)
+- [filter](/docs/classes/SortedArray.md#filter)
+- [find](/docs/classes/SortedArray.md#find)
+- [findIndex](/docs/classes/SortedArray.md#findindex)
+- [firstIndexOfCompare](/docs/classes/SortedArray.md#firstindexofcompare)
+- [firstInsertionIndex](/docs/classes/SortedArray.md#firstinsertionindex)
+- [flat](/docs/classes/SortedArray.md#flat)
+- [flatMap](/docs/classes/SortedArray.md#flatmap)
+- [forEach](/docs/classes/SortedArray.md#foreach)
+- [includes](/docs/classes/SortedArray.md#includes)
+- [indexOf](/docs/classes/SortedArray.md#indexof)
+- [indexOfCompare](/docs/classes/SortedArray.md#indexofcompare)
+- [indicesOfCompare](/docs/classes/SortedArray.md#indicesofcompare)
+- [insertionIndex](/docs/classes/SortedArray.md#insertionindex)
+- [intersection](/docs/classes/SortedArray.md#intersection)
+- [join](/docs/classes/SortedArray.md#join)
+- [keys](/docs/classes/SortedArray.md#keys)
+- [lastIndexOf](/docs/classes/SortedArray.md#lastindexof)
+- [lastIndexOfCompare](/docs/classes/SortedArray.md#lastindexofcompare)
+- [lastInsertionIndex](/docs/classes/SortedArray.md#lastinsertionindex)
+- [map](/docs/classes/SortedArray.md#map)
+- [pop](/docs/classes/SortedArray.md#pop)
+- [push](/docs/classes/SortedArray.md#push)
+- [reduce](/docs/classes/SortedArray.md#reduce)
+- [reduceRight](/docs/classes/SortedArray.md#reduceright)
+- [reverse](/docs/classes/SortedArray.md#reverse)
+- [shift](/docs/classes/SortedArray.md#shift)
+- [slice](/docs/classes/SortedArray.md#slice)
+- [some](/docs/classes/SortedArray.md#some)
+- [sort](/docs/classes/SortedArray.md#sort)
+- [splice](/docs/classes/SortedArray.md#splice)
+- [toArray](/docs/classes/SortedArray.md#toarray)
+- [toLocaleString](/docs/classes/SortedArray.md#tolocalestring)
+- [toString](/docs/classes/SortedArray.md#tostring)
+- [unique](/docs/classes/SortedArray.md#unique)
+- [unshift](/docs/classes/SortedArray.md#unshift)
+- [values](/docs/classes/SortedArray.md#values)
+- [from](/docs/classes/SortedArray.md#from)
+- [isArray](/docs/classes/SortedArray.md#isarray)
+- [of](/docs/classes/SortedArray.md#of)
 
 ## Constructors
 
@@ -93,7 +96,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `options` | [`ISortedArrayOptions`](../interfaces/ISortedArrayOptions.md)<`T`\> |
+| `options` | [`ISortedArrayOptions`](/docs/interfaces/ISortedArrayOptions.md)<`T`\> |
 
 #### Overrides
 
@@ -101,9 +104,54 @@ Array.constructor
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:15](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L15)
+[src/libs/datastructures/src/SortedArray.ts:15](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L15)
 
 ## Properties
+
+### allowDuplicates
+
+• `Private` **allowDuplicates**: `boolean` = `true`
+
+#### Defined in
+
+[src/libs/datastructures/src/SortedArray.ts:13](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L13)
+
+___
+
+### compare
+
+• `Private` **compare**: (`a`: `any`, `b`: `any`) => `number` = `compareString`
+
+#### Type declaration
+
+▸ (`a`, `b`): `number`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `any` |
+| `b` | `any` |
+
+##### Returns
+
+`number`
+
+#### Defined in
+
+[src/libs/datastructures/src/SortedArray.ts:11](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L11)
+
+___
+
+### compareFound
+
+• `Private` **compareFound**: `boolean` = `false`
+
+#### Defined in
+
+[src/libs/datastructures/src/SortedArray.ts:12](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L12)
+
+___
 
 ### length
 
@@ -127,7 +175,7 @@ ___
 
 #### Inherited from
 
-Array.\_\_@species@607
+Array.\_\_@species@278
 
 #### Defined in
 
@@ -147,7 +195,7 @@ Iterator
 
 #### Inherited from
 
-Array.\_\_@iterator@87
+Array.\_\_@iterator@13
 
 #### Defined in
 
@@ -178,7 +226,7 @@ when they will be absent when used in a 'with' statement.
 
 #### Inherited from
 
-Array.\_\_@unscopables@89
+Array.\_\_@unscopables@15
 
 #### Defined in
 
@@ -188,7 +236,7 @@ ___
 
 ### add
 
-▸ **add**(`element`): [`SortedArray`](SortedArray.md)<`T`\>
+▸ **add**(`element`): [`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 #### Parameters
 
@@ -198,17 +246,17 @@ ___
 
 #### Returns
 
-[`SortedArray`](SortedArray.md)<`T`\>
+[`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:47](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L47)
+[src/libs/datastructures/src/SortedArray.ts:47](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L47)
 
 ___
 
 ### addMany
 
-▸ **addMany**(`...elements`): [`SortedArray`](SortedArray.md)<`T`\>
+▸ **addMany**(`...elements`): [`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 Add elements to the sorted array.
 
@@ -220,11 +268,11 @@ Add elements to the sorted array.
 
 #### Returns
 
-[`SortedArray`](SortedArray.md)<`T`\>
+[`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:68](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L68)
+[src/libs/datastructures/src/SortedArray.ts:68](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L68)
 
 ___
 
@@ -306,7 +354,7 @@ ___
 
 ### copyWithin
 
-▸ **copyWithin**(`target`, `start`, `end?`): [`SortedArray`](SortedArray.md)<`T`\>
+▸ **copyWithin**(`target`, `start`, `end?`): [`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 Returns the this object after copying a section of the array identified by start and end
 to the same array starting at position target
@@ -321,7 +369,7 @@ to the same array starting at position target
 
 #### Returns
 
-[`SortedArray`](SortedArray.md)<`T`\>
+[`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 #### Inherited from
 
@@ -411,7 +459,7 @@ ___
 
 ### fill
 
-▸ **fill**(`value`, `start?`, `end?`): [`SortedArray`](SortedArray.md)<`T`\>
+▸ **fill**(`value`, `start?`, `end?`): [`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 Changes all array elements from `start` to `end` index to a static `value` and returns the modified array
 
@@ -425,7 +473,7 @@ Changes all array elements from `start` to `end` index to a static `value` and r
 
 #### Returns
 
-[`SortedArray`](SortedArray.md)<`T`\>
+[`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 #### Inherited from
 
@@ -594,7 +642,7 @@ Returns the index of the first element that is determined equal by the compare f
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:164](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L164)
+[src/libs/datastructures/src/SortedArray.ts:164](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L164)
 
 ___
 
@@ -616,7 +664,7 @@ Returns a tuple containing the first index of where to add an element to keep th
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:119](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L119)
+[src/libs/datastructures/src/SortedArray.ts:119](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L119)
 
 ___
 
@@ -790,7 +838,7 @@ Returns the index of the first element found that is determined equal by the com
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:153](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L153)
+[src/libs/datastructures/src/SortedArray.ts:153](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L153)
 
 ___
 
@@ -812,7 +860,7 @@ Returns all indices at which element exists. Equality is determined by the compa
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:186](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L186)
+[src/libs/datastructures/src/SortedArray.ts:186](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L186)
 
 ___
 
@@ -834,7 +882,7 @@ Returns a tuple containing the index of where to add an element to keep the arra
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:98](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L98)
+[src/libs/datastructures/src/SortedArray.ts:98](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L98)
 
 ___
 
@@ -856,7 +904,7 @@ Returns the interestion of this and another sorted array.
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:218](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L218)
+[src/libs/datastructures/src/SortedArray.ts:218](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L218)
 
 ___
 
@@ -951,7 +999,7 @@ Returns the index of the last element that is determined equal by the compare fu
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:175](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L175)
+[src/libs/datastructures/src/SortedArray.ts:175](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L175)
 
 ___
 
@@ -973,7 +1021,7 @@ Returns a tuple containing the last index of where to add an element to keep the
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:136](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L136)
+[src/libs/datastructures/src/SortedArray.ts:136](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L136)
 
 ___
 
@@ -1309,7 +1357,7 @@ ___
 
 ### sort
 
-▸ **sort**(`compareFn?`): [`SortedArray`](SortedArray.md)<`T`\>
+▸ **sort**(`compareFn?`): [`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 Sorts an array in place.
 This method mutates the array and returns a reference to the same array.
@@ -1322,7 +1370,7 @@ This method mutates the array and returns a reference to the same array.
 
 #### Returns
 
-[`SortedArray`](SortedArray.md)<`T`\>
+[`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 #### Inherited from
 
@@ -1401,7 +1449,7 @@ Convert to a normal Array instance
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:43](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L43)
+[src/libs/datastructures/src/SortedArray.ts:43](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L43)
 
 ___
 
@@ -1447,17 +1495,17 @@ ___
 
 ### unique
 
-▸ **unique**(): [`SortedArray`](SortedArray.md)<`T`\>
+▸ **unique**(): [`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 Remove all duplicate elements in the sorted array, leaving only unique values. Equality is determined by the compare function.
 
 #### Returns
 
-[`SortedArray`](SortedArray.md)<`T`\>
+[`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:79](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/SortedArray.ts#L79)
+[src/libs/datastructures/src/SortedArray.ts:79](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L79)
 
 ___
 

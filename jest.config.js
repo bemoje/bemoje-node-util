@@ -3,6 +3,6 @@
 
 const configuration = {
   preset: 'ts-jest',
-};
+}
 
-module.exports = configuration;
+module.exports = configuration

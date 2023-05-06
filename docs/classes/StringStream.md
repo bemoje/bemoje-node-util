@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / StringStream
+[@bemoje/node-util](/docs/index.md) / StringStream
 
 # Class: StringStream
 
@@ -14,68 +14,70 @@ Extension of Node's native Readable class for converting a string into a Readabl
 
 ### Constructors
 
-- [constructor](StringStream.md#constructor)
+- [constructor](/docs/classes/StringStream.md#constructor)
 
 ### Properties
 
-- [closed](StringStream.md#closed)
-- [destroyed](StringStream.md#destroyed)
-- [errored](StringStream.md#errored)
-- [readable](StringStream.md#readable)
-- [readableAborted](StringStream.md#readableaborted)
-- [readableDidRead](StringStream.md#readabledidread)
-- [readableEncoding](StringStream.md#readableencoding)
-- [readableEnded](StringStream.md#readableended)
-- [readableFlowing](StringStream.md#readableflowing)
-- [readableHighWaterMark](StringStream.md#readablehighwatermark)
-- [readableLength](StringStream.md#readablelength)
-- [readableObjectMode](StringStream.md#readableobjectmode)
-- [captureRejectionSymbol](StringStream.md#capturerejectionsymbol)
-- [captureRejections](StringStream.md#capturerejections)
-- [defaultMaxListeners](StringStream.md#defaultmaxlisteners)
-- [errorMonitor](StringStream.md#errormonitor)
+- [closed](/docs/classes/StringStream.md#closed)
+- [destroyed](/docs/classes/StringStream.md#destroyed)
+- [ended](/docs/classes/StringStream.md#ended)
+- [errored](/docs/classes/StringStream.md#errored)
+- [readable](/docs/classes/StringStream.md#readable)
+- [readableAborted](/docs/classes/StringStream.md#readableaborted)
+- [readableDidRead](/docs/classes/StringStream.md#readabledidread)
+- [readableEncoding](/docs/classes/StringStream.md#readableencoding)
+- [readableEnded](/docs/classes/StringStream.md#readableended)
+- [readableFlowing](/docs/classes/StringStream.md#readableflowing)
+- [readableHighWaterMark](/docs/classes/StringStream.md#readablehighwatermark)
+- [readableLength](/docs/classes/StringStream.md#readablelength)
+- [readableObjectMode](/docs/classes/StringStream.md#readableobjectmode)
+- [str](/docs/classes/StringStream.md#str)
+- [captureRejectionSymbol](/docs/classes/StringStream.md#capturerejectionsymbol)
+- [captureRejections](/docs/classes/StringStream.md#capturerejections)
+- [defaultMaxListeners](/docs/classes/StringStream.md#defaultmaxlisteners)
+- [errorMonitor](/docs/classes/StringStream.md#errormonitor)
 
 ### Methods
 
-- [[asyncIterator]](StringStream.md#[asynciterator])
-- [\_construct](StringStream.md#_construct)
-- [\_destroy](StringStream.md#_destroy)
-- [\_read](StringStream.md#_read)
-- [addListener](StringStream.md#addlistener)
-- [destroy](StringStream.md#destroy)
-- [emit](StringStream.md#emit)
-- [eventNames](StringStream.md#eventnames)
-- [getMaxListeners](StringStream.md#getmaxlisteners)
-- [isPaused](StringStream.md#ispaused)
-- [listenerCount](StringStream.md#listenercount)
-- [listeners](StringStream.md#listeners)
-- [off](StringStream.md#off)
-- [on](StringStream.md#on)
-- [once](StringStream.md#once)
-- [pause](StringStream.md#pause)
-- [pipe](StringStream.md#pipe)
-- [prependListener](StringStream.md#prependlistener)
-- [prependOnceListener](StringStream.md#prependoncelistener)
-- [push](StringStream.md#push)
-- [rawListeners](StringStream.md#rawlisteners)
-- [read](StringStream.md#read)
-- [removeAllListeners](StringStream.md#removealllisteners)
-- [removeListener](StringStream.md#removelistener)
-- [resume](StringStream.md#resume)
-- [setEncoding](StringStream.md#setencoding)
-- [setMaxListeners](StringStream.md#setmaxlisteners)
-- [unpipe](StringStream.md#unpipe)
-- [unshift](StringStream.md#unshift)
-- [wrap](StringStream.md#wrap)
-- [from](StringStream.md#from)
-- [fromWeb](StringStream.md#fromweb)
-- [getEventListeners](StringStream.md#geteventlisteners)
-- [isDisturbed](StringStream.md#isdisturbed)
-- [listenerCount](StringStream.md#listenercount-1)
-- [on](StringStream.md#on-1)
-- [once](StringStream.md#once-1)
-- [setMaxListeners](StringStream.md#setmaxlisteners-1)
-- [toWeb](StringStream.md#toweb)
+- [[asyncIterator]](/docs/classes/StringStream.md#[asynciterator])
+- [\_construct](/docs/classes/StringStream.md#_construct)
+- [\_destroy](/docs/classes/StringStream.md#_destroy)
+- [\_read](/docs/classes/StringStream.md#_read)
+- [addListener](/docs/classes/StringStream.md#addlistener)
+- [destroy](/docs/classes/StringStream.md#destroy)
+- [emit](/docs/classes/StringStream.md#emit)
+- [eventNames](/docs/classes/StringStream.md#eventnames)
+- [getMaxListeners](/docs/classes/StringStream.md#getmaxlisteners)
+- [isPaused](/docs/classes/StringStream.md#ispaused)
+- [listenerCount](/docs/classes/StringStream.md#listenercount)
+- [listeners](/docs/classes/StringStream.md#listeners)
+- [off](/docs/classes/StringStream.md#off)
+- [on](/docs/classes/StringStream.md#on)
+- [once](/docs/classes/StringStream.md#once)
+- [pause](/docs/classes/StringStream.md#pause)
+- [pipe](/docs/classes/StringStream.md#pipe)
+- [prependListener](/docs/classes/StringStream.md#prependlistener)
+- [prependOnceListener](/docs/classes/StringStream.md#prependoncelistener)
+- [push](/docs/classes/StringStream.md#push)
+- [rawListeners](/docs/classes/StringStream.md#rawlisteners)
+- [read](/docs/classes/StringStream.md#read)
+- [removeAllListeners](/docs/classes/StringStream.md#removealllisteners)
+- [removeListener](/docs/classes/StringStream.md#removelistener)
+- [resume](/docs/classes/StringStream.md#resume)
+- [setEncoding](/docs/classes/StringStream.md#setencoding)
+- [setMaxListeners](/docs/classes/StringStream.md#setmaxlisteners)
+- [unpipe](/docs/classes/StringStream.md#unpipe)
+- [unshift](/docs/classes/StringStream.md#unshift)
+- [wrap](/docs/classes/StringStream.md#wrap)
+- [from](/docs/classes/StringStream.md#from)
+- [fromWeb](/docs/classes/StringStream.md#fromweb)
+- [getEventListeners](/docs/classes/StringStream.md#geteventlisteners)
+- [isDisturbed](/docs/classes/StringStream.md#isdisturbed)
+- [listenerCount](/docs/classes/StringStream.md#listenercount-1)
+- [on](/docs/classes/StringStream.md#on-1)
+- [once](/docs/classes/StringStream.md#once-1)
+- [setMaxListeners](/docs/classes/StringStream.md#setmaxlisteners-1)
+- [toWeb](/docs/classes/StringStream.md#toweb)
 
 ## Constructors
 
@@ -95,7 +97,7 @@ Readable.constructor
 
 #### Defined in
 
-[src/libs/node/src/StringStream.ts:10](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/StringStream.ts#L10)
+[src/libs/node/src/StringStream.ts:10](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/node/src/StringStream.ts#L10)
 
 ## Properties
 
@@ -136,6 +138,16 @@ Readable.destroyed
 #### Defined in
 
 node_modules/@types/node/stream.d.ts:129
+
+___
+
+### ended
+
+• `Private` **ended**: `boolean`
+
+#### Defined in
+
+[src/libs/node/src/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/node/src/StringStream.ts#L8)
 
 ___
 
@@ -343,9 +355,19 @@ node_modules/@types/node/stream.d.ts:124
 
 ___
 
+### str
+
+• `Private` **str**: `string`
+
+#### Defined in
+
+[src/libs/node/src/StringStream.ts:7](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/node/src/StringStream.ts#L7)
+
+___
+
 ### captureRejectionSymbol
 
-▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](StringStream.md#capturerejectionsymbol)
+▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](/docs/classes/StringStream.md#capturerejectionsymbol)
 
 #### Inherited from
 
@@ -389,7 +411,7 @@ ___
 
 ### errorMonitor
 
-▪ `Static` `Readonly` **errorMonitor**: typeof [`errorMonitor`](StringStream.md#errormonitor)
+▪ `Static` `Readonly` **errorMonitor**: typeof [`errorMonitor`](/docs/classes/StringStream.md#errormonitor)
 
 This symbol shall be used to install a listener for only monitoring `'error'`
 events. Listeners installed using this symbol are called before the regular
@@ -419,7 +441,7 @@ node_modules/@types/node/events.d.ts:327
 
 #### Inherited from
 
-Readable.\_\_@asyncIterator@21675
+Readable.\_\_@asyncIterator@1834
 
 #### Defined in
 
@@ -490,13 +512,13 @@ Readable.\_read
 
 #### Defined in
 
-[src/libs/node/src/StringStream.ts:16](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/node/src/StringStream.ts#L16)
+[src/libs/node/src/StringStream.ts:16](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/node/src/StringStream.ts#L16)
 
 ___
 
 ### addListener
 
-▸ **addListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 Event emitter
 The defined events on documents including:
@@ -517,7 +539,7 @@ The defined events on documents including:
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -527,7 +549,7 @@ Readable.addListener
 
 node_modules/@types/node/stream.d.ts:447
 
-▸ **addListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -538,7 +560,7 @@ node_modules/@types/node/stream.d.ts:447
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -548,7 +570,7 @@ Readable.addListener
 
 node_modules/@types/node/stream.d.ts:448
 
-▸ **addListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -559,7 +581,7 @@ node_modules/@types/node/stream.d.ts:448
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -569,7 +591,7 @@ Readable.addListener
 
 node_modules/@types/node/stream.d.ts:449
 
-▸ **addListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -580,7 +602,7 @@ node_modules/@types/node/stream.d.ts:449
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -590,7 +612,7 @@ Readable.addListener
 
 node_modules/@types/node/stream.d.ts:450
 
-▸ **addListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -601,7 +623,7 @@ node_modules/@types/node/stream.d.ts:450
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -611,7 +633,7 @@ Readable.addListener
 
 node_modules/@types/node/stream.d.ts:451
 
-▸ **addListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -622,7 +644,7 @@ node_modules/@types/node/stream.d.ts:451
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -632,7 +654,7 @@ Readable.addListener
 
 node_modules/@types/node/stream.d.ts:452
 
-▸ **addListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -643,7 +665,7 @@ node_modules/@types/node/stream.d.ts:452
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -653,7 +675,7 @@ Readable.addListener
 
 node_modules/@types/node/stream.d.ts:453
 
-▸ **addListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -664,7 +686,7 @@ node_modules/@types/node/stream.d.ts:453
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -678,7 +700,7 @@ ___
 
 ### destroy
 
-▸ **destroy**(`error?`): [`StringStream`](StringStream.md)
+▸ **destroy**(`error?`): [`StringStream`](/docs/classes/StringStream.md)
 
 Destroy the stream. Optionally emit an `'error'` event, and emit a `'close'`event (unless `emitClose` is set to `false`). After this call, the readable
 stream will release any internal resources and subsequent calls to `push()`will be ignored.
@@ -700,7 +722,7 @@ v8.0.0
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -922,7 +944,7 @@ ___
 ▸ **getMaxListeners**(): `number`
 
 Returns the current max listener value for the `EventEmitter` which is either
-set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](StringStream.md#defaultmaxlisteners).
+set by `emitter.setMaxListeners(n)` or defaults to [defaultMaxListeners](/docs/classes/StringStream.md#defaultmaxlisteners).
 
 **`Since`**
 
@@ -1048,7 +1070,7 @@ ___
 
 ### off
 
-▸ **off**(`eventName`, `listener`): [`StringStream`](StringStream.md)
+▸ **off**(`eventName`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 Alias for `emitter.removeListener()`.
 
@@ -1065,7 +1087,7 @@ v10.0.0
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1079,7 +1101,7 @@ ___
 
 ### on
 
-▸ **on**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1090,7 +1112,7 @@ ___
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1100,7 +1122,7 @@ Readable.on
 
 node_modules/@types/node/stream.d.ts:463
 
-▸ **on**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1111,7 +1133,7 @@ node_modules/@types/node/stream.d.ts:463
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1121,7 +1143,7 @@ Readable.on
 
 node_modules/@types/node/stream.d.ts:464
 
-▸ **on**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1132,7 +1154,7 @@ node_modules/@types/node/stream.d.ts:464
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1142,7 +1164,7 @@ Readable.on
 
 node_modules/@types/node/stream.d.ts:465
 
-▸ **on**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1153,7 +1175,7 @@ node_modules/@types/node/stream.d.ts:465
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1163,7 +1185,7 @@ Readable.on
 
 node_modules/@types/node/stream.d.ts:466
 
-▸ **on**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1174,7 +1196,7 @@ node_modules/@types/node/stream.d.ts:466
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1184,7 +1206,7 @@ Readable.on
 
 node_modules/@types/node/stream.d.ts:467
 
-▸ **on**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1195,7 +1217,7 @@ node_modules/@types/node/stream.d.ts:467
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1205,7 +1227,7 @@ Readable.on
 
 node_modules/@types/node/stream.d.ts:468
 
-▸ **on**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1216,7 +1238,7 @@ node_modules/@types/node/stream.d.ts:468
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1226,7 +1248,7 @@ Readable.on
 
 node_modules/@types/node/stream.d.ts:469
 
-▸ **on**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1237,7 +1259,7 @@ node_modules/@types/node/stream.d.ts:469
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1251,7 +1273,7 @@ ___
 
 ### once
 
-▸ **once**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1262,7 +1284,7 @@ ___
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1272,7 +1294,7 @@ Readable.once
 
 node_modules/@types/node/stream.d.ts:471
 
-▸ **once**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1283,7 +1305,7 @@ node_modules/@types/node/stream.d.ts:471
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1293,7 +1315,7 @@ Readable.once
 
 node_modules/@types/node/stream.d.ts:472
 
-▸ **once**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1304,7 +1326,7 @@ node_modules/@types/node/stream.d.ts:472
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1314,7 +1336,7 @@ Readable.once
 
 node_modules/@types/node/stream.d.ts:473
 
-▸ **once**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1325,7 +1347,7 @@ node_modules/@types/node/stream.d.ts:473
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1335,7 +1357,7 @@ Readable.once
 
 node_modules/@types/node/stream.d.ts:474
 
-▸ **once**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1346,7 +1368,7 @@ node_modules/@types/node/stream.d.ts:474
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1356,7 +1378,7 @@ Readable.once
 
 node_modules/@types/node/stream.d.ts:475
 
-▸ **once**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1367,7 +1389,7 @@ node_modules/@types/node/stream.d.ts:475
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1377,7 +1399,7 @@ Readable.once
 
 node_modules/@types/node/stream.d.ts:476
 
-▸ **once**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1388,7 +1410,7 @@ node_modules/@types/node/stream.d.ts:476
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1398,7 +1420,7 @@ Readable.once
 
 node_modules/@types/node/stream.d.ts:477
 
-▸ **once**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1409,7 +1431,7 @@ node_modules/@types/node/stream.d.ts:477
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1423,7 +1445,7 @@ ___
 
 ### pause
 
-▸ **pause**(): [`StringStream`](StringStream.md)
+▸ **pause**(): [`StringStream`](/docs/classes/StringStream.md)
 
 The `readable.pause()` method will cause a stream in flowing mode to stop
 emitting `'data'` events, switching out of flowing mode. Any data that
@@ -1450,7 +1472,7 @@ v0.9.4
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1496,7 +1518,7 @@ ___
 
 ### prependListener
 
-▸ **prependListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1507,7 +1529,7 @@ ___
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1517,7 +1539,7 @@ Readable.prependListener
 
 node_modules/@types/node/stream.d.ts:479
 
-▸ **prependListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1528,7 +1550,7 @@ node_modules/@types/node/stream.d.ts:479
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1538,7 +1560,7 @@ Readable.prependListener
 
 node_modules/@types/node/stream.d.ts:480
 
-▸ **prependListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1549,7 +1571,7 @@ node_modules/@types/node/stream.d.ts:480
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1559,7 +1581,7 @@ Readable.prependListener
 
 node_modules/@types/node/stream.d.ts:481
 
-▸ **prependListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1570,7 +1592,7 @@ node_modules/@types/node/stream.d.ts:481
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1580,7 +1602,7 @@ Readable.prependListener
 
 node_modules/@types/node/stream.d.ts:482
 
-▸ **prependListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1591,7 +1613,7 @@ node_modules/@types/node/stream.d.ts:482
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1601,7 +1623,7 @@ Readable.prependListener
 
 node_modules/@types/node/stream.d.ts:483
 
-▸ **prependListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1612,7 +1634,7 @@ node_modules/@types/node/stream.d.ts:483
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1622,7 +1644,7 @@ Readable.prependListener
 
 node_modules/@types/node/stream.d.ts:484
 
-▸ **prependListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1633,7 +1655,7 @@ node_modules/@types/node/stream.d.ts:484
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1643,7 +1665,7 @@ Readable.prependListener
 
 node_modules/@types/node/stream.d.ts:485
 
-▸ **prependListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1654,7 +1676,7 @@ node_modules/@types/node/stream.d.ts:485
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1668,7 +1690,7 @@ ___
 
 ### prependOnceListener
 
-▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1679,7 +1701,7 @@ ___
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1689,7 +1711,7 @@ Readable.prependOnceListener
 
 node_modules/@types/node/stream.d.ts:487
 
-▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1700,7 +1722,7 @@ node_modules/@types/node/stream.d.ts:487
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1710,7 +1732,7 @@ Readable.prependOnceListener
 
 node_modules/@types/node/stream.d.ts:488
 
-▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1721,7 +1743,7 @@ node_modules/@types/node/stream.d.ts:488
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1731,7 +1753,7 @@ Readable.prependOnceListener
 
 node_modules/@types/node/stream.d.ts:489
 
-▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1742,7 +1764,7 @@ node_modules/@types/node/stream.d.ts:489
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1752,7 +1774,7 @@ Readable.prependOnceListener
 
 node_modules/@types/node/stream.d.ts:490
 
-▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1763,7 +1785,7 @@ node_modules/@types/node/stream.d.ts:490
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1773,7 +1795,7 @@ Readable.prependOnceListener
 
 node_modules/@types/node/stream.d.ts:491
 
-▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1784,7 +1806,7 @@ node_modules/@types/node/stream.d.ts:491
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1794,7 +1816,7 @@ Readable.prependOnceListener
 
 node_modules/@types/node/stream.d.ts:492
 
-▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1805,7 +1827,7 @@ node_modules/@types/node/stream.d.ts:492
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1815,7 +1837,7 @@ Readable.prependOnceListener
 
 node_modules/@types/node/stream.d.ts:493
 
-▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -1826,7 +1848,7 @@ node_modules/@types/node/stream.d.ts:493
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -1992,7 +2014,7 @@ a call to `readable.read(size)`, regardless of the value of the`size` argument.
 If the `readable.read()` method returns a chunk of data, a `'data'` event will
 also be emitted.
 
-Calling [read](StringStream.md#read) after the `'end'` event has
+Calling [read](/docs/classes/StringStream.md#read) after the `'end'` event has
 been emitted will return `null`. No runtime error will be raised.
 
 **`Since`**
@@ -2021,7 +2043,7 @@ ___
 
 ### removeAllListeners
 
-▸ **removeAllListeners**(`event?`): [`StringStream`](StringStream.md)
+▸ **removeAllListeners**(`event?`): [`StringStream`](/docs/classes/StringStream.md)
 
 Removes all listeners, or those of the specified `eventName`.
 
@@ -2043,7 +2065,7 @@ v0.1.26
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2057,7 +2079,7 @@ ___
 
 ### removeListener
 
-▸ **removeListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -2068,7 +2090,7 @@ ___
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2078,7 +2100,7 @@ Readable.removeListener
 
 node_modules/@types/node/stream.d.ts:495
 
-▸ **removeListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -2089,7 +2111,7 @@ node_modules/@types/node/stream.d.ts:495
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2099,7 +2121,7 @@ Readable.removeListener
 
 node_modules/@types/node/stream.d.ts:496
 
-▸ **removeListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -2110,7 +2132,7 @@ node_modules/@types/node/stream.d.ts:496
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2120,7 +2142,7 @@ Readable.removeListener
 
 node_modules/@types/node/stream.d.ts:497
 
-▸ **removeListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -2131,7 +2153,7 @@ node_modules/@types/node/stream.d.ts:497
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2141,7 +2163,7 @@ Readable.removeListener
 
 node_modules/@types/node/stream.d.ts:498
 
-▸ **removeListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -2152,7 +2174,7 @@ node_modules/@types/node/stream.d.ts:498
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2162,7 +2184,7 @@ Readable.removeListener
 
 node_modules/@types/node/stream.d.ts:499
 
-▸ **removeListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -2173,7 +2195,7 @@ node_modules/@types/node/stream.d.ts:499
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2183,7 +2205,7 @@ Readable.removeListener
 
 node_modules/@types/node/stream.d.ts:500
 
-▸ **removeListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -2194,7 +2216,7 @@ node_modules/@types/node/stream.d.ts:500
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2204,7 +2226,7 @@ Readable.removeListener
 
 node_modules/@types/node/stream.d.ts:501
 
-▸ **removeListener**(`event`, `listener`): [`StringStream`](StringStream.md)
+▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
 #### Parameters
 
@@ -2215,7 +2237,7 @@ node_modules/@types/node/stream.d.ts:501
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2229,7 +2251,7 @@ ___
 
 ### resume
 
-▸ **resume**(): [`StringStream`](StringStream.md)
+▸ **resume**(): [`StringStream`](/docs/classes/StringStream.md)
 
 The `readable.resume()` method causes an explicitly paused `Readable` stream to
 resume emitting `'data'` events, switching the stream into flowing mode.
@@ -2253,7 +2275,7 @@ v0.9.4
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2267,7 +2289,7 @@ ___
 
 ### setEncoding
 
-▸ **setEncoding**(`encoding`): [`StringStream`](StringStream.md)
+▸ **setEncoding**(`encoding`): [`StringStream`](/docs/classes/StringStream.md)
 
 The `readable.setEncoding()` method sets the character encoding for
 data read from the `Readable` stream.
@@ -2302,7 +2324,7 @@ v0.9.4
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2316,7 +2338,7 @@ ___
 
 ### setMaxListeners
 
-▸ **setMaxListeners**(`n`): [`StringStream`](StringStream.md)
+▸ **setMaxListeners**(`n`): [`StringStream`](/docs/classes/StringStream.md)
 
 By default `EventEmitter`s will print a warning if more than `10` listeners are
 added for a particular event. This is a useful default that helps finding
@@ -2337,7 +2359,7 @@ v0.3.5
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2351,10 +2373,10 @@ ___
 
 ### unpipe
 
-▸ **unpipe**(`destination?`): [`StringStream`](StringStream.md)
+▸ **unpipe**(`destination?`): [`StringStream`](/docs/classes/StringStream.md)
 
 The `readable.unpipe()` method detaches a `Writable` stream previously attached
-using the [pipe](StringStream.md#pipe) method.
+using the [pipe](/docs/classes/StringStream.md#pipe) method.
 
 If the `destination` is not specified, then _all_ pipes are detached.
 
@@ -2388,7 +2410,7 @@ v0.9.4
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2456,11 +2478,11 @@ function parseHeader(stream, callback) {
 }
 ```
 
-Unlike [push](StringStream.md#push), `stream.unshift(chunk)` will not
+Unlike [push](/docs/classes/StringStream.md#push), `stream.unshift(chunk)` will not
 end the reading process by resetting the internal reading state of the stream.
 This can cause unexpected results if `readable.unshift()` is called during a
-read (i.e. from within a [_read](StringStream.md#_read) implementation on a
-custom stream). Following the call to `readable.unshift()` with an immediate [push](StringStream.md#push) will reset the reading state appropriately,
+read (i.e. from within a [_read](/docs/classes/StringStream.md#_read) implementation on a
+custom stream). Following the call to `readable.unshift()` with an immediate [push](/docs/classes/StringStream.md#push) will reset the reading state appropriately,
 however it is best to simply avoid calling `readable.unshift()` while in the
 process of performing a read.
 
@@ -2491,12 +2513,12 @@ ___
 
 ### wrap
 
-▸ **wrap**(`stream`): [`StringStream`](StringStream.md)
+▸ **wrap**(`stream`): [`StringStream`](/docs/classes/StringStream.md)
 
 Prior to Node.js 0.10, streams did not implement the entire `stream` module API
 as it is currently defined. (See `Compatibility` for more information.)
 
-When using an older Node.js library that emits `'data'` events and has a [pause](StringStream.md#pause) method that is advisory only, the`readable.wrap()` method can be used to create a `Readable`
+When using an older Node.js library that emits `'data'` events and has a [pause](/docs/classes/StringStream.md#pause) method that is advisory only, the`readable.wrap()` method can be used to create a `Readable`
 stream that uses
 the old stream as its data source.
 
@@ -2527,7 +2549,7 @@ v0.9.4
 
 #### Returns
 
-[`StringStream`](StringStream.md)
+[`StringStream`](/docs/classes/StringStream.md)
 
 #### Inherited from
 
@@ -2581,7 +2603,7 @@ v17.0.0
 | Name | Type |
 | :------ | :------ |
 | `readableStream` | `ReadableStream`<`any`\> |
-| `options?` | `Pick`<`ReadableOptions`, ``"signal"`` \| ``"encoding"`` \| ``"highWaterMark"`` \| ``"objectMode"``\> |
+| `options?` | `Pick`<`ReadableOptions`, ``"encoding"`` \| ``"highWaterMark"`` \| ``"objectMode"`` \| ``"signal"``\> |
 
 #### Returns
 

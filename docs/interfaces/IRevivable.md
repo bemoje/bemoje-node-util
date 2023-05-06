@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / IRevivable
+[@bemoje/node-util](/docs/index.md) / IRevivable
 
 # Interface: IRevivable<SerializedForm\>
 
@@ -12,14 +12,14 @@ Guarantees that class instances are serializable and have a static revive functi
 
 ## Implemented by
 
-- [`Queue`](../classes/Queue.md)
-- [`Table`](../classes/Table.md)
+- [`Queue`](/docs/classes/Queue.md)
+- [`Table`](/docs/classes/Table.md)
 
 ## Table of contents
 
 ### Properties
 
-- [toJSON](IRevivable.md#tojson)
+- [toJSON](/docs/interfaces/IRevivable.md#tojson)
 
 ## Properties
 
@@ -37,4 +37,4 @@ Guarantees that class instances are serializable and have a static revive functi
 
 #### Defined in
 
-src/libs/mixins/src/interfaces.ts:7
+[src/libs/mixins/src/interfaces.ts:7](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/interfaces.ts#L7)

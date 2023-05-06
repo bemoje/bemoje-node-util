@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / ExtensibleFunction
+[@bemoje/node-util](/docs/index.md) / ExtensibleFunction
 
 # Class: ExtensibleFunction
 
@@ -29,23 +29,23 @@ class MyFunction<T> extends util.ExtensibleFunction {
 
 ### Constructors
 
-- [constructor](ExtensibleFunction.md#constructor)
+- [constructor](/docs/classes/ExtensibleFunction.md#constructor)
 
 ### Properties
 
-- [arguments](ExtensibleFunction.md#arguments)
-- [caller](ExtensibleFunction.md#caller)
-- [length](ExtensibleFunction.md#length)
-- [name](ExtensibleFunction.md#name)
-- [prototype](ExtensibleFunction.md#prototype)
+- [arguments](/docs/classes/ExtensibleFunction.md#arguments)
+- [caller](/docs/classes/ExtensibleFunction.md#caller)
+- [length](/docs/classes/ExtensibleFunction.md#length)
+- [name](/docs/classes/ExtensibleFunction.md#name)
+- [prototype](/docs/classes/ExtensibleFunction.md#prototype)
 
 ### Methods
 
-- [[hasInstance]](ExtensibleFunction.md#[hasinstance])
-- [apply](ExtensibleFunction.md#apply)
-- [bind](ExtensibleFunction.md#bind)
-- [call](ExtensibleFunction.md#call)
-- [toString](ExtensibleFunction.md#tostring)
+- [[hasInstance]](/docs/classes/ExtensibleFunction.md#[hasinstance])
+- [apply](/docs/classes/ExtensibleFunction.md#apply)
+- [bind](/docs/classes/ExtensibleFunction.md#bind)
+- [call](/docs/classes/ExtensibleFunction.md#call)
+- [toString](/docs/classes/ExtensibleFunction.md#tostring)
 
 ## Constructors
 
@@ -66,7 +66,7 @@ Function.constructor
 
 #### Defined in
 
-[src/libs/function/src/ExtensibleFunction.ts:19](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/function/src/ExtensibleFunction.ts#L19)
+[src/libs/function/src/ExtensibleFunction.ts:19](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/function/src/ExtensibleFunction.ts#L19)
 
 ## Properties
 
@@ -164,7 +164,7 @@ A constructor function can control which objects are recognized as its instances
 
 #### Inherited from
 
-Function.\_\_@hasInstance@79
+Function.\_\_@hasInstance@122
 
 #### Defined in
 

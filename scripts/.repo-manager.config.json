@@ -33,7 +33,7 @@
     "output": {
       "commonjs": true,
       "esm": true,
-      "umd": true,
+      "umd": false,
       "umdMinified": {
         "enabled": true,
         "options": {

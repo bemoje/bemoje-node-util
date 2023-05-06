@@ -1,4 +1,4 @@
-import { regexEscapeString } from '../../regex'
+import { regexEscapeString } from '../../regex/src/regexEscapeString'
 
 /**
  * Inserts provided strings before and after a string.

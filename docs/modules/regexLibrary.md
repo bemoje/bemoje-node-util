@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / regexLibrary
+[@bemoje/node-util](/docs/index.md) / regexLibrary
 
 # Namespace: regexLibrary
 
@@ -6,18 +6,18 @@
 
 ### Variables
 
-- [integers](regexLibrary.md#integers)
-- [isHex](regexLibrary.md#ishex)
-- [isHexPrefix](regexLibrary.md#ishexprefix)
-- [isLocaleAlpha](regexLibrary.md#islocalealpha)
-- [isLocaleAlphaNumeric](regexLibrary.md#islocalealphanumeric)
-- [numberCommaSepDotDecimal](regexLibrary.md#numbercommasepdotdecimal)
-- [numberDotSepCommaDecimal](regexLibrary.md#numberdotsepcommadecimal)
-- [numberNoThousandSepCommaDecimal](regexLibrary.md#numbernothousandsepcommadecimal)
-- [numberNoThousandSepDotDecimal](regexLibrary.md#numbernothousandsepdotdecimal)
-- [repeatingWhiteSpace](regexLibrary.md#repeatingwhitespace)
-- [socialSecurityNumbersDK](regexLibrary.md#socialsecuritynumbersdk)
-- [words](regexLibrary.md#words)
+- [integers](/docs/modules/regexLibrary.md#integers)
+- [isHex](/docs/modules/regexLibrary.md#ishex)
+- [isHexPrefix](/docs/modules/regexLibrary.md#ishexprefix)
+- [isLocaleAlpha](/docs/modules/regexLibrary.md#islocalealpha)
+- [isLocaleAlphaNumeric](/docs/modules/regexLibrary.md#islocalealphanumeric)
+- [numberCommaSepDotDecimal](/docs/modules/regexLibrary.md#numbercommasepdotdecimal)
+- [numberDotSepCommaDecimal](/docs/modules/regexLibrary.md#numberdotsepcommadecimal)
+- [numberNoThousandSepCommaDecimal](/docs/modules/regexLibrary.md#numbernothousandsepcommadecimal)
+- [numberNoThousandSepDotDecimal](/docs/modules/regexLibrary.md#numbernothousandsepdotdecimal)
+- [repeatingWhiteSpace](/docs/modules/regexLibrary.md#repeatingwhitespace)
+- [socialSecurityNumbersDK](/docs/modules/regexLibrary.md#socialsecuritynumbersdk)
+- [words](/docs/modules/regexLibrary.md#words)
 
 ## Variables
 
@@ -30,7 +30,7 @@ Example: -20
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:21](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L21)
+[src/libs/regex/src/regexLibrary.ts:21](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L21)
 
 ___
 
@@ -42,7 +42,7 @@ Understands prefixes for hex colors, hex decimal and regexp unicode hex
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:55](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L55)
+[src/libs/regex/src/regexLibrary.ts:55](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L55)
 
 ___
 
@@ -54,7 +54,7 @@ Prefixes for hex colors, hex decimal and regexp unicode hex
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:50](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L50)
+[src/libs/regex/src/regexLibrary.ts:50](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L50)
 
 ___
 
@@ -66,7 +66,7 @@ For checking if a string is of only alpha characters for a specific locale.
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:60](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L60)
+[src/libs/regex/src/regexLibrary.ts:60](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L60)
 
 ___
 
@@ -78,7 +78,7 @@ For checking if a string is of only alpha-numeric characters for a specific loca
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:98](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L98)
+[src/libs/regex/src/regexLibrary.ts:98](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L98)
 
 ___
 
@@ -91,7 +91,7 @@ Example: -20,412.34
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:45](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L45)
+[src/libs/regex/src/regexLibrary.ts:45](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L45)
 
 ___
 
@@ -104,7 +104,7 @@ Example: -20.412,34
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:39](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L39)
+[src/libs/regex/src/regexLibrary.ts:39](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L39)
 
 ___
 
@@ -117,7 +117,7 @@ Example: -20412,3461
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:27](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L27)
+[src/libs/regex/src/regexLibrary.ts:27](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L27)
 
 ___
 
@@ -130,7 +130,7 @@ Example: -20412.3461
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:33](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L33)
+[src/libs/regex/src/regexLibrary.ts:33](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L33)
 
 ___
 
@@ -142,7 +142,7 @@ Matches 2 or more consecutive whitespace characters, including line terminators,
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:4](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L4)
+[src/libs/regex/src/regexLibrary.ts:4](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L4)
 
 ___
 
@@ -155,7 +155,7 @@ Example: 151199-1512
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:15](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L15)
+[src/libs/regex/src/regexLibrary.ts:15](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L15)
 
 ___
 
@@ -167,4 +167,4 @@ Matches words in a string
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:9](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/regex/src/regexLibrary.ts#L9)
+[src/libs/regex/src/regexLibrary.ts:9](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexLibrary.ts#L9)

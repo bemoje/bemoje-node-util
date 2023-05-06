@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / IHandledOptions
+[@bemoje/node-util](/docs/index.md) / IHandledOptions
 
 # Interface: IHandledOptions
 
@@ -8,12 +8,12 @@ Guarantees that options are handled in a consistent way.
 
 ### Properties
 
-- [defaultOptions](IHandledOptions.md#defaultoptions)
-- [options](IHandledOptions.md#options)
+- [defaultOptions](/docs/interfaces/IHandledOptions.md#defaultoptions)
+- [options](/docs/interfaces/IHandledOptions.md#options)
 
 ### Methods
 
-- [handleOptions](IHandledOptions.md#handleoptions)
+- [handleOptions](/docs/interfaces/IHandledOptions.md#handleoptions)
 
 ## Properties
 
@@ -23,7 +23,7 @@ Guarantees that options are handled in a consistent way.
 
 #### Defined in
 
-src/libs/mixins/src/interfaces.ts:16
+[src/libs/mixins/src/interfaces.ts:16](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/interfaces.ts#L16)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 #### Defined in
 
-src/libs/mixins/src/interfaces.ts:15
+[src/libs/mixins/src/interfaces.ts:15](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/interfaces.ts#L15)
 
 ## Methods
 
@@ -53,4 +53,4 @@ src/libs/mixins/src/interfaces.ts:15
 
 #### Defined in
 
-src/libs/mixins/src/interfaces.ts:17
+[src/libs/mixins/src/interfaces.ts:17](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/interfaces.ts#L17)

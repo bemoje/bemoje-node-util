@@ -1,5 +1,5 @@
 import { split } from 'sentence-splitter'
-import { regexLibrary } from '../../regex/'
+import { repeatingWhiteSpace } from '../../regex/src/regexLibrary'
 
 /**
  * Intelligently split a string into sentences. Uses NLP with parse tree to determine sentence boundaries.
@@ -13,7 +13,7 @@ export function strToSentences(text: string): Array<string> {
   return split(text)
     .map((node) => {
       const [start, end] = node.range
-      return text.substring(start, end).replace(regexLibrary.repeatingWhiteSpace, ' ').trim()
+      return text.substring(start, end).replace(repeatingWhiteSpace, ' ').trim()
     })
     .filter((s) => !!s)
 }

@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / IScopeNode
+[@bemoje/node-util](/docs/index.md) / IScopeNode
 
 # Interface: IScopeNode
 
@@ -6,33 +6,33 @@
 
 ### Properties
 
-- [between](IScopeNode.md#between)
-- [children](IScopeNode.md#children)
-- [depth](IScopeNode.md#depth)
-- [left](IScopeNode.md#left)
-- [parent](IScopeNode.md#parent)
-- [right](IScopeNode.md#right)
-- [type](IScopeNode.md#type)
+- [between](/docs/interfaces/IScopeNode.md#between)
+- [children](/docs/interfaces/IScopeNode.md#children)
+- [depth](/docs/interfaces/IScopeNode.md#depth)
+- [left](/docs/interfaces/IScopeNode.md#left)
+- [parent](/docs/interfaces/IScopeNode.md#parent)
+- [right](/docs/interfaces/IScopeNode.md#right)
+- [type](/docs/interfaces/IScopeNode.md#type)
 
 ## Properties
 
 ### between
 
-• **between**: [`RexecYield`](../README.md#rexecyield)
+• **between**: [`RexecYield`](/docs/index.md#rexecyield)
 
 #### Defined in
 
-src/libs/regex/src/regexScopeTree.ts:14
+[src/libs/regex/src/regexScopeTree.ts:14](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexScopeTree.ts#L14)
 
 ___
 
 ### children
 
-• **children**: [`IScopeNode`](IScopeNode.md)[]
+• **children**: [`IScopeNode`](/docs/interfaces/IScopeNode.md)[]
 
 #### Defined in
 
-src/libs/regex/src/regexScopeTree.ts:15
+[src/libs/regex/src/regexScopeTree.ts:15](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexScopeTree.ts#L15)
 
 ___
 
@@ -42,37 +42,37 @@ ___
 
 #### Defined in
 
-src/libs/regex/src/regexScopeTree.ts:11
+[src/libs/regex/src/regexScopeTree.ts:11](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexScopeTree.ts#L11)
 
 ___
 
 ### left
 
-• **left**: [`RexecYield`](../README.md#rexecyield)
+• **left**: [`RexecYield`](/docs/index.md#rexecyield)
 
 #### Defined in
 
-src/libs/regex/src/regexScopeTree.ts:12
+[src/libs/regex/src/regexScopeTree.ts:12](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexScopeTree.ts#L12)
 
 ___
 
 ### parent
 
-• **parent**: ``null`` \| [`IScopeNode`](IScopeNode.md)
+• **parent**: ``null`` \| [`IScopeNode`](/docs/interfaces/IScopeNode.md)
 
 #### Defined in
 
-src/libs/regex/src/regexScopeTree.ts:10
+[src/libs/regex/src/regexScopeTree.ts:10](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexScopeTree.ts#L10)
 
 ___
 
 ### right
 
-• **right**: [`RexecYield`](../README.md#rexecyield)
+• **right**: [`RexecYield`](/docs/index.md#rexecyield)
 
 #### Defined in
 
-src/libs/regex/src/regexScopeTree.ts:13
+[src/libs/regex/src/regexScopeTree.ts:13](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexScopeTree.ts#L13)
 
 ___
 
@@ -82,4 +82,4 @@ ___
 
 #### Defined in
 
-src/libs/regex/src/regexScopeTree.ts:9
+[src/libs/regex/src/regexScopeTree.ts:9](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/regex/src/regexScopeTree.ts#L9)

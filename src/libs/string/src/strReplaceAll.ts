@@ -1,4 +1,4 @@
-import { regexEscapeString } from '../../regex'
+import { regexEscapeString } from '../../regex/src/regexEscapeString'
 
 /**
  * In a given string, replace all occurances of a given search string with a given replacement string.

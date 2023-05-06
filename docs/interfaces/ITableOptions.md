@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / ITableOptions
+[@bemoje/node-util](/docs/index.md) / ITableOptions
 
 # Interface: ITableOptions<T\>
 
@@ -14,13 +14,13 @@ Constructor options for the Table class.
 
 ### Properties
 
-- [columnHeaders](ITableOptions.md#columnheaders)
-- [columns](ITableOptions.md#columns)
-- [data](ITableOptions.md#data)
-- [extractColumnHeaders](ITableOptions.md#extractcolumnheaders)
-- [extractRowHeaders](ITableOptions.md#extractrowheaders)
-- [rowHeaders](ITableOptions.md#rowheaders)
-- [rows](ITableOptions.md#rows)
+- [columnHeaders](/docs/interfaces/ITableOptions.md#columnheaders)
+- [columns](/docs/interfaces/ITableOptions.md#columns)
+- [data](/docs/interfaces/ITableOptions.md#data)
+- [extractColumnHeaders](/docs/interfaces/ITableOptions.md#extractcolumnheaders)
+- [extractRowHeaders](/docs/interfaces/ITableOptions.md#extractrowheaders)
+- [rowHeaders](/docs/interfaces/ITableOptions.md#rowheaders)
+- [rows](/docs/interfaces/ITableOptions.md#rows)
 
 ## Properties
 
@@ -35,7 +35,7 @@ When using row headers simultaneously, this array will need to be of length one 
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:38](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Table.ts#L38)
+[src/libs/datastructures/src/Table.ts:38](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Table.ts#L38)
 
 ___
 
@@ -49,7 +49,7 @@ TypeScript: Type safety consideration: Please note that when initializing an emp
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:50](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Table.ts#L50)
+[src/libs/datastructures/src/Table.ts:50](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Table.ts#L50)
 
 ___
 
@@ -63,7 +63,7 @@ When using this option, the 'columns' and 'rows' options are not allowed.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:17](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Table.ts#L17)
+[src/libs/datastructures/src/Table.ts:17](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Table.ts#L17)
 
 ___
 
@@ -78,7 +78,7 @@ If the 'columnHeaders' option is used, this option is not allowed.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:24](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Table.ts#L24)
+[src/libs/datastructures/src/Table.ts:24](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Table.ts#L24)
 
 ___
 
@@ -93,7 +93,7 @@ If the 'rowHeaders' option is used, this option is not allowed.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:31](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Table.ts#L31)
+[src/libs/datastructures/src/Table.ts:31](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Table.ts#L31)
 
 ___
 
@@ -107,7 +107,7 @@ When performing lookups in the table from indices or coordinates, headers are ig
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:44](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Table.ts#L44)
+[src/libs/datastructures/src/Table.ts:44](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Table.ts#L44)
 
 ___
 
@@ -121,4 +121,4 @@ TypeScript: Type safety consideration: Please note that when initializing an emp
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:56](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Table.ts#L56)
+[src/libs/datastructures/src/Table.ts:56](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Table.ts#L56)

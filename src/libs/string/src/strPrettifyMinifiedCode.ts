@@ -1,4 +1,6 @@
-import { strRepeat, strLinesTrimRight, strLinesRemoveEmpty } from '../'
+import { strRepeat } from '../../string/src/strRepeat'
+import { strLinesTrimRight } from '../../string/src/strLinesTrimRight'
+import { strLinesRemoveEmpty } from '../../string/src/strLinesRemoveEmpty'
 
 /**
  * Very crude, simple, fast code formatting of minified code.

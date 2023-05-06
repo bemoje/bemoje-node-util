@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / Matrix
+[@bemoje/node-util](/docs/index.md) / Matrix
 
 # Class: Matrix
 
@@ -6,59 +6,64 @@
 
 ### Constructors
 
-- [constructor](Matrix.md#constructor)
+- [constructor](/docs/classes/Matrix.md#constructor)
+
+### Properties
+
+- [immutable](/docs/classes/Matrix.md#immutable)
+- [matrix](/docs/classes/Matrix.md#matrix)
 
 ### Accessors
 
-- [cols](Matrix.md#cols)
-- [rows](Matrix.md#rows)
+- [cols](/docs/classes/Matrix.md#cols)
+- [rows](/docs/classes/Matrix.md#rows)
 
 ### Methods
 
-- [[iterator]](Matrix.md#[iterator])
-- [addBy](Matrix.md#addby)
-- [addColBy](Matrix.md#addcolby)
-- [addRowBy](Matrix.md#addrowby)
-- [appendCol](Matrix.md#appendcol)
-- [appendRow](Matrix.md#appendrow)
-- [clone](Matrix.md#clone)
-- [deepEquals](Matrix.md#deepequals)
-- [divideBy](Matrix.md#divideby)
-- [divideColBy](Matrix.md#dividecolby)
-- [divideRowBy](Matrix.md#dividerowby)
-- [dotProduct](Matrix.md#dotproduct)
-- [every](Matrix.md#every)
-- [forEach](Matrix.md#foreach)
-- [forEachInCol](Matrix.md#foreachincol)
-- [forEachInDiagonal](Matrix.md#foreachindiagonal)
-- [forEachInRow](Matrix.md#foreachinrow)
-- [get](Matrix.md#get)
-- [getImmutable](Matrix.md#getimmutable)
-- [has](Matrix.md#has)
-- [hasDimensions](Matrix.md#hasdimensions)
-- [isSameInstanceAs](Matrix.md#issameinstanceas)
-- [isScalarMatrix](Matrix.md#isscalarmatrix)
-- [isSquareMatrix](Matrix.md#issquarematrix)
-- [isZeroMatrix](Matrix.md#iszeromatrix)
-- [map](Matrix.md#map)
-- [mapCol](Matrix.md#mapcol)
-- [mapRow](Matrix.md#maprow)
-- [multiplyBy](Matrix.md#multiplyby)
-- [multiplyColBy](Matrix.md#multiplycolby)
-- [multiplyRowBy](Matrix.md#multiplyrowby)
-- [set](Matrix.md#set)
-- [setImmutable](Matrix.md#setimmutable)
-- [some](Matrix.md#some)
-- [subtractBy](Matrix.md#subtractby)
-- [subtractColBy](Matrix.md#subtractcolby)
-- [subtractRowBy](Matrix.md#subtractrowby)
-- [swapCols](Matrix.md#swapcols)
-- [swapRows](Matrix.md#swaprows)
-- [toArray](Matrix.md#toarray)
-- [values](Matrix.md#values)
-- [fromArray](Matrix.md#fromarray)
-- [fromIterable](Matrix.md#fromiterable)
-- [identity](Matrix.md#identity)
+- [[iterator]](/docs/classes/Matrix.md#[iterator])
+- [addBy](/docs/classes/Matrix.md#addby)
+- [addColBy](/docs/classes/Matrix.md#addcolby)
+- [addRowBy](/docs/classes/Matrix.md#addrowby)
+- [appendCol](/docs/classes/Matrix.md#appendcol)
+- [appendRow](/docs/classes/Matrix.md#appendrow)
+- [clone](/docs/classes/Matrix.md#clone)
+- [deepEquals](/docs/classes/Matrix.md#deepequals)
+- [divideBy](/docs/classes/Matrix.md#divideby)
+- [divideColBy](/docs/classes/Matrix.md#dividecolby)
+- [divideRowBy](/docs/classes/Matrix.md#dividerowby)
+- [dotProduct](/docs/classes/Matrix.md#dotproduct)
+- [every](/docs/classes/Matrix.md#every)
+- [forEach](/docs/classes/Matrix.md#foreach)
+- [forEachInCol](/docs/classes/Matrix.md#foreachincol)
+- [forEachInDiagonal](/docs/classes/Matrix.md#foreachindiagonal)
+- [forEachInRow](/docs/classes/Matrix.md#foreachinrow)
+- [get](/docs/classes/Matrix.md#get)
+- [getImmutable](/docs/classes/Matrix.md#getimmutable)
+- [has](/docs/classes/Matrix.md#has)
+- [hasDimensions](/docs/classes/Matrix.md#hasdimensions)
+- [isSameInstanceAs](/docs/classes/Matrix.md#issameinstanceas)
+- [isScalarMatrix](/docs/classes/Matrix.md#isscalarmatrix)
+- [isSquareMatrix](/docs/classes/Matrix.md#issquarematrix)
+- [isZeroMatrix](/docs/classes/Matrix.md#iszeromatrix)
+- [map](/docs/classes/Matrix.md#map)
+- [mapCol](/docs/classes/Matrix.md#mapcol)
+- [mapRow](/docs/classes/Matrix.md#maprow)
+- [multiplyBy](/docs/classes/Matrix.md#multiplyby)
+- [multiplyColBy](/docs/classes/Matrix.md#multiplycolby)
+- [multiplyRowBy](/docs/classes/Matrix.md#multiplyrowby)
+- [set](/docs/classes/Matrix.md#set)
+- [setImmutable](/docs/classes/Matrix.md#setimmutable)
+- [some](/docs/classes/Matrix.md#some)
+- [subtractBy](/docs/classes/Matrix.md#subtractby)
+- [subtractColBy](/docs/classes/Matrix.md#subtractcolby)
+- [subtractRowBy](/docs/classes/Matrix.md#subtractrowby)
+- [swapCols](/docs/classes/Matrix.md#swapcols)
+- [swapRows](/docs/classes/Matrix.md#swaprows)
+- [toArray](/docs/classes/Matrix.md#toarray)
+- [values](/docs/classes/Matrix.md#values)
+- [fromArray](/docs/classes/Matrix.md#fromarray)
+- [fromIterable](/docs/classes/Matrix.md#fromiterable)
+- [identity](/docs/classes/Matrix.md#identity)
 
 ## Constructors
 
@@ -75,7 +80,27 @@
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:35](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L35)
+[src/libs/datastructures/src/Matrix.ts:35](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L35)
+
+## Properties
+
+### immutable
+
+• `Protected` **immutable**: `boolean` = `false`
+
+#### Defined in
+
+[src/libs/datastructures/src/Matrix.ts:3](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L3)
+
+___
+
+### matrix
+
+• `Protected` **matrix**: `number`[][]
+
+#### Defined in
+
+[src/libs/datastructures/src/Matrix.ts:2](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L2)
 
 ## Accessors
 
@@ -89,7 +114,7 @@
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:48](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L48)
+[src/libs/datastructures/src/Matrix.ts:48](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L48)
 
 ___
 
@@ -103,7 +128,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:44](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L44)
+[src/libs/datastructures/src/Matrix.ts:44](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L44)
 
 ## Methods
 
@@ -117,13 +142,13 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:157](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L157)
+[src/libs/datastructures/src/Matrix.ts:157](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L157)
 
 ___
 
 ### addBy
 
-▸ **addBy**(`n`): [`Matrix`](Matrix.md)
+▸ **addBy**(`n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -133,17 +158,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:213](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L213)
+[src/libs/datastructures/src/Matrix.ts:213](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L213)
 
 ___
 
 ### addColBy
 
-▸ **addColBy**(`col`, `n`): [`Matrix`](Matrix.md)
+▸ **addColBy**(`col`, `n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -154,17 +179,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:253](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L253)
+[src/libs/datastructures/src/Matrix.ts:253](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L253)
 
 ___
 
 ### addRowBy
 
-▸ **addRowBy**(`row`, `n`): [`Matrix`](Matrix.md)
+▸ **addRowBy**(`row`, `n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -175,17 +200,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:233](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L233)
+[src/libs/datastructures/src/Matrix.ts:233](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L233)
 
 ___
 
 ### appendCol
 
-▸ **appendCol**(`col?`): [`Matrix`](Matrix.md)
+▸ **appendCol**(`col?`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -195,17 +220,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:198](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L198)
+[src/libs/datastructures/src/Matrix.ts:198](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L198)
 
 ___
 
 ### appendRow
 
-▸ **appendRow**(`row?`): [`Matrix`](Matrix.md)
+▸ **appendRow**(`row?`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -215,25 +240,25 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:185](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L185)
+[src/libs/datastructures/src/Matrix.ts:185](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L185)
 
 ___
 
 ### clone
 
-▸ **clone**(): [`Matrix`](Matrix.md)
+▸ **clone**(): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:99](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L99)
+[src/libs/datastructures/src/Matrix.ts:99](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L99)
 
 ___
 
@@ -245,7 +270,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`Matrix`](Matrix.md) \| `number`[][] |
+| `other` | [`Matrix`](/docs/classes/Matrix.md) \| `number`[][] |
 
 #### Returns
 
@@ -253,13 +278,13 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:65](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L65)
+[src/libs/datastructures/src/Matrix.ts:65](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L65)
 
 ___
 
 ### divideBy
 
-▸ **divideBy**(`n`): [`Matrix`](Matrix.md)
+▸ **divideBy**(`n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -269,17 +294,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:228](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L228)
+[src/libs/datastructures/src/Matrix.ts:228](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L228)
 
 ___
 
 ### divideColBy
 
-▸ **divideColBy**(`col`, `n`): [`Matrix`](Matrix.md)
+▸ **divideColBy**(`col`, `n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -290,17 +315,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:268](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L268)
+[src/libs/datastructures/src/Matrix.ts:268](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L268)
 
 ___
 
 ### divideRowBy
 
-▸ **divideRowBy**(`row`, `n`): [`Matrix`](Matrix.md)
+▸ **divideRowBy**(`row`, `n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -311,17 +336,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:248](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L248)
+[src/libs/datastructures/src/Matrix.ts:248](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L248)
 
 ___
 
 ### dotProduct
 
-▸ **dotProduct**(`other`): [`Matrix`](Matrix.md)
+▸ **dotProduct**(`other`): [`Matrix`](/docs/classes/Matrix.md)
 
 Performs dot product of the matrix with another given matrix.
 
@@ -329,15 +354,15 @@ Performs dot product of the matrix with another given matrix.
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`Matrix`](Matrix.md) |
+| `other` | [`Matrix`](/docs/classes/Matrix.md) |
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:344](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L344)
+[src/libs/datastructures/src/Matrix.ts:344](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L344)
 
 ___
 
@@ -357,13 +382,13 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:304](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L304)
+[src/libs/datastructures/src/Matrix.ts:304](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L304)
 
 ___
 
 ### forEach
 
-▸ **forEach**(`f`): [`Matrix`](Matrix.md)
+▸ **forEach**(`f`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -373,17 +398,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:109](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L109)
+[src/libs/datastructures/src/Matrix.ts:109](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L109)
 
 ___
 
 ### forEachInCol
 
-▸ **forEachInCol**(`col`, `f`): [`Matrix`](Matrix.md)
+▸ **forEachInCol**(`col`, `f`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -394,17 +419,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:129](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L129)
+[src/libs/datastructures/src/Matrix.ts:129](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L129)
 
 ___
 
 ### forEachInDiagonal
 
-▸ **forEachInDiagonal**(`f`): [`Matrix`](Matrix.md)
+▸ **forEachInDiagonal**(`f`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -414,17 +439,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:138](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L138)
+[src/libs/datastructures/src/Matrix.ts:138](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L138)
 
 ___
 
 ### forEachInRow
 
-▸ **forEachInRow**(`row`, `f`): [`Matrix`](Matrix.md)
+▸ **forEachInRow**(`row`, `f`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -435,11 +460,11 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:120](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L120)
+[src/libs/datastructures/src/Matrix.ts:120](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L120)
 
 ___
 
@@ -460,7 +485,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:83](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L83)
+[src/libs/datastructures/src/Matrix.ts:83](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L83)
 
 ___
 
@@ -474,7 +499,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:56](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L56)
+[src/libs/datastructures/src/Matrix.ts:56](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L56)
 
 ___
 
@@ -495,7 +520,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:87](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L87)
+[src/libs/datastructures/src/Matrix.ts:87](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L87)
 
 ___
 
@@ -516,7 +541,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:315](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L315)
+[src/libs/datastructures/src/Matrix.ts:315](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L315)
 
 ___
 
@@ -528,7 +553,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `other` | [`Matrix`](Matrix.md) |
+| `other` | [`Matrix`](/docs/classes/Matrix.md) |
 
 #### Returns
 
@@ -536,7 +561,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:52](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L52)
+[src/libs/datastructures/src/Matrix.ts:52](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L52)
 
 ___
 
@@ -552,7 +577,7 @@ Returns whether the matrix is a square matrix that has identical values on its d
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:326](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L326)
+[src/libs/datastructures/src/Matrix.ts:326](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L326)
 
 ___
 
@@ -566,7 +591,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:319](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L319)
+[src/libs/datastructures/src/Matrix.ts:319](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L319)
 
 ___
 
@@ -580,13 +605,13 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:337](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L337)
+[src/libs/datastructures/src/Matrix.ts:337](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L337)
 
 ___
 
 ### map
 
-▸ **map**(`f`): [`Matrix`](Matrix.md)
+▸ **map**(`f`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -596,17 +621,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:147](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L147)
+[src/libs/datastructures/src/Matrix.ts:147](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L147)
 
 ___
 
 ### mapCol
 
-▸ **mapCol**(`col`, `f`): [`Matrix`](Matrix.md)
+▸ **mapCol**(`col`, `f`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -617,17 +642,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:177](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L177)
+[src/libs/datastructures/src/Matrix.ts:177](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L177)
 
 ___
 
 ### mapRow
 
-▸ **mapRow**(`row`, `f`): [`Matrix`](Matrix.md)
+▸ **mapRow**(`row`, `f`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -638,17 +663,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:169](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L169)
+[src/libs/datastructures/src/Matrix.ts:169](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L169)
 
 ___
 
 ### multiplyBy
 
-▸ **multiplyBy**(`n`): [`Matrix`](Matrix.md)
+▸ **multiplyBy**(`n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -658,17 +683,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:223](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L223)
+[src/libs/datastructures/src/Matrix.ts:223](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L223)
 
 ___
 
 ### multiplyColBy
 
-▸ **multiplyColBy**(`col`, `n`): [`Matrix`](Matrix.md)
+▸ **multiplyColBy**(`col`, `n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -679,17 +704,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:263](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L263)
+[src/libs/datastructures/src/Matrix.ts:263](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L263)
 
 ___
 
 ### multiplyRowBy
 
-▸ **multiplyRowBy**(`row`, `n`): [`Matrix`](Matrix.md)
+▸ **multiplyRowBy**(`row`, `n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -700,17 +725,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:243](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L243)
+[src/libs/datastructures/src/Matrix.ts:243](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L243)
 
 ___
 
 ### set
 
-▸ **set**(`row`, `col`, `value`): [`Matrix`](Matrix.md)
+▸ **set**(`row`, `col`, `value`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -722,17 +747,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:77](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L77)
+[src/libs/datastructures/src/Matrix.ts:77](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L77)
 
 ___
 
 ### setImmutable
 
-▸ **setImmutable**(`immutable`): [`Matrix`](Matrix.md)
+▸ **setImmutable**(`immutable`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -742,11 +767,11 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:60](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L60)
+[src/libs/datastructures/src/Matrix.ts:60](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L60)
 
 ___
 
@@ -766,13 +791,13 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:293](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L293)
+[src/libs/datastructures/src/Matrix.ts:293](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L293)
 
 ___
 
 ### subtractBy
 
-▸ **subtractBy**(`n`): [`Matrix`](Matrix.md)
+▸ **subtractBy**(`n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -782,17 +807,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:218](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L218)
+[src/libs/datastructures/src/Matrix.ts:218](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L218)
 
 ___
 
 ### subtractColBy
 
-▸ **subtractColBy**(`col`, `n`): [`Matrix`](Matrix.md)
+▸ **subtractColBy**(`col`, `n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -803,17 +828,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:258](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L258)
+[src/libs/datastructures/src/Matrix.ts:258](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L258)
 
 ___
 
 ### subtractRowBy
 
-▸ **subtractRowBy**(`row`, `n`): [`Matrix`](Matrix.md)
+▸ **subtractRowBy**(`row`, `n`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -824,17 +849,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:238](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L238)
+[src/libs/datastructures/src/Matrix.ts:238](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L238)
 
 ___
 
 ### swapCols
 
-▸ **swapCols**(`col1`, `col2`): [`Matrix`](Matrix.md)
+▸ **swapCols**(`col1`, `col2`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -845,17 +870,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:282](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L282)
+[src/libs/datastructures/src/Matrix.ts:282](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L282)
 
 ___
 
 ### swapRows
 
-▸ **swapRows**(`row1`, `row2`): [`Matrix`](Matrix.md)
+▸ **swapRows**(`row1`, `row2`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -866,11 +891,11 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:273](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L273)
+[src/libs/datastructures/src/Matrix.ts:273](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L273)
 
 ___
 
@@ -884,7 +909,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:91](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L91)
+[src/libs/datastructures/src/Matrix.ts:91](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L91)
 
 ___
 
@@ -898,13 +923,13 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:165](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L165)
+[src/libs/datastructures/src/Matrix.ts:165](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L165)
 
 ___
 
 ### fromArray
 
-▸ `Static` **fromArray**(`array`): [`Matrix`](Matrix.md)
+▸ `Static` **fromArray**(`array`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -914,17 +939,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:5](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L5)
+[src/libs/datastructures/src/Matrix.ts:5](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L5)
 
 ___
 
 ### fromIterable
 
-▸ `Static` **fromIterable**(`iterable`): [`Matrix`](Matrix.md)
+▸ `Static` **fromIterable**(`iterable`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -934,17 +959,17 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:19](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L19)
+[src/libs/datastructures/src/Matrix.ts:19](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L19)
 
 ___
 
 ### identity
 
-▸ `Static` **identity**(`size`): [`Matrix`](Matrix.md)
+▸ `Static` **identity**(`size`): [`Matrix`](/docs/classes/Matrix.md)
 
 #### Parameters
 
@@ -954,8 +979,8 @@ ___
 
 #### Returns
 
-[`Matrix`](Matrix.md)
+[`Matrix`](/docs/classes/Matrix.md)
 
 #### Defined in
 
-[src/libs/datastructures/src/Matrix.ts:27](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Matrix.ts#L27)
+[src/libs/datastructures/src/Matrix.ts:27](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Matrix.ts#L27)

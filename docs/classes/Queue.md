@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / Queue
+[@bemoje/node-util](/docs/index.md) / Queue
 
 # Class: Queue<T\>
 
@@ -12,36 +12,44 @@ Guarantees that class instances are serializable and have a static revive functi
 
 ## Hierarchy
 
-- [`Base`](Base.md)
+- [`Base`](/docs/classes/Base.md)
 
   ↳ **`Queue`**
 
 ## Implements
 
-- [`IRevivable`](../interfaces/IRevivable.md)<`T`[]\>
+- [`IRevivable`](/docs/interfaces/IRevivable.md)<`T`[]\>
 - `Iterable`<`T`\>
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Queue.md#constructor)
+- [constructor](/docs/classes/Queue.md#constructor)
+
+### Properties
+
+- [queue](/docs/classes/Queue.md#queue)
 
 ### Accessors
 
-- [klass](Queue.md#klass)
-- [proto](Queue.md#proto)
-- [size](Queue.md#size)
+- [klass](/docs/classes/Queue.md#klass)
+- [proto](/docs/classes/Queue.md#proto)
+- [size](/docs/classes/Queue.md#size)
 
 ### Methods
 
-- [[iterator]](Queue.md#[iterator])
-- [dequeue](Queue.md#dequeue)
-- [enqueue](Queue.md#enqueue)
-- [toArray](Queue.md#toarray)
-- [toJSON](Queue.md#tojson)
-- [from](Queue.md#from)
-- [fromJSON](Queue.md#fromjson)
+- [[iterator]](/docs/classes/Queue.md#[iterator])
+- [assertNoAmbiguousOptions](/docs/classes/Queue.md#assertnoambiguousoptions)
+- [assertNoOptionsRequireMissingOptions](/docs/classes/Queue.md#assertnooptionsrequiremissingoptions)
+- [dequeue](/docs/classes/Queue.md#dequeue)
+- [enqueue](/docs/classes/Queue.md#enqueue)
+- [init](/docs/classes/Queue.md#init)
+- [setNonEnumerablePrivateProperties](/docs/classes/Queue.md#setnonenumerableprivateproperties)
+- [toArray](/docs/classes/Queue.md#toarray)
+- [toJSON](/docs/classes/Queue.md#tojson)
+- [from](/docs/classes/Queue.md#from)
+- [fromJSON](/docs/classes/Queue.md#fromjson)
 
 ## Constructors
 
@@ -63,21 +71,31 @@ Guarantees that class instances are serializable and have a static revive functi
 
 #### Inherited from
 
-[Base](Base.md).[constructor](Base.md#constructor)
+[Base](/docs/classes/Base.md).[constructor](/docs/classes/Base.md#constructor)
 
 #### Defined in
 
-src/libs/mixins/src/Base.ts:10
+[src/libs/mixins/src/Base.ts:10](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L10)
+
+## Properties
+
+### queue
+
+• `Protected` **queue**: `T`[] = `[]`
+
+#### Defined in
+
+[src/libs/datastructures/src/Queue.ts:5](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L5)
 
 ## Accessors
 
 ### klass
 
-• `get` **klass**(): typeof [`Base`](Base.md)
+• `get` **klass**(): typeof [`Base`](/docs/classes/Base.md)
 
 #### Returns
 
-typeof [`Base`](Base.md)
+typeof [`Base`](/docs/classes/Base.md)
 
 #### Inherited from
 
@@ -85,7 +103,7 @@ Base.klass
 
 #### Defined in
 
-src/libs/mixins/src/Base.ts:14
+[src/libs/mixins/src/Base.ts:14](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L14)
 
 ___
 
@@ -103,7 +121,7 @@ Base.proto
 
 #### Defined in
 
-src/libs/mixins/src/Base.ts:18
+[src/libs/mixins/src/Base.ts:18](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L18)
 
 ___
 
@@ -117,7 +135,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:28](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L28)
+[src/libs/datastructures/src/Queue.ts:28](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L28)
 
 ## Methods
 
@@ -131,11 +149,61 @@ ___
 
 #### Implementation of
 
-Iterable.\_\_@iterator@87
+Iterable.\_\_@iterator@13
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:40](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L40)
+[src/libs/datastructures/src/Queue.ts:40](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L40)
+
+___
+
+### assertNoAmbiguousOptions
+
+▸ `Protected` **assertNoAmbiguousOptions**(`options`, `optionKeyPairs`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Record`<`string`, `any`\> |
+| `optionKeyPairs` | [`string`, `string`][] |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Base](/docs/classes/Base.md).[assertNoAmbiguousOptions](/docs/classes/Base.md#assertnoambiguousoptions)
+
+#### Defined in
+
+[src/libs/mixins/src/Base.ts:68](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L68)
+
+___
+
+### assertNoOptionsRequireMissingOptions
+
+▸ `Protected` **assertNoOptionsRequireMissingOptions**(`options`, `optionKeyPairs`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Record`<`string`, `any`\> |
+| `optionKeyPairs` | [`string`, `string`][] |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Base](/docs/classes/Base.md).[assertNoOptionsRequireMissingOptions](/docs/classes/Base.md#assertnooptionsrequiremissingoptions)
+
+#### Defined in
+
+[src/libs/mixins/src/Base.ts:76](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L76)
 
 ___
 
@@ -149,13 +217,13 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:22](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L22)
+[src/libs/datastructures/src/Queue.ts:22](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L22)
 
 ___
 
 ### enqueue
 
-▸ **enqueue**(`item`): [`Queue`](Queue.md)<`T`\>
+▸ **enqueue**(`item`): [`Queue`](/docs/classes/Queue.md)<`T`\>
 
 #### Parameters
 
@@ -165,11 +233,49 @@ ___
 
 #### Returns
 
-[`Queue`](Queue.md)<`T`\>
+[`Queue`](/docs/classes/Queue.md)<`T`\>
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:17](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L17)
+[src/libs/datastructures/src/Queue.ts:17](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L17)
+
+___
+
+### init
+
+▸ `Protected` **init**(): `void`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Base](/docs/classes/Base.md).[init](/docs/classes/Base.md#init)
+
+#### Defined in
+
+[src/libs/mixins/src/Base.ts:22](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L22)
+
+___
+
+### setNonEnumerablePrivateProperties
+
+▸ `Protected` **setNonEnumerablePrivateProperties**(): `void`
+
+Make the properties with property names that start with an underscore non-enumerable.
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[Base](/docs/classes/Base.md).[setNonEnumerablePrivateProperties](/docs/classes/Base.md#setnonenumerableprivateproperties)
+
+#### Defined in
+
+[src/libs/mixins/src/Base.ts:64](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L64)
 
 ___
 
@@ -183,7 +289,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:32](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L32)
+[src/libs/datastructures/src/Queue.ts:32](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L32)
 
 ___
 
@@ -201,13 +307,13 @@ IRevivable.toJSON
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:36](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L36)
+[src/libs/datastructures/src/Queue.ts:36](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L36)
 
 ___
 
 ### from
 
-▸ `Static` **from**<`T`\>(`o`): [`Queue`](Queue.md)<`T`\>
+▸ `Static` **from**<`T`\>(`o`): [`Queue`](/docs/classes/Queue.md)<`T`\>
 
 #### Type parameters
 
@@ -223,17 +329,17 @@ ___
 
 #### Returns
 
-[`Queue`](Queue.md)<`T`\>
+[`Queue`](/docs/classes/Queue.md)<`T`\>
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:7](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L7)
+[src/libs/datastructures/src/Queue.ts:7](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L7)
 
 ___
 
 ### fromJSON
 
-▸ `Static` **fromJSON**<`T`\>(`json`): [`Queue`](Queue.md)<`T`\>
+▸ `Static` **fromJSON**<`T`\>(`json`): [`Queue`](/docs/classes/Queue.md)<`T`\>
 
 #### Type parameters
 
@@ -249,8 +355,8 @@ ___
 
 #### Returns
 
-[`Queue`](Queue.md)<`T`\>
+[`Queue`](/docs/classes/Queue.md)<`T`\>
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/datastructures/src/Queue.ts#L13)
+[src/libs/datastructures/src/Queue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L13)

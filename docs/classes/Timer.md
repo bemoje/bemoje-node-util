@@ -1,4 +1,4 @@
-[@bemoje/node-util](../README.md) / Timer
+[@bemoje/node-util](/docs/index.md) / Timer
 
 # Class: Timer
 
@@ -8,15 +8,15 @@ For recording time passed since constructor was invoked and until the stop() met
 
 ### Constructors
 
-- [constructor](Timer.md#constructor)
+- [constructor](/docs/classes/Timer.md#constructor)
 
 ### Properties
 
-- [t0](Timer.md#t0)
+- [t0](/docs/classes/Timer.md#t0)
 
 ### Methods
 
-- [stop](Timer.md#stop)
+- [stop](/docs/classes/Timer.md#stop)
 
 ## Constructors
 
@@ -26,7 +26,7 @@ For recording time passed since constructor was invoked and until the stop() met
 
 #### Defined in
 
-[src/libs/performance/src/Timer.ts:10](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/performance/src/Timer.ts#L10)
+[src/libs/performance/src/Timer.ts:10](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/performance/src/Timer.ts#L10)
 
 ## Properties
 
@@ -38,7 +38,7 @@ The initial time
 
 #### Defined in
 
-[src/libs/performance/src/Timer.ts:8](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/performance/src/Timer.ts#L8)
+[src/libs/performance/src/Timer.ts:8](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/performance/src/Timer.ts#L8)
 
 ## Methods
 
@@ -54,4 +54,4 @@ Returns the time passed since constructor was invoked in milliseconds.
 
 #### Defined in
 
-[src/libs/performance/src/Timer.ts:17](https://github.com/bemoje/bemoje-node-util/blob/c5f3e88/src/libs/performance/src/Timer.ts#L17)
+[src/libs/performance/src/Timer.ts:17](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/performance/src/Timer.ts#L17)
