@@ -1,3 +1,4 @@
+import type { Obj } from '../../interfaces'
 export const interfaceDefinitions = new Map<string, [string[], string[]]>()
 
 /**
@@ -12,8 +13,11 @@ interfaceDefinitions.set('IRevivable', [['toJSON'], ['fromJSON']])
  * Guarantees that options are handled in a consistent way.
  */
 export interface IHandledOptions {
-  options: Record<string, any>
-  defaultOptions: Record<string, any>
-  handleOptions(options?: Record<string, any>): void
+  options: Obj
+  defaultOptions: Obj
+  handleOptions(options?: Obj): void
 }
-interfaceDefinitions.set('IOptions', [['options', 'defaultOptions', 'handleOptions'], ['defaultOptions']])
+interfaceDefinitions.set('IOptions', [
+  ['options', 'defaultOptions', 'handleOptions'],
+  ['defaultOptions'],
+])

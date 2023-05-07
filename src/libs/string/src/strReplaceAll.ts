@@ -7,6 +7,11 @@ import { regexEscapeString } from '../../regex/src/regexEscapeString'
  * @param replaceWith string to replace matches with
  * @param flags RegExp flags as single string.
  */
-export function strReplaceAll(input: string, replace: string, replaceWith: string, flags = 'g'): string {
+export function strReplaceAll(
+  input: string,
+  replace: string,
+  replaceWith: string,
+  flags = 'g',
+): string {
   return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith)
 }

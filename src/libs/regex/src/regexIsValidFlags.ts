@@ -1,4 +1,4 @@
-import { strRemoveDuplicateChars } from '../../string'
+import { strRemoveDuplicateChars } from '../../string/src/strRemoveDuplicateChars'
 
 /**
  * Checks if a string is a valid regex flags string.

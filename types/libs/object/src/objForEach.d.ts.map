@@ -1,0 +1,1 @@
+{"version":3,"file":"objForEach.d.ts","sourceRoot":"","sources":["../../../../src/libs/object/src/objForEach.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AACH,wBAAgB,UAAU,CAAC,CAAC,EAC1B,MAAM,EAAE,MAAM,CAAC,MAAM,EAAE,CAAC,CAAC,EACzB,QAAQ,EAAE,CAAC,KAAK,EAAE,CAAC,EAAE,GAAG,EAAE,MAAM,KAAK,IAAI,EACzC,OAAO,GAAE,CAAC,GAAG,EAAE,OAAO,MAAM,KAAK,QAAQ,CAAC,MAAM,CAAe,GAC9D,OAAO,MAAM,CAKf"}

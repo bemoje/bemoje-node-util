@@ -1,6 +1,6 @@
-import { Constructor } from '../../interfaces'
+import type { Constructor, GenericArgs } from '../../interfaces'
 import { Base } from './Base'
-import { strHash } from '../../string'
+import { strHash } from '../../string/src/strHash'
 
 const allIndexedInstances: Array<Array<Base>> = []
 const allIndexedClasses: Array<Constructor> = []
@@ -18,7 +18,7 @@ export function Indexed<TBase extends Constructor>(BaseConstructor: TBase): Cons
 
     public id: [number, number]
 
-    constructor(...args: any[]) {
+    constructor(...args: GenericArgs) {
       super(...args)
       this.id = [classIndex, ++nextInstanceIndex]
       this.klass.instances[this.insId] = this

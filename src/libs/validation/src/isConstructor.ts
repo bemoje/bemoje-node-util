@@ -1,10 +1,10 @@
-import { Constructor } from '../../interfaces'
+import type { ExistentValue } from '../../interfaces'
 import { isPrototype } from './isPrototype'
 
 /**
  * Determine if value is a constructor function
  */
-export function isConstructor<T>(value: T): boolean {
+export function isConstructor(value: ExistentValue): boolean {
   return (
     typeof value === 'function' &&
     'prototype' in value &&

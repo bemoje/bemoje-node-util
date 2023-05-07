@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as util from '../src/libs/array'
-import { Callback, Predicate } from '../src/libs/interfaces'
 
 describe('arr2dToCSV', () => {
   it('works for 2D array', () => {
@@ -17,21 +17,6 @@ describe('arr2dToCSV', () => {
       ['2', 'Alice'],
     ]
     expect(util.arr2dToCSV(a, ',')).toBe('#,name\n1,John\n2,Alice')
-  })
-})
-
-describe('arrAssignFrom', () => {
-  it('mutably assigns values - longer source array', () => {
-    const target = [1, 2, 3]
-    const result = util.arrAssignFrom(target, [4, 5, 6, 7])
-    expect(target).toStrictEqual([4, 5, 6, 7])
-    expect(target).toBe(result)
-  })
-  it('mutably assigns values - shorter source array', () => {
-    const target = [1, 2, 3]
-    const result = util.arrAssignFrom(target, [4, 5])
-    expect(target).toStrictEqual([4, 5])
-    expect(target).toBe(result)
   })
 })
 
@@ -55,16 +40,6 @@ describe('arrEvery', () => {
       return true
     })
     expect(indexCheck).toStrictEqual(arr)
-  })
-})
-
-describe('arrFilterMutable', () => {
-  it('example', () => {
-    const a = [1, 2, 3, 4, 5]
-    util.arrFilterMutable(a, (value) => {
-      return value > 3
-    })
-    expect(a).toStrictEqual([4, 5])
   })
 })
 
@@ -94,37 +69,9 @@ describe('arrFlatten', () => {
     expect(util.arrFlatten([1, [2, [3, [4]]]], 2)).toStrictEqual([1, 2, 3, [4]])
   })
   it('flattens complex array', () => {
-    expect(util.arrFlatten([[[1, [[2, [3, [4]], 6]]]], 1, [2, [3, [4]], 6], 8, 2, [], 5, [9]])).toStrictEqual([
-      1, 2, 3, 4, 6, 1, 2, 3, 4, 6, 8, 2, 5, 9,
-    ])
-  })
-})
-
-describe('arrFlattenMutable', () => {
-  it('mutably flattens empty array', () => {
-    const a: any = []
-    util.arrFlattenMutable(a)
-    expect(a).toStrictEqual([])
-  })
-  it('mutably flattens array depth 0', () => {
-    const a = [1, 2]
-    util.arrFlattenMutable(a)
-    expect(a).toStrictEqual([1, 2])
-  })
-  it('mutably flattens array depth 1', () => {
-    const a = [1, [2]]
-    util.arrFlattenMutable(a)
-    expect(a).toStrictEqual([1, 2])
-  })
-  it('mutably flattens array depth 2', () => {
-    const a = [1, [2, [3]]]
-    util.arrFlattenMutable(a)
-    expect(a).toStrictEqual([1, 2, 3])
-  })
-  it('mutably flattens array depth 3 with max depth 2', () => {
-    const a = [1, [2, [3, [4]]]]
-    util.arrFlattenMutable(a, 2)
-    expect(a).toStrictEqual([1, 2, 3, [4]])
+    expect(
+      util.arrFlatten([[[1, [[2, [3, [4]], 6]]]], 1, [2, [3, [4]], 6], 8, 2, [], 5, [9]]),
+    ).toStrictEqual([1, 2, 3, 4, 6, 1, 2, 3, 4, 6, 8, 2, 5, 9])
   })
 })
 

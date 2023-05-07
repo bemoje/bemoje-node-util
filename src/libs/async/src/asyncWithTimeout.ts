@@ -5,12 +5,12 @@
  * @param args The arguments to pass to the task.
  * @returns A promise that resolves with the task's result or rejects with an error.
  */
-export function asyncWithTimeout<T>(timeout: number, task: (...args: any[]) => Promise<T>, ...args: any[]): Promise<T> {
+export function asyncWithTimeout<T>(timeout: number, task: () => Promise<T>): Promise<T> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       reject(new Error(`Timed out after ${timeout} ms.`))
     }, timeout)
-    task(...args)
+    task()
       .then(
         (value: T) => {
           resolve(value)

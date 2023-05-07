@@ -1,5 +1,4 @@
 import * as util from '../src/libs/mixins/src/Base'
-import { IRevivable } from '../src'
 
 describe('setNonEnumerablePrivateProperties', () => {
   it('identifies underscored property names correctly', () => {

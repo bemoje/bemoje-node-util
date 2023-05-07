@@ -1,3 +1,5 @@
+import type { GenericFunction } from '../../interfaces'
+
 /**
  * A Function class that can be extended.
  * @example
@@ -15,10 +17,9 @@
  * ```
  */
 export class ExtensibleFunction extends Function {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  constructor(name: string, f: any) {
+  constructor(name: string, f: GenericFunction) {
     Object.defineProperty(f, 'name', { value: name })
-    super(f)
+    super(typeof f === 'string' ? f : f.toString())
     return Object.setPrototypeOf(f, new.target.prototype)
   }
 }

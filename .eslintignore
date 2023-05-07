@@ -2,7 +2,8 @@
 # References at https://eslint.org/docs/user-guide/configuring#eslintignore
 
 # Generated docs, bundles and type definitions.
-docs/
 dist/
-types/
-repo-manager.js
+docs/
+logs/
+notes/
+scripts/

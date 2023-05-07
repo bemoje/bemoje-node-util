@@ -97,7 +97,7 @@ Readable.constructor
 
 #### Defined in
 
-[src/libs/node/src/StringStream.ts:10](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/node/src/StringStream.ts#L10)
+[src/libs/node/src/StringStream.ts:10](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/node/src/StringStream.ts#L10)
 
 ## Properties
 
@@ -147,7 +147,7 @@ ___
 
 #### Defined in
 
-[src/libs/node/src/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/node/src/StringStream.ts#L8)
+[src/libs/node/src/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/node/src/StringStream.ts#L8)
 
 ___
 
@@ -361,7 +361,7 @@ ___
 
 #### Defined in
 
-[src/libs/node/src/StringStream.ts:7](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/node/src/StringStream.ts#L7)
+[src/libs/node/src/StringStream.ts:7](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/node/src/StringStream.ts#L7)
 
 ___
 
@@ -441,7 +441,7 @@ node_modules/@types/node/events.d.ts:327
 
 #### Inherited from
 
-Readable.\_\_@asyncIterator@1834
+Readable.\_\_@asyncIterator@21671
 
 #### Defined in
 
@@ -512,7 +512,7 @@ Readable.\_read
 
 #### Defined in
 
-[src/libs/node/src/StringStream.ts:16](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/node/src/StringStream.ts#L16)
+[src/libs/node/src/StringStream.ts:16](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/node/src/StringStream.ts#L16)
 
 ___
 
@@ -935,7 +935,7 @@ Readable.eventNames
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:669
+node_modules/@types/node/events.d.ts:673
 
 ___
 
@@ -1002,9 +1002,12 @@ ___
 
 ### listenerCount
 
-▸ **listenerCount**(`eventName`): `number`
+▸ **listenerCount**(`eventName`, `listener?`): `number`
 
 Returns the number of listeners listening to the event named `eventName`.
+
+If `listener` is provided, it will return how many times the listener
+is found in the list of the listeners of the event.
 
 **`Since`**
 
@@ -1015,6 +1018,7 @@ v3.2.0
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `eventName` | `string` \| `symbol` | The name of the event being listened for |
+| `listener?` | `Function` | The event handler function |
 
 #### Returns
 
@@ -1026,7 +1030,7 @@ Readable.listenerCount
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:616
+node_modules/@types/node/events.d.ts:620
 
 ___
 
@@ -2603,7 +2607,7 @@ v17.0.0
 | Name | Type |
 | :------ | :------ |
 | `readableStream` | `ReadableStream`<`any`\> |
-| `options?` | `Pick`<`ReadableOptions`, ``"encoding"`` \| ``"highWaterMark"`` \| ``"objectMode"`` \| ``"signal"``\> |
+| `options?` | `Pick`<`ReadableOptions`, ``"signal"`` \| ``"encoding"`` \| ``"highWaterMark"`` \| ``"objectMode"``\> |
 
 #### Returns
 

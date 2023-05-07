@@ -2,7 +2,7 @@ import { regexGetGroupNames } from './regexGetGroupNames'
 import { regexEscapeString } from './regexEscapeString'
 import { regexMatcherToValidater } from './regexMatcherToValidater'
 import { rexec } from './rexec'
-import { strSortChars } from '../../string'
+import { strSortChars } from '../../string/src/strSortChars'
 import { regexIsValidFlags } from './regexIsValidFlags'
 import { regexFixFlags } from './regexFixFlags'
 import { regexValidFlags } from './regexValidFlags'
@@ -81,7 +81,9 @@ export class BemojeRegex extends RegExp {
    * @param regex - RegExp instance to compare to.
    */
   public compareToStrict(regex: RegExp): boolean {
-    return regex instanceof BemojeRegex && this.source === regex.source && this.flags === regex.flags
+    return (
+      regex instanceof BemojeRegex && this.source === regex.source && this.flags === regex.flags
+    )
   }
 
   /**

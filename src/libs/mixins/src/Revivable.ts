@@ -1,12 +1,11 @@
-import { setNonEnumerable } from '../../object'
-import { Constructor } from '../../interfaces'
-import { IRevivable } from './interfaces'
-import { Base } from './Base'
+import { setNonEnumerable } from '../../object/src/setNonEnumerable'
+import type { Constructor, Obj, GenericArgs } from '../../interfaces'
+import type { IRevivable } from './interfaces'
 
 export function Revivable<TBase extends Constructor>(BaseConstructor: TBase): Constructor {
   const serializeIgnoreKeys: Array<string> = []
 
-  return class Revivable extends BaseConstructor implements IRevivable<Record<string, any>> {
+  return class Revivable extends BaseConstructor implements IRevivable<Obj> {
     /**
      * Ignore a key when serializing to JSON.
      */
@@ -21,7 +20,7 @@ export function Revivable<TBase extends Constructor>(BaseConstructor: TBase): Co
       return Object.setPrototypeOf(JSON.parse(json), this.prototype)
     }
 
-    constructor(...args: any[]) {
+    constructor(...args: GenericArgs) {
       super(...args)
       setNonEnumerable(this, ...serializeIgnoreKeys)
     }

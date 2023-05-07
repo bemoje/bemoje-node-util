@@ -23,7 +23,9 @@ describe('Conversion between ints and bytes', () => {
   })
   describe('bytesToInt', () => {
     it('throws when passed an invalid byte-array', () => {
-      expect(() => util.bytesToInt([252, 252])).toThrowError(`Invalid first byte. Got length: 2, and bytes: [252, 252]`)
+      expect(() => util.bytesToInt([252, 252])).toThrowError(
+        `Invalid first byte. Got length: 2, and bytes: [252, 252]`,
+      )
       expect(() => util.bytesToInt([253, 5, 1])).toThrowError(
         `Invalid first byte. Got length: 3, and bytes: [253, 5, 1]`,
       )

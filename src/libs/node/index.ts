@@ -1,16 +1,3 @@
-export type MemoryUsageValues = {
-  processAllocationMB: number
-  heapAllocationMB: number
-  heapUsedMB: number
-  extenalV8: number
-}
-export type MemoryUsageValuesFormatted = {
-  processAllocationMB: string
-  heapAllocationMB: string
-  heapUsedMB: string
-  extenalV8: string
-}
-
 export * from './src/createFileExtensionFilter'
 export * from './src/ensureValidWindowsPath'
 export * from './src/memoryUsage'

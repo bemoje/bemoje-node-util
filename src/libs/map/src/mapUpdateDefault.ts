@@ -18,7 +18,12 @@
  * //=> Map(5) { 'a' => 2, 'b' => 3, 'c' => 3, 'd' => 1, 'e' => 1 }
  * ```
  */
-export function mapUpdateDefault<K, V>(map: Map<K, V>, key: K, defaultValue: V, fun: (value: V) => V): Map<K, V> {
+export function mapUpdateDefault<K, V>(
+  map: Map<K, V>,
+  key: K,
+  defaultValue: V,
+  fun: (value: V) => V,
+): Map<K, V> {
   const value = map.get(key)
   map.set(key, fun(value === undefined ? defaultValue : value))
   return map

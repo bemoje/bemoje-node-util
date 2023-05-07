@@ -1,4 +1,4 @@
-import { strCountCharOccurances } from '../../string'
+import { strCountCharOccurances } from '../../string/src/strCountCharOccurances'
 
 export type ensureValidWindowsPathOptions = {
   extendedMaxLength?: boolean
@@ -12,7 +12,10 @@ export type ensureValidWindowsPathOptions = {
  * @param extendedMaxLength On most versions of windows, the max allowed length of paths has been
  * raised.
  */
-export function ensureValidWindowsPath(path: string, options?: ensureValidWindowsPathOptions): boolean {
+export function ensureValidWindowsPath(
+  path: string,
+  options?: ensureValidWindowsPathOptions,
+): boolean {
   const throwOrFalse = (msg: string) => {
     if (options && options.assert === true) {
       throw new Error(`Invalid windows path. ${msg}  |  input received: ${path}`)

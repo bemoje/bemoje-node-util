@@ -1,17 +1,39 @@
 import * as util from '../src/libs/number'
 
-describe('numFormatEU', () => {
+describe('numFormat', () => {
+  it('should format a number with thousand seperator and decimal seperator', () => {
+    expect(util.numFormat(1234567.89)).toBe('1.234.567,89')
+  })
+
+  it('should format a negative number with thousand seperator and decimal seperator', () => {
+    expect(util.numFormat(-1234567.89)).toBe('-1.234.567,89')
+  })
+
+  it('should format a number with custom thousand seperator and decimal seperator', () => {
+    expect(util.numFormat(1234567.89, '-', 2, '.')).toBe('1-234-567.89')
+  })
+
+  it('should format a number with custom thousand seperator and decimal seperator and no decimals', () => {
+    expect(util.numFormat(1234567.89, '-', 0, '.')).toBe('1-234-568')
+  })
+
+  it('should format a number with custom thousand seperator and decimal seperator and more decimals than input has', () => {
+    expect(util.numFormat(1234567.89, '-', 5, '.')).toBe('1-234-567.89000')
+  })
+})
+
+describe('numFormatDK', () => {
   it('example', () => {
-    expect(util.numFormatEU(5)).toBe('5')
-    expect(util.numFormatEU(5.3)).toBe('5')
-    expect(util.numFormatEU(5000)).toBe('5.000')
-    expect(util.numFormatEU(25000)).toBe('25.000')
-    expect(util.numFormatEU(5000000)).toBe('5.000.000')
-    expect(util.numFormatEU(-5000)).toBe('-5.000')
-    expect(util.numFormatEU(5000.512)).toBe('5.000')
-    expect(util.numFormatEU(5000.512, 1)).toBe('5.000,5')
-    expect(util.numFormatEU(5000.512, 3)).toBe('5.000,512')
-    expect(util.numFormatEU(5000.512, 5)).toBe('5.000,51200')
+    expect(util.numFormatDK(5)).toBe('5')
+    expect(util.numFormatDK(5.3)).toBe('5')
+    expect(util.numFormatDK(5000)).toBe('5.000')
+    expect(util.numFormatDK(25000)).toBe('25.000')
+    expect(util.numFormatDK(5000000)).toBe('5.000.000')
+    expect(util.numFormatDK(-5000)).toBe('-5.000')
+    expect(util.numFormatDK(5000.512)).toBe('5.001')
+    expect(util.numFormatDK(5000.512, 1)).toBe('5.000,5')
+    expect(util.numFormatDK(5000.512, 3)).toBe('5.000,512')
+    expect(util.numFormatDK(5000.512, 5)).toBe('5.000,51200')
   })
 })
 
@@ -23,10 +45,26 @@ describe('numFormatUS', () => {
     expect(util.numFormatUS(25000)).toBe('25,000')
     expect(util.numFormatUS(5000000)).toBe('5,000,000')
     expect(util.numFormatUS(-5000)).toBe('-5,000')
-    expect(util.numFormatUS(5000.512)).toBe('5,000')
+    expect(util.numFormatUS(5000.512)).toBe('5,001')
     expect(util.numFormatUS(5000.512, 1)).toBe('5,000.5')
     expect(util.numFormatUS(5000.512, 3)).toBe('5,000.512')
     expect(util.numFormatUS(5000.512, 5)).toBe('5,000.51200')
+  })
+})
+
+describe('numParseFormatted', () => {
+  it('example', () => {
+    expect(util.numParseFormatted('0')).toBe(0)
+    expect(util.numParseFormatted('-0')).toBe(-0)
+    expect(util.numParseFormatted('5')).toBe(5)
+    expect(util.numParseFormatted('-5')).toBe(-5)
+  })
+})
+
+describe('numParseFormattedDK', () => {
+  it('example', () => {
+    expect(util.numParseFormattedDK('-67.889,78998')).toBe(-67889.78998)
+    expect(util.numParseFormattedDK('- 1. 242. 251, 15')).toBe(-1242251.15)
   })
 })
 
@@ -45,8 +83,12 @@ describe('numApproximateLog10', () => {
     expect(util.numApproximateLog10(1e9)).toBe(9)
   })
   it('throws on invalid input.', () => {
-    expect(() => util.numApproximateLog10(-1)).toThrowError(`Expected positive integer smaller than 10^10. Got -1`)
-    expect(() => util.numApproximateLog10(1.1)).toThrowError(`Expected positive integer smaller than 10^10. Got 1.1`)
+    expect(() => util.numApproximateLog10(-1)).toThrowError(
+      `Expected positive integer smaller than 10^10. Got -1`,
+    )
+    expect(() => util.numApproximateLog10(1.1)).toThrowError(
+      `Expected positive integer smaller than 10^10. Got 1.1`,
+    )
     expect(() => util.numApproximateLog10(1e10)).toThrowError(
       `Expected positive integer smaller than 10^10. Got ${1e10}`,
     )

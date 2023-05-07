@@ -1,13 +1,16 @@
-import { inheritStaticMembers, iteratePrototypeChain, setNonEnumerablePrivateProperties } from '../../object'
-import { Constructor } from '../../interfaces'
+import { inheritStaticMembers } from '../../object/src/inheritStaticMembers'
+import { iteratePrototypeChain } from '../../object/src/iteratePrototypeChain'
+import { setNonEnumerablePrivateProperties } from '../../object/src/setNonEnumerablePrivateProperties'
+import { getConstructor } from '../../object/src/getConstructor'
+import type { Constructor, Obj } from '../../interfaces'
 import { interfaceDefinitions } from './interfaces'
 
-const hasSeenFirstInstance = new WeakSet<any>()
+const hasSeenFirstInstance = new WeakSet<Constructor>()
 /**
  * Abstract class that other classes can inherit from to gain various handy functionality.
  */
 export class Base {
-  constructor(options?: Record<string, any>) {
+  constructor() {
     // this.init()
   }
 
@@ -15,13 +18,13 @@ export class Base {
     return Object.getPrototypeOf(this).constructor
   }
 
-  public get proto(): Record<string, any> {
+  public get proto(): Obj {
     return Object.getPrototypeOf(this)
   }
 
   protected init(): void {
-    if (!hasSeenFirstInstance.has(this.constructor)) {
-      hasSeenFirstInstance.add(this.constructor)
+    if (!hasSeenFirstInstance.has(getConstructor(this))) {
+      hasSeenFirstInstance.add(getConstructor(this))
       this.inheritAllStatic()
       this.checkInterfaces()
     }
@@ -65,7 +68,7 @@ export class Base {
     setNonEnumerablePrivateProperties(this)
   }
 
-  protected assertNoAmbiguousOptions(options: Record<string, any>, optionKeyPairs: Array<[string, string]>): void {
+  protected assertNoAmbiguousOptions(options: Obj, optionKeyPairs: Array<[string, string]>): void {
     for (const [key1, key2] of optionKeyPairs) {
       if (options[key1] !== undefined && options[key2] !== undefined) {
         throw new Error(`Cannot use the '${key1}' option and the '${key2}' option simultanously.`)
@@ -74,7 +77,7 @@ export class Base {
   }
 
   protected assertNoOptionsRequireMissingOptions(
-    options: Record<string, any>,
+    options: Obj,
     optionKeyPairs: Array<[string, string]>,
   ): void {
     for (const [key1, key2] of optionKeyPairs) {

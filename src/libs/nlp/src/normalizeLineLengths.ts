@@ -1,4 +1,8 @@
-function singlePass(sentences: Array<string>, lowerBound?: number, upperBound?: number): Array<string> {
+function singlePass(
+  sentences: Array<string>,
+  lowerBound?: number,
+  upperBound?: number,
+): Array<string> {
   // determine lower and upper bounds if not given
   if (lowerBound === undefined || upperBound === undefined) {
     let average = 0
@@ -16,7 +20,10 @@ function singlePass(sentences: Array<string>, lowerBound?: number, upperBound?: 
   for (let i = 1; i < sentences.length; i++) {
     const cur = sentences[i]
     const pre = sentences[i - 1]
-    if (cur.length + pre.length < upperBound && (cur.length < lowerBound || pre.length < lowerBound)) {
+    if (
+      cur.length + pre.length < upperBound &&
+      (cur.length < lowerBound || pre.length < lowerBound)
+    ) {
       sentences[i] = `${pre} ${cur}`
       sentences[i - 1] = ''
     }

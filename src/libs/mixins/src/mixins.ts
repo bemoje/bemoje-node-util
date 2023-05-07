@@ -1,6 +1,6 @@
 import { Base } from './Base'
 import { Timestamped } from './Timestamped'
-import { Indexed, IndexedGetInstance, IndexedGetClass } from './Indexed'
+import { Indexed } from './Indexed'
 import { Options } from './Options'
 import { Revivable } from './Revivable'
 
@@ -20,6 +20,7 @@ class User extends Revivable(Options(Timestamped(Indexed(Base)))) {
     this.init()
   }
 }
+User
 
 // new User({ wow: 'yeah' })
 // new User({ dam: 6 })

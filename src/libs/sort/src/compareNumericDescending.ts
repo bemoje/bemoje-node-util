@@ -8,7 +8,10 @@
  * arr.sort(compareNumericDescending) // [3n, true, false, -2n]
  * ```
  */
-export function compareNumericDescending(a: number | bigint | boolean, b: number | bigint | boolean): number {
+export function compareNumericDescending(
+  a: number | bigint | boolean,
+  b: number | bigint | boolean,
+): number {
   if (a > b) return -1
   if (a < b) return 1
   return 0

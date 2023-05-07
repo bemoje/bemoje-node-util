@@ -159,12 +159,16 @@ describe('constructor options validation', () => {
   it("Cannot use the 'extractColumnHeaders' option and the 'columnHeaders' option simultanously.", () => {
     expect(() => {
       new util.Table({ extractColumnHeaders: true, columnHeaders: ['a'] })
-    }).toThrowError("Cannot use the 'extractColumnHeaders' option and the 'columnHeaders' option simultanously.")
+    }).toThrowError(
+      "Cannot use the 'extractColumnHeaders' option and the 'columnHeaders' option simultanously.",
+    )
   })
   it("Cannot use the 'extractRowHeaders' option and the 'rowHeaders' option simultanously.", () => {
     expect(() => {
       new util.Table({ extractRowHeaders: true, rowHeaders: ['a'] })
-    }).toThrowError("Cannot use the 'extractRowHeaders' option and the 'rowHeaders' option simultanously.")
+    }).toThrowError(
+      "Cannot use the 'extractRowHeaders' option and the 'rowHeaders' option simultanously.",
+    )
   })
   it("Cannot use the 'columns' option and the 'data' option simultanously.", () => {
     expect(() => {
@@ -544,29 +548,6 @@ describe('toArrayDataOnly', () => {
     expect(t.toArrayDataOnly()).toStrictEqual([
       ['A1', 'B1'],
       ['A2', 'B2'],
-    ])
-  })
-})
-
-describe('toCSV', () => {
-  it('works', () => {
-    const columnHeaders = ['#', 'A', 'B']
-    const rowHeaders = ['1', '2']
-    const data = [
-      ['A1', 'B1'],
-      ['A2', 'B2'],
-    ]
-    const t = new util.Table({ rowHeaders, columnHeaders, data })
-    expect(t.toCSV(',')).toBe(['#,A,B', '1,A1,B1', '2,A2,B2'].join('\n'))
-  })
-})
-describe('fromCSV', () => {
-  it('works', () => {
-    const csv = ['#,A,B', '1,A1,B1', '2,A2,B2'].join('\n')
-    expect(util.Table.fromCSV(csv, ',').toArray()).toStrictEqual([
-      ['#', 'A', 'B'],
-      ['1', 'A1', 'B1'],
-      ['2', 'A2', 'B2'],
     ])
   })
 })

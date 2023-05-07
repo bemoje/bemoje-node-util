@@ -12,7 +12,8 @@ export const words = /\b[^\W]+/g
  * Matches Danish social security numbers with or without the dash.
  * Example: 151199-1512
  */
-export const socialSecurityNumbersDK = /(?<dd>[0-3][0-9])(?<mm>[0-1][0-9])(?<yy>[0-9]{2}).?(?<id>[0-9]{4})/g
+export const socialSecurityNumbersDK =
+  /(?<dd>[0-3][0-9])(?<mm>[0-1][0-9])(?<yy>[0-9]{2}).?(?<id>[0-9]{4})/g
 
 /**
  * Matches positive or negative integers.

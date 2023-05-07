@@ -10,7 +10,7 @@
  * mapGetOrElse(map, 'nonexistentKey', () => 2) // Output: 2
  * ```
  */
-export function mapGetOrElse<K, V>(map: Map<K, V> | WeakMap<any, V>, key: K, callback: (key: K) => V): V {
+export function mapGetOrElse<K, V>(map: Map<K, V>, key: K, callback: (key: K) => V): V {
   let value = map.get(key)
   if (value !== undefined) return value
   value = callback(key)

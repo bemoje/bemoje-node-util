@@ -1,0 +1,1 @@
+{"version":3,"file":"ensureValidWindowsPath.d.ts","sourceRoot":"","sources":["../../../../src/libs/node/src/ensureValidWindowsPath.ts"],"names":[],"mappings":"AAEA,MAAM,MAAM,6BAA6B,GAAG;IAC1C,iBAAiB,CAAC,EAAE,OAAO,CAAA;IAC3B,MAAM,CAAC,EAAE,OAAO,CAAA;CACjB,CAAA;AAED;;;;;;GAMG;AACH,wBAAgB,sBAAsB,CACpC,IAAI,EAAE,MAAM,EACZ,OAAO,CAAC,EAAE,6BAA6B,GACtC,OAAO,CAkCT"}

@@ -1,4 +1,5 @@
-import { strSortChars, strRemoveDuplicateChars } from '../../string'
+import { strRemoveDuplicateChars } from '../../string/src/strRemoveDuplicateChars'
+import { strSortChars } from '../../string/src/strSortChars'
 
 /**
  * Takes a string of RegExp flags and returns a string guaranteed to be valid.

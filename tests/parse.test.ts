@@ -26,12 +26,20 @@ describe('parseSocialSecurityNumberDK', () => {
     )
   })
   it('throws on invalid birthdate - day', () => {
-    expect(() => util.parseSocialSecurityNumberDK('001209-1235')).toThrowError(`Expected valid birth date.`)
-    expect(() => util.parseSocialSecurityNumberDK('321209-1235')).toThrowError(`Expected valid birth date.`)
+    expect(() => util.parseSocialSecurityNumberDK('001209-1235')).toThrowError(
+      `Expected valid birth date.`,
+    )
+    expect(() => util.parseSocialSecurityNumberDK('321209-1235')).toThrowError(
+      `Expected valid birth date.`,
+    )
   })
   it('throws on invalid birthdate - month', () => {
-    expect(() => util.parseSocialSecurityNumberDK('010009-1235')).toThrowError(`Expected valid birth date.`)
-    expect(() => util.parseSocialSecurityNumberDK('011332-1235')).toThrowError(`Expected valid birth date.`)
+    expect(() => util.parseSocialSecurityNumberDK('010009-1235')).toThrowError(
+      `Expected valid birth date.`,
+    )
+    expect(() => util.parseSocialSecurityNumberDK('011332-1235')).toThrowError(
+      `Expected valid birth date.`,
+    )
   })
 })
 

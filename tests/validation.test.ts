@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import * as util from '../src/libs/validation'
 
@@ -9,8 +10,8 @@ describe('isConstructor', () => {
   })
   it('returns false for non-functions', () => {
     expect(util.isConstructor([])).toBe(false)
-    expect(util.isConstructor(null)).toBe(false)
-    expect(util.isConstructor(undefined)).toBe(false)
+    expect(util.isConstructor(null as any)).toBe(false)
+    expect(util.isConstructor(undefined as any)).toBe(false)
     expect(util.isConstructor(function* () {})).toBe(false)
   })
   it('returns false for functions without prototype property', () => {
@@ -112,7 +113,6 @@ describe('isIterable', () => {
     expect(util.isIterable([])).toBe(true)
     expect(util.isIterable(new Set())).toBe(true)
     expect(util.isIterable(new Map())).toBe(true)
-    expect(util.isIterable('abc')).toBe(true)
   })
 
   it('should return false for non-iterable objects', () => {
@@ -120,5 +120,6 @@ describe('isIterable', () => {
     expect(util.isIterable(undefined)).toBe(false)
     expect(util.isIterable(123)).toBe(false)
     expect(util.isIterable({})).toBe(false)
+    expect(util.isIterable('abc')).toBe(false)
   })
 })

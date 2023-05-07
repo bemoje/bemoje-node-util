@@ -1,6 +1,6 @@
 import { strIsLowerCase } from './strIsLowerCase'
 import { strIsUpperCase } from './strIsUpperCase'
-import { isNumericString } from '../../validation'
+import { isNumericString } from '../../validation/src/isNumericString'
 
 function isCamelCaseWordBreakIndex(word: string, index: number) {
   return (

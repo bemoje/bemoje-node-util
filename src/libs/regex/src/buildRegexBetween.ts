@@ -1,4 +1,4 @@
-import { strRemoveDuplicateChars } from '../../string'
+import { strRemoveDuplicateChars } from '../../string/src/strRemoveDuplicateChars'
 import { regexEscapeString } from './regexEscapeString'
 
 /**
@@ -12,7 +12,11 @@ import { regexEscapeString } from './regexEscapeString'
  * 'abc'.match(regex)?.groups?.mid // 'c'
  * ```
  */
-export function buildRegexBetween(left: string | RegExp, right: string | RegExp, flags?: string): RegExp {
+export function buildRegexBetween(
+  left: string | RegExp,
+  right: string | RegExp,
+  flags?: string,
+): RegExp {
   left = typeof left === 'string' ? regexEscapeString(left) : left.source
   right = typeof right === 'string' ? regexEscapeString(right) : right.source
   flags = flags ? strRemoveDuplicateChars('gs' + flags) : 'gs'

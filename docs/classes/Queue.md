@@ -55,7 +55,7 @@ Guarantees that class instances are serializable and have a static revive functi
 
 ### constructor
 
-• **new Queue**<`T`\>(`options?`)
+• **new Queue**<`T`\>()
 
 #### Type parameters
 
@@ -63,19 +63,13 @@ Guarantees that class instances are serializable and have a static revive functi
 | :------ |
 | `T` |
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Record`<`string`, `any`\> |
-
 #### Inherited from
 
 [Base](/docs/classes/Base.md).[constructor](/docs/classes/Base.md#constructor)
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:10](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L10)
+[src/libs/mixins/src/Base.ts:13](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L13)
 
 ## Properties
 
@@ -85,7 +79,7 @@ Guarantees that class instances are serializable and have a static revive functi
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:5](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L5)
+[src/libs/datastructures/src/Queue.ts:5](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/Queue.ts#L5)
 
 ## Accessors
 
@@ -103,17 +97,17 @@ Base.klass
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:14](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L14)
+[src/libs/mixins/src/Base.ts:17](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L17)
 
 ___
 
 ### proto
 
-• `get` **proto**(): `Record`<`string`, `any`\>
+• `get` **proto**(): [`Obj`](/docs/index.md#obj)
 
 #### Returns
 
-`Record`<`string`, `any`\>
+[`Obj`](/docs/index.md#obj)
 
 #### Inherited from
 
@@ -121,7 +115,7 @@ Base.proto
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:18](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L18)
+[src/libs/mixins/src/Base.ts:21](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L21)
 
 ___
 
@@ -135,7 +129,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:28](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L28)
+[src/libs/datastructures/src/Queue.ts:28](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/Queue.ts#L28)
 
 ## Methods
 
@@ -149,11 +143,11 @@ ___
 
 #### Implementation of
 
-Iterable.\_\_@iterator@13
+Iterable.\_\_@iterator@87
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:40](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L40)
+[src/libs/datastructures/src/Queue.ts:40](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/Queue.ts#L40)
 
 ___
 
@@ -165,7 +159,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `Record`<`string`, `any`\> |
+| `options` | [`Obj`](/docs/index.md#obj) |
 | `optionKeyPairs` | [`string`, `string`][] |
 
 #### Returns
@@ -178,7 +172,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:68](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L68)
+[src/libs/mixins/src/Base.ts:71](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L71)
 
 ___
 
@@ -190,7 +184,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `Record`<`string`, `any`\> |
+| `options` | [`Obj`](/docs/index.md#obj) |
 | `optionKeyPairs` | [`string`, `string`][] |
 
 #### Returns
@@ -203,7 +197,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:76](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L76)
+[src/libs/mixins/src/Base.ts:79](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L79)
 
 ___
 
@@ -217,7 +211,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:22](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L22)
+[src/libs/datastructures/src/Queue.ts:22](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/Queue.ts#L22)
 
 ___
 
@@ -237,7 +231,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:17](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L17)
+[src/libs/datastructures/src/Queue.ts:17](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/Queue.ts#L17)
 
 ___
 
@@ -255,7 +249,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:22](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L22)
+[src/libs/mixins/src/Base.ts:25](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L25)
 
 ___
 
@@ -275,7 +269,7 @@ Make the properties with property names that start with an underscore non-enumer
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:64](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L64)
+[src/libs/mixins/src/Base.ts:67](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L67)
 
 ___
 
@@ -289,7 +283,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:32](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L32)
+[src/libs/datastructures/src/Queue.ts:32](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/Queue.ts#L32)
 
 ___
 
@@ -307,7 +301,7 @@ IRevivable.toJSON
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:36](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L36)
+[src/libs/datastructures/src/Queue.ts:36](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/Queue.ts#L36)
 
 ___
 
@@ -333,7 +327,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:7](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L7)
+[src/libs/datastructures/src/Queue.ts:7](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/Queue.ts#L7)
 
 ___
 
@@ -359,4 +353,4 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/Queue.ts#L13)
+[src/libs/datastructures/src/Queue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/Queue.ts#L13)

@@ -1,39 +1,37 @@
-import { sort as timsort } from 'timsort'
-import { compareString, compareNumber, compareNumeric } from '../../sort'
+import { compareNumber } from '../../sort/src/compareNumber'
+import { compareString } from '../../sort/src/compareString'
+import type { Comparator } from '../../interfaces'
+import { setNonEnumerable } from '../../object/src/setNonEnumerable'
 
 export interface ISortedArrayOptions<T> {
+  compare?: Comparator
   data?: Iterable<T>
-  compare?: (a: any, b: any) => number
   allowDuplicates?: boolean
 }
 
 export class SortedArray<T> extends Array {
-  private compare: (a: any, b: any) => number = compareString
-  private compareFound = false
+  private compare: Comparator = compareString
   private allowDuplicates = true
 
   constructor(options: ISortedArrayOptions<T> = {}) {
     super()
-    Object.defineProperty(this, 'compare', { enumerable: false })
-    Object.defineProperty(this, 'compareFound', { enumerable: false })
-    Object.defineProperty(this, 'allowDuplicates', { enumerable: false })
+    setNonEnumerable(this, 'compare', 'allowDuplicates')
+
     if (options.compare) {
       this.compare = options.compare
-      this.compareFound = true
-    }
-    if (options.data) {
-      for (const e of options.data) {
-        this.push(e)
-      }
-      if (!this.compareFound && this.length && typeof this[0] !== 'string') {
-        this.compare = compareNumeric
-        this.compareFound = true
-      }
-      timsort(this, this.compare)
     }
     if (options.allowDuplicates === false) {
       this.allowDuplicates = false
-      this.unique()
+    }
+    if (options.data) {
+      const data = this.allowDuplicates ? options.data : new Set(options.data)
+      for (const element of data) {
+        super.push(element)
+      }
+      if (!options.compare && typeof this[0] === 'number') {
+        this.compare = compareNumber
+      }
+      this.sort(this.compare)
     }
   }
 
@@ -45,19 +43,13 @@ export class SortedArray<T> extends Array {
   }
 
   public add(element: T): SortedArray<T> {
-    if (!this.compareFound) {
-      if (typeof element !== 'string') {
-        this.compare = compareNumeric
-        this.compareFound = true
-      }
-    }
     if (this.length === 0) {
-      this.push(element)
+      super.push(element)
       return this
     }
     const [index, foundIdentical] = this.insertionIndex(element)
     if (foundIdentical && !this.allowDuplicates) return this
-    this.splice(index, 0, element)
+    super.splice(index, 0, element)
     return this
   }
 
@@ -83,7 +75,7 @@ export class SortedArray<T> extends Array {
       prev = this[i - 1]
       curr = this[i]
       if (this.compare(prev, curr) === 0) {
-        this.splice(i, 1)
+        super.splice(i, 1)
         len--
         i--
       }
@@ -232,5 +224,27 @@ export class SortedArray<T> extends Array {
       }
     }
     return result
+  }
+
+  /**
+   * Pushes and sorts an element into the array.
+   */
+  override push(...elements: T[]): number {
+    this.addMany(...elements)
+    return this.length
+  }
+
+  /**
+   * Throws an error since it would break the sorted state.
+   */
+  override reverse(): never {
+    throw new Error('Cannot reverse a SortedArray since it would then no longer be sorted.')
+  }
+
+  /**
+   * Same as Array.prototype.splice, but cannot insert elements
+   */
+  override splice(start: number, deleteCount?: number): SortedArray<T> {
+    return super.splice(start, deleteCount) as SortedArray<T>
   }
 }

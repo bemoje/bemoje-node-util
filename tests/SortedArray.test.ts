@@ -636,11 +636,6 @@ describe('add', () => {
     const a = new util.SortedArray({ data: [1, 1, 1, 3, 3, 3, 5, 5, 5] })
     expect(a.add(5).toArray()).toStrictEqual([1, 1, 1, 3, 3, 3, 5, 5, 5, 5])
   })
-  it('automatically switches to numeric comparator if first added element is not a string', () => {
-    expect(() => {
-      new util.SortedArray().add(0).add(1).add(2)
-    }).not.toThrowError()
-  })
 })
 
 describe('addMany', () => {

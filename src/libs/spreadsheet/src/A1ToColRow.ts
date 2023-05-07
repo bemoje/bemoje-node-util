@@ -1,4 +1,4 @@
-import { rexec } from '../../regex'
+import { rexec } from '../../regex/src/rexec'
 import { letterToCol } from './letterToCol'
 
 const REGEX_VALID_A1 = /^(?<a>[A-Z]+)(?<n>[1-9]+)$/g

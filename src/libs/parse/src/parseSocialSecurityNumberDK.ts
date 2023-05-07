@@ -1,7 +1,9 @@
-import { isEven } from '../../number'
-import { getCurrentYear, getCentury } from '../../date'
-import { regexMatcherToValidater, regexLibrary } from '../../regex'
-import { isValidDate } from '../../date'
+import { isEven } from '../../number/src/isEven'
+import { getCentury } from '../../date/src/getCentury'
+import { getCurrentYear } from '../../date/src/getCurrentYear'
+import { regexLibrary } from '../../regex'
+import { regexMatcherToValidater } from '../../regex/src/regexMatcherToValidater'
+import { isValidDate } from '../../date/src/isValidDate'
 
 /**
  * Extract birthdate (yyyy,mm,dd), four digit id and sex from a Danish social security number.
@@ -17,7 +19,9 @@ export function parseSocialSecurityNumberDK(ssn: string): {
 } {
   const match = ssn.match(regexMatcherToValidater(regexLibrary.socialSecurityNumbersDK))
   if (!match || !match.groups)
-    throw new Error(`Invalid Danish social security number format. Expected ddmmyy[-]xxxx. Got: ${ssn}`)
+    throw new Error(
+      `Invalid Danish social security number format. Expected ddmmyy[-]xxxx. Got: ${ssn}`,
+    )
   const { dd, mm, yy, id } = match.groups
   const iDay = parseInt(dd)
   const iMon = parseInt(mm)

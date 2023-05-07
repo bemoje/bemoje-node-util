@@ -1,13 +1,13 @@
-import { Comparator } from '../../interfaces'
+import type { Comparator } from '../../interfaces'
 
 /**
  * Returns a given comparator as an array compatible comparator. Behaves as if the array to sort was recursively flattened.
  * @param compareAt shallow compare function that compares two elements of an array
  * @param descending whether the input comparator sorts in descending order
  */
-export function compareArray(compareAt: Comparator, descending = false): Comparator {
+export function compareArray<T>(compareAt: Comparator, descending = false): Comparator {
   const orderMultiplier = descending ? -1 : 1
-  function recursiveCompare(a: any, b: any, _lenCompareParent?: number): number {
+  function recursiveCompare(a: T, b: T, _lenCompareParent?: number): number {
     const aIsArr = Array.isArray(a)
     const bIsArr = Array.isArray(b)
     if (aIsArr) {

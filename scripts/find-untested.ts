@@ -2,13 +2,12 @@ import fs from 'fs'
 import path from 'path'
 import walkdir from 'walkdir'
 import { rexec } from '../src/'
-import { generateUnitTests } from '../src/libs/nlp/src/generateUnitTests'
+import { generateUnitTests } from './generateUnitTests'
 
 // settings
 const testFileForEveryExport = ['datastructures']
 const ignoreSources = [
   ['regex', 'regexLibrary'],
-  ['wip', '*'],
   ['nlp', 'generateUnitTests'],
   ['html', '*'],
   ['datastructures', 'interfaces'],
@@ -24,24 +23,24 @@ const libPath = path.join(process.cwd(), 'src', 'libs')
 const outPathNeedsTests = path.join(process.cwd(), 'notes', 'needs-tests.json')
 const outPathHasTests = path.join(process.cwd(), 'notes', 'has-tests.json')
 
-// generate root index.ts file
-const rootFilePath = path.join(srcPath, 'index.ts')
-const libDirPaths = fs
-  .readdirSync(libPath)
-  .map((name) => {
-    return { name, dirpath: path.join(libPath, name) }
-  })
-  .filter((o) => fs.statSync(o.dirpath).isDirectory())
+// // generate root index.ts file
+// const rootFilePath = path.join(srcPath, 'index.ts')
+// const libDirPaths = fs
+//   .readdirSync(libPath)
+//   .map((name) => {
+//     return { name, dirpath: path.join(libPath, name) }
+//   })
+//   .filter((o) => fs.statSync(o.dirpath).isDirectory())
 
-fs.writeFileSync(
-  rootFilePath,
-  libDirPaths
-    .filter((o) => o.name !== 'wip')
-    .map((o) => {
-      return `export * from './libs/${o.name}'`
-    })
-    .join('\n'),
-)
+// fs.writeFileSync(
+//   rootFilePath,
+//   libDirPaths
+//     .filter((o) => o.name !== 'wip')
+//     .map((o) => {
+//       return `export * from './libs/${o.name}'`
+//     })
+//     .join('\n'),
+// )
 
 // traverse test files
 const regExportName = /\nexport ((async )?function\*?|const|class) (?<name>\w+)/g
@@ -102,9 +101,9 @@ walkdir.sync(libPath, function (sourcePath, stat) {
       tests.get(testFileForEveryExport.includes(sourceDir) ? sourceFileName : sourceDir),
     )
     const testsUseDir = testFile.source.includes(sourceDir)
-    const testsUseFileName = new RegExp(`\ndescribe\\('${sourceFileName}', |util\\.${sourceFileName}`).test(
-      testFile.source,
-    )
+    const testsUseFileName = new RegExp(
+      `\ndescribe\\('${sourceFileName}', |util\\.${sourceFileName}`,
+    ).test(testFile.source)
     let isMissingTests = !testsUseDir || !testsUseFileName
     const testsUseExports = Object.fromEntries(
       exports.reduce((o, e) => {
@@ -141,7 +140,9 @@ fs.writeFileSync(outPathHasTests, JSON.stringify(success, null, 2))
 // generate unit tests with OpenAI's GPT
 for (let i = 0; i < failed.length; i++) {
   const result = failed[i]
-  generateUnitTests(result.source, result.sourceDir, result.sourceFileName, true).catch((e) => console.log(e))
+  generateUnitTests(result.source, result.sourceDir, result.sourceFileName, true).catch((e) =>
+    console.log(e),
+  )
 }
 
 // output stats

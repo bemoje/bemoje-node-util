@@ -65,7 +65,13 @@ describe('iteratePrototypeChain', () => {
   class C extends B {}
   const instance = new C()
   it('iterates prototype chain for class constructor', () => {
-    expect([...util.iteratePrototypeChain(C)]).toStrictEqual([C, B, A, Function.prototype, Object.prototype])
+    expect([...util.iteratePrototypeChain(C)]).toStrictEqual([
+      C,
+      B,
+      A,
+      Function.prototype,
+      Object.prototype,
+    ])
   })
   it('iterates prototype chain for class prototype', () => {
     expect([...util.iteratePrototypeChain(C.prototype)]).toStrictEqual([
@@ -183,7 +189,9 @@ describe('setValueAsGetter', () => {
 
   it('should throw an error if the property does not exist on the object', () => {
     const obj = {}
-    expect(() => util.setValueAsGetter(obj, 'prop')).toThrowError(`Property 'prop' does not exist on object.`)
+    expect(() => util.setValueAsGetter(obj, 'prop')).toThrowError(
+      `Property 'prop' does not exist on object.`,
+    )
   })
 
   it('should set the property as a getter', () => {
@@ -197,5 +205,99 @@ describe('setValueAsGetter', () => {
     util.setValueAsGetter(obj, 'prop1', 'prop2')
     expect(obj.prop1).toBe('value1')
     expect(obj.prop2).toBe('value2')
+  })
+})
+
+describe('objForEach', () => {
+  it('example', () => {
+    const o = {
+      a: 1,
+      b: 2,
+      c: 3,
+    }
+    let sum = 0
+    util.objForEach(o, (value, key) => (sum += key.length + value))
+    expect(sum).toBe(9)
+  })
+})
+
+describe('objMap', () => {
+  it('example', () => {
+    const o = {
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 4,
+      _e: 6,
+    }
+    expect(util.objMap(o, (value, key) => (key.length === 1 ? value * 2 : 0))).toEqual({
+      a: 2,
+      b: 4,
+      c: 6,
+      d: 8,
+      _e: 0,
+    })
+    Object.defineProperty(o, '_e', { enumerable: false })
+    expect(util.objMap(o, (value, key) => (key.length === 1 ? value * 2 : 0))).toEqual({
+      a: 2,
+      b: 4,
+      c: 6,
+      d: 8,
+    })
+    expect(
+      util.objMap(
+        o,
+        (value, key) => (key.length === 1 ? value * 2 : 0),
+        Object.getOwnPropertyNames,
+      ),
+    ).toEqual({ a: 2, b: 4, c: 6, d: 8, _e: 0 })
+  })
+})
+
+describe('objMapKeys', () => {
+  it('example', () => {
+    const o = {
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 4,
+      _e: 6,
+    }
+    expect(util.objMapKeys(o, (key, value) => key + value)).toEqual({
+      a1: 1,
+      b2: 2,
+      c3: 3,
+      d4: 4,
+      _e6: 6,
+    })
+  })
+})
+
+describe('objFilter', () => {
+  it('example', () => {
+    const o = {
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 4,
+      _e: 6,
+    }
+    expect(util.objFilter(o, (value, key) => value % 2 === 0 && key.length === 1)).toEqual({
+      b: 2,
+      d: 4,
+    })
+  })
+})
+
+describe('objReduce', () => {
+  it('example', () => {
+    const o = {
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 4,
+      _e: 6,
+    }
+    expect(util.objReduce(o, (accum, value, key) => accum + value - key.length, 0)).toBe(10)
   })
 })

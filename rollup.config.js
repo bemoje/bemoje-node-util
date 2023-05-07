@@ -13,14 +13,9 @@ const banner = `/*!
 export default {
   input: './src/index.ts',
   external: [
-    'timsort',
-    'date-and-time',
-    'dotenv/config',
-    'openai',
     'fs',
     'path',
     'stream',
-    'winston',
     'cli-color',
     'format-number',
     'sentence-splitter',
@@ -49,6 +44,7 @@ export default {
     typescript2({
       clean: true,
       useTsconfigDeclarationDir: true,
+      tsconfig: './tsconfig.bundle.json',
     }),
   ],
 }

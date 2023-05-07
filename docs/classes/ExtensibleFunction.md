@@ -58,7 +58,7 @@ class MyFunction<T> extends util.ExtensibleFunction {
 | Name | Type |
 | :------ | :------ |
 | `name` | `string` |
-| `f` | `any` |
+| `f` | [`GenericFunction`](/docs/index.md#genericfunction) |
 
 #### Overrides
 
@@ -66,7 +66,7 @@ Function.constructor
 
 #### Defined in
 
-[src/libs/function/src/ExtensibleFunction.ts:19](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/function/src/ExtensibleFunction.ts#L19)
+[src/libs/function/src/ExtensibleFunction.ts:20](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/function/src/ExtensibleFunction.ts#L20)
 
 ## Properties
 
@@ -164,7 +164,7 @@ A constructor function can control which objects are recognized as its instances
 
 #### Inherited from
 
-Function.\_\_@hasInstance@122
+Function.\_\_@hasInstance@79
 
 #### Defined in
 

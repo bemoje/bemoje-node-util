@@ -2,7 +2,11 @@ import * as util from '../src/libs/nlp'
 
 describe('normalizeLineLengths', () => {
   it('should not just merge short sentences when they are about same length', () => {
-    const sentences = ['This is a short sentence.', 'This is another short sentence.', 'This is a long sentence.']
+    const sentences = [
+      'This is a short sentence.',
+      'This is another short sentence.',
+      'This is a long sentence.',
+    ]
     const result = util.normalizeLineLengths(sentences)
     expect(result).toEqual(sentences)
   })

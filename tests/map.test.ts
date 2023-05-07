@@ -44,12 +44,16 @@ describe('mapUpdateDefault', () => {
   })
 
   it('should set default value if key is not present', () => {
-    expect(util.mapUpdateDefault(map, 'key', 0, (value) => value + 1)).toEqual(new Map([['key', 1]]))
+    expect(util.mapUpdateDefault(map, 'key', 0, (value) => value + 1)).toEqual(
+      new Map([['key', 1]]),
+    )
   })
 
   it('should update value if key is present', () => {
     map.set('key', 1)
-    expect(util.mapUpdateDefault(map, 'key', 0, (value) => value + 1)).toEqual(new Map([['key', 2]]))
+    expect(util.mapUpdateDefault(map, 'key', 0, (value) => value + 1)).toEqual(
+      new Map([['key', 2]]),
+    )
   })
 })
 

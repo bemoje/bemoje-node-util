@@ -1,5 +1,4 @@
 import * as util from '../src/libs/string'
-import { createHash } from 'crypto'
 
 describe('strWrapIn', () => {
   it('example', () => {
@@ -116,7 +115,13 @@ describe('strRepeat', () => {
 
 describe('strLinesTrimLeft', () => {
   it('trims all lines', () => {
-    const str = ['list:', ' 1. some text', ' 2. some text', '   a. some text', '   b. some text'].join('\n')
+    const str = [
+      'list:',
+      ' 1. some text',
+      ' 2. some text',
+      '   a. some text',
+      '   b. some text',
+    ].join('\n')
     expect(util.strLinesTrimLeft(str)).toBe(
       ['list:', '1. some text', '2. some text', 'a. some text', 'b. some text'].join('\n'),
     )
@@ -125,7 +130,13 @@ describe('strLinesTrimLeft', () => {
 
 describe('strLinesTrimRight', () => {
   it('trims all lines', () => {
-    const str = ['list:', ' 1. some text  ', ' 2. some text\t', '   a. some text   ', '   b. some text'].join('\n')
+    const str = [
+      'list:',
+      ' 1. some text  ',
+      ' 2. some text\t',
+      '   a. some text   ',
+      '   b. some text',
+    ].join('\n')
     expect(util.strLinesTrimRight(str)).toBe(
       ['list:', ' 1. some text', ' 2. some text', '   a. some text', '   b. some text'].join('\n'),
     )
@@ -238,11 +249,13 @@ describe('strToCharSet', () => {
 
 describe('strToSentences', () => {
   it('should split a string into sentences', () => {
-    expect(util.strToSentences('Hello world. How are you?')).toEqual(['Hello world.', 'How are you?'])
-    expect(util.strToSentences('Well, this is a sentence! And this - is another sentence.')).toEqual([
-      'Well, this is a sentence!',
-      'And this - is another sentence.',
+    expect(util.strToSentences('Hello world. How are you?')).toEqual([
+      'Hello world.',
+      'How are you?',
     ])
+    expect(
+      util.strToSentences('Well, this is a sentence! And this - is another sentence.'),
+    ).toEqual(['Well, this is a sentence!', 'And this - is another sentence.'])
     expect(util.strToSentences('')).toEqual([])
   })
 })
@@ -289,8 +302,8 @@ describe('strHash', () => {
       const algorithm = 'sha256'
       const result = util.strHash.toBuffer(string, algorithm)
       expect(Array.from(result)).toEqual([
-        44, 242, 77, 186, 95, 176, 163, 14, 38, 232, 59, 42, 197, 185, 226, 158, 27, 22, 30, 92, 31, 167, 66, 94, 115,
-        4, 51, 98, 147, 139, 152, 36,
+        44, 242, 77, 186, 95, 176, 163, 14, 38, 232, 59, 42, 197, 185, 226, 158, 27, 22, 30, 92, 31,
+        167, 66, 94, 115, 4, 51, 98, 147, 139, 152, 36,
       ])
     })
   })

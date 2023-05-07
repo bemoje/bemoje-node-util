@@ -1,12 +1,24 @@
-import { MemoryUsageValues } from '../'
-import { numFormatUS } from '../../number'
-import { numFormatEU } from '../../number'
-import { MemoryUsageValuesFormatted } from '../'
+import { numFormatUS } from '../../number/src/numFormatUS'
+import { numFormatDK } from '../../number/src/numFormatDK'
+
+export interface IMemoryUsageValues {
+  processAllocationMB: number
+  heapAllocationMB: number
+  heapUsedMB: number
+  extenalV8: number
+}
+
+export interface IMemoryUsageValuesFormatted {
+  processAllocationMB: string
+  heapAllocationMB: string
+  heapUsedMB: string
+  extenalV8: string
+}
 
 /**
  * Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
  */
-export function memoryUsage(): MemoryUsageValues {
+export function memoryUsage(): IMemoryUsageValues {
   const toIntMB = (n: number) => Math.floor(n * 0.000001)
   const data = process.memoryUsage()
   return {
@@ -17,7 +29,7 @@ export function memoryUsage(): MemoryUsageValues {
   }
 }
 
-const formatMemoryUsageOutput = (format: (n: number) => string): MemoryUsageValuesFormatted => {
+const formatMemoryUsageOutput = (format: (n: number) => string): IMemoryUsageValuesFormatted => {
   const data = process.memoryUsage()
   return {
     processAllocationMB: format(data.rss),
@@ -31,14 +43,14 @@ const formatMemoryUsageOutput = (format: (n: number) => string): MemoryUsageValu
  * Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
  * The values are formatted strings in the style of 5.000,00
  */
-export function memoryUsageEuFormat(): MemoryUsageValuesFormatted {
-  return formatMemoryUsageOutput((bytes: number) => `${numFormatEU(bytes * 0.000001, 2)} MB`)
+export function memoryUsageDkFormat(): IMemoryUsageValuesFormatted {
+  return formatMemoryUsageOutput((bytes: number) => `${numFormatDK(bytes * 0.000001, 2)} MB`)
 }
 
 /**
  * Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
  * The values are formatted strings in the style of 5,000.00
  */
-export function memoryUsageUsFormat(): MemoryUsageValuesFormatted {
+export function memoryUsageUsFormat(): IMemoryUsageValuesFormatted {
   return formatMemoryUsageOutput((bytes: number) => `${numFormatUS(bytes * 0.000001, 2)} MB`)
 }

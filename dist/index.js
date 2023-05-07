@@ -1,5 +1,5 @@
 /*!
- * @bemoje/node-util v0.1.3
+ * @bemoje/node-util v0.2.0
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
@@ -9,47 +9,35 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var timsort = require('timsort');
+var crypto = require('crypto');
+var path = require('path');
+var fs = require('fs');
+var stream = require('stream');
+var cliColor = require('cli-color');
 var sentenceSplitter = require('sentence-splitter');
 var lodash = require('lodash');
-var crypto = require('crypto');
-var date = require('date-and-time');
-require('dotenv/config');
-var openai$1 = require('openai');
-var fs = require('fs');
-var path = require('path');
-var numberFormat = require('format-number');
-var stream = require('stream');
-var winston = require('winston');
-var clc = require('cli-color');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var date__default = /*#__PURE__*/_interopDefaultLegacy(date);
-var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
 var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
-var numberFormat__default = /*#__PURE__*/_interopDefaultLegacy(numberFormat);
-var winston__default = /*#__PURE__*/_interopDefaultLegacy(winston);
-var clc__default = /*#__PURE__*/_interopDefaultLegacy(clc);
+var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
 
 /**
  * Converts a 2-dimensional array into a CSV string.
+ * If input data contains the delimiter, it will be removed.
+ * Linebreaks will be removed.
  * @param input a 2-dimensional array
- * @param delimiter csv delimiter
+ * @param delimiter csv delimiter.
+ * @param replaceLinebreakWith replace linebreaks with this string.
  */
-function arr2dToCSV(input, delimiter = ';') {
-    return input.map((row) => row.join(delimiter)).join('\n');
-}
-
-/**
- * Mutably assigns the values of source array to target array. Lengths will also be identical.
- */
-function arrAssignFrom(target, source) {
-    target.splice(source.length);
-    for (let i = 0; i < source.length; i++) {
-        target[i] = source[i];
-    }
-    return target;
+function arr2dToCSV(input, delimiter = ';', replaceLinebreakWith = ' ') {
+    return input
+        .map((row) => {
+        return row
+            .map((item) => (item + '').replaceAll(delimiter, '').replace(/(\r*\n)+/g, replaceLinebreakWith))
+            .join(delimiter);
+    })
+        .join('\n');
 }
 
 /**
@@ -67,22 +55,13 @@ function arrEvery(input, predicate) {
 }
 
 /**
- * Same as Array.prototype.filter but performs operations in palce (not immutable).
- * @param input - input array
- * @param f - predicate
- */
-function arrFilterMutable(input, f) {
-    return arrAssignFrom(input, input.filter(f));
-}
-
-/**
  * Flattens the passed array recursively to a specified depth. Immutable.
  * @param input - the array to flatten
  * @param maxDepth - the maximum recursive flattening depth.
  */
 function arrFlatten(input, maxDepth = Number.MAX_SAFE_INTEGER) {
     const accum = [];
-    (function recurse(arr = input, depth = 0) {
+    function recurse(arr, depth) {
         for (let i = 0; i < arr.length; i++) {
             if (Array.isArray(arr[i]) && depth < maxDepth) {
                 recurse(arr[i], depth + 1);
@@ -91,17 +70,9 @@ function arrFlatten(input, maxDepth = Number.MAX_SAFE_INTEGER) {
                 accum.push(arr[i]);
             }
         }
-    })();
+    }
+    recurse(input, 0);
     return accum;
-}
-
-/**
- * Flattens the passed array recursively. Mutable.
- * @param input - the array to flatten
- * @param maxDepth - the maximum recursive flattening depth.
- */
-function arrFlattenMutable(input, maxDepth = Number.MAX_SAFE_INTEGER) {
-    return arrAssignFrom(input, arrFlatten(input, maxDepth));
 }
 
 /**
@@ -193,93 +164,6 @@ function arrSome(input, predicate) {
 }
 
 /**
- * Returns a given comparator as an array compatible comparator. Behaves as if the array to sort was recursively flattened.
- * @param compareAt shallow compare function that compares two elements of an array
- * @param descending whether the input comparator sorts in descending order
- */
-function compareArray(compareAt, descending = false) {
-    const orderMultiplier = descending ? -1 : 1;
-    function recursiveCompare(a, b, _lenCompareParent) {
-        const aIsArr = Array.isArray(a);
-        const bIsArr = Array.isArray(b);
-        if (aIsArr) {
-            if (bIsArr) {
-                const aLen = a.length;
-                const bLen = b.length;
-                let lenShortest, lenCompare;
-                if (aLen > bLen) {
-                    lenShortest = aLen;
-                    lenCompare = 1 * orderMultiplier;
-                }
-                else if (aLen < bLen) {
-                    lenShortest = bLen;
-                    lenCompare = -1 * orderMultiplier;
-                }
-                else {
-                    lenShortest = aLen;
-                    lenCompare = 0;
-                }
-                for (let i = 0, len = lenShortest; i < len; i++) {
-                    const res = recursiveCompare(a[i], b[i], lenCompare);
-                    if (res !== 0) {
-                        return res;
-                    }
-                }
-            }
-            else {
-                return 1 * orderMultiplier;
-            }
-        }
-        else {
-            if (bIsArr) {
-                return -1 * orderMultiplier;
-            }
-            else {
-                const res = compareAt(a, b);
-                if (res === 0) {
-                    return _lenCompareParent || res;
-                }
-                else {
-                    return res;
-                }
-            }
-        }
-        return 0;
-    }
-    return (a, b) => {
-        return recursiveCompare(a, b);
-    };
-}
-
-/**
- * Number comparator function (ascending)
- * @param a first value to compare
- * @param b second value to compare
- * @example
- * ```ts
- * const arr = [3, 1, 4, 1, 5]
- * arr.sort(compareNumber) // [1, 1, 3, 4, 5]
- * ```
- */
-function compareNumber(a, b) {
-    return a - b;
-}
-
-/**
- * Number comparator function (descending)
- * @param a first value to compare
- * @param b second value to compare
- * @example
- * ```ts
- * const arr = [3, 1, 4, 1, 5]
- * arr.sort(compareNumberDescending) // [5, 4, 3, 1, 1]
- * ```
- */
-function compareNumberDescending(a, b) {
-    return b - a;
-}
-
-/**
  * number, bigint, boolean comparator function (ascending)
  * @param a first value to compare
  * @param b second value to compare
@@ -295,42 +179,6 @@ function compareNumeric(a, b) {
     if (a > b)
         return 1;
     return 0;
-}
-
-/**
- * number, bigint, boolean comparator function (descending)
- * @param a first value to compare
- * @param b second value to compare
- * @example
- * ```ts
- * const arr = [true, 3n, -2n, false]
- * arr.sort(compareNumericDescending) // [3n, true, false, -2n]
- * ```
- */
-function compareNumericDescending(a, b) {
-    if (a > b)
-        return -1;
-    if (a < b)
-        return 1;
-    return 0;
-}
-
-/**
- * Alpha numeric comparator function (ascending)
- * @param a first value to compare
- * @param b second value to compare
- */
-function compareString(a, b) {
-    return a.localeCompare(b);
-}
-
-/**
- * Alpha numeric comparator function (descending)
- * @param a first value to compare
- * @param b second value to compare
- */
-function compareStringDescending(a, b) {
-    return b.localeCompare(a);
 }
 
 /**
@@ -364,12 +212,12 @@ function arrAverage(array) {
  * @param args The arguments to pass to the task.
  * @returns A promise that resolves with the task's result or rejects with an error.
  */
-function asyncWithTimeout(timeout, task, ...args) {
+function asyncWithTimeout(timeout, task) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             reject(new Error(`Timed out after ${timeout} ms.`));
         }, timeout);
-        task(...args)
+        task()
             .then((value) => {
             resolve(value);
         }, (error) => {
@@ -381,22 +229,71 @@ function asyncWithTimeout(timeout, task, ...args) {
     });
 }
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
 /**
  * Run async tasks in parallel.
  */
-async function asyncParallel(tasks) {
-    return await Promise.all(tasks.map((task) => task()));
+function asyncParallel(tasks) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield Promise.all(tasks.map((task) => task()));
+    });
 }
 
 /**
  * Run async tasks serially, each task waiting for the previous one to complete.
  */
-async function asyncSerial(tasks) {
-    const results = [];
-    for (const task of tasks) {
-        results.push(await task());
-    }
-    return results;
+function asyncSerial(tasks) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const results = [];
+        for (const task of tasks) {
+            results.push(yield task());
+        }
+        return results;
+    });
 }
 
 /**
@@ -500,7 +397,13 @@ function intToBytes(int) {
                 : x < 16777216
                     ? [253, Math.floor(x / 65536), Math.floor(x / 256) % 256, x % 256]
                     : x < 4294967296
-                        ? [254, Math.floor(x / 16777216), Math.floor(x / 65536) % 256, Math.floor(x / 256) % 256, x % 256]
+                        ? [
+                            254,
+                            Math.floor(x / 16777216),
+                            Math.floor(x / 65536) % 256,
+                            Math.floor(x / 256) % 256,
+                            x % 256,
+                        ]
                         : (() => {
                             const exp = Math.floor(Math.log(x) / Math.log(2)) - 32;
                             const bytes = [255, ...intToBytes(exp)];
@@ -517,7 +420,13 @@ function intToBytes(int) {
  */
 function padArrayBytesLeft(a) {
     const l = a.length;
-    return l === 4 ? a : l === 1 ? [0, 0, 0, a[0]] : l === 2 ? [0, 0, a[0], a[1]] : [0, a[0], a[1], a[2]];
+    return l === 4
+        ? a
+        : l === 1
+            ? [0, 0, 0, a[0]]
+            : l === 2
+                ? [0, 0, a[0], a[1]]
+                : [0, a[0], a[1], a[2]];
 }
 
 /**
@@ -525,7 +434,13 @@ function padArrayBytesLeft(a) {
  */
 function padArrayBytesRight(a) {
     const l = a.length;
-    return l === 4 ? a : l === 1 ? [a[0], 0, 0, 0] : l === 2 ? [a[0], a[1], 0, 0] : [a[0], a[1], a[2], 0];
+    return l === 4
+        ? a
+        : l === 1
+            ? [a[0], 0, 0, 0]
+            : l === 2
+                ? [a[0], a[1], 0, 0]
+                : [a[0], a[1], a[2], 0];
 }
 
 /**
@@ -561,19 +476,32 @@ function trimArrayBytesRight(a) {
 }
 
 /**
- * Determine wheter the argument is a Object (is typeof object but not null).
+ * Copy static members from source to target.
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function isObject(value) {
-    return value !== null && typeof value === 'object';
+function inheritStaticMembers(target, source, ignoreKeys = []) {
+    const ignore = new Set([
+        ...Reflect.ownKeys(target),
+        ...ignoreKeys,
+        'prototype',
+        'name',
+        'constructor',
+    ]);
+    for (const key of Reflect.ownKeys(source)) {
+        if (ignore.has(key))
+            continue;
+        const des = Object.getOwnPropertyDescriptor(source, key);
+        if (!des)
+            continue;
+        Object.defineProperty(target, key, des);
+    }
+    return target;
 }
 
 /**
  * Determine wheter a given object is a prototype-object (obj.constructor.prototype === obj).
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function isPrototype(value) {
-    if (!isObject(value))
+    if (value === null || typeof value !== 'object')
         return false;
     if (!('constructor' in value))
         return false;
@@ -588,42 +516,6 @@ function isConstructor(value) {
         'prototype' in value &&
         isPrototype(value.prototype) &&
         value === value.prototype.constructor);
-}
-
-/**
- * Determine whether a string is a hexadecimal string.
- */
-function isHex$1(s) {
-    return /[\da-f]+$/i.test(s);
-}
-
-/**
- * Determine whether a string is either a hexadecimal or a '\u' or '0x' prepended unicode hex string.
- */
-function isHexOrUnicode(s) {
-    return /^(\\\\?u|0x)?[\da-f]+$/i.test(s);
-}
-
-/**
- * Check if an object is iterable
- * @param o The object to check
- */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function isIterable(o) {
-    return (typeof Symbol !== 'undefined' &&
-        Symbol &&
-        'iterator' in Symbol &&
-        o != null &&
-        typeof o[Symbol.iterator] === 'function');
-}
-
-/**
- * Checks if a string is a number.
- * @param string - input string
- */
-function isNumericString(string) {
-    const n = Number(string.trim());
-    return !isNaN(n) && isFinite(n);
 }
 
 /**
@@ -666,28 +558,6 @@ function* iteratePrototypeChain(object) {
 }
 
 /**
- * Set multiple 'enumerable' property descriptor attributes of the target object to true.
- * @param object The target object.
- * @param propertyName The property names to be affected.
- */
-function setEnumerable(object, ...propertyNames) {
-    for (const propertyName of propertyNames) {
-        Object.defineProperty(object, propertyName, { enumerable: true });
-    }
-}
-
-/**
- * Set multiple 'configurable' property descriptor attributes of the target object to false.
- * @param object The target object.
- * @param propertyName The property names to be affected.
- */
-function setNonConfigurable(object, ...propertyNames) {
-    for (const propertyName of propertyNames) {
-        Object.defineProperty(object, propertyName, { configurable: false });
-    }
-}
-
-/**
  * Set multiple 'enumerable' property descriptor attributes of the target object to false.
  * @param object The target object.
  * @param propertyName The property names to be affected.
@@ -717,90 +587,25 @@ function setNonEnumerablePrivateProperties(object) {
 }
 
 /**
- * Set multiple 'writable' property descriptor attributes of the target object to false.
- * @param object The target object.
- * @param propertyName The property names to be affected.
- */
-function setNonWritable(object, ...propertyNames) {
-    for (const propertyName of propertyNames) {
-        Object.defineProperty(object, propertyName, { writable: false });
-    }
-}
-
-/**
- * Set multiple 'writable' property descriptor attributes of the target object to true.
- * @param object The target object.
- * @param propertyName The property names to be affected.
- */
-function setWritable(object, ...propertyNames) {
-    for (const propertyName of propertyNames) {
-        Object.defineProperty(object, propertyName, { writable: true });
-    }
-}
-
-/**
- * Copy static members from source to target.
- */
-function inheritStaticMembers(target, source, ignoreKeys = []) {
-    const ignore = new Set([...Reflect.ownKeys(target), ...ignoreKeys, 'prototype', 'name', 'constructor']);
-    for (const key of Reflect.ownKeys(source)) {
-        if (ignore.has(key))
-            continue;
-        const des = Object.getOwnPropertyDescriptor(source, key);
-        if (!des)
-            continue;
-        Object.defineProperty(target, key, des);
-    }
-    return target;
-}
-
-/**
  * Returns the class constructor object belonging to a given object's class of origin.
  */
 function getConstructor(o) {
     return Object.getPrototypeOf(o).constructor;
 }
 
-/**
- * Returns the prototype object belonging to a given object.
- * @param o - The object to get the prototype of.
- */
-function getPrototype(o) {
-    return Object.getPrototypeOf(o);
-}
-
-/**
- * Set multiple 'enumerable' property descriptor attributes of the target object to false.
- * @param object The target object.
- * @param propertyName The property names to be affected.
- */
-function setValueAsGetter(object, ...propertyNames) {
-    if (!object || typeof object !== 'object') {
-        throw new Error(`setValueAsGetter() requires an object as the first argument.`);
-    }
-    for (const propertyName of propertyNames) {
-        if (!Object.hasOwn(object, propertyName)) {
-            throw new Error(`Property '${propertyName}' does not exist on object.`);
-        }
-        const des = Object.getOwnPropertyDescriptor(object, propertyName);
-        if (!des)
-            throw new Error(`Property '${propertyName}' does not have a descriptor.`);
-        const { value, enumerable, configurable } = des;
-        Object.defineProperty(object, propertyName, { configurable, enumerable, get: () => value });
-    }
-    return object;
-}
-
 const interfaceDefinitions = new Map();
 interfaceDefinitions.set('IRevivable', [['toJSON'], ['fromJSON']]);
-interfaceDefinitions.set('IOptions', [['options', 'defaultOptions', 'handleOptions'], ['defaultOptions']]);
+interfaceDefinitions.set('IOptions', [
+    ['options', 'defaultOptions', 'handleOptions'],
+    ['defaultOptions'],
+]);
 
 const hasSeenFirstInstance = new WeakSet();
 /**
  * Abstract class that other classes can inherit from to gain various handy functionality.
  */
 class Base {
-    constructor(options) {
+    constructor() {
         // this.init()
     }
     get klass() {
@@ -810,8 +615,8 @@ class Base {
         return Object.getPrototypeOf(this);
     }
     init() {
-        if (!hasSeenFirstInstance.has(this.constructor)) {
-            hasSeenFirstInstance.add(this.constructor);
+        if (!hasSeenFirstInstance.has(getConstructor(this))) {
+            hasSeenFirstInstance.add(getConstructor(this));
             this.inheritAllStatic();
             this.checkInterfaces();
         }
@@ -864,8 +669,6 @@ class Base {
 }
 
 class Matrix {
-    matrix;
-    immutable = false;
     static fromArray(array) {
         const cols = array[0].length;
         const m = new this(array.length, cols);
@@ -894,6 +697,7 @@ class Matrix {
         return m;
     }
     constructor(rows, cols) {
+        this.immutable = false;
         if (rows < 1)
             throw new Error('Expected rows to be greater than zero.');
         if (cols < 1)
@@ -1184,7 +988,10 @@ class Matrix {
 }
 
 class Queue extends Base {
-    queue = [];
+    constructor() {
+        super(...arguments);
+        this.queue = [];
+    }
     static from(o) {
         const instance = new Queue();
         instance.queue = [...o];
@@ -1222,32 +1029,50 @@ class Queue extends Base {
 // const q2 = Queue.fromJSON(str)
 // console.log(q2)
 
+/**
+ * Number comparator function (ascending)
+ * @param a first value to compare
+ * @param b second value to compare
+ * @example
+ * ```ts
+ * const arr = [3, 1, 4, 1, 5]
+ * arr.sort(compareNumber) // [1, 1, 3, 4, 5]
+ * ```
+ */
+function compareNumber(a, b) {
+    return a - b;
+}
+
+/**
+ * Alpha numeric comparator function (ascending)
+ * @param a first value to compare
+ * @param b second value to compare
+ */
+function compareString(a, b) {
+    return a.localeCompare(b);
+}
+
 class SortedArray extends Array {
-    compare = compareString;
-    compareFound = false;
-    allowDuplicates = true;
     constructor(options = {}) {
         super();
-        Object.defineProperty(this, 'compare', { enumerable: false });
-        Object.defineProperty(this, 'compareFound', { enumerable: false });
-        Object.defineProperty(this, 'allowDuplicates', { enumerable: false });
+        this.compare = compareString;
+        this.allowDuplicates = true;
+        setNonEnumerable(this, 'compare', 'allowDuplicates');
         if (options.compare) {
             this.compare = options.compare;
-            this.compareFound = true;
-        }
-        if (options.data) {
-            for (const e of options.data) {
-                this.push(e);
-            }
-            if (!this.compareFound && this.length && typeof this[0] !== 'string') {
-                this.compare = compareNumeric;
-                this.compareFound = true;
-            }
-            timsort.sort(this, this.compare);
         }
         if (options.allowDuplicates === false) {
             this.allowDuplicates = false;
-            this.unique();
+        }
+        if (options.data) {
+            const data = this.allowDuplicates ? options.data : new Set(options.data);
+            for (const element of data) {
+                super.push(element);
+            }
+            if (!options.compare && typeof this[0] === 'number') {
+                this.compare = compareNumber;
+            }
+            this.sort(this.compare);
         }
     }
     /**
@@ -1257,20 +1082,14 @@ class SortedArray extends Array {
         return Array.from(this);
     }
     add(element) {
-        if (!this.compareFound) {
-            if (typeof element !== 'string') {
-                this.compare = compareNumeric;
-                this.compareFound = true;
-            }
-        }
         if (this.length === 0) {
-            this.push(element);
+            super.push(element);
             return this;
         }
         const [index, foundIdentical] = this.insertionIndex(element);
         if (foundIdentical && !this.allowDuplicates)
             return this;
-        this.splice(index, 0, element);
+        super.splice(index, 0, element);
         return this;
     }
     /**
@@ -1296,7 +1115,7 @@ class SortedArray extends Array {
             prev = this[i - 1];
             curr = this[i];
             if (this.compare(prev, curr) === 0) {
-                this.splice(i, 1);
+                super.splice(i, 1);
                 len--;
                 i--;
             }
@@ -1455,143 +1274,26 @@ class SortedArray extends Array {
         }
         return result;
     }
+    /**
+     * Pushes and sorts an element into the array.
+     */
+    push(...elements) {
+        this.addMany(...elements);
+        return this.length;
+    }
+    /**
+     * Throws an error since it would break the sorted state.
+     */
+    reverse() {
+        throw new Error('Cannot reverse a SortedArray since it would then no longer be sorted.');
+    }
+    /**
+     * Same as Array.prototype.splice, but cannot insert elements
+     */
+    splice(start, deleteCount) {
+        return super.splice(start, deleteCount);
+    }
 }
-
-/**
- * Matches 2 or more consecutive whitespace characters, including line terminators, tabs, etc.
- */
-const repeatingWhiteSpace = /((\r?\r?\n)|\s|\t){2,}/g;
-/**
- * Matches words in a string
- */
-const words = /\b[^\W]+/g;
-/**
- * Matches Danish social security numbers with or without the dash.
- * Example: 151199-1512
- */
-const socialSecurityNumbersDK = /(?<dd>[0-3][0-9])(?<mm>[0-1][0-9])(?<yy>[0-9]{2}).?(?<id>[0-9]{4})/g;
-/**
- * Matches positive or negative integers.
- * Example: -20
- */
-const integers = /-?\d+/g;
-/**
- * Matches inverted US format positive or negative decimal numbers with no thousand separators.
- * Example: -20412,3461
- */
-const numberNoThousandSepCommaDecimal = /-?\d+,\d+/g;
-/**
- * Matches US format positive or negative decimal numbers with no thousand separators.
- * Example: -20412.3461
- */
-const numberNoThousandSepDotDecimal = /-?\d+.\d+/g;
-/**
- * Matches inverted US format positive or negative decimal numbers with thousand separators.
- * Example: -20.412,34
- */
-const numberDotSepCommaDecimal = /-?\d{1,3}(\.\d{3})*(,\d+)?/g;
-/**
- * Matches US format positive or negative decimal numbers with thousand separators.
- * Example: -20,412.34
- */
-const numberCommaSepDotDecimal = /-?\d{1,3}(,\d{3})*(\.\d+)?/g;
-/**
- * Prefixes for hex colors, hex decimal and regexp unicode hex
- */
-const isHexPrefix = /^(0x|0h|(\\?u)|#)/i;
-/**
- * Understands prefixes for hex colors, hex decimal and regexp unicode hex
- */
-const isHex = /^(0x|0h|(\\?u)|#)?[0-9A-F]+$/i;
-/**
- * For checking if a string is of only alpha characters for a specific locale.
- */
-const isLocaleAlpha = new Map([
-    ['en-US', /^[A-Z]+$/i],
-    ['az-AZ', /^[A-VXYZÇƏĞİıÖŞÜ]+$/i],
-    ['bg-BG', /^[А-Я]+$/i],
-    ['cs-CZ', /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]+$/i],
-    ['da-DK', /^[A-ZÆØÅ]+$/i],
-    ['de-DE', /^[A-ZÄÖÜß]+$/i],
-    ['el-GR', /^[Α-ώ]+$/i],
-    ['es-ES', /^[A-ZÁÉÍÑÓÚÜ]+$/i],
-    ['fa-IR', /^[ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/i],
-    ['fr-FR', /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]+$/i],
-    ['it-IT', /^[A-ZÀÉÈÌÎÓÒÙ]+$/i],
-    ['nb-NO', /^[A-ZÆØÅ]+$/i],
-    ['nl-NL', /^[A-ZÁÉËÏÓÖÜÚ]+$/i],
-    ['nn-NO', /^[A-ZÆØÅ]+$/i],
-    ['hu-HU', /^[A-ZÁÉÍÓÖŐÚÜŰ]+$/i],
-    ['pl-PL', /^[A-ZĄĆĘŚŁŃÓŻŹ]+$/i],
-    ['pt-PT', /^[A-ZÃÁÀÂÄÇÉÊËÍÏÕÓÔÖÚÜ]+$/i],
-    ['ru-RU', /^[А-ЯЁ]+$/i],
-    ['sl-SI', /^[A-ZČĆĐŠŽ]+$/i],
-    ['sk-SK', /^[A-ZÁČĎÉÍŇÓŠŤÚÝŽĹŔĽÄÔ]+$/i],
-    ['sr-RS@latin', /^[A-ZČĆŽŠĐ]+$/i],
-    ['sr-RS', /^[А-ЯЂЈЉЊЋЏ]+$/i],
-    ['sv-SE', /^[A-ZÅÄÖ]+$/i],
-    ['th-TH', /^[ก-๐\s]+$/i],
-    ['tr-TR', /^[A-ZÇĞİıÖŞÜ]+$/i],
-    ['uk-UA', /^[А-ЩЬЮЯЄIЇҐі]+$/i],
-    ['vi-VN', /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴĐÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸ]+$/i],
-    ['ku-IQ', /^[ئابپتجچحخدرڕزژسشعغفڤقکگلڵمنوۆھەیێيطؤثآإأكضصةظذ]+$/i],
-    // eslint-disable-next-line no-misleading-character-class
-    ['ar', /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]+$/],
-    ['he', /^[א-ת]+$/],
-    ['fa', /^['آاءأؤئبپتثجچحخدذرزژسشصضطظعغفقکگلمنوهةی']+$/i],
-]);
-/**
- * For checking if a string is of only alpha-numeric characters for a specific locale.
- */
-const isLocaleAlphaNumeric = new Map([
-    ['en-US', /^[0-9A-Z]+$/i],
-    ['az-AZ', /^[0-9A-VXYZÇƏĞİıÖŞÜ]+$/i],
-    ['bg-BG', /^[0-9А-Я]+$/i],
-    ['cs-CZ', /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]+$/i],
-    ['da-DK', /^[0-9A-ZÆØÅ]+$/i],
-    ['de-DE', /^[0-9A-ZÄÖÜß]+$/i],
-    ['el-GR', /^[0-9Α-ω]+$/i],
-    ['es-ES', /^[0-9A-ZÁÉÍÑÓÚÜ]+$/i],
-    ['fr-FR', /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]+$/i],
-    ['it-IT', /^[0-9A-ZÀÉÈÌÎÓÒÙ]+$/i],
-    ['hu-HU', /^[0-9A-ZÁÉÍÓÖŐÚÜŰ]+$/i],
-    ['nb-NO', /^[0-9A-ZÆØÅ]+$/i],
-    ['nl-NL', /^[0-9A-ZÁÉËÏÓÖÜÚ]+$/i],
-    ['nn-NO', /^[0-9A-ZÆØÅ]+$/i],
-    ['pl-PL', /^[0-9A-ZĄĆĘŚŁŃÓŻŹ]+$/i],
-    ['pt-PT', /^[0-9A-ZÃÁÀÂÄÇÉÊËÍÏÕÓÔÖÚÜ]+$/i],
-    ['ru-RU', /^[0-9А-ЯЁ]+$/i],
-    ['sl-SI', /^[0-9A-ZČĆĐŠŽ]+$/i],
-    ['sk-SK', /^[0-9A-ZÁČĎÉÍŇÓŠŤÚÝŽĹŔĽÄÔ]+$/i],
-    ['sr-RS@latin', /^[0-9A-ZČĆŽŠĐ]+$/i],
-    ['sr-RS', /^[0-9А-ЯЂЈЉЊЋЏ]+$/i],
-    ['sv-SE', /^[0-9A-ZÅÄÖ]+$/i],
-    ['th-TH', /^[ก-๙\s]+$/i],
-    ['tr-TR', /^[0-9A-ZÇĞİıÖŞÜ]+$/i],
-    ['uk-UA', /^[0-9А-ЩЬЮЯЄIЇҐі]+$/i],
-    ['ku-IQ', /^[٠١٢٣٤٥٦٧٨٩0-9ئابپتجچحخدرڕزژسشعغفڤقکگلڵمنوۆھەیێيطؤثآإأكضصةظذ]+$/i],
-    ['vi-VN', /^[0-9A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴĐÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸ]+$/i],
-    // eslint-disable-next-line no-misleading-character-class
-    ['ar', /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]+$/],
-    ['he', /^[0-9א-ת]+$/],
-    ['fa', /^['0-9آاءأؤئبپتثجچحخدذرزژسشصضطظعغفقکگلمنوهةی۱۲۳۴۵۶۷۸۹۰']+$/i],
-]);
-
-var regexLibrary = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  repeatingWhiteSpace: repeatingWhiteSpace,
-  words: words,
-  socialSecurityNumbersDK: socialSecurityNumbersDK,
-  integers: integers,
-  numberNoThousandSepCommaDecimal: numberNoThousandSepCommaDecimal,
-  numberNoThousandSepDotDecimal: numberNoThousandSepDotDecimal,
-  numberDotSepCommaDecimal: numberDotSepCommaDecimal,
-  numberCommaSepDotDecimal: numberCommaSepDotDecimal,
-  isHexPrefix: isHexPrefix,
-  isHex: isHex,
-  isLocaleAlpha: isLocaleAlpha,
-  isLocaleAlphaNumeric: isLocaleAlphaNumeric
-});
 
 /**
  * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
@@ -1630,740 +1332,6 @@ function* rexec(regex, string) {
     }
 }
 
-/**
- * Returns an array of named groups defined inside a RegExp instance.
- * @param re RegExp instance to extract named groups from.
- */
-function regexGetGroupNames(re) {
-    const names = [];
-    for (const res of rexec(/\(\?<(?<name>\w+)>/g, re.toString())) {
-        names.push(res.groups.name);
-    }
-    return names;
-}
-
-/**
- * Escapes a string so it can be used in a regular expression.
- */
-function regexEscapeString(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-}
-
-/**
- * Convert a regex for matching to a regex for validation.
- * @param regex - The regex to convert
- * @example ```js
- * const regexMatchDigits = /\d+/gi;
- * const regexIsDigit = regexMatcherToValidater(regexMatchDigits); //=> /^\d+$/i
- * const isDigit = (str) => regexIsDigit.test(str)
- * isDigit('1') //=> true
- * isDigit('a') //=> false
- * ```
- */
-function regexMatcherToValidater(regex) {
-    return new RegExp(`^${regex.source}$`, regex.flags.replace('g', ''));
-}
-
-/**
- * Count occurances of a character within a given string.
- * @param input - The string to search
- * @param char - The character to find
- */
-function strCountCharOccurances(input, char) {
-    if (char.length !== 1) {
-        throw new Error('Expected char to be a single character string of length 1.');
-    }
-    let result = 0;
-    for (const c of input) {
-        if (c === char) {
-            result++;
-        }
-    }
-    return result;
-}
-
-/**
- * Count the number of occurrences of each character in a string.
- * @example
- * ```ts
- * strCountChars('Hello!') // Map(9) { 'H' => 1, 'e' => 1, 'l' => 2, 'o' => 1, '!' => 1 }
- * ```
- */
-function strCountChars(string) {
-    const result = new Map();
-    for (const char of string) {
-        const count = result.get(char);
-        result.set(char, count ? count + 1 : 1);
-    }
-    return result;
-}
-
-/**
- * Returns whether the string is lower case.
- * @param input - input string
- * @example
- * ```js
- * strIsLowerCase('abc')
- * //=> true
- *
- * strIsLowerCase('ABC')
- * //=> false
- * ```
- */
-function strIsLowerCase(input) {
-    return input === input.toLowerCase();
-}
-
-/**
- * Returns whether the string is upper case.
- * @param input - input string
- * @example
- * ```js
- * strIsUpperCase('abc')
- * //=> false
- *
- * strIsUpperCase('ABC')
- * //=> true
- * ```
- */
-function strIsUpperCase(input) {
-    return input === input.toUpperCase();
-}
-
-/**
- * Takes a multiline string and removes lines that are empty or only contain whitespace.
- * @param input - input string
- */
-function strLinesRemoveEmpty(input) {
-    return input
-        .replace(/\r?\n\s*\r?\n/gm, '\n')
-        .trimStart()
-        .trimEnd();
-}
-
-/**
- * Takes a multiline string and performs a left side trim of whitespace on each line.
- * @param input - input string
- */
-function strLinesTrimLeft(input) {
-    return input.replace(/\n\r?\s+/gm, '\n');
-}
-
-/**
- * Takes a multiline string and performs a right side trim of whitespace on each line.
- * @param input - input string
- */
-function strLinesTrimRight(input) {
-    return input.replace(/\s+\n/gm, '\n');
-}
-
-/**
- * Returns a given number of contatenations of a given input string.
- * @param input - input string
- * @param n - Number of repetitions of the input string
- */
-function strRepeat(input, n) {
-    return new Array(n).fill(input).join('');
-}
-
-/**
- * Very crude, simple, fast code formatting of minified code.
- * Only works when input code:
- * - is minified
- * - is scoped with brackets
- * - expressions end with semicolon
- * - has no string literals containing any of these characters: '{', '}', ';'.
- * @param input The minified source code
- * @param indent The string to use as indentation
- */
-function strPrettifyMinifiedCode(input, indent = '  ') {
-    const getIndents = (n) => strRepeat('\t', n);
-    const fixIndents = (s) => {
-        return s.replace(/\t +/g, '\t').replace(/\t/g, indent);
-    };
-    let depth = 0;
-    const arr = Array.from(input).map((c) => {
-        if (c === '{') {
-            depth++;
-            return '{\n' + getIndents(depth);
-        }
-        else if (c === '}') {
-            depth--;
-            return '\n' + getIndents(depth) + '}\n' + getIndents(depth);
-        }
-        else if (c === ';') {
-            return ';\n' + getIndents(depth);
-        }
-        else
-            return c;
-    });
-    return fixIndents(strLinesTrimRight(strLinesRemoveEmpty(arr.join(''))));
-}
-
-/**
- * Remove duplicate characters from a string.
- * ```ts
- * strRemoveDuplicateChars('Hello world!') // 'Helo wrd!'
- * ```
- */
-function strRemoveDuplicateChars(string) {
-    return Array.from(new Set(string)).join('');
-}
-
-/**
- * In a given string, replace all occurances of a given search string with a given replacement string.
- * @param input input string
- * @param replace string to find a replace
- * @param replaceWith string to replace matches with
- * @param flags RegExp flags as single string.
- */
-function strReplaceAll(input, replace, replaceWith, flags = 'g') {
-    return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith);
-}
-
-/**
- * Sorts the characters in a string.
- * @example
- * ```ts
- * strSortChars('hello') // 'ehllo'
- * ```
- */
-function strSortChars(string) {
-    return Array.from(string).sort().join('');
-}
-
-function isCamelCaseWordBreakIndex(word, index) {
-    return (strIsLowerCase(word[index - 1]) &&
-        strIsUpperCase(word[index]) &&
-        !isNumericString(word[index - 1]) &&
-        !isNumericString(word[index]));
-}
-/**
- * Returns an array of words in the string
- * @param input - input string
- * @example
- * ```js
- * strSplitCamelCase('someCamelCase')
- * //=> ['some', 'Camel', 'Case']
- * ```
- */
-function strSplitCamelCase(word) {
-    const result = [];
-    const lastCharIndex = word.length - 1;
-    let lastCamelCaseBreakIndex = 0;
-    let foundCamelCase = false;
-    for (let i = 1; i < word.length; i++) {
-        if (foundCamelCase && i === lastCharIndex) {
-            // last char
-            const sub = word.substring(lastCamelCaseBreakIndex);
-            if (sub)
-                result.push(sub);
-            continue;
-        }
-        if (isCamelCaseWordBreakIndex(word, i)) {
-            const sub = word.substring(lastCamelCaseBreakIndex, i);
-            if (!sub)
-                continue;
-            result.push(sub);
-            lastCamelCaseBreakIndex = i;
-            foundCamelCase = true;
-        }
-    }
-    // if no splits needed, just return the word as it was
-    if (!foundCamelCase) {
-        result.push(word);
-    }
-    return result;
-}
-
-/**
- * Converts a string to an array of char codes
- * @example
- * ```ts
- * strToCharCodes('hello') // [104, 101, 108, 108, 111]
- * ```
- */
-function strToCharCodes(str) {
-    const len = str.length;
-    const ret = new Array(len);
-    for (let i = 0; i < len; i++) {
-        ret[i] = str.charCodeAt(i);
-    }
-    return ret;
-}
-
-/**
- * Returns a string containing the set of all unique characters in a string.
- * @example
- * ```ts
- * strToCharSet('hello') // 'ehlo'
- * ```
- */
-function strToCharSet(string) {
-    return Array.from(new Set(string)).sort().join('');
-}
-
-/**
- * Intelligently split a string into sentences. Uses NLP with parse tree to determine sentence boundaries.
- * @param text Text to split into sentences
- * @example
- * ```ts
- * strToSentences('Hello world. How are you?') // ['Hello world.', 'How are you?']
- * ```
- */
-function strToSentences(text) {
-    return sentenceSplitter.split(text)
-        .map((node) => {
-        const [start, end] = node.range;
-        return text.substring(start, end).replace(repeatingWhiteSpace, ' ').trim();
-    })
-        .filter((s) => !!s);
-}
-
-/**
- * Returns an array of words in the string
- * @param input - input string
- * @example
- * ```js
- * strToWords('How are you?')
- * //=> ['How', 'are', 'you']
- * ```
- */
-function strToWords(input) {
-    return lodash.words(input);
-}
-
-/**
- * Inserts provided strings before and after a string.
- * @param input - input string
- * @param left - string to place before
- * @param right - string to place after
- * @param flags - regex flags
- */
-function strUnwrap(input, left, right, flags = '') {
-    return input
-        .replace(new RegExp('^' + regexEscapeString(left), flags), '')
-        .replace(new RegExp(regexEscapeString(right) + '$', flags), '');
-}
-
-/**
- * Inserts provided strings before and after a string.
- * @param input - input string
- * @param left - string to place before
- * @param right - string to place after
- * @example
- * ```js
- * expect(util.strWrapBetween('input', '#', '&')).toBe('#input&');
- * ```
- */
-function strWrapBetween(input, left, right) {
-    return left + input + right;
-}
-
-/**
- * Inserts a provided string before and after a string.
- * @param input - input string
- * @param wrap - string to place before and after
- * @example
- * ```js
- * expect(util.strWrapIn('input', '#')).toBe('#input#');
- * ```
- */
-function strWrapIn(input, wrap) {
-    return wrap + input + wrap;
-}
-
-/**
- * Wraps a string in angle brackets.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInAngleBrackets('input')).toBe('<input>');
- * ```
- */
-function strWrapInAngleBrackets(input) {
-    return '<' + input + '>';
-}
-
-/**
- * Wraps a string in braces.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInBraces('input')).toBe('{input}');
- * ```
- */
-function strWrapInBraces(input) {
-    return '{' + input + '}';
-}
-
-/**
- * Wraps a string in brackets.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInBrackets('input')).toBe('[input]');
- * ```
- */
-function strWrapInBrackets(input) {
-    return '[' + input + ']';
-}
-
-/**
- * Wraps a string in parenthesis.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInDoubleQuotes('input')).toBe('"input"');
- * ```
- */
-function strWrapInDoubleQuotes(input) {
-    return '"' + input + '"';
-}
-
-/**
- * Wraps a string in parenthesis.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInParenthesis('input')).toBe('(input)');
- * ```
- */
-function strWrapInParenthesis(input) {
-    return '(' + input + ')';
-}
-
-/**
- * Wraps a string in parenthesis.
- * @param input - input string
- * @example
- * ```js
- * expect(util.strWrapInSingleQuotes('input')).toBe("'input'");
- * ```
- */
-function strWrapInSingleQuotes(input) {
-    return "'" + input + "'";
-}
-
-/**
- * String hashing
- */
-const strHash = {
-    /**
-     * Hash a string into a buffer with a given algorithm
-     * @param string The string to hash
-     * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
-     * @see strHashListAlgorithms for a list of accepted strings for 'algorithm'
-     * @example
-     * ```ts
-     * strHash.toBuffer('hello')
-     * //=> <Buffer 2c f2 4d ba 5f b0 a3 0e 26 e8 3b 2a c5 b9 e2 9e 1b 16 1e 5c 1f a7 42 5e 73 04 33 62 93 8b 98 24>
-     * ```
-     */
-    toBuffer(string, algorithm = 'sha256') {
-        return crypto.createHash(algorithm).update(string).digest();
-    },
-    /**
-     * Hash a string into an array of unsigned 32-bit integers.
-     * @param string The string to hash
-     * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
-     * @see strHashListAlgorithms for a list of accepted strings for 'algorithm'
-     * @example
-     * ```ts
-     * strHash.toUint32Array('hello')
-     * //=> Uint32Array(8) [3125670444,  245608543, 708569126, 2665658821, 1545475611, 1581426463, 1647510643, 613976979]
-     * ```
-     */
-    toUint32Array(string, algorithm = 'sha256') {
-        return new Uint32Array(this.toBuffer(string, algorithm).buffer);
-    },
-    /**
-     * Hash a string into a buffer with a given algorithm
-     * @param string The string to hash
-     * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
-     * @see strHashListAlgorithms for a list of accepted strings for 'algorithm'
-     * @param encoding base64 | base64url | hex | binary | utf8 | utf-8 | utf16le | latin1 | ascii | binary | ucs2 | ucs-2
-     * @example
-     * ```ts
-     * strHash.toString('hello', 'sha256', 'hex')
-     * //=> 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
-     * ```
-     */
-    toString(string, algorithm = 'sha256', encoding = 'base64') {
-        return this.toBuffer(string, algorithm).toString(encoding);
-    },
-    /**
-     * List all available hash algorithms (node-js crypto library)
-     */
-    listAlgorithms() {
-        return crypto.getHashes();
-    },
-};
-
-/**
- * Returns the string as is, except the first character is capitalized.
- * @param string The string to capitalize the first character of.
- */
-function strFirstCharToUpperCase(string) {
-    return string.charAt(0).toUpperCase() + string.substring(1);
-}
-
-/**
- * Tries to parse strings such as "false" and "true" into corresponding booleans.
- * @param string The string to parse.
- */
-function strParseBoolean(string) {
-    return string.toLowerCase() === 'true';
-}
-
-/**
- * Checks if a string is a valid regex flags string.
- * @example
- * ```ts
- * regexIsValidFlags('gim') // true
- * regexIsValidFlags('gmisuy') // false
- * ```
- */
-function regexIsValidFlags(flags) {
-    return /^[gimsuy]*$/.test(flags) && strRemoveDuplicateChars(flags).length === flags.length;
-}
-
-/**
- * Takes a string of RegExp flags and returns a string guaranteed to be valid.
- * @param flags - string of RegExp flags
- * @example
- * ```ts
- * regexFixFlags('ggim') // 'gim'
- * regexFixFlags('?gim*') // 'gim'
- * ```
- */
-function regexFixFlags(flags) {
-    if (!flags)
-        return flags;
-    return strSortChars(strRemoveDuplicateChars(flags).replace(/[^gimsuy]/gi, ''));
-}
-
-/**
- * Returns an array of all valid flags for a regular expression.
- * @example
- * ```ts
- * regexValidFlags() //=> ['g', 'i', 'm', 's', 'u', 'y']
- * ```
- */
-function regexValidFlags() {
-    return ['g', 'i', 'm', 's', 'u', 'y'];
-}
-
-/**
- * A RegExp class extension with extra features.
- */
-class BemojeRegex extends RegExp {
-    static defaultOptions = {
-        escapeSourceString: false,
-        fixFlags: false,
-    };
-    options;
-    constructor(source, flags = '', options) {
-        if (source instanceof RegExp && !flags) {
-            super(source);
-        }
-        else {
-            options = Object.assign({}, BemojeRegex.defaultOptions, options);
-            if (source instanceof RegExp) {
-                flags = flags ? flags : source.flags;
-                source = source.source;
-            }
-            else if (options?.escapeSourceString) {
-                source = regexEscapeString(source);
-            }
-            if (options.fixFlags) {
-                flags = regexFixFlags(flags);
-            }
-            else {
-                flags = strSortChars(flags);
-            }
-            super(source, flags);
-        }
-        this.options = options || BemojeRegex.defaultOptions;
-    }
-    /**
-     * Checks if a string is a valid regex flags string.
-     */
-    static isValidFlags = regexIsValidFlags;
-    /**
-     * Takes a string of RegExp flags and returns a string guaranteed to be valid.
-     * @param flags - string of RegExp flags
-     */
-    static fixFlags = regexFixFlags;
-    /**
-     * Returns an array of all valid flags for a regular expression.
-     */
-    static getValidFlags = regexValidFlags;
-    /**
-     * Returns true if the RegExp instance has same source and flags.
-     * @param regex - RegExp instance to compare to.
-     */
-    compareTo(regex) {
-        return this.source === regex.source && this.flags === regex.flags;
-    }
-    /**
-     * Returns true if the RegExp instance is a also BemojeRegex instance and both have the same source and flags.
-     * @param regex - RegExp instance to compare to.
-     */
-    compareToStrict(regex) {
-        return regex instanceof BemojeRegex && this.source === regex.source && this.flags === regex.flags;
-    }
-    /**
-     * Returns an array of named groups defined inside the RegExp instance.
-     */
-    getGroupNames() {
-        return regexGetGroupNames(this);
-    }
-    /**
-     * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
-     */
-    *rexec(string) {
-        yield* rexec(this, string);
-    }
-    /**
-     * Convert a regex for matching to a regex for validation.
-     */
-    toValidator() {
-        return Object.setPrototypeOf(regexMatcherToValidater(this), BemojeRegex.prototype);
-    }
-    /**
-     * Convert the BemojeRegex instance to a RegExp instance.
-     */
-    toRegExp() {
-        return Object.setPrototypeOf(this, RegExp.prototype);
-    }
-}
-// declare global {
-//   interface RegExp {
-//     /**
-//      * Convert the RegExp instance to a BemojeRegex instance.
-//      */
-//     get bemoje(): BemojeRegex
-//   }
-// }
-// Object.defineProperty(RegExp.prototype, 'bemoje', {
-//   get: function () {
-//     return Object.setPrototypeOf(this, BemojeRegex.prototype)
-//   },
-// })
-// const reg = new BemojeRegex(/(?<asd>\/\*\*)(?<aga3>.*?)(?=\*\/)(?<ahfdtr>\*\/)/gi)
-// console.log(reg.getGroupNames())
-// console.log(reg.getGroupNames())
-// console.log(reg.toValidator())
-// console.log(reg.toRegExp())
-// const reg2 = new BemojeRegex(/abc/g)
-// const str2 = 'lala abc lalala abc ...'
-// console.log([...reg2.rexec(str2)])
-
-/**
- * Builds a regex that matches a string between two strings. Supports regex instead of string.
- * @param left - string or regex to match before
- * @param right - string or regex to match after
- * @param flags - regex flags - 'g' and 's' are always added to whatever flags are passed.
- * @example
- * ```ts
- * const regex = buildRegexBetween(/a/, /b/)
- * 'abc'.match(regex)?.groups?.mid // 'c'
- * ```
- */
-function buildRegexBetween(left, right, flags) {
-    left = typeof left === 'string' ? regexEscapeString(left) : left.source;
-    right = typeof right === 'string' ? regexEscapeString(right) : right.source;
-    flags = flags ? strRemoveDuplicateChars('gs' + flags) : 'gs';
-    return new RegExp(`(?<left>${left})(?<mid>.*?)(?=${right})(?<right>${right})`, flags);
-}
-
-/**
- * Sets the name of a function.
- * @param name The name to set.
- * @param fun The function to set the name of.
- */
-function funSetName(name, fun) {
-    Object.defineProperty(fun, 'name', { value: name, configurable: true });
-    return fun;
-}
-
-function parseParam(param) {
-    const isString = typeof param === 'string';
-    const reg = isString
-        ? new RegExp(regexEscapeString(param), 'g')
-        : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'));
-    const regValidate = new RegExp('^' + reg.source + '$', '');
-    return [reg, regValidate];
-}
-/**
- * Builds a regex that matches a string between two strings. Supports regex instead of string.
- * @param type - type of scope being matched
- * @param left - string or regex to match before
- * @param right - string or regex to match after
- * @param flags - regex flags - 'g' and 's' are always added to whatever flags are passed.
- * @example
- * ```ts
- * const regex = buildRegexBetween(/a/, /b/)
- * 'abc'.match(regex)?.groups?.mid // 'c'
- * ```
- */
-function regexScopeTree(type, left, right) {
-    const [regLeft, regLeftValidate] = parseParam(left);
-    const [regRight, regRightValidate] = parseParam(right);
-    return funSetName(type, function* (string, yieldOnlyRootNodes = false) {
-        const matches = [...rexec(regLeft, string)].concat([...rexec(regRight, string)]);
-        matches.sort(compareArray((a, b) => a.index - b.index));
-        const nodes = [];
-        const stack = [];
-        for (const match of matches) {
-            if (regLeftValidate.test(match.match)) {
-                stack.push(match);
-            }
-            else if (regRightValidate.test(match.match)) {
-                const left = stack.pop();
-                if (!left)
-                    continue;
-                const right = match;
-                const depth = stack.length;
-                const node = {
-                    type,
-                    parent: null,
-                    depth,
-                    left,
-                    right,
-                    between: {
-                        index: left.lastIndex,
-                        lastIndex: right.index,
-                        groups: {},
-                        match: string.substring(left.lastIndex, right.index),
-                    },
-                    children: [],
-                };
-                setNonEnumerable(node, 'parent');
-                for (let i = nodes.length - 1; i >= 0; i--) {
-                    if (left.index >= nodes[i].left.index || right.lastIndex <= nodes[i].right.lastIndex)
-                        break;
-                    node.children.push(nodes[i]);
-                    if (nodes[i].parent !== null)
-                        continue;
-                    nodes[i].parent = node;
-                }
-                nodes.push(node);
-                if (yieldOnlyRootNodes && depth > 0)
-                    continue;
-                yield node;
-            }
-            else {
-                throw new Error('Match does not recognize itself as neither left nor right, which should be impossible.');
-            }
-        }
-    });
-}
-// const parenthesesTree = regexScopeTree('Parentheses', '(', ')')
-// const string = '(1+((3)+(1)))+(15+(21-(521))))'
-// console.dir([...parenthesesTree(string, true)], { depth: null })
-
 const REGEX_VALID_A = /^[A-Z]*$/i;
 const alphaToColMap = new Map();
 /**
@@ -2401,67 +1369,10 @@ function A1ToColRow(A1, zeroIndexed = false) {
     return [letterToCol(matches[0].groups.a) - adjust, parseInt(matches[0].groups.n) - adjust];
 }
 
-const colToAlphaMap = new Map();
-/**
- * Convert a spreadsheet column number to a column letter.
- * @param col - Column number
- * @param zeroIndexed - Whether or not column number start at one or zero.
- */
-function colToLetter(col, zeroIndexed = false) {
-    if (zeroIndexed)
-        col++;
-    const fromMem = colToAlphaMap.get(col);
-    if (fromMem)
-        return fromMem;
-    if (!Number.isInteger(col))
-        throw new Error(`Expected col to be an integer. Got: ${col}`);
-    if (col < 1)
-        throw new Error(`Expected col to be greater than zero. Got: ${col}`);
-    let letter = '';
-    let temp;
-    while (col > 0) {
-        temp = (col - 1) % 26;
-        letter = String.fromCharCode(temp + 65) + letter;
-        col = (col - temp - 1) / 26;
-    }
-    return letter;
-}
-
-/**
- * Convert spreadsheet [column, row] to A1-notation.
- * @param CR - [column, row]
- * @param zeroIndexed - Whether or not column number start at one or zero.
- */
-function colRowToA1(CR, zeroIndexed = false) {
-    if (CR.length !== 2)
-        throw new Error(`Expected CR to to be length 2. Got: ${CR.length}`);
-    if (!Number.isInteger(CR[1]))
-        throw new Error(`Expected row to be an integer. Got: ${CR[1]}`);
-    if (CR[1] < 1)
-        throw new Error(`Expected row to be greater than zero. Got: ${CR[1]}`);
-    return colToLetter(CR[0], zeroIndexed) + CR[1].toString();
-}
-
 /**
  * Two-dimensional table class supporting column and row headers.
  */
 class Table extends Base {
-    _columnHeaders;
-    _rowHeaders;
-    _data = [];
-    /**
-     * Creates a Table instance from CSV string data.
-     * @param csv CSV data string
-     * @param delimiter csv delimiter
-     * @param options TableOptions constructor options.
-     */
-    static fromCSV(csv, delimiter = ';', options = {}) {
-        options.data = csv
-            .split('\n')
-            .filter((line) => line.length)
-            .map((line) => line.trim().split(delimiter));
-        return new Table(options);
-    }
     /**
      * Revive a stringified Table object.
      * @param json a stringified Table object.
@@ -2471,6 +1382,7 @@ class Table extends Base {
     }
     constructor(options = {}) {
         super();
+        this._data = [];
         this.validateOptions(options);
         this.handleOptions(options);
         this.validateData();
@@ -2600,13 +1512,6 @@ class Table extends Base {
             result.push(this._data[i].slice());
         }
         return result;
-    }
-    /**
-     * Returns the table as a CSV string.
-     * @param delimiter csv delimiter
-     */
-    toCSV(delimiter = ';') {
-        return arr2dToCSV(this.toArray(), delimiter);
     }
     /**
      * Override of the native toJSON method. When parsing the returned json string, it can be revived as a Table object when using the static Table.fromJSON method.
@@ -2755,38 +1660,64 @@ class Table extends Base {
 }
 
 function isValidDate(year, month, day, hour, minute, second, millisecond) {
-    let str = '';
-    let format = '';
-    if (year !== undefined) {
-        format += 'YYYY';
-        str += `${year.toString().padStart(4, '0')}`;
-    }
-    if (month !== undefined) {
-        format += '-MM';
-        str += `-${month.toString().padStart(2, '0')}`;
-    }
-    if (day !== undefined) {
-        format += '-DD';
-        str += `-${day.toString().padStart(2, '0')}`;
-    }
-    if (hour !== undefined) {
-        format += ' HH';
-        str += ` ${hour.toString().padStart(2, '0')}`;
-    }
-    if (minute !== undefined) {
-        format += ':mm';
-        str += `:${minute.toString().padStart(2, '0')}`;
-    }
-    if (second !== undefined) {
-        format += ':ss';
-        str += `:${second.toString().padStart(2, '0')}`;
-    }
-    if (millisecond !== undefined) {
-        format += ':SSS';
-        str += `:${millisecond.toString().padStart(3, '0')}`;
-    }
-    return date__default["default"].isValid(str, format);
+    year = year ? Number(year) : 0;
+    month = month ? Number(month) : 0;
+    day = day ? Number(day) : 0;
+    hour = hour ? Number(hour) : 0;
+    minute = minute ? Number(minute) : 0;
+    second = second ? Number(second) : 0;
+    millisecond = millisecond ? Number(millisecond) : 0;
+    const d = new Date(year, month - 1, day, hour, minute, second, millisecond);
+    return (d.getFullYear() === year &&
+        d.getMonth() + 1 === month &&
+        d.getDate() === day &&
+        d.getHours() === hour &&
+        d.getMinutes() === minute &&
+        d.getSeconds() === second &&
+        d.getMilliseconds() === millisecond);
 }
+// import date from 'date-and-time'
+// export function isValidDate(
+//   year?: number | string,
+//   month?: number | string,
+//   day?: number | string,
+//   hour?: number | string,
+//   minute?: number | string,
+//   second?: number | string,
+//   millisecond?: number | string,
+// ): boolean {
+//   let str = ''
+//   let format = ''
+//   if (year !== undefined) {
+//     format += 'YYYY'
+//     str += `${year.toString().padStart(4, '0')}`
+//   }
+//   if (month !== undefined) {
+//     format += '-MM'
+//     str += `-${month.toString().padStart(2, '0')}`
+//   }
+//   if (day !== undefined) {
+//     format += '-DD'
+//     str += `-${day.toString().padStart(2, '0')}`
+//   }
+//   if (hour !== undefined) {
+//     format += ' HH'
+//     str += ` ${hour.toString().padStart(2, '0')}`
+//   }
+//   if (minute !== undefined) {
+//     format += ':mm'
+//     str += `:${minute.toString().padStart(2, '0')}`
+//   }
+//   if (second !== undefined) {
+//     format += ':ss'
+//     str += `:${second.toString().padStart(2, '0')}`
+//   }
+//   if (millisecond !== undefined) {
+//     format += ':SSS'
+//     str += `:${millisecond.toString().padStart(3, '0')}`
+//   }
+//   return date.isValid(str, format)
+// }
 
 /**
  * Throws if the given year is invalid.
@@ -2920,12 +1851,21 @@ function isoDateTimestamp(date = new Date()) {
  * ```
  */
 class ExtensibleFunction extends Function {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor(name, f) {
         Object.defineProperty(f, 'name', { value: name });
-        super(f);
+        super(typeof f === 'string' ? f : f.toString());
         return Object.setPrototypeOf(f, new.target.prototype);
     }
+}
+
+/**
+ * Sets the name of a function.
+ * @param name The name to set.
+ * @param fun The function to set the name of.
+ */
+function funSetName(name, fun) {
+    Object.defineProperty(fun, 'name', { value: name, configurable: true });
+    return fun;
 }
 
 const HTML_VOID_TAGS = new Set([
@@ -3118,7 +2058,18 @@ const HTML_ATTRIBUTES = {
     },
     'bgcolor': {
         description: 'Background color of the element. Note:This is a legacy attribute. Please use the CSSbackground-colorproperty instead.',
-        relatedTags: ['body', 'col', 'colgroup', 'marquee', 'table', 'tbody', 'tfoot', 'td', 'th', 'tr'],
+        relatedTags: [
+            'body',
+            'col',
+            'colgroup',
+            'marquee',
+            'table',
+            'tbody',
+            'tfoot',
+            'td',
+            'th',
+            'tr',
+        ],
     },
     'border': {
         description: 'The border width. Note:This is a legacy attribute. Please use the CSSborderproperty instead.',
@@ -3226,7 +2177,17 @@ const HTML_ATTRIBUTES = {
     },
     'disabled': {
         description: 'Indicates whether the user can interact with the element.',
-        relatedTags: ['button', 'command', 'fieldset', 'input', 'keygen', 'optgroup', 'option', 'select', 'textarea'],
+        relatedTags: [
+            'button',
+            'command',
+            'fieldset',
+            'input',
+            'keygen',
+            'optgroup',
+            'option',
+            'select',
+            'textarea',
+        ],
     },
     'download': {
         description: 'Indicates that the hyperlink is to be used for downloading a resource.',
@@ -3588,7 +2549,17 @@ const HTML_ATTRIBUTES = {
     },
     'type': {
         description: 'Defines the type of the element.',
-        relatedTags: ['button', 'input', 'command', 'embed', 'object', 'script', 'source', 'style', 'menu'],
+        relatedTags: [
+            'button',
+            'input',
+            'command',
+            'embed',
+            'object',
+            'script',
+            'source',
+            'style',
+            'menu',
+        ],
     },
     'usemap': {
         description: '',
@@ -3977,8 +2948,8 @@ const HTML_ELEMENTS = {
 };
 
 class Doc {
-    elements = [];
     constructor(...elements) {
+        this.elements = [];
         this.elements = elements;
     }
     toString() {
@@ -3986,13 +2957,8 @@ class Doc {
     }
 }
 class Elem {
-    type;
-    attributes;
-    elements;
-    isVoid;
     constructor(type, ...args) {
         this.type = type;
-        this.checkValidType();
         this.isVoid = HTML_VOID_TAGS.has(type);
         this.attributes = new Map();
         this.elements = [];
@@ -4011,12 +2977,6 @@ class Elem {
     }
     get description() {
         return HTML_ELEMENTS[this.type].description;
-    }
-    checkValidType() {
-        if (!Object.hasOwn(HTML_ELEMENTS, this.type)) {
-            //throw new Error(`Invalid HTMLElement tag: ${this.type}`)
-            console.log(`Maybe invalid HTMLElement tag: ${this.type}`);
-        }
     }
     renderAttributes() {
         return this.attributes.size ? ' ' + Array.from(this.attributes.values()).join(' ') : '';
@@ -4044,22 +3004,10 @@ class Elem {
     }
 }
 class Att {
-    type;
-    value;
-    isBoolean;
     constructor(type, value) {
         this.type = type;
         this.value = value;
-        this.checkValidType();
         this.isBoolean = HTML_BOOLEAN_ATTRIBUTES.has(type);
-    }
-    checkValidType() {
-        if (!Object.hasOwn(HTML_ATTRIBUTES, this.type) &&
-            !HTML_EVENT_HANDLER_ATTRIBUTES.has(this.type) &&
-            !this.type.startsWith('data-')) {
-            // throw new Error(`Invalid attribute type: ${this.type}`)
-            console.log(`Maybe invalid attribute type: ${this.type}`);
-        }
     }
     toString() {
         return `${this.type}${this.isBoolean ? '' : `="${this.value || ''}"`}`;
@@ -4094,7 +3042,28 @@ function defineAttributeType(type) {
 }
 const comment = (comment) => `<!-- ${comment} -->`;
 const doctype = (type = 'html') => `<!DOCTYPE ${type}>`;
-var HtmlGenerate = { Doc, el, at, comment, doctype, defineElementType, defineAttributeType };
+function createTable(rows, hasHeader = false) {
+    const table = el.table();
+    for (let i = 0; i < rows.length; i++) {
+        const isHeader = i === 0 && hasHeader;
+        const row = rows[i];
+        const tr = el.tr();
+        for (const cell of row) {
+            tr.elements.push(isHeader ? el.th(cell) : el.td(cell));
+        }
+        table.elements.push(tr);
+    }
+    return table;
+}
+const HtmlGenerate = {
+    el,
+    at,
+    comment,
+    doctype,
+    defineElementType,
+    defineAttributeType,
+    createTable,
+};
 // const doc = new Doc(
 //   doctype(),
 //   el.html(
@@ -4161,6 +3130,7 @@ var HtmlGenerate = { Doc, el, at, comment, doctype, defineElementType, defineAtt
  * @returns {Array<Array<string>>} Data table which is an arrays of row-arrays of cell content (string).
  */
 function htmlTableTo2dArray(element, headers = true) {
+    var _a;
     const result = [];
     const htmlRows = element.querySelectorAll('tr');
     for (let i = 0; i < htmlRows.length; i++) {
@@ -4170,7 +3140,7 @@ function htmlTableTo2dArray(element, headers = true) {
         for (let j = 0; j < htmlCells.length; j++) {
             const htmlCell = htmlCells[j];
             if (htmlCell) {
-                row.push(htmlCell?.textContent?.trim() || '');
+                row.push(((_a = htmlCell === null || htmlCell === void 0 ? void 0 : htmlCell.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || '');
             }
         }
         if (!headers) {
@@ -4274,41 +3244,97 @@ function mapGetOrElse(map, key, callback) {
     return value;
 }
 
+/**
+ * String hashing
+ */
+const strHash = {
+    /**
+     * Hash a string into a buffer with a given algorithm
+     * @param string The string to hash
+     * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
+     * @see strHashListAlgorithms for a list of accepted strings for 'algorithm'
+     * @example
+     * ```ts
+     * strHash.toBuffer('hello')
+     * //=> <Buffer 2c f2 4d ba 5f b0 a3 0e 26 e8 3b 2a c5 b9 e2 9e 1b 16 1e 5c 1f a7 42 5e 73 04 33 62 93 8b 98 24>
+     * ```
+     */
+    toBuffer(string, algorithm = 'sha256') {
+        return crypto.createHash(algorithm).update(string).digest();
+    },
+    /**
+     * Hash a string into an array of unsigned 32-bit integers.
+     * @param string The string to hash
+     * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
+     * @see strHashListAlgorithms for a list of accepted strings for 'algorithm'
+     * @example
+     * ```ts
+     * strHash.toUint32Array('hello')
+     * //=> Uint32Array(8) [3125670444,  245608543, 708569126, 2665658821, 1545475611, 1581426463, 1647510643, 613976979]
+     * ```
+     */
+    toUint32Array(string, algorithm = 'sha256') {
+        return new Uint32Array(this.toBuffer(string, algorithm).buffer);
+    },
+    /**
+     * Hash a string into a buffer with a given algorithm
+     * @param string The string to hash
+     * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
+     * @see strHashListAlgorithms for a list of accepted strings for 'algorithm'
+     * @param encoding base64 | base64url | hex | binary | utf8 | utf-8 | utf16le | latin1 | ascii | binary | ucs2 | ucs-2
+     * @example
+     * ```ts
+     * strHash.toString('hello', 'sha256', 'hex')
+     * //=> 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+     * ```
+     */
+    toString(string, algorithm = 'sha256', encoding = 'base64') {
+        return this.toBuffer(string, algorithm).toString(encoding);
+    },
+    /**
+     * List all available hash algorithms (node-js crypto library)
+     */
+    listAlgorithms() {
+        return crypto.getHashes();
+    },
+};
+
 const allIndexedInstances = [];
 const allIndexedClasses = [];
 let nextClassIndex = -1;
 function Indexed(BaseConstructor) {
+    var _a;
     const classIndex = ++nextClassIndex;
     allIndexedInstances[classIndex] = [];
     let nextInstanceIndex = -1;
-    const Class = class Indexed extends BaseConstructor {
-        static instances = allIndexedInstances[classIndex];
-        static clsId = classIndex;
-        id;
-        constructor(...args) {
-            super(...args);
-            this.id = [classIndex, ++nextInstanceIndex];
-            this.klass.instances[this.insId] = this;
-        }
-        get clsId() {
-            return this.id[0];
-        }
-        get insId() {
-            return this.id[1];
-        }
-        get uidString() {
-            return this.clsId.toString(16) + '-' + this.insId.toString(16);
-        }
-        get guidHashMd5() {
-            return strHash.toString(this.uidString, 'md5', 'base64url');
-        }
-        get guidHashSha256() {
-            return strHash.toString(this.uidString, 'sha256', 'base64url');
-        }
-        get klass() {
-            return this.constructor.prototype.constructor;
-        }
-    };
+    const Class = (_a = class Indexed extends BaseConstructor {
+            constructor(...args) {
+                super(...args);
+                this.id = [classIndex, ++nextInstanceIndex];
+                this.klass.instances[this.insId] = this;
+            }
+            get clsId() {
+                return this.id[0];
+            }
+            get insId() {
+                return this.id[1];
+            }
+            get uidString() {
+                return this.clsId.toString(16) + '-' + this.insId.toString(16);
+            }
+            get guidHashMd5() {
+                return strHash.toString(this.uidString, 'md5', 'base64url');
+            }
+            get guidHashSha256() {
+                return strHash.toString(this.uidString, 'sha256', 'base64url');
+            }
+            get klass() {
+                return this.constructor.prototype.constructor;
+            }
+        },
+        _a.instances = allIndexedInstances[classIndex],
+        _a.clsId = classIndex,
+        _a);
     allIndexedClasses[classIndex] = Class;
     return Class;
 }
@@ -4320,11 +3346,16 @@ function IndexedGetInstance(classIndex, instanceIndex) {
 }
 
 function Timestamped(BaseConstructor) {
+    var _a;
     const t0 = Date.now();
-    return class Timestamped extends BaseConstructor {
-        static timestamp = t0;
-        timestamp = Date.now();
-    };
+    return _a = class Timestamped extends BaseConstructor {
+            constructor() {
+                super(...arguments);
+                this.timestamp = Date.now();
+            }
+        },
+        _a.timestamp = t0,
+        _a;
 }
 
 function Options(BaseConstructor) {
@@ -4387,15 +3418,15 @@ function Revivable(BaseConstructor) {
 }
 
 class User extends Revivable(Options(Timestamped(Indexed(Base)))) {
-    static defaultOptions = {
-        wow: 'cool',
-        dam: 2,
-    };
     constructor(options) {
         super(options);
         this.init();
     }
 }
+User.defaultOptions = {
+    wow: 'cool',
+    dam: 2,
+};
 // new User({ wow: 'yeah' })
 // new User({ dam: 6 })
 // console.log(Reflect.ownKeys(User))
@@ -4410,69 +3441,6 @@ const Mixins = {
     Timestamped,
     Options,
 };
-
-const openai = new openai$1.OpenAIApi(new openai$1.Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-}));
-// type t = { data: CreateChatCompletionResponse; text: string }
-function gptHttpRequester(temperature = 0, instructions) {
-    return async function (prompt) {
-        const response = await openai.createChatCompletion({
-            model: 'gpt-3.5-turbo',
-            temperature,
-            // top_p: 0.1,
-            messages: [
-                {
-                    role: 'system',
-                    content: instructions,
-                },
-                { role: 'user', content: prompt },
-            ],
-        });
-        const data = response.data;
-        const text = data?.choices[0]?.message?.content?.toString() || '';
-        return { data, text };
-    };
-}
-const generateUnitTestsGPT = gptHttpRequester(0, [
-    'You are a helpful assistant who will help write tests for TypeScript code.',
-    'The tests need to be written using the Jest testing framwork.',
-    'Use the Jest framework methods called "describe" and "it".',
-    'Your reply should only be the code. No comments or other text.',
-].join('\n'));
-async function generateUnitTests(sourceCode, dirname, exportName, append = true) {
-    const testFilepath = path__default["default"].join(process.cwd(), 'tests', dirname + '.test.ts');
-    const testFileExists = fs__default["default"].existsSync(testFilepath);
-    if (!append && testFileExists)
-        return console.log('test already exists: ' + testFilepath);
-    if (append && !testFileExists)
-        append = false;
-    let testFileCurrentCode = '';
-    if (append) {
-        testFileCurrentCode = fs__default["default"].readFileSync(testFilepath).toString();
-        if (testFileCurrentCode.includes(exportName)) {
-            return console.log('tests already exists in the file: ' + testFilepath);
-        }
-    }
-    const result = await generateUnitTestsGPT(sourceCode.replace(/import .+\n/gm, '').trim());
-    const data = result.data;
-    const text = (append ? '' : `import * as util from '../src/libs/${dirname}'\n\n`) +
-        result.text
-            .trim()
-            .replace(/^```(\w+)?/, '')
-            .replace(/```$/, '')
-            .replace(/import .+\n/gm, '')
-            .split(exportName)
-            .join('util.' + exportName)
-            .replace(`describe('util.`, `describe('`)
-            .replace(`describe("util.`, `describe("`)
-            .trim();
-    await fs__default["default"].promises.writeFile(testFilepath, append ? testFileCurrentCode + '\n\n' + text : text);
-    return { data, text };
-}
-// generateUnitTests(code1, 'object', 'iteratePrototypeChain')
-// generateUnitTests(code2, 'node', 'createFileExtensionFilter', true)
-// generateUnitTests(code3, 'regex', 'rexec')
 
 function singlePass(sentences, lowerBound, upperBound) {
     // determine lower and upper bounds if not given
@@ -4495,7 +3463,8 @@ function singlePass(sentences, lowerBound, upperBound) {
     for (let i = 1; i < sentences.length; i++) {
         const cur = sentences[i];
         const pre = sentences[i - 1];
-        if (cur.length + pre.length < upperBound && (cur.length < lowerBound || pre.length < lowerBound)) {
+        if (cur.length + pre.length < upperBound &&
+            (cur.length < lowerBound || pre.length < lowerBound)) {
             sentences[i] = `${pre} ${cur}`;
             sentences[i - 1] = '';
         }
@@ -4515,6 +3484,24 @@ function normalizeLineLengths(sentences, lowerBound, upperBound) {
         newSentences = singlePass(sentences, lowerBound, upperBound);
     }
     return newSentences;
+}
+
+/**
+ * Count occurances of a character within a given string.
+ * @param input - The string to search
+ * @param char - The character to find
+ */
+function strCountCharOccurances(input, char) {
+    if (char.length !== 1) {
+        throw new Error('Expected char to be a single character string of length 1.');
+    }
+    let result = 0;
+    for (const c of input) {
+        if (c === char) {
+            result++;
+        }
+    }
+    return result;
 }
 
 /**
@@ -4588,6 +3575,221 @@ function ensureValidWindowsPath(path, options) {
 }
 
 /**
+ * Round value with a given number of decimal points.
+ * @param n the number to round.
+ * @param decimalPoints the number of decimal points.
+ */
+function round(n, decimalPoints = 0) {
+    return Math.round(n * Math.pow(10, decimalPoints)) / Math.pow(10, decimalPoints) + 0;
+}
+
+/**
+ * Formats a number input to a string representation with a given number of decimal places, thousand seperator and decimal seperator.
+ * @param input number to format
+ * @param thousandSeperator character to use as thousand seperator
+ * @param fractionDigits number of decimal places to return. Will pad string with zeroes to ensure this length.
+ * @param decimalSeperator character to use as decimal seperator
+ */
+function numFormat(input, thousandSeperator = '.', fractionDigits = 2, decimalSeperator = ',') {
+    const minus = input < 0 ? '-' : '';
+    const string = Math.abs(round(input, fractionDigits)).toString();
+    const split = string.split('.');
+    const integer = split[0];
+    const decimals = fractionDigits
+        ? decimalSeperator + (split[1] || '').padEnd(fractionDigits, '0')
+        : '';
+    let result = '';
+    for (let i = 0; i < integer.length; i++) {
+        if (i % 3 === 0 && i !== 0) {
+            result = thousandSeperator + result;
+        }
+        result = integer[integer.length - i - 1] + result;
+    }
+    return minus + result + decimals;
+}
+
+/**
+ * Formats a number input to a string representation in the style of 5,000,000.00
+ * @param input number to format
+ * @param decimalPlaces number of decimal places to return. Will pad string with zeroes to ensure this length.
+ */
+function numFormatUS(input, decimalPlaces = 0) {
+    return numFormat(input, ',', decimalPlaces, '.');
+}
+
+/**
+ * Formats a number input to a string representation in the style of 5.000.000,00
+ * @param input number to format
+ * @param decimalPlaces number of decimal places to return. Will pad string with zeroes to ensure this length.
+ */
+function numFormatDK(input, decimalPlaces = 0) {
+    return numFormat(input, '.', decimalPlaces, ',');
+}
+
+/**
+ * Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
+ */
+function memoryUsage() {
+    const toIntMB = (n) => Math.floor(n * 0.000001);
+    const data = process.memoryUsage();
+    return {
+        processAllocationMB: toIntMB(data.rss),
+        heapAllocationMB: toIntMB(data.heapTotal),
+        heapUsedMB: toIntMB(data.heapUsed),
+        extenalV8: toIntMB(data.external),
+    };
+}
+const formatMemoryUsageOutput = (format) => {
+    const data = process.memoryUsage();
+    return {
+        processAllocationMB: format(data.rss),
+        heapAllocationMB: format(data.heapTotal),
+        heapUsedMB: format(data.heapUsed),
+        extenalV8: format(data.external),
+    };
+};
+/**
+ * Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
+ * The values are formatted strings in the style of 5.000,00
+ */
+function memoryUsageDkFormat() {
+    return formatMemoryUsageOutput((bytes) => `${numFormatDK(bytes * 0.000001, 2)} MB`);
+}
+/**
+ * Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
+ * The values are formatted strings in the style of 5,000.00
+ */
+function memoryUsageUsFormat() {
+    return formatMemoryUsageOutput((bytes) => `${numFormatUS(bytes * 0.000001, 2)} MB`);
+}
+
+/**
+ * Takes a directory path as a list of directory/folder names from the current working directory and returns it as a full path string.
+ * @param dirs directory names from the current working directory.
+ */
+function pathFromCwd(...dirs) {
+    return path__default["default"].join(process.cwd(), ...dirs);
+}
+
+/**
+ * Takes a filepath and returns its utf8 contents as a single string.
+ * @param path path to the file
+ */
+function readFileStringSync(path) {
+    return fs__default["default"].readFileSync(path, 'utf8').toString();
+}
+
+/**
+ * Drain a Readable into a string.
+ * @param stream - a Readable of string chunks
+ */
+function streamToString(stream) {
+    var _a, stream_1, stream_1_1;
+    var _b, e_1, _c, _d;
+    return __awaiter(this, void 0, void 0, function* () {
+        const chunks = [];
+        try {
+            for (_a = true, stream_1 = __asyncValues(stream); stream_1_1 = yield stream_1.next(), _b = stream_1_1.done, !_b;) {
+                _d = stream_1_1.value;
+                _a = false;
+                try {
+                    const chunk = _d;
+                    chunks.push(Buffer.from(chunk).toString());
+                }
+                finally {
+                    _a = true;
+                }
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (!_a && !_b && (_c = stream_1.return)) yield _c.call(stream_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        return chunks.join('');
+    });
+}
+
+/**
+ * Extension of Node's native Readable class for converting a string into a Readable stream.
+ */
+class StringStream extends stream.Readable {
+    constructor(str) {
+        super();
+        this.str = str;
+        this.ended = false;
+    }
+    _read() {
+        if (!this.ended) {
+            process.nextTick(() => {
+                this.push(Buffer.from(this.str));
+                this.push(null);
+            });
+            this.ended = true;
+        }
+    }
+}
+
+/**
+ * Generic function for logging to console, used by the log-level specific functions.
+ */
+function logToConsole(level, message, timestampColor, levelColor, outpuColor, depth) {
+    const ts = timestampColor(new Date().toISOString());
+    const lvl = levelColor(level);
+    if (typeof message === 'object') {
+        console.log(`${ts} [${lvl}]:`);
+        console.dir(message, depth);
+        console.log(cliColor.blackBright('------------------------------------------'));
+    }
+    else {
+        console.log(`${ts} [${lvl}]: ${outpuColor((message + '').includes('\n') ? '\n' + message : message)}`);
+    }
+}
+/**
+ * Depending configured environment variables, these functions will log to console, file and EventEmitter.
+ */
+const log = {
+    info(message, depth) {
+        logToConsole('INFO', message, cliColor.magenta, cliColor.green, cliColor.cyan, depth);
+        return message;
+    },
+    warn(message) {
+        logToConsole('WARN', message, cliColor.magenta, cliColor.yellow, cliColor.yellow);
+        return message;
+    },
+    error(message) {
+        logToConsole('ERROR', message, cliColor.magenta, cliColor.red, cliColor.red);
+        return message;
+    },
+    task(description, task) {
+        return __awaiter(this, void 0, void 0, function* () {
+            log.info(`Began: ${description}.`);
+            const t0 = Date.now();
+            const returnValue = yield task();
+            log.info(`Ended: ${description}. (${((Date.now() - t0) / 1000).toString()} seconds)`);
+            return returnValue;
+        });
+    },
+    taskSync(description, task) {
+        log.info(`Began: ${description}.`);
+        const t0 = Date.now();
+        const returnValue = task();
+        log.info(`Ended: ${description}. (${((Date.now() - t0) / 1000).toString()} seconds)`);
+        return returnValue;
+    },
+};
+
+/**
+ * If the filepath is somewhere in the current working directory, it can be converted into a relative path.
+ * @param filepath - the absolute filepath to convert.
+ */
+function absolutCwdPathToRelative(filepath) {
+    return filepath.replace(process.cwd(), '').replace(/\\/g, '/').replace(/^\//, '');
+}
+
+/**
  * Returns true if a given interger is even.
  */
 function isEven(n) {
@@ -4631,44 +3833,24 @@ function numApproximateLog10(n) {
     return 9;
 }
 
-const eu = new Map();
 /**
- * Formats a number input to a string representation in the style of 5.000.000,00
- * @param input number to format
- * @param decimalPlaces number of decimal places to return. Will pad string with zeroes to ensure this length.
+ * Parses a formatted number string to a number
+ * @param input string to parse
+ * @param thousandSeperator character to use as thousand seperator
+ * @param decimalSeperator character to use as decimal seperator
  */
-function numFormatEU(input, decimalPlaces = 0) {
-    let formatter = eu.get(decimalPlaces);
-    if (!formatter) {
-        formatter = numberFormat__default["default"]({
-            truncate: decimalPlaces,
-            padRight: decimalPlaces,
-            integerSeparator: '.',
-            decimal: ',',
-        });
-        eu.set(decimalPlaces, formatter);
-    }
-    return formatter(input);
+function numParseFormatted(input, thousandSeperator = ',', decimalSeperator = '.') {
+    return Number(input
+        .replaceAll(thousandSeperator, '')
+        .replace(decimalSeperator, '.')
+        .replace(/[^\d.-]/g, ''));
 }
 
-const us = new Map();
 /**
- * Formats a number input to a string representation in the style of 5,000,000.00
- * @param input number to format
- * @param decimalPlaces number of decimal places to return. Will pad string with zeroes to ensure this length.
+ * Parses a danish-formatted number string to a number
  */
-function numFormatUS(input, decimalPlaces = 0) {
-    let formatter = us.get(decimalPlaces);
-    if (!formatter) {
-        formatter = numberFormat__default["default"]({
-            truncate: decimalPlaces,
-            padRight: decimalPlaces,
-            integerSeparator: ',',
-            decimal: '.',
-        });
-        us.set(decimalPlaces, formatter);
-    }
-    return formatter(input);
+function numParseFormattedDK(input) {
+    return numParseFormatted(input, '.', ',');
 }
 
 /**
@@ -4682,15 +3864,6 @@ function randomIntBetween(min, max) {
     if (!Number.isInteger(max))
         throw new Error(`max must be an integer. Got ${max}`);
     return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-/**
- * Round value with a given number of decimal points.
- * @param n the number to round.
- * @param decimalPoints the number of decimal points.
- */
-function round(n, decimalPoints = 0) {
-    return Math.round(n * Math.pow(10, decimalPoints)) / Math.pow(10, decimalPoints) + 0;
 }
 
 /**
@@ -4708,134 +3881,636 @@ function roundUp(n) {
 }
 
 /**
- * Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
+ * Set multiple 'enumerable' property descriptor attributes of the target object to true.
+ * @param object The target object.
+ * @param propertyName The property names to be affected.
  */
-function memoryUsage() {
-    const toIntMB = (n) => Math.floor(n * 0.000001);
-    const data = process.memoryUsage();
-    return {
-        processAllocationMB: toIntMB(data.rss),
-        heapAllocationMB: toIntMB(data.heapTotal),
-        heapUsedMB: toIntMB(data.heapUsed),
-        extenalV8: toIntMB(data.external),
-    };
-}
-const formatMemoryUsageOutput = (format) => {
-    const data = process.memoryUsage();
-    return {
-        processAllocationMB: format(data.rss),
-        heapAllocationMB: format(data.heapTotal),
-        heapUsedMB: format(data.heapUsed),
-        extenalV8: format(data.external),
-    };
-};
-/**
- * Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
- * The values are formatted strings in the style of 5.000,00
- */
-function memoryUsageEuFormat() {
-    return formatMemoryUsageOutput((bytes) => `${numFormatEU(bytes * 0.000001, 2)} MB`);
-}
-/**
- * Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
- * The values are formatted strings in the style of 5,000.00
- */
-function memoryUsageUsFormat() {
-    return formatMemoryUsageOutput((bytes) => `${numFormatUS(bytes * 0.000001, 2)} MB`);
-}
-
-/**
- * Takes a directory path as a list of directory/folder names from the current working directory and returns it as a full path string.
- * @param dirs directory names from the current working directory.
- */
-function pathFromCwd(...dirs) {
-    return path__default["default"].join(process.cwd(), ...dirs);
-}
-
-/**
- * Takes a filepath and returns its utf8 contents as a single string.
- * @param path path to the file
- */
-function readFileStringSync(path) {
-    return fs__default["default"].readFileSync(path, 'utf8').toString();
-}
-
-/**
- * Drain a Readable into a string.
- * @param stream - a Readable of string chunks
- */
-async function streamToString(stream) {
-    const chunks = [];
-    for await (const chunk of stream) {
-        chunks.push(Buffer.from(chunk).toString());
+function setEnumerable(object, ...propertyNames) {
+    for (const propertyName of propertyNames) {
+        Object.defineProperty(object, propertyName, { enumerable: true });
     }
-    return chunks.join('');
 }
 
 /**
- * Extension of Node's native Readable class for converting a string into a Readable stream.
+ * Set multiple 'configurable' property descriptor attributes of the target object to false.
+ * @param object The target object.
+ * @param propertyName The property names to be affected.
  */
-class StringStream extends stream.Readable {
-    str;
-    ended;
-    constructor(str) {
-        super();
-        this.str = str;
-        this.ended = false;
+function setNonConfigurable(object, ...propertyNames) {
+    for (const propertyName of propertyNames) {
+        Object.defineProperty(object, propertyName, { configurable: false });
     }
-    _read() {
-        if (!this.ended) {
-            process.nextTick(() => {
-                this.push(Buffer.from(this.str));
-                this.push(null);
-            });
-            this.ended = true;
+}
+
+/**
+ * Set multiple 'writable' property descriptor attributes of the target object to false.
+ * @param object The target object.
+ * @param propertyName The property names to be affected.
+ */
+function setNonWritable(object, ...propertyNames) {
+    for (const propertyName of propertyNames) {
+        Object.defineProperty(object, propertyName, { writable: false });
+    }
+}
+
+/**
+ * Set multiple 'writable' property descriptor attributes of the target object to true.
+ * @param object The target object.
+ * @param propertyName The property names to be affected.
+ */
+function setWritable(object, ...propertyNames) {
+    for (const propertyName of propertyNames) {
+        Object.defineProperty(object, propertyName, { writable: true });
+    }
+}
+
+/**
+ * Returns the prototype object belonging to a given object.
+ * @param o - The object to get the prototype of.
+ */
+function getPrototype(o) {
+    return Object.getPrototypeOf(o);
+}
+
+/**
+ * Set multiple 'enumerable' property descriptor attributes of the target object to false.
+ * @param object The target object.
+ * @param propertyName The property names to be affected.
+ */
+function setValueAsGetter(object, ...propertyNames) {
+    if (!object || typeof object !== 'object') {
+        throw new Error(`setValueAsGetter() requires an object as the first argument.`);
+    }
+    for (const propertyName of propertyNames) {
+        if (!Object.hasOwn(object, propertyName)) {
+            throw new Error(`Property '${propertyName}' does not exist on object.`);
+        }
+        const des = Object.getOwnPropertyDescriptor(object, propertyName);
+        if (!des)
+            throw new Error(`Property '${propertyName}' does not have a descriptor.`);
+        const { value, enumerable, configurable } = des;
+        Object.defineProperty(object, propertyName, { configurable, enumerable, get: () => value });
+    }
+    return object;
+}
+
+/**
+ * Similar to Array.prototype.map, but for objects.
+ * @param object The object to iterate over.
+ * @param callback The function to call for each key-value pair.
+ * @param getKeys A function that returns the keys of the object.
+ */
+function objMap(object, callback, getKeys = Object.keys) {
+    const result = {};
+    for (const key of getKeys(object)) {
+        result[key] = callback(object[key], key);
+    }
+    return result;
+}
+
+/**
+ * Similar to Array.prototype.filter, but for objects.
+ * @param object The object to iterate over.
+ * @param callback The function to call for each key-value pair.
+ * @param getKeys A function that returns the keys of the object.
+ */
+function objFilter(object, callback, getKeys = Object.keys) {
+    const result = {};
+    for (const key of getKeys(object)) {
+        if (callback(object[key], key)) {
+            result[key] = object[key];
         }
     }
+    return result;
 }
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-const logger = winston__default["default"].createLogger({
-    format: winston__default["default"].format.combine(winston__default["default"].format.timestamp(), winston__default["default"].format.json()),
-    transports: [new winston__default["default"].transports.File({ filename: 'logs/app.log' })],
+/**
+ * Similar to Array.prototype.forEach, but for objects.
+ * @param object The object to iterate over.
+ * @param callback The function to call for each key-value pair.
+ * @param getKeys A function that returns the keys of the object.
+ */
+function objForEach(object, callback, getKeys = Object.keys) {
+    for (const key of getKeys(object)) {
+        callback(object[key], key);
+    }
+    return object;
+}
+
+/**
+ * Similar to Array.prototype.map, but for object keys - not values.
+ * @param object The object to iterate over.
+ * @param callback The function to call for each key-value pair.
+ * @param getKeys A function that returns the keys of the object.
+ */
+function objMapKeys(object, callback, getKeys = Object.keys) {
+    const result = {};
+    for (const key of getKeys(object)) {
+        result[callback(key, object[key])] = object[key];
+    }
+    return result;
+}
+
+/**
+ * Similar to Array.prototype.reduce, but for objects.
+ * @param object The object to iterate over.
+ * @param callback The function to call for each key-value pair.
+ * @param accum The initial value of the accumulator.
+ * @param getKeys A function that returns the keys of the object.
+ */
+function objReduce(object, callback, accum, getKeys = Object.keys) {
+    for (const key of getKeys(object)) {
+        accum = callback(accum, object[key], key);
+    }
+    return accum;
+}
+
+/**
+ * Matches 2 or more consecutive whitespace characters, including line terminators, tabs, etc.
+ */
+const repeatingWhiteSpace = /((\r?\r?\n)|\s|\t){2,}/g;
+/**
+ * Matches words in a string
+ */
+const words = /\b[^\W]+/g;
+/**
+ * Matches Danish social security numbers with or without the dash.
+ * Example: 151199-1512
+ */
+const socialSecurityNumbersDK = /(?<dd>[0-3][0-9])(?<mm>[0-1][0-9])(?<yy>[0-9]{2}).?(?<id>[0-9]{4})/g;
+/**
+ * Matches positive or negative integers.
+ * Example: -20
+ */
+const integers = /-?\d+/g;
+/**
+ * Matches inverted US format positive or negative decimal numbers with no thousand separators.
+ * Example: -20412,3461
+ */
+const numberNoThousandSepCommaDecimal = /-?\d+,\d+/g;
+/**
+ * Matches US format positive or negative decimal numbers with no thousand separators.
+ * Example: -20412.3461
+ */
+const numberNoThousandSepDotDecimal = /-?\d+.\d+/g;
+/**
+ * Matches inverted US format positive or negative decimal numbers with thousand separators.
+ * Example: -20.412,34
+ */
+const numberDotSepCommaDecimal = /-?\d{1,3}(\.\d{3})*(,\d+)?/g;
+/**
+ * Matches US format positive or negative decimal numbers with thousand separators.
+ * Example: -20,412.34
+ */
+const numberCommaSepDotDecimal = /-?\d{1,3}(,\d{3})*(\.\d+)?/g;
+/**
+ * Prefixes for hex colors, hex decimal and regexp unicode hex
+ */
+const isHexPrefix = /^(0x|0h|(\\?u)|#)/i;
+/**
+ * Understands prefixes for hex colors, hex decimal and regexp unicode hex
+ */
+const isHex$1 = /^(0x|0h|(\\?u)|#)?[0-9A-F]+$/i;
+/**
+ * For checking if a string is of only alpha characters for a specific locale.
+ */
+const isLocaleAlpha = new Map([
+    ['en-US', /^[A-Z]+$/i],
+    ['az-AZ', /^[A-VXYZÇƏĞİıÖŞÜ]+$/i],
+    ['bg-BG', /^[А-Я]+$/i],
+    ['cs-CZ', /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]+$/i],
+    ['da-DK', /^[A-ZÆØÅ]+$/i],
+    ['de-DE', /^[A-ZÄÖÜß]+$/i],
+    ['el-GR', /^[Α-ώ]+$/i],
+    ['es-ES', /^[A-ZÁÉÍÑÓÚÜ]+$/i],
+    ['fa-IR', /^[ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی]+$/i],
+    ['fr-FR', /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]+$/i],
+    ['it-IT', /^[A-ZÀÉÈÌÎÓÒÙ]+$/i],
+    ['nb-NO', /^[A-ZÆØÅ]+$/i],
+    ['nl-NL', /^[A-ZÁÉËÏÓÖÜÚ]+$/i],
+    ['nn-NO', /^[A-ZÆØÅ]+$/i],
+    ['hu-HU', /^[A-ZÁÉÍÓÖŐÚÜŰ]+$/i],
+    ['pl-PL', /^[A-ZĄĆĘŚŁŃÓŻŹ]+$/i],
+    ['pt-PT', /^[A-ZÃÁÀÂÄÇÉÊËÍÏÕÓÔÖÚÜ]+$/i],
+    ['ru-RU', /^[А-ЯЁ]+$/i],
+    ['sl-SI', /^[A-ZČĆĐŠŽ]+$/i],
+    ['sk-SK', /^[A-ZÁČĎÉÍŇÓŠŤÚÝŽĹŔĽÄÔ]+$/i],
+    ['sr-RS@latin', /^[A-ZČĆŽŠĐ]+$/i],
+    ['sr-RS', /^[А-ЯЂЈЉЊЋЏ]+$/i],
+    ['sv-SE', /^[A-ZÅÄÖ]+$/i],
+    ['th-TH', /^[ก-๐\s]+$/i],
+    ['tr-TR', /^[A-ZÇĞİıÖŞÜ]+$/i],
+    ['uk-UA', /^[А-ЩЬЮЯЄIЇҐі]+$/i],
+    ['vi-VN', /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴĐÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸ]+$/i],
+    ['ku-IQ', /^[ئابپتجچحخدرڕزژسشعغفڤقکگلڵمنوۆھەیێيطؤثآإأكضصةظذ]+$/i],
+    // eslint-disable-next-line no-misleading-character-class
+    ['ar', /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]+$/],
+    ['he', /^[א-ת]+$/],
+    ['fa', /^['آاءأؤئبپتثجچحخدذرزژسشصضطظعغفقکگلمنوهةی']+$/i],
+]);
+/**
+ * For checking if a string is of only alpha-numeric characters for a specific locale.
+ */
+const isLocaleAlphaNumeric = new Map([
+    ['en-US', /^[0-9A-Z]+$/i],
+    ['az-AZ', /^[0-9A-VXYZÇƏĞİıÖŞÜ]+$/i],
+    ['bg-BG', /^[0-9А-Я]+$/i],
+    ['cs-CZ', /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]+$/i],
+    ['da-DK', /^[0-9A-ZÆØÅ]+$/i],
+    ['de-DE', /^[0-9A-ZÄÖÜß]+$/i],
+    ['el-GR', /^[0-9Α-ω]+$/i],
+    ['es-ES', /^[0-9A-ZÁÉÍÑÓÚÜ]+$/i],
+    ['fr-FR', /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]+$/i],
+    ['it-IT', /^[0-9A-ZÀÉÈÌÎÓÒÙ]+$/i],
+    ['hu-HU', /^[0-9A-ZÁÉÍÓÖŐÚÜŰ]+$/i],
+    ['nb-NO', /^[0-9A-ZÆØÅ]+$/i],
+    ['nl-NL', /^[0-9A-ZÁÉËÏÓÖÜÚ]+$/i],
+    ['nn-NO', /^[0-9A-ZÆØÅ]+$/i],
+    ['pl-PL', /^[0-9A-ZĄĆĘŚŁŃÓŻŹ]+$/i],
+    ['pt-PT', /^[0-9A-ZÃÁÀÂÄÇÉÊËÍÏÕÓÔÖÚÜ]+$/i],
+    ['ru-RU', /^[0-9А-ЯЁ]+$/i],
+    ['sl-SI', /^[0-9A-ZČĆĐŠŽ]+$/i],
+    ['sk-SK', /^[0-9A-ZÁČĎÉÍŇÓŠŤÚÝŽĹŔĽÄÔ]+$/i],
+    ['sr-RS@latin', /^[0-9A-ZČĆŽŠĐ]+$/i],
+    ['sr-RS', /^[0-9А-ЯЂЈЉЊЋЏ]+$/i],
+    ['sv-SE', /^[0-9A-ZÅÄÖ]+$/i],
+    ['th-TH', /^[ก-๙\s]+$/i],
+    ['tr-TR', /^[0-9A-ZÇĞİıÖŞÜ]+$/i],
+    ['uk-UA', /^[0-9А-ЩЬЮЯЄIЇҐі]+$/i],
+    ['ku-IQ', /^[٠١٢٣٤٥٦٧٨٩0-9ئابپتجچحخدرڕزژسشعغفڤقکگلڵمنوۆھەیێيطؤثآإأكضصةظذ]+$/i],
+    ['vi-VN', /^[0-9A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴĐÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸ]+$/i],
+    // eslint-disable-next-line no-misleading-character-class
+    ['ar', /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]+$/],
+    ['he', /^[0-9א-ת]+$/],
+    ['fa', /^['0-9آاءأؤئبپتثجچحخدذرزژسشصضطظعغفقکگلمنوهةی۱۲۳۴۵۶۷۸۹۰']+$/i],
+]);
+
+var regexLibrary = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  repeatingWhiteSpace: repeatingWhiteSpace,
+  words: words,
+  socialSecurityNumbersDK: socialSecurityNumbersDK,
+  integers: integers,
+  numberNoThousandSepCommaDecimal: numberNoThousandSepCommaDecimal,
+  numberNoThousandSepDotDecimal: numberNoThousandSepDotDecimal,
+  numberDotSepCommaDecimal: numberDotSepCommaDecimal,
+  numberCommaSepDotDecimal: numberCommaSepDotDecimal,
+  isHexPrefix: isHexPrefix,
+  isHex: isHex$1,
+  isLocaleAlpha: isLocaleAlpha,
+  isLocaleAlphaNumeric: isLocaleAlphaNumeric
 });
-const log = {
-    info: (message) => {
-        logger.info(message);
-        if (typeof message === 'object') {
-            console.log(message);
-        }
-        else {
-            console.log(clc__default["default"].magenta(new Date().toISOString()) + ' [' + clc__default["default"].green('INFO') + ']: ' + clc__default["default"].cyan(message));
-        }
-    },
-    warn: (message) => {
-        logger.warn(message);
-        if (typeof message === 'object') {
-            console.log(message);
-        }
-        else {
-            console.log(clc__default["default"].magenta(new Date().toISOString()) + ' [' + clc__default["default"].yellow('WARN') + ']: ' + clc__default["default"].yellow(message));
-        }
-    },
-    error: (message) => {
-        logger.error(message);
-        if (typeof message === 'object') {
-            console.error(message);
-        }
-        else {
-            console.error(clc__default["default"].magenta(new Date().toISOString()) + ' [' + clc__default["default"].red('ERROR') + ']: ' + clc__default["default"].red(message));
-        }
-    },
-};
 
 /**
- * If the filepath is somewhere in the current working directory, it can be converted into a relative path.
- * @param filepath - the absolute filepath to convert.
+ * Returns an array of named groups defined inside a RegExp instance.
+ * @param re RegExp instance to extract named groups from.
  */
-function absolutCwdPathToRelative(filepath) {
-    return filepath.replace(process.cwd(), '').replace(/\\/g, '/').replace(/^\//, '');
+function regexGetGroupNames(re) {
+    const names = [];
+    for (const res of rexec(/\(\?<(?<name>\w+)>/g, re.toString())) {
+        names.push(res.groups.name);
+    }
+    return names;
 }
+
+/**
+ * Escapes a string so it can be used in a regular expression.
+ */
+function regexEscapeString(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+/**
+ * Convert a regex for matching to a regex for validation.
+ * @param regex - The regex to convert
+ * @example ```js
+ * const regexMatchDigits = /\d+/gi;
+ * const regexIsDigit = regexMatcherToValidater(regexMatchDigits); //=> /^\d+$/i
+ * const isDigit = (str) => regexIsDigit.test(str)
+ * isDigit('1') //=> true
+ * isDigit('a') //=> false
+ * ```
+ */
+function regexMatcherToValidater(regex) {
+    return new RegExp(`^${regex.source}$`, regex.flags.replace('g', ''));
+}
+
+/**
+ * Sorts the characters in a string.
+ * @example
+ * ```ts
+ * strSortChars('hello') // 'ehllo'
+ * ```
+ */
+function strSortChars(string) {
+    return Array.from(string).sort().join('');
+}
+
+/**
+ * Remove duplicate characters from a string.
+ * ```ts
+ * strRemoveDuplicateChars('Hello world!') // 'Helo wrd!'
+ * ```
+ */
+function strRemoveDuplicateChars(string) {
+    return Array.from(new Set(string)).join('');
+}
+
+/**
+ * Checks if a string is a valid regex flags string.
+ * @example
+ * ```ts
+ * regexIsValidFlags('gim') // true
+ * regexIsValidFlags('gmisuy') // false
+ * ```
+ */
+function regexIsValidFlags(flags) {
+    return /^[gimsuy]*$/.test(flags) && strRemoveDuplicateChars(flags).length === flags.length;
+}
+
+/**
+ * Takes a string of RegExp flags and returns a string guaranteed to be valid.
+ * @param flags - string of RegExp flags
+ * @example
+ * ```ts
+ * regexFixFlags('ggim') // 'gim'
+ * regexFixFlags('?gim*') // 'gim'
+ * ```
+ */
+function regexFixFlags(flags) {
+    if (!flags)
+        return flags;
+    return strSortChars(strRemoveDuplicateChars(flags).replace(/[^gimsuy]/gi, ''));
+}
+
+/**
+ * Returns an array of all valid flags for a regular expression.
+ * @example
+ * ```ts
+ * regexValidFlags() //=> ['g', 'i', 'm', 's', 'u', 'y']
+ * ```
+ */
+function regexValidFlags() {
+    return ['g', 'i', 'm', 's', 'u', 'y'];
+}
+
+/**
+ * A RegExp class extension with extra features.
+ */
+class BemojeRegex extends RegExp {
+    constructor(source, flags = '', options) {
+        if (source instanceof RegExp && !flags) {
+            super(source);
+        }
+        else {
+            options = Object.assign({}, BemojeRegex.defaultOptions, options);
+            if (source instanceof RegExp) {
+                flags = flags ? flags : source.flags;
+                source = source.source;
+            }
+            else if (options === null || options === void 0 ? void 0 : options.escapeSourceString) {
+                source = regexEscapeString(source);
+            }
+            if (options.fixFlags) {
+                flags = regexFixFlags(flags);
+            }
+            else {
+                flags = strSortChars(flags);
+            }
+            super(source, flags);
+        }
+        this.options = options || BemojeRegex.defaultOptions;
+    }
+    /**
+     * Returns true if the RegExp instance has same source and flags.
+     * @param regex - RegExp instance to compare to.
+     */
+    compareTo(regex) {
+        return this.source === regex.source && this.flags === regex.flags;
+    }
+    /**
+     * Returns true if the RegExp instance is a also BemojeRegex instance and both have the same source and flags.
+     * @param regex - RegExp instance to compare to.
+     */
+    compareToStrict(regex) {
+        return (regex instanceof BemojeRegex && this.source === regex.source && this.flags === regex.flags);
+    }
+    /**
+     * Returns an array of named groups defined inside the RegExp instance.
+     */
+    getGroupNames() {
+        return regexGetGroupNames(this);
+    }
+    /**
+     * Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
+     */
+    *rexec(string) {
+        yield* rexec(this, string);
+    }
+    /**
+     * Convert a regex for matching to a regex for validation.
+     */
+    toValidator() {
+        return Object.setPrototypeOf(regexMatcherToValidater(this), BemojeRegex.prototype);
+    }
+    /**
+     * Convert the BemojeRegex instance to a RegExp instance.
+     */
+    toRegExp() {
+        return Object.setPrototypeOf(this, RegExp.prototype);
+    }
+}
+BemojeRegex.defaultOptions = {
+    escapeSourceString: false,
+    fixFlags: false,
+};
+/**
+ * Checks if a string is a valid regex flags string.
+ */
+BemojeRegex.isValidFlags = regexIsValidFlags;
+/**
+ * Takes a string of RegExp flags and returns a string guaranteed to be valid.
+ * @param flags - string of RegExp flags
+ */
+BemojeRegex.fixFlags = regexFixFlags;
+/**
+ * Returns an array of all valid flags for a regular expression.
+ */
+BemojeRegex.getValidFlags = regexValidFlags;
+// declare global {
+//   interface RegExp {
+//     /**
+//      * Convert the RegExp instance to a BemojeRegex instance.
+//      */
+//     get bemoje(): BemojeRegex
+//   }
+// }
+// Object.defineProperty(RegExp.prototype, 'bemoje', {
+//   get: function () {
+//     return Object.setPrototypeOf(this, BemojeRegex.prototype)
+//   },
+// })
+// const reg = new BemojeRegex(/(?<asd>\/\*\*)(?<aga3>.*?)(?=\*\/)(?<ahfdtr>\*\/)/gi)
+// console.log(reg.getGroupNames())
+// console.log(reg.getGroupNames())
+// console.log(reg.toValidator())
+// console.log(reg.toRegExp())
+// const reg2 = new BemojeRegex(/abc/g)
+// const str2 = 'lala abc lalala abc ...'
+// console.log([...reg2.rexec(str2)])
+
+/**
+ * Builds a regex that matches a string between two strings. Supports regex instead of string.
+ * @param left - string or regex to match before
+ * @param right - string or regex to match after
+ * @param flags - regex flags - 'g' and 's' are always added to whatever flags are passed.
+ * @example
+ * ```ts
+ * const regex = buildRegexBetween(/a/, /b/)
+ * 'abc'.match(regex)?.groups?.mid // 'c'
+ * ```
+ */
+function buildRegexBetween(left, right, flags) {
+    left = typeof left === 'string' ? regexEscapeString(left) : left.source;
+    right = typeof right === 'string' ? regexEscapeString(right) : right.source;
+    flags = flags ? strRemoveDuplicateChars('gs' + flags) : 'gs';
+    return new RegExp(`(?<left>${left})(?<mid>.*?)(?=${right})(?<right>${right})`, flags);
+}
+
+/**
+ * Returns a given comparator as an array compatible comparator. Behaves as if the array to sort was recursively flattened.
+ * @param compareAt shallow compare function that compares two elements of an array
+ * @param descending whether the input comparator sorts in descending order
+ */
+function compareArray(compareAt, descending = false) {
+    const orderMultiplier = descending ? -1 : 1;
+    function recursiveCompare(a, b, _lenCompareParent) {
+        const aIsArr = Array.isArray(a);
+        const bIsArr = Array.isArray(b);
+        if (aIsArr) {
+            if (bIsArr) {
+                const aLen = a.length;
+                const bLen = b.length;
+                let lenShortest, lenCompare;
+                if (aLen > bLen) {
+                    lenShortest = aLen;
+                    lenCompare = 1 * orderMultiplier;
+                }
+                else if (aLen < bLen) {
+                    lenShortest = bLen;
+                    lenCompare = -1 * orderMultiplier;
+                }
+                else {
+                    lenShortest = aLen;
+                    lenCompare = 0;
+                }
+                for (let i = 0, len = lenShortest; i < len; i++) {
+                    const res = recursiveCompare(a[i], b[i], lenCompare);
+                    if (res !== 0) {
+                        return res;
+                    }
+                }
+            }
+            else {
+                return 1 * orderMultiplier;
+            }
+        }
+        else {
+            if (bIsArr) {
+                return -1 * orderMultiplier;
+            }
+            else {
+                const res = compareAt(a, b);
+                if (res === 0) {
+                    return _lenCompareParent || res;
+                }
+                else {
+                    return res;
+                }
+            }
+        }
+        return 0;
+    }
+    return (a, b) => {
+        return recursiveCompare(a, b);
+    };
+}
+
+function parseParam(param) {
+    const isString = typeof param === 'string';
+    const reg = isString
+        ? new RegExp(regexEscapeString(param), 'g')
+        : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'));
+    const regValidate = new RegExp('^' + reg.source + '$', '');
+    return [reg, regValidate];
+}
+/**
+ * Builds a regex that matches a string between two strings. Supports regex instead of string.
+ * @param type - type of scope being matched
+ * @param left - string or regex to match before
+ * @param right - string or regex to match after
+ * @param flags - regex flags - 'g' and 's' are always added to whatever flags are passed.
+ * @example
+ * ```ts
+ * const regex = buildRegexBetween(/a/, /b/)
+ * 'abc'.match(regex)?.groups?.mid // 'c'
+ * ```
+ */
+function regexScopeTree(type, left, right) {
+    const [regLeft, regLeftValidate] = parseParam(left);
+    const [regRight, regRightValidate] = parseParam(right);
+    return funSetName(type, function* (string, yieldOnlyRootNodes = false) {
+        const matches = [...rexec(regLeft, string)].concat([...rexec(regRight, string)]);
+        matches.sort(compareArray((a, b) => a.index - b.index));
+        const nodes = [];
+        const stack = [];
+        for (const match of matches) {
+            if (regLeftValidate.test(match.match)) {
+                stack.push(match);
+            }
+            else if (regRightValidate.test(match.match)) {
+                const left = stack.pop();
+                if (!left)
+                    continue;
+                const right = match;
+                const depth = stack.length;
+                const node = {
+                    type,
+                    parent: null,
+                    depth,
+                    left,
+                    right,
+                    between: {
+                        index: left.lastIndex,
+                        lastIndex: right.index,
+                        groups: {},
+                        match: string.substring(left.lastIndex, right.index),
+                    },
+                    children: [],
+                };
+                setNonEnumerable(node, 'parent');
+                for (let i = nodes.length - 1; i >= 0; i--) {
+                    if (left.index >= nodes[i].left.index || right.lastIndex <= nodes[i].right.lastIndex)
+                        break;
+                    node.children.push(nodes[i]);
+                    if (nodes[i].parent !== null)
+                        continue;
+                    nodes[i].parent = node;
+                }
+                nodes.push(node);
+                if (yieldOnlyRootNodes && depth > 0)
+                    continue;
+                yield node;
+            }
+            else {
+                throw new Error('Match does not recognize itself as neither left nor right, which should be impossible.');
+            }
+        }
+    });
+}
+// const parenthesesTree = regexScopeTree('Parentheses', '(', ')')
+// const string = '(1+((3)+(1)))+(15+(21-(521))))'
+// console.dir([...parenthesesTree(string, true)], { depth: null })
 
 /**
  * Extract birthdate (yyyy,mm,dd), four digit id and sex from a Danish social security number.
@@ -4884,10 +4559,6 @@ function isSocialSecurityNumberDK(s) {
  * For recording time passed since constructor was invoked and until the stop() method i called.
  */
 class Timer {
-    /**
-     * The initial time
-     */
-    t0;
     constructor() {
         this.t0 = Date.now();
     }
@@ -4968,9 +4639,497 @@ function setSymmetricDifference(setA, setB) {
     return _difference;
 }
 
+/**
+ * Number comparator function (descending)
+ * @param a first value to compare
+ * @param b second value to compare
+ * @example
+ * ```ts
+ * const arr = [3, 1, 4, 1, 5]
+ * arr.sort(compareNumberDescending) // [5, 4, 3, 1, 1]
+ * ```
+ */
+function compareNumberDescending(a, b) {
+    return b - a;
+}
+
+/**
+ * number, bigint, boolean comparator function (descending)
+ * @param a first value to compare
+ * @param b second value to compare
+ * @example
+ * ```ts
+ * const arr = [true, 3n, -2n, false]
+ * arr.sort(compareNumericDescending) // [3n, true, false, -2n]
+ * ```
+ */
+function compareNumericDescending(a, b) {
+    if (a > b)
+        return -1;
+    if (a < b)
+        return 1;
+    return 0;
+}
+
+/**
+ * Alpha numeric comparator function (descending)
+ * @param a first value to compare
+ * @param b second value to compare
+ */
+function compareStringDescending(a, b) {
+    return b.localeCompare(a);
+}
+
+const colToAlphaMap = new Map();
+/**
+ * Convert a spreadsheet column number to a column letter.
+ * @param col - Column number
+ * @param zeroIndexed - Whether or not column number start at one or zero.
+ */
+function colToLetter(col, zeroIndexed = false) {
+    if (zeroIndexed)
+        col++;
+    const fromMem = colToAlphaMap.get(col);
+    if (fromMem)
+        return fromMem;
+    if (!Number.isInteger(col))
+        throw new Error(`Expected col to be an integer. Got: ${col}`);
+    if (col < 1)
+        throw new Error(`Expected col to be greater than zero. Got: ${col}`);
+    let letter = '';
+    let temp;
+    while (col > 0) {
+        temp = (col - 1) % 26;
+        letter = String.fromCharCode(temp + 65) + letter;
+        col = (col - temp - 1) / 26;
+    }
+    return letter;
+}
+
+/**
+ * Convert spreadsheet [column, row] to A1-notation.
+ * @param CR - [column, row]
+ * @param zeroIndexed - Whether or not column number start at one or zero.
+ */
+function colRowToA1(CR, zeroIndexed = false) {
+    if (CR.length !== 2)
+        throw new Error(`Expected CR to to be length 2. Got: ${CR.length}`);
+    if (!Number.isInteger(CR[1]))
+        throw new Error(`Expected row to be an integer. Got: ${CR[1]}`);
+    if (CR[1] < 1)
+        throw new Error(`Expected row to be greater than zero. Got: ${CR[1]}`);
+    return colToLetter(CR[0], zeroIndexed) + CR[1].toString();
+}
+
+/**
+ * Count the number of occurrences of each character in a string.
+ * @example
+ * ```ts
+ * strCountChars('Hello!') // Map(9) { 'H' => 1, 'e' => 1, 'l' => 2, 'o' => 1, '!' => 1 }
+ * ```
+ */
+function strCountChars(string) {
+    const result = new Map();
+    for (const char of string) {
+        const count = result.get(char);
+        result.set(char, count ? count + 1 : 1);
+    }
+    return result;
+}
+
+/**
+ * Returns whether the string is lower case.
+ * @param input - input string
+ * @example
+ * ```js
+ * strIsLowerCase('abc')
+ * //=> true
+ *
+ * strIsLowerCase('ABC')
+ * //=> false
+ * ```
+ */
+function strIsLowerCase(input) {
+    return input === input.toLowerCase();
+}
+
+/**
+ * Returns whether the string is upper case.
+ * @param input - input string
+ * @example
+ * ```js
+ * strIsUpperCase('abc')
+ * //=> false
+ *
+ * strIsUpperCase('ABC')
+ * //=> true
+ * ```
+ */
+function strIsUpperCase(input) {
+    return input === input.toUpperCase();
+}
+
+/**
+ * Takes a multiline string and removes lines that are empty or only contain whitespace.
+ * @param input - input string
+ */
+function strLinesRemoveEmpty(input) {
+    return input
+        .replace(/\r?\n\s*\r?\n/gm, '\n')
+        .trimStart()
+        .trimEnd();
+}
+
+/**
+ * Takes a multiline string and performs a left side trim of whitespace on each line.
+ * @param input - input string
+ */
+function strLinesTrimLeft(input) {
+    return input.replace(/\n\r?\s+/gm, '\n');
+}
+
+/**
+ * Takes a multiline string and performs a right side trim of whitespace on each line.
+ * @param input - input string
+ */
+function strLinesTrimRight(input) {
+    return input.replace(/\s+\n/gm, '\n');
+}
+
+/**
+ * Returns a given number of contatenations of a given input string.
+ * @param input - input string
+ * @param n - Number of repetitions of the input string
+ */
+function strRepeat(input, n) {
+    return new Array(n).fill(input).join('');
+}
+
+/**
+ * Very crude, simple, fast code formatting of minified code.
+ * Only works when input code:
+ * - is minified
+ * - is scoped with brackets
+ * - expressions end with semicolon
+ * - has no string literals containing semicolons or braces.
+ * @param input The minified source code
+ * @param indent The string to use as indentation
+ */
+function strPrettifyMinifiedCode(input, indent = '  ') {
+    const getIndents = (n) => strRepeat('\t', n);
+    const fixIndents = (s) => {
+        return s.replace(/\t +/g, '\t').replace(/\t/g, indent);
+    };
+    let depth = 0;
+    const arr = Array.from(input).map((c) => {
+        if (c === '{') {
+            depth++;
+            return '{\n' + getIndents(depth);
+        }
+        else if (c === '}') {
+            depth--;
+            return '\n' + getIndents(depth) + '}\n' + getIndents(depth);
+        }
+        else if (c === ';') {
+            return ';\n' + getIndents(depth);
+        }
+        else
+            return c;
+    });
+    return fixIndents(strLinesTrimRight(strLinesRemoveEmpty(arr.join(''))));
+}
+
+/**
+ * In a given string, replace all occurances of a given search string with a given replacement string.
+ * @param input input string
+ * @param replace string to find a replace
+ * @param replaceWith string to replace matches with
+ * @param flags RegExp flags as single string.
+ */
+function strReplaceAll(input, replace, replaceWith, flags = 'g') {
+    return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith);
+}
+
+/**
+ * Checks if a string is a number.
+ * @param string - input string
+ */
+function isNumericString(string) {
+    const n = Number(string.trim());
+    return !isNaN(n) && isFinite(n);
+}
+
+function isCamelCaseWordBreakIndex(word, index) {
+    return (strIsLowerCase(word[index - 1]) &&
+        strIsUpperCase(word[index]) &&
+        !isNumericString(word[index - 1]) &&
+        !isNumericString(word[index]));
+}
+/**
+ * Returns an array of words in the string
+ * @param input - input string
+ * @example
+ * ```js
+ * strSplitCamelCase('someCamelCase')
+ * //=> ['some', 'Camel', 'Case']
+ * ```
+ */
+function strSplitCamelCase(word) {
+    const result = [];
+    const lastCharIndex = word.length - 1;
+    let lastCamelCaseBreakIndex = 0;
+    let foundCamelCase = false;
+    for (let i = 1; i < word.length; i++) {
+        if (foundCamelCase && i === lastCharIndex) {
+            // last char
+            const sub = word.substring(lastCamelCaseBreakIndex);
+            if (sub)
+                result.push(sub);
+            continue;
+        }
+        if (isCamelCaseWordBreakIndex(word, i)) {
+            const sub = word.substring(lastCamelCaseBreakIndex, i);
+            if (!sub)
+                continue;
+            result.push(sub);
+            lastCamelCaseBreakIndex = i;
+            foundCamelCase = true;
+        }
+    }
+    // if no splits needed, just return the word as it was
+    if (!foundCamelCase) {
+        result.push(word);
+    }
+    return result;
+}
+
+/**
+ * Converts a string to an array of char codes
+ * @example
+ * ```ts
+ * strToCharCodes('hello') // [104, 101, 108, 108, 111]
+ * ```
+ */
+function strToCharCodes(str) {
+    const len = str.length;
+    const ret = new Array(len);
+    for (let i = 0; i < len; i++) {
+        ret[i] = str.charCodeAt(i);
+    }
+    return ret;
+}
+
+/**
+ * Returns a string containing the set of all unique characters in a string.
+ * @example
+ * ```ts
+ * strToCharSet('hello') // 'ehlo'
+ * ```
+ */
+function strToCharSet(string) {
+    return Array.from(new Set(string)).sort().join('');
+}
+
+/**
+ * Intelligently split a string into sentences. Uses NLP with parse tree to determine sentence boundaries.
+ * @param text Text to split into sentences
+ * @example
+ * ```ts
+ * strToSentences('Hello world. How are you?') // ['Hello world.', 'How are you?']
+ * ```
+ */
+function strToSentences(text) {
+    return sentenceSplitter.split(text)
+        .map((node) => {
+        const [start, end] = node.range;
+        return text.substring(start, end).replace(repeatingWhiteSpace, ' ').trim();
+    })
+        .filter((s) => !!s);
+}
+
+/**
+ * Returns an array of words in the string
+ * @param input - input string
+ * @example
+ * ```js
+ * strToWords('How are you?')
+ * //=> ['How', 'are', 'you']
+ * ```
+ */
+function strToWords(input) {
+    return lodash.words(input);
+}
+
+/**
+ * Inserts provided strings before and after a string.
+ * @param input - input string
+ * @param left - string to place before
+ * @param right - string to place after
+ * @param flags - regex flags
+ */
+function strUnwrap(input, left, right, flags = '') {
+    return input
+        .replace(new RegExp('^' + regexEscapeString(left), flags), '')
+        .replace(new RegExp(regexEscapeString(right) + '$', flags), '');
+}
+
+/**
+ * Inserts provided strings before and after a string.
+ * @param input - input string
+ * @param left - string to place before
+ * @param right - string to place after
+ * @example
+ * ```js
+ * expect(util.strWrapBetween('input', '#', '&')).toBe('#input&');
+ * ```
+ */
+function strWrapBetween(input, left, right) {
+    return left + input + right;
+}
+
+/**
+ * Inserts a provided string before and after a string.
+ * @param input - input string
+ * @param wrap - string to place before and after
+ * @example
+ * ```js
+ * expect(util.strWrapIn('input', '#')).toBe('#input#');
+ * ```
+ */
+function strWrapIn(input, wrap) {
+    return wrap + input + wrap;
+}
+
+/**
+ * Wraps a string in angle brackets.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInAngleBrackets('input')).toBe('<input>');
+ * ```
+ */
+function strWrapInAngleBrackets(input) {
+    return '<' + input + '>';
+}
+
+/**
+ * Wraps a string in braces.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInBraces('input')).toBe('{input}');
+ * ```
+ */
+function strWrapInBraces(input) {
+    return '{' + input + '}';
+}
+
+/**
+ * Wraps a string in brackets.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInBrackets('input')).toBe('[input]');
+ * ```
+ */
+function strWrapInBrackets(input) {
+    return '[' + input + ']';
+}
+
+/**
+ * Wraps a string in parenthesis.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInDoubleQuotes('input')).toBe('"input"');
+ * ```
+ */
+function strWrapInDoubleQuotes(input) {
+    return '"' + input + '"';
+}
+
+/**
+ * Wraps a string in parenthesis.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInParenthesis('input')).toBe('(input)');
+ * ```
+ */
+function strWrapInParenthesis(input) {
+    return '(' + input + ')';
+}
+
+/**
+ * Wraps a string in parenthesis.
+ * @param input - input string
+ * @example
+ * ```js
+ * expect(util.strWrapInSingleQuotes('input')).toBe("'input'");
+ * ```
+ */
+function strWrapInSingleQuotes(input) {
+    return "'" + input + "'";
+}
+
+/**
+ * Returns the string as is, except the first character is capitalized.
+ * @param string The string to capitalize the first character of.
+ */
+function strFirstCharToUpperCase(string) {
+    return string.charAt(0).toUpperCase() + string.substring(1);
+}
+
+/**
+ * Tries to parse strings such as "false" and "true" into corresponding booleans.
+ * @param string The string to parse.
+ */
+function strParseBoolean(string) {
+    return string.toLowerCase() === 'true';
+}
+
+/**
+ * Determine whether a string is a hexadecimal string.
+ */
+function isHex(s) {
+    return /[\da-f]+$/i.test(s);
+}
+
+/**
+ * Determine whether a string is either a hexadecimal or a '\u' or '0x' prepended unicode hex string.
+ */
+function isHexOrUnicode(s) {
+    return /^(\\\\?u|0x)?[\da-f]+$/i.test(s);
+}
+
+/**
+ * Check if an object is iterable
+ * @param o The object to check
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+function isIterable(o) {
+    return (typeof Symbol !== 'undefined' &&
+        Symbol &&
+        'iterator' in Symbol &&
+        o != null &&
+        typeof o === 'object' &&
+        Symbol.iterator in o &&
+        typeof o[Symbol.iterator] === 'function');
+}
+
+/**
+ * Determine wheter the argument is a Object (is typeof object but not null).
+ */
+function isObject(value) {
+    return value !== null && typeof value === 'object';
+}
+
 exports.A1ToColRow = A1ToColRow;
+exports.Att = Att;
 exports.Base = Base;
 exports.BemojeRegex = BemojeRegex;
+exports.Doc = Doc;
+exports.Elem = Elem;
 exports.ExtensibleFunction = ExtensibleFunction;
 exports.HTML_ATTRIBUTES = HTML_ATTRIBUTES;
 exports.HTML_BOOLEAN_ATTRIBUTES = HTML_BOOLEAN_ATTRIBUTES;
@@ -4993,12 +5152,9 @@ exports.Timer = Timer;
 exports.Timestamped = Timestamped;
 exports.absolutCwdPathToRelative = absolutCwdPathToRelative;
 exports.arr2dToCSV = arr2dToCSV;
-exports.arrAssignFrom = arrAssignFrom;
 exports.arrAverage = arrAverage;
 exports.arrEvery = arrEvery;
-exports.arrFilterMutable = arrFilterMutable;
 exports.arrFlatten = arrFlatten;
-exports.arrFlattenMutable = arrFlattenMutable;
 exports.arrIndicesOf = arrIndicesOf;
 exports.arrMapMutable = arrMapMutable;
 exports.arrShallowEquals = arrShallowEquals;
@@ -5030,7 +5186,6 @@ exports.compareStringDescending = compareStringDescending;
 exports.createFileExtensionFilter = createFileExtensionFilter;
 exports.ensureValidWindowsPath = ensureValidWindowsPath;
 exports.funSetName = funSetName;
-exports.generateUnitTests = generateUnitTests;
 exports.getCentury = getCentury;
 exports.getConstructor = getConstructor;
 exports.getCurrentYear = getCurrentYear;
@@ -5043,7 +5198,7 @@ exports.intToBytes = intToBytes;
 exports.interfaceDefinitions = interfaceDefinitions;
 exports.isConstructor = isConstructor;
 exports.isEven = isEven;
-exports.isHex = isHex$1;
+exports.isHex = isHex;
 exports.isHexOrUnicode = isHexOrUnicode;
 exports.isIterable = isIterable;
 exports.isLeapYear = isLeapYear;
@@ -5065,14 +5220,22 @@ exports.mapGetOrElse = mapGetOrElse;
 exports.mapUpdate = mapUpdate;
 exports.mapUpdateDefault = mapUpdateDefault;
 exports.memoryUsage = memoryUsage;
-exports.memoryUsageEuFormat = memoryUsageEuFormat;
+exports.memoryUsageDkFormat = memoryUsageDkFormat;
 exports.memoryUsageUsFormat = memoryUsageUsFormat;
 exports.normalizeFileExtension = normalizeFileExtension;
 exports.normalizeLineLengths = normalizeLineLengths;
 exports.numApproximateLog10 = numApproximateLog10;
 exports.numDaysInMonth = numDaysInMonth;
-exports.numFormatEU = numFormatEU;
+exports.numFormat = numFormat;
+exports.numFormatDK = numFormatDK;
 exports.numFormatUS = numFormatUS;
+exports.numParseFormatted = numParseFormatted;
+exports.numParseFormattedDK = numParseFormattedDK;
+exports.objFilter = objFilter;
+exports.objForEach = objForEach;
+exports.objMap = objMap;
+exports.objMapKeys = objMapKeys;
+exports.objReduce = objReduce;
 exports.padArrayBytesLeft = padArrayBytesLeft;
 exports.padArrayBytesRight = padArrayBytesRight;
 exports.parseSocialSecurityNumberDK = parseSocialSecurityNumberDK;

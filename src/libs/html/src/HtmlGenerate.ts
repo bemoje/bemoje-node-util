@@ -6,7 +6,9 @@ import {
   HTML_ATTRIBUTES,
 } from './html-meta-data'
 
-class Doc {
+import type { GenericArgs } from '../../interfaces'
+
+export class Doc {
   elements: (Elem | string)[] = []
 
   constructor(...elements: (Elem | string)[]) {
@@ -18,7 +20,7 @@ class Doc {
   }
 }
 
-class Elem {
+export class Elem {
   type: string
   attributes: Map<string, Att>
   elements: (Elem | string)[]
@@ -26,7 +28,6 @@ class Elem {
 
   constructor(type: string, ...args: (Att[] | Elem | string)[]) {
     this.type = type
-    this.checkValidType()
     this.isVoid = HTML_VOID_TAGS.has(type)
     this.attributes = new Map()
     this.elements = []
@@ -36,7 +37,8 @@ class Elem {
           this.attributes.set(att.type, att)
         }
       } else {
-        if (this.isVoid) throw new Error("Void elements types can't have children. Got type: " + type)
+        if (this.isVoid)
+          throw new Error("Void elements types can't have children. Got type: " + type)
         this.elements.push(arg as Elem | string)
       }
     }
@@ -44,13 +46,6 @@ class Elem {
 
   get description(): string {
     return HTML_ELEMENTS[this.type].description
-  }
-
-  checkValidType() {
-    if (!Object.hasOwn(HTML_ELEMENTS, this.type)) {
-      //throw new Error(`Invalid HTMLElement tag: ${this.type}`)
-      console.log(`Maybe invalid HTMLElement tag: ${this.type}`)
-    }
   }
 
   private renderAttributes() {
@@ -61,11 +56,13 @@ class Elem {
     return this.elements.join('')
   }
 
-  toString() {
-    return `<${this.type}${this.renderAttributes()}${this.isVoid ? ' />' : `>${this.renderChildren()}</${this.type}>`}`
+  toString(): string {
+    return `<${this.type}${this.renderAttributes()}${
+      this.isVoid ? ' />' : `>${this.renderChildren()}</${this.type}>`
+    }`
   }
 
-  toHtmlElement() {
+  toHtmlElement(): HTMLElement {
     const elem = document.createElement(this.type)
     for (const attr of this.attributes.values()) {
       elem.setAttribute(attr.type, attr.value || '')
@@ -81,23 +78,11 @@ class Elem {
   }
 }
 
-class Att {
+export class Att {
   isBoolean: boolean
 
   constructor(public type: string, public value?: string) {
-    this.checkValidType()
     this.isBoolean = HTML_BOOLEAN_ATTRIBUTES.has(type)
-  }
-
-  checkValidType() {
-    if (
-      !Object.hasOwn(HTML_ATTRIBUTES, this.type) &&
-      !HTML_EVENT_HANDLER_ATTRIBUTES.has(this.type) &&
-      !this.type.startsWith('data-')
-    ) {
-      // throw new Error(`Invalid attribute type: ${this.type}`)
-      console.log(`Maybe invalid attribute type: ${this.type}`)
-    }
   }
 
   toString(): string {
@@ -113,17 +98,17 @@ class Att {
   }
 }
 
-const el: Record<string, (...args: any) => Elem> = {}
+const el: Record<string, (...args: GenericArgs) => Elem> = {}
 for (const type of Object.keys(HTML_ELEMENTS)) {
   el[type] = (...args) => new Elem(type, ...args)
 }
-function defineElementType(type: string): (...args: any[]) => Elem {
+function defineElementType(type: string): (...args: GenericArgs) => Elem {
   el[type] = (...args) => new Elem(type, ...args)
   HTML_ELEMENTS[type] = { description: 'Custom Element' }
   return el[type]
 }
 
-const at: Record<string, (...args: any) => Att> = {}
+const at: Record<string, (...args: GenericArgs) => Att> = {}
 for (const type of Object.keys(HTML_ATTRIBUTES)) {
   at[type] = (value?: string) => new Att(type, value)
 }
@@ -153,7 +138,15 @@ function createTable(rows: string[][], hasHeader = false): Elem {
   return table
 }
 
-export default { Doc, el, at, comment, doctype, defineElementType, defineAttributeType }
+export const HtmlGenerate = {
+  el,
+  at,
+  comment,
+  doctype,
+  defineElementType,
+  defineAttributeType,
+  createTable,
+}
 
 // const doc = new Doc(
 //   doctype(),

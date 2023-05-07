@@ -19,21 +19,21 @@ Guarantees that options are handled in a consistent way.
 
 ### defaultOptions
 
-• **defaultOptions**: `Record`<`string`, `any`\>
+• **defaultOptions**: [`Obj`](/docs/index.md#obj)
 
 #### Defined in
 
-[src/libs/mixins/src/interfaces.ts:16](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/interfaces.ts#L16)
+[src/libs/mixins/src/interfaces.ts:17](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/interfaces.ts#L17)
 
 ___
 
 ### options
 
-• **options**: `Record`<`string`, `any`\>
+• **options**: [`Obj`](/docs/index.md#obj)
 
 #### Defined in
 
-[src/libs/mixins/src/interfaces.ts:15](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/interfaces.ts#L15)
+[src/libs/mixins/src/interfaces.ts:16](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/interfaces.ts#L16)
 
 ## Methods
 
@@ -45,7 +45,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | `Record`<`string`, `any`\> |
+| `options?` | [`Obj`](/docs/index.md#obj) |
 
 #### Returns
 
@@ -53,4 +53,4 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/interfaces.ts:17](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/interfaces.ts#L17)
+[src/libs/mixins/src/interfaces.ts:18](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/interfaces.ts#L18)

@@ -195,10 +195,22 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
   'bgcolor': {
     description:
       'Background color of the element. Note:This is a legacy attribute. Please use the CSSbackground-colorproperty instead.',
-    relatedTags: ['body', 'col', 'colgroup', 'marquee', 'table', 'tbody', 'tfoot', 'td', 'th', 'tr'],
+    relatedTags: [
+      'body',
+      'col',
+      'colgroup',
+      'marquee',
+      'table',
+      'tbody',
+      'tfoot',
+      'td',
+      'th',
+      'tr',
+    ],
   },
   'border': {
-    description: 'The border width. Note:This is a legacy attribute. Please use the CSSborderproperty instead.',
+    description:
+      'The border width. Note:This is a legacy attribute. Please use the CSSborderproperty instead.',
     relatedTags: ['img', 'object', 'table'],
   },
   'buffered': {
@@ -272,7 +284,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['audio', 'img', 'link', 'script', 'video'],
   },
   'csp': {
-    description: 'Specifies the Content Security Policy that an embedded document must agree to enforce upon itself.',
+    description:
+      'Specifies the Content Security Policy that an embedded document must agree to enforce upon itself.',
     relatedTags: ['iframe'],
   },
   'data': {
@@ -297,7 +310,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['script'],
   },
   'dir': {
-    description: 'Defines the text direction. Allowed values are ltr (Left-To-Right) or rtl (Right-To-Left)',
+    description:
+      'Defines the text direction. Allowed values are ltr (Left-To-Right) or rtl (Right-To-Left)',
     relatedTags: ['Global attribute'],
   },
   'dirname': {
@@ -306,7 +320,17 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
   },
   'disabled': {
     description: 'Indicates whether the user can interact with the element.',
-    relatedTags: ['button', 'command', 'fieldset', 'input', 'keygen', 'optgroup', 'option', 'select', 'textarea'],
+    relatedTags: [
+      'button',
+      'command',
+      'fieldset',
+      'input',
+      'keygen',
+      'optgroup',
+      'option',
+      'select',
+      'textarea',
+    ],
   },
   'download': {
     description: 'Indicates that the hyperlink is to be used for downloading a resource.',
@@ -383,7 +407,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['canvas', 'embed', 'iframe', 'img', 'input', 'object', 'video'],
   },
   'hidden': {
-    description: 'Prevents rendering of given element, while keeping child elements, e.g. script elements, active.',
+    description:
+      'Prevents rendering of given element, while keeping child elements, e.g. script elements, active.',
     relatedTags: ['Global attribute'],
   },
   'high': {
@@ -403,7 +428,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['command'],
   },
   'id': {
-    description: 'Often used with CSS to style a specific element. The value of this attribute must be unique.',
+    description:
+      'Often used with CSS to style a specific element. The value of this attribute must be unique.',
     relatedTags: ['Global attribute'],
   },
   'importance': {
@@ -411,7 +437,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['iframe', 'img', 'link', 'script'],
   },
   'integrity': {
-    description: 'Specifies aSubresource Integrityvalue that allows browsers to verify what they fetch.',
+    description:
+      'Specifies aSubresource Integrityvalue that allows browsers to verify what they fetch.',
     relatedTags: ['link', 'script'],
   },
   'intrinsicsize': {
@@ -461,7 +488,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['input'],
   },
   'loop': {
-    description: "Indicates whether the media should start playing from the start when it's finished.",
+    description:
+      "Indicates whether the media should start playing from the start when it's finished.",
     relatedTags: ['audio', 'bgsound', 'marquee', 'video'],
   },
   'low': {
@@ -490,7 +518,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['a', 'area', 'link', 'source', 'style'],
   },
   'method': {
-    description: 'Defines whichHTTPmethod to use when submitting the form. Can beGET(default) orPOST.',
+    description:
+      'Defines whichHTTPmethod to use when submitting the form. Can beGET(default) orPOST.',
     relatedTags: ['form'],
   },
   'min': {
@@ -498,7 +527,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['input', 'meter'],
   },
   'multiple': {
-    description: 'Indicates whether multiple values can be entered in an input of the typeemailorfile.',
+    description:
+      'Indicates whether multiple values can be entered in an input of the typeemailorfile.',
     relatedTags: ['input', 'select'],
   },
   'muted': {
@@ -506,7 +536,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['audio', 'video'],
   },
   'name': {
-    description: 'Name of the element. For example used by the server to identify the fields in form submits.',
+    description:
+      'Name of the element. For example used by the server to identify the fields in form submits.',
     relatedTags: [
       'button',
       'form',
@@ -536,7 +567,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['meter'],
   },
   'pattern': {
-    description: "Defines a regular expression which the element's value will be validated against.",
+    description:
+      "Defines a regular expression which the element's value will be validated against.",
     relatedTags: ['input'],
   },
   'ping': {
@@ -553,7 +585,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['video'],
   },
   'preload': {
-    description: 'Indicates whether the whole resource, parts of it or nothing should be preloaded.',
+    description:
+      'Indicates whether the whole resource, parts of it or nothing should be preloaded.',
     relatedTags: ['audio', 'video'],
   },
   'radiogroup': {
@@ -577,7 +610,8 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
     relatedTags: ['input', 'select', 'textarea'],
   },
   'reversed': {
-    description: 'Indicates whether the list should be displayed in a descending order instead of a ascending.',
+    description:
+      'Indicates whether the list should be displayed in a descending order instead of a ascending.',
     relatedTags: ['ol'],
   },
   'rows': {
@@ -681,7 +715,17 @@ export const HTML_ATTRIBUTES: Record<string, { description: string; relatedTags:
   },
   'type': {
     description: 'Defines the type of the element.',
-    relatedTags: ['button', 'input', 'command', 'embed', 'object', 'script', 'source', 'style', 'menu'],
+    relatedTags: [
+      'button',
+      'input',
+      'command',
+      'embed',
+      'object',
+      'script',
+      'source',
+      'style',
+      'menu',
+    ],
   },
   'usemap': {
     description: '',
@@ -740,7 +784,8 @@ export const HTML_ELEMENTS: Record<string, { description: string }> = {
     description: 'Not supported in HTML5. Use CSS instead.',
   },
   bdi: {
-    description: 'Isolates a part of text that might be formatted in a different direction from other text outside it',
+    description:
+      'Isolates a part of text that might be formatted in a different direction from other text outside it',
   },
   bdo: {
     description: 'Overrides the current text direction',

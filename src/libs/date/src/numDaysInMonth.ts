@@ -1,5 +1,5 @@
 import { assertValidDateMonth } from './assertValidDateMonth'
-import { isLeapYear } from '../../date/src/isLeapYear'
+import { isLeapYear } from './isLeapYear'
 
 const DAYS_IN_MONTH = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 

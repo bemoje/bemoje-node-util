@@ -11,7 +11,7 @@
  * mapGetOrDefault(map, 'nonexistentKey', 2) // Output: 2
  * ```
  */
-export function mapGetOrDefault<K, V>(map: Map<K, V> | WeakMap<any, V>, key: K, defaultValue: V): V {
+export function mapGetOrDefault<K, V>(map: Map<K, V>, key: K, defaultValue: V): V {
   const value = map.get(key)
   if (value !== undefined) return value
   map.set(key, defaultValue)

@@ -1,4 +1,4 @@
-import { MapIterator } from '../../..'
+import type { MapIterator } from '../../interfaces'
 
 /**
  * Same as Array.prototype.map but performs operations in palce (not immutable).

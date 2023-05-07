@@ -1,4 +1,6 @@
-import { isConstructor, isPrototype } from '../../validation'
+import { isPrototype } from '../../validation/src/isPrototype'
+import { isConstructor } from '../../validation/src/isConstructor'
+import type { Obj } from '../../interfaces'
 
 /**
  * Iterate the prototype chain of a given object.
@@ -19,7 +21,7 @@ import { isConstructor, isPrototype } from '../../validation'
  * //=> [instance, C.prototype, B.prototype, A.prototype, Object.prototype]
  * ```
  */
-export function* iteratePrototypeChain(object: Record<string, any>): Generator<Record<string, any>> {
+export function* iteratePrototypeChain(object: Obj): Generator<Obj> {
   if (object == null) return
   if (
     // if the below false, then object must be an instance
@@ -32,7 +34,7 @@ export function* iteratePrototypeChain(object: Record<string, any>): Generator<R
     yield object
     object = object.constructor.prototype
   }
-  let objectOrNull: Record<string, any> | null = object
+  let objectOrNull: Obj | null = object
   while (objectOrNull) {
     yield objectOrNull
     objectOrNull = Reflect.getPrototypeOf(objectOrNull)

@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-extra-semi */
 import { IRevivable } from '../../mixins/src/interfaces'
-import { arr2dToCSV, arrEvery, arrMapMutable } from '../../array'
 import { Base } from '../../mixins/src/Base'
-import { A1ToColRow } from '../../spreadsheet'
+import { A1ToColRow } from '../../spreadsheet/src/A1ToColRow'
 import { letterToCol } from '../../spreadsheet/src/letterToCol'
+import { arrEvery } from '../../array/src/arrEvery'
+import { arrMapMutable } from '../../array/src/arrMapMutable'
 
 /**
  * Constructor options for the Table class.
@@ -71,20 +71,6 @@ export class Table<T> extends Base implements IRevivable<TableSerializedForm<T>>
   protected _data: Array<Array<T>> = []
 
   /**
-   * Creates a Table instance from CSV string data.
-   * @param csv CSV data string
-   * @param delimiter csv delimiter
-   * @param options TableOptions constructor options.
-   */
-  public static fromCSV<T>(csv: string, delimiter = ';', options: ITableOptions<T | string> = {}): Table<T | string> {
-    options.data = csv
-      .split('\n')
-      .filter((line) => line.length)
-      .map((line) => line.trim().split(delimiter))
-    return new Table(options)
-  }
-
-  /**
    * Revive a stringified Table object.
    * @param json a stringified Table object.
    */
@@ -141,6 +127,7 @@ export class Table<T> extends Base implements IRevivable<TableSerializedForm<T>>
    * @param spreadsheetNotation Interpret row and col as spreadsheet coordinates, eg. ("A","1")
    */
   public get(column: number | string, row: number | string, spreadsheetNotation = false): T {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
     ;[column, row] = this.normalizeColRow(column, row, spreadsheetNotation)
     return this._data[row][column]
   }
@@ -152,7 +139,13 @@ export class Table<T> extends Base implements IRevivable<TableSerializedForm<T>>
    * @param value The value to insert
    * @param spreadsheetNotation Interpret row and col as spreadsheet coordinates, eg. ("A","1")
    */
-  public set(column: number | string, row: number | string, value: T, spreadsheetNotation = false): Table<T> {
+  public set(
+    column: number | string,
+    row: number | string,
+    value: T,
+    spreadsheetNotation = false,
+  ): Table<T> {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
     ;[column, row] = this.normalizeColRow(column, row, spreadsheetNotation)
     this._data[row][column] = value
     return this
@@ -233,14 +226,6 @@ export class Table<T> extends Base implements IRevivable<TableSerializedForm<T>>
       result.push(this._data[i].slice())
     }
     return result
-  }
-
-  /**
-   * Returns the table as a CSV string.
-   * @param delimiter csv delimiter
-   */
-  public toCSV(delimiter = ';'): string {
-    return arr2dToCSV(this.toArray(), delimiter)
   }
 
   /**
@@ -393,8 +378,13 @@ export class Table<T> extends Base implements IRevivable<TableSerializedForm<T>>
     return this.ensureValidRowIndex(row)
   }
 
-  protected normalizeColRow(col: number | string, row: number | string, spreadsheetNotation: boolean): number[] {
+  protected normalizeColRow(
+    col: number | string,
+    row: number | string,
+    spreadsheetNotation: boolean,
+  ): number[] {
     if (spreadsheetNotation) {
+      // eslint-disable-next-line @typescript-eslint/no-extra-semi
       ;[col, row] = A1ToColRow(String(col) + String(row), true)
     }
     return [this.ensureValidColIndex(col), this.ensureValidRowIndex(row)]

@@ -8,7 +8,7 @@ import { strLinesRemoveEmpty } from '../../string/src/strLinesRemoveEmpty'
  * - is minified
  * - is scoped with brackets
  * - expressions end with semicolon
- * - has no string literals containing any of these characters: '{', '}', ';'.
+ * - has no string literals containing semicolons or braces.
  * @param input The minified source code
  * @param indent The string to use as indentation
  */

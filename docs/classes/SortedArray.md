@@ -24,7 +24,6 @@
 
 - [allowDuplicates](/docs/classes/SortedArray.md#allowduplicates)
 - [compare](/docs/classes/SortedArray.md#compare)
-- [compareFound](/docs/classes/SortedArray.md#comparefound)
 - [length](/docs/classes/SortedArray.md#length)
 - [[species]](/docs/classes/SortedArray.md#[species])
 
@@ -104,7 +103,7 @@ Array.constructor
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:15](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L15)
+[src/libs/datastructures/src/SortedArray.ts:16](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L16)
 
 ## Properties
 
@@ -114,42 +113,17 @@ Array.constructor
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:13](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L13)
+[src/libs/datastructures/src/SortedArray.ts:14](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L14)
 
 ___
 
 ### compare
 
-• `Private` **compare**: (`a`: `any`, `b`: `any`) => `number` = `compareString`
-
-#### Type declaration
-
-▸ (`a`, `b`): `number`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | `any` |
-| `b` | `any` |
-
-##### Returns
-
-`number`
+• `Private` **compare**: [`Comparator`](/docs/index.md#comparator) = `compareString`
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:11](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L11)
-
-___
-
-### compareFound
-
-• `Private` **compareFound**: `boolean` = `false`
-
-#### Defined in
-
-[src/libs/datastructures/src/SortedArray.ts:12](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L12)
+[src/libs/datastructures/src/SortedArray.ts:13](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L13)
 
 ___
 
@@ -175,7 +149,7 @@ ___
 
 #### Inherited from
 
-Array.\_\_@species@278
+Array.\_\_@species@607
 
 #### Defined in
 
@@ -195,7 +169,7 @@ Iterator
 
 #### Inherited from
 
-Array.\_\_@iterator@13
+Array.\_\_@iterator@87
 
 #### Defined in
 
@@ -226,7 +200,7 @@ when they will be absent when used in a 'with' statement.
 
 #### Inherited from
 
-Array.\_\_@unscopables@15
+Array.\_\_@unscopables@89
 
 #### Defined in
 
@@ -250,7 +224,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:47](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L47)
+[src/libs/datastructures/src/SortedArray.ts:45](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L45)
 
 ___
 
@@ -272,7 +246,7 @@ Add elements to the sorted array.
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:68](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L68)
+[src/libs/datastructures/src/SortedArray.ts:60](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L60)
 
 ___
 
@@ -642,7 +616,7 @@ Returns the index of the first element that is determined equal by the compare f
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:164](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L164)
+[src/libs/datastructures/src/SortedArray.ts:156](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L156)
 
 ___
 
@@ -664,7 +638,7 @@ Returns a tuple containing the first index of where to add an element to keep th
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:119](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L119)
+[src/libs/datastructures/src/SortedArray.ts:111](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L111)
 
 ___
 
@@ -838,7 +812,7 @@ Returns the index of the first element found that is determined equal by the com
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:153](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L153)
+[src/libs/datastructures/src/SortedArray.ts:145](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L145)
 
 ___
 
@@ -860,7 +834,7 @@ Returns all indices at which element exists. Equality is determined by the compa
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:186](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L186)
+[src/libs/datastructures/src/SortedArray.ts:178](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L178)
 
 ___
 
@@ -882,7 +856,7 @@ Returns a tuple containing the index of where to add an element to keep the arra
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:98](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L98)
+[src/libs/datastructures/src/SortedArray.ts:90](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L90)
 
 ___
 
@@ -904,7 +878,7 @@ Returns the interestion of this and another sorted array.
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:218](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L218)
+[src/libs/datastructures/src/SortedArray.ts:210](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L210)
 
 ___
 
@@ -999,7 +973,7 @@ Returns the index of the last element that is determined equal by the compare fu
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:175](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L175)
+[src/libs/datastructures/src/SortedArray.ts:167](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L167)
 
 ___
 
@@ -1021,7 +995,7 @@ Returns a tuple containing the last index of where to add an element to keep the
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:136](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L136)
+[src/libs/datastructures/src/SortedArray.ts:128](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L128)
 
 ___
 
@@ -1081,27 +1055,27 @@ ___
 
 ### push
 
-▸ **push**(`...items`): `number`
+▸ **push**(`...elements`): `number`
 
-Appends new elements to the end of an array, and returns the new length of the array.
+Pushes and sorts an element into the array.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `...items` | `any`[] | New elements to add to the array. |
+| Name | Type |
+| :------ | :------ |
+| `...elements` | `T`[] |
 
 #### Returns
 
 `number`
 
-#### Inherited from
+#### Overrides
 
 Array.push
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1322
+[src/libs/datastructures/src/SortedArray.ts:232](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L232)
 
 ___
 
@@ -1259,22 +1233,21 @@ ___
 
 ### reverse
 
-▸ **reverse**(): `any`[]
+▸ **reverse**(): `never`
 
-Reverses the elements in an array in place.
-This method mutates the array and returns a reference to the same array.
+Throws an error since it would break the sorted state.
 
 #### Returns
 
-`any`[]
+`never`
 
-#### Inherited from
+#### Overrides
 
 Array.reverse
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1344
+[src/libs/datastructures/src/SortedArray.ts:240](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L240)
 
 ___
 
@@ -1384,56 +1357,28 @@ ___
 
 ### splice
 
-▸ **splice**(`start`, `deleteCount?`): `any`[]
+▸ **splice**(`start`, `deleteCount?`): [`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
-Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
+Same as Array.prototype.splice, but cannot insert elements
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `start` | `number` | The zero-based location in the array from which to start removing elements. |
-| `deleteCount?` | `number` | The number of elements to remove. |
+| Name | Type |
+| :------ | :------ |
+| `start` | `number` |
+| `deleteCount?` | `number` |
 
 #### Returns
 
-`any`[]
+[`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
-An array containing the elements that were deleted.
-
-#### Inherited from
+#### Overrides
 
 Array.splice
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1377
-
-▸ **splice**(`start`, `deleteCount`, `...items`): `any`[]
-
-Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `start` | `number` | The zero-based location in the array from which to start removing elements. |
-| `deleteCount` | `number` | The number of elements to remove. |
-| `...items` | `any`[] | Elements to insert into the array in place of the deleted elements. |
-
-#### Returns
-
-`any`[]
-
-An array containing the elements that were deleted.
-
-#### Inherited from
-
-Array.splice
-
-#### Defined in
-
-node_modules/typescript/lib/lib.es5.d.ts:1385
+[src/libs/datastructures/src/SortedArray.ts:247](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L247)
 
 ___
 
@@ -1449,7 +1394,7 @@ Convert to a normal Array instance
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:43](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L43)
+[src/libs/datastructures/src/SortedArray.ts:41](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L41)
 
 ___
 
@@ -1505,7 +1450,7 @@ Remove all duplicate elements in the sorted array, leaving only unique values. E
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:79](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/datastructures/src/SortedArray.ts#L79)
+[src/libs/datastructures/src/SortedArray.ts:71](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/datastructures/src/SortedArray.ts#L71)
 
 ___
 

@@ -13,7 +13,7 @@ describe('getMemoryUsage', () => {
 
 describe('getMemoryUsageFormattedEU', () => {
   it('example', () => {
-    const m = util.memoryUsageEuFormat()
+    const m = util.memoryUsageDkFormat()
     expect(typeof m.processAllocationMB).toBe('string')
     expect(typeof m.heapAllocationMB).toBe('string')
     expect(typeof m.heapUsedMB).toBe('string')

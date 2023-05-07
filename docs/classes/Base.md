@@ -38,17 +38,11 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 ### constructor
 
-• **new Base**(`options?`)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Record`<`string`, `any`\> |
+• **new Base**()
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:10](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L10)
+[src/libs/mixins/src/Base.ts:13](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L13)
 
 ## Accessors
 
@@ -62,21 +56,21 @@ typeof [`Base`](/docs/classes/Base.md)
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:14](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L14)
+[src/libs/mixins/src/Base.ts:17](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L17)
 
 ___
 
 ### proto
 
-• `get` **proto**(): `Record`<`string`, `any`\>
+• `get` **proto**(): [`Obj`](/docs/index.md#obj)
 
 #### Returns
 
-`Record`<`string`, `any`\>
+[`Obj`](/docs/index.md#obj)
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:18](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L18)
+[src/libs/mixins/src/Base.ts:21](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L21)
 
 ## Methods
 
@@ -97,7 +91,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:51](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L51)
+[src/libs/mixins/src/Base.ts:54](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L54)
 
 ___
 
@@ -109,7 +103,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `Record`<`string`, `any`\> |
+| `options` | [`Obj`](/docs/index.md#obj) |
 | `optionKeyPairs` | [`string`, `string`][] |
 
 #### Returns
@@ -118,7 +112,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:68](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L68)
+[src/libs/mixins/src/Base.ts:71](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L71)
 
 ___
 
@@ -130,7 +124,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `Record`<`string`, `any`\> |
+| `options` | [`Obj`](/docs/index.md#obj) |
 | `optionKeyPairs` | [`string`, `string`][] |
 
 #### Returns
@@ -139,7 +133,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:76](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L76)
+[src/libs/mixins/src/Base.ts:79](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L79)
 
 ___
 
@@ -153,7 +147,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:39](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L39)
+[src/libs/mixins/src/Base.ts:42](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L42)
 
 ___
 
@@ -173,7 +167,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:47](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L47)
+[src/libs/mixins/src/Base.ts:50](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L50)
 
 ___
 
@@ -187,7 +181,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:30](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L30)
+[src/libs/mixins/src/Base.ts:33](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L33)
 
 ___
 
@@ -201,7 +195,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:22](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L22)
+[src/libs/mixins/src/Base.ts:25](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L25)
 
 ___
 
@@ -217,4 +211,4 @@ Make the properties with property names that start with an underscore non-enumer
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:64](https://github.com/bemoje/bemoje-node-util/blob/2716028/src/libs/mixins/src/Base.ts#L64)
+[src/libs/mixins/src/Base.ts:67](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/Base.ts#L67)
