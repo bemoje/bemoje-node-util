@@ -1,5 +1,5 @@
 /*!
- * @bemoje/node-util v0.2.0
+ * @bemoje/node-util v0.2.1
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
@@ -23,6 +23,24 @@ var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
 var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
 
 /**
+ * Escapes a string so it can be used in a regular expression.
+ */
+function regexEscapeString(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+/**
+ * In a given string, replace all occurances of a given search string with a given replacement string.
+ * @param input input string
+ * @param replace string to find a replace
+ * @param replaceWith string to replace matches with
+ * @param flags RegExp flags as single string.
+ */
+function strReplaceAll(input, replace, replaceWith, flags = 'g') {
+    return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith);
+}
+
+/**
  * Converts a 2-dimensional array into a CSV string.
  * If input data contains the delimiter, it will be removed.
  * Linebreaks will be removed.
@@ -34,7 +52,7 @@ function arr2dToCSV(input, delimiter = ';', replaceLinebreakWith = ' ') {
     return input
         .map((row) => {
         return row
-            .map((item) => (item + '').replaceAll(delimiter, '').replace(/(\r*\n)+/g, replaceLinebreakWith))
+            .map((item) => strReplaceAll(item + '', delimiter, '').replace(/(\r*\n)+/g, replaceLinebreakWith))
             .join(delimiter);
     })
         .join('\n');
@@ -3664,11 +3682,11 @@ function memoryUsageUsFormat() {
 }
 
 /**
- * Takes a directory path as a list of directory/folder names from the current working directory and returns it as a full path string.
- * @param dirs directory names from the current working directory.
+ * Takes a directory path as a list of directory/folder names from the current working directory and returns it as an absolute path.
+ * @param names directory/file names from the current working directory.
  */
-function pathFromCwd(...dirs) {
-    return path__default["default"].join(process.cwd(), ...dirs);
+function pathFromCwd(...names) {
+    return path__default["default"].join(process.cwd(), ...names);
 }
 
 /**
@@ -3840,10 +3858,14 @@ function numApproximateLog10(n) {
  * @param decimalSeperator character to use as decimal seperator
  */
 function numParseFormatted(input, thousandSeperator = ',', decimalSeperator = '.') {
-    return Number(input
-        .replaceAll(thousandSeperator, '')
+    if (!input)
+        return NaN;
+    const n = Number(strReplaceAll(input, thousandSeperator, '')
         .replace(decimalSeperator, '.')
         .replace(/[^\d.-]/g, ''));
+    if (!Number.isNaN(n) && Number.isFinite(n))
+        return n;
+    return Number(input);
 }
 
 /**
@@ -4026,6 +4048,17 @@ function objReduce(object, callback, accum, getKeys = Object.keys) {
 }
 
 /**
+ * Returns whether an object has no enumerable own keys defined.
+ */
+function objIsEmpty(obj) {
+    for (const key of Object.keys(obj)) {
+        if (key)
+            return false;
+    }
+    return true;
+}
+
+/**
  * Matches 2 or more consecutive whitespace characters, including line terminators, tabs, etc.
  */
 const repeatingWhiteSpace = /((\r?\r?\n)|\s|\t){2,}/g;
@@ -4171,13 +4204,6 @@ function regexGetGroupNames(re) {
         names.push(res.groups.name);
     }
     return names;
-}
-
-/**
- * Escapes a string so it can be used in a regular expression.
- */
-function regexEscapeString(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
 /**
@@ -4840,17 +4866,6 @@ function strPrettifyMinifiedCode(input, indent = '  ') {
 }
 
 /**
- * In a given string, replace all occurances of a given search string with a given replacement string.
- * @param input input string
- * @param replace string to find a replace
- * @param replaceWith string to replace matches with
- * @param flags RegExp flags as single string.
- */
-function strReplaceAll(input, replace, replaceWith, flags = 'g') {
-    return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith);
-}
-
-/**
  * Checks if a string is a number.
  * @param string - input string
  */
@@ -5089,6 +5104,20 @@ function strParseBoolean(string) {
 }
 
 /**
+ * Returns whether a given string has any line breaks.
+ */
+function strIsMultiLine(string) {
+    return string.includes('\n');
+}
+
+/**
+ * Remove line breaks from string.
+ */
+function strRemoveNewLines(string, replaceWith = '. ') {
+    return string.replace(/\r*\n/g, replaceWith);
+}
+
+/**
  * Determine whether a string is a hexadecimal string.
  */
 function isHex(s) {
@@ -5233,6 +5262,7 @@ exports.numParseFormatted = numParseFormatted;
 exports.numParseFormattedDK = numParseFormattedDK;
 exports.objFilter = objFilter;
 exports.objForEach = objForEach;
+exports.objIsEmpty = objIsEmpty;
 exports.objMap = objMap;
 exports.objMapKeys = objMapKeys;
 exports.objReduce = objReduce;
@@ -5271,6 +5301,7 @@ exports.strCountChars = strCountChars;
 exports.strFirstCharToUpperCase = strFirstCharToUpperCase;
 exports.strHash = strHash;
 exports.strIsLowerCase = strIsLowerCase;
+exports.strIsMultiLine = strIsMultiLine;
 exports.strIsUpperCase = strIsUpperCase;
 exports.strLinesRemoveEmpty = strLinesRemoveEmpty;
 exports.strLinesTrimLeft = strLinesTrimLeft;
@@ -5278,6 +5309,7 @@ exports.strLinesTrimRight = strLinesTrimRight;
 exports.strParseBoolean = strParseBoolean;
 exports.strPrettifyMinifiedCode = strPrettifyMinifiedCode;
 exports.strRemoveDuplicateChars = strRemoveDuplicateChars;
+exports.strRemoveNewLines = strRemoveNewLines;
 exports.strRepeat = strRepeat;
 exports.strReplaceAll = strReplaceAll;
 exports.strSortChars = strSortChars;

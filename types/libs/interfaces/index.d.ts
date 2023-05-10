@@ -9,8 +9,12 @@ export type Callback<T> = (value: T, index: number, array: Array<T>) => void;
 export type MapIterator<T> = (value: T, index: number, array: Array<T>) => T;
 export type Predicate<T> = (value: T, index: number, array: Array<T>) => boolean;
 export type Comparator = (a: any, b: any) => number;
-export type Constructor<T = Record<string, any>> = new (...args: GenericArgs) => T;
 export type NestedArray<T> = Array<NestedArray<T> | T>;
+export type Constructor<T = Record<string, any>> = new (...args: GenericArgs) => T;
+export type ConstructorOf<T> = {
+    new (): T;
+    name: string;
+};
 export type Bit = 0 | 1;
 export type BitArray = Array<Bit>;
 export type ByteInt = PositiveIntegerLessThan<256>;

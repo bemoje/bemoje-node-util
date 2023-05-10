@@ -27,4 +27,6 @@ export * from './src/strWrapInSingleQuotes';
 export * from './src/strHash';
 export * from './src/strFirstCharToUpperCase';
 export * from './src/strParseBoolean';
+export * from './src/strIsMultiLine';
+export * from './src/strRemoveNewLines';
 //# sourceMappingURL=index.d.ts.map

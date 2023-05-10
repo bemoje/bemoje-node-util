@@ -1,3 +1,5 @@
+import { strReplaceAll } from '../../string/src/strReplaceAll'
+
 /**
  * Converts a 2-dimensional array into a CSV string.
  * If input data contains the delimiter, it will be removed.
@@ -15,7 +17,7 @@ export function arr2dToCSV<T>(
     .map((row) => {
       return row
         .map((item) =>
-          (item + '').replaceAll(delimiter, '').replace(/(\r*\n)+/g, replaceLinebreakWith),
+          strReplaceAll(item + '', delimiter, '').replace(/(\r*\n)+/g, replaceLinebreakWith),
         )
         .join(delimiter)
     })

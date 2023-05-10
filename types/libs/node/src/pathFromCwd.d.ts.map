@@ -1,1 +1,1 @@
-{"version":3,"file":"pathFromCwd.d.ts","sourceRoot":"","sources":["../../../../src/libs/node/src/pathFromCwd.ts"],"names":[],"mappings":"AAEA;;;GAGG;AACH,wBAAgB,WAAW,CAAC,GAAG,IAAI,EAAE,KAAK,CAAC,MAAM,CAAC,GAAG,MAAM,CAE1D"}
+{"version":3,"file":"pathFromCwd.d.ts","sourceRoot":"","sources":["../../../../src/libs/node/src/pathFromCwd.ts"],"names":[],"mappings":"AAEA;;;GAGG;AACH,wBAAgB,WAAW,CAAC,GAAG,KAAK,EAAE,KAAK,CAAC,MAAM,CAAC,GAAG,MAAM,CAE3D"}

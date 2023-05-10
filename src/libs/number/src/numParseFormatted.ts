@@ -1,3 +1,5 @@
+import { strReplaceAll } from '../../string/src/strReplaceAll'
+
 /**
  * Parses a formatted number string to a number
  * @param input string to parse
@@ -9,11 +11,12 @@ export function numParseFormatted(
   thousandSeperator = ',',
   decimalSeperator = '.',
 ): number {
-  thousandSeperator
-  return Number(
-    input
-      .replaceAll(thousandSeperator, '')
+  if (!input) return NaN
+  const n = Number(
+    strReplaceAll(input, thousandSeperator, '')
       .replace(decimalSeperator, '.')
       .replace(/[^\d.-]/g, ''),
   )
+  if (!Number.isNaN(n) && Number.isFinite(n)) return n
+  return Number(input)
 }

@@ -14,4 +14,5 @@ export * from './src/objFilter';
 export * from './src/objForEach';
 export * from './src/objMapKeys';
 export * from './src/objReduce';
+export * from './src/objIsEmpty';
 //# sourceMappingURL=index.d.ts.map

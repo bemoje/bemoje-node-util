@@ -1,5 +1,5 @@
 /*!
- * @bemoje/node-util v0.2.0
+ * @bemoje/node-util v0.2.1
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
@@ -14,6 +14,24 @@ import { split } from 'sentence-splitter';
 import { words as words$1 } from 'lodash';
 
 /**
+ * Escapes a string so it can be used in a regular expression.
+ */
+function regexEscapeString(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+/**
+ * In a given string, replace all occurances of a given search string with a given replacement string.
+ * @param input input string
+ * @param replace string to find a replace
+ * @param replaceWith string to replace matches with
+ * @param flags RegExp flags as single string.
+ */
+function strReplaceAll(input, replace, replaceWith, flags = 'g') {
+    return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith);
+}
+
+/**
  * Converts a 2-dimensional array into a CSV string.
  * If input data contains the delimiter, it will be removed.
  * Linebreaks will be removed.
@@ -25,7 +43,7 @@ function arr2dToCSV(input, delimiter = ';', replaceLinebreakWith = ' ') {
     return input
         .map((row) => {
         return row
-            .map((item) => (item + '').replaceAll(delimiter, '').replace(/(\r*\n)+/g, replaceLinebreakWith))
+            .map((item) => strReplaceAll(item + '', delimiter, '').replace(/(\r*\n)+/g, replaceLinebreakWith))
             .join(delimiter);
     })
         .join('\n');
@@ -3655,11 +3673,11 @@ function memoryUsageUsFormat() {
 }
 
 /**
- * Takes a directory path as a list of directory/folder names from the current working directory and returns it as a full path string.
- * @param dirs directory names from the current working directory.
+ * Takes a directory path as a list of directory/folder names from the current working directory and returns it as an absolute path.
+ * @param names directory/file names from the current working directory.
  */
-function pathFromCwd(...dirs) {
-    return path.join(process.cwd(), ...dirs);
+function pathFromCwd(...names) {
+    return path.join(process.cwd(), ...names);
 }
 
 /**
@@ -3831,10 +3849,14 @@ function numApproximateLog10(n) {
  * @param decimalSeperator character to use as decimal seperator
  */
 function numParseFormatted(input, thousandSeperator = ',', decimalSeperator = '.') {
-    return Number(input
-        .replaceAll(thousandSeperator, '')
+    if (!input)
+        return NaN;
+    const n = Number(strReplaceAll(input, thousandSeperator, '')
         .replace(decimalSeperator, '.')
         .replace(/[^\d.-]/g, ''));
+    if (!Number.isNaN(n) && Number.isFinite(n))
+        return n;
+    return Number(input);
 }
 
 /**
@@ -4017,6 +4039,17 @@ function objReduce(object, callback, accum, getKeys = Object.keys) {
 }
 
 /**
+ * Returns whether an object has no enumerable own keys defined.
+ */
+function objIsEmpty(obj) {
+    for (const key of Object.keys(obj)) {
+        if (key)
+            return false;
+    }
+    return true;
+}
+
+/**
  * Matches 2 or more consecutive whitespace characters, including line terminators, tabs, etc.
  */
 const repeatingWhiteSpace = /((\r?\r?\n)|\s|\t){2,}/g;
@@ -4162,13 +4195,6 @@ function regexGetGroupNames(re) {
         names.push(res.groups.name);
     }
     return names;
-}
-
-/**
- * Escapes a string so it can be used in a regular expression.
- */
-function regexEscapeString(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
 /**
@@ -4831,17 +4857,6 @@ function strPrettifyMinifiedCode(input, indent = '  ') {
 }
 
 /**
- * In a given string, replace all occurances of a given search string with a given replacement string.
- * @param input input string
- * @param replace string to find a replace
- * @param replaceWith string to replace matches with
- * @param flags RegExp flags as single string.
- */
-function strReplaceAll(input, replace, replaceWith, flags = 'g') {
-    return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith);
-}
-
-/**
  * Checks if a string is a number.
  * @param string - input string
  */
@@ -5080,6 +5095,20 @@ function strParseBoolean(string) {
 }
 
 /**
+ * Returns whether a given string has any line breaks.
+ */
+function strIsMultiLine(string) {
+    return string.includes('\n');
+}
+
+/**
+ * Remove line breaks from string.
+ */
+function strRemoveNewLines(string, replaceWith = '. ') {
+    return string.replace(/\r*\n/g, replaceWith);
+}
+
+/**
  * Determine whether a string is a hexadecimal string.
  */
 function isHex(s) {
@@ -5115,5 +5144,5 @@ function isObject(value) {
     return value !== null && typeof value === 'object';
 }
 
-export { A1ToColRow, Att, Base, BemojeRegex, Doc, Elem, ExtensibleFunction, HTML_ATTRIBUTES, HTML_BOOLEAN_ATTRIBUTES, HTML_ELEMENTS, HTML_EVENT_HANDLER_ATTRIBUTES, HTML_VOID_TAGS, HtmlGenerate, Indexed, IndexedGetClass, IndexedGetInstance, Matrix, Mixins, Options, Queue, Revivable, SortedArray, StringStream, Table, Timer, Timestamped, absolutCwdPathToRelative, arr2dToCSV, arrAverage, arrEvery, arrFlatten, arrIndicesOf, arrMapMutable, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSum, arrSwap, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, asyncParallel, asyncSerial, asyncWithTimeout, atob, btoa, buildRegexBetween, bytesToInt, colRowToA1, colToLetter, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createFileExtensionFilter, ensureValidWindowsPath, funSetName, getCentury, getConstructor, getCurrentYear, getPrototype, htmlTableTo2dArray, inheritStaticMembers, intToArrayBytes, intToBuffer, intToBytes, interfaceDefinitions, isConstructor, isEven, isHex, isHexOrUnicode, isIterable, isLeapYear, isNumericString, isObject, isOdd, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, isoDateTimestamp, iteratePrototypeChain, letterToCol, log, mapGetOrDefault, mapGetOrElse, mapUpdate, mapUpdateDefault, memoryUsage, memoryUsageDkFormat, memoryUsageUsFormat, normalizeFileExtension, normalizeLineLengths, numApproximateLog10, numDaysInMonth, numFormat, numFormatDK, numFormatUS, numParseFormatted, numParseFormattedDK, objFilter, objForEach, objMap, objMapKeys, objReduce, padArrayBytesLeft, padArrayBytesRight, parseSocialSecurityNumberDK, pathFromCwd, randomIntBetween, readFileStringSync, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexLibrary, regexMatcherToValidater, regexScopeTree, regexValidFlags, rexec, round, roundDown, roundUp, setDifference, setEnumerable, setIntersection, setIsSuperset, setNonConfigurable, setNonEnumerable, setNonEnumerablePrivateProperties, setNonWritable, setSymmetricDifference, setUnion, setValueAsGetter, setWritable, strCountCharOccurances, strCountChars, strFirstCharToUpperCase, strHash, strIsLowerCase, strIsUpperCase, strLinesRemoveEmpty, strLinesTrimLeft, strLinesTrimRight, strParseBoolean, strPrettifyMinifiedCode, strRemoveDuplicateChars, strRepeat, strReplaceAll, strSortChars, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToWords, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, trimArrayBytesLeft, trimArrayBytesRight };
+export { A1ToColRow, Att, Base, BemojeRegex, Doc, Elem, ExtensibleFunction, HTML_ATTRIBUTES, HTML_BOOLEAN_ATTRIBUTES, HTML_ELEMENTS, HTML_EVENT_HANDLER_ATTRIBUTES, HTML_VOID_TAGS, HtmlGenerate, Indexed, IndexedGetClass, IndexedGetInstance, Matrix, Mixins, Options, Queue, Revivable, SortedArray, StringStream, Table, Timer, Timestamped, absolutCwdPathToRelative, arr2dToCSV, arrAverage, arrEvery, arrFlatten, arrIndicesOf, arrMapMutable, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSum, arrSwap, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, asyncParallel, asyncSerial, asyncWithTimeout, atob, btoa, buildRegexBetween, bytesToInt, colRowToA1, colToLetter, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createFileExtensionFilter, ensureValidWindowsPath, funSetName, getCentury, getConstructor, getCurrentYear, getPrototype, htmlTableTo2dArray, inheritStaticMembers, intToArrayBytes, intToBuffer, intToBytes, interfaceDefinitions, isConstructor, isEven, isHex, isHexOrUnicode, isIterable, isLeapYear, isNumericString, isObject, isOdd, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, isoDateTimestamp, iteratePrototypeChain, letterToCol, log, mapGetOrDefault, mapGetOrElse, mapUpdate, mapUpdateDefault, memoryUsage, memoryUsageDkFormat, memoryUsageUsFormat, normalizeFileExtension, normalizeLineLengths, numApproximateLog10, numDaysInMonth, numFormat, numFormatDK, numFormatUS, numParseFormatted, numParseFormattedDK, objFilter, objForEach, objIsEmpty, objMap, objMapKeys, objReduce, padArrayBytesLeft, padArrayBytesRight, parseSocialSecurityNumberDK, pathFromCwd, randomIntBetween, readFileStringSync, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexLibrary, regexMatcherToValidater, regexScopeTree, regexValidFlags, rexec, round, roundDown, roundUp, setDifference, setEnumerable, setIntersection, setIsSuperset, setNonConfigurable, setNonEnumerable, setNonEnumerablePrivateProperties, setNonWritable, setSymmetricDifference, setUnion, setValueAsGetter, setWritable, strCountCharOccurances, strCountChars, strFirstCharToUpperCase, strHash, strIsLowerCase, strIsMultiLine, strIsUpperCase, strLinesRemoveEmpty, strLinesTrimLeft, strLinesTrimRight, strParseBoolean, strPrettifyMinifiedCode, strRemoveDuplicateChars, strRemoveNewLines, strRepeat, strReplaceAll, strSortChars, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToWords, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, trimArrayBytesLeft, trimArrayBytesRight };
 //# sourceMappingURL=index.esm.js.map

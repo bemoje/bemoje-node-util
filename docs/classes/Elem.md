@@ -41,7 +41,7 @@
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:29](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L29)
+[src/libs/html/src/HtmlGenerate.ts:29](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L29)
 
 ## Properties
 
@@ -51,7 +51,7 @@
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:25](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L25)
+[src/libs/html/src/HtmlGenerate.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L25)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:26](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L26)
+[src/libs/html/src/HtmlGenerate.ts:26](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L26)
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:27](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L27)
+[src/libs/html/src/HtmlGenerate.ts:27](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L27)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:24](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L24)
+[src/libs/html/src/HtmlGenerate.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L24)
 
 ## Accessors
 
@@ -95,7 +95,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:47](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L47)
+[src/libs/html/src/HtmlGenerate.ts:47](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L47)
 
 ## Methods
 
@@ -109,7 +109,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:51](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L51)
+[src/libs/html/src/HtmlGenerate.ts:51](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L51)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:55](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L55)
+[src/libs/html/src/HtmlGenerate.ts:55](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L55)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:65](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L65)
+[src/libs/html/src/HtmlGenerate.ts:65](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L65)
 
 ___
 
@@ -151,4 +151,4 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:59](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L59)
+[src/libs/html/src/HtmlGenerate.ts:59](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L59)

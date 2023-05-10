@@ -5,7 +5,7 @@ import { getConstructor } from '../../object/src/getConstructor'
 import type { Constructor, Obj } from '../../interfaces'
 import { interfaceDefinitions } from './interfaces'
 
-const hasSeenFirstInstance = new WeakSet<Constructor>()
+const hasSeenFirstInstance: WeakSet<Constructor> = new WeakSet()
 /**
  * Abstract class that other classes can inherit from to gain various handy functionality.
  */

@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L14)
+[src/libs/html/src/HtmlGenerate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L14)
 
 ## Properties
 
@@ -40,7 +40,7 @@
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:12](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L12)
+[src/libs/html/src/HtmlGenerate.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L12)
 
 ## Methods
 
@@ -54,4 +54,4 @@
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:18](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/html/src/HtmlGenerate.ts#L18)
+[src/libs/html/src/HtmlGenerate.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L18)

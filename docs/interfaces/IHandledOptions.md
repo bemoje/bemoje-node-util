@@ -23,7 +23,7 @@ Guarantees that options are handled in a consistent way.
 
 #### Defined in
 
-[src/libs/mixins/src/interfaces.ts:17](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/interfaces.ts#L17)
+[src/libs/mixins/src/interfaces.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/interfaces.ts#L17)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/interfaces.ts:16](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/interfaces.ts#L16)
+[src/libs/mixins/src/interfaces.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/interfaces.ts#L16)
 
 ## Methods
 
@@ -53,4 +53,4 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/interfaces.ts:18](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/interfaces.ts#L18)
+[src/libs/mixins/src/interfaces.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/interfaces.ts#L18)

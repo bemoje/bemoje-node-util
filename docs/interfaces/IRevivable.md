@@ -37,4 +37,4 @@ Guarantees that class instances are serializable and have a static revive functi
 
 #### Defined in
 
-[src/libs/mixins/src/interfaces.ts:8](https://github.com/bemoje/bemoje-node-util/blob/8a90c26/src/libs/mixins/src/interfaces.ts#L8)
+[src/libs/mixins/src/interfaces.ts:8](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/interfaces.ts#L8)
