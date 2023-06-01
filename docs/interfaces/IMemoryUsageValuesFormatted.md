@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/node/src/memoryUsage.ts#L15)
+[src/libs/node/src/memoryUsage.ts:15](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/node/src/memoryUsage.ts#L15)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/node/src/memoryUsage.ts#L13)
+[src/libs/node/src/memoryUsage.ts:13](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/node/src/memoryUsage.ts#L13)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/node/src/memoryUsage.ts#L14)
+[src/libs/node/src/memoryUsage.ts:14](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/node/src/memoryUsage.ts#L14)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/node/src/memoryUsage.ts#L12)
+[src/libs/node/src/memoryUsage.ts:12](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/node/src/memoryUsage.ts#L12)

@@ -1,41 +1,45 @@
-import type { GenericArgs } from '../../interfaces';
-export declare class Doc {
-    elements: (Elem | string)[];
-    constructor(...elements: (Elem | string)[]);
+export type ElemConstructorArgs = Attr[] | Attr | Elem | Elem[] | string | string[];
+export declare const el: Record<string, (...args: ElemConstructorArgs[]) => Elem>;
+export declare const attr: Record<string, (value?: string | number | boolean) => Attr>;
+export declare class Attr {
+    name: string;
+    value?: string | number | boolean | undefined;
+    constructor(name: string, value?: string | number | boolean | undefined);
+    get isBoolean(): boolean;
     toString(): string;
 }
 export declare class Elem {
-    type: string;
-    attributes: Map<string, Att>;
-    elements: (Elem | string)[];
-    isVoid: boolean;
-    constructor(type: string, ...args: (Att[] | Elem | string)[]);
-    get description(): string;
-    private renderAttributes;
-    private renderChildren;
+    tag: string;
+    attributes: Map<string, Attr>;
+    children: (Elem | string)[];
+    constructor(tag: string, ...args: ElemConstructorArgs[]);
+    get isVoid(): boolean;
     toString(): string;
     toHtmlElement(): HTMLElement;
 }
-export declare class Att {
-    type: string;
-    value?: string | undefined;
-    isBoolean: boolean;
-    constructor(type: string, value?: string | undefined);
+export declare class Doc extends Elem {
+    /**
+     * Generate simple HTML page with reasonable defaults.
+     */
+    static simple(options: {
+        title: string;
+        head?: (Elem | string)[];
+        body?: (Elem | string)[];
+        scripts?: Elem[];
+    }): Doc;
+    constructor(...args: ElemConstructorArgs[]);
     toString(): string;
-    get relatedTags(): string[];
-    get description(): string;
 }
-declare function defineElementType(type: string): (...args: GenericArgs) => Elem;
-declare function defineAttributeType(type: string): (value?: string) => Att;
-declare function createTable(rows: string[][], hasHeader?: boolean): Elem;
-export declare const HtmlGenerate: {
-    el: Record<string, (...args: GenericArgs) => Elem>;
-    at: Record<string, (...args: GenericArgs) => Att>;
-    comment: (comment: string) => string;
-    doctype: (type?: string) => string;
-    defineElementType: typeof defineElementType;
-    defineAttributeType: typeof defineAttributeType;
-    createTable: typeof createTable;
+export declare function comment<T>(comment: T): string;
+export declare function tableFrom(rows: string[][], hasHeaderRow?: boolean): Elem;
+declare const _default: {
+    Doc: typeof Doc;
+    Elem: typeof Elem;
+    Attr: typeof Attr;
+    el: Record<string, (...args: ElemConstructorArgs[]) => Elem>;
+    attr: Record<string, (value?: string | number | boolean | undefined) => Attr>;
+    comment: typeof comment;
+    tableFrom: typeof tableFrom;
 };
-export {};
+export default _default;
 //# sourceMappingURL=HtmlGenerate.d.ts.map

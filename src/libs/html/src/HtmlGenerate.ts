@@ -1,73 +1,62 @@
 import {
-  HTML_VOID_TAGS,
-  HTML_BOOLEAN_ATTRIBUTES,
-  HTML_EVENT_HANDLER_ATTRIBUTES,
+  HTML_VOID_ELEMENTS,
   HTML_ELEMENTS,
+  HTML_BOOLEAN_ATTRIBUTES,
   HTML_ATTRIBUTES,
 } from './html-meta-data'
 
-import type { GenericArgs } from '../../interfaces'
+export type ElemConstructorArgs = Attr[] | Attr | Elem | Elem[] | string | string[]
 
-export class Doc {
-  elements: (Elem | string)[] = []
+export const el: Record<string, (...args: ElemConstructorArgs[]) => Elem> = {}
+export const attr: Record<string, (value?: string | number | boolean) => Attr> = {}
 
-  constructor(...elements: (Elem | string)[]) {
-    this.elements = elements
+export class Attr {
+  constructor(public name: string, public value?: string | number | boolean) {}
+
+  get isBoolean(): boolean {
+    return HTML_BOOLEAN_ATTRIBUTES.has(this.name)
   }
 
   toString(): string {
-    return this.elements.join('')
+    return `${this.name}${this.isBoolean ? '' : `="${this.value || ''}"`}`
   }
 }
 
 export class Elem {
-  type: string
-  attributes: Map<string, Att>
-  elements: (Elem | string)[]
-  isVoid: boolean
+  attributes: Map<string, Attr> = new Map()
+  children: (Elem | string)[] = []
 
-  constructor(type: string, ...args: (Att[] | Elem | string)[]) {
-    this.type = type
-    this.isVoid = HTML_VOID_TAGS.has(type)
-    this.attributes = new Map()
-    this.elements = []
-    for (const arg of args) {
-      if (Array.isArray(arg)) {
-        for (const att of arg) {
-          this.attributes.set(att.type, att)
-        }
+  constructor(public tag: string, ...args: ElemConstructorArgs[]) {
+    for (const arg of args.flat()) {
+      if (arg instanceof Attr) {
+        this.attributes.set(arg.name, arg)
+      } else if (typeof arg === 'string' && tag !== 'script' && tag !== 'style') {
+        this.children.push(arg.replace(/\r*\n/g, '<br />'))
       } else {
-        if (this.isVoid)
-          throw new Error("Void elements types can't have children. Got type: " + type)
-        this.elements.push(arg as Elem | string)
+        this.children.push(arg)
       }
+    }
+    if (this.children.length && this.isVoid) {
+      throw new Error('Void elements cannot have children.')
     }
   }
 
-  get description(): string {
-    return HTML_ELEMENTS[this.type].description
-  }
-
-  private renderAttributes() {
-    return this.attributes.size ? ' ' + Array.from(this.attributes.values()).join(' ') : ''
-  }
-
-  private renderChildren() {
-    return this.elements.join('')
+  get isVoid(): boolean {
+    return HTML_VOID_ELEMENTS.has(this.tag)
   }
 
   toString(): string {
-    return `<${this.type}${this.renderAttributes()}${
-      this.isVoid ? ' />' : `>${this.renderChildren()}</${this.type}>`
-    }`
+    return `<${this.tag}${
+      this.attributes.size ? ' ' + Array.from(this.attributes.values()).join(' ') : ''
+    }${this.isVoid ? ' />' : `>${this.children.join('')}</${this.tag}>`}`
   }
 
   toHtmlElement(): HTMLElement {
-    const elem = document.createElement(this.type)
+    const elem = document.createElement(this.tag)
     for (const attr of this.attributes.values()) {
-      elem.setAttribute(attr.type, attr.value || '')
+      elem.setAttribute(attr.name, attr.value?.toString() || '')
     }
-    for (const child of this.elements) {
+    for (const child of this.children) {
       if (typeof child === 'string') {
         elem.appendChild(document.createTextNode(child))
       } else {
@@ -78,132 +67,146 @@ export class Elem {
   }
 }
 
-export class Att {
-  isBoolean: boolean
-
-  constructor(public type: string, public value?: string) {
-    this.isBoolean = HTML_BOOLEAN_ATTRIBUTES.has(type)
+export class Doc extends Elem {
+  /**
+   * Generate simple HTML page with reasonable defaults.
+   */
+  static simple(options: {
+    title: string
+    head?: (Elem | string)[]
+    body?: (Elem | string)[]
+    scripts?: Elem[]
+  }): Doc {
+    return new Doc(
+      attr.lang('en'),
+      el.head(
+        el.meta(attr.charset('utf-8')),
+        el.meta(attr.name('viewport'), attr.content('width=device-width, initial-scale=1')),
+        el.title(options.title || 'index'),
+        comment('Bootstrap CSS'),
+        el.link(
+          attr.rel('stylesheet'),
+          attr.href(
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css',
+          ),
+          attr.integrity('sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ'),
+          attr.crossorigin('anonymous'),
+        ),
+        comment('Custom CSS'),
+        el.style(
+          'body { margin: 50px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; }',
+        ),
+        ...(options.head || []),
+      ),
+      el.body(
+        comment('Content'),
+        el.div(attr.id('root'), attr.class('container'), ...(options.body || [])),
+        comment('Bootstrap JS'),
+        el.script(
+          attr.src(
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js',
+          ),
+          attr.integrity('sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe'),
+          attr.crossorigin('anonymous'),
+        ),
+        comment('Custom JS'),
+        ...(options.scripts || []),
+      ),
+    )
   }
 
+  constructor(...args: ElemConstructorArgs[]) {
+    super('html', ...args)
+  }
   toString(): string {
-    return `${this.type}${this.isBoolean ? '' : `="${this.value || ''}"`}`
-  }
-
-  get relatedTags(): string[] {
-    return HTML_ATTRIBUTES[this.type].relatedTags
-  }
-
-  get description(): string {
-    return HTML_ATTRIBUTES[this.type].description
+    return '<!DOCTYPE html>' + super.toString()
   }
 }
 
-const el: Record<string, (...args: GenericArgs) => Elem> = {}
-for (const type of Object.keys(HTML_ELEMENTS)) {
-  el[type] = (...args) => new Elem(type, ...args)
-}
-function defineElementType(type: string): (...args: GenericArgs) => Elem {
-  el[type] = (...args) => new Elem(type, ...args)
-  HTML_ELEMENTS[type] = { description: 'Custom Element' }
-  return el[type]
+export function comment<T>(comment: T): string {
+  return '<!-- ' + comment + ' -->'
 }
 
-const at: Record<string, (...args: GenericArgs) => Att> = {}
-for (const type of Object.keys(HTML_ATTRIBUTES)) {
-  at[type] = (value?: string) => new Att(type, value)
-}
-for (const type of HTML_EVENT_HANDLER_ATTRIBUTES) {
-  at[type] = (value?: string) => new Att(type, value)
-}
-function defineAttributeType(type: string): (value?: string) => Att {
-  at[type] = (value?: string) => new Att(type, value)
-  HTML_ATTRIBUTES[type] = { description: 'Custom Element', relatedTags: [] }
-  return at[type]
-}
-
-const comment = (comment: string): string => `<!-- ${comment} -->`
-const doctype = (type = 'html'): string => `<!DOCTYPE ${type}>`
-
-function createTable(rows: string[][], hasHeader = false): Elem {
-  const table = el.table()
-  for (let i = 0; i < rows.length; i++) {
-    const isHeader = i === 0 && hasHeader
-    const row = rows[i]
-    const tr = el.tr()
-    for (const cell of row) {
-      tr.elements.push(isHeader ? el.th(cell) : el.td(cell))
-    }
-    table.elements.push(tr)
+export function tableFrom(rows: string[][], hasHeaderRow = true): Elem {
+  const thead = el.thead()
+  if (hasHeaderRow) {
+    rows = rows.slice()
+    thead.children.push(el.tr((rows.shift() || []).map((cell) => el.th(cell))))
   }
-  return table
+  return el.table(
+    attr.class('table table-striped table-hover table-sm'),
+    thead,
+    el.tbody(rows.map((row) => el.tr(row.map((cell) => el.td(cell))))),
+  )
 }
 
-export const HtmlGenerate = {
+export default {
+  Doc,
+  Elem,
+  Attr,
   el,
-  at,
+  attr,
   comment,
-  doctype,
-  defineElementType,
-  defineAttributeType,
-  createTable,
+  tableFrom,
 }
 
-// const doc = new Doc(
-//   doctype(),
-//   el.html(
-//     [at.lang('en')],
-//     el.head(
-//       el.meta([at.charset('utf-8')]),
-//       el.meta([at['http-equiv']('X-UA-Compatible'), at.content('ie=edge')]),
-//       el.meta([at.name('viewport'), at.content('width=device-width, initial-scale=1.0')]),
-//       comment('Bootstrap starter css template'),
-//       el.title('my title'),
-//       el.link([
-//         at.rel('stylesheet'),
-//         at.href('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'),
-//       ]),
-//       el.style(`
-//         body {
-//           margin: 0;
-//           box-sizing: border-box;
-//         }
-//         .container {
-//           line-height: 150%;
-//         }
-//       `),
-//     ),
-//     el.body(
-//       el.div(
-//         [at.id('outer')],
-//         el.div(
-//           [at.id('inner'), at.class('container bg-primary text-white')],
-//           'some text',
-//           'some more text',
-//           el.div(
-//             'some text',
-//             el.ul([at.id('messages')], el.li('some message'), el.li('wow')),
-//             el.div(
-//               [at.id('input-area')],
-//               el.textarea([at.id('uInput'), at.placeholder('Text...'), at.selected()], 'This is the text area text'),
-//             ),
-//           ),
-//           el.ul([at.id('textlist')], el.li('something'), el.li('cool')),
-//         ),
-//         el.button([at.id('btn'), at.class('btn btn-primary'), at.onclick('doit()')], 'Click me!'),
-//       ),
-//       createTable(['a b c'.split(' '), '1 2 3'.split(' '), 'x y z'.split(' ')], true),
-//       comment('Jquery import'),
-//       el.script([
-//         at.src('https://code.jquery.com/jquery-3.5.1.slim.min.js'),
-//         at.crossorigin('anonymous'),
-//         at.integrity('sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM='),
-//       ]),
-//       comment('Own script'),
-//       el.script(`function doit() {console.log('did it')}`),
-//     ),
-//   ),
-// )
+//////////////////
 
+for (const tag of HTML_ELEMENTS) {
+  el[tag] = (...args: ElemConstructorArgs[]) => new Elem(tag, ...args)
+}
+
+el['html'] = (...args: ElemConstructorArgs[]) => new Doc('html', ...args)
+
+for (const name of HTML_ATTRIBUTES) {
+  attr[name] = (value?: string | number | boolean) => new Attr(name, value)
+}
+
+//////////////////
+
+// const doc = Doc.simple({
+//   title: 'index',
+//   head: [el.style('.row { margin-top: 10px } .col { margin: 20px }')],
+//   body: [
+//     el.div(
+//       attr.class('row'),
+//       el.div(
+//         attr.class('col'),
+//         el.h3('Table'),
+//         tableFrom([
+//           ['A', 'B', 'C'],
+//           ['Abe', 'Ben', 'Citron'],
+//           ['Ananas', 'Bongo', 'Cirkus'],
+//         ]),
+//       ),
+//       el.div(
+//         attr.class('col'),
+//         el.h3('Text'),
+//         el.p('This is a paragraph.'),
+//         el.p('This is a one more.'),
+//       ),
+//       el.div(
+//         attr.class('row'),
+//         el.div(
+//           attr.class('col'),
+//           el.h3('List'),
+//           el.ul(
+//             ['one', 'two', 'three', 'four'].map((item) => el.li(attr.contenteditable(true), item)),
+//           ),
+//         ),
+//         el.div(
+//           attr.class('col'),
+//           el.h3('Button'),
+//           el.button([attr.class('btn btn-primary'), attr.onclick('doit()')], 'Click me!'),
+//         ),
+//       ),
+//     ),
+//   ],
+//   scripts: [el.script(`function doit() { console.log('did it'); }`)],
+// })
+
+// console.dir(doc, { depth: null })
 // console.log(doc.toString())
+
 // import fs from 'fs'
 // fs.writeFileSync(__filename + '.html', doc.toString())

@@ -42,7 +42,7 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L13)
+[src/libs/mixins/src/Base.ts:13](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L13)
 
 ## Accessors
 
@@ -56,7 +56,7 @@ typeof [`Base`](/docs/classes/Base.md)
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L17)
+[src/libs/mixins/src/Base.ts:17](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L17)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:21](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L21)
+[src/libs/mixins/src/Base.ts:21](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L21)
 
 ## Methods
 
@@ -91,7 +91,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:54](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L54)
+[src/libs/mixins/src/Base.ts:54](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L54)
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:71](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L71)
+[src/libs/mixins/src/Base.ts:71](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L71)
 
 ___
 
@@ -133,7 +133,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:79](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L79)
+[src/libs/mixins/src/Base.ts:79](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L79)
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:42](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L42)
+[src/libs/mixins/src/Base.ts:42](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L42)
 
 ___
 
@@ -167,7 +167,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:50](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L50)
+[src/libs/mixins/src/Base.ts:50](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L50)
 
 ___
 
@@ -181,7 +181,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:33](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L33)
+[src/libs/mixins/src/Base.ts:33](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L33)
 
 ___
 
@@ -195,7 +195,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L25)
+[src/libs/mixins/src/Base.ts:25](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L25)
 
 ___
 
@@ -211,4 +211,4 @@ Make the properties with property names that start with an underscore non-enumer
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:67](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L67)
+[src/libs/mixins/src/Base.ts:67](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L67)

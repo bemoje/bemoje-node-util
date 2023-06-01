@@ -11,7 +11,7 @@ import { strReplaceAll } from '../../string/src/strReplaceAll'
 export function arr2dToCSV<T>(
   input: Array<Array<T>>,
   delimiter = ';',
-  replaceLinebreakWith = ' ',
+  replaceLinebreakWith = ' | ',
 ): string {
   return input
     .map((row) => {

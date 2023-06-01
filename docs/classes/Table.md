@@ -93,7 +93,7 @@ Two-dimensional table class supporting column and row headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:81](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L81)
+[src/libs/datastructures/src/Table.ts:81](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L81)
 
 ## Properties
 
@@ -103,7 +103,7 @@ Two-dimensional table class supporting column and row headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:69](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L69)
+[src/libs/datastructures/src/Table.ts:69](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L69)
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:71](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L71)
+[src/libs/datastructures/src/Table.ts:71](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L71)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:70](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L70)
+[src/libs/datastructures/src/Table.ts:70](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L70)
 
 ## Accessors
 
@@ -139,7 +139,7 @@ Gets the column headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:106](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L106)
+[src/libs/datastructures/src/Table.ts:106](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L106)
 
 ___
 
@@ -155,7 +155,7 @@ Gets the number of cols in the table, not including headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:92](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L92)
+[src/libs/datastructures/src/Table.ts:92](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L92)
 
 ___
 
@@ -173,7 +173,7 @@ Base.klass
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L17)
+[src/libs/mixins/src/Base.ts:17](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L17)
 
 ___
 
@@ -191,7 +191,7 @@ Base.proto
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:21](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L21)
+[src/libs/mixins/src/Base.ts:21](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L21)
 
 ___
 
@@ -207,7 +207,7 @@ Gets the row headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:116](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L116)
+[src/libs/datastructures/src/Table.ts:116](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L116)
 
 ___
 
@@ -223,7 +223,7 @@ Gets the number of rows in the table, not including headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:99](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L99)
+[src/libs/datastructures/src/Table.ts:99](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L99)
 
 ## Methods
 
@@ -248,7 +248,7 @@ Gets the number of rows in the table, not including headers.
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:71](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L71)
+[src/libs/mixins/src/Base.ts:71](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L71)
 
 ___
 
@@ -273,7 +273,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:79](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L79)
+[src/libs/mixins/src/Base.ts:79](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L79)
 
 ___
 
@@ -294,7 +294,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:317](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L317)
+[src/libs/datastructures/src/Table.ts:317](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L317)
 
 ___
 
@@ -314,7 +314,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:354](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L354)
+[src/libs/datastructures/src/Table.ts:354](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L354)
 
 ___
 
@@ -334,7 +334,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:341](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L341)
+[src/libs/datastructures/src/Table.ts:341](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L341)
 
 ___
 
@@ -358,7 +358,7 @@ Returns a value at a given (row, col) position.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:129](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L129)
+[src/libs/datastructures/src/Table.ts:129](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L129)
 
 ___
 
@@ -378,7 +378,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:257](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L257)
+[src/libs/datastructures/src/Table.ts:257](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L257)
 
 ___
 
@@ -401,7 +401,7 @@ Even if row headers are defined, this is not considered a column and is ignored 
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:187](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L187)
+[src/libs/datastructures/src/Table.ts:187](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L187)
 
 ___
 
@@ -423,7 +423,7 @@ Gets the index of a given row header.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:197](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L197)
+[src/libs/datastructures/src/Table.ts:197](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L197)
 
 ___
 
@@ -441,7 +441,7 @@ ___
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L25)
+[src/libs/mixins/src/Base.ts:25](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L25)
 
 ___
 
@@ -462,7 +462,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:367](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L367)
+[src/libs/datastructures/src/Table.ts:367](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L367)
 
 ___
 
@@ -484,7 +484,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:381](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L381)
+[src/libs/datastructures/src/Table.ts:381](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L381)
 
 ___
 
@@ -505,7 +505,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:374](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L374)
+[src/libs/datastructures/src/Table.ts:374](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L374)
 
 ___
 
@@ -528,7 +528,7 @@ Deletes a column in the table.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:159](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L159)
+[src/libs/datastructures/src/Table.ts:159](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L159)
 
 ___
 
@@ -551,7 +551,7 @@ Deletes a row in the table.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:176](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L176)
+[src/libs/datastructures/src/Table.ts:176](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L176)
 
 ___
 
@@ -576,7 +576,7 @@ Inserts a given value at a given (row, col) position.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:142](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L142)
+[src/libs/datastructures/src/Table.ts:142](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L142)
 
 ___
 
@@ -596,7 +596,7 @@ Make the properties with property names that start with an underscore non-enumer
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:67](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/mixins/src/Base.ts#L67)
+[src/libs/mixins/src/Base.ts:67](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/Base.ts#L67)
 
 ___
 
@@ -612,7 +612,7 @@ Returns the table as a two-dimensional array, including row and column headers..
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:207](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L207)
+[src/libs/datastructures/src/Table.ts:207](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L207)
 
 ___
 
@@ -628,7 +628,7 @@ Returns the table as a two-dimensional array, without row and column headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:223](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L223)
+[src/libs/datastructures/src/Table.ts:223](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L223)
 
 ___
 
@@ -648,7 +648,7 @@ IRevivable.toJSON
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:234](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L234)
+[src/libs/datastructures/src/Table.ts:234](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L234)
 
 ___
 
@@ -668,7 +668,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:332](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L332)
+[src/libs/datastructures/src/Table.ts:332](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L332)
 
 ___
 
@@ -682,7 +682,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:300](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L300)
+[src/libs/datastructures/src/Table.ts:300](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L300)
 
 ___
 
@@ -702,7 +702,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:242](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L242)
+[src/libs/datastructures/src/Table.ts:242](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L242)
 
 ___
 
@@ -722,7 +722,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:323](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L323)
+[src/libs/datastructures/src/Table.ts:323](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L323)
 
 ___
 
@@ -750,4 +750,4 @@ Revive a stringified Table object.
 
 #### Defined in
 
-[src/libs/datastructures/src/Table.ts:77](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/Table.ts#L77)
+[src/libs/datastructures/src/Table.ts:77](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/Table.ts#L77)

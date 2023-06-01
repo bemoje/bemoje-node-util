@@ -15,4 +15,7 @@ export * from './src/objForEach';
 export * from './src/objMapKeys';
 export * from './src/objReduce';
 export * from './src/objIsEmpty';
+export * from './src/oKeysArray';
+export * from './src/oValuesArray';
+export * from './src/oEntriesArray';
 //# sourceMappingURL=index.d.ts.map

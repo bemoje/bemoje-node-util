@@ -2,6 +2,7 @@ export * from './src/arr2dToCSV';
 export * from './src/arrEvery';
 export * from './src/arrFlatten';
 export * from './src/arrIndicesOf';
+export * from './src/arrLast';
 export * from './src/arrMapMutable';
 export * from './src/arrShallowEquals';
 export * from './src/arrShuffle';

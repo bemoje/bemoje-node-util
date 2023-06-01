@@ -2,6 +2,12 @@
 
 # Class: Elem
 
+## Hierarchy
+
+- **`Elem`**
+
+  ↳ [`Doc`](/docs/classes/Doc.md)
+
 ## Table of contents
 
 ### Constructors
@@ -11,18 +17,15 @@
 ### Properties
 
 - [attributes](/docs/classes/Elem.md#attributes)
-- [elements](/docs/classes/Elem.md#elements)
-- [isVoid](/docs/classes/Elem.md#isvoid)
-- [type](/docs/classes/Elem.md#type)
+- [children](/docs/classes/Elem.md#children)
+- [tag](/docs/classes/Elem.md#tag)
 
 ### Accessors
 
-- [description](/docs/classes/Elem.md#description)
+- [isVoid](/docs/classes/Elem.md#isvoid)
 
 ### Methods
 
-- [renderAttributes](/docs/classes/Elem.md#renderattributes)
-- [renderChildren](/docs/classes/Elem.md#renderchildren)
 - [toHtmlElement](/docs/classes/Elem.md#tohtmlelement)
 - [toString](/docs/classes/Elem.md#tostring)
 
@@ -30,102 +33,64 @@
 
 ### constructor
 
-• **new Elem**(`type`, `...args`)
+• **new Elem**(`tag`, `...args`)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `type` | `string` |
-| `...args` | (`string` \| [`Elem`](/docs/classes/Elem.md) \| [`Att`](/docs/classes/Att.md)[])[] |
+| `tag` | `string` |
+| `...args` | [`ElemConstructorArgs`](/docs/index.md#elemconstructorargs)[] |
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:29](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L29)
+[src/libs/html/src/HtmlGenerate.ts:29](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L29)
 
 ## Properties
 
 ### attributes
 
-• **attributes**: `Map`<`string`, [`Att`](/docs/classes/Att.md)\>
+• **attributes**: `Map`<`string`, [`Attr`](/docs/classes/Attr.md)\>
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L25)
+[src/libs/html/src/HtmlGenerate.ts:26](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L26)
 
 ___
 
-### elements
+### children
 
-• **elements**: (`string` \| [`Elem`](/docs/classes/Elem.md))[]
+• **children**: (`string` \| [`Elem`](/docs/classes/Elem.md))[] = `[]`
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:26](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L26)
+[src/libs/html/src/HtmlGenerate.ts:27](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L27)
 
 ___
 
-### isVoid
+### tag
 
-• **isVoid**: `boolean`
-
-#### Defined in
-
-[src/libs/html/src/HtmlGenerate.ts:27](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L27)
-
-___
-
-### type
-
-• **type**: `string`
+• **tag**: `string`
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L24)
+[src/libs/html/src/HtmlGenerate.ts:29](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L29)
 
 ## Accessors
 
-### description
+### isVoid
 
-• `get` **description**(): `string`
+• `get` **isVoid**(): `boolean`
 
 #### Returns
 
-`string`
+`boolean`
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:47](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L47)
+[src/libs/html/src/HtmlGenerate.ts:44](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L44)
 
 ## Methods
-
-### renderAttributes
-
-▸ `Private` **renderAttributes**(): `string`
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[src/libs/html/src/HtmlGenerate.ts:51](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L51)
-
-___
-
-### renderChildren
-
-▸ `Private` **renderChildren**(): `string`
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[src/libs/html/src/HtmlGenerate.ts:55](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L55)
-
-___
 
 ### toHtmlElement
 
@@ -137,7 +102,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:65](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L65)
+[src/libs/html/src/HtmlGenerate.ts:54](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L54)
 
 ___
 
@@ -151,4 +116,4 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:59](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/html/src/HtmlGenerate.ts#L59)
+[src/libs/html/src/HtmlGenerate.ts:48](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L48)

@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/SortedArray.ts#L9)
+[src/libs/datastructures/src/SortedArray.ts:9](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/SortedArray.ts#L9)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/SortedArray.ts#L7)
+[src/libs/datastructures/src/SortedArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/SortedArray.ts#L7)
 
 ___
 
@@ -44,4 +44,4 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:8](https://github.com/bemoje/bemoje-node-util/blob/ee11909/src/libs/datastructures/src/SortedArray.ts#L8)
+[src/libs/datastructures/src/SortedArray.ts:8](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/datastructures/src/SortedArray.ts#L8)
