@@ -13,6 +13,7 @@ Guarantees that class instances are serializable and have a static revive functi
 ## Implemented by
 
 - [`Queue`](/docs/classes/Queue.md)
+- [`SimpleTable`](/docs/classes/SimpleTable.md)
 - [`Table`](/docs/classes/Table.md)
 
 ## Table of contents
@@ -37,4 +38,4 @@ Guarantees that class instances are serializable and have a static revive functi
 
 #### Defined in
 
-[src/libs/mixins/src/interfaces.ts:8](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/mixins/src/interfaces.ts#L8)
+[src/libs/mixins/src/interfaces.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/interfaces.ts#L8)

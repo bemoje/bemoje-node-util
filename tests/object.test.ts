@@ -301,3 +301,109 @@ describe('objReduce', () => {
     expect(util.objReduce(o, (accum, value, key) => accum + value - key.length, 0)).toBe(10)
   })
 })
+
+describe('createPseudoClass', () => {
+  describe('no defaults', () => {
+    const noDefaults = util.createPseudoClass(['a', 'b', 'c'])
+    it('no values', () =>
+      expect(noDefaults()).toEqual({ a: undefined, b: undefined, c: undefined }))
+    it('some values', () => expect(noDefaults([10])).toEqual({ a: 10, b: undefined, c: undefined }))
+    it('all values', () => expect(noDefaults([10, 20, 30])).toEqual({ a: 10, b: 20, c: 30 }))
+  })
+
+  describe('some defaults', () => {
+    const someDefaults = util.createPseudoClass(['a', 'b', 'c'], [1])
+    it('no values', () => expect(someDefaults()).toEqual({ a: 1, b: undefined, c: undefined }))
+    it('some values', () =>
+      expect(someDefaults([10])).toEqual({ a: 10, b: undefined, c: undefined }))
+    it('all values', () => expect(someDefaults([10, 20, 30])).toEqual({ a: 10, b: 20, c: 30 }))
+  })
+
+  describe('all defaults', () => {
+    const allDefaults = util.createPseudoClass(['a', 'b', 'c'], [1, 2, 3])
+    it('no values', () => expect(allDefaults()).toEqual({ a: 1, b: 2, c: 3 }))
+    it('some values', () => expect(allDefaults([10])).toEqual({ a: 10, b: 2, c: 3 }))
+    it('all values', () => expect(allDefaults([10, 20, 30])).toEqual({ a: 10, b: 20, c: 30 }))
+  })
+
+  describe('Errors', () => {
+    it('throws if defaultValues length larger than keys length.', () => {
+      expect(() => util.createPseudoClass(['a'], [1, 2])).toThrowError(
+        'defaultValues length larger than keys length.',
+      )
+    })
+    it('throws if values length larger than keys length.', () => {
+      expect(() => util.createPseudoClass(['a'])([1, 2])).toThrowError(
+        'values length larger than keys length.',
+      )
+    })
+  })
+})
+
+describe('objMapMutable', () => {
+  it('should mutate the original object', () => {
+    const obj = { a: 1, b: 2, c: 3 }
+    util.objMapMutable(obj, (value) => value * 2)
+    expect(obj).toEqual({ a: 2, b: 4, c: 6 })
+  })
+})
+
+describe('objDeepFreeze', () => {
+  it('should make all properties of an object immutable', () => {
+    const obj = {
+      a: 1,
+      b: {
+        c: 2,
+        d: [3, 4],
+      },
+    }
+    const frozenObj = util.objDeepFreeze(obj)
+    expect(() => {
+      frozenObj.a = 2
+    }).toThrow(TypeError)
+    expect(() => {
+      frozenObj.b.c = 3
+    }).toThrow(TypeError)
+    expect(() => {
+      frozenObj.b.d.push(5)
+    }).toThrow(TypeError)
+  })
+})
+
+describe('objIsEmpty', () => {
+  it('should return true for an empty object', () => {
+    expect(util.objIsEmpty({})).toBe(true)
+  })
+
+  it('should return false for an object with enumerable own keys', () => {
+    expect(util.objIsEmpty({ a: 1 })).toBe(false)
+  })
+})
+
+describe('oEntriesArray', () => {
+  it('should return an array of entries', () => {
+    const obj = { a: 1, b: 2, c: 3 }
+    const result = util.oEntriesArray(obj)
+    expect(result).toEqual([
+      ['a', 1],
+      ['b', 2],
+      ['c', 3],
+    ])
+  })
+})
+
+describe('oValuesArray', () => {
+  it('should return an array of values from an object', () => {
+    const obj = { a: 1, b: 2, c: 3 }
+    const result = util.oValuesArray(obj)
+    expect(result).toEqual([1, 2, 3])
+  })
+})
+
+describe('oKeysArray', () => {
+  it('should return an array of keys from an object', () => {
+    const obj = { a: 1, b: 2, c: 3 }
+    const result = util.oKeysArray(obj)
+    expect(result).toEqual(['a', 'b', 'c'])
+  })
+})

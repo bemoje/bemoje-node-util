@@ -1,5 +1,5 @@
 /*!
- * @bemoje/node-util v0.2.2
+ * @bemoje/node-util v0.2.3
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
@@ -14,6 +14,10 @@ var path = require('path');
 var fs = require('fs');
 var stream = require('stream');
 var cliColor = require('cli-color');
+var excelJs = require('exceljs');
+var pdf = require('pdf-parse');
+var pdfLib = require('pdf-lib');
+var mkdirp = require('mkdirp');
 var sentenceSplitter = require('sentence-splitter');
 var lodash = require('lodash');
 
@@ -21,6 +25,8 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
 var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
+var excelJs__default = /*#__PURE__*/_interopDefaultLegacy(excelJs);
+var pdf__default = /*#__PURE__*/_interopDefaultLegacy(pdf);
 
 /**
  * Escapes a string so it can be used in a regular expression.
@@ -230,6 +236,80 @@ function arrSum(array) {
  */
 function arrAverage(array) {
     return arrSum(array) / array.length;
+}
+
+/**
+ * Remove duplicates from an array
+ */
+function arrRemoveDuplicates(array) {
+    return Array.from(new Set(array));
+}
+
+/**
+ * Returns an object factory function that instantiates objects, always with the same keys in the same order.
+ */
+function createPseudoClass(keys, defaultValues) {
+    const numKeys = keys.length;
+    if (defaultValues && defaultValues.length > numKeys) {
+        throw new Error('defaultValues length larger than keys length.');
+    }
+    return function factory(values) {
+        if (values && values.length > numKeys) {
+            throw new Error('values length larger than keys length.');
+        }
+        const o = {};
+        for (let i = 0; i < numKeys; i++) {
+            let value;
+            if (values) {
+                value = values[i];
+                if (value === undefined && defaultValues) {
+                    value = defaultValues[i];
+                }
+            }
+            else if (defaultValues) {
+                value = defaultValues[i];
+            }
+            Object.defineProperty(o, keys[i], {
+                enumerable: true,
+                writable: true,
+                configurable: true,
+                value,
+            });
+        }
+        return o;
+    };
+}
+
+/**
+ * Converts a data table of a header row and data rows into an array of objects.
+ */
+function arrTableToObjects(rows, headers) {
+    if (headers) {
+        if (!rows.length)
+            return [];
+    }
+    else {
+        if (rows.length <= 1)
+            return [];
+        headers = rows[0].map((header) => {
+            return header === null || header === undefined ? '' : String(header);
+        });
+        rows = rows.slice(1);
+    }
+    const oRow = createPseudoClass(headers);
+    return rows.map((row) => oRow(row));
+}
+
+/**
+ * Asserts that all rows in the table have the same length.
+ */
+function arrTableAssertRowsSameLength(rows, headers) {
+    const numHeaders = (headers || rows[0]).length;
+    for (const row of rows) {
+        if (row.length !== numHeaders) {
+            throw new Error(`Expected ${numHeaders} columns, got ${row.length}`);
+        }
+    }
 }
 
 /**
@@ -1686,6 +1766,115 @@ class Table extends Base {
     }
 }
 
+/**
+ * Two-dimensional table class supporting column and row headers.
+ */
+class SimpleTable extends Base {
+    /**
+     * Revive a stringified Table object.
+     * @param json a stringified Table object.
+     */
+    static fromJSON(json) {
+        const { headers, data } = JSON.parse(json);
+        return new SimpleTable(data, headers);
+    }
+    constructor(data, headers) {
+        super();
+        this._colIndexMap = {};
+        this._data = [];
+        if (headers) {
+            this._headers = headers.slice();
+            this._data = data.map((row) => {
+                this.assertRowValidLength(row);
+                return row.slice();
+            });
+        }
+        else {
+            this._headers = data[0].map((header) => '' + header);
+            this._data = data.slice(1).map((row) => {
+                this.assertRowValidLength(row);
+                return row.slice();
+            });
+        }
+        if (!this._headers.length)
+            throw new Error('Table must have at least one column.');
+        if (!this._data.length)
+            throw new Error('Table must have at least one row.');
+        this._headers.forEach((header, i) => {
+            this._colIndexMap[header] = i;
+        });
+        this.setNonEnumerablePrivateProperties();
+    }
+    assertRowValidLength(row) {
+        if (row.length !== this._headers.length)
+            throw new Error('Row length does not match headers length.');
+    }
+    /**
+     * Gets the number of cols in the table, not including headers.
+     */
+    get numColumns() {
+        return this._data[0].length;
+    }
+    /**
+     * Gets the number of rows in the table, not including headers.
+     */
+    get numRows() {
+        return this._data.length;
+    }
+    /**
+     * Gets the column headers.
+     */
+    get headers() {
+        return this._headers.slice();
+    }
+    /**
+     * Returns the table as a two-dimensional array, without column headers.
+     */
+    get data() {
+        return this._data.slice().map((row) => row.slice());
+    }
+    /**
+     * Returns a value at a given (row, col) position.
+     * @param column Column index or name
+     * @param row Row index
+     */
+    get(column, row) {
+        if (typeof column === 'string') {
+            column = this._colIndexMap[column];
+        }
+        return this._data[row][column];
+    }
+    /**
+     * Inserts a given value at a given (row, col) position.
+     * @param column Column index
+     * @param row Row index
+     * @param value The value to insert
+     */
+    set(column, row, value) {
+        if (typeof column === 'string') {
+            column = this._colIndexMap[column];
+        }
+        this._data[row][column] = value;
+        return this;
+    }
+    /**
+     * Returns the table as a two-dimensional array, including row and column headers..
+     */
+    toArray() {
+        const result = [this.headers];
+        return result.concat(this.data);
+    }
+    /**
+     * Override of the native toJSON method. When parsing the returned json string, it can be revived as a Table object when using the static Table.fromJSON method.
+     */
+    toJSON() {
+        return {
+            headers: this._headers,
+            data: this._data,
+        };
+    }
+}
+
 function isValidDate(year, month, day, hour, minute, second, millisecond) {
     year = year ? Number(year) : 0;
     month = month ? Number(month) : 0;
@@ -1859,6 +2048,34 @@ function getCurrentYear() {
  */
 function isoDateTimestamp(date = new Date()) {
     return date.toISOString().replace(/\D/g, '');
+}
+
+/**
+ * Subtracts a given number of days from the current time and returns the resulting Date.
+ */
+function dateDaysAgo(days) {
+    const date = new Date();
+    date.setDate(date.getDate() - days);
+    return date;
+}
+
+/**
+ * Returns the number of days that has passed since a given date.
+ */
+function daysSinceDate(date) {
+    return (Date.now() - date.getTime()) / (1000 * 3600 * 24);
+}
+
+/**
+ * Returns a modified ISO date string: YYYY-MM-DD-HH-mm-SS-sss
+ * This will correctly sort in chronological order.
+ * @param date - The date to convert if not current time
+ */
+function isoDateTimestampForFilename(date = new Date()) {
+    return date
+        .toISOString()
+        .replace(/[-:T.]/g, '-')
+        .replace('Z', '');
 }
 
 /**
@@ -2985,6 +3202,32 @@ function oEntriesArray(o) {
 }
 
 /**
+ * Make an object's properties immutable, recursively.
+ */
+function objDeepFreeze(o) {
+    for (const key of Reflect.ownKeys(o)) {
+        const value = o[key];
+        if ((value && typeof value === 'object') || typeof value === 'function') {
+            objDeepFreeze(value);
+        }
+    }
+    return Object.freeze(o);
+}
+
+/**
+ * Similar to Array.prototype.map, but for objects - and mutable! This changes the original object.
+ * @param object The object to iterate over.
+ * @param callback The function to call for each key-value pair.
+ * @param getKeys A function that returns the keys of the object.
+ */
+function objMapMutable(object, callback, getKeys = Object.keys) {
+    for (const key of getKeys(object)) {
+        object[key] = callback(object[key], key);
+    }
+    return object;
+}
+
+/**
  * Matches 2 or more consecutive whitespace characters, including line terminators, tabs, etc.
  */
 const repeatingWhiteSpace = /((\r?\r?\n)|\s|\t){2,}/g;
@@ -3507,6 +3750,109 @@ function isSocialSecurityNumberDK(s) {
     }
 }
 
+function readExcelFile(filepath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const workbook = new excelJs__default["default"].Workbook();
+        yield workbook.xlsx.readFile(filepath);
+        const worksheets = {};
+        workbook.eachSheet((worksheet) => {
+            worksheets[worksheet.name] = worksheetValues(worksheet);
+        });
+        return worksheets;
+    });
+}
+function readExcelFileWorksheet(filepath, worksheetIndexOrName = 0) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const workbook = new excelJs__default["default"].Workbook();
+        yield workbook.xlsx.readFile(filepath);
+        const worksheet = typeof worksheetIndexOrName === 'number'
+            ? workbook.worksheets[worksheetIndexOrName]
+            : workbook.getWorksheet(worksheetIndexOrName);
+        return worksheetValues(worksheet);
+    });
+}
+function worksheetValues(worksheet) {
+    const rows = [];
+    worksheet.eachRow((cells) => {
+        const row = [];
+        cells.eachCell((cell) => {
+            row.push(String(cell.value).trim());
+        });
+        rows.push(row);
+    });
+    return rows;
+}
+
+/**
+ * Parse a markdown table into a 2D array of strings.
+ */
+function parseMarkdownTable(string) {
+    return string
+        .trim() // allow leading/trailing whitespace
+        .split('\n')
+        .map((s) => s.trim())
+        .filter((s, i) => !!s) // remove empty lines
+        .filter((s, i) => i !== 1) // remove the separator line
+        .map((row) => {
+        return row
+            .trim()
+            .replace(/^\|/, '') // remove leading pipe
+            .replace(/\|$/, '') // remove trailing pipe
+            .split('|')
+            .map((cell) => cell.trim());
+    });
+}
+
+/**
+ * Parse text content of each page in a PDF file. Array indices correspond to page numbers.
+ */
+function pdfReadPages(filepath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const buffer = yield fs__default["default"].promises.readFile(filepath);
+        const doc = yield pdfLib.PDFDocument.load(buffer.buffer);
+        const result = [];
+        for (let i = 0; i < doc.getPages().length; i++) {
+            const pageDoc = yield pdfLib.PDFDocument.create();
+            const [pageCopy] = yield pageDoc.copyPages(doc, [i]);
+            pageDoc.addPage(pageCopy);
+            const pageIntArray = yield pageDoc.save();
+            const pageBuffer = Buffer.from(pageIntArray);
+            const pageData = yield pdf__default["default"](pageBuffer);
+            result[i] = pageData.text;
+        }
+        return result;
+    });
+}
+// const filepath = process.cwd() + '\\tests\\test-files\\pdf-test.pdf'
+// pdfReadPages(filepath).then(console.log)
+
+/**
+ * Split a given PDF file into separate single-page-files.
+ * @returns Array of filepaths of the split files. Array indices correspond to page numbers.
+ */
+function pdfSplitPages(filepath, outputDirpath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const inputBuffer = yield fs__default["default"].promises.readFile(filepath);
+        const doc = yield pdfLib.PDFDocument.load(inputBuffer);
+        const numPages = doc.getPages().length;
+        const numPageNumDigits = numPages.toString().length;
+        const filepaths = [];
+        yield mkdirp.mkdirp(outputDirpath);
+        for (let i = 0; i < numPages; i++) {
+            const page = yield pdfLib.PDFDocument.create();
+            const [copiedPage] = yield page.copyPages(doc, [i]);
+            page.addPage(copiedPage);
+            const pageNumber = i;
+            const outputBuffer = yield page.save();
+            const outputFilename = `${pageNumber.toString().padStart(numPageNumDigits, '0')}.pdf`;
+            const outputFilepath = path__default["default"].join(outputDirpath, outputFilename);
+            yield fs__default["default"].promises.writeFile(outputFilepath, outputBuffer);
+            filepaths[pageNumber] = outputFilepath;
+        }
+        return filepaths;
+    });
+}
+
 /**
  * For recording time passed since constructor was invoked and until the stop() method i called.
  */
@@ -3794,8 +4140,9 @@ function strPrettifyMinifiedCode(input, indent = '  ') {
 /**
  * Splits a string by a delimiter and trims each of the resulting strings.
  */
-function strSplitAndTrim(string, delimiter) {
-    return string.split(delimiter).map((s) => s.trim());
+function strSplitAndTrim(string, delimiter, removeEmptyLines = false) {
+    const lines = string.split(delimiter).map((s) => s.trim());
+    return removeEmptyLines ? lines.filter((s) => !!s) : lines;
 }
 
 /**
@@ -4046,7 +4393,7 @@ function strIsMultiLine(string) {
 /**
  * Remove line breaks from string.
  */
-function strRemoveNewLines(string, replaceWith = '. ') {
+function strRemoveNewLines(string, replaceWith = '') {
     return string.replace(/\r*\n/g, replaceWith);
 }
 
@@ -4107,6 +4454,7 @@ exports.Mixins = Mixins;
 exports.Options = Options;
 exports.Queue = Queue;
 exports.Revivable = Revivable;
+exports.SimpleTable = SimpleTable;
 exports.SortedArray = SortedArray;
 exports.StringStream = StringStream;
 exports.Table = Table;
@@ -4120,12 +4468,15 @@ exports.arrFlatten = arrFlatten;
 exports.arrIndicesOf = arrIndicesOf;
 exports.arrLast = arrLast;
 exports.arrMapMutable = arrMapMutable;
+exports.arrRemoveDuplicates = arrRemoveDuplicates;
 exports.arrShallowEquals = arrShallowEquals;
 exports.arrShuffle = arrShuffle;
 exports.arrSome = arrSome;
 exports.arrSortNumeric = arrSortNumeric;
 exports.arrSum = arrSum;
 exports.arrSwap = arrSwap;
+exports.arrTableAssertRowsSameLength = arrTableAssertRowsSameLength;
+exports.arrTableToObjects = arrTableToObjects;
 exports.assertValidDate = assertValidDate;
 exports.assertValidDateDay = assertValidDateDay;
 exports.assertValidDateMonth = assertValidDateMonth;
@@ -4149,6 +4500,9 @@ exports.compareNumericDescending = compareNumericDescending;
 exports.compareString = compareString;
 exports.compareStringDescending = compareStringDescending;
 exports.createFileExtensionFilter = createFileExtensionFilter;
+exports.createPseudoClass = createPseudoClass;
+exports.dateDaysAgo = dateDaysAgo;
+exports.daysSinceDate = daysSinceDate;
 exports.el = el;
 exports.ensureValidWindowsPath = ensureValidWindowsPath;
 exports.funSetName = funSetName;
@@ -4178,6 +4532,7 @@ exports.isValidDateDay = isValidDateDay;
 exports.isValidDateMonth = isValidDateMonth;
 exports.isValidDateYear = isValidDateYear;
 exports.isoDateTimestamp = isoDateTimestamp;
+exports.isoDateTimestampForFilename = isoDateTimestampForFilename;
 exports.iteratePrototypeChain = iteratePrototypeChain;
 exports.letterToCol = letterToCol;
 exports.log = log;
@@ -4202,17 +4557,24 @@ exports.numParseFormattedDK = numParseFormattedDK;
 exports.oEntriesArray = oEntriesArray;
 exports.oKeysArray = oKeysArray;
 exports.oValuesArray = oValuesArray;
+exports.objDeepFreeze = objDeepFreeze;
 exports.objFilter = objFilter;
 exports.objForEach = objForEach;
 exports.objIsEmpty = objIsEmpty;
 exports.objMap = objMap;
 exports.objMapKeys = objMapKeys;
+exports.objMapMutable = objMapMutable;
 exports.objReduce = objReduce;
 exports.padArrayBytesLeft = padArrayBytesLeft;
 exports.padArrayBytesRight = padArrayBytesRight;
+exports.parseMarkdownTable = parseMarkdownTable;
 exports.parseSocialSecurityNumberDK = parseSocialSecurityNumberDK;
 exports.pathFromCwd = pathFromCwd;
+exports.pdfReadPages = pdfReadPages;
+exports.pdfSplitPages = pdfSplitPages;
 exports.randomIntBetween = randomIntBetween;
+exports.readExcelFile = readExcelFile;
+exports.readExcelFileWorksheet = readExcelFileWorksheet;
 exports.readFileStringSync = readFileStringSync;
 exports.regexEscapeString = regexEscapeString;
 exports.regexFixFlags = regexFixFlags;

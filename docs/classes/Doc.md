@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:118](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L118)
+[src/libs/html/src/HtmlGenerate.ts:118](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L118)
 
 ## Properties
 
@@ -62,7 +62,7 @@
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:26](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L26)
+[src/libs/html/src/HtmlGenerate.ts:26](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L26)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:27](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L27)
+[src/libs/html/src/HtmlGenerate.ts:27](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L27)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:29](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L29)
+[src/libs/html/src/HtmlGenerate.ts:29](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L29)
 
 ## Accessors
 
@@ -108,7 +108,7 @@ Elem.isVoid
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:44](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L44)
+[src/libs/html/src/HtmlGenerate.ts:44](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L44)
 
 ## Methods
 
@@ -126,7 +126,7 @@ Elem.isVoid
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:54](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L54)
+[src/libs/html/src/HtmlGenerate.ts:54](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L54)
 
 ___
 
@@ -144,7 +144,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:121](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L121)
+[src/libs/html/src/HtmlGenerate.ts:121](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L121)
 
 ___
 
@@ -170,4 +170,4 @@ Generate simple HTML page with reasonable defaults.
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:74](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L74)
+[src/libs/html/src/HtmlGenerate.ts:74](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L74)

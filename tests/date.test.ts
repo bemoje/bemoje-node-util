@@ -168,3 +168,42 @@ describe('isoDateTimestamp', () => {
     expect(util.isoDateTimestamp().length).toBe(17)
   })
 })
+
+describe('isoDateTimestampForFilename', () => {
+  it('should return a string in the format of YYYY-MM-DD-HH-mm-SS-sss', () => {
+    const date = new Date('2022-01-01T00:00:00.000Z')
+    const result = util.isoDateTimestampForFilename(date)
+    expect(result).toEqual('2022-01-01-00-00-00-000')
+  })
+
+  it('should return a string with the current date and time if no date is provided', () => {
+    const result = util.isoDateTimestampForFilename()
+    const regex = /^\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}-\d{3}$/
+    expect(result).toMatch(regex)
+  })
+})
+
+describe('daysSinceDate', () => {
+  it('should return 0 if the date is today', () => {
+    const today = new Date()
+    expect(util.daysSinceDate(today)).toBe(0)
+  })
+
+  it('should return a positive number if the date is in the past', () => {
+    const date = new Date('2021-01-01')
+    expect(util.daysSinceDate(date)).toBeGreaterThan(0)
+  })
+
+  it('should return a negative number if the date is in the future', () => {
+    const date = new Date('2050-01-01')
+    expect(util.daysSinceDate(date)).toBeLessThan(0)
+  })
+})
+
+describe('dateDaysAgo', () => {
+  it('should return a date that is the given number of days ago', () => {
+    const today = new Date()
+    const yesterday = util.dateDaysAgo(1)
+    expect(yesterday.getDate()).toBe(today.getDate() - 1)
+  })
+})

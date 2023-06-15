@@ -182,3 +182,19 @@ describe('round', () => {
     expect(util.round(0.833, 2)).toBe(0.83)
   })
 })
+
+describe('numIsBetweenExclusive', () => {
+  it('returns true if number is between lower and upper bounds', () => {
+    expect(util.numIsBetweenExclusive(5, 2, 8)).toBe(true)
+  })
+
+  it('returns false if number is equal to lower or upper bounds', () => {
+    expect(util.numIsBetweenExclusive(2, 2, 8)).toBe(false)
+    expect(util.numIsBetweenExclusive(8, 2, 8)).toBe(false)
+  })
+
+  it('returns false if number is outside of lower and upper bounds', () => {
+    expect(util.numIsBetweenExclusive(1, 2, 8)).toBe(false)
+    expect(util.numIsBetweenExclusive(10, 2, 8)).toBe(false)
+  })
+})

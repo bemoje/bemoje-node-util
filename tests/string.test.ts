@@ -368,3 +368,46 @@ describe('strFirstCharToUpperCase', () => {
     expect(util.strFirstCharToUpperCase('')).toBe('')
   })
 })
+
+describe('strSplitAndTrim', () => {
+  it('removeEmptyLines=false | should split and trim a string by a delimiter', () => {
+    const result = util.strSplitAndTrim('\n  hello, world,  ', ',', false)
+    expect(result).toEqual(['hello', 'world', ''])
+  })
+
+  it('removeEmptyLines=true | should split and trim a string by a delimiter and clean up empty lines', () => {
+    const result = util.strSplitAndTrim('\n  hello, world,  ', ',', true)
+    expect(result).toEqual(['hello', 'world'])
+  })
+
+  it('should return an array with one element if no delimiter is found', () => {
+    const result = util.strSplitAndTrim('hello world', ',')
+    expect(result).toEqual(['hello world'])
+  })
+})
+
+describe('strRemoveNewLines', () => {
+  it('should remove line breaks from string', () => {
+    const input = 'Hello\nWorld\n'
+    const expectedOutput = 'HelloWorld'
+    expect(util.strRemoveNewLines(input)).toEqual(expectedOutput)
+  })
+
+  it('should replace line breaks with custom string', () => {
+    const input = 'Hello\nWorld\n'
+    const expectedOutput = 'Hello, World, '
+    expect(util.strRemoveNewLines(input, ', ')).toEqual(expectedOutput)
+  })
+})
+
+describe('strIsMultiLine', () => {
+  it('should return true if the string has line breaks', () => {
+    const result = util.strIsMultiLine('Hello\nWorld')
+    expect(result).toBe(true)
+  })
+
+  it('should return false if the string has no line breaks', () => {
+    const result = util.strIsMultiLine('Hello World')
+    expect(result).toBe(false)
+  })
+})

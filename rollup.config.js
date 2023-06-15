@@ -21,6 +21,11 @@ export default {
     'sentence-splitter',
     'lodash',
     'crypto',
+    'mkdirp',
+    'pdf-lib',
+    'pdf-parse',
+    'exceljs',
+    'appdata-path',
   ],
   output: [
     {

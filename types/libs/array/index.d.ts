@@ -11,4 +11,7 @@ export * from './src/arrSortNumeric';
 export * from './src/arrSwap';
 export * from './src/arrAverage';
 export * from './src/arrSum';
+export * from './src/arrRemoveDuplicates';
+export * from './src/arrTableToObjects';
+export * from './src/arrTableAssertRowsSameLength';
 //# sourceMappingURL=index.d.ts.map

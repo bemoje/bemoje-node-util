@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L14)
+[src/libs/html/src/HtmlGenerate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L14)
 
 ## Properties
 
@@ -46,7 +46,7 @@
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L14)
+[src/libs/html/src/HtmlGenerate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L14)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L14)
+[src/libs/html/src/HtmlGenerate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L14)
 
 ## Accessors
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:16](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L16)
+[src/libs/html/src/HtmlGenerate.ts:16](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L16)
 
 ## Methods
 
@@ -84,4 +84,4 @@ ___
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:20](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/html/src/HtmlGenerate.ts#L20)
+[src/libs/html/src/HtmlGenerate.ts:20](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L20)

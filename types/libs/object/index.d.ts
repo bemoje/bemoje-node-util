@@ -18,4 +18,7 @@ export * from './src/objIsEmpty';
 export * from './src/oKeysArray';
 export * from './src/oValuesArray';
 export * from './src/oEntriesArray';
+export * from './src/createPseudoClass';
+export * from './src/objDeepFreeze';
+export * from './src/objMapMutable';
 //# sourceMappingURL=index.d.ts.map

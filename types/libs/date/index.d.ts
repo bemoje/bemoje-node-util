@@ -11,4 +11,7 @@ export * from './src/isValidDateMonth';
 export * from './src/isValidDateYear';
 export * from './src/numDaysInMonth';
 export * from './src/isoDateTimestamp';
+export * from './src/dateDaysAgo';
+export * from './src/daysSinceDate';
+export * from './src/isoDateTimestampForFilename';
 //# sourceMappingURL=index.d.ts.map

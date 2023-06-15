@@ -13,6 +13,7 @@ export * from './libs/node';
 export * from './libs/number';
 export * from './libs/object';
 export * from './libs/parse';
+export * from './libs/pdf';
 export * from './libs/performance';
 export * from './libs/regex';
 export * from './libs/set';

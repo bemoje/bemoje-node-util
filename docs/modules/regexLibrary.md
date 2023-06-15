@@ -30,7 +30,7 @@ Example: -20
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:22](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L22)
+[src/libs/regex/src/regexLibrary.ts:22](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L22)
 
 ___
 
@@ -42,7 +42,7 @@ Understands prefixes for hex colors, hex decimal and regexp unicode hex
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:56](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L56)
+[src/libs/regex/src/regexLibrary.ts:56](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L56)
 
 ___
 
@@ -54,7 +54,7 @@ Prefixes for hex colors, hex decimal and regexp unicode hex
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:51](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L51)
+[src/libs/regex/src/regexLibrary.ts:51](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L51)
 
 ___
 
@@ -66,7 +66,7 @@ For checking if a string is of only alpha characters for a specific locale.
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:61](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L61)
+[src/libs/regex/src/regexLibrary.ts:61](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L61)
 
 ___
 
@@ -78,7 +78,7 @@ For checking if a string is of only alpha-numeric characters for a specific loca
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:99](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L99)
+[src/libs/regex/src/regexLibrary.ts:99](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L99)
 
 ___
 
@@ -91,7 +91,7 @@ Example: -20,412.34
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:46](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L46)
+[src/libs/regex/src/regexLibrary.ts:46](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L46)
 
 ___
 
@@ -104,7 +104,7 @@ Example: -20.412,34
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:40](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L40)
+[src/libs/regex/src/regexLibrary.ts:40](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L40)
 
 ___
 
@@ -117,7 +117,7 @@ Example: -20412,3461
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:28](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L28)
+[src/libs/regex/src/regexLibrary.ts:28](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L28)
 
 ___
 
@@ -130,7 +130,7 @@ Example: -20412.3461
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:34](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L34)
+[src/libs/regex/src/regexLibrary.ts:34](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L34)
 
 ___
 
@@ -142,7 +142,7 @@ Matches 2 or more consecutive whitespace characters, including line terminators,
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:4](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L4)
+[src/libs/regex/src/regexLibrary.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L4)
 
 ___
 
@@ -155,7 +155,7 @@ Example: 151199-1512
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:15](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L15)
+[src/libs/regex/src/regexLibrary.ts:15](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L15)
 
 ___
 
@@ -167,4 +167,4 @@ Matches words in a string
 
 #### Defined in
 
-[src/libs/regex/src/regexLibrary.ts:9](https://github.com/bemoje/bemoje-node-util/blob/e2587a1/src/libs/regex/src/regexLibrary.ts#L9)
+[src/libs/regex/src/regexLibrary.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexLibrary.ts#L9)

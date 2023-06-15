@@ -284,3 +284,64 @@ describe('arrAverage', () => {
     expect(util.arrAverage([-1, 1])).toBe(0)
   })
 })
+
+describe('arrTableToObjects', () => {
+  it('without headers', () => {
+    const table = [
+      ['a', 'b', 'c'],
+      ['1', '2', '3'],
+      ['4', '5', '6'],
+    ]
+    expect(util.arrTableToObjects(table)).toEqual([
+      { a: '1', b: '2', c: '3' },
+      { a: '4', b: '5', c: '6' },
+    ])
+  })
+
+  it('with headers', () => {
+    const headers = ['a', 'b', 'c']
+    const rows = [
+      ['1', '2', '3'],
+      ['4', '5', '6'],
+    ]
+    expect(util.arrTableToObjects(rows, headers)).toEqual([
+      { a: '1', b: '2', c: '3' },
+      { a: '4', b: '5', c: '6' },
+    ])
+  })
+})
+
+describe('arrRemoveDuplicates', () => {
+  it('removes duplicates', () => {
+    expect(util.arrRemoveDuplicates([1, 2, 3, 1, 2, 3])).toEqual([1, 2, 3])
+  })
+})
+
+describe('arrTableAssertRowsSameLength', () => {
+  it('should throw an error if rows have different lengths', () => {
+    const rows = [
+      ['a', 'b', 'c'],
+      ['d', 'e'],
+    ]
+    expect(() => util.arrTableAssertRowsSameLength(rows)).toThrow()
+  })
+
+  it('should not throw an error if all rows have the same length', () => {
+    const rows = [
+      ['a', 'b', 'c'],
+      ['d', 'e', 'f'],
+    ]
+    expect(() => util.arrTableAssertRowsSameLength(rows)).not.toThrow()
+  })
+})
+
+describe('arrLast', () => {
+  it('should return the last element of an array', () => {
+    expect(util.arrLast([1, 2, 3])).toBe(3)
+    expect(util.arrLast(['a', 'b', 'c'])).toBe('c')
+  })
+
+  it('should throw an error if the array is empty', () => {
+    expect(() => util.arrLast([])).toThrow()
+  })
+})
