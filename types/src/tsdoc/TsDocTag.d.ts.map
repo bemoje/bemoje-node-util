@@ -1,0 +1,1 @@
+{"version":3,"file":"TsDocTag.d.ts","sourceRoot":"","sources":["../../../src/tsdoc/TsDocTag.ts"],"names":[],"mappings":"AAEA;;GAEG;AACH,qBAAa,QAAQ;IAKA,GAAG,EAAE,MAAM;IAAS,IAAI,EAAE,MAAM;IAAS,WAAW,EAAE,MAAM,EAAE;IAJjF;;;OAGG;gBACgB,GAAG,EAAE,MAAM,EAAS,IAAI,EAAE,MAAM,EAAS,WAAW,EAAE,MAAM,EAAE;IAajF;;;OAGG;IACH,QAAQ,IAAI,MAAM;CAcnB"}

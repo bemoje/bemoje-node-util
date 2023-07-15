@@ -24,17 +24,32 @@
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SortedArray.ts#L9)
+src/datastructures/types/ISortedArrayOptions.ts:4
 
 ___
 
 ### compare
 
-• `Optional` **compare**: [`Comparator`](/docs/index.md#comparator)
+• `Optional` **compare**: (`a`: `any`, `b`: `any`) => `number`
+
+#### Type declaration
+
+▸ (`a`, `b`): `number`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `a` | `any` |
+| `b` | `any` |
+
+##### Returns
+
+`number`
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SortedArray.ts#L7)
+src/datastructures/types/ISortedArrayOptions.ts:2
 
 ___
 
@@ -44,4 +59,4 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/SortedArray.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SortedArray.ts#L8)
+src/datastructures/types/ISortedArrayOptions.ts:3

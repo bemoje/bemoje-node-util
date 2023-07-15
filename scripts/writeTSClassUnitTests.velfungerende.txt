@@ -1,0 +1,29 @@
+async function writeTSClassUnitTests(
+  openai: OpenaiApiClient,
+  file: SourceFile,
+  options: IChatRequestOptions = {},
+): Promise<string> {
+  const parsed = file.parseClass()
+  const code = tsDocStripExample(file.source)
+  options = {
+    temperature: 0.3,
+    ...options,
+    instruction: [
+      'You are a helpful assistant who writes unit tests for TypeScript.',
+      `For for each public method in the the exported class, '${file.exportName}', follow every possible code path step-by-step ` +
+        'and then write tests for every code path, edge case or scenario that you find.',
+      'The public class members that need to be tested are: ' +
+        parsed.public.join(', ') +
+        '. Create several tests for each of these.',
+      'Use the Jest testing framework, ie. "describe" and "it".',
+      'Write as many tests as needed to achieve a 95% code coverage minimum. ',
+      'Your response should be only the TypeScript code for the tests and nothing else.',
+    ].join('\n\n'),
+    prompt: tsStripImports(tsDocStripExample(code)),
+  }
+  const tokens = openai.countTokens(code)
+  console.log({ tokens })
+  const response = tokens > 1000 ? await openai.chat3_16(options) : await openai.chat4_8(options)
+  const jest = tsJestConvertExportNameString(tsExtractJestTests(response), file.exportName)
+  return strNoConsecutiveEmptyLines(jest).trim() + '\n'
+}

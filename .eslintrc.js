@@ -17,14 +17,18 @@ const options = {
   extends: [
     'eslint:recommended',
     'plugin:prettier/recommended',
+    //'prettier:@typescript-eslint',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
   ],
   rules: {
+    'semi': 0,
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-locals': 'off',
     '@typescript-eslint/no-unused-parameters': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-extra-semi': 'off',
+    '@typescript-eslint/no-namespace': 'off',
     'prettier/prettier': [
       'warn',
       {

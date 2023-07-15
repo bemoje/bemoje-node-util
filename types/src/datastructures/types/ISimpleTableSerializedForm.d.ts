@@ -1,0 +1,5 @@
+export interface ISimpleTableSerializedForm<T> {
+    headers: string[];
+    data: T[][];
+}
+//# sourceMappingURL=ISimpleTableSerializedForm.d.ts.map

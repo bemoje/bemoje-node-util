@@ -2,7 +2,7 @@
 
 # Class: Queue<T\>
 
-Guarantees that class instances are serializable and have a static revive function.
+Abstract class that other classes can inherit from to gain various handy functionality.
 
 ## Type parameters
 
@@ -12,14 +12,9 @@ Guarantees that class instances are serializable and have a static revive functi
 
 ## Hierarchy
 
-- [`Base`](/docs/classes/Base.md)
+- [`MixinBase`](/docs/classes/MixinBase.md)
 
   ↳ **`Queue`**
-
-## Implements
-
-- [`IRevivable`](/docs/interfaces/IRevivable.md)<`T`[]\>
-- `Iterable`<`T`\>
 
 ## Table of contents
 
@@ -33,19 +28,17 @@ Guarantees that class instances are serializable and have a static revive functi
 
 ### Accessors
 
-- [klass](/docs/classes/Queue.md#klass)
-- [proto](/docs/classes/Queue.md#proto)
 - [size](/docs/classes/Queue.md#size)
 
 ### Methods
 
 - [[iterator]](/docs/classes/Queue.md#[iterator])
-- [assertNoAmbiguousOptions](/docs/classes/Queue.md#assertnoambiguousoptions)
-- [assertNoOptionsRequireMissingOptions](/docs/classes/Queue.md#assertnooptionsrequiremissingoptions)
 - [dequeue](/docs/classes/Queue.md#dequeue)
 - [enqueue](/docs/classes/Queue.md#enqueue)
-- [init](/docs/classes/Queue.md#init)
+- [getConstructor](/docs/classes/Queue.md#getconstructor)
+- [getPrototype](/docs/classes/Queue.md#getprototype)
 - [setNonEnumerablePrivateProperties](/docs/classes/Queue.md#setnonenumerableprivateproperties)
+- [setNonEnumerableProperties](/docs/classes/Queue.md#setnonenumerableproperties)
 - [toArray](/docs/classes/Queue.md#toarray)
 - [toJSON](/docs/classes/Queue.md#tojson)
 - [from](/docs/classes/Queue.md#from)
@@ -65,11 +58,7 @@ Guarantees that class instances are serializable and have a static revive functi
 
 #### Inherited from
 
-[Base](/docs/classes/Base.md).[constructor](/docs/classes/Base.md#constructor)
-
-#### Defined in
-
-[src/libs/mixins/src/Base.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L13)
+[MixinBase](/docs/classes/MixinBase.md).[constructor](/docs/classes/MixinBase.md#constructor)
 
 ## Properties
 
@@ -79,45 +68,9 @@ Guarantees that class instances are serializable and have a static revive functi
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Queue.ts#L5)
+src/datastructures/Queue.ts:4
 
 ## Accessors
-
-### klass
-
-• `get` **klass**(): typeof [`Base`](/docs/classes/Base.md)
-
-#### Returns
-
-typeof [`Base`](/docs/classes/Base.md)
-
-#### Inherited from
-
-Base.klass
-
-#### Defined in
-
-[src/libs/mixins/src/Base.ts:17](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L17)
-
-___
-
-### proto
-
-• `get` **proto**(): [`Obj`](/docs/index.md#obj)
-
-#### Returns
-
-[`Obj`](/docs/index.md#obj)
-
-#### Inherited from
-
-Base.proto
-
-#### Defined in
-
-[src/libs/mixins/src/Base.ts:21](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L21)
-
-___
 
 ### size
 
@@ -129,7 +82,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:28](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Queue.ts#L28)
+src/datastructures/Queue.ts:27
 
 ## Methods
 
@@ -141,63 +94,9 @@ ___
 
 `Iterator`<`T`, `any`, `undefined`\>
 
-#### Implementation of
-
-Iterable.\_\_@iterator@87
-
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:40](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Queue.ts#L40)
-
-___
-
-### assertNoAmbiguousOptions
-
-▸ `Protected` **assertNoAmbiguousOptions**(`options`, `optionKeyPairs`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | [`Obj`](/docs/index.md#obj) |
-| `optionKeyPairs` | [`string`, `string`][] |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Base](/docs/classes/Base.md).[assertNoAmbiguousOptions](/docs/classes/Base.md#assertnoambiguousoptions)
-
-#### Defined in
-
-[src/libs/mixins/src/Base.ts:71](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L71)
-
-___
-
-### assertNoOptionsRequireMissingOptions
-
-▸ `Protected` **assertNoOptionsRequireMissingOptions**(`options`, `optionKeyPairs`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | [`Obj`](/docs/index.md#obj) |
-| `optionKeyPairs` | [`string`, `string`][] |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Base](/docs/classes/Base.md).[assertNoOptionsRequireMissingOptions](/docs/classes/Base.md#assertnooptionsrequiremissingoptions)
-
-#### Defined in
-
-[src/libs/mixins/src/Base.ts:79](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L79)
+src/datastructures/Queue.ts:39
 
 ___
 
@@ -211,7 +110,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:22](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Queue.ts#L22)
+src/datastructures/Queue.ts:21
 
 ___
 
@@ -231,25 +130,43 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:17](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Queue.ts#L17)
+src/datastructures/Queue.ts:16
 
 ___
 
-### init
+### getConstructor
 
-▸ `Protected` **init**(): `void`
+▸ **getConstructor**(): typeof [`MixinBase`](/docs/classes/MixinBase.md)
 
 #### Returns
 
-`void`
+typeof [`MixinBase`](/docs/classes/MixinBase.md)
 
 #### Inherited from
 
-[Base](/docs/classes/Base.md).[init](/docs/classes/Base.md#init)
+[MixinBase](/docs/classes/MixinBase.md).[getConstructor](/docs/classes/MixinBase.md#getconstructor)
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:25](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L25)
+src/mixins/MixinBase.ts:8
+
+___
+
+### getPrototype
+
+▸ **getPrototype**(): [`MixinBase`](/docs/classes/MixinBase.md)
+
+#### Returns
+
+[`MixinBase`](/docs/classes/MixinBase.md)
+
+#### Inherited from
+
+[MixinBase](/docs/classes/MixinBase.md).[getPrototype](/docs/classes/MixinBase.md#getprototype)
+
+#### Defined in
+
+src/mixins/MixinBase.ts:12
 
 ___
 
@@ -265,11 +182,37 @@ Make the properties with property names that start with an underscore non-enumer
 
 #### Inherited from
 
-[Base](/docs/classes/Base.md).[setNonEnumerablePrivateProperties](/docs/classes/Base.md#setnonenumerableprivateproperties)
+[MixinBase](/docs/classes/MixinBase.md).[setNonEnumerablePrivateProperties](/docs/classes/MixinBase.md#setnonenumerableprivateproperties)
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:67](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L67)
+src/mixins/MixinBase.ts:19
+
+___
+
+### setNonEnumerableProperties
+
+▸ `Protected` **setNonEnumerableProperties**(`...propertyNames`): `void`
+
+Make the properties with the given property names non-enumerable.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...propertyNames` | `string`[] |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[MixinBase](/docs/classes/MixinBase.md).[setNonEnumerableProperties](/docs/classes/MixinBase.md#setnonenumerableproperties)
+
+#### Defined in
+
+src/mixins/MixinBase.ts:26
 
 ___
 
@@ -283,7 +226,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:32](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Queue.ts#L32)
+src/datastructures/Queue.ts:31
 
 ___
 
@@ -295,13 +238,9 @@ ___
 
 `T`[]
 
-#### Implementation of
-
-IRevivable.toJSON
-
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:36](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Queue.ts#L36)
+src/datastructures/Queue.ts:35
 
 ___
 
@@ -327,7 +266,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Queue.ts#L7)
+src/datastructures/Queue.ts:6
 
 ___
 
@@ -353,4 +292,4 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/Queue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Queue.ts#L13)
+src/datastructures/Queue.ts:12

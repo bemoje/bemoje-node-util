@@ -1,0 +1,6 @@
+/**
+ * Matches US format positive or negative decimal numbers with no thousand separators.
+ * Example: -20412.3461
+ */
+export declare const regNumberNoThousandSepDotDecimal: RegExp;
+//# sourceMappingURL=regNumberNoThousandSepDotDecimal.d.ts.map

@@ -26,6 +26,16 @@ export default {
     'pdf-parse',
     'exceljs',
     'appdata-path',
+    'title-case',
+    'level',
+    'events',
+    'object-hash',
+    'async-retry',
+    'openai',
+    'gpt-3-encoder',
+    'util',
+    'child_process',
+    'deep-assign',
   ],
   output: [
     {

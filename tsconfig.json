@@ -295,5 +295,13 @@
     /* Skip type checking all .d.ts files. */
     "skipLibCheck": false
   },
-  "include": ["./tests/**/*.ts", "./tests/**/*.tsx", "./src/**/*.ts", "./src/**/*.tsx"]
+  "include": [
+    "./tests/**/*.ts",
+    "./tests/**/*.tsx",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "scripts/generateEntryPoint.ts",
+    "scripts/OpenaiApiClient.example.ts",
+    "scripts/tsBundleImports.ts"
+  ]
 }

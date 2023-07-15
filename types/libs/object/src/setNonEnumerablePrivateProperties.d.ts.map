@@ -1,1 +1,0 @@
-{"version":3,"file":"setNonEnumerablePrivateProperties.d.ts","sourceRoot":"","sources":["../../../../src/libs/object/src/setNonEnumerablePrivateProperties.ts"],"names":[],"mappings":"AACA,OAAO,KAAK,EAAE,GAAG,EAAE,MAAM,kBAAkB,CAAA;AAC3C;;;GAGG;AACH,wBAAgB,iCAAiC,CAAC,MAAM,EAAE,GAAG,GAAG,IAAI,CAEnE"}

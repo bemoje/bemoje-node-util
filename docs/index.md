@@ -4,98 +4,113 @@
 
 ## Table of contents
 
-### Namespaces
-
-- [regexLibrary](/docs/modules/regexLibrary.md)
-
 ### Classes
 
-- [Attr](/docs/classes/Attr.md)
-- [Base](/docs/classes/Base.md)
-- [BemojeRegex](/docs/classes/BemojeRegex.md)
-- [Doc](/docs/classes/Doc.md)
-- [Elem](/docs/classes/Elem.md)
+- [ApiReponseCache](/docs/classes/ApiReponseCache.md)
 - [ExtensibleFunction](/docs/classes/ExtensibleFunction.md)
 - [Matrix](/docs/classes/Matrix.md)
+- [MixinBase](/docs/classes/MixinBase.md)
+- [NumberFormatter](/docs/classes/NumberFormatter.md)
+- [OpenaiApiClient](/docs/classes/OpenaiApiClient.md)
+- [OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md)
+- [OpenaiTokenUsage](/docs/classes/OpenaiTokenUsage.md)
 - [Queue](/docs/classes/Queue.md)
 - [SimpleTable](/docs/classes/SimpleTable.md)
 - [SortedArray](/docs/classes/SortedArray.md)
 - [StringStream](/docs/classes/StringStream.md)
-- [Table](/docs/classes/Table.md)
-- [Timer](/docs/classes/Timer.md)
+- [TsDoc](/docs/classes/TsDoc.md)
+- [TsDocTag](/docs/classes/TsDocTag.md)
+- [log](/docs/classes/log.md)
 
 ### Interfaces
 
-- [IHandledOptions](/docs/interfaces/IHandledOptions.md)
-- [IMemoryUsageValues](/docs/interfaces/IMemoryUsageValues.md)
-- [IMemoryUsageValuesFormatted](/docs/interfaces/IMemoryUsageValuesFormatted.md)
-- [IRevivable](/docs/interfaces/IRevivable.md)
-- [IScopeNode](/docs/interfaces/IScopeNode.md)
+- [IApiClientApiDefaultsOptions](/docs/interfaces/IApiClientApiDefaultsOptions.md)
+- [IApiClientOptions](/docs/interfaces/IApiClientOptions.md)
+- [IApiResponseCacheOptions](/docs/interfaces/IApiResponseCacheOptions.md)
+- [IChatRequestOptions](/docs/interfaces/IChatRequestOptions.md)
+- [ICompletionRequestOptions](/docs/interfaces/ICompletionRequestOptions.md)
+- [IEditRequestOptions](/docs/interfaces/IEditRequestOptions.md)
+- [IEnsureValidWindowsPathOptions](/docs/interfaces/IEnsureValidWindowsPathOptions.md)
+- [IExtractedTsDocComment](/docs/interfaces/IExtractedTsDocComment.md)
+- [IResponseCacheOptions](/docs/interfaces/IResponseCacheOptions.md)
+- [ISimpleTableSerializedForm](/docs/interfaces/ISimpleTableSerializedForm.md)
 - [ISortedArrayOptions](/docs/interfaces/ISortedArrayOptions.md)
-- [ITableOptions](/docs/interfaces/ITableOptions.md)
+- [ITsExtractImportsResult](/docs/interfaces/ITsExtractImportsResult.md)
+- [ITsParseClassResult](/docs/interfaces/ITsParseClassResult.md)
+- [ITsParseFunctionResult](/docs/interfaces/ITsParseFunctionResult.md)
+- [TsDocOptions](/docs/interfaces/TsDocOptions.md)
 
 ### Type Aliases
 
-- [BemojeRegexOptions](/docs/index.md#bemojeregexoptions)
+- [ArrayPredicate](/docs/index.md#arraypredicate)
+- [ArrayValueCallback](/docs/index.md#arrayvaluecallback)
+- [ArrayVoidCallback](/docs/index.md#arrayvoidcallback)
 - [Bit](/docs/index.md#bit)
 - [BitArray](/docs/index.md#bitarray)
 - [ByteArray](/docs/index.md#bytearray)
 - [ByteInt](/docs/index.md#byteint)
-- [Callback](/docs/index.md#callback)
 - [Comparator](/docs/index.md#comparator)
 - [Constructor](/docs/index.md#constructor)
 - [ConstructorOf](/docs/index.md#constructorof)
 - [DefinedPrimitive](/docs/index.md#definedprimitive)
-- [ElemConstructorArgs](/docs/index.md#elemconstructorargs)
-- [ExistentValue](/docs/index.md#existentvalue)
-- [GenericArgs](/docs/index.md#genericargs)
 - [GenericFunction](/docs/index.md#genericfunction)
-- [MapIterator](/docs/index.md#mapiterator)
+- [MemoryUsageResult](/docs/index.md#memoryusageresult)
 - [NestedArray](/docs/index.md#nestedarray)
-- [Obj](/docs/index.md#obj)
+- [ObjectKey](/docs/index.md#objectkey)
+- [ParsedSocialSecurityNumberDK](/docs/index.md#parsedsocialsecuritynumberdk)
 - [PositiveIntegerLessThan](/docs/index.md#positiveintegerlessthan)
-- [Predicate](/docs/index.md#predicate)
 - [Primitive](/docs/index.md#primitive)
 - [RGB](/docs/index.md#rgb)
+- [RegexScopeTreeNode](/docs/index.md#regexscopetreenode)
 - [RexecYield](/docs/index.md#rexecyield)
-- [SimpleTableSerializedForm](/docs/index.md#simpletableserializedform)
-- [TPseudoClass](/docs/index.md#tpseudoclass)
-- [TableSerializedForm](/docs/index.md#tableserializedform)
-- [UndefinedPrimitive](/docs/index.md#undefinedprimitive)
-- [ensureValidWindowsPathOptions](/docs/index.md#ensurevalidwindowspathoptions)
+- [WalkImportsResult](/docs/index.md#walkimportsresult)
 
 ### Variables
 
-- [HTML\_ATTRIBUTES](/docs/index.md#html_attributes)
-- [HTML\_BOOLEAN\_ATTRIBUTES](/docs/index.md#html_boolean_attributes)
-- [HTML\_ELEMENTS](/docs/index.md#html_elements)
-- [HTML\_EVENT\_ATTRIBUTES](/docs/index.md#html_event_attributes)
-- [HTML\_GLOBAL\_ATTRIBUTES](/docs/index.md#html_global_attributes)
-- [HTML\_VOID\_ELEMENTS](/docs/index.md#html_void_elements)
-- [Mixins](/docs/index.md#mixins)
-- [attr](/docs/index.md#attr)
-- [el](/docs/index.md#el)
-- [interfaceDefinitions](/docs/index.md#interfacedefinitions)
-- [log](/docs/index.md#log)
-- [strHash](/docs/index.md#strhash)
+- [HtmlGenerator](/docs/index.md#htmlgenerator)
+- [MS\_IN\_DAY](/docs/index.md#ms_in_day)
+- [MS\_IN\_HOUR](/docs/index.md#ms_in_hour)
+- [MS\_IN\_MINUTE](/docs/index.md#ms_in_minute)
+- [MS\_IN\_MONTH](/docs/index.md#ms_in_month)
+- [MS\_IN\_SECOND](/docs/index.md#ms_in_second)
+- [MS\_IN\_WEEK](/docs/index.md#ms_in_week)
+- [MS\_IN\_YEAR](/docs/index.md#ms_in_year)
+- [regBlockCommentsWithIndent](/docs/index.md#regblockcommentswithindent)
+- [regFunctionsExports](/docs/index.md#regfunctionsexports)
+- [regHex](/docs/index.md#reghex)
+- [regHexPrefix](/docs/index.md#reghexprefix)
+- [regInteger](/docs/index.md#reginteger)
+- [regJestTests](/docs/index.md#regjesttests)
+- [regLocaleAlpha](/docs/index.md#reglocalealpha)
+- [regLocaleAlphaNumeric](/docs/index.md#reglocalealphanumeric)
+- [regNumberCommaSepDotDecimal](/docs/index.md#regnumbercommasepdotdecimal)
+- [regNumberDotSepCommaDecimal](/docs/index.md#regnumberdotsepcommadecimal)
+- [regNumberNoThousandSepCommaDecimal](/docs/index.md#regnumbernothousandsepcommadecimal)
+- [regNumberNoThousandSepDotDecimal](/docs/index.md#regnumbernothousandsepdotdecimal)
+- [regPowerOfTen](/docs/index.md#regpoweroften)
+- [regRepeatingWhiteSpace](/docs/index.md#regrepeatingwhitespace)
+- [regSocialSecurityNumbersDK](/docs/index.md#regsocialsecuritynumbersdk)
+- [regTsDocExampleCode](/docs/index.md#regtsdocexamplecode)
+- [regTsDocExampleLines](/docs/index.md#regtsdocexamplelines)
+- [regWords](/docs/index.md#regwords)
 
 ### Functions
 
 - [A1ToColRow](/docs/index.md#a1tocolrow)
-- [Indexed](/docs/index.md#indexed)
-- [IndexedGetClass](/docs/index.md#indexedgetclass)
-- [IndexedGetInstance](/docs/index.md#indexedgetinstance)
-- [Options](/docs/index.md#options)
-- [Revivable](/docs/index.md#revivable)
-- [Timestamped](/docs/index.md#timestamped)
-- [absolutCwdPathToRelative](/docs/index.md#absolutcwdpathtorelative)
-- [arr2dToCSV](/docs/index.md#arr2dtocsv)
+- [MixinIndexed](/docs/index.md#mixinindexed)
+- [MixinOptions](/docs/index.md#mixinoptions)
+- [MixinTimestamped](/docs/index.md#mixintimestamped)
+- [absoluteToRelativePath](/docs/index.md#absolutetorelativepath)
 - [arrAverage](/docs/index.md#arraverage)
+- [arrEachToString](/docs/index.md#arreachtostring)
 - [arrEvery](/docs/index.md#arrevery)
+- [arrFilterMutable](/docs/index.md#arrfiltermutable)
 - [arrFlatten](/docs/index.md#arrflatten)
 - [arrIndicesOf](/docs/index.md#arrindicesof)
 - [arrLast](/docs/index.md#arrlast)
 - [arrMapMutable](/docs/index.md#arrmapmutable)
+- [arrObjectsToTable](/docs/index.md#arrobjectstotable)
+- [arrObjectsUniqueKeys](/docs/index.md#arrobjectsuniquekeys)
 - [arrRemoveDuplicates](/docs/index.md#arrremoveduplicates)
 - [arrShallowEquals](/docs/index.md#arrshallowequals)
 - [arrShuffle](/docs/index.md#arrshuffle)
@@ -104,21 +119,33 @@
 - [arrSum](/docs/index.md#arrsum)
 - [arrSwap](/docs/index.md#arrswap)
 - [arrTableAssertRowsSameLength](/docs/index.md#arrtableassertrowssamelength)
+- [arrTableEachToString](/docs/index.md#arrtableeachtostring)
+- [arrTableToCSV](/docs/index.md#arrtabletocsv)
 - [arrTableToObjects](/docs/index.md#arrtabletoobjects)
+- [assertInteger](/docs/index.md#assertinteger)
+- [assertNegativeInteger](/docs/index.md#assertnegativeinteger)
+- [assertPositiveInteger](/docs/index.md#assertpositiveinteger)
+- [assertPowerOfTen](/docs/index.md#assertpoweroften)
 - [assertValidDate](/docs/index.md#assertvaliddate)
 - [assertValidDateDay](/docs/index.md#assertvaliddateday)
 - [assertValidDateMonth](/docs/index.md#assertvaliddatemonth)
 - [assertValidDateYear](/docs/index.md#assertvaliddateyear)
-- [asyncParallel](/docs/index.md#asyncparallel)
-- [asyncSerial](/docs/index.md#asyncserial)
+- [assertValidNumber](/docs/index.md#assertvalidnumber)
+- [assertValidTsDocComment](/docs/index.md#assertvalidtsdoccomment)
+- [asyncTasksLimit](/docs/index.md#asynctaskslimit)
+- [asyncTasksParallel](/docs/index.md#asynctasksparallel)
+- [asyncTasksSerial](/docs/index.md#asynctasksserial)
 - [asyncWithTimeout](/docs/index.md#asyncwithtimeout)
 - [atob](/docs/index.md#atob)
 - [btoa](/docs/index.md#btoa)
 - [buildRegexBetween](/docs/index.md#buildregexbetween)
 - [bytesToInt](/docs/index.md#bytestoint)
+- [cleanDirectory](/docs/index.md#cleandirectory)
+- [cleanDirectorySafe](/docs/index.md#cleandirectorysafe)
+- [cleanDirectorySafeSync](/docs/index.md#cleandirectorysafesync)
+- [cleanDirectorySync](/docs/index.md#cleandirectorysync)
 - [colRowToA1](/docs/index.md#colrowtoa1)
 - [colToLetter](/docs/index.md#coltoletter)
-- [comment](/docs/index.md#comment)
 - [compareArray](/docs/index.md#comparearray)
 - [compareNumber](/docs/index.md#comparenumber)
 - [compareNumberDescending](/docs/index.md#comparenumberdescending)
@@ -126,80 +153,121 @@
 - [compareNumericDescending](/docs/index.md#comparenumericdescending)
 - [compareString](/docs/index.md#comparestring)
 - [compareStringDescending](/docs/index.md#comparestringdescending)
+- [createDirectory](/docs/index.md#createdirectory)
+- [createDirectorySync](/docs/index.md#createdirectorysync)
 - [createFileExtensionFilter](/docs/index.md#createfileextensionfilter)
-- [createPseudoClass](/docs/index.md#createpseudoclass)
+- [createObjectFactory](/docs/index.md#createobjectfactory)
 - [dateDaysAgo](/docs/index.md#datedaysago)
 - [daysSinceDate](/docs/index.md#dayssincedate)
+- [deleteDirectory](/docs/index.md#deletedirectory)
+- [deleteDirectorySafe](/docs/index.md#deletedirectorysafe)
+- [deleteDirectorySafeSync](/docs/index.md#deletedirectorysafesync)
+- [deleteDirectorySync](/docs/index.md#deletedirectorysync)
 - [ensureValidWindowsPath](/docs/index.md#ensurevalidwindowspath)
+- [executeCommand](/docs/index.md#executecommand)
+- [funParseClass](/docs/index.md#funparseclass)
+- [funParseFunction](/docs/index.md#funparsefunction)
 - [funSetName](/docs/index.md#funsetname)
 - [getCentury](/docs/index.md#getcentury)
 - [getConstructor](/docs/index.md#getconstructor)
 - [getCurrentYear](/docs/index.md#getcurrentyear)
 - [getPrototype](/docs/index.md#getprototype)
-- [htmlTableTo2dArray](/docs/index.md#htmltableto2darray)
+- [hoursSinceDate](/docs/index.md#hourssincedate)
 - [inheritStaticMembers](/docs/index.md#inheritstaticmembers)
 - [intToArrayBytes](/docs/index.md#inttoarraybytes)
 - [intToBuffer](/docs/index.md#inttobuffer)
 - [intToBytes](/docs/index.md#inttobytes)
+- [isBetween](/docs/index.md#isbetween)
 - [isConstructor](/docs/index.md#isconstructor)
 - [isEven](/docs/index.md#iseven)
+- [isGT](/docs/index.md#isgt)
+- [isGTE](/docs/index.md#isgte)
 - [isHex](/docs/index.md#ishex)
 - [isHexOrUnicode](/docs/index.md#ishexorunicode)
+- [isInRange](/docs/index.md#isinrange)
+- [isInteger](/docs/index.md#isinteger)
 - [isIterable](/docs/index.md#isiterable)
+- [isLT](/docs/index.md#islt)
+- [isLTE](/docs/index.md#islte)
 - [isLeapYear](/docs/index.md#isleapyear)
+- [isMultiTsDocTag](/docs/index.md#ismultitsdoctag)
+- [isNamedMultiTsDocTag](/docs/index.md#isnamedmultitsdoctag)
+- [isNamedTsDocTag](/docs/index.md#isnamedtsdoctag)
+- [isNegativeInteger](/docs/index.md#isnegativeinteger)
 - [isNumericString](/docs/index.md#isnumericstring)
 - [isObject](/docs/index.md#isobject)
 - [isOdd](/docs/index.md#isodd)
+- [isPositiveInteger](/docs/index.md#ispositiveinteger)
+- [isPowerOfTen](/docs/index.md#ispoweroften)
 - [isPrototype](/docs/index.md#isprototype)
 - [isSocialSecurityNumberDK](/docs/index.md#issocialsecuritynumberdk)
 - [isValidDate](/docs/index.md#isvaliddate)
 - [isValidDateDay](/docs/index.md#isvaliddateday)
 - [isValidDateMonth](/docs/index.md#isvaliddatemonth)
 - [isValidDateYear](/docs/index.md#isvaliddateyear)
+- [isValidNumber](/docs/index.md#isvalidnumber)
+- [isValidTsDocComment](/docs/index.md#isvalidtsdoccomment)
 - [isoDateTimestamp](/docs/index.md#isodatetimestamp)
 - [isoDateTimestampForFilename](/docs/index.md#isodatetimestampforfilename)
+- [iterableFirstElement](/docs/index.md#iterablefirstelement)
 - [iteratePrototypeChain](/docs/index.md#iterateprototypechain)
 - [letterToCol](/docs/index.md#lettertocol)
-- [mapGetOrDefault](/docs/index.md#mapgetordefault)
 - [mapGetOrElse](/docs/index.md#mapgetorelse)
+- [mapReverse](/docs/index.md#mapreverse)
 - [mapUpdate](/docs/index.md#mapupdate)
-- [mapUpdateDefault](/docs/index.md#mapupdatedefault)
+- [markdownWrapCodeBlock](/docs/index.md#markdownwrapcodeblock)
 - [memoryUsage](/docs/index.md#memoryusage)
-- [memoryUsageDkFormat](/docs/index.md#memoryusagedkformat)
-- [memoryUsageUsFormat](/docs/index.md#memoryusageusformat)
+- [minutesSinceDate](/docs/index.md#minutessincedate)
+- [monthsSinceDate](/docs/index.md#monthssincedate)
+- [msSinceDate](/docs/index.md#mssincedate)
 - [normalizeFileExtension](/docs/index.md#normalizefileextension)
 - [normalizeLineLengths](/docs/index.md#normalizelinelengths)
-- [numApproximateLog10](/docs/index.md#numapproximatelog10)
 - [numDaysInMonth](/docs/index.md#numdaysinmonth)
-- [numFormat](/docs/index.md#numformat)
-- [numFormatDK](/docs/index.md#numformatdk)
-- [numFormatUS](/docs/index.md#numformatus)
-- [numIsBetween](/docs/index.md#numisbetween)
-- [numIsBetweenExclusive](/docs/index.md#numisbetweenexclusive)
-- [numParseFormatted](/docs/index.md#numparseformatted)
-- [numParseFormattedDK](/docs/index.md#numparseformatteddk)
-- [oEntriesArray](/docs/index.md#oentriesarray)
-- [oKeysArray](/docs/index.md#okeysarray)
-- [oValuesArray](/docs/index.md#ovaluesarray)
+- [numRange](/docs/index.md#numrange)
+- [objAssignDeep](/docs/index.md#objassigndeep)
 - [objDeepFreeze](/docs/index.md#objdeepfreeze)
+- [objDelete](/docs/index.md#objdelete)
+- [objDeleteKeys](/docs/index.md#objdeletekeys)
+- [objDeleteKeysMutable](/docs/index.md#objdeletekeysmutable)
+- [objEntries](/docs/index.md#objentries)
+- [objEntriesArray](/docs/index.md#objentriesarray)
 - [objFilter](/docs/index.md#objfilter)
 - [objForEach](/docs/index.md#objforeach)
+- [objGet](/docs/index.md#objget)
+- [objGetOrElse](/docs/index.md#objgetorelse)
+- [objHas](/docs/index.md#objhas)
 - [objIsEmpty](/docs/index.md#objisempty)
+- [objKeys](/docs/index.md#objkeys)
+- [objKeysArray](/docs/index.md#objkeysarray)
 - [objMap](/docs/index.md#objmap)
 - [objMapKeys](/docs/index.md#objmapkeys)
 - [objMapMutable](/docs/index.md#objmapmutable)
+- [objPropertyValueToGetter](/docs/index.md#objpropertyvaluetogetter)
 - [objReduce](/docs/index.md#objreduce)
+- [objReverse](/docs/index.md#objreverse)
+- [objSet](/docs/index.md#objset)
+- [objSize](/docs/index.md#objsize)
+- [objSortKeys](/docs/index.md#objsortkeys)
+- [objToMap](/docs/index.md#objtomap)
+- [objUpdate](/docs/index.md#objupdate)
+- [objValues](/docs/index.md#objvalues)
+- [objValuesArray](/docs/index.md#objvaluesarray)
+- [objWalk](/docs/index.md#objwalk)
 - [padArrayBytesLeft](/docs/index.md#padarraybytesleft)
 - [padArrayBytesRight](/docs/index.md#padarraybytesright)
+- [parseMarkdownCodeBlock](/docs/index.md#parsemarkdowncodeblock)
 - [parseMarkdownTable](/docs/index.md#parsemarkdowntable)
 - [parseSocialSecurityNumberDK](/docs/index.md#parsesocialsecuritynumberdk)
-- [pathFromCwd](/docs/index.md#pathfromcwd)
-- [pdfReadPages](/docs/index.md#pdfreadpages)
+- [pdfGetPages](/docs/index.md#pdfgetpages)
+- [pdfIteratePages](/docs/index.md#pdfiteratepages)
 - [pdfSplitPages](/docs/index.md#pdfsplitpages)
 - [randomIntBetween](/docs/index.md#randomintbetween)
 - [readExcelFile](/docs/index.md#readexcelfile)
 - [readExcelFileWorksheet](/docs/index.md#readexcelfileworksheet)
 - [readFileStringSync](/docs/index.md#readfilestringsync)
+- [readJsonFile](/docs/index.md#readjsonfile)
+- [readJsonFileSync](/docs/index.md#readjsonfilesync)
+- [regexClone](/docs/index.md#regexclone)
 - [regexEscapeString](/docs/index.md#regexescapestring)
 - [regexFixFlags](/docs/index.md#regexfixflags)
 - [regexGetGroupNames](/docs/index.md#regexgetgroupnames)
@@ -208,9 +276,14 @@
 - [regexScopeTree](/docs/index.md#regexscopetree)
 - [regexValidFlags](/docs/index.md#regexvalidflags)
 - [rexec](/docs/index.md#rexec)
+- [rexecFirstMatch](/docs/index.md#rexecfirstmatch)
 - [round](/docs/index.md#round)
 - [roundDown](/docs/index.md#rounddown)
+- [roundToNearest](/docs/index.md#roundtonearest)
+- [roundToNearestPow10](/docs/index.md#roundtonearestpow10)
 - [roundUp](/docs/index.md#roundup)
+- [roundWith](/docs/index.md#roundwith)
+- [secondsSinceDate](/docs/index.md#secondssincedate)
 - [setDifference](/docs/index.md#setdifference)
 - [setEnumerable](/docs/index.md#setenumerable)
 - [setIntersection](/docs/index.md#setintersection)
@@ -218,23 +291,29 @@
 - [setNonConfigurable](/docs/index.md#setnonconfigurable)
 - [setNonEnumerable](/docs/index.md#setnonenumerable)
 - [setNonEnumerablePrivateProperties](/docs/index.md#setnonenumerableprivateproperties)
+- [setNonEnumerableSafe](/docs/index.md#setnonenumerablesafe)
 - [setNonWritable](/docs/index.md#setnonwritable)
 - [setSymmetricDifference](/docs/index.md#setsymmetricdifference)
 - [setUnion](/docs/index.md#setunion)
-- [setValueAsGetter](/docs/index.md#setvalueasgetter)
 - [setWritable](/docs/index.md#setwritable)
 - [strCountCharOccurances](/docs/index.md#strcountcharoccurances)
 - [strCountChars](/docs/index.md#strcountchars)
+- [strCountWords](/docs/index.md#strcountwords)
+- [strEnsureEndsWith](/docs/index.md#strensureendswith)
 - [strFirstCharToUpperCase](/docs/index.md#strfirstchartouppercase)
+- [strHashToBuffer](/docs/index.md#strhashtobuffer)
+- [strHashToString](/docs/index.md#strhashtostring)
+- [strHashToUint32Array](/docs/index.md#strhashtouint32array)
 - [strIsLowerCase](/docs/index.md#strislowercase)
 - [strIsMultiLine](/docs/index.md#strismultiline)
 - [strIsUpperCase](/docs/index.md#strisuppercase)
-- [strLinesRemoveEmpty](/docs/index.md#strlinesremoveempty)
-- [strLinesTrimLeft](/docs/index.md#strlinestrimleft)
-- [strLinesTrimRight](/docs/index.md#strlinestrimright)
+- [strNoConsecutiveEmptyLines](/docs/index.md#strnoconsecutiveemptylines)
+- [strNoConsecutiveWhitespace](/docs/index.md#strnoconsecutivewhitespace)
 - [strParseBoolean](/docs/index.md#strparseboolean)
-- [strPrettifyMinifiedCode](/docs/index.md#strprettifyminifiedcode)
+- [strPrependLines](/docs/index.md#strprependlines)
 - [strRemoveDuplicateChars](/docs/index.md#strremoveduplicatechars)
+- [strRemoveEmptyLines](/docs/index.md#strremoveemptylines)
+- [strRemoveFirstAndLastLine](/docs/index.md#strremovefirstandlastline)
 - [strRemoveNewLines](/docs/index.md#strremovenewlines)
 - [strRepeat](/docs/index.md#strrepeat)
 - [strReplaceAll](/docs/index.md#strreplaceall)
@@ -244,7 +323,11 @@
 - [strToCharCodes](/docs/index.md#strtocharcodes)
 - [strToCharSet](/docs/index.md#strtocharset)
 - [strToSentences](/docs/index.md#strtosentences)
+- [strToSortedCharSet](/docs/index.md#strtosortedcharset)
 - [strToWords](/docs/index.md#strtowords)
+- [strTrimLines](/docs/index.md#strtrimlines)
+- [strTrimLinesLeft](/docs/index.md#strtrimlinesleft)
+- [strTrimLinesRight](/docs/index.md#strtrimlinesright)
 - [strUnwrap](/docs/index.md#strunwrap)
 - [strWrapBetween](/docs/index.md#strwrapbetween)
 - [strWrapIn](/docs/index.md#strwrapin)
@@ -255,72 +338,123 @@
 - [strWrapInParenthesis](/docs/index.md#strwrapinparenthesis)
 - [strWrapInSingleQuotes](/docs/index.md#strwrapinsinglequotes)
 - [streamToString](/docs/index.md#streamtostring)
-- [tableFrom](/docs/index.md#tablefrom)
+- [toJson](/docs/index.md#tojson)
 - [trimArrayBytesLeft](/docs/index.md#trimarraybytesleft)
 - [trimArrayBytesRight](/docs/index.md#trimarraybytesright)
+- [tsCountExports](/docs/index.md#tscountexports)
+- [tsDocExtractAllComments](/docs/index.md#tsdocextractallcomments)
+- [tsDocExtractExample](/docs/index.md#tsdocextractexample)
+- [tsDocExtractFirstComment](/docs/index.md#tsdocextractfirstcomment)
+- [tsDocFixSpacingBeforeAfter](/docs/index.md#tsdocfixspacingbeforeafter)
+- [tsDocNormalizeTagName](/docs/index.md#tsdocnormalizetagname)
+- [tsDocRemoveEmptyLines](/docs/index.md#tsdocremoveemptylines)
+- [tsDocStripAllTagsExcepThrowsParamDescription](/docs/index.md#tsdocstripalltagsexcepthrowsparamdescription)
+- [tsDocStripExample](/docs/index.md#tsdocstripexample)
+- [tsDocStripTypes](/docs/index.md#tsdocstriptypes)
+- [tsDocUnwrapComment](/docs/index.md#tsdocunwrapcomment)
+- [tsDocWrapAsComment](/docs/index.md#tsdocwrapascomment)
+- [tsDocWrapExample](/docs/index.md#tsdocwrapexample)
+- [tsExtractImports](/docs/index.md#tsextractimports)
+- [tsExtractJestTests](/docs/index.md#tsextractjesttests)
+- [tsGetClassMemberAccessModifiers](/docs/index.md#tsgetclassmemberaccessmodifiers)
+- [tsHasDefaultExport](/docs/index.md#tshasdefaultexport)
+- [tsJestConvertExportNameString](/docs/index.md#tsjestconvertexportnamestring)
+- [tsJestFixLineSpacing](/docs/index.md#tsjestfixlinespacing)
+- [tsSimpleMinifyCode](/docs/index.md#tssimpleminifycode)
+- [tsStripBlockComments](/docs/index.md#tsstripblockcomments)
+- [tsStripComments](/docs/index.md#tsstripcomments)
+- [tsStripDeclSourceMapComments](/docs/index.md#tsstripdeclsourcemapcomments)
+- [tsStripExportKeyword](/docs/index.md#tsstripexportkeyword)
+- [tsStripFullSlashCommentLines](/docs/index.md#tsstripfullslashcommentlines)
+- [tsStripImports](/docs/index.md#tsstripimports)
+- [tsWalkImports](/docs/index.md#tswalkimports)
+- [weeksSinceDate](/docs/index.md#weekssincedate)
+- [writeExcelFile](/docs/index.md#writeexcelfile)
+- [writeJsonFile](/docs/index.md#writejsonfile)
+- [writeJsonFileSync](/docs/index.md#writejsonfilesync)
+- [yearsSinceDate](/docs/index.md#yearssincedate)
 
 ## Type Aliases
 
-### BemojeRegexOptions
+### ArrayPredicate
 
-Ƭ **BemojeRegexOptions**: `Object`
+Ƭ **ArrayPredicate**<`T`\>: (`value`: `T`, `index`: `number`, `array`: `T`[]) => `boolean`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Type declaration
 
+▸ (`value`, `index`, `array`): `boolean`
+
+Type definition for a predicate function that operates on arrays.
+
+**`Remarks`**
+
+This type is useful when you want to create a function that can be used with methods like `Array.prototype.filter`.
+
+**`Typeparam`**
+
+T - The type of elements in the array.
+
+##### Parameters
+
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `escapeSourceString?` | `boolean` | Whether to insert escape characters into the source string. |
-| `fixFlags?` | `boolean` | Whether to repair the flags string if it is not valid. |
+| `value` | `T` | The current element being processed in the array. |
+| `index` | `number` | The index of the current element being processed in the array. |
+| `array` | `T`[] | The array `ArrayPredicate` was called upon. |
+
+##### Returns
+
+`boolean`
+
+A boolean indicating whether the current element passes the test.
 
 #### Defined in
 
-[src/libs/regex/src/BemojeRegex.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/BemojeRegex.ts#L11)
+src/types/ArrayPredicate.ts:10
 
 ___
 
-### Bit
+### ArrayValueCallback
 
-Ƭ **Bit**: ``0`` \| ``1``
+Ƭ **ArrayValueCallback**<`T`\>: (`value`: `T`, `index`: `number`, `array`: `T`[]) => `T`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+▸ (`value`, `index`, `array`): `T`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `index` | `number` |
+| `array` | `T`[] |
+
+##### Returns
+
+`T`
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:21](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L21)
+src/types/ArrayValueCallback.ts:1
 
 ___
 
-### BitArray
+### ArrayVoidCallback
 
-Ƭ **BitArray**: [`Bit`](/docs/index.md#bit)[]
-
-#### Defined in
-
-[src/libs/interfaces/index.ts:22](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L22)
-
-___
-
-### ByteArray
-
-Ƭ **ByteArray**: [`ByteInt`](/docs/index.md#byteint)[]
-
-#### Defined in
-
-[src/libs/interfaces/index.ts:25](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L25)
-
-___
-
-### ByteInt
-
-Ƭ **ByteInt**: [`PositiveIntegerLessThan`](/docs/index.md#positiveintegerlessthan)<``256``\>
-
-#### Defined in
-
-[src/libs/interfaces/index.ts:24](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L24)
-
-___
-
-### Callback
-
-Ƭ **Callback**<`T`\>: (`value`: `T`, `index`: `number`, `array`: `T`[]) => `void`
+Ƭ **ArrayVoidCallback**<`T`\>: (`value`: `T`, `index`: `number`, `array`: `T`[]) => `void`
 
 #### Type parameters
 
@@ -346,7 +480,47 @@ ___
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L9)
+src/types/ArrayVoidCallback.ts:1
+
+___
+
+### Bit
+
+Ƭ **Bit**: ``0`` \| ``1``
+
+#### Defined in
+
+src/types/Bit.ts:1
+
+___
+
+### BitArray
+
+Ƭ **BitArray**: [`Bit`](/docs/index.md#bit)[]
+
+#### Defined in
+
+src/types/BitArray.ts:3
+
+___
+
+### ByteArray
+
+Ƭ **ByteArray**: [`ByteInt`](/docs/index.md#byteint)[]
+
+#### Defined in
+
+src/types/ByteArray.ts:3
+
+___
+
+### ByteInt
+
+Ƭ **ByteInt**: [`PositiveIntegerLessThan`](/docs/index.md#positiveintegerlessthan)<``256``\>
+
+#### Defined in
+
+src/types/ByteInt.ts:3
 
 ___
 
@@ -371,33 +545,35 @@ ___
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:12](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L12)
+src/types/Comparator.ts:1
 
 ___
 
 ### Constructor
 
-Ƭ **Constructor**<`T`\>: (...`args`: [`GenericArgs`](/docs/index.md#genericargs)) => `T`
+Ƭ **Constructor**<`T`\>: (...`args`: `any`[]) => `T`
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `Record`<`string`, `any`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | `Record`<`string`, `any`\> | The type of the object that the constructor will create. Defaults to a record with string keys and any type values. |
 
 #### Type declaration
 
 • (`...args`)
 
+This type represents a constructor function. It is a function that can be called with the `new` keyword to create an instance of a certain type.
+
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `...args` | [`GenericArgs`](/docs/index.md#genericargs) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `...args` | `any`[] | The arguments to pass to the constructor function. |
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:15](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L15)
+src/types/Constructor.ts:7
 
 ___
 
@@ -427,7 +603,7 @@ ___
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:16](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L16)
+src/types/ConstructorOf.ts:1
 
 ___
 
@@ -437,43 +613,13 @@ ___
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L4)
-
-___
-
-### ElemConstructorArgs
-
-Ƭ **ElemConstructorArgs**: [`Attr`](/docs/classes/Attr.md)[] \| [`Attr`](/docs/classes/Attr.md) \| [`Elem`](/docs/classes/Elem.md) \| [`Elem`](/docs/classes/Elem.md)[] \| `string` \| `string`[]
-
-#### Defined in
-
-[src/libs/html/src/HtmlGenerate.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L8)
-
-___
-
-### ExistentValue
-
-Ƭ **ExistentValue**: [`DefinedPrimitive`](/docs/index.md#definedprimitive) \| [`Obj`](/docs/index.md#obj)
-
-#### Defined in
-
-[src/libs/interfaces/index.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L7)
-
-___
-
-### GenericArgs
-
-Ƭ **GenericArgs**: `any`[]
-
-#### Defined in
-
-[src/libs/interfaces/index.ts:3](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L3)
+src/types/DefinedPrimitive.ts:1
 
 ___
 
 ### GenericFunction
 
-Ƭ **GenericFunction**: (...`args`: [`GenericArgs`](/docs/index.md#genericargs)) => `any`
+Ƭ **GenericFunction**: (...`args`: `any`[]) => `any`
 
 #### Type declaration
 
@@ -483,7 +629,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `...args` | [`GenericArgs`](/docs/index.md#genericargs) |
+| `...args` | `any`[] |
 
 ##### Returns
 
@@ -491,39 +637,26 @@ ___
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L8)
+src/types/GenericFunction.ts:1
 
 ___
 
-### MapIterator
+### MemoryUsageResult
 
-Ƭ **MapIterator**<`T`\>: (`value`: `T`, `index`: `number`, `array`: `T`[]) => `T`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
+Ƭ **MemoryUsageResult**: `Object`
 
 #### Type declaration
 
-▸ (`value`, `index`, `array`): `T`
-
-##### Parameters
-
 | Name | Type |
 | :------ | :------ |
-| `value` | `T` |
-| `index` | `number` |
-| `array` | `T`[] |
-
-##### Returns
-
-`T`
+| `extenalV8` | `number` |
+| `heapAllocationMB` | `number` |
+| `heapUsedMB` | `number` |
+| `processAllocationMB` | `number` |
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:10](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L10)
+src/node/types/MemoryUsageResult.ts:1
 
 ___
 
@@ -539,23 +672,61 @@ ___
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L13)
+src/types/NestedArray.ts:1
 
 ___
 
-### Obj
+### ObjectKey
 
-Ƭ **Obj**: `Record`<`string`, `any`\>
+Ƭ **ObjectKey**: `string` \| `number` \| `symbol`
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:2](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L2)
+src/types/ObjectKey.ts:1
+
+___
+
+### ParsedSocialSecurityNumberDK
+
+Ƭ **ParsedSocialSecurityNumberDK**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `day` | `number` |
+| `id` | `number` |
+| `month` | `number` |
+| `sex` | ``"F"`` \| ``"M"`` |
+| `year` | `number` |
+
+#### Defined in
+
+src/validation/types/ParsedSocialSecurityNumberDK.ts:1
 
 ___
 
 ### PositiveIntegerLessThan
 
 Ƭ **PositiveIntegerLessThan**<`L`, `T`, `Z`\>: `T` extends { `length`: `L`  } ? `Z` : [`PositiveIntegerLessThan`](/docs/index.md#positiveintegerlessthan)<`L`, [...T, `any`], `Z` \| `T` extends { `length`: infer L  } ? `L` : `never`\>
+
+Type that represents a positive integer less than a specified number.
+
+**`Typeparam`**
+
+L - The upper limit for the integer. Must be a number.
+
+**`Typeparam`**
+
+T - An array type used for internal recursion. Defaults to an empty array.
+
+**`Typeparam`**
+
+Z - A type used for internal recursion. Defaults to 0.
+
+**`Remarks`**
+
+This type uses TypeScript's conditional types and recursive types to calculate the type. It starts with an empty array and keeps adding elements until the length of the array is equal to L. At each step, it checks if the length of the array is less than L. If it is, it continues the recursion. If it's not, it returns the length of the array as the type.
 
 #### Type parameters
 
@@ -567,49 +738,17 @@ ___
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:29](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L29)
-
-___
-
-### Predicate
-
-Ƭ **Predicate**<`T`\>: (`value`: `T`, `index`: `number`, `array`: `T`[]) => `boolean`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-▸ (`value`, `index`, `array`): `boolean`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
-| `index` | `number` |
-| `array` | `T`[] |
-
-##### Returns
-
-`boolean`
-
-#### Defined in
-
-[src/libs/interfaces/index.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L11)
+src/types/PositiveIntegerLessThan.ts:10
 
 ___
 
 ### Primitive
 
-Ƭ **Primitive**: [`DefinedPrimitive`](/docs/index.md#definedprimitive) \| [`UndefinedPrimitive`](/docs/index.md#undefinedprimitive)
+Ƭ **Primitive**: ``null`` \| `undefined` \| `bigint` \| `boolean` \| `number` \| `string` \| `symbol`
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L6)
+src/types/Primitive.ts:1
 
 ___
 
@@ -619,7 +758,28 @@ ___
 
 #### Defined in
 
-[src/libs/interfaces/index.ts:27](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L27)
+src/types/RGB.ts:3
+
+___
+
+### RegexScopeTreeNode
+
+Ƭ **RegexScopeTreeNode**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `between` | [`RexecYield`](/docs/index.md#rexecyield) |
+| `children` | [`RegexScopeTreeNode`](/docs/index.md#regexscopetreenode)[] |
+| `depth` | `number` |
+| `left` | [`RexecYield`](/docs/index.md#rexecyield) |
+| `parent` | [`RegexScopeTreeNode`](/docs/index.md#regexscopetreenode) \| ``null`` |
+| `right` | [`RexecYield`](/docs/index.md#rexecyield) |
+
+#### Defined in
+
+src/regex/types/RegexScopeTreeNode.ts:3
 
 ___
 
@@ -638,269 +798,346 @@ ___
 
 #### Defined in
 
-[src/libs/regex/src/rexec.ts:1](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/rexec.ts#L1)
+src/regex/types/RexecYield.ts:1
 
 ___
 
-### SimpleTableSerializedForm
+### WalkImportsResult
 
-Ƭ **SimpleTableSerializedForm**<`T`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `data` | `T`[][] |
-| `headers` | `string`[] |
+Ƭ **WalkImportsResult**: `Map`<`string`, { `depth`: `number` ; `error?`: `unknown` ; `match`: `string` ; `source?`: `string`  }\>
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L4)
-
-___
-
-### TPseudoClass
-
-Ƭ **TPseudoClass**<`T`\>: (`values?`: `T`[]) => `Record`<`string`, `T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-▸ (`values?`): `Record`<`string`, `T`\>
-
-**`Throws`**
-
-if values array is passed in the returned function and if the number of keys length is smaller than the length of the passed values array.
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `values?` | `T`[] |
-
-##### Returns
-
-`Record`<`string`, `T`\>
-
-#### Defined in
-
-src/libs/object/src/createPseudoClass.ts:4
-
-___
-
-### TableSerializedForm
-
-Ƭ **TableSerializedForm**<`T`\>: `Object`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `columnHeaders` | `string`[] |
-| `data` | `T`[][] |
-| `rowHeaders` | `string`[] |
-
-#### Defined in
-
-[src/libs/datastructures/src/Table.ts:59](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/Table.ts#L59)
-
-___
-
-### UndefinedPrimitive
-
-Ƭ **UndefinedPrimitive**: ``null`` \| `undefined`
-
-#### Defined in
-
-[src/libs/interfaces/index.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/interfaces/index.ts#L5)
-
-___
-
-### ensureValidWindowsPathOptions
-
-Ƭ **ensureValidWindowsPathOptions**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `assert?` | `boolean` |
-| `extendedMaxLength?` | `boolean` |
-
-#### Defined in
-
-[src/libs/node/src/ensureValidWindowsPath.ts:3](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/ensureValidWindowsPath.ts#L3)
+src/tscode/types/WalkImportsResult.ts:1
 
 ## Variables
 
-### HTML\_ATTRIBUTES
+### HtmlGenerator
 
-• `Const` **HTML\_ATTRIBUTES**: `Set`<`string`\>
-
-#### Defined in
-
-[src/libs/html/src/html-meta-data.ts:17](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/html-meta-data.ts#L17)
-
-___
-
-### HTML\_BOOLEAN\_ATTRIBUTES
-
-• `Const` **HTML\_BOOLEAN\_ATTRIBUTES**: `Set`<`string`\>
-
-#### Defined in
-
-[src/libs/html/src/html-meta-data.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/html-meta-data.ts#L5)
-
-___
-
-### HTML\_ELEMENTS
-
-• `Const` **HTML\_ELEMENTS**: `Set`<`string`\>
-
-#### Defined in
-
-[src/libs/html/src/html-meta-data.ts:28](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/html-meta-data.ts#L28)
-
-___
-
-### HTML\_EVENT\_ATTRIBUTES
-
-• `Const` **HTML\_EVENT\_ATTRIBUTES**: `Set`<`string`\>
-
-#### Defined in
-
-[src/libs/html/src/html-meta-data.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/html-meta-data.ts#L9)
-
-___
-
-### HTML\_GLOBAL\_ATTRIBUTES
-
-• `Const` **HTML\_GLOBAL\_ATTRIBUTES**: `Set`<`string`\>
-
-#### Defined in
-
-[src/libs/html/src/html-meta-data.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/html-meta-data.ts#L13)
-
-___
-
-### HTML\_VOID\_ELEMENTS
-
-• `Const` **HTML\_VOID\_ELEMENTS**: `Set`<`string`\>
-
-#### Defined in
-
-[src/libs/html/src/html-meta-data.ts:24](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/html-meta-data.ts#L24)
-
-___
-
-### Mixins
-
-• `Const` **Mixins**: `Object`
+• `Const` **HtmlGenerator**: `Object`
 
 #### Type declaration
 
 | Name | Type |
 | :------ | :------ |
-| `Base` | typeof [`Base`](/docs/classes/Base.md) |
-| `Indexed` | <TBase\>(`BaseConstructor`: `TBase`) => [`Constructor`](/docs/index.md#constructor) |
-| `IndexedGetClass` | (`classIndex`: `number`) => [`Constructor`](/docs/index.md#constructor) |
-| `IndexedGetInstance` | (`classIndex`: `number`, `instanceIndex`: `number`) => [`Base`](/docs/classes/Base.md) |
-| `Options` | <TBase\>(`BaseConstructor`: `TBase`) => [`Constructor`](/docs/index.md#constructor) |
-| `Timestamped` | <TBase\>(`BaseConstructor`: `TBase`) => [`Constructor`](/docs/index.md#constructor) |
+| `Attr` | typeof `Attr` |
+| `Doc` | typeof `Doc` |
+| `Elem` | typeof `Elem` |
+| `attr` | `Record`<`string`, (`value?`: `string` \| `number` \| `boolean`) => `Attr`\> |
+| `comment` | <T\>(`comment`: `T`) => `string` |
+| `el` | `Record`<`string`, (...`args`: `ElemConstructorArgs`[]) => `Elem`\> |
+| `tableFrom` | (`rows`: `string`[][], `hasHeaderRow`: `boolean`) => `Elem` |
 
 #### Defined in
 
-[src/libs/mixins/index.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/index.ts#L7)
+src/html/HtmlGenerator.ts:151
 
 ___
 
-### attr
+### MS\_IN\_DAY
 
-• `Const` **attr**: `Record`<`string`, (`value?`: `string` \| `number` \| `boolean`) => [`Attr`](/docs/classes/Attr.md)\> = `{}`
+• `Const` **MS\_IN\_DAY**: `number`
+
+The number of milliseconds in a day.
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L11)
+src/date/constants/MS_IN_DAY.ts:4
 
 ___
 
-### el
+### MS\_IN\_HOUR
 
-• `Const` **el**: `Record`<`string`, (...`args`: [`ElemConstructorArgs`](/docs/index.md#elemconstructorargs)[]) => [`Elem`](/docs/classes/Elem.md)\> = `{}`
+• `Const` **MS\_IN\_HOUR**: `number`
+
+The number of milliseconds in an hour.
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:10](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L10)
+src/date/constants/MS_IN_HOUR.ts:4
 
 ___
 
-### interfaceDefinitions
+### MS\_IN\_MINUTE
 
-• `Const` **interfaceDefinitions**: `Map`<`string`, [`string`[], `string`[]]\>
+• `Const` **MS\_IN\_MINUTE**: `number`
+
+The number of milliseconds in a minute.
 
 #### Defined in
 
-[src/libs/mixins/src/interfaces.ts:2](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/interfaces.ts#L2)
+src/date/constants/MS_IN_MINUTE.ts:4
 
 ___
 
-### log
+### MS\_IN\_MONTH
 
-• `Const` **log**: `Object`
+• `Const` **MS\_IN\_MONTH**: `number`
 
-Depending configured environment variables, these functions will log to console, file and EventEmitter.
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `error` | <T\>(`message`: `T`) => `T` |
-| `info` | <T\>(`message`: `T`, `depth?`: `number`) => `T` |
-| `task` | <T\>(`description`: `string`, `task`: () => `Promise`<`T`\>) => `Promise`<`T`\> |
-| `taskSync` | <T\>(`description`: `string`, `task`: () => `T`) => `T` |
-| `warn` | <T\>(`message`: `T`) => `T` |
+The number of milliseconds in a month.
 
 #### Defined in
 
-[src/libs/node/src/log.ts:31](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/log.ts#L31)
+src/date/constants/MS_IN_MONTH.ts:4
 
 ___
 
-### strHash
+### MS\_IN\_SECOND
 
-• `Const` **strHash**: `Object`
+• `Const` **MS\_IN\_SECOND**: ``1000``
 
-String hashing
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `listAlgorithms` | () => `string`[] |
-| `toBuffer` | (`string`: `string`, `algorithm`: `string`) => `Buffer` |
-| `toString` | (`string`: `string`, `algorithm`: `string`, `encoding`: `Encoding`) => `string` |
-| `toUint32Array` | (`string`: `string`, `algorithm`: `string`) => `Uint32Array` |
+The number of milliseconds in a second.
 
 #### Defined in
 
-[src/libs/string/src/strHash.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strHash.ts#L6)
+src/date/constants/MS_IN_SECOND.ts:4
+
+___
+
+### MS\_IN\_WEEK
+
+• `Const` **MS\_IN\_WEEK**: `number`
+
+The number of milliseconds in a week.
+
+#### Defined in
+
+src/date/constants/MS_IN_WEEK.ts:4
+
+___
+
+### MS\_IN\_YEAR
+
+• `Const` **MS\_IN\_YEAR**: `number`
+
+The number of milliseconds in a year.
+
+#### Defined in
+
+src/date/constants/MS_IN_YEAR.ts:4
+
+___
+
+### regBlockCommentsWithIndent
+
+• `Const` **regBlockCommentsWithIndent**: `RegExp`
+
+Matches block comments including if they are indented.
+
+#### Defined in
+
+src/regexlib/regBlockCommentsWithIndent.ts:6
+
+___
+
+### regFunctionsExports
+
+• `Const` **regFunctionsExports**: `RegExp`
+
+Matches exported functions in TypeScript source code.
+
+#### Defined in
+
+src/regexlib/regFunctionsExports.ts:6
+
+___
+
+### regHex
+
+• `Const` **regHex**: `RegExp`
+
+Understands prefixes for hex colors, hex decimal and regexp unicode hex.
+
+#### Defined in
+
+src/regexlib/regHex.ts:4
+
+___
+
+### regHexPrefix
+
+• `Const` **regHexPrefix**: `RegExp`
+
+Prefixes for hex colors, hex decimal and regexp unicode hex
+
+#### Defined in
+
+src/regexlib/regHexPrefix.ts:4
+
+___
+
+### regInteger
+
+• `Const` **regInteger**: `RegExp`
+
+Matches positive or negative integers.
+Example: -20
+
+#### Defined in
+
+src/regexlib/regInteger.ts:5
+
+___
+
+### regJestTests
+
+• `Const` **regJestTests**: `RegExp`
+
+Matches root level Jest describe() tests.
+
+#### Defined in
+
+src/regexlib/regJestTests.ts:6
+
+___
+
+### regLocaleAlpha
+
+• `Const` **regLocaleAlpha**: `Map`<`string`, `RegExp`\>
+
+For checking if a string is of only alpha characters for a specific locale.
+
+#### Defined in
+
+src/regexlib/regLocaleAlpha.ts:4
+
+___
+
+### regLocaleAlphaNumeric
+
+• `Const` **regLocaleAlphaNumeric**: `Map`<`string`, `RegExp`\>
+
+For checking if a string is of only alpha-numeric characters for a specific locale.
+
+#### Defined in
+
+src/regexlib/regLocaleAlphaNumeric.ts:4
+
+___
+
+### regNumberCommaSepDotDecimal
+
+• `Const` **regNumberCommaSepDotDecimal**: `RegExp`
+
+Matches US format positive or negative decimal numbers with thousand separators.
+Example: -20,412.34
+
+#### Defined in
+
+src/regexlib/regNumberCommaSepDotDecimal.ts:5
+
+___
+
+### regNumberDotSepCommaDecimal
+
+• `Const` **regNumberDotSepCommaDecimal**: `RegExp`
+
+Matches inverted US format positive or negative decimal numbers with thousand separators.
+Example: -20.412,34
+
+#### Defined in
+
+src/regexlib/regNumberDotSepCommaDecimal.ts:5
+
+___
+
+### regNumberNoThousandSepCommaDecimal
+
+• `Const` **regNumberNoThousandSepCommaDecimal**: `RegExp`
+
+Matches inverted US format positive or negative decimal numbers with no thousand separators.
+Example: -20412,3461
+
+#### Defined in
+
+src/regexlib/regNumberNoThousandSepCommaDecimal.ts:5
+
+___
+
+### regNumberNoThousandSepDotDecimal
+
+• `Const` **regNumberNoThousandSepDotDecimal**: `RegExp`
+
+Matches US format positive or negative decimal numbers with no thousand separators.
+Example: -20412.3461
+
+#### Defined in
+
+src/regexlib/regNumberNoThousandSepDotDecimal.ts:5
+
+___
+
+### regPowerOfTen
+
+• `Const` **regPowerOfTen**: `RegExp`
+
+Matches integers that are a power of 10.
+Requires that thousand-separators removed.
+
+#### Defined in
+
+src/regexlib/regPowerOfTen.ts:5
+
+___
+
+### regRepeatingWhiteSpace
+
+• `Const` **regRepeatingWhiteSpace**: `RegExp`
+
+Matches 2 or more consecutive whitespace characters, including line terminators, tabs, etc.
+
+#### Defined in
+
+src/regexlib/regRepeatingWhiteSpace.ts:4
+
+___
+
+### regSocialSecurityNumbersDK
+
+• `Const` **regSocialSecurityNumbersDK**: `RegExp`
+
+Matches Danish social security numbers with or without the dash.
+Example: 151199-1512
+
+#### Defined in
+
+src/regexlib/regSocialSecurityNumbersDK.ts:5
+
+___
+
+### regTsDocExampleCode
+
+• `Const` **regTsDocExampleCode**: `RegExp`
+
+Matches TSDoc example-tag content wrapped in markdown typescript code blocks.
+
+#### Defined in
+
+src/regexlib/regTsDocExampleCode.ts:6
+
+___
+
+### regTsDocExampleLines
+
+• `Const` **regTsDocExampleLines**: `RegExp`
+
+Matches TSDoc example-tag content wrapped in markdown typescript code blocks.
+
+#### Defined in
+
+src/regexlib/regTsDocExampleLines.ts:6
+
+___
+
+### regWords
+
+• `Const` **regWords**: `RegExp`
+
+Matches words in a text string.
+
+#### Defined in
+
+src/regexlib/regWords.ts:4
 
 ## Functions
 
@@ -908,221 +1145,179 @@ String hashing
 
 ▸ **A1ToColRow**(`A1`, `zeroIndexed?`): `number`[]
 
-Convert spreadsheet A1-notation to [column, row].
+Converts an A1 notation string to a column-row pair.
+
+**`Throws`**
+
+If the A1 string is invalid.
+
+**`Example`**
+
+```ts
+//=> [1, 1]
+A1ToColRow('B2', true);
+//=> [1, 1]
+```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `A1` | `string` | `undefined` | A1-notation string. |
-| `zeroIndexed` | `boolean` | `false` | Whether or not column and row numbers start at one or zero. |
+| `A1` | `string` | `undefined` | The A1 notation string to convert. |
+| `zeroIndexed` | `boolean` | `false` | Optional. If true, the returned indices will be zero-based. Default is false. |
 
 #### Returns
 
 `number`[]
 
+An array where the first element is the column index and the second element is the row index.
+
 #### Defined in
 
-[src/libs/spreadsheet/src/A1ToColRow.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/spreadsheet/src/A1ToColRow.ts#L11)
+src/spreadsheet/A1ToColRow.ts:17
 
 ___
 
-### Indexed
+### MixinIndexed
 
-▸ **Indexed**<`TBase`\>(`BaseConstructor`): [`Constructor`](/docs/index.md#constructor)
+▸ **MixinIndexed**<`TBase`\>(`BaseConstructor`): [`Constructor`](/docs/index.md#constructor)
+
+This function is a mixin that adds an index to a class and provides several methods to get unique identifiers based on the class name and index.
+
+**`Typeparam`**
+
+TBase - The type of the base constructor.
+
+**`Example`**
+
+```ts
+//
+```
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `TBase` | extends [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `BaseConstructor` | `TBase` |
-
-#### Returns
-
-[`Constructor`](/docs/index.md#constructor)
-
-#### Defined in
-
-[src/libs/mixins/src/Indexed.ts:10](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Indexed.ts#L10)
-
-___
-
-### IndexedGetClass
-
-▸ **IndexedGetClass**(`classIndex`): [`Constructor`](/docs/index.md#constructor)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `classIndex` | `number` |
-
-#### Returns
-
-[`Constructor`](/docs/index.md#constructor)
-
-#### Defined in
-
-[src/libs/mixins/src/Indexed.ts:51](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Indexed.ts#L51)
-
-___
-
-### IndexedGetInstance
-
-▸ **IndexedGetInstance**(`classIndex`, `instanceIndex`): [`Base`](/docs/classes/Base.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `classIndex` | `number` |
-| `instanceIndex` | `number` |
-
-#### Returns
-
-[`Base`](/docs/classes/Base.md)
-
-#### Defined in
-
-[src/libs/mixins/src/Indexed.ts:55](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Indexed.ts#L55)
-
-___
-
-### Options
-
-▸ **Options**<`TBase`\>(`BaseConstructor`): [`Constructor`](/docs/index.md#constructor)
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TBase` | extends [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `BaseConstructor` | `TBase` |
-
-#### Returns
-
-[`Constructor`](/docs/index.md#constructor)
-
-#### Defined in
-
-[src/libs/mixins/src/Options.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Options.ts#L5)
-
-___
-
-### Revivable
-
-▸ **Revivable**<`TBase`\>(`BaseConstructor`): [`Constructor`](/docs/index.md#constructor)
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TBase` | extends [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `BaseConstructor` | `TBase` |
-
-#### Returns
-
-[`Constructor`](/docs/index.md#constructor)
-
-#### Defined in
-
-[src/libs/mixins/src/Revivable.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Revivable.ts#L5)
-
-___
-
-### Timestamped
-
-▸ **Timestamped**<`TBase`\>(`BaseConstructor`): [`Constructor`](/docs/index.md#constructor)
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `TBase` | extends [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `BaseConstructor` | `TBase` |
-
-#### Returns
-
-[`Constructor`](/docs/index.md#constructor)
-
-#### Defined in
-
-[src/libs/mixins/src/Timestamped.ts:3](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Timestamped.ts#L3)
-
-___
-
-### absolutCwdPathToRelative
-
-▸ **absolutCwdPathToRelative**(`filepath`): `string`
-
-If the filepath is somewhere in the current working directory, it can be converted into a relative path.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `filepath` | `string` | the absolute filepath to convert. |
+| `BaseConstructor` | `TBase` | The base constructor to extend. |
 
 #### Returns
 
-`string`
+[`Constructor`](/docs/index.md#constructor)
+
+A constructor for a class that extends the base constructor and includes an index and methods for getting unique identifiers.
 
 #### Defined in
 
-[src/libs/node/src/absolutCwdPathToRelative.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/absolutCwdPathToRelative.ts#L5)
+src/mixins/MixinIndexed.ts:15
 
 ___
 
-### arr2dToCSV
+### MixinOptions
 
-▸ **arr2dToCSV**<`T`\>(`input`, `delimiter?`, `replaceLinebreakWith?`): `string`
+▸ **MixinOptions**<`TBase`\>(`BaseConstructor`): [`Constructor`](/docs/index.md#constructor)
 
-Converts a 2-dimensional array into a CSV string.
-If input data contains the delimiter, it will be removed.
-Linebreaks will be removed.
+This function is a mixin that adds options management to a base class.
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `TBase` | extends [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> | The type of the base class to which this mixin is applied. |
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `input` | `T`[][] | `undefined` | a 2-dimensional array |
-| `delimiter` | `string` | `';'` | csv delimiter. |
-| `replaceLinebreakWith` | `string` | `' | '` | replace linebreaks with this string. |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `BaseConstructor` | `TBase` | The base class to which this mixin is applied. |
+
+#### Returns
+
+[`Constructor`](/docs/index.md#constructor)
+
+The resulting class with the mixin applied.
+
+#### Defined in
+
+src/mixins/MixinOptions.ts:10
+
+___
+
+### MixinTimestamped
+
+▸ **MixinTimestamped**<`TBase`\>(`BaseConstructor`): [`Constructor`](/docs/index.md#constructor)
+
+This function is a mixin that adds timestamp functionality to a base class.
+
+**`Example`**
+
+```ts
+//
+```
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `TBase` | extends [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> | The type of the base constructor. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `BaseConstructor` | `TBase` | The base constructor that the mixin is applied to. |
+
+#### Returns
+
+[`Constructor`](/docs/index.md#constructor)
+
+The constructor of the new class with the timestamp functionality.
+
+#### Defined in
+
+src/mixins/MixinTimestamped.ts:12
+
+___
+
+### absoluteToRelativePath
+
+▸ **absoluteToRelativePath**(`absolute`, `workingDirectory?`): `string`
+
+If the filepath is somewhere in the current working directory, it can be converted into a relative path.
+
+**`Remarks`**
+
+This function takes an absolute path as input and returns a relative path. It replaces the current working directory in the path with an empty string,
+replaces all backslashes with forward slashes, and removes any leading forward slashes.
+
+**`Example`**
+
+```ts
+absoluteToRelativePath(__filename)
+//=> 'src/absoluteToRelativePath.ts'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `absolute` | `string` | the absolute filepath to convert. |
+| `workingDirectory` | `string` | The directory relative to which the path should be converted. Defaults to the current working directory. |
 
 #### Returns
 
 `string`
 
+The relative path.
+
 #### Defined in
 
-[src/libs/array/src/arr2dToCSV.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arr2dToCSV.ts#L11)
+src/filesystem/absoluteToRelativePath.ts:16
 
 ___
 
@@ -1132,19 +1327,71 @@ ___
 
 Calculates the average of an array of numbers.
 
+**`Throws`**
+
+Will throw an error if the array is not of type number[].
+
+**`Example`**
+
+```ts
+const numbers = [1, 2, 3, 4, 5];
+arrAverage(numbers);
+//=> 3
+```
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `array` | `number`[] | The array of numbers to average. |
+| `array` | `number`[] | The array of numbers. |
 
 #### Returns
 
 `number`
 
+The average of all numbers in the array. Returns 0 if the array is empty.
+
 #### Defined in
 
-[src/libs/array/src/arrAverage.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrAverage.ts#L7)
+src/array/arrAverage.ts:14
+
+___
+
+### arrEachToString
+
+▸ **arrEachToString**<`T`\>(`array`): `string`[]
+
+Coerce each element of an array to string.
+
+**`Example`**
+
+```ts
+const numbers = [1, 2, 3];
+arrEachToString(numbers);
+//=> ['1', '2', '3']
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the input array. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `array` | `T`[] | The array to iterate over. |
+
+#### Returns
+
+`string`[]
+
+A new array where each element is the string representation of the corresponding element in the input array.
+
+#### Defined in
+
+src/array/arrEachToString.ts:12
 
 ___
 
@@ -1154,26 +1401,77 @@ ___
 
 Returns true if the predicate is satisfied for every element of the passed array; otherwise false.
 
+**`Example`**
+
+```ts
+const numbers = [1, 2, 3, 4, 5];
+const isEven = (num) => num % 2 === 0;
+arrEvery(numbers, isEven);
+//=> false
+arrEvery(numbers, (num) => num > 0);
+//=> true
+```
+
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the array. |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `input` | `T`[] | The array |
-| `predicate` | [`Predicate`](/docs/index.md#predicate)<`T`\> | A predicate callback function |
+| `predicate` | [`ArrayPredicate`](/docs/index.md#arraypredicate)<`T`\> | A predicate callback function |
 
 #### Returns
 
 `boolean`
 
+Returns `true` if all elements pass the predicate check, else `false`.
+
 #### Defined in
 
-[src/libs/array/src/arrEvery.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrEvery.ts#L9)
+src/array/arrEvery.ts:18
+
+___
+
+### arrFilterMutable
+
+▸ **arrFilterMutable**<`T`\>(`input`, `f`): `T`[]
+
+This function filters an array based on a predicate function, modifying the original array.
+
+**`Example`**
+
+```ts
+arrFilterMutable([1, 2, 3, 4, 5], (num: number) => num % 2 === 0);;
+//=> [2, 4]
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the input array. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `input` | `T`[] | The array to be filtered. |
+| `f` | [`ArrayPredicate`](/docs/index.md#arraypredicate)<`T`\> | The predicate function to determine which elements to keep. This function takes three arguments: the current element, its index, and the original array. |
+
+#### Returns
+
+`T`[]
+
+The original array, now filtered based on the predicate function.
+
+#### Defined in
+
+src/array/arrFilterMutable.ts:14
 
 ___
 
@@ -1183,11 +1481,23 @@ ___
 
 Flattens the passed array recursively to a specified depth. Immutable.
 
+**`Throws`**
+
+If the input is not an array.
+
+**`Example`**
+
+```ts
+const nestedArray = [[1, 2], [3, [4, 5]], [6]];
+arrFlatten(nestedArray, 1);
+//=> [1, 2, 3, [4, 5], 6]
+```
+
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the elements in the input array. |
 
 #### Parameters
 
@@ -1200,9 +1510,11 @@ Flattens the passed array recursively to a specified depth. Immutable.
 
 `T`[]
 
+The flattened array.
+
 #### Defined in
 
-[src/libs/array/src/arrFlatten.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrFlatten.ts#L8)
+src/array/arrFlatten.ts:17
 
 ___
 
@@ -1212,11 +1524,20 @@ ___
 
 Returns all indexes at which an element is found.
 
+**`Example`**
+
+```ts
+ const inputArray = [1, 2, 3, 2, 4, 2, 5];
+ const elementToFind = 2;
+ arrIndicesOf(inputArray, elementToFind);
+ //=> [1, 3, 5]
+ ```
+
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the input array. |
 
 #### Parameters
 
@@ -1229,9 +1550,11 @@ Returns all indexes at which an element is found.
 
 `number`[]
 
+An array of indices where the specified element can be found.
+
 #### Defined in
 
-[src/libs/array/src/arrIndicesOf.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrIndicesOf.ts#L7)
+src/array/arrIndicesOf.ts:14
 
 ___
 
@@ -1239,27 +1562,43 @@ ___
 
 ▸ **arrLast**<`T`\>(`array`): `T`
 
-Returns the last element of a given array.
+Returns the last element of an array.
+
+**`Throws`**
+
+If the array is empty.
+
+**`Example`**
+
+```ts
+const numbers = [1, 2, 3, 4, 5];
+arrLast(numbers);
+//=> 5
+const emptyArray = [];
+arrLast(emptyArray); // Throws an error
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the array. |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `array` | `T`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `array` | `T`[] | The array from which to retrieve the last element. |
 
 #### Returns
 
 `T`
 
+The last element of the array.
+
 #### Defined in
 
-[src/libs/array/src/arrLast.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrLast.ts#L4)
+src/array/arrLast.ts:15
 
 ___
 
@@ -1267,16 +1606,148 @@ ___
 
 ▸ **arrMapMutable**<`T`\>(`input`, `f`): `T`[]
 
-Same as Array.prototype.map but performs operations in palce (not immutable).
+This function takes an array and a callback function as arguments. It applies the callback function to each element of the array, mutating the original array in the process.
 
 **`Example`**
 
-```js
-expect(
-  util.arrMapMutable([1, 2, 3, 4, 5], (value: number) => {
-    return value + 1;
-  }),
-).toStrictEqual([2, 3, 4, 5, 6]);
+```ts
+arrMapMutable([1, 2, 3], (value: number) => value * 2);;
+//=> [2, 4, 6]
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the input array. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `input` | `T`[] | The array to be mapped over. |
+| `f` | [`ArrayValueCallback`](/docs/index.md#arrayvaluecallback)<`T`\> | The callback function to be applied to each element of the array. This function takes three arguments: the current element, its index, and the original array. |
+
+#### Returns
+
+`T`[]
+
+The original array, mutated by the callback function.
+
+#### Defined in
+
+src/array/arrMapMutable.ts:14
+
+___
+
+### arrObjectsToTable
+
+▸ **arrObjectsToTable**<`T`, `E`\>(`objects`, `options?`): (`string` \| `T` \| `E`)[][]
+
+Convert an array of objects to a two-dimensional table.
+
+**`Example`**
+
+```ts
+arrObjectsToTable(
+  [
+    { a: 1, b: 2 },
+    { a: 3, b: 4, c: 5 },
+  ],
+  { emptyCell:1 },
+) //=> [ [ 'a', 'b', 'c' ], [ 1, 2,1 ], [ 3, 4, 5 ] ]
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the values in the objects. |
+| `E` | - |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `objects` | `Record`<`string`, `undefined` \| `T`\>[] | The array of objects to convert to a table. |
+| `options` | `Object` | The options for converting the objects to a table. |
+| `options.emptyCell?` | `E` | An optional value to use for empty cells. If not provided, the function will use `undefined`. |
+| `options.headers?` | `string`[] | An optional array of strings specifying the headers (property names) to use. If not provided, the function will use all unique keys found in the objects. |
+
+#### Returns
+
+(`string` \| `T` \| `E`)[][]
+
+A 2D array (table) where each row represents an object and each column represents a property of the object.
+
+#### Defined in
+
+src/array/arrObjectsToTable.ts:21
+
+___
+
+### arrObjectsUniqueKeys
+
+▸ **arrObjectsUniqueKeys**<`T`\>(`objects`): `string`[]
+
+Returns an array of all unique object keys found in an array of objects.
+
+**`Example`**
+
+```ts
+const objects = [
+  { name: 'John', age: 25 },
+  { name: 'Jane', gender: 'female' },
+  { name: 'Bob', age: 30, gender: 'male' },
+];
+arrObjectsUniqueKeys(objects);
+//=> ['name', 'age', 'gender']
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of values in the input objects. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `objects` | `Record`<`string`, `T`\>[] | The array of objects. |
+
+#### Returns
+
+`string`[]
+
+An array of unique keys present in the input objects.
+
+#### Defined in
+
+src/array/arrObjectsUniqueKeys.ts:16
+
+___
+
+### arrRemoveDuplicates
+
+▸ **arrRemoveDuplicates**<`T`\>(`array`): `T`[]
+
+Remove duplicates from an array
+
+**`Remarks`**
+
+This function uses the JavaScript Set object to remove duplicate values from an array.
+
+**`Typeparam`**
+
+T - The type of elements in the array.
+
+**`Example`**
+
+```ts
+const array = [1, 2, 2, 3, 4, 4, 5];
+arrRemoveDuplicates(array);
+//=> [1, 2, 3, 4, 5]
 ```
 
 #### Type parameters
@@ -1289,44 +1760,17 @@ expect(
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `T`[] | input array |
-| `f` | [`MapIterator`](/docs/index.md#mapiterator)<`T`\> | iterator |
+| `array` | `T`[] | The array from which to remove duplicates. |
 
 #### Returns
 
 `T`[]
 
-#### Defined in
-
-[src/libs/array/src/arrMapMutable.ts:17](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrMapMutable.ts#L17)
-
-___
-
-### arrRemoveDuplicates
-
-▸ **arrRemoveDuplicates**<`T`\>(`array`): `T`[]
-
-Remove duplicates from an array
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `array` | `T`[] |
-
-#### Returns
-
-`T`[]
+The new array with duplicates removed.
 
 #### Defined in
 
-src/libs/array/src/arrRemoveDuplicates.ts:4
+src/array/arrRemoveDuplicates.ts:13
 
 ___
 
@@ -1334,28 +1778,39 @@ ___
 
 ▸ **arrShallowEquals**<`T`\>(`input1`, `input2`): `boolean`
 
-Returns whether or not two arrays shallow equal each other.
+This function compares the length of the two arrays and then checks if each element at the corresponding index is equal.
+
+**`Example`**
+
+```ts
+arrShallowEquals([1, 2, 3], [1, 2, 3]);
+//=> true
+arrShallowEquals([1, 2, 3], [1, 2, 4]);
+//=> false
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the elements in the arrays. |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input1` | `T`[] | first array |
-| `input2` | `T`[] | second array |
+| `input1` | `T`[] | The first array to compare. |
+| `input2` | `T`[] | The second array to compare. Checks if two arrays are shallowly equal. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the two arrays are shallowly equal.
+
 #### Defined in
 
-[src/libs/array/src/arrShallowEquals.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrShallowEquals.ts#L8)
+src/array/arrShallowEquals.ts:17
 
 ___
 
@@ -1363,7 +1818,23 @@ ___
 
 ▸ **arrShuffle**<`T`\>(`input`): `T`[]
 
-Shuffle items in an array in-place. Guarantees that the array has changes.
+Shuffle items in an array in-place. Guarantees changes.
+
+**`Remarks`**
+
+This function does not guarantee that the order of the elements will be different after shuffling.
+
+**`Typeparam`**
+
+T - The type of the elements in the input array.
+
+**`Example`**
+
+```ts
+const input = [1, 2, 3, 4, 5];
+arrShuffle(input);
+//=> [3, 1, 5, 2, 4]
+```
 
 #### Type parameters
 
@@ -1381,9 +1852,11 @@ Shuffle items in an array in-place. Guarantees that the array has changes.
 
 `T`[]
 
+The same array, but shuffled.
+
 #### Defined in
 
-[src/libs/array/src/arrShuffle.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrShuffle.ts#L8)
+src/array/arrShuffle.ts:17
 
 ___
 
@@ -1391,28 +1864,39 @@ ___
 
 ▸ **arrSome**<`T`\>(`input`, `predicate`): `boolean`
 
-Check whether a condition is true for any element of an array. The condition check is in the form of a callback.
+Checks if at least one element in the array satisfies the provided predicate.
+
+**`Example`**
+
+```ts
+const numbers = [1, 2, 3, 4, 5];
+const isEven = (num) => num % 2 === 0;
+arrSome(numbers, isEven);
+//=> true
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the input array. |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `T`[] | The array |
-| `predicate` | [`Predicate`](/docs/index.md#predicate)<`T`\> | A predicate callback function |
+| `input` | `T`[] | The array to check. |
+| `predicate` | [`ArrayPredicate`](/docs/index.md#arraypredicate)<`T`\> | The predicate function to apply to each element. |
 
 #### Returns
 
 `boolean`
 
+Returns `true` if at least one element in the array passes the test implemented by the provided function, otherwise `false`.
+
 #### Defined in
 
-[src/libs/array/src/arrSome.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrSome.ts#L9)
+src/array/arrSome.ts:16
 
 ___
 
@@ -1420,21 +1904,40 @@ ___
 
 ▸ **arrSortNumeric**(`input`): (`number` \| `bigint` \| `boolean`)[]
 
-Uses Array.prototype.sort but sorts numbers.
+Sorts an array of numbers, bigints, or booleans in ascending order.
+
+**`Remarks`**
+
+This function uses the JavaScript `Array.prototype.sort()` method, which sorts elements in place.
+Therefore, the original array will be modified.
+
+**`Throws`**
+
+If any element in the input array is not a number, bigint, or boolean.
+
+**`Example`**
+
+```ts
+const input = [5, 2n, true, 10, false];
+arrSortNumeric(input);
+//=> [false, true, 2n, 5, 10]
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | (`number` \| `bigint` \| `boolean`)[] | input array |
+| `input` | (`number` \| `bigint` \| `boolean`)[] | The array to be sorted. |
 
 #### Returns
 
 (`number` \| `bigint` \| `boolean`)[]
 
+The sorted array.
+
 #### Defined in
 
-[src/libs/array/src/arrSortNumeric.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrSortNumeric.ts#L7)
+src/array/arrSortNumeric.ts:16
 
 ___
 
@@ -1443,6 +1946,14 @@ ___
 ▸ **arrSum**(`array`): `number`
 
 Calculates the sum of an array of numbers.
+
+**`Example`**
+
+```ts
+const numbers = [1, 2, 3, 4, 5];
+arrSum(numbers);
+//=> 15
+```
 
 #### Parameters
 
@@ -1454,9 +1965,11 @@ Calculates the sum of an array of numbers.
 
 `number`
 
+The sum of all numbers in the array.
+
 #### Defined in
 
-[src/libs/array/src/arrSum.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrSum.ts#L5)
+src/array/arrSum.ts:11
 
 ___
 
@@ -1464,7 +1977,77 @@ ___
 
 ▸ **arrSwap**<`T`\>(`input`, `from`, `to`): `T`[]
 
-Swap array elements in place. Runtime: O(1)
+Swaps two elements in an array. This function takes an input array and swaps the elements at the specified indices.
+
+**`Throws`**
+
+Will throw an error if 'from' or 'to' is not a valid index in the array.
+
+**`Example`**
+
+```ts
+const arr = [1, 2, 3, 4, 5]
+arrSwap(arr, 1, 3) //=> [1, 4, 3, 2, 5]
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the array. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `input` | `T`[] | The input array. |
+| `from` | `number` | The index of the element to swap from. |
+| `to` | `number` | The index of the element to swap to. |
+
+#### Returns
+
+`T`[]
+
+The modified array with swapped elements.
+
+#### Defined in
+
+src/array/arrSwap.ts:14
+
+___
+
+### arrTableAssertRowsSameLength
+
+▸ **arrTableAssertRowsSameLength**<`T`\>(`rows`, `headers?`): `void`
+
+Asserts that all rows in a 2D array have the same length.
+
+**`Throws`**
+
+If any row in the array has a different length than the others.
+
+**`Typeparam`**
+
+T - The type of elements in the rows.
+
+**`Example`**
+
+```ts
+ const rows = [
+   [1, 2, 3],
+   [4, 5, 6],
+   [7, 8, 9],
+ ];
+ arrTableAssertRowsSameLength(rows);
+ //=> undefined
+ const rowsWithDifferentLength = [
+   [1, 2, 3],
+   [4, 5],
+   [7, 8, 9],
+ ];
+ arrTableAssertRowsSameLength(rowsWithDifferentLength);
+ //=> Error: Expected 3 columns, got 2
+ ```
 
 #### Type parameters
 
@@ -1476,25 +2059,83 @@ Swap array elements in place. Runtime: O(1)
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `T`[] | to be modified |
-| `from` | `number` | index of the first element |
-| `to` | `number` | index of the second element |
+| `rows` | `T`[][] | The 2D array to check. |
+| `headers?` | `string`[] | Optional. An array of headers. If provided, each row must have the same length as this array. |
 
 #### Returns
 
-`T`[]
+`void`
 
 #### Defined in
 
-[src/libs/array/src/arrSwap.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrSwap.ts#L7)
+src/array/arrTableAssertRowsSameLength.ts:25
 
 ___
 
-### arrTableAssertRowsSameLength
+### arrTableEachToString
 
-▸ **arrTableAssertRowsSameLength**<`T`\>(`rows`, `headers?`): `void`
+▸ **arrTableEachToString**<`T`\>(`table`): `string`[][]
 
-Asserts that all rows in the table have the same length.
+Coerce each value of a 2D array table to string.
+
+**`Example`**
+
+```ts
+const input: number[][] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+arrTableEachToString(input);
+//=> [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']]
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the elements in the input array. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `table` | `T`[][] | The 2D array to convert. |
+
+#### Returns
+
+`string`[][]
+
+The converted 2D array where each element is a string.
+
+#### Defined in
+
+src/array/arrTableEachToString.ts:14
+
+___
+
+### arrTableToCSV
+
+▸ **arrTableToCSV**<`T`\>(`input`, `delimiter?`, `replaceLinebreakWith?`): `string`
+
+Converts a 2D array to a CSV string.
+
+**`Remarks`**
+
+This function is useful for exporting data to CSV format.
+
+**`Typeparam`**
+
+T - The type of the elements in the input array.
+
+**`Example`**
+
+```ts
+const input = [
+  ['Name', 'Age', 'Country'],
+  ['John', '25', 'USA'],
+  ['Alice', '30', 'Canada'],
+  ['Bob', '35', 'UK'],
+];
+arrTableToCSV(input);
+//=> "Name;Age;Country\nJohn;25;USA\nAlice;30;Canada\nBob;35;UK"
+```
 
 #### Type parameters
 
@@ -1504,18 +2145,21 @@ Asserts that all rows in the table have the same length.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `rows` | `T`[][] |
-| `headers?` | `string`[] |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `input` | `T`[][] | `undefined` | The input 2D array. |
+| `delimiter` | `string` | `';'` | The delimiter to use for separating values in the CSV string. |
+| `replaceLinebreakWith` | `string` | `'|'` | The character used to replace line breaks in the CSV string. Defaults to '\|'. |
 
 #### Returns
 
-`void`
+`string`
+
+The CSV string representation of the input array.
 
 #### Defined in
 
-src/libs/array/src/arrTableAssertRowsSameLength.ts:4
+src/array/arrTableToCSV.ts:22
 
 ___
 
@@ -1523,28 +2167,203 @@ ___
 
 ▸ **arrTableToObjects**<`T`\>(`rows`, `headers?`): `Record`<`string`, `T`\>[]
 
-Converts a data table of a header row and data rows into an array of objects.
+Converts a 2D array representing a table into an array of objects.
+
+**`Throws`**
+
+Throws an error if the headers are not provided and the table is empty or only contains one row.
+
+**`Example`**
+
+```ts
+const table = [
+  ['Name', 'Age', 'Country'],
+  ['John', 25, 'USA'],
+  ['Jane', 30, 'Canada'],
+];
+const headers = ['Name', 'Age', 'Country'];
+arrTableToObjects(table, headers) //=> [
+//   { Name: 'John', Age: 25, Country: 'USA' },
+//   { Name: 'Jane', Age: 30, Country: 'Canada' },
+// ]
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the elements in the rows. |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `rows` | `T`[][] |
-| `headers?` | `string`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `rows` | `T`[][] | The 2D array representing the table. |
+| `headers?` | `string`[] | The headers to use as keys for the objects. If not provided, the first row of the table is used as headers. |
 
 #### Returns
 
 `Record`<`string`, `T`\>[]
 
+An array of objects, where each object represents a row in the table.
+
 #### Defined in
 
-[src/libs/array/src/arrTableToObjects.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/array/src/arrTableToObjects.ts#L6)
+src/array/arrTableToObjects.ts:24
+
+___
+
+### assertInteger
+
+▸ **assertInteger**(`int`): `number`
+
+Asserts that the provided value is an integer. If the value is not an integer, a TypeError is thrown.
+
+**`Throws`**
+
+Throws an error if the input value is not an integer.
+
+**`Example`**
+
+```ts
+assertInteger(5);;
+//=> 5
+assertInteger(5.5);;
+//=> throws TypeError
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `int` | `number` | The value to be checked. |
+
+#### Returns
+
+`number`
+
+Returns the input value if it is an integer.
+
+#### Defined in
+
+src/validation/assertInteger.ts:13
+
+___
+
+### assertNegativeInteger
+
+▸ **assertNegativeInteger**(`int`): `number`
+
+Asserts that the provided number is a negative integer.
+If the number is not a negative integer, it throws a TypeError.
+
+**`Throws`**
+
+Throws an error if the provided number is not a negative integer.
+
+**`Example`**
+
+```ts
+assertNegativeInteger(-5);;
+//=> -5
+assertNegativeInteger(5);;
+//=> throws TypeError
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `int` | `number` | The number to be checked. |
+
+#### Returns
+
+`number`
+
+Returns the number if it is a negative integer.
+
+#### Defined in
+
+src/validation/assertNegativeInteger.ts:14
+
+___
+
+### assertPositiveInteger
+
+▸ **assertPositiveInteger**(`int`): `number`
+
+Asserts that the provided number is a positive integer.
+If the number is not a positive integer, a TypeError is thrown.
+
+**`Throws`**
+
+Throws an error if the provided number is not a positive integer.
+
+**`Example`**
+
+```ts
+assertPositiveInteger(5);;
+//=> 5
+assertPositiveInteger(-2);;
+//=> throws TypeError
+assertPositiveInteger(2.5);;
+//=> throws TypeError
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `int` | `number` | The number to be checked. |
+
+#### Returns
+
+`number`
+
+The same number if it is a positive integer.
+
+#### Defined in
+
+src/validation/assertPositiveInteger.ts:16
+
+___
+
+### assertPowerOfTen
+
+▸ **assertPowerOfTen**(`number`): `number`
+
+Asserts if the given number is a power of ten.
+If the number is a power of ten, it returns the number.
+If the number is not a power of ten, it throws a TypeError.
+
+**`Throws`**
+
+Throws an error if the number is not a power of ten.
+
+**`Example`**
+
+```ts
+assertPowerOfTen(10);;
+//=> true
+assertPowerOfTen(15);;
+//=> throws TypeError: Expected number to be a power of ten. Got: 15
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `number` | `number` | The number to be checked. |
+
+#### Returns
+
+`number`
+
+Returns the number if it is a power of ten.
+
+#### Defined in
+
+src/validation/assertPowerOfTen.ts:17
 
 ___
 
@@ -1552,19 +2371,32 @@ ___
 
 ▸ **assertValidDate**(`year?`, `month?`, `day?`, `hour?`, `minute?`, `second?`, `millisecond?`): `void`
 
-Throws if the given year is invalid.
+Asserts that the provided date parameters form a valid date.
+
+**`Throws`**
+
+Will throw an error if the date is not valid.
+
+**`Example`**
+
+```ts
+assertValidDate(2021, 12, 31, 23, 59, 59, 999);;
+//=> true
+assertValidDate(2021, 13, 31, 23, 59, 59, 999);;
+//=> throws an error
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `year?` | `string` \| `number` |
-| `month?` | `string` \| `number` |
-| `day?` | `string` \| `number` |
-| `hour?` | `string` \| `number` |
-| `minute?` | `string` \| `number` |
-| `second?` | `string` \| `number` |
-| `millisecond?` | `string` \| `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `year?` | `string` \| `number` | The year of the date. |
+| `month?` | `string` \| `number` | The month of the date. |
+| `day?` | `string` \| `number` | The day of the date. |
+| `hour?` | `string` \| `number` | The hour of the date. |
+| `minute?` | `string` \| `number` | The minute of the date. |
+| `second?` | `string` \| `number` | The second of the date. |
+| `millisecond?` | `string` \| `number` | The millisecond of the date. |
 
 #### Returns
 
@@ -1572,7 +2404,7 @@ Throws if the given year is invalid.
 
 #### Defined in
 
-[src/libs/date/src/assertValidDate.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/assertValidDate.ts#L6)
+src/date/assertValidDate.ts:20
 
 ___
 
@@ -1580,15 +2412,29 @@ ___
 
 ▸ **assertValidDateDay**(`day`, `month`, `year?`): `void`
 
-Throws an error if the day of the month is invalid.
+Asserts that the provided day, month, and optional year form a valid date.
+If the date is not valid, it throws an error.
+
+**`Throws`**
+
+Will throw an error if the provided day, month, and optional year do not form a valid date.
+
+**`Example`**
+
+```ts
+assertValidDateDay(31, 2, 2020);;
+//=> Error: Invalid day of the month: 31.
+assertValidDateDay(29, 2, 2020);;
+//=> no error
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `day` | `number` |
-| `month` | `number` |
-| `year?` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `day` | `number` | The day of the month. Should be an integer between 1 and 31. |
+| `month` | `number` | The month of the year. Should be an integer between 1 and 12. |
+| `year?` | `number` | The year of the date. Optional parameter. If provided, should be a positive integer. |
 
 #### Returns
 
@@ -1596,7 +2442,7 @@ Throws an error if the day of the month is invalid.
 
 #### Defined in
 
-[src/libs/date/src/assertValidDateDay.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/assertValidDateDay.ts#L6)
+src/date/assertValidDateDay.ts:17
 
 ___
 
@@ -1604,13 +2450,26 @@ ___
 
 ▸ **assertValidDateMonth**(`month`): `void`
 
-Throws error if the given month is invalid.
+Asserts if the provided month is a valid date month.
+
+**`Throws`**
+
+Will throw an error if the month is not a valid date month.
+
+**`Example`**
+
+```ts
+assertValidDateMonth(13);;
+//=> Error: Invalid month: 13.
+assertValidDateMonth(1);;
+//=> undefined
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `month` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `month` | `number` | The month to be validated. Should be a number between 1 and 12. |
 
 #### Returns
 
@@ -1618,7 +2477,7 @@ Throws error if the given month is invalid.
 
 #### Defined in
 
-[src/libs/date/src/assertValidDateMonth.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/assertValidDateMonth.ts#L6)
+src/date/assertValidDateMonth.ts:14
 
 ___
 
@@ -1626,13 +2485,86 @@ ___
 
 ▸ **assertValidDateYear**(`year`): `void`
 
-Throws if the given year is invalid.
+Asserts that the provided year is a valid date year.
+
+**`Throws`**
+
+Will throw an error if the year is not valid.
+
+**`Example`**
+
+```ts
+assertValidDateYear(2020);;
+//=> undefined
+assertValidDateYear(10000);;
+//=> Error: Invalid year: 10000.
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `year` | `number` | The year to be validated |
+
+#### Returns
+
+`void`
+
+void
+
+#### Defined in
+
+src/date/assertValidDateYear.ts:15
+
+___
+
+### assertValidNumber
+
+▸ **assertValidNumber**(`number`): `number`
+
+Asserts that the provided value is a valid number. If the value is not a valid number, it throws a TypeError.
+A valid number is a finite number and not NaN.
+
+**`Throws`**
+
+Throws an error if the provided number is not valid.
+
+**`Example`**
+
+```ts
+assertValidNumber(5);;
+//=> 5
+assertValidNumber(NaN);;
+//=> throws TypeError
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `number` | `number` | The number to be validated. |
+
+#### Returns
+
+`number`
+
+Returns the validated number if it is valid.
+
+#### Defined in
+
+src/validation/assertValidNumber.ts:16
+
+___
+
+### assertValidTsDocComment
+
+▸ **assertValidTsDocComment**(`code`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `year` | `number` |
+| `code` | `string` |
 
 #### Returns
 
@@ -1640,15 +2572,39 @@ Throws if the given year is invalid.
 
 #### Defined in
 
-[src/libs/date/src/assertValidDateYear.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/assertValidDateYear.ts#L6)
+src/tsdoc/assertValidTsDocComment.ts:3
 
 ___
 
-### asyncParallel
+### asyncTasksLimit
 
-▸ **asyncParallel**<`T`\>(`tasks`): `Promise`<`T`[]\>
+▸ **asyncTasksLimit**<`T`\>(`concurrency`, `tasks`, `callback?`): `Promise`<`T`[]\>
 
-Run async tasks in parallel.
+Run async tasks in parallel with a limit on the number of concurrent tasks.
+
+**`Typeparam`**
+
+T - The type of the return value of the tasks.
+
+**`Throws`**
+
+Will throw an error if any of the tasks fail.
+
+**`Example`**
+
+```ts
+const tasks = [
+  () => new Promise((resolve) => setTimeout(() => resolve('Task A complete'), 2000)),
+  () => new Promise((resolve) => setTimeout(() => resolve('Task B complete'), 1000)),
+  () => new Promise((resolve) => setTimeout(() => resolve('Task C complete'), 3000)),
+  () => new Promise((resolve) => setTimeout(() => resolve('Task D complete'), 4000)),
+  () => new Promise((resolve) => setTimeout(() => resolve('Task E complete'), 5000)),
+]
+const results2 = await asyncTasksLimit(2, tasks, (value, index) => {
+  console.log(`Task ${index} completed with value ${value}`)
+})
+console.log(results2)
+```
 
 #### Type parameters
 
@@ -1658,25 +2614,48 @@ Run async tasks in parallel.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `tasks` | () => `Promise`<`T`\>[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `concurrency` | `number` | number of tasks to run concurrently |
+| `tasks` | () => `Promise`<`any`\>[] | array of functions that return a promise |
+| `callback?` | (`value`: `T`, `index`: `number`) => `void` | callback is invoked in order of completion |
 
 #### Returns
 
 `Promise`<`T`[]\>
 
+array of return values which are ordered with indices identical to their respective tasks in the input array.
+
 #### Defined in
 
-[src/libs/async/src/asyncParallel.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/async/src/asyncParallel.ts#L4)
+src/async/asyncTasksLimit.ts:23
 
 ___
 
-### asyncSerial
+### asyncTasksParallel
 
-▸ **asyncSerial**<`T`\>(`tasks`): `Promise`<`T`[]\>
+▸ **asyncTasksParallel**<`T`\>(`tasks`): `Promise`<`T`[]\>
 
-Run async tasks serially, each task waiting for the previous one to complete.
+Executes an array of asynchronous tasks in parallel and returns an array of results.
+
+**`Remarks`**
+
+This function is useful when you need to perform multiple asynchronous operations concurrently and wait for all of them to complete.
+
+**`Typeparam`**
+
+T - The type of the result that each asynchronous task returns.
+
+**`Example`**
+
+```ts
+[
+  async () => await fetch('https://api.example.com/data1'),
+  async () => await fetch('https://api.example.com/data2'),
+  async () => await fetch('https://api.example.com/data3')
+].map(task => asyncTasksParallel(task));;
+//=> {results}
+```
 
 #### Type parameters
 
@@ -1686,17 +2665,61 @@ Run async tasks serially, each task waiting for the previous one to complete.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `tasks` | () => `Promise`<`T`\>[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `tasks` | () => `Promise`<`T`\>[] | An array of functions that return a Promise of type T. |
 
 #### Returns
 
 `Promise`<`T`[]\>
 
+A Promise that resolves to an array of results of type T.
+
 #### Defined in
 
-[src/libs/async/src/asyncSerial.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/async/src/asyncSerial.ts#L4)
+src/async/asyncTasksParallel.ts:16
+
+___
+
+### asyncTasksSerial
+
+▸ **asyncTasksSerial**<`T`\>(`tasks`): `Promise`<`T`[]\>
+
+Executes an array of asynchronous tasks in a serial manner, one after the other.
+Returns a promise that resolves with an array of results of each task.
+
+**`Example`**
+
+```ts
+[() => Promise.resolve(1), () => Promise.resolve(2), () => Promise.resolve(3)].map(task => asyncTasksSerial(task));
+//=> [1, 2, 3]
+```
+
+**`Throws`**
+
+If any of the tasks fail, the function will throw an error.
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the result of each task. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `tasks` | () => `Promise`<`T`\>[] | An array of functions that return a promise. |
+
+#### Returns
+
+`Promise`<`T`[]\>
+
+A promise that resolves with an array of results of each task.
+
+#### Defined in
+
+src/async/asyncTasksSerial.ts:13
 
 ___
 
@@ -1706,11 +2729,34 @@ ___
 
 Executes an async task with a timeout.
 
+**`Throws`**
+
+If the Promise does not resolve within the specified time, an Error is thrown with a message indicating the timeout.
+
+**`Example`**
+
+```ts
+// Example 1: Resolving a promise within the timeout
+asyncWithTimeout(5000, async () => {
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  return 'Task completed within timeout'
+})
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error))
+// Example 2: Rejecting a promise due to timeout
+asyncWithTimeout(2000, async () => {
+  await new Promise((resolve) => setTimeout(resolve, 5000))
+  return 'This should not be returned'
+})
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error))
+```
+
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the value that the Promise resolves to. |
 
 #### Parameters
 
@@ -1727,7 +2773,7 @@ A promise that resolves with the task's result or rejects with an error.
 
 #### Defined in
 
-[src/libs/async/src/asyncWithTimeout.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/async/src/asyncWithTimeout.ts#L8)
+src/async/asyncWithTimeout.ts:26
 
 ___
 
@@ -1735,13 +2781,20 @@ ___
 
 ▸ **atob**(`str`): `Buffer`
 
-Converts a base64 buffer to a string
+Decodes a base64 encoded string into a Buffer.
+
+**`Example`**
+
+```ts
+const encodedString = 'SGVsbG8gd29ybGQ=';
+atob(encodedString) //=> <Buffer 48 65 6c 6c 6f 20 77 6f 72 6c 64>
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | The base64 encoded string to decode. |
 
 #### Returns
 
@@ -1749,7 +2802,7 @@ Converts a base64 buffer to a string
 
 #### Defined in
 
-[src/libs/binary/src/atob.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/atob.ts#L4)
+src/binary/atob.ts:9
 
 ___
 
@@ -1757,13 +2810,21 @@ ___
 
 ▸ **btoa**(`buf`): `string`
 
-Converts a string to a base64 buffer
+Encodes a Buffer object to a base64 string.
+
+**`Example`**
+
+```ts
+const buffer = Buffer.from('Hello, World!', 'utf8');
+btoa(buffer);
+//=> "SGVsbG8sIFdvcmxkIQ=="
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `buf` | `Buffer` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `buf` | `Buffer` | The Buffer object to encode. |
 
 #### Returns
 
@@ -1771,7 +2832,7 @@ Converts a string to a base64 buffer
 
 #### Defined in
 
-[src/libs/binary/src/btoa.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/btoa.ts#L4)
+src/binary/btoa.ts:10
 
 ___
 
@@ -1780,6 +2841,12 @@ ___
 ▸ **buildRegexBetween**(`left`, `right`, `flags?`): `RegExp`
 
 Builds a regex that matches a string between two strings. Supports regex instead of string.
+
+**`Remarks`**
+
+The function accepts either strings or regular expressions as the left and right patterns.
+If a string is provided, it will be escaped to form a valid regular expression.
+The function also accepts an optional flags parameter to specify regular expression flags.
 
 **`Example`**
 
@@ -1793,16 +2860,18 @@ const regex = buildRegexBetween(/a/, /b/)
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `left` | `string` \| `RegExp` | string or regex to match before |
-| `right` | `string` \| `RegExp` | string or regex to match after |
+| `right` | `string` \| `RegExp` | - |
 | `flags?` | `string` | regex flags - 'g' and 's' are always added to whatever flags are passed. |
 
 #### Returns
 
 `RegExp`
 
+A regular expression that matches text between the left and right patterns.
+
 #### Defined in
 
-[src/libs/regex/src/buildRegexBetween.ts:15](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/buildRegexBetween.ts#L15)
+src/regex/buildRegexBetween.ts:17
 
 ___
 
@@ -1810,14 +2879,25 @@ ___
 
 ▸ **bytesToInt**(`bytes`): `number`
 
-Converts a byte-array to an integer.
-Throws Error if the input is an invalid byte-array or corresponds to an integer value larger than 256^5.
+Converts an array of bytes to an integer.
+
+**`Throws`**
+
+If the bytes are invalid or the resulting integer is greater than 256^5.
+
+**`Example`**
+
+```ts
+const bytes = [255, 1, 2, 3, 4, 5];
+bytesToInt(bytes);
+//=> 1099511627776
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `bytes` | `number`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `bytes` | `number`[] | The array of bytes to convert. |
 
 #### Returns
 
@@ -1825,7 +2905,148 @@ Throws Error if the input is an invalid byte-array or corresponds to an integer 
 
 #### Defined in
 
-[src/libs/binary/src/bytesToInt.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/bytesToInt.ts#L5)
+src/binary/bytesToInt.ts:11
+
+___
+
+### cleanDirectory
+
+▸ **cleanDirectory**(`dirpath`, `filter`): `Promise`<`string`\>
+
+Cleans a directory by removing files that match a filter.
+
+**`Remarks`**
+
+This function is asynchronous and returns a promise that resolves to the path of the cleaned directory.
+
+**`Throws`**
+
+If the directory cannot be read or a file cannot be removed.
+
+**`Example`**
+
+```ts
+cleanDirectory('./src', (filename: string) => filename.endsWith('.ts'));
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path of the directory to clean. |
+| `filter` | (`filename`: `string`) => `boolean` | A function that takes a filename and returns a boolean. Files for which this function returns `true` will be removed. |
+
+#### Returns
+
+`Promise`<`string`\>
+
+A promise that resolves to the path of the cleaned directory.
+
+#### Defined in
+
+src/filesystem/cleanDirectory.ts:15
+
+___
+
+### cleanDirectorySafe
+
+▸ **cleanDirectorySafe**(`dirpath`, `filter`): `Promise`<`string`\>
+
+Cleans a directory in a safe manner by checking if the directory exists before attempting to clean it.
+The cleaning process is determined by a filter function that is passed as an argument.
+
+**`Example`**
+
+```ts
+cleanDirectorySafe('./src', (filename: string) => filename.endsWith('.ts'));
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path of the directory to be cleaned. |
+| `filter` | (`filename`: `string`) => `boolean` | A function that takes a filename as an argument and returns a boolean. Files for which this function returns `true` will be deleted. |
+
+#### Returns
+
+`Promise`<`string`\>
+
+A promise that resolves to the path of the directory.
+
+#### Defined in
+
+src/filesystem/cleanDirectorySafe.ts:15
+
+___
+
+### cleanDirectorySafeSync
+
+▸ **cleanDirectorySafeSync**(`dirpath`, `filter`): `string`
+
+Synchronously cleans a directory in a safe manner. If the directory does not exist, it will return the directory path without making any changes.
+
+**`Example`**
+
+```ts
+cleanDirectorySafeSync('./src', (filename: string) => filename.endsWith('.ts'));
+```
+
+**`Throws`**
+
+If the directory path is not a string or the filter is not a function.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path of the directory to clean. |
+| `filter` | (`filename`: `string`) => `boolean` | A function that takes a filename as a parameter and returns a boolean. If the function returns true, the file will be kept; otherwise, it will be deleted. |
+
+#### Returns
+
+`string`
+
+The path of the directory.
+
+#### Defined in
+
+src/filesystem/cleanDirectorySafeSync.ts:14
+
+___
+
+### cleanDirectorySync
+
+▸ **cleanDirectorySync**(`dirpath`, `filter`): `string`
+
+Synchronously cleans a directory by removing files that match a provided filter function.
+
+**`Throws`**
+
+Will throw an error if the directory does not exist or if an error occurs while removing a file.
+
+**`Example`**
+
+```ts
+cleanDirectorySync('./src', (filename: string) => filename.endsWith('.ts'));
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path to the directory to clean. |
+| `filter` | (`filename`: `string`) => `boolean` | A function that takes a filename as a parameter and returns a boolean. Files for which this function returns `true` will be removed. |
+
+#### Returns
+
+`string`
+
+The path to the cleaned directory.
+
+#### Defined in
+
+src/filesystem/cleanDirectorySync.ts:14
 
 ___
 
@@ -1833,22 +3054,45 @@ ___
 
 ▸ **colRowToA1**(`CR`, `zeroIndexed?`): `string`
 
-Convert spreadsheet [column, row] to A1-notation.
+Converts a column and row index to A1 notation.
+
+**`Throws`**
+
+If the length of the CR array is not 2.
+
+**`Throws`**
+
+If the row index is not an integer.
+
+**`Throws`**
+
+If the row index is less than 1.
+
+**`Example`**
+
+```ts
+colRowToA1([3, 5]);;
+//=> 'D5'
+colRowToA1([3, 5], true);;
+//=> 'C5'
+```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `CR` | `number`[] | `undefined` | [column, row] |
-| `zeroIndexed` | `boolean` | `false` | Whether or not column number start at one or zero. |
+| `CR` | `number`[] | `undefined` | An array of two numbers where the first number is the column index and the second number is the row index. |
+| `zeroIndexed` | `boolean` | `false` | A boolean indicating whether the column and row indexes are zero-based. Defaults to false. |
 
 #### Returns
 
 `string`
 
+The A1 notation of the column and row index.
+
 #### Defined in
 
-[src/libs/spreadsheet/src/colRowToA1.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/spreadsheet/src/colRowToA1.ts#L8)
+src/spreadsheet/colRowToA1.ts:18
 
 ___
 
@@ -1856,48 +3100,43 @@ ___
 
 ▸ **colToLetter**(`col`, `zeroIndexed?`): `string`
 
-Convert a spreadsheet column number to a column letter.
+Converts a column number to a column letter (e.g. 1 => 'A', 27 => 'AA').
+
+**`Throws`**
+
+If `col` is not an integer.
+
+**`Throws`**
+
+If `col` is less than 1.
+
+**`Example`**
+
+```ts
+colToLetter(1);;
+//=> 'A'
+colToLetter(27);;
+//=> 'AA'
+colToLetter(1, true);;
+//=> 'B'
+```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `col` | `number` | `undefined` | Column number |
-| `zeroIndexed` | `boolean` | `false` | Whether or not column number start at one or zero. |
+| `col` | `number` | `undefined` | The column number to convert. Must be a positive integer. |
+| `zeroIndexed` | `boolean` | `false` | Optional. Whether the column number is zero-indexed. Defaults to false. |
 
 #### Returns
 
 `string`
 
-#### Defined in
-
-[src/libs/spreadsheet/src/colToLetter.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/spreadsheet/src/colToLetter.ts#L8)
-
-___
-
-### comment
-
-▸ **comment**<`T`\>(`comment`): `string`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `comment` | `T` |
-
-#### Returns
-
-`string`
+The column letter corresponding to the column number.
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:126](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L126)
+src/spreadsheet/colToLetter.ts:17
 
 ___
 
@@ -1905,28 +3144,41 @@ ___
 
 ▸ **compareArray**<`T`\>(`compareAt`, `descending?`): [`Comparator`](/docs/index.md#comparator)
 
-Returns a given comparator as an array compatible comparator. Behaves as if the array to sort was recursively flattened.
+This function compares two arrays using a provided comparator function.
+It can compare arrays of any type, as long as the comparator function can handle the type.
+If the arrays are of different lengths, the shorter one is considered smaller.
+If the arrays are of the same length, the elements are compared one by one until a difference is found.
+If no difference is found, the arrays are considered equal.
+
+**`Example`**
+
+```ts
+[[1, 2, 3], [1, 2, 2], [1, 1, 4]].sort(compareArray((a, b) => a - b));;
+//=> [[1, 1, 4], [1, 2, 2], [1, 2, 3]]
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the elements in the arrays. |
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `compareAt` | [`Comparator`](/docs/index.md#comparator) | `undefined` | shallow compare function that compares two elements of an array |
-| `descending` | `boolean` | `false` | whether the input comparator sorts in descending order |
+| `compareAt` | [`Comparator`](/docs/index.md#comparator) | `undefined` | The comparator function to use for comparing elements. It should take two arguments of type T and return a number: - a negative number if the first argument is smaller, - a positive number if the first argument is larger, - and 0 if they are equal. |
+| `descending` | `boolean` | `false` | Whether to sort in descending order. Defaults to false. If true, larger elements will come before smaller ones. If false (the default), smaller elements will come before larger ones. |
 
 #### Returns
 
 [`Comparator`](/docs/index.md#comparator)
 
+A comparator function that can be used for sorting arrays with the Array.prototype.sort method.
+
 #### Defined in
 
-[src/libs/sort/src/compareArray.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/sort/src/compareArray.ts#L8)
+src/sort/compareArray.ts:24
 
 ___
 
@@ -1935,6 +3187,10 @@ ___
 ▸ **compareNumber**(`a`, `b`): `number`
 
 Number comparator function (ascending)
+
+**`Remarks`**
+
+This function subtracts the second number from the first number and returns the result.
 
 **`Example`**
 
@@ -1954,9 +3210,11 @@ arr.sort(compareNumber) // [1, 1, 3, 4, 5]
 
 `number`
 
+The difference between the two numbers
+
 #### Defined in
 
-[src/libs/sort/src/compareNumber.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/sort/src/compareNumber.ts#L11)
+src/sort/compareNumber.ts:12
 
 ___
 
@@ -1984,9 +3242,11 @@ arr.sort(compareNumberDescending) // [5, 4, 3, 1, 1]
 
 `number`
 
+The difference between the two numbers (b - a). If the result is positive, `b` is larger. If the result is negative, `a` is larger. If the result is 0, both numbers are equal.
+
 #### Defined in
 
-[src/libs/sort/src/compareNumberDescending.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/sort/src/compareNumberDescending.ts#L11)
+src/sort/compareNumberDescending.ts:11
 
 ___
 
@@ -2014,9 +3274,14 @@ arr.sort(compareNumeric) // [-2n, false, true, 3n]
 
 `number`
 
+A number indicating the relationship between the two numbers:
+- `-1` if `a` is less than `b`
+- `1` if `a` is greater than `b`
+- `0` if `a` is equal to `b`
+
 #### Defined in
 
-[src/libs/sort/src/compareNumeric.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/sort/src/compareNumeric.ts#L11)
+src/sort/compareNumeric.ts:14
 
 ___
 
@@ -2025,6 +3290,10 @@ ___
 ▸ **compareNumericDescending**(`a`, `b`): `number`
 
 number, bigint, boolean comparator function (descending)
+
+**`Remarks`**
+
+This function is used for sorting arrays of numbers in descending order.
 
 **`Example`**
 
@@ -2044,9 +3313,11 @@ arr.sort(compareNumericDescending) // [3n, true, false, -2n]
 
 `number`
 
+A number indicating the sort order. -1 if `a` is greater than `b`, 1 if `a` is less than `b`, 0 if they are equal.
+
 #### Defined in
 
-[src/libs/sort/src/compareNumericDescending.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/sort/src/compareNumericDescending.ts#L11)
+src/sort/compareNumericDescending.ts:12
 
 ___
 
@@ -2056,6 +3327,17 @@ ___
 
 Alpha numeric comparator function (ascending)
 
+**`Example`**
+
+```ts
+compareString("apple", "banana");;
+//=> -1
+compareString("banana", "apple");;
+//=> 1
+compareString("apple", "apple");;
+//=> 0
+```
+
 #### Parameters
 
 | Name | Type | Description |
@@ -2067,9 +3349,11 @@ Alpha numeric comparator function (ascending)
 
 `number`
 
+A number indicating whether a reference string comes before or after or is the same as the given string in sort order.
+
 #### Defined in
 
-[src/libs/sort/src/compareString.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/sort/src/compareString.ts#L6)
+src/sort/compareString.ts:15
 
 ___
 
@@ -2079,6 +3363,17 @@ ___
 
 Alpha numeric comparator function (descending)
 
+**`Example`**
+
+```ts
+compareStringDescending('apple', 'banana');;
+//=> 1
+compareStringDescending('banana', 'apple');;
+//=> -1
+compareStringDescending('apple', 'apple');;
+//=> 0
+```
+
 #### Parameters
 
 | Name | Type | Description |
@@ -2090,9 +3385,81 @@ Alpha numeric comparator function (descending)
 
 `number`
 
+A negative number if `a` is greater than `b`, a positive number if `a` is less than `b`, or 0 if they are equal.
+
 #### Defined in
 
-[src/libs/sort/src/compareStringDescending.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/sort/src/compareStringDescending.ts#L6)
+src/sort/compareStringDescending.ts:15
+
+___
+
+### createDirectory
+
+▸ **createDirectory**(`dirpath`): `Promise`<`string`\>
+
+Create a directory at a given path if it does not exist.
+Automatically creates parent directories if they do not exist.
+
+**`Remarks`**
+
+This function uses the `mkdirp` package to create directories.
+
+**`Example`**
+
+```ts
+createDirectory('/path/to/directory')
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path where the directory should be created. |
+
+#### Returns
+
+`Promise`<`string`\>
+
+The path of the directory.
+
+#### Defined in
+
+src/filesystem/createDirectory.ts:13
+
+___
+
+### createDirectorySync
+
+▸ **createDirectorySync**(`dirpath`): `string`
+
+Create a directory at a given path if it does not exist.
+Automatically creates parent directories if they do not exist.
+
+**`Remarks`**
+
+This function uses the `mkdirpSync` function from the `mkdirp` library to create a directory at the specified path.
+
+**`Example`**
+
+```ts
+createDirectorySync('/path/to/directory')
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path where the directory should be created. |
+
+#### Returns
+
+`string`
+
+The path of the directory.
+
+#### Defined in
+
+src/filesystem/createDirectorySync.ts:13
 
 ___
 
@@ -2101,6 +3468,19 @@ ___
 ▸ **createFileExtensionFilter**(`...fileExtensions`): (`filepath`: `string`) => `boolean`
 
 Takes a list of file extensions and returns a filter function that returns true if a filepath/filename passed to it contains one of the given file extensions.
+
+**`Remarks`**
+
+If no file extensions are provided, the filter will always return true.
+
+**`Example`**
+
+```ts
+createFileExtensionFilter('.ts', '.tsx')('index.ts');;
+//=> true
+createFileExtensionFilter('.ts', '.tsx')('index.js');;
+//=> false
+```
 
 #### Parameters
 
@@ -2111,6 +3491,8 @@ Takes a list of file extensions and returns a filter function that returns true 
 #### Returns
 
 `fn`
+
+A function that takes a filepath and returns true if the filepath has one of the specified file extensions, false otherwise.
 
 ▸ (`filepath`): `boolean`
 
@@ -2126,36 +3508,61 @@ Takes a list of file extensions and returns a filter function that returns true 
 
 #### Defined in
 
-[src/libs/node/src/createFileExtensionFilter.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/createFileExtensionFilter.ts#L8)
+src/filesystem/createFileExtensionFilter.ts:16
 
 ___
 
-### createPseudoClass
+### createObjectFactory
 
-▸ **createPseudoClass**<`T`\>(`keys`, `defaultValues?`): [`TPseudoClass`](/docs/index.md#tpseudoclass)<`T`\>
+▸ **createObjectFactory**<`T`\>(`keys`, `defaultValues?`): (`values?`: `T`[]) => `Record`<`string`, `T`\>
 
-Returns an object factory function that instantiates objects, always with the same keys in the same order.
+Creates a factory function for creating objects with specified keys and default values.
+
+**`Throws`**
+
+If the length of the `defaultValues` array is larger than the length of the `keys` array, or if the length of the `values` array passed to the factory function is larger than the length of the `keys` array.
+
+**`Example`**
+
+```ts
+createObjectFactory(['key1', 'key2'], ['default1', 'default2'])(['value1']);
+//=> { key1: 'value1', key2: 'default2' }
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the values. |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `keys` | `string`[] |
-| `defaultValues?` | `T`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `keys` | `string`[] | An array of strings representing the keys of the objects to be created. |
+| `defaultValues?` | `T`[] | An optional array of default values for the keys. If provided, its length should not be larger than the length of the keys array. |
 
 #### Returns
 
-[`TPseudoClass`](/docs/index.md#tpseudoclass)<`T`\>
+`fn`
+
+An `ObjectFactory` function. When called, this function takes an optional array of values and returns an object with the specified keys and values. If the values array is not provided or if a value is `undefined`, the corresponding default value is used.
+
+▸ (`values?`): `Record`<`string`, `T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `values?` | `T`[] |
+
+##### Returns
+
+`Record`<`string`, `T`\>
 
 #### Defined in
 
-src/libs/object/src/createPseudoClass.ts:9
+src/object/createObjectFactory.ts:13
 
 ___
 
@@ -2163,21 +3570,30 @@ ___
 
 ▸ **dateDaysAgo**(`days`): `Date`
 
-Subtracts a given number of days from the current time and returns the resulting Date.
+Returns a Date object representing a date that is a certain number of days in the past.
+
+**`Example`**
+
+```ts
+dateDaysAgo(5);;
+//=> {result}
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `days` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `days` | `number` | The number of days ago for the date to represent. |
 
 #### Returns
 
 `Date`
 
+A Date object representing the date that is the specified number of days in the past.
+
 #### Defined in
 
-src/libs/date/src/dateDaysAgo.ts:4
+src/date/dateDaysAgo.ts:10
 
 ___
 
@@ -2185,21 +3601,186 @@ ___
 
 ▸ **daysSinceDate**(`date`): `number`
 
-Returns the number of days that has passed since a given date.
+Calculates the number of days that have passed since the given date.
+
+**`Example`**
+
+```ts
+new Date('2020-01-01');;
+//=> <date object>
+daysSinceDate(new Date('2020-01-01'));;
+//=> <number of days since 2020-01-01>
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `date` | `Date` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `Date` | The date from which to calculate the number of days passed. |
 
 #### Returns
 
 `number`
 
+The number of days since the given date.
+
 #### Defined in
 
-src/libs/date/src/daysSinceDate.ts:4
+src/date/daysSinceDate.ts:15
+
+___
+
+### deleteDirectory
+
+▸ **deleteDirectory**(`dirpath`): `Promise`<`void`\>
+
+Deletes a directory and all of its contents.
+
+**`Remarks`**
+
+This function uses Node.js's `fs.promises.rm` method with the `recursive` and `force` options set to `true`.
+This means it will delete the directory and all of its contents, even if the directory is not empty.
+
+**`Throws`**
+
+Will throw an error if the directory does not exist, or if there was a problem deleting the directory.
+
+**`Example`**
+
+```ts
+deleteDirectory('/path/to/directory');;
+//=> undefined
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path to the directory to delete. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+A Promise that resolves when the directory has been deleted.
+
+#### Defined in
+
+src/filesystem/deleteDirectory.ts:15
+
+___
+
+### deleteDirectorySafe
+
+▸ **deleteDirectorySafe**(`dirpath`): `Promise`<`void`\>
+
+Deletes a directory safely if it exists.
+
+**`Remarks`**
+
+This function uses Node.js' `fs.promises.rm` method with the `recursive` and `force` options set to `true`.
+This means it will delete the directory and all its contents, even if the directory is not empty.
+
+**`Throws`**
+
+Will throw an error if the `fs.promises.rm` operation fails.
+
+**`Example`**
+
+```ts
+deleteDirectorySafe('/path/to/directory');;
+//=> undefined
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path of the directory to delete. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+A promise that resolves to `void` when the directory has been deleted.
+
+#### Defined in
+
+src/filesystem/deleteDirectorySafe.ts:15
+
+___
+
+### deleteDirectorySafeSync
+
+▸ **deleteDirectorySafeSync**(`dirpath`): `string`
+
+Deletes a directory synchronously in a safe manner. If the directory does not exist, it will simply return the directory path without throwing an error.
+
+**`Throws`**
+
+Will throw an error if the operation fails for reasons other than the directory not existing.
+
+**`Example`**
+
+```ts
+deleteDirectorySafeSync('/path/to/directory');;
+//=> undefined
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path of the directory to be deleted. |
+
+#### Returns
+
+`string`
+
+The path of the directory that was intended to be deleted.
+
+#### Defined in
+
+src/filesystem/deleteDirectorySafeSync.ts:13
+
+___
+
+### deleteDirectorySync
+
+▸ **deleteDirectorySync**(`dirpath`): `string`
+
+Deletes a directory synchronously.
+
+**`Remarks`**
+
+This function uses Node.js's `fs.rmSync` method with the options `{ recursive: true, force: true }`.
+
+**`Throws`**
+
+Will throw an error if the directory does not exist or if the process lacks permissions to delete it.
+
+**`Example`**
+
+```ts
+deleteDirectorySync('/path/to/directory');;
+//=> undefined
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dirpath` | `string` | The path of the directory to delete. |
+
+#### Returns
+
+`string`
+
+The path of the deleted directory.
+
+#### Defined in
+
+src/filesystem/deleteDirectorySync.ts:14
 
 ___
 
@@ -2210,20 +3791,121 @@ ___
 Check whether a provided windows filesystem path string is valid according to:
 https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
 
+**`Throws`**
+
+Will throw an error if the `assert` option is true and the path is invalid.
+
+**`Example`**
+
+```ts
+ensureValidWindowsPath('C:\\Users\\User\\Documents\\file.txt');;
+//=> true
+ensureValidWindowsPath('C:/Users/User/Documents/file.txt');;
+//=> false
+ensureValidWindowsPath('C:\\Users\\User\\Documents\\file.txt', { assert: true });;
+//=> throws an error
+ensureValidWindowsPath('C:\\Users\\User\\Documents\\file.txt', { extendedMaxLength: true });;
+//=> true
+```
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | `string` | The path to validate |
-| `options?` | [`ensureValidWindowsPathOptions`](/docs/index.md#ensurevalidwindowspathoptions) | - |
+| `path` | `string` | The path to validate. |
+| `options?` | [`IEnsureValidWindowsPathOptions`](/docs/interfaces/IEnsureValidWindowsPathOptions.md) | An optional object that may contain the following properties: - `assert`: If true, the function will throw an error if the path is invalid. Default is false. - `extendedMaxLength`: If true, the function will allow paths up to 32767 characters long. Default is false. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the path is valid. If the `assert` option is true, the function will throw an error instead of returning false.
+
 #### Defined in
 
-[src/libs/node/src/ensureValidWindowsPath.ts:15](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/ensureValidWindowsPath.ts#L15)
+src/filesystem/ensureValidWindowsPath.ts:24
+
+___
+
+### executeCommand
+
+▸ **executeCommand**(`command`): `Promise`<{ `stderr`: `string` ; `stdout`: `string`  }\>
+
+Executes a shell command and returns an object that contains the standard output and standard error.
+
+**`Remarks`**
+
+This function is asynchronous and returns a Promise.
+
+**`Throws`**
+
+Will throw an error if the command execution fails.
+
+**`Example`**
+
+```ts
+executeCommand('ls -la')
+  .then(result => result.stdout);
+//=> "expected stdout result"
+  .catch(error => error.stderr);;
+//=> "expected stderr result"
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `command` | `string` | The shell command to execute. |
+
+#### Returns
+
+`Promise`<{ `stderr`: `string` ; `stdout`: `string`  }\>
+
+A Promise that resolves to an object with `stdout` and `stderr` properties.
+
+#### Defined in
+
+src/node/executeCommand.ts:19
+
+___
+
+### funParseClass
+
+▸ **funParseClass**(`ctor`): [`ITsParseClassResult`](/docs/interfaces/ITsParseClassResult.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `ctor` | [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> |
+
+#### Returns
+
+[`ITsParseClassResult`](/docs/interfaces/ITsParseClassResult.md)
+
+#### Defined in
+
+src/function/funParseClass.ts:5
+
+___
+
+### funParseFunction
+
+▸ **funParseFunction**(`func`): [`ITsParseFunctionResult`](/docs/interfaces/ITsParseFunctionResult.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `func` | (...`args`: `any`[]) => `any` |
+
+#### Returns
+
+[`ITsParseFunctionResult`](/docs/interfaces/ITsParseFunctionResult.md)
+
+#### Defined in
+
+src/function/funParseFunction.ts:4
 
 ___
 
@@ -2231,28 +3913,38 @@ ___
 
 ▸ **funSetName**<`T`\>(`name`, `fun`): `T`
 
-Sets the name of a function.
+This function sets the name of a function and returns the function with the new name.
+
+**`Example`**
+
+```ts
+const myFun = () => 'Hello World';
+funSetName('newFun', myFun).name;;
+//=> 'newFun'
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the function. |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `name` | `string` | The name to set. |
-| `fun` | `T` | The function to set the name of. |
+| `name` | `string` | The new name to be set for the function. |
+| `fun` | `T` | The function whose name is to be set. |
 
 #### Returns
 
 `T`
 
+The function with the new name.
+
 #### Defined in
 
-[src/libs/function/src/funSetName.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/function/src/funSetName.ts#L6)
+src/function/funSetName.ts:13
 
 ___
 
@@ -2260,50 +3952,74 @@ ___
 
 ▸ **getCentury**(`year`): `number`
 
-Get century from year.
+This function takes a year as a parameter and returns the century it belongs to.
+
+**`Throws`**
+
+Will throw an error if the year is not a valid number.
 
 **`Example`**
 
-```js
-getCentury(2009);
-//=> 21
+```ts
+getCentury(2000);;
+//=> 20
+getCentury(1899);;
+//=> 19
 ```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `year` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `year` | `number` | The year to determine the century for. Must be a valid year number. |
 
 #### Returns
 
 `number`
 
+The century the year belongs to.
+
 #### Defined in
 
-[src/libs/date/src/getCentury.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/getCentury.ts#L11)
+src/date/getCentury.ts:15
 
 ___
 
 ### getConstructor
 
-▸ **getConstructor**(`o`): [`Constructor`](/docs/index.md#constructor)
+▸ **getConstructor**<`T`\>(`o`): [`ConstructorOf`](/docs/index.md#constructorof)<`T`\>
 
-Returns the class constructor object belonging to a given object's class of origin.
+Returns the constructor of the given object.
+
+**`Example`**
+
+```ts
+class MyClass {}
+getConstructor(new MyClass()) === MyClass;;
+//=> true
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the object. |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `o` | [`ExistentValue`](/docs/index.md#existentvalue) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `o` | `T` | The object whose constructor is to be returned. |
 
 #### Returns
 
-[`Constructor`](/docs/index.md#constructor)
+[`ConstructorOf`](/docs/index.md#constructorof)<`T`\>
+
+The constructor of the object.
 
 #### Defined in
 
-[src/libs/object/src/getConstructor.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/getConstructor.ts#L6)
+src/object/getConstructor.ts:14
 
 ___
 
@@ -2311,15 +4027,28 @@ ___
 
 ▸ **getCurrentYear**(): `number`
 
-Returns the current year (UTC full year).
+Returns the current year as a number.
+
+**`Remarks`**
+
+This function uses the `getUTCFullYear` method of the `Date` object to get the current year.
+
+**`Example`**
+
+```ts
+getCurrentYear();;
+//=> 2022
+```
 
 #### Returns
 
 `number`
 
+The current year as a number.
+
 #### Defined in
 
-[src/libs/date/src/getCurrentYear.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/getCurrentYear.ts#L4)
+src/date/getCurrentYear.ts:10
 
 ___
 
@@ -2327,46 +4056,67 @@ ___
 
 ▸ **getPrototype**(`o`): typeof `Object.prototype`
 
-Returns the prototype object belonging to a given object.
+Returns the prototype (i.e. the internal Prototype property) of the specified object.
+
+**`Remarks`**
+
+This function is a wrapper around the built-in `Object.getPrototypeOf` function.
+
+**`Example`**
+
+```ts
+getPrototype({ a: 1 });;
+//=> "{}"
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `o` | `Object` | The object to get the prototype of. |
+| `o` | `Object` | The object whose prototype is to be returned. |
 
 #### Returns
 
 typeof `Object.prototype`
 
+The prototype of the specified object.
+
 #### Defined in
 
-[src/libs/object/src/getPrototype.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/getPrototype.ts#L5)
+src/object/getPrototype.ts:11
 
 ___
 
-### htmlTableTo2dArray
+### hoursSinceDate
 
-▸ **htmlTableTo2dArray**(`element`, `headers?`): `string`[][]
+▸ **hoursSinceDate**(`date`): `number`
 
-Converts the table element's data content to a 2-dimensional array.
+Calculates the number of hours that have passed since the given date.
+
+**`Example`**
+
+```ts
+new Date('2020-01-01T00:00:00Z');;
+//=> {date object}
+hoursSinceDate(new Date('2020-01-01T00:00:00Z'));;
+//=> {number of hours since January 1, 2020}
+```
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `element` | `HTMLElement` | `undefined` | The table element |
-| `headers` | `boolean` | `true` | Whether to extract table column header data from <th> elements. |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `Date` | The date from which to calculate the number of hours passed. |
 
 #### Returns
 
-`string`[][]
+`number`
 
-Data table which is an arrays of row-arrays of cell content (string).
+The number of hours that have passed since the given date.
 
 #### Defined in
 
-[src/libs/html/src/htmlTableTo2dArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/htmlTableTo2dArray.ts#L7)
+src/date/hoursSinceDate.ts:15
 
 ___
 
@@ -2374,23 +4124,46 @@ ___
 
 ▸ **inheritStaticMembers**(`target`, `source`, `ignoreKeys?`): [`Constructor`](/docs/index.md#constructor)
 
-Copy static members from source to target.
+Copies static members from a source constructor to a target constructor, excluding specified keys.
+
+**`Throws`**
+
+If `target` or `source` is not a constructor.
+
+**`Example`**
+
+```ts
+class Parent {
+  static parentStaticMethod() {
+    return 'Parent static method'
+  }
+}
+class Child {
+  static childStaticMethod() {
+    return 'Child static method'
+  }
+}
+inheritStaticMembers(Child, Parent)
+Child.parentStaticMethod() //=> 'Parent static method'
+```
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `target` | [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> | `undefined` |
-| `source` | [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> | `undefined` |
-| `ignoreKeys` | `never`[] | `[]` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `target` | [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> | `undefined` | The target constructor to inherit static members. |
+| `source` | [`Constructor`](/docs/index.md#constructor)<`Record`<`string`, `any`\>\> | `undefined` | The source constructor to copy static members from. |
+| `ignoreKeys` | `string`[] | `[]` | An optional array of keys to exclude from copying. |
 
 #### Returns
 
 [`Constructor`](/docs/index.md#constructor)
 
+The target constructor with the inherited static members.
+
 #### Defined in
 
-[src/libs/object/src/inheritStaticMembers.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/inheritStaticMembers.ts#L6)
+src/object/inheritStaticMembers.ts:26
 
 ___
 
@@ -2398,13 +4171,20 @@ ___
 
 ▸ **intToArrayBytes**(`int`): `number`[]
 
-Converts an integer to an array of bytes
+Converts an integer to an array of bytes.
+
+**`Example`**
+
+```ts
+intToArrayBytes(1234567890);
+//=> [210, 2, 150, 73]
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `int` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `int` | `number` | The integer to convert. |
 
 #### Returns
 
@@ -2412,7 +4192,7 @@ Converts an integer to an array of bytes
 
 #### Defined in
 
-[src/libs/binary/src/intToArrayBytes.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/intToArrayBytes.ts#L4)
+src/binary/intToArrayBytes.ts:9
 
 ___
 
@@ -2420,13 +4200,20 @@ ___
 
 ▸ **intToBuffer**(`int`): `Buffer`
 
-Converts an integer to a buffer
+Converts an integer to a Buffer.
+
+**`Example`**
+
+```ts
+const int = 42;
+intToBuffer(int) //=> <Buffer 00 00 00 2a>
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `int` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `int` | `number` | The integer to convert. |
 
 #### Returns
 
@@ -2434,7 +4221,7 @@ Converts an integer to a buffer
 
 #### Defined in
 
-[src/libs/binary/src/intToBuffer.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/intToBuffer.ts#L6)
+src/binary/intToBuffer.ts:11
 
 ___
 
@@ -2442,14 +4229,24 @@ ___
 
 ▸ **intToBytes**(`int`): `number`[]
 
-Converts a positive integer to a byte array.
-Throws Error if the input is larger than 256^5 or not a positive integer.
+Converts a positive integer to an array of bytes.
+
+**`Throws`**
+
+An error if the input is not a positive integer or exceeds 256^5.
+
+**`Example`**
+
+```ts
+intToBytes(12345);
+//=> [ 251, 0, 48, 57 ]
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `int` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `int` | `number` | The positive integer to convert. |
 
 #### Returns
 
@@ -2457,29 +4254,86 @@ Throws Error if the input is larger than 256^5 or not a positive integer.
 
 #### Defined in
 
-[src/libs/binary/src/intToBytes.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/intToBytes.ts#L5)
+src/binary/intToBytes.ts:10
 
 ___
 
-### isConstructor
+### isBetween
 
-▸ **isConstructor**(`value`): `boolean`
+▸ **isBetween**(`n`, `min`, `max`, `minExcl?`, `maxExcl?`): `boolean`
 
-Determine if value is a constructor function
+Checks if a number is between two other numbers.
+
+**`Example`**
+
+```ts
+isBetween(5, 1, 10);
+//=> true
+isBetween(1, 1, 10);
+//=> true
+isBetween(1, 1, 10, true);
+//=> false
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | [`ExistentValue`](/docs/index.md#existentvalue) |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `n` | `number` | `undefined` | The number to check. |
+| `min` | `number` | `undefined` | The minimum boundary. |
+| `max` | `number` | `undefined` | The maximum boundary. |
+| `minExcl` | `boolean` | `false` | If true, the minimum boundary is exclusive. Default is false. |
+| `maxExcl` | `boolean` | `false` | If true, the maximum boundary is exclusive. Default is false. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the number is between the two boundaries.
+
 #### Defined in
 
-[src/libs/validation/src/isConstructor.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/validation/src/isConstructor.ts#L7)
+src/number/isBetween.ts:23
+
+___
+
+### isConstructor
+
+▸ **isConstructor**<`T`\>(`value`): `boolean`
+
+Checks if the given value is a constructor.
+
+**`Example`**
+
+```ts
+class MyClass {}
+isConstructor(MyClass);;
+//=> true
+isConstructor('Not a class');;
+//=> false
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the value to check. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `T` | The value to check. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the value is a constructor or not.
+
+#### Defined in
+
+src/validation/isConstructor.ts:16
 
 ___
 
@@ -2487,21 +4341,108 @@ ___
 
 ▸ **isEven**(`n`): `boolean`
 
-Returns true if a given interger is even.
+Checks if a number is even.
+
+**`Remarks`**
+
+This function will throw an error if the provided value is not an integer.
+
+**`Throws`**
+
+Will throw an error if the provided value is not an integer.
+
+**`Example`**
+
+```ts
+isEven(2);
+//=> true
+isEven(3);
+//=> false
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n` | `number` | The number to check. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the number is even.
+
 #### Defined in
 
-[src/libs/number/src/isEven.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/isEven.ts#L4)
+src/number/isEven.ts:14
+
+___
+
+### isGT
+
+▸ **isGT**(`number`, `lowerBound`): `boolean`
+
+Checks if a number is greater than a given lower bound.
+
+**`Example`**
+
+```ts
+isGT(5, 3);;
+//=> true
+isGT(2, 3);;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `number` | `number` | The number to check. |
+| `lowerBound` | `number` | The lower bound to compare against. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the number is greater than the lower bound.
+
+#### Defined in
+
+src/number/isGT.ts:13
+
+___
+
+### isGTE
+
+▸ **isGTE**(`number`, `lowerBound`): `boolean`
+
+Checks if a number is greater than or equal to a lower bound.
+
+**`Example`**
+
+```ts
+isGTE(5, 3); ;
+//=> true
+isGTE(2, 3); ;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `number` | `number` | The number to check. |
+| `lowerBound` | `number` | The lower bound to compare against. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the number is greater than or equal to the lower bound.
+
+#### Defined in
+
+src/number/isGTE.ts:13
 
 ___
 
@@ -2509,21 +4450,37 @@ ___
 
 ▸ **isHex**(`s`): `boolean`
 
-Determine whether a string is a hexadecimal string.
+Checks if a string is a hexadecimal number.
+Understands prefixes for hex colors, hex decimal and regexp unicode hex.
+
+**`Remarks`**
+
+This function uses a regular expression to test if the input string is a hexadecimal number.
+
+**`Example`**
+
+```ts
+isHex('123abc');
+//=> true
+isHex('123g');
+//=> false
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `s` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `s` | `string` | The string to be tested. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the string is a hexadecimal number.
+
 #### Defined in
 
-[src/libs/validation/src/isHex.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/validation/src/isHex.ts#L4)
+src/validation/isHex.ts:16
 
 ___
 
@@ -2531,21 +4488,120 @@ ___
 
 ▸ **isHexOrUnicode**(`s`): `boolean`
 
-Determine whether a string is either a hexadecimal or a '\u' or '0x' prepended unicode hex string.
+Checks if a given string is a hexadecimal or unicode.
+
+**`Remarks`**
+
+This function uses a regular expression to test if the input string is a hexadecimal or unicode.
+
+**`Example`**
+
+```ts
+isHexOrUnicode('0x123');
+//=> true
+isHexOrUnicode('u123');
+//=> true
+isHexOrUnicode('123');
+//=> false
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `s` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `s` | `string` | The string to be tested. |
 
 #### Returns
 
 `boolean`
 
+A boolean value indicating whether the string is a hexadecimal or unicode.
+
 #### Defined in
 
-[src/libs/validation/src/isHexOrUnicode.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/validation/src/isHexOrUnicode.ts#L4)
+src/validation/isHexOrUnicode.ts:15
+
+___
+
+### isInRange
+
+▸ **isInRange**(`n`, `range`, `exclusive?`): `boolean`
+
+Checks if a number is within a specified range.
+
+**`Example`**
+
+```ts
+isInRange(5, [1, 10]);
+//=> true
+isInRange(1, [1, 10]);
+//=> true
+isInRange(10, [1, 10]);
+//=> true
+isInRange(0, [1, 10]);
+//=> false
+isInRange(11, [1, 10]);
+//=> false
+isInRange(1, [1, 10], [true, false]);
+//=> false
+isInRange(10, [1, 10], [false, true]);
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n` | `number` | The number to check. |
+| `range` | [`number`, `number`] | The range to check within. It is an array of two numbers, where the first number is the start of the range and the second number is the end of the range. |
+| `exclusive` | [`boolean`, `boolean`] | An optional parameter that specifies whether the start and end of the range are exclusive. It is an array of two booleans, where the first boolean corresponds to the start of the range and the second boolean corresponds to the end of the range. If a boolean is true, the corresponding end of the range is exclusive. Default is [false, false], which means both ends of the range are inclusive. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the number is within the range.
+
+#### Defined in
+
+src/number/isInRange.ts:26
+
+___
+
+### isInteger
+
+▸ **isInteger**(`int`): `boolean`
+
+Checks if the provided number is an integer.
+
+**`Remarks`**
+
+This function uses the built-in `Number.isInteger` method.
+
+**`Example`**
+
+```ts
+isInteger(5);
+//=> true
+isInteger(5.5);
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `int` | `number` | The number to check. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the provided number is an integer.
+
+#### Defined in
+
+src/validation/isInteger.ts:13
 
 ___
 
@@ -2553,7 +4609,24 @@ ___
 
 ▸ **isIterable**<`T`\>(`o`): `boolean`
 
-Check if an object is iterable
+Checks if the given object is iterable.
+
+**`Remarks`**
+
+This function checks if the given object is iterable by checking if the object is not null, is an object, and has a function for the Symbol.iterator property.
+
+**`Typeparam`**
+
+T - The type of the object to check.
+
+**`Example`**
+
+```ts
+isIterable([1, 2, 3]);;
+//=> true
+isIterable(5);;
+//=> false
+```
 
 #### Type parameters
 
@@ -2565,15 +4638,90 @@ Check if an object is iterable
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `o` | `T` | The object to check |
+| `o` | `T` | The object to check. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the object is iterable.
+
 #### Defined in
 
-[src/libs/validation/src/isIterable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/validation/src/isIterable.ts#L6)
+src/validation/isIterable.ts:14
+
+___
+
+### isLT
+
+▸ **isLT**(`number`, `upperBound`): `boolean`
+
+Checks if a number is less than an upper bound.
+
+**`Remarks`**
+
+This function is part of the `NumberUtils` library.
+
+**`Example`**
+
+```ts
+import { isLT } from './NumberUtils';
+isLT(5, 10); ;
+//=> true
+isLT(10, 5); ;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `number` | `number` | The number to check. |
+| `upperBound` | `number` | The upper bound to compare against. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the number is less than the upper bound.
+
+#### Defined in
+
+src/number/isLT.ts:15
+
+___
+
+### isLTE
+
+▸ **isLTE**(`number`, `upperBound`): `boolean`
+
+Checks if a number is less than or equal to an upper bound.
+
+**`Example`**
+
+```ts
+isLTE(5, 10); ;
+//=> true
+isLTE(15, 10);;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `number` | `number` | The number to check. |
+| `upperBound` | `number` | The upper bound to compare against. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the number is less than or equal to the upper bound.
+
+#### Defined in
+
+src/number/isLTE.ts:13
 
 ___
 
@@ -2581,21 +4729,181 @@ ___
 
 ▸ **isLeapYear**(`year`): `boolean`
 
-Check whether a given year is a leap year.
+Checks if a given year is a leap year.
+A leap year is exactly divisible by 4 except for century years (years ending with 00).
+The century year is a leap year only if it is perfectly divisible by 400.
+
+**`Throws`**
+
+Will throw an error if the year is not a valid number.
+
+**`Example`**
+
+```ts
+isLeapYear(2000); ;
+//=> true
+isLeapYear(2001); ;
+//=> false
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `year` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `year` | `number` | The year to check. Must be a valid year number. |
 
 #### Returns
 
 `boolean`
 
+`true` if the year is a leap year, `false` otherwise.
+
 #### Defined in
 
-[src/libs/date/src/isLeapYear.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/isLeapYear.ts#L6)
+src/date/isLeapYear.ts:17
+
+___
+
+### isMultiTsDocTag
+
+▸ **isMultiTsDocTag**(`tag`): `boolean`
+
+Checks if the provided tag is a multi TSDoc tag.
+
+**`Remarks`**
+
+This function is case-insensitive.
+
+**`Example`**
+
+```ts
+isMultiTsDocTag('param');;
+//=> true
+isMultiTsDocTag('example');;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `tag` | `string` | The tag to check. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the tag is a multi TSDoc tag.
+
+#### Defined in
+
+src/tsdoc/isMultiTsDocTag.ts:13
+
+___
+
+### isNamedMultiTsDocTag
+
+▸ **isNamedMultiTsDocTag**(`tag`): `boolean`
+
+Checks if the provided tag is a named multi TSDoc tag.
+Named multi TSDoc tags are 'param' and 'property'.
+
+**`Example`**
+
+```ts
+isNamedMultiTsDocTag('param');;
+//=> true
+isNamedMultiTsDocTag('returns');;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `tag` | `string` | The tag to check. |
+
+#### Returns
+
+`boolean`
+
+Returns true if the tag is a named multi TSDoc tag, false otherwise.
+
+#### Defined in
+
+src/tsdoc/isNamedMultiTsDocTag.ts:13
+
+___
+
+### isNamedTsDocTag
+
+▸ **isNamedTsDocTag**(`tag`): `boolean`
+
+Checks if the given tag is a named TSDoc tag.
+
+**`Example`**
+
+```ts
+isNamedTsDocTag('param');;
+//=> true
+isNamedTsDocTag('random');;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `tag` | `string` | The tag to check. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the tag is a named TSDoc tag.
+
+#### Defined in
+
+src/tsdoc/isNamedTsDocTag.ts:14
+
+___
+
+### isNegativeInteger
+
+▸ **isNegativeInteger**(`int`): `boolean`
+
+Checks if a given number is a negative integer.
+
+**`Remarks`**
+
+This function uses the `Number.isInteger` method to check if the input is an integer, and then checks if it is less than 0.
+
+**`Example`**
+
+```ts
+isNegativeInteger(-5); ;
+//=> true
+isNegativeInteger(0);  ;
+//=> false
+isNegativeInteger(5);  ;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `int` | `number` | The number to check. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the input is a negative integer.
+
+#### Defined in
+
+src/validation/isNegativeInteger.ts:15
 
 ___
 
@@ -2603,21 +4911,36 @@ ___
 
 ▸ **isNumericString**(`string`): `boolean`
 
-Checks if a string is a number.
+Checks if a given string is numeric.
+
+**`Remarks`**
+
+This function will return true if the string can be converted to a finite number, false otherwise.
+
+**`Example`**
+
+```ts
+isNumericString("123");;
+//=> true
+isNumericString("abc");;
+//=> false
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `string` | `string` | input string |
+| `string` | `string` | The string to be checked. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the string is numeric or not.
+
 #### Defined in
 
-[src/libs/validation/src/isNumericString.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/validation/src/isNumericString.ts#L5)
+src/validation/isNumericString.ts:13
 
 ___
 
@@ -2625,27 +4948,38 @@ ___
 
 ▸ **isObject**<`T`\>(`value`): `boolean`
 
-Determine wheter the argument is a Object (is typeof object but not null).
+Checks if the provided value is an object.
+
+**`Example`**
+
+```ts
+isObject({});;
+//=> true
+isObject(123);;
+//=> false
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the value to check. |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `T` | The value to check. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the provided value is an object.
+
 #### Defined in
 
-[src/libs/validation/src/isObject.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/validation/src/isObject.ts#L4)
+src/validation/isObject.ts:13
 
 ___
 
@@ -2653,21 +4987,118 @@ ___
 
 ▸ **isOdd**(`n`): `boolean`
 
-Returns true if a given interger is odd.
+Checks if a number is odd.
+
+**`Remarks`**
+
+This function will throw an error if the provided value is not an integer.
+
+**`Throws`**
+
+Will throw an error if the input is not an integer.
+
+**`Example`**
+
+```ts
+isOdd(5);
+//=> true
+isOdd(4);
+//=> false
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n` | `number` | The number to check. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the number is odd.
+
 #### Defined in
 
-[src/libs/number/src/isOdd.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/isOdd.ts#L4)
+src/number/isOdd.ts:14
+
+___
+
+### isPositiveInteger
+
+▸ **isPositiveInteger**(`int`): `boolean`
+
+Checks if a given number is a positive integer.
+
+**`Remarks`**
+
+This function uses the `Number.isInteger` method and a simple greater than zero check.
+
+**`Example`**
+
+```ts
+isPositiveInteger(5); ;
+//=> true
+isPositiveInteger(-5);;
+//=> false
+isPositiveInteger(0); ;
+//=> false
+isPositiveInteger(5.5);;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `int` | `number` | The number to check. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the input is a positive integer.
+
+#### Defined in
+
+src/validation/isPositiveInteger.ts:17
+
+___
+
+### isPowerOfTen
+
+▸ **isPowerOfTen**(`integer`): `boolean`
+
+Checks if a given integer is a power of ten.
+
+**`Remarks`**
+
+This function uses regular expressions to test if the integer is a power of ten.
+
+**`Example`**
+
+```ts
+isPowerOfTen(1000); ;
+//=> true
+isPowerOfTen(500);  ;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `integer` | `number` | The integer to be checked. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the integer is a power of ten.
+
+#### Defined in
+
+src/validation/isPowerOfTen.ts:15
 
 ___
 
@@ -2675,49 +5106,79 @@ ___
 
 ▸ **isPrototype**<`T`\>(`value`): `boolean`
 
-Determine wheter a given object is a prototype-object (obj.constructor.prototype === obj).
+Checks if the given value is a prototype.
+
+**`Example`**
+
+```ts
+isPrototype({});;
+//=> false
+isPrototype(Object.getPrototypeOf({}));;
+//=> true
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
+| Name | Description |
 | :------ | :------ |
-| `value` | `T` |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[src/libs/validation/src/isPrototype.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/validation/src/isPrototype.ts#L4)
-
-___
-
-### isSocialSecurityNumberDK
-
-▸ **isSocialSecurityNumberDK**(`s`): `boolean`
-
-Determine whether a string is a valid Danish social security number.
+| `T` | The type of the value to check. |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `s` | `string` | String to test |
+| `value` | `T` | The value to check. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the value is a prototype.
+
 #### Defined in
 
-[src/libs/parse/src/parseSocialSecurityNumberDK.ts:51](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/parse/src/parseSocialSecurityNumberDK.ts#L51)
+src/validation/isPrototype.ts:13
+
+___
+
+### isSocialSecurityNumberDK
+
+▸ **isSocialSecurityNumberDK**(`ssn`): `boolean`
+
+Checks if the given string is a valid Danish Social Security Number (SSN).
+
+**`Remarks`**
+
+This function uses the `parseSocialSecurityNumberDK` function to validate the SSN.
+
+**`Throws`**
+
+Will throw an error if the `parseSocialSecurityNumberDK` function throws an error.
+
+**`Example`**
+
+```ts
+isSocialSecurityNumberDK('123456-7890');;
+//=> true
+isSocialSecurityNumberDK('123456-789');;
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `ssn` | `string` | The string to be checked. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the string is a valid Danish SSN.
+
+#### Defined in
+
+src/validation/isSocialSecurityNumberDK.ts:16
 
 ___
 
@@ -2725,25 +5186,40 @@ ___
 
 ▸ **isValidDate**(`year?`, `month?`, `day?`, `hour?`, `minute?`, `second?`, `millisecond?`): `boolean`
 
+Checks if the provided date and time values form a valid date.
+
+**`Example`**
+
+```ts
+isValidDate(2021, 12, 31, 23, 59, 59, 999);;
+//=> true
+isValidDate('2021', '12', '31', '23', '59', '59', '999');;
+//=> true
+isValidDate(2021, 13, 31, 23, 59, 59, 999);;
+//=> false
+```
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `year?` | `string` \| `number` |
-| `month?` | `string` \| `number` |
-| `day?` | `string` \| `number` |
-| `hour?` | `string` \| `number` |
-| `minute?` | `string` \| `number` |
-| `second?` | `string` \| `number` |
-| `millisecond?` | `string` \| `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `year?` | `string` \| `number` | The year of the date. |
+| `month?` | `string` \| `number` | The month of the date. |
+| `day?` | `string` \| `number` | The day of the date. |
+| `hour?` | `string` \| `number` | The hour of the time. |
+| `minute?` | `string` \| `number` | The minute of the time. |
+| `second?` | `string` \| `number` | The second of the time. |
+| `millisecond?` | `string` \| `number` | The millisecond of the time. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the provided date and time values form a valid date.
+
 #### Defined in
 
-[src/libs/date/src/isValidDate.ts:1](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/isValidDate.ts#L1)
+src/date/isValidDate.ts:20
 
 ___
 
@@ -2751,23 +5227,36 @@ ___
 
 ▸ **isValidDateDay**(`day`, `month`, `year?`): `boolean`
 
-Returns whether a day of month is a valid date for the given month and year.
+Checks if the given day is a valid day of the month.
+
+**`Example`**
+
+```ts
+isValidDateDay(31, 1, 2000);
+//=> true
+isValidDateDay(31, 2, 2000);
+//=> false
+isValidDateDay(29, 2);
+//=> true
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `day` | `number` |
-| `month` | `number` |
-| `year?` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `day` | `number` | The day of the month. Must be an integer. |
+| `month` | `number` | The month of the year. Must be an integer. |
+| `year?` | `number` | The year. Optional parameter. If not provided, the function will not check for leap years. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the day is valid for the given month and year.
+
 #### Defined in
 
-[src/libs/date/src/isValidDateDay.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/isValidDateDay.ts#L6)
+src/date/isValidDateDay.ts:18
 
 ___
 
@@ -2775,21 +5264,32 @@ ___
 
 ▸ **isValidDateMonth**(`month`): `boolean`
 
-Check if a given month number is valid.
+Checks if the provided month is a valid month number (1-12).
+
+**`Example`**
+
+```ts
+isValidDateMonth(5);;
+//=> true
+isValidDateMonth(13);;
+//=> false
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `month` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `month` | `number` | The month number to validate. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the month is valid.
+
 #### Defined in
 
-[src/libs/date/src/isValidDateMonth.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/isValidDateMonth.ts#L4)
+src/date/isValidDateMonth.ts:12
 
 ___
 
@@ -2797,21 +5297,105 @@ ___
 
 ▸ **isValidDateYear**(`year`): `boolean`
 
-Checks if the given year is a valid year > 0.
+Checks if the provided year is a valid date year.
+
+**`Remarks`**
+
+This function will return true if the year is a positive integer, false otherwise.
+
+**`Example`**
+
+```ts
+isValidDateYear(2020); ;
+//=> true
+isValidDateYear(-2020);;
+//=> false
+isValidDateYear(2020.5);;
+//=> false
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `year` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `year` | `number` | The year to be checked. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the year is valid or not.
+
 #### Defined in
 
-[src/libs/date/src/isValidDateYear.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/isValidDateYear.ts#L4)
+src/date/isValidDateYear.ts:15
+
+___
+
+### isValidNumber
+
+▸ **isValidNumber**(`number`): `boolean`
+
+Checks if the provided value is a valid number.
+
+**`Remarks`**
+
+This function checks if the provided value is a finite number and not NaN.
+
+**`Example`**
+
+```ts
+isValidNumber(123);
+//=> true
+isValidNumber(NaN);
+//=> false
+isValidNumber(Infinity);
+//=> false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `number` | `number` | The value to check. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the provided value is a valid number.
+
+#### Defined in
+
+src/validation/isValidNumber.ts:15
+
+___
+
+### isValidTsDocComment
+
+▸ **isValidTsDocComment**(`code`): `boolean`
+
+Checks if the provided code string is a valid TSDoc comment.
+
+**`Remarks`**
+
+This function tests each line of the provided code string against a regular expression that matches the TSDoc comment syntax.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The source code string to be checked. |
+
+#### Returns
+
+`boolean`
+
+A boolean indicating whether the provided code string is a valid TSDoc comment.
+
+#### Defined in
+
+src/tsdoc/isValidTsDocComment.ts:9
 
 ___
 
@@ -2819,22 +5403,38 @@ ___
 
 ▸ **isoDateTimestamp**(`date?`): `string`
 
-Returns an ISO date string but only digits remaining.
-This will correctly sort in chronological order.
+Converts a given date to an ISO date timestamp string.
+If no date is provided, the current date and time will be used.
+
+**`Example`**
+
+```ts
+isoDateTimestamp(new Date('2020-01-01T00:00:00Z'));;
+//=> "20200101T000000Z"
+```
+
+**`Example`**
+
+```ts
+const timestamp = isoDateTimestamp();
+console.log(timestamp); // Outputs the current date and time in ISO format, e.g. "20210520T102030Z"
+```
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `date` | `Date` | The date to convert to an ISO date string if not current time. |
+| Name | Type |
+| :------ | :------ |
+| `date` | `Date` |
 
 #### Returns
 
 `string`
 
+The ISO date timestamp string.
+
 #### Defined in
 
-[src/libs/date/src/isoDateTimestamp.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/isoDateTimestamp.ts#L6)
+src/date/isoDateTimestamp.ts:15
 
 ___
 
@@ -2842,62 +5442,117 @@ ___
 
 ▸ **isoDateTimestampForFilename**(`date?`): `string`
 
-Returns a modified ISO date string: YYYY-MM-DD-HH-mm-SS-sss
-This will correctly sort in chronological order.
+This function takes a date object and returns a string in ISO format suitable for filenames.
+If no date is provided, it uses the current date and time.
+
+**`Example`**
+
+```ts
+isoDateTimestampForFilename(new Date('2022-01-01T00:00:00Z'));;
+//=> "2022-01-01-00-00-00-000"
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | `Date` | The date to convert if not current time |
+| `date` | `Date` | The date object to be converted. Defaults to the current date and time. |
 
 #### Returns
 
 `string`
 
+A string in the format "YYYY-MM-DD-HH-MM-SS-SSS".
+
 #### Defined in
 
-[src/libs/date/src/isoDateTimestampForFilename.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/isoDateTimestampForFilename.ts#L6)
+src/date/isoDateTimestampForFilename.ts:11
+
+___
+
+### iterableFirstElement
+
+▸ **iterableFirstElement**<`T`\>(`iterable`): `T` \| `undefined`
+
+Returns the first element of an iterable object.
+
+**`Example`**
+
+```ts
+iterableFirstElement([1, 2, 3, 4, 5]);;
+//=> 1
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the iterable. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `iterable` | `Iterable`<`T`\> | The iterable object. |
+
+#### Returns
+
+`T` \| `undefined`
+
+The first element of the iterable object, or `undefined` if the iterable is empty.
+
+#### Defined in
+
+src/object/iterableFirstElement.ts:11
 
 ___
 
 ### iteratePrototypeChain
 
-▸ **iteratePrototypeChain**(`object`): `Generator`<[`Obj`](/docs/index.md#obj)\>
+▸ **iteratePrototypeChain**(`object`): `Generator`<`Record`<`string`, `any`\>\>
 
 Iterate the prototype chain of a given object.
 
+**`Remarks`**
+
+This function uses the `Reflect.getPrototypeOf` method to traverse the prototype chain.
+It also uses the `isPrototype` and `isConstructor` helper functions to determine whether
+the given object is a prototype or a constructor function.
+
+**`Throws`**
+
+If the provided object is not an object or a function, a TypeError will be thrown.
+
 **`Example`**
 
-```js
+```ts
 class A {}
 class B extends A {}
 class C extends B {}
 const instance = new C()
-
 iteratePrototypeChain(C)
 //=> [ C, B, A, Function.prototype, Object.prototype]
-
 iteratePrototypeChain(C.prototype)
 //=> [C.prototype, B.prototype, A.prototype, Object.prototype]
-
 iteratePrototypeChain(instance)
 //=> [instance, C.prototype, B.prototype, A.prototype, Object.prototype]
 ```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `object` | [`Obj`](/docs/index.md#obj) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `object` | `Record`<`string`, `any`\> | The object whose prototype chain is to be iterated over. |
 
 #### Returns
 
-`Generator`<[`Obj`](/docs/index.md#obj)\>
+`Generator`<`Record`<`string`, `any`\>\>
+
+A generator that yields each prototype in the chain.
 
 #### Defined in
 
-[src/libs/object/src/iteratePrototypeChain.ts:24](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/iteratePrototypeChain.ts#L24)
+src/object/iteratePrototypeChain.ts:25
 
 ___
 
@@ -2905,62 +5560,41 @@ ___
 
 ▸ **letterToCol**(`A`, `zeroIndexed?`): `number`
 
-Convert spreadsheet column letter(s) to column-number
+Converts a column letter (e.g., A, B, C, ..., Z, AA, AB, ...) to a column number.
+
+**`Throws`**
+
+Will throw an error if the input column letter is invalid.
+
+**`Example`**
+
+```ts
+letterToCol('A');;
+//=> 1
+letterToCol('Z');;
+//=> 26
+letterToCol('AA');;
+//=> 27
+letterToCol('AB', true);;
+//=> 27
+```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `A` | `string` | `undefined` | Column letter |
-| `zeroIndexed` | `boolean` | `false` | Whether or not column number start at one or zero. |
+| `A` | `string` | `undefined` | The column letter to convert. |
+| `zeroIndexed` | `boolean` | `false` | Optional. If true, the function will return a zero-indexed column number. Default is false. |
 
 #### Returns
 
 `number`
 
-#### Defined in
-
-[src/libs/spreadsheet/src/letterToCol.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/spreadsheet/src/letterToCol.ts#L9)
-
-___
-
-### mapGetOrDefault
-
-▸ **mapGetOrDefault**<`K`, `V`\>(`map`, `key`, `defaultValue`): `V`
-
-Returns a value from a map, while setting a given default value before returning it, if the key is not present.
-
-**`Example`**
-
-```ts
-const map = new Map<string, number>()
-map.set('key', 1)
-mapGetOrDefault(map, 'key', 2) // Output: 1
-mapGetOrDefault(map, 'nonexistentKey', 2) // Output: 2
-```
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `K` |
-| `V` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `map` | `Map`<`K`, `V`\> | map to get value from |
-| `key` | `K` | key to get value for |
-| `defaultValue` | `V` | default value to set if key is not present |
-
-#### Returns
-
-`V`
+The column number corresponding to the input column letter.
 
 #### Defined in
 
-[src/libs/map/src/mapGetOrDefault.ts:14](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/map/src/mapGetOrDefault.ts#L14)
+src/spreadsheet/letterToCol.ts:18
 
 ___
 
@@ -2980,10 +5614,10 @@ mapGetOrElse(map, 'nonexistentKey', () => 2) // Output: 2
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `K` |
-| `V` |
+| Name | Description |
+| :------ | :------ |
+| `K` | The type of the keys in the Map. |
+| `V` | - |
 
 #### Parameters
 
@@ -2997,146 +5631,273 @@ mapGetOrElse(map, 'nonexistentKey', () => 2) // Output: 2
 
 `V`
 
+The value retrieved from the Map or generated by the callback function.
+
 #### Defined in
 
-[src/libs/map/src/mapGetOrElse.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/map/src/mapGetOrElse.ts#L13)
+src/map/mapGetOrElse.ts:14
+
+___
+
+### mapReverse
+
+▸ **mapReverse**<`K`, `V`\>(`map`): `Map`<`K`, `V`\>
+
+Reverses the order of entries in a Map.
+
+**`Remarks`**
+
+This function creates a new Map with the entries of the original Map in reverse order.
+The original Map is not modified.
+
+**`Typeparam`**
+
+K - The type of the keys in the Map.
+
+**`Typeparam`**
+
+V - The type of the values in the Map.
+
+**`Example`**
+
+```ts
+mapReverse(new Map([['a', 1], ['b', 2], ['c', 3]]));;
+//=> [['c', 3], ['b', 2], ['a', 1]]
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `K` |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `map` | `Map`<`K`, `V`\> | The Map to reverse. |
+
+#### Returns
+
+`Map`<`K`, `V`\>
+
+A new Map with the entries of the original Map in reverse order.
+
+#### Defined in
+
+src/map/mapReverse.ts:14
 
 ___
 
 ### mapUpdate
 
-▸ **mapUpdate**<`K`, `V`\>(`map`, `key`, `fun`): `Map`<`K`, `V`\>
+▸ **mapUpdate**<`K`, `V`\>(`map`, `key`, `fun`): `V`
 
-Updates a value in a map, if the key is present.
+Updates the value for the given key in the map using the provided function.
+If the key does not exist in the map, the function will be called with `undefined` as the value.
 
 **`Example`**
 
 ```ts
 const map = new Map<string, number>()
-map.set('key', 1)
-mapUpdate(map, 'key', (value) => value! + 1) // Output: Map { 'key' => 2 }
-mapUpdate(map, 'nonexistentKey', (value) => value! + 1) // Output: Map {}
+map.set('a', 1)
+mapUpdate(map, 'a', (value, key) => value !== undefined ? value + 1 : 0)
+map.get('a')
+//=> 2
 ```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `K` |
-| `V` |
+| Name | Description |
+| :------ | :------ |
+| `K` | The type of the keys in the map. |
+| `V` | - |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `map` | `Map`<`K`, `V`\> | map to get value from |
-| `key` | `K` | key to get value for |
-| `fun` | (`value?`: `V`) => `V` | function to update value with |
+| `map` | `Map`<`K`, `V`\> | The map to update. |
+| `key` | `K` | The key of the value to update. |
+| `fun` | (`value`: `undefined` \| `V`, `key`: `K`) => `V` | The function to use to update the value. This function takes the current value (or `undefined` if the key does not exist) and the key as arguments, and should return the new value. |
 
 #### Returns
 
-`Map`<`K`, `V`\>
+`V`
+
+- The new value for the key.
 
 #### Defined in
 
-[src/libs/map/src/mapUpdate.ts:14](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/map/src/mapUpdate.ts#L14)
+src/map/mapUpdate.ts:19
 
 ___
 
-### mapUpdateDefault
+### markdownWrapCodeBlock
 
-▸ **mapUpdateDefault**<`K`, `V`\>(`map`, `key`, `defaultValue`, `fun`): `Map`<`K`, `V`\>
+▸ **markdownWrapCodeBlock**(`code`, `language?`): `string`
 
-For a given map, set a default value if the key is not present, then updates the value now definitely at key.
+Wraps a given code string in a markdown code block.
+
+**`Remarks`**
+
+This function is useful when you want to format a string of code to be displayed in markdown.
 
 **`Example`**
 
-```js
-const m = new Map([
-  ['a', 1],
-  ['b', 2],
-  ['c', 2],
-])
-for (const key of [...m.keys(), 'd', 'e']) {
-  mapUpdateDefault(m, key, 0, (v) => v + 1)
-}
-console.log(m)
-//=> Map(5) { 'a' => 2, 'b' => 3, 'c' => 3, 'd' => 1, 'e' => 1 }
+```ts
+markdownWrapCodeBlock("console.log('Hello, World!')", "javascript");;
+//=> "```javascript\nconsole.log('Hello, World!')\n```"
 ```
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `K` |
-| `V` |
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `map` | `Map`<`K`, `V`\> | map to get value from |
-| `key` | `K` | key to get value for |
-| `defaultValue` | `V` | default value to set if key is not present |
-| `fun` | (`value`: `V`) => `V` | function to update value with |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `code` | `string` | `undefined` | The code string to be wrapped. |
+| `language` | `string` | `''` | The language of the code string. Default is an empty string. |
 
 #### Returns
 
-`Map`<`K`, `V`\>
+`string`
+
+The code string wrapped in a markdown code block.
 
 #### Defined in
 
-[src/libs/map/src/mapUpdateDefault.ts:21](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/map/src/mapUpdateDefault.ts#L21)
+src/parse/markdownWrapCodeBlock.ts:12
 
 ___
 
 ### memoryUsage
 
-▸ **memoryUsage**(): [`IMemoryUsageValues`](/docs/interfaces/IMemoryUsageValues.md)
+▸ **memoryUsage**(): [`MemoryUsageResult`](/docs/index.md#memoryusageresult)
 
-Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
+**`Example`**
+
+```ts
+memoryUsage().processAllocationMB;;
+//=> {result in MB}
+memoryUsage().heapAllocationMB;;
+//=> {result in MB}
+memoryUsage().heapUsedMB;;
+//=> {result in MB}
+memoryUsage().extenalV8;;
+//=> {result in MB}
+```
 
 #### Returns
 
-[`IMemoryUsageValues`](/docs/interfaces/IMemoryUsageValues.md)
+[`MemoryUsageResult`](/docs/index.md#memoryusageresult)
+
+An object with the following properties:
+- `processAllocationMB`: The amount of memory that Node.js has obtained from the system.
+- `heapAllocationMB`: The amount of memory V8 has allocated for the heap. This is just the memory used by the heap itself, not including the memory used by the objects it contains.
+- `heapUsedMB`: The amount of memory used by application data on the V8 heap.
+- `extenalV8`: The amount of memory used by C++ objects bound to JavaScript objects managed by V8.
+Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:21](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/memoryUsage.ts#L21)
+src/node/memoryUsage.ts:21
 
 ___
 
-### memoryUsageDkFormat
+### minutesSinceDate
 
-▸ **memoryUsageDkFormat**(): [`IMemoryUsageValuesFormatted`](/docs/interfaces/IMemoryUsageValuesFormatted.md)
+▸ **minutesSinceDate**(`date`): `number`
 
-Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
-The values are formatted strings in the style of 5.000,00
+Calculates the number of minutes that have passed since the given date.
+
+**`Example`**
+
+```ts
+new Date('2020-01-01T00:00:00Z');;
+//=> {date}
+minutesSinceDate(new Date('2020-01-01T00:00:00Z'));;
+//=> {number of minutes since 2020-01-01T00:00:00Z}
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `Date` | The date from which to calculate the number of minutes that have passed. |
 
 #### Returns
 
-[`IMemoryUsageValuesFormatted`](/docs/interfaces/IMemoryUsageValuesFormatted.md)
+`number`
+
+The number of minutes that have passed since the given date.
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:46](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/memoryUsage.ts#L46)
+src/date/minutesSinceDate.ts:15
 
 ___
 
-### memoryUsageUsFormat
+### monthsSinceDate
 
-▸ **memoryUsageUsFormat**(): [`IMemoryUsageValuesFormatted`](/docs/interfaces/IMemoryUsageValuesFormatted.md)
+▸ **monthsSinceDate**(`date`): `number`
 
-Returns an object about the process memory usage for: process allocation, heap allocation, heap, v8.
-The values are formatted strings in the style of 5,000.00
+Calculates the number of months that have passed since the provided date.
+
+**`Example`**
+
+```ts
+new Date(2020, 0, 1);;
+//=> {date}
+monthsSinceDate(new Date(2020, 0, 1));;
+//=> {number of months since January 1, 2020}
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `Date` | The date from which to calculate the number of passed months. |
 
 #### Returns
 
-[`IMemoryUsageValuesFormatted`](/docs/interfaces/IMemoryUsageValuesFormatted.md)
+`number`
+
+The number of months that have passed since the provided date.
 
 #### Defined in
 
-[src/libs/node/src/memoryUsage.ts:54](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/memoryUsage.ts#L54)
+src/date/monthsSinceDate.ts:15
+
+___
+
+### msSinceDate
+
+▸ **msSinceDate**(`date`): `number`
+
+Calculates the number of milliseconds that have passed since the provided date.
+
+**`Example`**
+
+```ts
+msSinceDate(new Date('2020-01-01'));;
+//=> {number of milliseconds since 2020-01-01}
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `Date` | The date from which to calculate the elapsed time. |
+
+#### Returns
+
+`number`
+
+The number of milliseconds that have passed since the provided date.
+
+#### Defined in
+
+src/date/msSinceDate.ts:10
 
 ___
 
@@ -3146,6 +5907,27 @@ ___
 
 Normalize a file extension to the form: .[ext]
 Anything before the last "." is not returned.
+
+**`Throws`**
+
+If the extension contains illegal characters.
+
+**`Example`**
+
+```ts
+normalizeFileExtension('jpg');;
+//=> '.jpg'
+normalizeFileExtension('.jpg');;
+//=> '.jpg'
+normalizeFileExtension('..jpg');;
+//=> '.jpg'
+normalizeFileExtension('');;
+//=> ''
+normalizeFileExtension('.');;
+//=> ''
+normalizeFileExtension('jpg|png');;
+//=> Error
+```
 
 #### Parameters
 
@@ -3157,9 +5939,11 @@ Anything before the last "." is not returned.
 
 `string`
 
+The normalized file extension.
+
 #### Defined in
 
-[src/libs/node/src/normalizeFileExtension.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/normalizeFileExtension.ts#L8)
+src/filesystem/normalizeFileExtension.ts:24
 
 ___
 
@@ -3183,29 +5967,7 @@ Normalize line lengths. Tries to merge sentences with its neighboring sentences 
 
 #### Defined in
 
-[src/libs/nlp/src/normalizeLineLengths.ts:40](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/nlp/src/normalizeLineLengths.ts#L40)
-
-___
-
-### numApproximateLog10
-
-▸ **numApproximateLog10**(`n`): `number`
-
-Approximate the logarithm base 10 of a small integer.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `n` | `number` |
-
-#### Returns
-
-`number`
-
-#### Defined in
-
-[src/libs/number/src/numApproximateLog10.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/numApproximateLog10.ts#L6)
+src/nlp/normalizeLineLengths.ts:7
 
 ___
 
@@ -3216,263 +5978,115 @@ ___
 Get number of days that there are in a given month of a given year.
 Note: The number of days in february depends on whether it is leap year. If no year is given, it is assumed that it is not leap year.
 
+**`Throws`**
+
+Will throw an error if the month is not a valid number between 1 and 12.
+
+**`Example`**
+
+```ts
+numDaysInMonth(2, 2020);;
+//=> 29
+numDaysInMonth(2);;
+//=> 28
+numDaysInMonth(1);;
+//=> 31
+```
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `month` | `number` |
-| `year?` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `month` | `number` | The month for which the number of days is to be calculated. Should be a number between 1 and 12. |
+| `year?` | `number` | The year for which the number of days in the month is to be calculated. Optional. |
 
 #### Returns
 
 `number`
 
+The number of days in the given month for the specified year.
+
 #### Defined in
 
-[src/libs/date/src/numDaysInMonth.ts:10](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/date/src/numDaysInMonth.ts#L10)
+src/date/numDaysInMonth.ts:20
 
 ___
 
-### numFormat
+### numRange
 
-▸ **numFormat**(`input`, `thousandSeperator?`, `fractionDigits?`, `decimalSeperator?`): `string`
+▸ **numRange**(`start`, `end`): `number`[]
 
-Formats a number input to a string representation with a given number of decimal places, thousand seperator and decimal seperator.
+Generates an array of numbers within a specified range.
+
+**`Throws`**
+
+Will throw an error if start is greater than end.
+
+**`Example`**
+
+```ts
+numRange(1, 5);
+//=> [1, 2, 3, 4, 5]
+numRange(5, 5);
+//=> [5]
+```
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `input` | `number` | `undefined` | number to format |
-| `thousandSeperator` | `string` | `'.'` | character to use as thousand seperator |
-| `fractionDigits` | `number` | `2` | number of decimal places to return. Will pad string with zeroes to ensure this length. |
-| `decimalSeperator` | `string` | `','` | character to use as decimal seperator |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `start` | `number` | The start of the range. |
+| `end` | `number` | The end of the range. |
 
 #### Returns
 
-`string`
+`number`[]
+
+An array of numbers from start to end, inclusive.
 
 #### Defined in
 
-[src/libs/number/src/numFormat.ts:10](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/numFormat.ts#L10)
+src/number/numRange.ts:14
 
 ___
 
-### numFormatDK
+### objAssignDeep
 
-▸ **numFormatDK**(`input`, `decimalPlaces?`): `string`
+▸ **objAssignDeep**<`T`, `U`\>(`target`, `source`): `T` & `U`
 
-Formats a number input to a string representation in the style of 5.000.000,00
+Merges two objects deeply, returning a new object that has the combined properties of both.
+If a property exists in both objects, the value from the source object will be used.
 
-#### Parameters
+**`Example`**
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `input` | `number` | `undefined` | number to format |
-| `decimalPlaces` | `number` | `0` | number of decimal places to return. Will pad string with zeroes to ensure this length. |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[src/libs/number/src/numFormatDK.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/numFormatDK.ts#L8)
-
-___
-
-### numFormatUS
-
-▸ **numFormatUS**(`input`, `decimalPlaces?`): `string`
-
-Formats a number input to a string representation in the style of 5,000,000.00
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `input` | `number` | `undefined` | number to format |
-| `decimalPlaces` | `number` | `0` | number of decimal places to return. Will pad string with zeroes to ensure this length. |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[src/libs/number/src/numFormatUS.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/numFormatUS.ts#L8)
-
-___
-
-### numIsBetween
-
-▸ **numIsBetween**(`number`, `lower`, `upper`): `boolean`
-
-Returns whether a number is larger than or equal to a given lower bound and less than or equal to a given upper bound.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `number` | `number` |
-| `lower` | `number` |
-| `upper` | `number` |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[src/libs/number/src/numIsBetween.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/numIsBetween.ts#L4)
-
-___
-
-### numIsBetweenExclusive
-
-▸ **numIsBetweenExclusive**(`number`, `lower`, `upper`): `boolean`
-
-Returns whether a number is larger than a given lower bound and less than a given upper bound, where the boundary values not included.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `number` | `number` |
-| `lower` | `number` |
-| `upper` | `number` |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[src/libs/number/src/numIsBetweenExclusive.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/numIsBetweenExclusive.ts#L5)
-
-___
-
-### numParseFormatted
-
-▸ **numParseFormatted**(`input`, `thousandSeperator?`, `decimalSeperator?`): `number`
-
-Parses a formatted number string to a number
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `input` | `string` | `undefined` | string to parse |
-| `thousandSeperator` | `string` | `','` | character to use as thousand seperator |
-| `decimalSeperator` | `string` | `'.'` | character to use as decimal seperator |
-
-#### Returns
-
-`number`
-
-#### Defined in
-
-[src/libs/number/src/numParseFormatted.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/numParseFormatted.ts#L9)
-
-___
-
-### numParseFormattedDK
-
-▸ **numParseFormattedDK**(`input`): `number`
-
-Parses a danish-formatted number string to a number
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `input` | `string` |
-
-#### Returns
-
-`number`
-
-#### Defined in
-
-[src/libs/number/src/numParseFormattedDK.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/numParseFormattedDK.ts#L6)
-
-___
-
-### oEntriesArray
-
-▸ **oEntriesArray**<`T`\>(`o`): [`string`, `T`][]
+```ts
+objAssignDeep({ a: 1, b: 2 }, { b: 3, c: 4 });;
+//=> { a: 1, b: 3, c: 4 }
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the target object. |
+| `U` | The type of the source object. |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `o` | `Record`<`string`, `T`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `target` | `T` | The target object to which properties will be added. |
+| `source` | `U` | The source object from which properties will be copied. |
 
 #### Returns
 
-[`string`, `T`][]
+`T` & `U`
+
+A new object that has the combined properties of both the target and source objects.
 
 #### Defined in
 
-[src/libs/object/src/oEntriesArray.ts:1](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/oEntriesArray.ts#L1)
-
-___
-
-### oKeysArray
-
-▸ **oKeysArray**<`T`\>(`o`): `string`[]
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `o` | `Record`<`string`, `T`\> |
-
-#### Returns
-
-`string`[]
-
-#### Defined in
-
-[src/libs/object/src/oKeysArray.ts:1](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/oKeysArray.ts#L1)
-
-___
-
-### oValuesArray
-
-▸ **oValuesArray**<`T`\>(`o`): `T`[]
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `o` | `Record`<`string`, `T`\> |
-
-#### Returns
-
-`T`[]
-
-#### Defined in
-
-[src/libs/object/src/oValuesArray.ts:1](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/oValuesArray.ts#L1)
+src/object/objAssignDeep.ts:16
 
 ___
 
@@ -3480,21 +6094,270 @@ ___
 
 ▸ **objDeepFreeze**(`o`): `Record`<`string` \| `symbol`, `any`\>
 
-Make an object's properties immutable, recursively.
+Deep freezes an object, making it immutable by recursively freezing all nested objects and functions.
+
+**`Throws`**
+
+If the object is not an object or function.
+
+**`See`**
+
+[Object.freeze](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
+
+**`Example`**
+
+```ts
+const obj = {
+  prop1: 'value1',
+  prop2: {
+    nestedProp1: 'nestedValue1',
+    nestedProp2: {
+      deeplyNestedProp: 'deeplyNestedValue'
+    }
+  },
+  prop3: () => {
+    //=> Hello, world!
+  }
+}
+const frozenObj = objDeepFreeze(obj)
+// Attempting to modify the frozen object will throw an error
+frozenObj.prop1 //=> 'value1'
+frozenObj.prop2.nestedProp1 //=> 'nestedValue1'
+frozenObj.prop2.nestedProp2.deeplyNestedProp //=> 'deeplyNestedValue'
+frozenObj.prop3() //=> undefined
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `o` | `Record`<`string` \| `symbol`, `any`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `o` | `Record`<`string` \| `symbol`, `any`\> | The object to deep freeze. This function uses `Object.freeze()` to freeze the object and all its nested objects and functions. |
 
 #### Returns
 
 `Record`<`string` \| `symbol`, `any`\>
 
+The same object, but deeply frozen.
+
 #### Defined in
 
-[src/libs/object/src/objDeepFreeze.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/objDeepFreeze.ts#L4)
+src/object/objDeepFreeze.ts:29
+
+___
+
+### objDelete
+
+▸ **objDelete**<`K`, `V`\>(`obj`, `key`): `Omit`<`Record`<`K`, `V`\>, `K`\>
+
+Deletes a property from an object and returns the modified object.
+
+**`Example`**
+
+```ts
+const obj = { name: 'John', age: 30 };
+objDelete(obj, 'age');
+//=> { name: 'John' }
+```
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `K` | extends [`ObjectKey`](/docs/index.md#objectkey) | The type of the keys in the object. |
+| `V` | `V` | - |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<`K`, `V`\> | The object from which to delete the property. |
+| `key` | `K` | The key of the property to delete. |
+
+#### Returns
+
+`Omit`<`Record`<`K`, `V`\>, `K`\>
+
+The modified object with the key deleted.
+
+#### Defined in
+
+src/object/objDelete.ts:15
+
+___
+
+### objDeleteKeys
+
+▸ **objDeleteKeys**<`V`\>(`obj`, `...keys`): `Record`<`string`, `V`\>
+
+Deletes specified keys from an object. This function takes an object and an array of keys to be deleted from the object. It returns a new object with the specified keys removed.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+objDeleteKeys(obj, 'a', 'c');
+//=> { b: 2 }
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `V` | The type of the values in the object. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<`string`, `V`\> | The object from which keys are to be deleted. |
+| `...keys` | `string`[] | The keys to be deleted from the object. |
+
+#### Returns
+
+`Record`<`string`, `V`\>
+
+A new object with the specified keys deleted.
+
+#### Defined in
+
+src/object/objDeleteKeys.ts:15
+
+___
+
+### objDeleteKeysMutable
+
+▸ **objDeleteKeysMutable**<`V`\>(`obj`, `...keys`): `Record`<`string`, `V`\>
+
+Deletes the specified keys from an object in a mutable way.
+
+**`Typeparam`**
+
+V - The type of the values in the object.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+objDeleteKeysMutable(obj, 'a', 'c');
+//=> { b: 2 }
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<`string`, `V`\> | The object from which to delete the keys. |
+| `...keys` | `string`[] | The keys to delete from the object. |
+
+#### Returns
+
+`Record`<`string`, `V`\>
+
+The modified object with the specified keys deleted.
+
+#### Defined in
+
+src/object/objDeleteKeysMutable.ts:13
+
+___
+
+### objEntries
+
+▸ **objEntries**<`V`\>(`obj`): `Iterable`<[`string`, `V`]\>
+
+Returns an iterable of key-value pairs from the given object.
+
+**`Remarks`**
+
+This function is a part of Object Utilities.
+
+**`Typeparam`**
+
+V - The type of values in the object.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+for (const [key, value] of objEntries(obj)) {
+  //=> a  //=> b  //=> c 3
+}
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object to iterate over. |
+
+#### Returns
+
+`Iterable`<[`string`, `V`]\>
+
+An iterable of tuples where each tuple is a key-value pair from the object.
+
+#### Defined in
+
+src/object/objEntries.ts:16
+
+___
+
+### objEntriesArray
+
+▸ **objEntriesArray**<`V`\>(`obj`): [`string`, `V`][]
+
+Returns an array of key-value pairs from the given object.
+
+**`Remarks`**
+
+This function is a utility for converting an object into an array of its entries.
+Each entry is a tuple where the first element is the key and the second is the value.
+
+**`Typeparam`**
+
+V - The type of the values in the object.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+objEntriesArray(obj);
+//=> [['a', 1], ['b', 2], ['c', 3]]
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object to extract keyvalue pairs from. |
+
+#### Returns
+
+[`string`, `V`][]
+
+An array of entries, where each entry is a tuple of a string and a value of type `V`.
+
+#### Defined in
+
+src/object/objEntriesArray.ts:16
 
 ___
 
@@ -3502,29 +6365,39 @@ ___
 
 ▸ **objFilter**<`T`\>(`object`, `callback`, `getKeys?`): `Record`<`string`, `T`\>
 
-Similar to Array.prototype.filter, but for objects.
+Filters the properties of an object based on a callback function.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+objFilter(obj, (value, key) => value > 1);
+//=> { b: 2, c: 3 }
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the values in the object. |
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `object` | `Record`<`string`, `T`\> | `undefined` | The object to iterate over. |
-| `callback` | (`value`: `T`, `key`: `string`) => `boolean` | `undefined` | The function to call for each key-value pair. |
-| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | A function that returns the keys of the object. |
+| `object` | `Record`<`string`, `T`\> | `undefined` | The object to filter. |
+| `callback` | (`value`: `T`, `key`: `string`) => `boolean` | `undefined` | The callback function used to filter the object properties. |
+| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | The function used to get the keys of the object. |
 
 #### Returns
 
 `Record`<`string`, `T`\>
 
+A new object with the properties that passed the test. If no properties passed the test, an empty object will be returned.
+
 #### Defined in
 
-[src/libs/object/src/objFilter.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/objFilter.ts#L8)
+src/object/objFilter.ts:15
 
 ___
 
@@ -3532,29 +6405,168 @@ ___
 
 ▸ **objForEach**<`T`\>(`object`, `callback`, `getKeys?`): typeof `object`
 
-Similar to Array.prototype.forEach, but for objects.
+Applies a callback function to each key-value pair in an object.
+
+**`Example`**
+
+```ts
+const myObject = { a: 1, b: 2, c: 3 };
+objForEach(myObject, (value, key) => {
+  //=> ${key}: ${value}
+});
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the object's properties. |
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `object` | `Record`<`string`, `T`\> | `undefined` | The object to iterate over. |
-| `callback` | (`value`: `T`, `key`: `string`) => `void` | `undefined` | The function to call for each key-value pair. |
-| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | A function that returns the keys of the object. |
+| `callback` | (`value`: `T`, `key`: `string`) => `void` | `undefined` | The function to apply to each keyvalue pair. |
+| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | The function to retrieve the keys of the object. |
 
 #### Returns
 
 typeof `object`
 
+The original object.
+
 #### Defined in
 
-[src/libs/object/src/objForEach.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/objForEach.ts#L7)
+src/object/objForEach.ts:16
+
+___
+
+### objGet
+
+▸ **objGet**<`V`\>(`obj`, `key`): `V` \| `undefined`
+
+Retrieves the value associated with the specified key from an object.
+
+**`Example`**
+
+```ts
+const myObj = { name: 'John', age: 30 };
+objGet(myObj, 'name');
+//=> 'John'
+objGet(myObj, 'age');
+//=> 30
+objGet(myObj, 'address');
+//=> undefined
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object from which to retrieve the value. |
+| `key` | [`ObjectKey`](/docs/index.md#objectkey) | The key of the value to retrieve. |
+
+#### Returns
+
+`V` \| `undefined`
+
+The value of the specified key in the object, or `undefined` if the key does not exist.
+
+#### Defined in
+
+src/object/objGet.ts:19
+
+___
+
+### objGetOrElse
+
+▸ **objGetOrElse**<`V`\>(`obj`, `key`, `callback`): `V`
+
+This function attempts to retrieve a value from an object using a provided key.
+If the key does not exist in the object, it uses a callback function to generate a default value.
+
+**`Example`**
+
+```ts
+objGetOrElse({ a: 1, b: 2 }, 'c', (key) => 3);;
+//=> 3
+```
+
+**`Typeparam`**
+
+V - The type of the values in the object.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object from which to retrieve the value. |
+| `key` | [`ObjectKey`](/docs/index.md#objectkey) | The key to use when retrieving the value. |
+| `callback` | (`key`: [`ObjectKey`](/docs/index.md#objectkey)) => `V` | The function to call when the key does not exist in the object. This function should return the default value. |
+
+#### Returns
+
+`V`
+
+The value associated with the key in the object, or the result of the callback function if the key does not exist in the object.
+
+#### Defined in
+
+src/object/objGetOrElse.ts:16
+
+___
+
+### objHas
+
+▸ **objHas**<`V`\>(`obj`, `key`): `boolean`
+
+Checks if an object has a specific key.
+
+**`Example`**
+
+```ts
+const myObj = { name: 'John', age: 30 };
+objHas(myObj, 'name');
+//=> true
+objHas(myObj, 'email');
+//=> false
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object to check. |
+| `key` | [`ObjectKey`](/docs/index.md#objectkey) | The key to check for. |
+
+#### Returns
+
+`boolean`
+
+Returns true if the object has the key, false otherwise.
+
+#### Defined in
+
+src/object/objHas.ts:17
 
 ___
 
@@ -3562,7 +6574,27 @@ ___
 
 ▸ **objIsEmpty**<`T`\>(`obj`): `boolean`
 
-Returns whether an object has no enumerable own keys defined.
+Checks if an object is empty. This function iterates over the keys of the provided object and checks if any key is defined.
+
+**`Remarks`**
+
+This function uses the `Object.keys()` method to check if the object has any keys.
+If the object has at least one key, the function returns `false`, otherwise it returns `true`.
+
+**`Typeparam`**
+
+T - The type of the values in the object.
+
+**`Example`**
+
+```ts
+const emptyObject = {};
+const nonEmptyObject = { key: 'value' };
+objIsEmpty(emptyObject);
+//=> true
+objIsEmpty(nonEmptyObject);
+//=> false
+```
 
 #### Type parameters
 
@@ -3572,17 +6604,113 @@ Returns whether an object has no enumerable own keys defined.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `obj` | `Record`<`string`, `T`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<`string`, `T`\> | The object to check. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the object is empty or not.
+
 #### Defined in
 
-[src/libs/object/src/objIsEmpty.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/objIsEmpty.ts#L4)
+src/object/objIsEmpty.ts:17
+
+___
+
+### objKeys
+
+▸ **objKeys**<`V`\>(`obj`): `Iterable`<`string`\>
+
+Returns an iterable of all the keys in the given object.
+
+**`Remarks`**
+
+This function is a part of the `utils` module.
+
+**`Typeparam`**
+
+V - The type of the values in the object.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+const keys = objKeys(obj);
+for (const key of keys) {
+  //=>  //=>  //=> c
+}
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object whose keys to iterate over. |
+
+#### Returns
+
+`Iterable`<`string`\>
+
+An iterable of the object's keys.
+
+#### Defined in
+
+src/object/objKeys.ts:17
+
+___
+
+### objKeysArray
+
+▸ **objKeysArray**<`V`\>(`obj`): `string`[]
+
+Returns an array of keys from the provided object.
+
+**`Remarks`**
+
+This function is a part of Object Utilities.
+
+**`Typeparam`**
+
+V - The type of values in the object.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+objKeysArray(obj);
+//=> ['a', 'b', 'c']
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object from which to extract the keys. |
+
+#### Returns
+
+`string`[]
+
+The array of keys of the input object.
+
+#### Defined in
+
+src/object/objKeysArray.ts:15
 
 ___
 
@@ -3590,29 +6718,39 @@ ___
 
 ▸ **objMap**<`T`\>(`object`, `callback`, `getKeys?`): `Record`<`string`, `T`\>
 
-Similar to Array.prototype.map, but for objects.
+Maps over the values of an object and returns a new object with the mapped values.
+
+**`Example`**
+
+```ts
+const object = { a: 1, b: 2, c: 3 }
+const callback = (value: number, key: string) => value * 2
+objMap(object, callback) //=> { a: 2, b: 4, c: 6 }
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the values in the input object. |
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `object` | `Record`<`string`, `T`\> | `undefined` | The object to iterate over. |
-| `callback` | (`value`: `T`, `key`: `string`) => `T` | `undefined` | The function to call for each key-value pair. |
-| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | A function that returns the keys of the object. |
+| `object` | `Record`<`string`, `T`\> | `undefined` | The object to map over. |
+| `callback` | (`value`: `T`, `key`: `string`) => `T` | `undefined` | The mapping function to apply to each value. |
+| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | The function used to get the keys of the object. |
 
 #### Returns
 
 `Record`<`string`, `T`\>
 
+A new object with the same keys as the input object, but with each value transformed by the callback function.
+
 #### Defined in
 
-[src/libs/object/src/objMap.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/objMap.ts#L7)
+src/object/objMap.ts:15
 
 ___
 
@@ -3620,29 +6758,40 @@ ___
 
 ▸ **objMapKeys**<`T`\>(`object`, `callback`, `getKeys?`): `Record`<`string`, `T`\>
 
-Similar to Array.prototype.map, but for object keys - not values.
+Maps the keys of an object using a callback function.
+
+**`Example`**
+
+```ts
+const object = { a: 1, b: 2, c: 3 };
+const callback = (key: string, value: number) => key.toUpperCase();
+objMapKeys(object, callback);
+//=> { A: 1, B: 2, C: 3 }
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the values in the object. |
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `object` | `Record`<`string`, `T`\> | `undefined` | The object to iterate over. |
-| `callback` | (`key`: `string`, `value`: `T`) => `string` | `undefined` | The function to call for each key-value pair. |
-| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | A function that returns the keys of the object. |
+| `object` | `Record`<`string`, `T`\> | `undefined` | The object whose keys will be mapped. |
+| `callback` | (`key`: `string`, `value`: `T`) => `string` | `undefined` | The callback function that maps the keys. |
+| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | The function that retrieves the keys of the object. |
 
 #### Returns
 
 `Record`<`string`, `T`\>
 
+A new object with the keys mapped.
+
 #### Defined in
 
-[src/libs/object/src/objMapKeys.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/objMapKeys.ts#L8)
+src/object/objMapKeys.ts:16
 
 ___
 
@@ -3650,29 +6799,89 @@ ___
 
 ▸ **objMapMutable**<`T`\>(`object`, `callback`, `getKeys?`): typeof `object`
 
-Similar to Array.prototype.map, but for objects - and mutable! This changes the original object.
+Applies a callback function to each key-value pair in an object and mutates the object.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+const callback = (value: number, key: string) => value * 2;
+objMapMutable(obj, callback);
+//=> { a: 2, b: 4, c: 6 }
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the properties in the object. |
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `object` | `Record`<`string`, `T`\> | `undefined` | The object to iterate over. |
-| `callback` | (`value`: `T`, `key`: `string`) => `T` | `undefined` | The function to call for each key-value pair. |
-| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | A function that returns the keys of the object. |
+| `object` | `Record`<`string`, `T`\> | `undefined` | The object to be mapped. |
+| `callback` | (`value`: `T`, `key`: `string`) => `T` | `undefined` | The callback function to apply to each valuekey pair. |
+| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | The function used to get the keys of the object. |
 
 #### Returns
 
 typeof `object`
 
+The mutated object.
+
 #### Defined in
 
-[src/libs/object/src/objMapMutable.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/objMapMutable.ts#L8)
+src/object/objMapMutable.ts:16
+
+___
+
+### objPropertyValueToGetter
+
+▸ **objPropertyValueToGetter**<`V`, `T`\>(`object`, `...propertyNames`): `T`
+
+Converts the specified properties of an object into getter functions.
+
+**`Throws`**
+
+Throws an error if the property descriptor for a specified property name is not found.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+objPropertyValueToGetter(obj, 'a', 'b');
+obj.a;;
+//=> 1
+obj.b;;
+//=> 2
+obj.c;;
+//=> 3
+```
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `V` | `V` | The type of the values of the object. |
+| `T` | extends `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The type of the object. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `object` | `T` | The object whose properties are to be converted into getter functions. |
+| `...propertyNames` | [`ObjectKey`](/docs/index.md#objectkey)[] | The names of the properties to be converted into getter functions. |
+
+#### Returns
+
+`T`
+
+The object with the specified properties converted into getter functions.
+
+#### Defined in
+
+src/object/objPropertyValueToGetter.ts:23
 
 ___
 
@@ -3680,31 +6889,442 @@ ___
 
 ▸ **objReduce**<`T`, `A`\>(`object`, `callback`, `accum`, `getKeys?`): `A`
 
-Similar to Array.prototype.reduce, but for objects.
+Reduces the values of an object into a single value.
+
+**`Example`**
+
+```ts
+const object = { a: 1, b: 2, c: 3 };
+const callback = (accum, value, key) => accum + value;
+const initialAccum = 0;
+objReduce(object, callback, initialAccum);
+//=> 6
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
-| `A` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the values in the input object. |
+| `A` | - |
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `object` | `Record`<`string`, `T`\> | `undefined` | The object to iterate over. |
-| `callback` | (`accum`: `A`, `value`: `T`, `key`: `string`) => `A` | `undefined` | The function to call for each key-value pair. |
+| `object` | `Record`<`string`, `T`\> | `undefined` | The object to reduce. |
+| `callback` | (`accum`: `A`, `value`: `T`, `key`: `string`) => `A` | `undefined` | The function that handles the reduction logic. |
 | `accum` | `A` | `undefined` | The initial value of the accumulator. |
-| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | A function that returns the keys of the object. |
+| `getKeys` | (`obj`: `Record`<`string`, `T`\>) => `Iterable`<`string`\> | `Object.keys` | The function that retrieves the keys of the object. |
 
 #### Returns
 
 `A`
 
+The final accumulated value.
+
 #### Defined in
 
-[src/libs/object/src/objReduce.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/objReduce.ts#L9)
+src/object/objReduce.ts:18
+
+___
+
+### objReverse
+
+▸ **objReverse**<`V`\>(`obj`): `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\>
+
+Reverses the order of the properties in the given object.
+
+**`Remarks`**
+
+This function does not mutate the original object. It returns a new object with the properties in reverse order.
+
+**`Typeparam`**
+
+V - The type of the values in the input object and the returned object.
+
+**`Example`**
+
+```ts
+objReverse({ a: 1, b: 2, c: 3 });;
+//=> { c: 3, b: 2, a: 1 }
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object to reverse. The object's keys are of type `ObjectKey` and its values are of type `V`. |
+
+#### Returns
+
+`Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\>
+
+A new object with the properties of the input object in reverse order. The returned object's keys are of type `ObjectKey` and its values are of type `V`.
+
+#### Defined in
+
+src/object/objReverse.ts:15
+
+___
+
+### objSet
+
+▸ **objSet**<`V`\>(`obj`, `key`, `value`): `V`
+
+Sets a value for a key in an object and returns the value.
+
+**`Example`**
+
+```ts
+objSet({ a: 1, b: 2 }, 'a', 3);;
+//=> { a: 3, b: 2 }
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `V` | The type of the values in the object. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object in which to set the value. |
+| `key` | [`ObjectKey`](/docs/index.md#objectkey) | The key for which to set the value. |
+| `value` | `V` | The value to set. |
+
+#### Returns
+
+`V`
+
+The value that was set.
+
+#### Defined in
+
+src/object/objSet.ts:16
+
+___
+
+### objSize
+
+▸ **objSize**<`V`\>(`obj`): `number`
+
+Calculates and returns the size of the given object.
+
+**`Remarks`**
+
+This function uses `Object.keys(obj).length` to determine the size of the object.
+
+**`Typeparam`**
+
+V - The type of the values in the object.
+
+**`Example`**
+
+```ts
+objSize({ a: 1, b: 2, c: 3 });;
+//=> 3
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object whose size is to be calculated. |
+
+#### Returns
+
+`number`
+
+The size of the object.
+
+#### Defined in
+
+src/object/objSize.ts:14
+
+___
+
+### objSortKeys
+
+▸ **objSortKeys**<`V`\>(`o`): `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\>
+
+Sorts the keys of an object in alphabetical order.
+
+**`Remarks`**
+
+This function does not mutate the original object. It returns a new object with sorted keys.
+
+**`Typeparam`**
+
+V - The type of the values in the object.
+
+**`Example`**
+
+```ts
+const obj = { c: 1, a: 2, b: 3 };
+objSortKeys(obj);
+//=> { a: 2, b: 3, c: 1 }
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `o` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object whose keys should be sorted. |
+
+#### Returns
+
+`Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\>
+
+A new object with the same values as the original, but with keys sorted in ascending order.
+
+#### Defined in
+
+src/object/objSortKeys.ts:15
+
+___
+
+### objToMap
+
+▸ **objToMap**<`V`\>(`obj`): `Map`<`string`, `V`\>
+
+Converts an object to a Map.
+
+**`Remarks`**
+
+This function is useful when you need to convert an object to a Map data structure.
+
+**`Typeparam`**
+
+V - The type of the values in the object.
+
+**`Example`**
+
+```ts
+const obj = { key1: 'value1', key2: 'value2' };
+const map = objToMap(obj);
+map.get('key1');
+//=> 'value1'
+map.get('key2');
+//=> 'value2'
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object to convert to a Map. |
+
+#### Returns
+
+`Map`<`string`, `V`\>
+
+A new Map object populated with the [key, value] pairs from the original object.
+
+#### Defined in
+
+src/object/objToMap.ts:18
+
+___
+
+### objUpdate
+
+▸ **objUpdate**<`V`\>(`obj`, `key`, `callback`): `V`
+
+Updates the value of a specific key in an object using a callback function.
+
+**`Example`**
+
+```ts
+objUpdate({ a: 1, b: 2 }, 'a', (value, key) => value + 1);;
+//=> { a: 2, b: 2 }
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `V` | The type of the values in the object. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object to update. |
+| `key` | [`ObjectKey`](/docs/index.md#objectkey) | The key of the value to update. |
+| `callback` | (`value`: `undefined` \| `V`, `key`: [`ObjectKey`](/docs/index.md#objectkey)) => `V` | The function to generate the new value. It receives the current value and the key as arguments. |
+
+#### Returns
+
+`V`
+
+The new value.
+
+#### Defined in
+
+src/object/objUpdate.ts:15
+
+___
+
+### objValues
+
+▸ **objValues**<`V`\>(`obj`): `Iterable`<`V`\>
+
+Returns an iterable of the values of the given object.
+
+**`Remarks`**
+
+This function uses the `Object.values()` method to get all the values of the object and then yields them one by one.
+
+**`Typeparam`**
+
+V - The type of the values in the object.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+const values = objValues(obj);
+for (const value of values) {
+  //=> {value}
+}
+// Output:
+// 1
+// 2
+// 3
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object whose values should be returned. |
+
+#### Returns
+
+`Iterable`<`V`\>
+
+An iterable that yields all the values of the given object.
+
+#### Defined in
+
+src/object/objValues.ts:21
+
+___
+
+### objValuesArray
+
+▸ **objValuesArray**<`V`\>(`obj`): `V`[]
+
+Returns an array containing the values of the given object.
+
+**`Remarks`**
+
+This function is a part of Object Utilities.
+
+**`Typeparam`**
+
+V - The type of values in the object.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+objValuesArray(obj);
+//=> [1, 2, 3]
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `V` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `V`\> | The object whose values will be extracted. |
+
+#### Returns
+
+`V`[]
+
+An array of the values of the object.
+
+#### Defined in
+
+src/object/objValuesArray.ts:15
+
+___
+
+### objWalk
+
+▸ **objWalk**(`node`, `callback`): `void`
+
+Recursively traverses an object and invokes a callback function for every encountered non-object value.
+The callback function is passed the non-object value and an array representing the path to the value.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: { c: 2, d: [3, 4] } };
+objWalk(obj, (value, path) => {
+  console.log(`Path: ${path.join('.')}, Value: ${value}`);
+});
+// Output:
+// Path: a, Value: 1
+// Path: b.c, Value: 2
+// Path: b.d[0], Value: 3
+// Path: b.d[1], Value: 4
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `node` | `Record`<`string`, `any`\> | The object to be traversed. |
+| `callback` | (`value`: `any`, `path`: `string`[]) => `void` | The callback function to be invoked for every non-object value. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+src/object/objWalk.ts:18
 
 ___
 
@@ -3712,13 +7332,22 @@ ___
 
 ▸ **padArrayBytesLeft**(`a`): `number`[]
 
-Pads an array of bytes on the left
+Pads an array of bytes on the left side with zeros to make it a fixed length of 4 bytes.
+
+**`Example`**
+
+```ts
+padArrayBytesLeft([1, 2, 3]);
+//=> [0, 1, 2, 3]
+padArrayBytesLeft([1]);
+//=> [0, 0, 0, 1]
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `a` | `number`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `a` | `number`[] | The array of bytes to pad. |
 
 #### Returns
 
@@ -3726,7 +7355,7 @@ Pads an array of bytes on the left
 
 #### Defined in
 
-[src/libs/binary/src/padArrayBytesLeft.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/padArrayBytesLeft.ts#L4)
+src/binary/padArrayBytesLeft.ts:11
 
 ___
 
@@ -3734,13 +7363,22 @@ ___
 
 ▸ **padArrayBytesRight**(`a`): `number`[]
 
-Pads an array of bytes on the right
+Pads an array of bytes on the right with zeros to ensure it has a length of 4.
+
+**`Example`**
+
+```ts
+padArrayBytesRight([1, 2, 3]);
+//=> [1, 2, 3, 0]
+padArrayBytesRight([1]);
+//=> [1, 0, 0, 0]
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `a` | `number`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `a` | `number`[] | The array of bytes to pad. |
 
 #### Returns
 
@@ -3748,7 +7386,52 @@ Pads an array of bytes on the right
 
 #### Defined in
 
-[src/libs/binary/src/padArrayBytesRight.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/padArrayBytesRight.ts#L4)
+src/binary/padArrayBytesRight.ts:11
+
+___
+
+### parseMarkdownCodeBlock
+
+▸ **parseMarkdownCodeBlock**(`string`): `Object`
+
+Parse language and code content from a markdown code block.
+
+**`Remarks`**
+
+This function uses regular expressions to parse the markdown code block.
+
+**`Throws`**
+
+Throws an error if the markdown code block cannot be parsed.
+
+**`Example`**
+
+```ts
+const markdown = "```javascript\nconsole.log('Hello, World!');\n```";
+parseMarkdownCodeBlock(markdown);
+//=> { language: "javascript", code: "console.log('Hello, World!');" }
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The markdown string containing the code block. |
+
+#### Returns
+
+`Object`
+
+An object containing the language and the code from the markdown code block.
+
+| Name | Type |
+| :------ | :------ |
+| `code` | `string` |
+| `language` | `string` |
+
+#### Defined in
+
+src/parse/parseMarkdownCodeBlock.ts:15
 
 ___
 
@@ -3756,30 +7439,61 @@ ___
 
 ▸ **parseMarkdownTable**(`string`): `string`[][]
 
-Parse a markdown table into a 2D array of strings.
+Parses a markdown table into a 2D array of strings.
+
+**`Remarks`**
+
+This function will remove leading and trailing pipes from each row, as well as any empty lines.
+It will also remove the separator line (the second line in a standard markdown table).
+Each cell's content will be trimmed of leading and trailing whitespace.
+
+**`Example`**
+
+```ts
+| Header 1 | Header 2 |
+|----------|----------|
+| Cell 1   | Cell 2   |
+| Cell 3   | Cell 4   |
+`);
+//=> [['Header 1', 'Header 2'], ['Cell 1', 'Cell 2'], ['Cell 3', 'Cell 4']]
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `string` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The markdown table to parse. |
 
 #### Returns
 
 `string`[][]
 
+A 2D array of strings, where each inner array represents a row of the table, and each string within that array represents a cell.
+
 #### Defined in
 
-src/libs/parse/src/parseMarkdownTable.ts:4
+src/parse/parseMarkdownTable.ts:17
 
 ___
 
 ### parseSocialSecurityNumberDK
 
-▸ **parseSocialSecurityNumberDK**(`ssn`): `Object`
+▸ **parseSocialSecurityNumberDK**(`ssn`): [`ParsedSocialSecurityNumberDK`](/docs/index.md#parsedsocialsecuritynumberdk) \| `undefined`
 
 Extract birthdate (yyyy,mm,dd), four digit id and sex from a Danish social security number.
 Assumes birth dates are at most 100 years in the past.
+
+**`Throws`**
+
+Will throw an error if the SSN is not a valid Danish Social Security Number.
+
+**`Example`**
+
+```ts
+const ssn = '010203-1234'
+parseSocialSecurityNumberDK(ssn)
+//=> { year: 2003, month: 2, day: 1, id: 1234, sex: 'F' }
+```
 
 #### Parameters
 
@@ -3789,47 +7503,19 @@ Assumes birth dates are at most 100 years in the past.
 
 #### Returns
 
-`Object`
+[`ParsedSocialSecurityNumberDK`](/docs/index.md#parsedsocialsecuritynumberdk) \| `undefined`
 
-| Name | Type |
-| :------ | :------ |
-| `day` | `number` |
-| `id` | `number` |
-| `month` | `number` |
-| `sex` | `string` |
-| `year` | `number` |
+An object containing the birth year, month, day, id, and sex of the individual.
 
 #### Defined in
 
-[src/libs/parse/src/parseSocialSecurityNumberDK.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/parse/src/parseSocialSecurityNumberDK.ts#L13)
+src/validation/parseSocialSecurityNumberDK.ts:21
 
 ___
 
-### pathFromCwd
+### pdfGetPages
 
-▸ **pathFromCwd**(`...names`): `string`
-
-Takes a directory path as a list of directory/folder names from the current working directory and returns it as an absolute path.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `...names` | `string`[] | directory/file names from the current working directory. |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[src/libs/node/src/pathFromCwd.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/pathFromCwd.ts#L7)
-
-___
-
-### pdfReadPages
-
-▸ **pdfReadPages**(`filepath`): `Promise`<`string`[]\>
+▸ **pdfGetPages**(`filepath`, `begin?`, `end?`): `Promise`<`string`[]\>
 
 Parse text content of each page in a PDF file. Array indices correspond to page numbers.
 
@@ -3838,6 +7524,8 @@ Parse text content of each page in a PDF file. Array indices correspond to page 
 | Name | Type |
 | :------ | :------ |
 | `filepath` | `string` |
+| `begin?` | `number` |
+| `end?` | `number` |
 
 #### Returns
 
@@ -3845,7 +7533,31 @@ Parse text content of each page in a PDF file. Array indices correspond to page 
 
 #### Defined in
 
-src/libs/pdf/src/pdfReadPages.ts:8
+src/pdf/pdfGetPages.ts:6
+
+___
+
+### pdfIteratePages
+
+▸ **pdfIteratePages**(`filepath`, `begin?`, `end?`): `AsyncGenerator`<`string`\>
+
+Parse text content of each page in a PDF file. Array indices correspond to page numbers.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `filepath` | `string` |
+| `begin?` | `number` |
+| `end?` | `number` |
+
+#### Returns
+
+`AsyncGenerator`<`string`\>
+
+#### Defined in
+
+src/pdf/pdfIteratePages.ts:8
 
 ___
 
@@ -3870,7 +7582,7 @@ Array of filepaths of the split files. Array indices correspond to page numbers.
 
 #### Defined in
 
-src/libs/pdf/src/pdfSplitPages.ts:10
+src/pdf/pdfSplitPages.ts:10
 
 ___
 
@@ -3879,6 +7591,21 @@ ___
 ▸ **randomIntBetween**(`min`, `max`): `number`
 
 Returns a random integer between min (inclusive) and max (inclusive).
+
+**`Throws`**
+
+if min is not an integer.
+
+**`Throws`**
+
+if max is not an integer.
+
+**`Example`**
+
+```ts
+randomIntBetween(1, 10);;
+//=> {random integer between 1 and 10}
+```
 
 #### Parameters
 
@@ -3891,9 +7618,11 @@ Returns a random integer between min (inclusive) and max (inclusive).
 
 `number`
 
+A random integer between min and max.
+
 #### Defined in
 
-[src/libs/number/src/randomIntBetween.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/randomIntBetween.ts#L6)
+src/number/randomIntBetween.ts:15
 
 ___
 
@@ -3901,19 +7630,40 @@ ___
 
 ▸ **readExcelFile**(`filepath`): `Promise`<`Record`<`string`, `string`[][]\>\>
 
+Reads an Excel file and returns a record where each key is the name of a worksheet and the value is a 2D array of the worksheet's cell values.
+
+**`Remarks`**
+
+This function is asynchronous and returns a Promise.
+
+**`Throws`**
+
+Will throw an error if the file at the provided filepath cannot be read.
+
+**`Example`**
+
+```ts
+readExcelFile('path/to/excel/file.xlsx').then((worksheets) => {
+  worksheets['Sheet1'];;
+//=> {result}
+});
+```
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `filepath` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `filepath` | `string` | The path to the Excel file to read. |
 
 #### Returns
 
 `Promise`<`Record`<`string`, `string`[][]\>\>
 
+A Promise that resolves to a Record. Each key in the Record is the name of a worksheet in the Excel file. Each value is a 2D array of strings, where each string is the value of a cell in the worksheet.
+
 #### Defined in
 
-src/libs/parse/src/readExcelFile.ts:4
+src/filesystem/readExcelFile.ts:17
 
 ___
 
@@ -3921,20 +7671,49 @@ ___
 
 ▸ **readExcelFileWorksheet**(`filepath`, `worksheetIndexOrName?`): `Promise`<`string`[][]\>
 
+Reads an Excel file and returns the values of a specified worksheet as a 2D string array.
+
+**`Remarks`**
+
+This function uses the `exceljs` library to read the Excel file and extract the worksheet data.
+
+**`Throws`**
+
+Will throw an error if the specified file does not exist or if the specified worksheet does not exist in the file.
+
+**`Example`**
+
+```ts
+readExcelFileWorksheet('path/to/file.xlsx', 'Sheet1').then((data) => {
+  data;;
+//=> {result}
+});
+```
+
+**`Example`**
+
+```ts
+readExcelFileWorksheet('path/to/file.xlsx', 0).then((data) => {
+  console.log(data); // Logs the values of the first worksheet in 'file.xlsx'
+});
+```
+
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `filepath` | `string` | `undefined` |
-| `worksheetIndexOrName` | `string` \| `number` | `0` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `filepath` | `string` | `undefined` | The path to the Excel file to read. |
+| `worksheetIndexOrName` | `string` \| `number` | `0` | The index or name of the worksheet to read. Defaults to the first worksheet (index 0) if not provided. |
 
 #### Returns
 
 `Promise`<`string`[][]\>
 
+A Promise that resolves to a 2D string array containing the values of the specified worksheet.
+
 #### Defined in
 
-src/libs/parse/src/readExcelFile.ts:14
+src/filesystem/readExcelFileWorksheet.ts:23
 
 ___
 
@@ -3943,6 +7722,21 @@ ___
 ▸ **readFileStringSync**(`path`): `string`
 
 Takes a filepath and returns its utf8 contents as a single string.
+
+**`Remarks`**
+
+This function is part of the `fs` module.
+
+**`Throws`**
+
+Will throw an error if the file cannot be read.
+
+**`Example`**
+
+```ts
+readFileStringSync('/path/to/file.txt');;
+//=> "{file content}"
+```
 
 #### Parameters
 
@@ -3954,9 +7748,140 @@ Takes a filepath and returns its utf8 contents as a single string.
 
 `string`
 
+The content of the file as a string.
+
 #### Defined in
 
-[src/libs/node/src/readFileStringSync.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/readFileStringSync.ts#L7)
+src/filesystem/readFileStringSync.ts:14
+
+___
+
+### readJsonFile
+
+▸ **readJsonFile**<`T`\>(`filepath`): `Promise`<`T`\>
+
+Reads a JSON file and returns its content as a Promise.
+
+**`Remarks`**
+
+This function is asynchronous and should be awaited.
+
+**`Typeparam`**
+
+T - The expected return type of the JSON file content.
+
+**`Throws`**
+
+Will throw an error if the file cannot be read or parsed.
+Read a JSON file and return the parsed content (async).
+
+**`Example`**
+
+```ts
+readJsonFile<MyType>('/path/to/file.json');;
+//=> {result}
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `filepath` | `string` | The path to the JSON file to read. |
+
+#### Returns
+
+`Promise`<`T`\>
+
+A Promise that resolves to the content of the JSON file.
+
+#### Defined in
+
+src/filesystem/readJsonFile.ts:16
+
+___
+
+### readJsonFileSync
+
+▸ **readJsonFileSync**<`T`\>(`filepath`): `Promise`<`T`\>
+
+Reads a JSON file synchronously and returns a Promise that resolves with the parsed JSON data.
+
+**`Throws`**
+
+Will throw an error if the file cannot be read or the JSON cannot be parsed.
+Read a JSON file and return the parsed content (sync).
+
+**`Example`**
+
+```ts
+readJsonFileSync<MyType>('/path/to/file.json');
+//=> {result}
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The expected return type of the JSON data. |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `filepath` | `string` | The path to the JSON file to read. |
+
+#### Returns
+
+`Promise`<`T`\>
+
+A Promise that resolves with the parsed JSON data.
+
+#### Defined in
+
+src/filesystem/readJsonFileSync.ts:15
+
+___
+
+### regexClone
+
+▸ **regexClone**(`regex`): `RegExp`
+
+Clones a regular expression.
+
+**`Remarks`**
+
+This function creates a new instance of the RegExp using the source and flags of the provided regular expression.
+
+**`Example`**
+
+```ts
+/abc/gi;;
+//=> /abc/gi
+regexClone(/abc/gi);;
+//=> /abc/gi
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regex` | `RegExp` | The regular expression to clone. |
+
+#### Returns
+
+`RegExp`
+
+A new RegExp instance with the same source and flags as the provided regular expression.
+
+#### Defined in
+
+src/regex/regexClone.ts:13
 
 ___
 
@@ -3964,21 +7889,31 @@ ___
 
 ▸ **regexEscapeString**(`str`): `string`
 
-Escapes a string so it can be used in a regular expression.
+Escapes special characters in a string to be used in a regular expression.
+
+**`Example`**
+
+```ts
+const input = 'Hello, world!';
+regexEscapeString(input);;
+//=> 'Hello, world!'
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | The input string to escape. |
 
 #### Returns
 
 `string`
 
+The escaped string.
+
 #### Defined in
 
-[src/libs/regex/src/regexEscapeString.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexEscapeString.ts#L4)
+src/regex/regexEscapeString.ts:11
 
 ___
 
@@ -3987,6 +7922,18 @@ ___
 ▸ **regexFixFlags**(`flags`): `string`
 
 Takes a string of RegExp flags and returns a string guaranteed to be valid.
+
+**`Remarks`**
+
+This function does not validate if the input string is a valid regex flags string. It only removes duplicates and non-regex characters.
+
+**`Throws`**
+
+This function does not throw any exceptions.
+
+**`See`**
+
+strSortChars, strRemoveDuplicateChars
 
 **`Example`**
 
@@ -4005,9 +7952,11 @@ regexFixFlags('?gim*') // 'gim'
 
 `string`
 
+The processed string of regex flags.
+
 #### Defined in
 
-[src/libs/regex/src/regexFixFlags.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexFixFlags.ts#L13)
+src/regex/regexFixFlags.ts:16
 
 ___
 
@@ -4015,21 +7964,34 @@ ___
 
 ▸ **regexGetGroupNames**(`re`): `string`[]
 
-Returns an array of named groups defined inside a RegExp instance.
+Returns an array of group names from a regular expression.
+
+**`Example`**
+
+```ts
+regexGetGroupNames(/(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/);;
+//=> ['year', 'month', 'day']
+```
+
+**`Remarks`**
+
+This function only works with regular expressions that use named capture groups.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `re` | `RegExp` | RegExp instance to extract named groups from. |
+| `re` | `RegExp` | The regular expression to extract group names from. |
 
 #### Returns
 
 `string`[]
 
+An array of group names.
+
 #### Defined in
 
-[src/libs/regex/src/regexGetGroupNames.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexGetGroupNames.ts#L7)
+src/regex/regexGetGroupNames.ts:13
 
 ___
 
@@ -4037,7 +7999,11 @@ ___
 
 ▸ **regexIsValidFlags**(`flags`): `boolean`
 
-Checks if a string is a valid regex flags string.
+Checks if the provided string is a valid regular expression flag.
+
+**`Remarks`**
+
+This function checks if the provided string contains only the characters 'g', 'i', 'm', 's', 'u', 'y' and if there are no duplicate characters.
 
 **`Example`**
 
@@ -4048,17 +8014,20 @@ regexIsValidFlags('gmisuy') // false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `flags` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `flags` | `string` | The string to be checked. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the string is a valid regular expression flag.
+Checks if a string is a valid regex flags string.
+
 #### Defined in
 
-[src/libs/regex/src/regexIsValidFlags.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexIsValidFlags.ts#L11)
+src/regex/regexIsValidFlags.ts:14
 
 ___
 
@@ -4070,7 +8039,7 @@ Convert a regex for matching to a regex for validation.
 
 **`Example`**
 
-```js
+```ts
 const regexMatchDigits = /\d+/gi;
 const regexIsDigit = regexMatcherToValidater(regexMatchDigits); //=> /^\d+$/i
 const isDigit = (str) => regexIsDigit.test(str)
@@ -4088,30 +8057,36 @@ isDigit('a') //=> false
 
 `RegExp`
 
+A new regular expression that matches the entire string.
+
 #### Defined in
 
-[src/libs/regex/src/regexMatcherToValidater.ts:12](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexMatcherToValidater.ts#L12)
+src/regex/regexMatcherToValidater.ts:13
 
 ___
 
 ### regexScopeTree
 
-▸ **regexScopeTree**(`type`, `left`, `right`): (`string`: `string`, `yieldOnlyRootNodes?`: `boolean`) => `Generator`<[`IScopeNode`](/docs/interfaces/IScopeNode.md)\>
+▸ **regexScopeTree**(`left`, `right`): (`string`: `string`, `yieldOnlyRootNodes?`: `boolean`) => `Generator`<[`RegexScopeTreeNode`](/docs/index.md#regexscopetreenode)\>
 
 Builds a regex that matches a string between two strings. Supports regex instead of string.
+
+**`Throws`**
+
+If a match does not recognize itself as neither left nor right.
 
 **`Example`**
 
 ```ts
-const regex = buildRegexBetween(/a/, /b/)
-'abc'.match(regex)?.groups?.mid // 'c'
+const generator = regexScopeTree('(', ')')
+const iterable = generator('(1+((3)+(1)))+(15+(21-(521))))', true)
+console.dir([...iterable], { depth: null })
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | type of scope being matched |
 | `left` | `string` \| `RegExp` | string or regex to match before |
 | `right` | `string` \| `RegExp` | string or regex to match after |
 
@@ -4119,7 +8094,10 @@ const regex = buildRegexBetween(/a/, /b/)
 
 `fn`
 
-▸ (`string`, `yieldOnlyRootNodes?`): `Generator`<[`IScopeNode`](/docs/interfaces/IScopeNode.md)\>
+A generator function that takes a string and an optional boolean parameter.
+The generator function yields nodes of type IRegexScopeTreeNode.
+
+▸ (`string`, `yieldOnlyRootNodes?`): `Generator`<[`RegexScopeTreeNode`](/docs/index.md#regexscopetreenode)\>
 
 ##### Parameters
 
@@ -4130,11 +8108,11 @@ const regex = buildRegexBetween(/a/, /b/)
 
 ##### Returns
 
-`Generator`<[`IScopeNode`](/docs/interfaces/IScopeNode.md)\>
+`Generator`<[`RegexScopeTreeNode`](/docs/index.md#regexscopetreenode)\>
 
 #### Defined in
 
-[src/libs/regex/src/regexScopeTree.ts:39](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexScopeTree.ts#L39)
+src/regex/regexScopeTree.ts:22
 
 ___
 
@@ -4142,7 +8120,7 @@ ___
 
 ▸ **regexValidFlags**(): `string`[]
 
-Returns an array of all valid flags for a regular expression.
+This function returns an array of valid flags for regular expressions in JavaScript.
 
 **`Example`**
 
@@ -4154,9 +8132,12 @@ regexValidFlags() //=> ['g', 'i', 'm', 's', 'u', 'y']
 
 `string`[]
 
+An array of valid flags for regular expressions.
+Returns an array of all valid flags for a regular expression.
+
 #### Defined in
 
-[src/libs/regex/src/regexValidFlags.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/regexValidFlags.ts#L8)
+src/regex/regexValidFlags.ts:9
 
 ___
 
@@ -4166,9 +8147,13 @@ ___
 
 Easily perform regex 'exec' on a string. An iterable is returned which steps through the exec process and yields all the details you might need.
 
+**`Throws`**
+
+If the provided regex is not a RegExp instance.
+
 **`Example`**
 
-```js
+```ts
 const regex = /(?<g1>a)/g
 const str = 'Anthony wants a girlfriend.'
 console.log([...rexec(regex, str)])
@@ -4199,105 +8184,359 @@ console.log([...rexec(regex, str)])
 
 `Generator`<[`RexecYield`](/docs/index.md#rexecyield)\>
 
+A generator that yields an object for each match.
+
 #### Defined in
 
-[src/libs/regex/src/rexec.ts:33](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/regex/src/rexec.ts#L33)
+src/regex/rexec.ts:30
+
+___
+
+### rexecFirstMatch
+
+▸ **rexecFirstMatch**(`regex`, `string`): [`RexecYield`](/docs/index.md#rexecyield) \| `undefined`
+
+Returns the first match of a regular expression in a string.
+
+**`Remarks`**
+
+This function is a part of RegExp utilities.
+
+**`Example`**
+
+```ts
+rexecFirstMatch(/hello/g, 'hello world');;
+//=> { match: 'hello', index: 0, input: 'hello world', groups: undefined }
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `regex` | `RegExp` | The regular expression to be used for matching. |
+| `string` | `string` | The string in which to search for a match. |
+
+#### Returns
+
+[`RexecYield`](/docs/index.md#rexecyield) \| `undefined`
+
+The first match as an `RexecYield` object, or `undefined` if no match is found.
+
+#### Defined in
+
+src/regex/rexecFirstMatch.ts:16
 
 ___
 
 ### round
 
-▸ **round**(`n`, `decimalPoints?`): `number`
+▸ **round**(`number`, `precision?`): `number`
 
-Round value with a given number of decimal points.
+Round a given number with a given precision.
+Shifts with exponential notation to avoid floating-point issues.
+
+**`Throws`**
+
+if the given number is not finite or NaN.
+
+**`Example`**
+
+```ts
+round(1.2345, 2);;
+//=> 1.23
+round(1.2345);;
+//=> 1
+```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `n` | `number` | `undefined` | the number to round. |
-| `decimalPoints` | `number` | `0` | the number of decimal points. |
+| `number` | `number` | `undefined` | the number to round. |
+| `precision` | `number` | `0` | the number of decimal points. |
 
 #### Returns
 
 `number`
 
+The rounded number.
+
 #### Defined in
 
-[src/libs/number/src/round.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/round.ts#L6)
+src/number/round.ts:18
 
 ___
 
 ### roundDown
 
-▸ **roundDown**(`n`): `number`
+▸ **roundDown**(`number`, `precision?`): `number`
 
-Round number down to the nearest integer.
+Round a given number down with a given precision.
+Shifts with exponential notation to avoid floating-point issues.
+
+**`Throws`**
+
+if the given number is not finite or NaN.
+
+**`Example`**
+
+```ts
+roundDown(5.6789, 2);;
+//=> 5.67
+roundDown(5.6789);;
+//=> 5
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n` | `number` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `number` | `number` | `undefined` | the number to round. |
+| `precision` | `number` | `0` | the number of decimal points. |
 
 #### Returns
 
 `number`
 
+The rounded down number.
+
 #### Defined in
 
-[src/libs/number/src/roundDown.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/roundDown.ts#L4)
+src/number/roundDown.ts:17
+
+___
+
+### roundToNearest
+
+▸ **roundToNearest**(`integer`, `nearest?`): `number`
+
+Round a given number to a given nearest whole number.
+
+**`Throws`**
+
+if any of the arguments are either not finite, NaN or not an integer.
+
+**`Example`**
+
+```ts
+roundToNearest(111, 1) //=> 111
+roundToNearest(111, 10) //=> 110
+roundToNearest(111, 100) //=> 100
+roundToNearest(111, 1000) //=> 0
+roundToNearest(13, 3) //=> 12
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `integer` | `number` | `undefined` | the number to round. |
+| `nearest` | `number` | `1` | the nearest whole number to round to. |
+
+#### Returns
+
+`number`
+
+The rounded number.
+
+#### Defined in
+
+src/number/roundToNearest.ts:17
+
+___
+
+### roundToNearestPow10
+
+▸ **roundToNearestPow10**(`integer`, `nearest?`): `number`
+
+Round a given number to a given nearest whole number.
+
+**`Throws`**
+
+if any of the arguments are either not finite, NaN or not an integer.
+
+**`Throws`**
+
+if 'nearest' is not a power of ten.
+
+**`Example`**
+
+```ts
+roundToNearestPow10(111, 1) //=> 111
+roundToNearestPow10(111, 10) //=> 110
+roundToNearestPow10(111, 100) //=> 100
+roundToNearestPow10(111, 1000) //=> 0
+roundToNearestPow10(111, 50) //=> throws TypeError
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `integer` | `number` | `undefined` | the number to round. |
+| `nearest` | `number` | `1` | the nearest power of ten to round to. |
+
+#### Returns
+
+`number`
+
+The rounded integer.
+
+#### Defined in
+
+src/number/roundToNearestPow10.ts:19
 
 ___
 
 ### roundUp
 
-▸ **roundUp**(`n`): `number`
+▸ **roundUp**(`number`, `precision?`): `number`
 
-Round number up to the nearest integer.
+Round a given number up with a given precision.
+Shifts with exponential notation to avoid floating-point issues.
+
+**`Throws`**
+
+if the given number is not finite or NaN.
+
+**`Example`**
+
+```ts
+roundUp(1.2345, 2);;
+//=> 1.24
+roundUp(1.2345);;
+//=> 2
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n` | `number` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `number` | `number` | `undefined` | the number to round. |
+| `precision` | `number` | `0` | the number of decimal points. |
 
 #### Returns
 
 `number`
 
+The rounded number.
+
 #### Defined in
 
-[src/libs/number/src/roundUp.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/number/src/roundUp.ts#L4)
+src/number/roundUp.ts:17
+
+___
+
+### roundWith
+
+▸ **roundWith**(`number`, `precision`, `func?`): `number`
+
+Round a given number with a given precision and rounding function.
+Shifts with exponential notation to avoid floating-point issues.
+
+**`Throws`**
+
+if the given number is not finite or NaN.
+
+**`Example`**
+
+```ts
+roundWith(1.2345, 2);;
+//=> 1.23
+roundWith(1.2345, 2, Math.ceil);;
+//=> 1.24
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `number` | `number` | `undefined` | the number to round. |
+| `precision` | `number` | `undefined` | the number of decimal points. |
+| `func` | (`n`: `number`) => `number` | `Math.round` | the rounding function to use. |
+
+#### Returns
+
+`number`
+
+The rounded number.
+
+#### Defined in
+
+src/number/roundWith.ts:18
+
+___
+
+### secondsSinceDate
+
+▸ **secondsSinceDate**(`date`): `number`
+
+Returns the number of seconds that have passed since the given date.
+
+**`Example`**
+
+```ts
+secondsSinceDate(new Date('2020-01-01'));;
+//=> {number of seconds since 2020-01-01}
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `Date` | The date from which to calculate the number of seconds. |
+
+#### Returns
+
+`number`
+
+The number of seconds since the given date.
+
+#### Defined in
+
+src/date/secondsSinceDate.ts:13
 
 ___
 
 ### setDifference
 
-▸ **setDifference**<`T`\>(`setA`, `setB`): `Set`<`T`\>
+▸ **setDifference**<`T`\>(`set1`, `set2`): `Set`<`T`\>
 
-Returns a new set with all elements that are in the first set but not in the second set.
+Returns a new set that contains all elements of the first set that are not in the second set.
+
+**`Example`**
+
+```ts
+new Set([1, 2, 3, 4]);;
+//=> Set {1, 2, 3, 4}
+new Set([3, 4, 5, 6]);;
+//=> Set {3, 4, 5, 6}
+setDifference(new Set([1, 2, 3, 4]), new Set([3, 4, 5, 6]));;
+//=> Set {1, 2}
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the set. |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `setA` | `Set`<`T`\> |
-| `setB` | `Set`<`T`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `set1` | `Set`<`T`\> | The first set. |
+| `set2` | `Set`<`T`\> | The second set. |
 
 #### Returns
 
 `Set`<`T`\>
 
+A new set that contains all elements of the first set that are not in the second set.
+
 #### Defined in
 
-[src/libs/set/src/setDifference.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/set/src/setDifference.ts#L4)
+src/set/setDifference.ts:16
 
 ___
 
@@ -4305,28 +8544,51 @@ ___
 
 ▸ **setEnumerable**<`T`\>(`object`, `...propertyNames`): `void`
 
-Set multiple 'enumerable' property descriptor attributes of the target object to true.
+Sets the enumerable property of the specified properties of an object to true.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+setEnumerable(obj, 'a', 'b');
+Object.keys(obj);;
+//=> ['a', 'b']
+```
+
+**`Remarks`**
+
+This function uses `Object.defineProperty` to set the enumerable property.
+
+**`Throws`**
+
+This function will throw an error if the property does not exist on the object.
+
+**`See`**
+
+[Object.defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the object. |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `object` | `T` | The target object. |
-| `...propertyNames` | `string`[] | - |
+| `object` | `T` | The object whose properties' enumerable property will be set to true. |
+| `...propertyNames` | `string`[] | The names of the properties to be set enumerable. |
 
 #### Returns
 
 `void`
 
+void
+
 #### Defined in
 
-[src/libs/object/src/setEnumerable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/setEnumerable.ts#L6)
+src/object/setEnumerable.ts:17
 
 ___
 
@@ -4334,7 +8596,21 @@ ___
 
 ▸ **setIntersection**<`T`\>(`sets`): `Set`<`T`\>
 
-Returns the set intersection of a provded array of Set instances.
+Computes the intersection of multiple sets.
+
+**`Typeparam`**
+
+T - The type of elements in the sets.
+
+**`Example`**
+
+```ts
+const set1 = new Set([1, 2, 3]);
+const set2 = new Set([2, 3, 4]);
+const set3 = new Set([3, 4, 5]);
+setIntersection([set1, set2, set3]);
+//=> new Set([3])
+```
 
 #### Type parameters
 
@@ -4346,15 +8622,17 @@ Returns the set intersection of a provded array of Set instances.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `sets` | `Set`<`T`\>[] | an array of Set instances |
+| `sets` | `Set`<`T`\>[] | An array of sets to compute the intersection from. |
 
 #### Returns
 
 `Set`<`T`\>
 
+The intersection of all sets in the array.
+
 #### Defined in
 
-[src/libs/set/src/setIntersection.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/set/src/setIntersection.ts#L5)
+src/set/setIntersection.ts:14
 
 ___
 
@@ -4362,7 +8640,24 @@ ___
 
 ▸ **setIsSuperset**<`T`\>(`set`, `subset`): `boolean`
 
-Returns true if the first set is a superset of the second set.
+Checks if a given set is a superset of another set. This function iterates over each element in the `subset` set and checks if it exists in the `set` set. If any element in the `subset` set does not exist in the `set` set, the function returns `false`. Otherwise, it returns `true`.
+
+**`Remarks`**
+
+This function will return true if all elements of the subset are found in the set, otherwise it will return false.
+
+**`Typeparam`**
+
+T - The type of elements in the set.
+
+**`Example`**
+
+```ts
+const set1 = new Set([1, 2, 3, 4]);
+const set2 = new Set([2, 4]);
+setIsSuperset(set1, set2);
+//=> true
+```
 
 #### Type parameters
 
@@ -4372,18 +8667,20 @@ Returns true if the first set is a superset of the second set.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `set` | `Set`<`T`\> |
-| `subset` | `Set`<`T`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `set` | `Set`<`T`\> | The set to check if it is a superset. |
+| `subset` | `Set`<`T`\> | The set to check if it is a subset. |
 
 #### Returns
 
 `boolean`
 
+A boolean indicating whether the set is a superset of the subset.
+
 #### Defined in
 
-[src/libs/set/src/setIsSuperset.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/set/src/setIsSuperset.ts#L4)
+src/set/setIsSuperset.ts:15
 
 ___
 
@@ -4391,7 +8688,32 @@ ___
 
 ▸ **setNonConfigurable**<`T`\>(`object`, `...propertyNames`): `void`
 
-Set multiple 'configurable' property descriptor attributes of the target object to false.
+Sets the specified properties of an object as non-configurable.
+
+**`Remarks`**
+
+This function modifies the original object by setting the `configurable` attribute of the specified properties to `false`.
+Once a property is made non-configurable, it can neither be deleted from the object nor changed to configurable.
+
+**`Typeparam`**
+
+T - The type of the object.
+
+**`Throws`**
+
+If `object` is not an object or `propertyNames` is not a string array.
+
+**`Example`**
+
+```ts
+setNonConfigurable({ a: 1, b: 2, c: 3 }, 'a', 'b');
+Object.getOwnPropertyDescriptor({ a: 1, b: 2, c: 3 }, 'a');;
+//=> {value: 1, writable: true, enumerable: true, configurable: false}
+Object.getOwnPropertyDescriptor({ a: 1, b: 2, c: 3 }, 'b');;
+//=> {value: 2, writable: true, enumerable: true, configurable: false}
+Object.getOwnPropertyDescriptor({ a: 1, b: 2, c: 3 }, 'c');;
+//=> {value: 3, writable: true, enumerable: true, configurable: true}
+```
 
 #### Type parameters
 
@@ -4403,8 +8725,8 @@ Set multiple 'configurable' property descriptor attributes of the target object 
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `object` | `T` | The target object. |
-| `...propertyNames` | `string`[] | - |
+| `object` | `T` | The object whose properties are to be made non-configurable. |
+| `...propertyNames` | `string`[] | The names of the properties to be made non-configurable. |
 
 #### Returns
 
@@ -4412,28 +8734,47 @@ Set multiple 'configurable' property descriptor attributes of the target object 
 
 #### Defined in
 
-[src/libs/object/src/setNonConfigurable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/setNonConfigurable.ts#L6)
+src/object/setNonConfigurable.ts:19
 
 ___
 
 ### setNonEnumerable
 
-▸ **setNonEnumerable**<`T`\>(`object`, `...propertyNames`): `void`
+▸ **setNonEnumerable**(`object`, `...propertyNames`): `void`
 
-Set multiple 'enumerable' property descriptor attributes of the target object to false.
+Sets the specified properties of an object as non-enumerable.
 
-#### Type parameters
+**`Remarks`**
 
-| Name |
-| :------ |
-| `T` |
+This function modifies the original object by setting the specified properties as non-enumerable.
+If the object or any of the property names are not valid, it throws an error.
+
+**`Throws`**
+
+Will throw an error if the first argument is not an object.
+
+**`Throws`**
+
+Will throw an error if any of the specified properties do not exist on the object.
+
+**`Throws`**
+
+Will throw an error if any of the specified properties do not have a descriptor.
+
+**`Example`**
+
+```ts
+setNonEnumerable({ a: 1, b: 2, c: 3 }, 'a', 'b');
+Object.keys({ a: 1, b: 2, c: 3 });;
+//=> ['c']
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `object` | `T` | The target object. |
-| `...propertyNames` | `string`[] | - |
+| `object` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `any`\> | The object whose properties are to be set as non-enumerable. |
+| `...propertyNames` | `string`[] | The names of the properties to be set as non-enumerable. |
 
 #### Returns
 
@@ -4441,7 +8782,7 @@ Set multiple 'enumerable' property descriptor attributes of the target object to
 
 #### Defined in
 
-[src/libs/object/src/setNonEnumerable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/setNonEnumerable.ts#L6)
+src/object/setNonEnumerable.ts:18
 
 ___
 
@@ -4449,13 +8790,87 @@ ___
 
 ▸ **setNonEnumerablePrivateProperties**(`object`): `void`
 
-Set the 'enumerable' property descriptor attributes on the target object to false for all property names that start with '_' (underscore).
+Sets non-enumerable private properties of an object.
+Private properties are determined by the convention of prefixing the property name with an underscore.
+
+**`Remarks`**
+
+This function modifies the original object by setting its private properties as non-enumerable.
+
+**`Example`**
+
+```ts
+const obj = { _private: 'secret', public: 'hello world' };
+setNonEnumerablePrivateProperties(obj);
+for (let key in obj) {
+  key;;
+//=> 'public'
+}
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `object` | [`Obj`](/docs/index.md#obj) | The target object. |
+| `object` | `Record`<[`ObjectKey`](/docs/index.md#objectkey), `any`\> | The object whose private properties are to be set as non-enumerable. |
+
+#### Returns
+
+`void`
+
+void
+
+#### Defined in
+
+src/object/setNonEnumerablePrivateProperties.ts:19
+
+___
+
+### setNonEnumerableSafe
+
+▸ **setNonEnumerableSafe**<`T`\>(`object`, `...propertyNames`): `void`
+
+Sets the specified properties of an object as non-enumerable.
+
+**`Remarks`**
+
+This function modifies the original object by setting the enumerable attribute of the specified properties to false.
+If the object does not have the specified property, it will be ignored.
+If the object is not an object, an error will be thrown.
+
+**`Typeparam`**
+
+T - The type of the object.
+
+**`Throws`**
+
+Will throw an error if the first argument is not an object.
+
+**`Throws`**
+
+Will throw an error if a specified property does not have a descriptor.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+setNonEnumerableSafe(obj, 'a', 'b');
+Object.keys(obj);;
+//=> ['c']
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `object` | `T` | The object whose properties are to be set as non-enumerable. |
+| `...propertyNames` | `string`[] | The names of the properties to be set as non-enumerable. |
 
 #### Returns
 
@@ -4463,7 +8878,7 @@ Set the 'enumerable' property descriptor attributes on the target object to fals
 
 #### Defined in
 
-[src/libs/object/src/setNonEnumerablePrivateProperties.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/setNonEnumerablePrivateProperties.ts#L7)
+src/object/setNonEnumerableSafe.ts:18
 
 ___
 
@@ -4471,28 +8886,45 @@ ___
 
 ▸ **setNonWritable**<`T`\>(`object`, `...propertyNames`): `void`
 
-Set multiple 'writable' property descriptor attributes of the target object to false.
+Sets the specified properties of an object to be non-writable.
+
+**`Example`**
+
+```ts
+const obj = { a: 1, b: 2, c: 3 };
+setNonWritable(obj, 'a', 'b');
+obj;;
+//=> { a: 1, b: 2, c: 3 }
+obj.a = 10;;
+//=> Throws an error
+obj.b = 20;;
+//=> Throws an error
+obj.c = 30;;
+//=> Works fine
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the object. |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `object` | `T` | The target object. |
-| `...propertyNames` | `string`[] | - |
+| `object` | `T` | The object whose properties are to be made non-writable. |
+| `...propertyNames` | `string`[] | The names of the properties to be made non-writable. |
 
 #### Returns
 
 `void`
 
+void
+
 #### Defined in
 
-[src/libs/object/src/setNonWritable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/setNonWritable.ts#L6)
+src/object/setNonWritable.ts:20
 
 ___
 
@@ -4500,28 +8932,39 @@ ___
 
 ▸ **setSymmetricDifference**<`T`\>(`setA`, `setB`): `Set`<`T`\>
 
-Returns the symmetric difference between two sets.
+Calculates the symmetric difference between two sets. The symmetric difference of two sets is the set of elements that are in either of the sets, but not in their intersection.
+
+**`Example`**
+
+```ts
+const setA = new Set([1, 2, 3]);
+const setB = new Set([2, 3, 4]);
+setSymmetricDifference(setA, setB);
+//=> Set([1, 4])
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of elements in the input sets. |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `setA` | `Set`<`T`\> |
-| `setB` | `Set`<`T`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `setA` | `Set`<`T`\> | The first set. |
+| `setB` | `Set`<`T`\> | The second set. |
 
 #### Returns
 
 `Set`<`T`\>
 
+A new Set containing the symmetric difference between the input sets.
+
 #### Defined in
 
-[src/libs/set/src/setSymmetricDifference.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/set/src/setSymmetricDifference.ts#L4)
+src/set/setSymmetricDifference.ts:14
 
 ___
 
@@ -4529,7 +8972,25 @@ ___
 
 ▸ **setUnion**<`T`\>(`sets`): `Set`<`T`\>
 
-Returns the set union of a provded array of Set instances.
+Computes the union of multiple sets.
+
+**`Remarks`**
+
+This function does not mutate the original sets.
+
+**`Typeparam`**
+
+T - The type of elements in the sets.
+
+**`Example`**
+
+```ts
+const set1 = new Set([1, 2, 3]);
+const set2 = new Set([2, 3, 4]);
+const set3 = new Set([3, 4, 5]);
+setUnion([set1, set2, set3]);
+//=> Set(5) { 1, 2, 3, 4, 5 }
+```
 
 #### Type parameters
 
@@ -4541,44 +9002,17 @@ Returns the set union of a provded array of Set instances.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `sets` | `Set`<`T`\>[] | an array of Set instances |
+| `sets` | `Set`<`T`\>[] | An array of sets to compute the union of. |
 
 #### Returns
 
 `Set`<`T`\>
 
-#### Defined in
-
-[src/libs/set/src/setUnion.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/set/src/setUnion.ts#L5)
-
-___
-
-### setValueAsGetter
-
-▸ **setValueAsGetter**<`T`\>(`object`, `...propertyNames`): `T`
-
-Set multiple 'enumerable' property descriptor attributes of the target object to false.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `object` | `T` | The target object. |
-| `...propertyNames` | `string`[] | - |
-
-#### Returns
-
-`T`
+A new set that is the union of all sets in the input array.
 
 #### Defined in
 
-[src/libs/object/src/setValueAsGetter.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/setValueAsGetter.ts#L6)
+src/set/setUnion.ts:15
 
 ___
 
@@ -4586,28 +9020,43 @@ ___
 
 ▸ **setWritable**<`T`\>(`object`, `...propertyNames`): `void`
 
-Set multiple 'writable' property descriptor attributes of the target object to true.
+Sets the specified properties of an object to be writable.
+
+**`Remarks`**
+
+This function uses `Object.defineProperty` to set the `writable` attribute of the specified properties to `true`.
+
+**`Example`**
+
+```ts
+setWritable({ a: 1, b: 2 }, 'a', 'b').a = 3;;
+//=> 3
+setWritable({ a: 1, b: 2 }, 'a', 'b').b = 4;;
+//=> 4
+```
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the object. |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `object` | `T` | The target object. |
-| `...propertyNames` | `string`[] | - |
+| `object` | `T` | The object whose properties are to be made writable. |
+| `...propertyNames` | `string`[] | The names of the properties to be made writable. |
 
 #### Returns
 
 `void`
 
+void
+
 #### Defined in
 
-[src/libs/object/src/setWritable.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/object/src/setWritable.ts#L6)
+src/object/setWritable.ts:15
 
 ___
 
@@ -4615,14 +9064,25 @@ ___
 
 ▸ **strCountCharOccurances**(`input`, `char`): `number`
 
-Count occurances of a character within a given string.
+Counts the number of occurrences of a specific character in a string.
+
+**`Throws`**
+
+If the char parameter is not a single character string of length 1.
+
+**`Example`**
+
+```ts
+strCountCharOccurances('hello world', 'o');;
+//=> 2
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | The string to search |
-| `char` | `string` | The character to find |
+| `input` | `string` | The string to search within. |
+| `char` | `string` | The character to count occurrences of. Must be a single character string of length 1. |
 
 #### Returns
 
@@ -4630,7 +9090,7 @@ Count occurances of a character within a given string.
 
 #### Defined in
 
-[src/libs/string/src/strCountCharOccurances.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strCountCharOccurances.ts#L6)
+src/string/strCountCharOccurances.ts:11
 
 ___
 
@@ -4638,19 +9098,20 @@ ___
 
 ▸ **strCountChars**(`string`): `Map`<`string`, `number`\>
 
-Count the number of occurrences of each character in a string.
+Counts the number of occurrences of each character in a string and returns a Map where the keys are the characters and the values are their counts.
 
 **`Example`**
 
 ```ts
-strCountChars('Hello!') // Map(9) { 'H' => 1, 'e' => 1, 'l' => 2, 'o' => 1, '!' => 1 }
+strCountChars("hello");;
+//=> Map { 'h' => 1, 'e' => 1, 'l' => 2, 'o' => 1 }
 ```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `string` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to count characters in. |
 
 #### Returns
 
@@ -4658,7 +9119,69 @@ strCountChars('Hello!') // Map(9) { 'H' => 1, 'e' => 1, 'l' => 2, 'o' => 1, '!' 
 
 #### Defined in
 
-[src/libs/string/src/strCountChars.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strCountChars.ts#L8)
+src/string/strCountChars.ts:9
+
+___
+
+### strCountWords
+
+▸ **strCountWords**(`string`): `number`
+
+Counts the number of words in a given string.
+
+**`Example`**
+
+```ts
+const inputString = "Hello world! This is a sample string.";
+strCountWords(inputString);
+//=> 7
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The input string to count the words from. |
+
+#### Returns
+
+`number`
+
+#### Defined in
+
+src/string/strCountWords.ts:12
+
+___
+
+### strEnsureEndsWith
+
+▸ **strEnsureEndsWith**(`string`, `endsWith`): `string`
+
+Ensures that a string ends with a specified substring. If the string already ends with the specified substring, it is returned as is. Otherwise, the substring is appended to the end of the string.
+
+**`Example`**
+
+```ts
+strEnsureEndsWith('Hello', ' World');
+//=> 'Hello World'
+strEnsureEndsWith('Hello World', ' World');
+//=> 'Hello World'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to be processed. |
+| `endsWith` | `string` | The substring that the string should end with. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/string/strEnsureEndsWith.ts:12
 
 ___
 
@@ -4666,13 +9189,20 @@ ___
 
 ▸ **strFirstCharToUpperCase**(`string`): `string`
 
-Returns the string as is, except the first character is capitalized.
+Converts the first character of a string to uppercase.
+
+**`Example`**
+
+```ts
+strFirstCharToUpperCase('hello');
+//=> 'Hello'
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `string` | `string` | The string to capitalize the first character of. |
+| `string` | `string` | The string to be converted. |
 
 #### Returns
 
@@ -4680,7 +9210,114 @@ Returns the string as is, except the first character is capitalized.
 
 #### Defined in
 
-[src/libs/string/src/strFirstCharToUpperCase.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strFirstCharToUpperCase.ts#L5)
+src/string/strFirstCharToUpperCase.ts:9
+
+___
+
+### strHashToBuffer
+
+▸ **strHashToBuffer**(`string`, `algorithm?`): `Buffer`
+
+Hash a string into a buffer with a given algorithm
+
+**`See`**
+
+crypto.getHashes for a list of accepted strings for 'algorithm'
+
+**`Example`**
+
+```ts
+strHash.toBuffer('hello')
+//=> <Buffer 2c f2 4d ba 5f b0 a3 0e 26 e8 3b 2a c5 b9 e2 9e 1b 16 1e 5c 1f a7 42 5e 73 04 33 62 93 8b 98 24>
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `string` | `string` | `undefined` | The string to hash |
+| `algorithm` | `string` | `'sha256'` | sha1 \| sha256 \| sha512 \| md5 \| etc... |
+
+#### Returns
+
+`Buffer`
+
+#### Defined in
+
+src/string/strHashToBuffer.ts:13
+
+___
+
+### strHashToString
+
+▸ **strHashToString**(`string`, `algorithm?`, `encoding?`): `string`
+
+Hash a string into a buffer with a given algorithm
+
+**`See`**
+
+crypto.getHashes for a list of accepted strings for 'algorithm'
+
+**`Example`**
+
+```ts
+strHash.toString('hello', 'sha256', 'hex')
+//=> 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `string` | `string` | `undefined` | The string to hash |
+| `algorithm` | `string` | `'sha256'` | sha1 \| sha256 \| sha512 \| md5 \| etc... |
+| `encoding` | `Encoding` | `'base64'` | base64 \| base64url \| hex \| binary \| utf8 \| utf-8 \| utf16le \| latin1 \| ascii \| binary \| ucs2 \| ucs-2 |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/string/strHashToString.ts:15
+
+___
+
+### strHashToUint32Array
+
+▸ **strHashToUint32Array**(`string`, `algorithm?`): `Uint32Array`
+
+Hash a string into an array of unsigned 32-bit integers.
+
+**`Throws`**
+
+Will throw an error if the hashing algorithm is not supported.
+
+**`See`**
+
+crypto.getHashes for a list of accepted strings for 'algorithm'
+
+**`Example`**
+
+```ts
+strHash.toUint32Array('hello')
+//=> Uint32Array(8) [3125670444,  245608543, 708569126, 2665658821, 1545475611, 1581426463, 1647510643, 613976979]
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `string` | `string` | `undefined` | The string to hash |
+| `algorithm` | `string` | `'sha256'` | sha1 \| sha256 \| sha512 \| md5 \| etc... |
+
+#### Returns
+
+`Uint32Array`
+
+#### Defined in
+
+src/string/strHashToUint32Array.ts:15
 
 ___
 
@@ -4688,15 +9325,14 @@ ___
 
 ▸ **strIsLowerCase**(`input`): `boolean`
 
-Returns whether the string is lower case.
+Checks if the given string is in lower case.
 
 **`Example`**
 
-```js
-strIsLowerCase('abc')
+```ts
+strIsLowerCase('hello');
 //=> true
-
-strIsLowerCase('ABC')
+strIsLowerCase('Hello');
 //=> false
 ```
 
@@ -4704,7 +9340,7 @@ strIsLowerCase('ABC')
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `input` | `string` | The string to be checked. |
 
 #### Returns
 
@@ -4712,7 +9348,7 @@ strIsLowerCase('ABC')
 
 #### Defined in
 
-[src/libs/string/src/strIsLowerCase.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strIsLowerCase.ts#L13)
+src/string/strIsLowerCase.ts:11
 
 ___
 
@@ -4720,13 +9356,22 @@ ___
 
 ▸ **strIsMultiLine**(`string`): `boolean`
 
-Returns whether a given string has any line breaks.
+Checks if a string contains multiple lines.
+
+**`Example`**
+
+```ts
+strIsMultiLine("Hello\nWorld");
+//=> true
+strIsMultiLine("Hello World");
+//=> false
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `string` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to check. |
 
 #### Returns
 
@@ -4734,7 +9379,7 @@ Returns whether a given string has any line breaks.
 
 #### Defined in
 
-[src/libs/string/src/strIsMultiLine.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strIsMultiLine.ts#L4)
+src/string/strIsMultiLine.ts:11
 
 ___
 
@@ -4742,23 +9387,22 @@ ___
 
 ▸ **strIsUpperCase**(`input`): `boolean`
 
-Returns whether the string is upper case.
+Checks if the given string is in upper case.
 
 **`Example`**
 
-```js
-strIsUpperCase('abc')
-//=> false
-
-strIsUpperCase('ABC')
+```ts
+strIsUpperCase('HELLO');;
 //=> true
+strIsUpperCase('Hello');;
+//=> false
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `input` | `string` | The string to be checked. |
 
 #### Returns
 
@@ -4766,21 +9410,28 @@ strIsUpperCase('ABC')
 
 #### Defined in
 
-[src/libs/string/src/strIsUpperCase.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strIsUpperCase.ts#L13)
+src/string/strIsUpperCase.ts:11
 
 ___
 
-### strLinesRemoveEmpty
+### strNoConsecutiveEmptyLines
 
-▸ **strLinesRemoveEmpty**(`input`): `string`
+▸ **strNoConsecutiveEmptyLines**(`code`): `string`
 
-Takes a multiline string and removes lines that are empty or only contain whitespace.
+Removes consecutive empty lines from a given string.
+
+**`Example`**
+
+```ts
+strNoConsecutiveEmptyLines("Hello\n\n\nWorld");;
+//=> "Hello\n\nWorld"
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `code` | `string` | The string from which to remove consecutive empty lines. |
 
 #### Returns
 
@@ -4788,21 +9439,28 @@ Takes a multiline string and removes lines that are empty or only contain whites
 
 #### Defined in
 
-[src/libs/string/src/strLinesRemoveEmpty.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strLinesRemoveEmpty.ts#L5)
+src/string/strNoConsecutiveEmptyLines.ts:9
 
 ___
 
-### strLinesTrimLeft
+### strNoConsecutiveWhitespace
 
-▸ **strLinesTrimLeft**(`input`): `string`
+▸ **strNoConsecutiveWhitespace**(`string`): `string`
 
-Takes a multiline string and performs a left side trim of whitespace on each line.
+Removes consecutive whitespace characters in a string and replaces them with a single space.
+
+**`Example`**
+
+```ts
+strNoConsecutiveWhitespace('Hello   World');
+//=> 'Hello World'
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `string` | `string` | The string to be processed. |
 
 #### Returns
 
@@ -4810,29 +9468,7 @@ Takes a multiline string and performs a left side trim of whitespace on each lin
 
 #### Defined in
 
-[src/libs/string/src/strLinesTrimLeft.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strLinesTrimLeft.ts#L5)
-
-___
-
-### strLinesTrimRight
-
-▸ **strLinesTrimRight**(`input`): `string`
-
-Takes a multiline string and performs a right side trim of whitespace on each line.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `input` | `string` | input string |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[src/libs/string/src/strLinesTrimRight.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strLinesTrimRight.ts#L5)
+src/string/strNoConsecutiveWhitespace.ts:9
 
 ___
 
@@ -4840,13 +9476,22 @@ ___
 
 ▸ **strParseBoolean**(`string`): `boolean`
 
-Tries to parse strings such as "false" and "true" into corresponding booleans.
+Parses a string into a boolean.
+
+**`Example`**
+
+```ts
+strParseBoolean('True');
+//=> true
+strParseBoolean('False');
+//=> false
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `string` | `string` | The string to parse. |
+| `string` | `string` | The string to parse into a boolean. |
 
 #### Returns
 
@@ -4854,27 +9499,20 @@ Tries to parse strings such as "false" and "true" into corresponding booleans.
 
 #### Defined in
 
-[src/libs/string/src/strParseBoolean.ts:5](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strParseBoolean.ts#L5)
+src/string/strParseBoolean.ts:11
 
 ___
 
-### strPrettifyMinifiedCode
+### strPrependLines
 
-▸ **strPrettifyMinifiedCode**(`input`, `indent?`): `string`
-
-Very crude, simple, fast code formatting of minified code.
-Only works when input code:
-- is minified
-- is scoped with brackets
-- expressions end with semicolon
-- has no string literals containing semicolons or braces.
+▸ **strPrependLines**(`string`, `toPrepend`): `string`
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `input` | `string` | `undefined` | The minified source code |
-| `indent` | `string` | `'  '` | The string to use as indentation |
+| Name | Type |
+| :------ | :------ |
+| `string` | `string` |
+| `toPrepend` | `string` |
 
 #### Returns
 
@@ -4882,7 +9520,7 @@ Only works when input code:
 
 #### Defined in
 
-[src/libs/string/src/strPrettifyMinifiedCode.ts:15](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strPrettifyMinifiedCode.ts#L15)
+src/string/strPrependLines.ts:1
 
 ___
 
@@ -4890,16 +9528,24 @@ ___
 
 ▸ **strRemoveDuplicateChars**(`string`): `string`
 
-Remove duplicate characters from a string.
+Removes duplicate characters from a string.
+
+**`Throws`**
+
+Will throw an error if the provided argument is not a string.
+
+**`Example`**
+
 ```ts
-strRemoveDuplicateChars('Hello world!') // 'Helo wrd!'
+strRemoveDuplicateChars('hello');
+//=> 'helo'
 ```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `string` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string from which to remove duplicate characters. |
 
 #### Returns
 
@@ -4907,7 +9553,65 @@ strRemoveDuplicateChars('Hello world!') // 'Helo wrd!'
 
 #### Defined in
 
-[src/libs/string/src/strRemoveDuplicateChars.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strRemoveDuplicateChars.ts#L7)
+src/string/strRemoveDuplicateChars.ts:10
+
+___
+
+### strRemoveEmptyLines
+
+▸ **strRemoveEmptyLines**(`string`): `string`
+
+Removes all empty lines from a given string.
+
+**`Example`**
+
+```ts
+strRemoveEmptyLines('Hello\n\nWorld\n\n!');;
+//=> 'Hello\nWorld\n!'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string from which to remove empty lines. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/string/strRemoveEmptyLines.ts:9
+
+___
+
+### strRemoveFirstAndLastLine
+
+▸ **strRemoveFirstAndLastLine**(`string`): `string`
+
+Removes the first and last line from a given string.
+
+**`Example`**
+
+```ts
+strRemoveFirstAndLastLine('Line1\nLine2\nLine3');;
+//=> 'Line2'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string from which the first and last line will be removed. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/string/strRemoveFirstAndLastLine.ts:9
 
 ___
 
@@ -4915,14 +9619,29 @@ ___
 
 ▸ **strRemoveNewLines**(`string`, `replaceWith?`): `string`
 
-Remove line breaks from string.
+Removes all new line characters from a string.
+
+**`Example`**
+
+```ts
+strRemoveNewLines('Hello\nWorld');;
+//=> 'HelloWorld'
+```
+
+**`Example`**
+
+```ts
+const str = 'Hello\nWorld';
+const result = strRemoveNewLines(str, ' ');
+console.log(result); // 'Hello World'
+```
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `string` | `string` | `undefined` |
-| `replaceWith` | `string` | `''` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `string` | `string` | `undefined` | The string from which to remove new line characters. |
+| `replaceWith` | `string` | `''` | The string to replace new line characters with. Default is an empty string. |
 
 #### Returns
 
@@ -4930,7 +9649,7 @@ Remove line breaks from string.
 
 #### Defined in
 
-[src/libs/string/src/strRemoveNewLines.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strRemoveNewLines.ts#L4)
+src/string/strRemoveNewLines.ts:15
 
 ___
 
@@ -4938,14 +9657,21 @@ ___
 
 ▸ **strRepeat**(`input`, `n`): `string`
 
-Returns a given number of contatenations of a given input string.
+Repeats the given string `n` times.
+
+**`Example`**
+
+```ts
+strRepeat('abc', 3);;
+//=> 'abcabcabc'
+```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
-| `n` | `number` | Number of repetitions of the input string |
+| `input` | `string` | The string to repeat. |
+| `n` | `number` | The number of times to repeat the string. |
 
 #### Returns
 
@@ -4953,7 +9679,7 @@ Returns a given number of contatenations of a given input string.
 
 #### Defined in
 
-[src/libs/string/src/strRepeat.ts:6](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strRepeat.ts#L6)
+src/string/strRepeat.ts:10
 
 ___
 
@@ -4961,16 +9687,26 @@ ___
 
 ▸ **strReplaceAll**(`input`, `replace`, `replaceWith`, `flags?`): `string`
 
-In a given string, replace all occurances of a given search string with a given replacement string.
+Replaces all occurrences of a substring in a string with a specified replacement.
+
+**`Example`**
+
+```ts
+const input = 'Hello, world!';
+const replace = 'o';
+const replaceWith = '0';
+strReplaceAll(input, replace, replaceWith);
+//=> 'Hell0, w0rld!'
+```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `input` | `string` | `undefined` | input string |
-| `replace` | `string` | `undefined` | string to find a replace |
-| `replaceWith` | `string` | `undefined` | string to replace matches with |
-| `flags` | `string` | `'g'` | RegExp flags as single string. |
+| `input` | `string` | `undefined` | The input string. |
+| `replace` | `string` | `undefined` | The substring to be replaced. |
+| `replaceWith` | `string` | `undefined` | The replacement string. |
+| `flags` | `string` | `'g'` | Optional. The flags for the regular expression. Defaults to 'g'. |
 
 #### Returns
 
@@ -4978,7 +9714,7 @@ In a given string, replace all occurances of a given search string with a given 
 
 #### Defined in
 
-[src/libs/string/src/strReplaceAll.ts:10](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strReplaceAll.ts#L10)
+src/string/strReplaceAll.ts:17
 
 ___
 
@@ -4986,19 +9722,20 @@ ___
 
 ▸ **strSortChars**(`string`): `string`
 
-Sorts the characters in a string.
+Sorts the characters in a string in alphabetical order.
 
 **`Example`**
 
 ```ts
-strSortChars('hello') // 'ehllo'
+strSortChars('dcba');
+//=> 'abcd'
 ```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `string` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to sort. |
 
 #### Returns
 
@@ -5006,7 +9743,7 @@ strSortChars('hello') // 'ehllo'
 
 #### Defined in
 
-[src/libs/string/src/strSortChars.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strSortChars.ts#L8)
+src/string/strSortChars.ts:9
 
 ___
 
@@ -5014,15 +9751,25 @@ ___
 
 ▸ **strSplitAndTrim**(`string`, `delimiter`, `removeEmptyLines?`): `string`[]
 
-Splits a string by a delimiter and trims each of the resulting strings.
+Splits a string by a specified delimiter and trims each resulting substring.
+Optionally, it can also remove empty lines.
+
+**`Example`**
+
+```ts
+strSplitAndTrim("  Hello ;  world ; ". ";", true;
+//=> ["Hello", "world"]
+strSplitAndTrim("  Hello ;  world ; ". ";", false;
+//=> ["Hello", "world", ""]
+```
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `string` | `string` | `undefined` |
-| `delimiter` | `string` | `undefined` |
-| `removeEmptyLines` | `boolean` | `false` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `string` | `string` | `undefined` | The string to be split and trimmed. |
+| `delimiter` | `string` | `undefined` | The delimiter to split the string by. |
+| `removeEmptyLines` | `boolean` | `false` | Optional parameter. If true, removes empty lines from the resulting array. Default is false. |
 
 #### Returns
 
@@ -5030,7 +9777,7 @@ Splits a string by a delimiter and trims each of the resulting strings.
 
 #### Defined in
 
-[src/libs/string/src/strSplitAndTrim.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strSplitAndTrim.ts#L4)
+src/string/strSplitAndTrim.ts:14
 
 ___
 
@@ -5040,18 +9787,22 @@ ___
 
 Returns an array of words in the string
 
+**`Throws`**
+
+Throws an error if the input is not a string.
+
 **`Example`**
 
-```js
-strSplitCamelCase('someCamelCase')
-//=> ['some', 'Camel', 'Case']
+```ts
+strSplitCamelCase('someCamel10Case')
+//=> ['some', 'Camel10', 'Case']
 ```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `word` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `word` | `string` | The camel case word to split. |
 
 #### Returns
 
@@ -5059,27 +9810,28 @@ strSplitCamelCase('someCamelCase')
 
 #### Defined in
 
-[src/libs/string/src/strSplitCamelCase.ts:23](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strSplitCamelCase.ts#L23)
+src/string/strSplitCamelCase.ts:14
 
 ___
 
 ### strToCharCodes
 
-▸ **strToCharCodes**(`str`): `number`[]
+▸ **strToCharCodes**(`string`): `number`[]
 
-Converts a string to an array of char codes
+Converts a string to an array of character codes.
 
 **`Example`**
 
 ```ts
-strToCharCodes('hello') // [104, 101, 108, 108, 111]
+strToCharCodes('Hello');;
+//=> [72, 101, 108, 108, 111]
 ```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to convert. |
 
 #### Returns
 
@@ -5087,35 +9839,36 @@ strToCharCodes('hello') // [104, 101, 108, 108, 111]
 
 #### Defined in
 
-[src/libs/string/src/strToCharCodes.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strToCharCodes.ts#L8)
+src/string/strToCharCodes.ts:9
 
 ___
 
 ### strToCharSet
 
-▸ **strToCharSet**(`string`): `string`
+▸ **strToCharSet**(`string`): `Set`<`string`\>
 
-Returns a string containing the set of all unique characters in a string.
+Converts a string to a set of unique characters.
 
 **`Example`**
 
 ```ts
-strToCharSet('hello') // 'ehlo'
+strToCharSet('hello');;
+//=> Set { 'h', 'e', 'l', 'o' }
 ```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `string` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to be converted. |
 
 #### Returns
 
-`string`
+`Set`<`string`\>
 
 #### Defined in
 
-[src/libs/string/src/strToCharSet.ts:8](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strToCharSet.ts#L8)
+src/string/strToCharSet.ts:9
 
 ___
 
@@ -5123,19 +9876,24 @@ ___
 
 ▸ **strToSentences**(`text`): `string`[]
 
-Intelligently split a string into sentences. Uses NLP with parse tree to determine sentence boundaries.
+Intelligently split a string into sentences.
+
+**`Throws`**
+
+Will throw an error if the input is not a string.
 
 **`Example`**
 
 ```ts
-strToSentences('Hello world. How are you?') // ['Hello world.', 'How are you?']
+strToSentences('Hello world. How are you?');
+//=> ['Hello world.', 'How are you?']
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `text` | `string` | Text to split into sentences |
+| `text` | `string` | Text to split into sentences. |
 
 #### Returns
 
@@ -5143,7 +9901,36 @@ strToSentences('Hello world. How are you?') // ['Hello world.', 'How are you?']
 
 #### Defined in
 
-[src/libs/string/src/strToSentences.ts:12](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strToSentences.ts#L12)
+src/string/strToSentences.ts:12
+
+___
+
+### strToSortedCharSet
+
+▸ **strToSortedCharSet**(`string`): `string`
+
+Converts a string to a sorted set of unique characters.
+
+**`Example`**
+
+```ts
+strToSortedCharSet('banana');
+//=> 'abn'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to be converted. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/string/strToSortedCharSet.ts:9
 
 ___
 
@@ -5151,11 +9938,12 @@ ___
 
 ▸ **strToWords**(`input`): `string`[]
 
-Returns an array of words in the string
+Just a wrapper for lodash's 'words' function.
+Returns an array of words in the string.
 
 **`Example`**
 
-```js
+```ts
 strToWords('How are you?')
 //=> ['How', 'are', 'you']
 ```
@@ -5172,7 +9960,94 @@ strToWords('How are you?')
 
 #### Defined in
 
-[src/libs/string/src/strToWords.ts:12](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strToWords.ts#L12)
+src/string/strToWords.ts:12
+
+___
+
+### strTrimLines
+
+▸ **strTrimLines**(`string`): `string`
+
+Trims leading and trailing whitespace from each line in a string.
+
+**`Example`**
+
+```ts
+strTrimLines('  Hello, world!  \n  How are you?  ');;
+//=> 'Hello, world!\nHow are you?'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to trim. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/string/strTrimLines.ts:9
+
+___
+
+### strTrimLinesLeft
+
+▸ **strTrimLinesLeft**(`string`): `string`
+
+Trims the leading whitespace from each line in a string.
+
+**`Example`**
+
+```ts
+strTrimLinesLeft('   line1\n   line2\n   line3');;
+//=> 'line1\nline2\nline3'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to trim. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/string/strTrimLinesLeft.ts:9
+
+___
+
+### strTrimLinesRight
+
+▸ **strTrimLinesRight**(`string`): `string`
+
+Trims trailing whitespace from each line in a string.
+
+**`Example`**
+
+```ts
+strTrimLinesRight('  Hello, world!  \n  How are you?  ');;
+//=> '  Hello, world!\n  How are you?'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to trim. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/string/strTrimLinesRight.ts:9
 
 ___
 
@@ -5180,16 +10055,26 @@ ___
 
 ▸ **strUnwrap**(`input`, `left`, `right`, `flags?`): `string`
 
-Inserts provided strings before and after a string.
+Removes the specified left and right substrings from the input string.
+
+**`Example`**
+
+```ts
+const input = 'Hello World';
+const left = 'Hello ';
+const right = ' World';
+strUnwrap(input, left, right);
+//=> 'World'
+```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `input` | `string` | `undefined` | input string |
-| `left` | `string` | `undefined` | string to place before |
-| `right` | `string` | `undefined` | string to place after |
-| `flags` | `string` | `''` | regex flags |
+| `input` | `string` | `undefined` | The input string from which to remove the substrings. |
+| `left` | `string` | `undefined` | The left substring to remove. |
+| `right` | `string` | `undefined` | The right substring to remove. |
+| `flags` | `string` | `''` | The flags for the RegExp. Default is an empty string. |
 
 #### Returns
 
@@ -5197,7 +10082,7 @@ Inserts provided strings before and after a string.
 
 #### Defined in
 
-[src/libs/string/src/strUnwrap.ts:10](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strUnwrap.ts#L10)
+src/string/strUnwrap.ts:17
 
 ___
 
@@ -5205,21 +10090,22 @@ ___
 
 ▸ **strWrapBetween**(`input`, `left`, `right`): `string`
 
-Inserts provided strings before and after a string.
+Wraps a string between two other strings.
 
 **`Example`**
 
-```js
-expect(util.strWrapBetween('input', '#', '&')).toBe('#input&');
+```ts
+strWrapBetween('Hello', '<', '>');;
+//=> '<Hello>'
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
-| `left` | `string` | string to place before |
-| `right` | `string` | string to place after |
+| `input` | `string` | The string to be wrapped. |
+| `left` | `string` | The string to be added to the left of the input string. |
+| `right` | `string` | The string to be added to the right of the input string. |
 
 #### Returns
 
@@ -5227,7 +10113,7 @@ expect(util.strWrapBetween('input', '#', '&')).toBe('#input&');
 
 #### Defined in
 
-[src/libs/string/src/strWrapBetween.ts:11](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strWrapBetween.ts#L11)
+src/string/strWrapBetween.ts:11
 
 ___
 
@@ -5235,20 +10121,21 @@ ___
 
 ▸ **strWrapIn**(`input`, `wrap`): `string`
 
-Inserts a provided string before and after a string.
+Wraps a given string with another string.
 
 **`Example`**
 
-```js
-expect(util.strWrapIn('input', '#')).toBe('#input#');
+```ts
+strWrapIn('hello', '*');;
+//=> '*hello*'
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
-| `wrap` | `string` | string to place before and after |
+| `input` | `string` | The string to be wrapped. |
+| `wrap` | `string` | The string to wrap around the input. |
 
 #### Returns
 
@@ -5256,7 +10143,7 @@ expect(util.strWrapIn('input', '#')).toBe('#input#');
 
 #### Defined in
 
-[src/libs/string/src/strWrapIn.ts:10](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strWrapIn.ts#L10)
+src/string/strWrapIn.ts:10
 
 ___
 
@@ -5268,15 +10155,16 @@ Wraps a string in angle brackets.
 
 **`Example`**
 
-```js
-expect(util.strWrapInAngleBrackets('input')).toBe('<input>');
+```ts
+strWrapInAngleBrackets('example');;
+//=> '<example>'
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `input` | `string` | The string to be wrapped in angle brackets. |
 
 #### Returns
 
@@ -5284,7 +10172,7 @@ expect(util.strWrapInAngleBrackets('input')).toBe('<input>');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInAngleBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strWrapInAngleBrackets.ts#L9)
+src/string/strWrapInAngleBrackets.ts:9
 
 ___
 
@@ -5292,19 +10180,20 @@ ___
 
 ▸ **strWrapInBraces**(`input`): `string`
 
-Wraps a string in braces.
+Wraps a given string in braces.
 
 **`Example`**
 
-```js
-expect(util.strWrapInBraces('input')).toBe('{input}');
+```ts
+strWrapInBraces('hello');
+//=> "{hello}"
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `input` | `string` | The string to be wrapped in braces. |
 
 #### Returns
 
@@ -5312,7 +10201,7 @@ expect(util.strWrapInBraces('input')).toBe('{input}');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInBraces.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strWrapInBraces.ts#L9)
+src/string/strWrapInBraces.ts:9
 
 ___
 
@@ -5324,15 +10213,16 @@ Wraps a string in brackets.
 
 **`Example`**
 
-```js
-expect(util.strWrapInBrackets('input')).toBe('[input]');
+```ts
+strWrapInBrackets('test');
+//=> '[test]'
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `input` | `string` | The string to be wrapped in brackets. |
 
 #### Returns
 
@@ -5340,7 +10230,7 @@ expect(util.strWrapInBrackets('input')).toBe('[input]');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strWrapInBrackets.ts#L9)
+src/string/strWrapInBrackets.ts:9
 
 ___
 
@@ -5348,19 +10238,20 @@ ___
 
 ▸ **strWrapInDoubleQuotes**(`input`): `string`
 
-Wraps a string in parenthesis.
+Wraps a given string in double quotes.
 
 **`Example`**
 
-```js
-expect(util.strWrapInDoubleQuotes('input')).toBe('"input"');
+```ts
+strWrapInDoubleQuotes('Hello World');
+//=> '"Hello World"'
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `input` | `string` | The string to be wrapped in double quotes. |
 
 #### Returns
 
@@ -5368,7 +10259,7 @@ expect(util.strWrapInDoubleQuotes('input')).toBe('"input"');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInDoubleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strWrapInDoubleQuotes.ts#L9)
+src/string/strWrapInDoubleQuotes.ts:9
 
 ___
 
@@ -5376,19 +10267,20 @@ ___
 
 ▸ **strWrapInParenthesis**(`input`): `string`
 
-Wraps a string in parenthesis.
+Wraps a given string in parenthesis.
 
 **`Example`**
 
-```js
-expect(util.strWrapInParenthesis('input')).toBe('(input)');
+```ts
+strWrapInParenthesis('hello');
+//=> '(hello)'
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `input` | `string` | The string to be wrapped in parenthesis. |
 
 #### Returns
 
@@ -5396,7 +10288,7 @@ expect(util.strWrapInParenthesis('input')).toBe('(input)');
 
 #### Defined in
 
-[src/libs/string/src/strWrapInParenthesis.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strWrapInParenthesis.ts#L9)
+src/string/strWrapInParenthesis.ts:9
 
 ___
 
@@ -5404,19 +10296,20 @@ ___
 
 ▸ **strWrapInSingleQuotes**(`input`): `string`
 
-Wraps a string in parenthesis.
+Wraps a given string in single quotes.
 
 **`Example`**
 
-```js
-expect(util.strWrapInSingleQuotes('input')).toBe("'input'");
+```ts
+strWrapInSingleQuotes('Hello World');
+//=> "'Hello World'"
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `input` | `string` | input string |
+| `input` | `string` | The string to be wrapped in single quotes. |
 
 #### Returns
 
@@ -5424,7 +10317,7 @@ expect(util.strWrapInSingleQuotes('input')).toBe("'input'");
 
 #### Defined in
 
-[src/libs/string/src/strWrapInSingleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/string/src/strWrapInSingleQuotes.ts#L9)
+src/string/strWrapInSingleQuotes.ts:9
 
 ___
 
@@ -5433,6 +10326,20 @@ ___
 ▸ **streamToString**(`stream`): `Promise`<`string`\>
 
 Drain a Readable into a string.
+
+**`Remarks`**
+
+This function is asynchronous and returns a promise that resolves to a string.
+If an error occurs during the conversion, it returns an empty string.
+
+**`Example`**
+
+```ts
+require('fs').createReadStream('file.txt');;
+//=> {stream}
+await streamToString(fs.createReadStream('file.txt'));;
+//=> {content of 'file.txt'}
+```
 
 #### Parameters
 
@@ -5444,30 +10351,49 @@ Drain a Readable into a string.
 
 `Promise`<`string`\>
 
+A promise that resolves to a string.
+
 #### Defined in
 
-[src/libs/node/src/streamToString.ts:7](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/node/src/streamToString.ts#L7)
+src/node/streamToString.ts:16
 
 ___
 
-### tableFrom
+### toJson
 
-▸ **tableFrom**(`rows`, `hasHeaderRow?`): [`Elem`](/docs/classes/Elem.md)
+▸ **toJson**<`T`\>(`data`, `pretty?`): `string`
+
+Converts the given data to a JSON string.
+
+**`Example`**
+
+```ts
+toJson({ name: 'John', age: 30 }, true);;
+//=> "{\n  "name": "John",\n  "age": 30\n}"
+```
+
+#### Type parameters
+
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the data to be converted to JSON. |
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `rows` | `string`[][] | `undefined` |
-| `hasHeaderRow` | `boolean` | `true` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `data` | `T` | `undefined` | The data to be converted to JSON. |
+| `pretty` | `boolean` | `false` | Optional parameter that determines whether the resulting JSON string should be pretty-printed. Default is `false`. |
 
 #### Returns
 
-[`Elem`](/docs/classes/Elem.md)
+`string`
+
+The JSON string representation of the given data.
 
 #### Defined in
 
-[src/libs/html/src/HtmlGenerate.ts:130](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/html/src/HtmlGenerate.ts#L130)
+src/object/toJson.ts:12
 
 ___
 
@@ -5475,13 +10401,21 @@ ___
 
 ▸ **trimArrayBytesLeft**(`a`): `number`[]
 
-Trims an array of bytes on the left
+Trims the left side of an array of bytes by removing leading zeros.
+
+**`Example`**
+
+```ts
+const input = [0, 0, 0, 1, 2, 3];
+trimArrayBytesLeft(input);
+//=> [1, 2, 3]
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `a` | `number`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `a` | `number`[] | The array of bytes to trim. |
 
 #### Returns
 
@@ -5489,7 +10423,7 @@ Trims an array of bytes on the left
 
 #### Defined in
 
-[src/libs/binary/src/trimArrayBytesLeft.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/trimArrayBytesLeft.ts#L4)
+src/binary/trimArrayBytesLeft.ts:10
 
 ___
 
@@ -5497,13 +10431,21 @@ ___
 
 ▸ **trimArrayBytesRight**(`a`): `number`[]
 
-Trims an array of bytes on the right
+Trims the trailing zero bytes from an array of numbers.
+
+**`Example`**
+
+```ts
+const input = [1, 2, 3, 0, 0, 0];
+trimArrayBytesRight(input);
+//=> [1, 2, 3]
+```
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `a` | `number`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `a` | `number`[] | The input array of numbers. |
 
 #### Returns
 
@@ -5511,4 +10453,1125 @@ Trims an array of bytes on the right
 
 #### Defined in
 
-[src/libs/binary/src/trimArrayBytesRight.ts:4](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/binary/src/trimArrayBytesRight.ts#L4)
+src/binary/trimArrayBytesRight.ts:10
+
+___
+
+### tsCountExports
+
+▸ **tsCountExports**(`code`): `number`
+
+Counts the number of export statements in a given code string.
+
+**`Example`**
+
+```ts
+const code = `
+  export const foo = 42;
+  export function bar() {
+    return "Hello, world!";
+  }
+`;
+const count = tsCountExports(code);
+//=> 2
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The code string to analyze. |
+
+#### Returns
+
+`number`
+
+The number of export statements found in the code.
+
+#### Defined in
+
+src/tscode/tsCountExports.ts:16
+
+___
+
+### tsDocExtractAllComments
+
+▸ **tsDocExtractAllComments**(`code`): `Generator`<[`IExtractedTsDocComment`](/docs/interfaces/IExtractedTsDocComment.md)\>
+
+This function takes a source string, and parses all TSDoc block comments in it..
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The source code string. |
+
+#### Returns
+
+`Generator`<[`IExtractedTsDocComment`](/docs/interfaces/IExtractedTsDocComment.md)\>
+
+#### Defined in
+
+src/tsdoc/tsDocExtractAllComments.ts:7
+
+___
+
+### tsDocExtractExample
+
+▸ **tsDocExtractExample**(`code`): `string`
+
+Extracts the first TSDoc
+
+**`Example`**
+
+```ts
+code block from the given code string.
+```
+
+**`Example`**
+
+```ts
+from.
+```
+
+**`Example`**
+
+```ts
+code block.
+```
+
+**`Remarks`**
+
+This function uses regular expressions to find the
+
+**`Example`**
+
+```ts
+tag in a TSDoc comment and extracts the code within it.
+If no
+```
+
+**`Example`**
+
+```ts
+tag is found, it throws an error.
+```
+
+**`Throws`**
+
+Throws an error if a TSDoc
+
+**`Example`**
+
+```ts
+cannot be found in the code.
+```
+
+**`Example`**
+
+```ts
+`
+/**
+ * @example
+ * 'Hello, world!';
+//=> "Hello, world!"
+ */
+function helloWorld() {
+  return 'Hello, world!'
+}
+`
+tsDocExtractExample(code);
+//=> "return 'Hello, world!'"
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The code string to extract the TSDoc |
+
+#### Returns
+
+`string`
+
+The extracted TSDoc
+
+#### Defined in
+
+src/tsdoc/tsDocExtractExample.ts:26
+
+___
+
+### tsDocExtractFirstComment
+
+▸ **tsDocExtractFirstComment**(`code`): [`IExtractedTsDocComment`](/docs/interfaces/IExtractedTsDocComment.md) \| `undefined`
+
+Extracts the first TSDoc block comment from the provided TypeScript code.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The TypeScript code to extract the TSDoc block comment from. |
+
+#### Returns
+
+[`IExtractedTsDocComment`](/docs/interfaces/IExtractedTsDocComment.md) \| `undefined`
+
+#### Defined in
+
+src/tsdoc/tsDocExtractFirstComment.ts:8
+
+___
+
+### tsDocFixSpacingBeforeAfter
+
+▸ **tsDocFixSpacingBeforeAfter**(`code`): `string`
+
+This function fixes the spacing before and after the code in a TypeScript file.
+It replaces multiple newlines after a block comment end with a single newline.
+It also ensures that there is a newline before the start of a block comment if there is any non-whitespace character before it.
+
+**`Example`**
+
+```ts
+const code = `
+function example() {
+  // some code
+}
+/**
+ * This is a comment.
+ */
+function anotherExample() {
+  // some more code
+}
+`;
+const fixedCode = tsDocFixSpacingBeforeAfter(code);
+//=> fixedCode
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The TypeScript code to fix the spacing for. |
+
+#### Returns
+
+`string`
+
+The TypeScript code with fixed spacing.
+
+#### Defined in
+
+src/tsdoc/tsDocFixSpacingBeforeAfter.ts:23
+
+___
+
+### tsDocNormalizeTagName
+
+▸ **tsDocNormalizeTagName**(`code`): `string`
+
+Normalizes a tag name by converting it to lowercase.
+If the tag name is not found in the map, it returns the original tag name.
+
+**`Remarks`**
+
+This function is case-insensitive and will return the input string if no equivalent TypeScript keyword is found.
+
+**`Example`**
+
+```ts
+tsDocNormalizeTagName("TagName");;
+//=> "tagname"
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The tag name to normalize. |
+
+#### Returns
+
+`string`
+
+The normalized tag name.
+
+#### Defined in
+
+src/tsdoc/tsDocNormalizeTagName.ts:14
+
+___
+
+### tsDocRemoveEmptyLines
+
+▸ **tsDocRemoveEmptyLines**(`string`): `string`
+
+Removes all empty lines from the given string.
+
+**`Remarks`**
+
+This function is particularly useful when dealing with multi-line strings that may have unnecessary empty lines.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string from which to remove empty lines. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/tsdoc/tsDocRemoveEmptyLines.ts:6
+
+___
+
+### tsDocStripAllTagsExcepThrowsParamDescription
+
+▸ **tsDocStripAllTagsExcepThrowsParamDescription**(`source`): `string`
+
+This function takes a source string, extracts all TSDoc comments from it, and then strips all TSDoc tags from these comments except for the 'throws' and 'param' tags.
+The function then returns the modified source string.
+
+**`Remarks`**
+
+This function is useful when you want to simplify your TSDoc comments by removing all tags except for the 'throws' and 'param' tags.
+
+**`Throws`**
+
+If the source string is not a valid TSDoc comment.
+
+**`Example`**
+
+```ts
+const source = `
+/**
+ * @param a - The first number.
+ * @param b - The second number.
+ * @returns The sum of a and b.
+ * @throws If a or b is not a number.
+ */
+function add(a, b) {
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    throw new Error('Both a and b must be numbers.');
+  }
+  return a + b;
+}
+`;
+tsDocStripAllTagsExcepThrowsParamDescription(source);
+//=> result
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `source` | `string` | The source string from which TSDoc comments are to be extracted and modified. |
+
+#### Returns
+
+`string`
+
+The modified source string with all TSDoc tags stripped except for the 'throws' and 'param' tags.
+
+#### Defined in
+
+src/tsdoc/tsDocStripAllTagsExcepThrowsParamDescription.ts:30
+
+___
+
+### tsDocStripExample
+
+▸ **tsDocStripExample**(`string`): `string`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `string` | `string` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/tsdoc/tsDocStripExample.ts:3
+
+___
+
+### tsDocStripTypes
+
+▸ **tsDocStripTypes**(`code`): `string`
+
+Strips TypeScript types from the provided code string.
+
+**`Remarks`**
+
+This function is useful when you want to remove TypeScript types from a code string.
+
+**`Example`**
+
+```ts
+tsDocStripTypes('let x: number = 5;');;
+//=> 'let x = 5;'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The TypeScript code string from which types should be stripped. |
+
+#### Returns
+
+`string`
+
+The provided code string with all TypeScript types removed.
+
+#### Defined in
+
+src/tsdoc/tsDocStripTypes.ts:13
+
+___
+
+### tsDocUnwrapComment
+
+▸ **tsDocUnwrapComment**(`code`): `string`
+
+Unwraps a TSDoc block comment, removing the comment markers and leading asterisks.
+Throws an error if the provided string is not a valid TSDoc block comment.
+
+**`Remarks`**
+
+This function will throw an error if the provided string is not a valid TSDoc block comment.
+
+**`Throws`**
+
+If the provided string is not a valid TSDoc block comment.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The TSDoc block comment to unwrap. |
+
+#### Returns
+
+`string`
+
+The unwrapped TSDoc comment.
+
+#### Defined in
+
+src/tsdoc/tsDocUnwrapComment.ts:13
+
+___
+
+### tsDocWrapAsComment
+
+▸ **tsDocWrapAsComment**(`string`): `string`
+
+Wraps a given string into a TSDoc block comment.
+
+**`Remarks`**
+
+This function is useful when you want to generate TSDoc comments programmatically.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to be wrapped into a TSDoc block comment. |
+
+#### Returns
+
+`string`
+
+The input string wrapped into a TSDoc block comment.
+
+#### Defined in
+
+src/tsdoc/tsDocWrapAsComment.ts:9
+
+___
+
+### tsDocWrapExample
+
+▸ **tsDocWrapExample**(`code`): `string`
+
+Wraps the given code in a TSDoc block comment with an
+
+**`Example`**
+
+```ts
+tag.
+```
+
+**`Example`**
+
+```ts
+const code = 'console.log("Hello, world!");';
+tsWrapDocExample(code);
+//=> 'console.log("Hello, world!");'
+```
+//
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The code to be wrapped. |
+
+#### Returns
+
+`string`
+
+The wrapped TypeScript code.
+
+#### Defined in
+
+src/tsdoc/tsDocWrapExample.ts:12
+
+___
+
+### tsExtractImports
+
+▸ **tsExtractImports**(`code`): [`ITsExtractImportsResult`](/docs/interfaces/ITsExtractImportsResult.md)[]
+
+This function extracts all import statements from a given TypeScript code string.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The TypeScript code as a string from which to extract import statements. |
+
+#### Returns
+
+[`ITsExtractImportsResult`](/docs/interfaces/ITsExtractImportsResult.md)[]
+
+#### Defined in
+
+src/tscode/tsExtractImports.ts:7
+
+___
+
+### tsExtractJestTests
+
+▸ **tsExtractJestTests**(`code`): `string`
+
+Parses the Jest tests from the given string.
+
+**`Remarks`**
+
+This function uses the `rexecFirstMatch` function from the `regex` module and the `regJestTests` function from the `regexlib` module.
+
+**`Throws`**
+
+Throws an error if the tests could not be parsed from the input source code.
+
+**`Example`**
+
+```ts
+parseJestTests('test("should pass", () => { expect(true).toBe(true); });');;
+//=> 'should pass'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The string to parse Jest tests from. |
+
+#### Returns
+
+`string`
+
+The extracted Jest tests as a string.
+
+#### Defined in
+
+src/tscode/tsExtractJestTests.ts:15
+
+___
+
+### tsGetClassMemberAccessModifiers
+
+▸ **tsGetClassMemberAccessModifiers**(`code`): `Record`<`string`, ``"protected"`` \| ``"private"``\>
+
+Returns a map of the private and protected class properties and methods of the provided TypeScript code for a class.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `code` | `string` |
+
+#### Returns
+
+`Record`<`string`, ``"protected"`` \| ``"private"``\>
+
+#### Defined in
+
+src/tscode/tsGetClassMemberAccessModifiers.ts:6
+
+___
+
+### tsHasDefaultExport
+
+▸ **tsHasDefaultExport**(`code`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `code` | `string` |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+src/tscode/tsHasDefaultExport.ts:1
+
+___
+
+### tsJestConvertExportNameString
+
+▸ **tsJestConvertExportNameString**(`code`, `funName`): `string`
+
+Converts the name of an exported function or variable in a Jest test suite to use the `.name` property of the exported item.
+This is useful for keeping test suite names in sync with the names of the items they are testing.
+
+**`Example`**
+
+```ts
+const code = `describe('myFunction', () => {...})`;
+const exportName = 'myFunction';
+const newCode = tsJestConvertExportNameString(code, exportName);
+//=> `describe(myFunction.name, () => {...})`
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The source code of the Jest test suite. |
+| `funName` | `string` | The name of the function being tested. |
+
+#### Returns
+
+`string`
+
+The modified source code.
+
+#### Defined in
+
+src/tscode/tsJestConvertExportNameString.ts:14
+
+___
+
+### tsJestFixLineSpacing
+
+▸ **tsJestFixLineSpacing**(`code`): `string`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `code` | `string` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/tscode/tsJestFixLineSpacing.ts:3
+
+___
+
+### tsSimpleMinifyCode
+
+▸ **tsSimpleMinifyCode**(`string`): `string`
+
+Minifies the given TypeScript code by removing empty lines and trimming lines.
+
+**`Example`**
+
+```ts
+//
+```
+
+**`Function`**
+
+tsSimpleMinifyCode
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The TypeScript code to minify. |
+
+#### Returns
+
+`string`
+
+The minified TypeScript code.
+
+#### Defined in
+
+src/tscode/tsSimpleMinifyCode.ts:13
+
+___
+
+### tsStripBlockComments
+
+▸ **tsStripBlockComments**(`code`): `string`
+
+Strips block comments from the provided TypeScript code.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `code` | `string` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/tscode/tsStripBlockComments.ts:8
+
+___
+
+### tsStripComments
+
+▸ **tsStripComments**(`code`): `string`
+
+Removes all comments from JavaScript or TypeScript code.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `code` | `string` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+src/tscode/tsStripComments.ts:7
+
+___
+
+### tsStripDeclSourceMapComments
+
+▸ **tsStripDeclSourceMapComments**(`code`): `string`
+
+Strips out TypeScript declaration source map comments from the provided code string.
+
+**`Remarks`**
+
+This function is useful when you want to clean up TypeScript code for readability or performance reasons.
+
+**`Example`**
+
+```ts
+tsStripDeclSourceMapComments(
+  ['// some code', '//# sourceMappingURL=buildRegexBetween.d.ts.map', ''].join('\n')
+);
+//=> '// some code\n'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The TypeScript code string from which to strip source map comments. |
+
+#### Returns
+
+`string`
+
+The cleaned TypeScript code string without source map comments.
+
+#### Defined in
+
+src/tscode/tsStripDeclSourceMapComments.ts:13
+
+___
+
+### tsStripExportKeyword
+
+▸ **tsStripExportKeyword**(`source`): `string`
+
+Strips the 'export' keyword from the beginning of each line in the provided source string.
+
+**`Remarks`**
+
+This function is useful when you want to remove the 'export' keyword from TypeScript code.
+
+**`Example`**
+
+```ts
+tsStripExportKeyword('export const foo = "bar";\nexport function baz() {}');;
+//=> 'const foo = "bar";\nfunction baz() {}'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `source` | `string` | The source string from which to strip the 'export' keyword. |
+
+#### Returns
+
+`string`
+
+The source string with the 'export' keyword stripped from the beginning of each line.
+
+#### Defined in
+
+src/tscode/tsStripExportKeyword.ts:11
+
+___
+
+### tsStripFullSlashCommentLines
+
+▸ **tsStripFullSlashCommentLines**(`code`): `string`
+
+Removes lines that consist of only a double-slash comment, from the given code.
+
+**`Remarks`**
+
+This function uses a regular expression to remove all lines that start with a single-line comment.
+
+**`Example`**
+
+```ts
+const code = `const x = 5;
+// This is a comment
+const y = 10;`;
+stripSlashComments(code);
+//=> "const x = 5;\nconst y = 10;"
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The code from which to remove the comments. |
+
+#### Returns
+
+`string`
+
+The TypeScript code without single-line comments.
+
+#### Defined in
+
+src/tscode/tsStripFullSlashCommentLines.ts:14
+
+___
+
+### tsStripImports
+
+▸ **tsStripImports**(`code`): `string`
+
+Strips all import statements from a given TypeScript code string.
+
+**`Example`**
+
+```ts
+const code = `
+import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
+const a = 1;
+`.trim()
+tsStripImports(code)
+//=> 'const a = 1;'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `code` | `string` | The TypeScript code to strip import statements from. |
+
+#### Returns
+
+`string`
+
+The TypeScript code without import statements.
+
+#### Defined in
+
+src/tscode/tsStripImports.ts:18
+
+___
+
+### tsWalkImports
+
+▸ **tsWalkImports**(`rootfile`, `maxDepth?`): [`WalkImportsResult`](/docs/index.md#walkimportsresult)
+
+Walks through the imports of a TypeScript file and its dependencies up to a specified depth.
+
+**`Remarks`**
+
+This function uses synchronous file operations and may block the event loop if used with large files or deep import trees.
+
+**`Throws`**
+
+Will throw an error if the file does not exist or if it is an external module.
+
+**`Example`**
+
+```ts
+tsWalkImports('./src/index.ts', 2);;
+//=> {result}
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `rootfile` | `string` | `undefined` | The root TypeScript file to start the walk from. |
+| `maxDepth` | `number` | `0` | The maximum depth to walk through the imports. Default is 0, which means no limit. |
+
+#### Returns
+
+[`WalkImportsResult`](/docs/index.md#walkimportsresult)
+
+A `WalkImportsResult` object that maps each file path to its import details.
+
+#### Defined in
+
+src/tscode/tsWalkImports.ts:19
+
+___
+
+### weeksSinceDate
+
+▸ **weeksSinceDate**(`date`): `number`
+
+Calculates the number of weeks that have passed since the provided date.
+
+**`Example`**
+
+```ts
+weeksSinceDate(new Date('2020-01-01'));;
+//=> {number of weeks since '2020-01-01'}
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `Date` | The date from which to calculate the number of weeks passed. |
+
+#### Returns
+
+`number`
+
+The number of weeks since the provided date.
+
+#### Defined in
+
+src/date/weeksSinceDate.ts:13
+
+___
+
+### writeExcelFile
+
+▸ **writeExcelFile**<`T`\>(`filepath`, `table`, `worksheetName?`): `Promise`<`void`\>
+
+Writes a 2D array to an Excel file.
+
+**`Remarks`**
+
+This function is asynchronous and returns a Promise that resolves to `void`.
+
+**`Typeparam`**
+
+T - The type of elements in the 2D array.
+
+**`Example`**
+
+```ts
+[['Name', 'Age'], ['John Doe', 30], ['Jane Doe', 25]];;
+//=> data
+writeExcelFile('path/to/file.xlsx', data, 'People');;
+//=> Promise<void>
+```
+
+**`Throws`**
+
+If the file cannot be written.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `filepath` | `string` | `undefined` | The path where the Excel file will be written. |
+| `table` | `T`[][] | `undefined` | The 2D array to be written to the Excel file. |
+| `worksheetName` | `string` | `'Sheet1'` | The name of the worksheet where the array will be written. Defaults to 'Sheet1'. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+A Promise that resolves to `void`.
+
+#### Defined in
+
+src/filesystem/writeExcelFile.ts:19
+
+___
+
+### writeJsonFile
+
+▸ **writeJsonFile**<`T`\>(`filepath`, `data`, `pretty?`): `Promise`<`void`\>
+
+Writes a JSON file to the specified filepath with the provided data.
+
+**`Remarks`**
+
+This function is asynchronous and returns a Promise that resolves to `void`.
+
+**`Typeparam`**
+
+T - The type of the data to be written to the JSON file.
+
+**`Throws`**
+
+If there's an error writing the file.
+Write a JSON file (async).
+
+**`Example`**
+
+```ts
+writeJsonFile('./data.json', { name: 'John', age: 30 }, true);;
+//=> undefined
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `filepath` | `string` | `undefined` | The path where the JSON file will be written. |
+| `data` | `T` | `undefined` | The data to be written to the JSON file. |
+| `pretty` | `boolean` | `false` | Optional parameter. If true, the JSON file will be formatted in a pretty, human-readable format. Default is `false`. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+A Promise that resolves to `void`.
+
+#### Defined in
+
+src/filesystem/writeJsonFile.ts:19
+
+___
+
+### writeJsonFileSync
+
+▸ **writeJsonFileSync**<`T`\>(`filepath`, `data`, `pretty?`): `void`
+
+Writes JSON data to a file synchronously.
+
+**`Remarks`**
+
+This method will throw an error if the file cannot be written.
+
+**`Typeparam`**
+
+T - The type of the data to be written to the file.
+
+**`Throws`**
+
+Will throw an error if the file cannot be written.
+Write a JSON file (sync).
+
+**`Example`**
+
+```ts
+writeJsonFileSync("./path/to/file.json", { key: "value" }, true);
+//=> undefined
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `filepath` | `string` | `undefined` | The path of the file where the data will be written. |
+| `data` | `T` | `undefined` | The data to be written to the file. |
+| `pretty` | `boolean` | `false` | Optional parameter. If true, the JSON data will be formatted in a pretty, human-readable format. Default is false. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+src/filesystem/writeJsonFileSync.ts:18
+
+___
+
+### yearsSinceDate
+
+▸ **yearsSinceDate**(`date`): `number`
+
+Calculates the number of years that have passed since the provided date.
+
+**`Example`**
+
+```ts
+yearsSinceDate(new Date('2000-01-01'));;
+//=> {number of years since '2000-01-01'}
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `Date` | The date from which to calculate the number of years passed. |
+
+#### Returns
+
+`number`
+
+The number of years that have passed since the provided date.
+
+#### Defined in
+
+src/date/yearsSinceDate.ts:13

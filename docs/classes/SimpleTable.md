@@ -6,19 +6,15 @@ Two-dimensional table class supporting column and row headers.
 
 ## Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Description |
+| :------ | :------ |
+| `T` | The type of the data in the table. |
 
 ## Hierarchy
 
-- [`Base`](/docs/classes/Base.md)
+- [`MixinBase`](/docs/classes/MixinBase.md)
 
   ↳ **`SimpleTable`**
-
-## Implements
-
-- [`IRevivable`](/docs/interfaces/IRevivable.md)<[`SimpleTableSerializedForm`](/docs/index.md#simpletableserializedform)<`T`\>\>
 
 ## Table of contents
 
@@ -36,20 +32,18 @@ Two-dimensional table class supporting column and row headers.
 
 - [data](/docs/classes/SimpleTable.md#data)
 - [headers](/docs/classes/SimpleTable.md#headers)
-- [klass](/docs/classes/SimpleTable.md#klass)
 - [numColumns](/docs/classes/SimpleTable.md#numcolumns)
 - [numRows](/docs/classes/SimpleTable.md#numrows)
-- [proto](/docs/classes/SimpleTable.md#proto)
 
 ### Methods
 
-- [assertNoAmbiguousOptions](/docs/classes/SimpleTable.md#assertnoambiguousoptions)
-- [assertNoOptionsRequireMissingOptions](/docs/classes/SimpleTable.md#assertnooptionsrequiremissingoptions)
 - [assertRowValidLength](/docs/classes/SimpleTable.md#assertrowvalidlength)
 - [get](/docs/classes/SimpleTable.md#get)
-- [init](/docs/classes/SimpleTable.md#init)
+- [getConstructor](/docs/classes/SimpleTable.md#getconstructor)
+- [getPrototype](/docs/classes/SimpleTable.md#getprototype)
 - [set](/docs/classes/SimpleTable.md#set)
 - [setNonEnumerablePrivateProperties](/docs/classes/SimpleTable.md#setnonenumerableprivateproperties)
+- [setNonEnumerableProperties](/docs/classes/SimpleTable.md#setnonenumerableproperties)
 - [toArray](/docs/classes/SimpleTable.md#toarray)
 - [toJSON](/docs/classes/SimpleTable.md#tojson)
 - [fromJSON](/docs/classes/SimpleTable.md#fromjson)
@@ -60,6 +54,8 @@ Two-dimensional table class supporting column and row headers.
 
 • **new SimpleTable**<`T`\>(`data`, `headers?`)
 
+Creates a new SimpleTable.
+
 #### Type parameters
 
 | Name |
@@ -68,18 +64,18 @@ Two-dimensional table class supporting column and row headers.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | `T`[][] |
-| `headers?` | `string`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `T`[][] | The data of the table. |
+| `headers?` | `string`[] | The headers of the table. |
 
 #### Overrides
 
-[Base](/docs/classes/Base.md).[constructor](/docs/classes/Base.md#constructor)
+[MixinBase](/docs/classes/MixinBase.md).[constructor](/docs/classes/MixinBase.md#constructor)
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:26](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L26)
+src/datastructures/SimpleTable.ts:38
 
 ## Properties
 
@@ -87,9 +83,11 @@ Two-dimensional table class supporting column and row headers.
 
 • `Protected` **\_colIndexMap**: `Record`<`string`, `number`\> = `{}`
 
+Map from column names to column indices.
+
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:13](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L13)
+src/datastructures/SimpleTable.ts:12
 
 ___
 
@@ -97,9 +95,11 @@ ___
 
 • `Protected` **\_data**: `T`[][] = `[]`
 
+The data of the table.
+
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:15](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L15)
+src/datastructures/SimpleTable.ts:22
 
 ___
 
@@ -107,9 +107,11 @@ ___
 
 • `Protected` **\_headers**: `string`[]
 
+The headers of the table.
+
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:14](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L14)
+src/datastructures/SimpleTable.ts:17
 
 ## Accessors
 
@@ -125,7 +127,7 @@ Returns the table as a two-dimensional array, without column headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:78](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L78)
+src/datastructures/SimpleTable.ts:94
 
 ___
 
@@ -141,25 +143,7 @@ Gets the column headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:71](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L71)
-
-___
-
-### klass
-
-• `get` **klass**(): typeof [`Base`](/docs/classes/Base.md)
-
-#### Returns
-
-typeof [`Base`](/docs/classes/Base.md)
-
-#### Inherited from
-
-Base.klass
-
-#### Defined in
-
-[src/libs/mixins/src/Base.ts:17](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L17)
+src/datastructures/SimpleTable.ts:87
 
 ___
 
@@ -175,7 +159,7 @@ Gets the number of cols in the table, not including headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:57](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L57)
+src/datastructures/SimpleTable.ts:73
 
 ___
 
@@ -191,87 +175,21 @@ Gets the number of rows in the table, not including headers.
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:64](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L64)
-
-___
-
-### proto
-
-• `get` **proto**(): [`Obj`](/docs/index.md#obj)
-
-#### Returns
-
-[`Obj`](/docs/index.md#obj)
-
-#### Inherited from
-
-Base.proto
-
-#### Defined in
-
-[src/libs/mixins/src/Base.ts:21](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L21)
+src/datastructures/SimpleTable.ts:80
 
 ## Methods
-
-### assertNoAmbiguousOptions
-
-▸ `Protected` **assertNoAmbiguousOptions**(`options`, `optionKeyPairs`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | [`Obj`](/docs/index.md#obj) |
-| `optionKeyPairs` | [`string`, `string`][] |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Base](/docs/classes/Base.md).[assertNoAmbiguousOptions](/docs/classes/Base.md#assertnoambiguousoptions)
-
-#### Defined in
-
-[src/libs/mixins/src/Base.ts:71](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L71)
-
-___
-
-### assertNoOptionsRequireMissingOptions
-
-▸ `Protected` **assertNoOptionsRequireMissingOptions**(`options`, `optionKeyPairs`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `options` | [`Obj`](/docs/index.md#obj) |
-| `optionKeyPairs` | [`string`, `string`][] |
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[Base](/docs/classes/Base.md).[assertNoOptionsRequireMissingOptions](/docs/classes/Base.md#assertnooptionsrequiremissingoptions)
-
-#### Defined in
-
-[src/libs/mixins/src/Base.ts:79](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L79)
-
-___
 
 ### assertRowValidLength
 
 ▸ `Protected` **assertRowValidLength**(`row`): `void`
 
+Checks if a row has the correct length.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `row` | `T`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `row` | `T`[] | The row to check. |
 
 #### Returns
 
@@ -279,7 +197,7 @@ ___
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:49](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L49)
+src/datastructures/SimpleTable.ts:65
 
 ___
 
@@ -302,25 +220,43 @@ Returns a value at a given (row, col) position.
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:87](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L87)
+src/datastructures/SimpleTable.ts:103
 
 ___
 
-### init
+### getConstructor
 
-▸ `Protected` **init**(): `void`
+▸ **getConstructor**(): typeof [`MixinBase`](/docs/classes/MixinBase.md)
 
 #### Returns
 
-`void`
+typeof [`MixinBase`](/docs/classes/MixinBase.md)
 
 #### Inherited from
 
-[Base](/docs/classes/Base.md).[init](/docs/classes/Base.md#init)
+[MixinBase](/docs/classes/MixinBase.md).[getConstructor](/docs/classes/MixinBase.md#getconstructor)
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:25](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L25)
+src/mixins/MixinBase.ts:8
+
+___
+
+### getPrototype
+
+▸ **getPrototype**(): [`MixinBase`](/docs/classes/MixinBase.md)
+
+#### Returns
+
+[`MixinBase`](/docs/classes/MixinBase.md)
+
+#### Inherited from
+
+[MixinBase](/docs/classes/MixinBase.md).[getPrototype](/docs/classes/MixinBase.md#getprototype)
+
+#### Defined in
+
+src/mixins/MixinBase.ts:12
 
 ___
 
@@ -344,7 +280,7 @@ Inserts a given value at a given (row, col) position.
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:100](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L100)
+src/datastructures/SimpleTable.ts:116
 
 ___
 
@@ -360,11 +296,37 @@ Make the properties with property names that start with an underscore non-enumer
 
 #### Inherited from
 
-[Base](/docs/classes/Base.md).[setNonEnumerablePrivateProperties](/docs/classes/Base.md#setnonenumerableprivateproperties)
+[MixinBase](/docs/classes/MixinBase.md).[setNonEnumerablePrivateProperties](/docs/classes/MixinBase.md#setnonenumerableprivateproperties)
 
 #### Defined in
 
-[src/libs/mixins/src/Base.ts:67](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/mixins/src/Base.ts#L67)
+src/mixins/MixinBase.ts:19
+
+___
+
+### setNonEnumerableProperties
+
+▸ `Protected` **setNonEnumerableProperties**(`...propertyNames`): `void`
+
+Make the properties with the given property names non-enumerable.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...propertyNames` | `string`[] |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[MixinBase](/docs/classes/MixinBase.md).[setNonEnumerableProperties](/docs/classes/MixinBase.md#setnonenumerableproperties)
+
+#### Defined in
+
+src/mixins/MixinBase.ts:26
 
 ___
 
@@ -380,27 +342,23 @@ Returns the table as a two-dimensional array, including row and column headers..
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:111](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L111)
+src/datastructures/SimpleTable.ts:127
 
 ___
 
 ### toJSON
 
-▸ **toJSON**(): [`SimpleTableSerializedForm`](/docs/index.md#simpletableserializedform)<`T`\>
+▸ **toJSON**(): [`ISimpleTableSerializedForm`](/docs/interfaces/ISimpleTableSerializedForm.md)<`T`\>
 
 Override of the native toJSON method. When parsing the returned json string, it can be revived as a Table object when using the static Table.fromJSON method.
 
 #### Returns
 
-[`SimpleTableSerializedForm`](/docs/index.md#simpletableserializedform)<`T`\>
-
-#### Implementation of
-
-IRevivable.toJSON
+[`ISimpleTableSerializedForm`](/docs/interfaces/ISimpleTableSerializedForm.md)<`T`\>
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:119](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L119)
+src/datastructures/SimpleTable.ts:135
 
 ___
 
@@ -428,4 +386,4 @@ Revive a stringified Table object.
 
 #### Defined in
 
-[src/libs/datastructures/src/SimpleTable.ts:21](https://github.com/bemoje/bemoje-node-util/blob/fd39a18/src/libs/datastructures/src/SimpleTable.ts#L21)
+src/datastructures/SimpleTable.ts:28
