@@ -1,5 +1,2 @@
-/**
- * Generate a indes.ts file in the source root directory that exports all the source files.
- */
-export declare function generateEntryPoint(): void;
+export {};
 //# sourceMappingURL=generateEntryPoint.d.ts.map

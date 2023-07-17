@@ -1,5 +1,5 @@
 /*!
- * @bemoje/node-util v0.3.0
+ * @bemoje/node-util v0.4.0
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
@@ -17,10 +17,10 @@ var getAppDataPath = require('appdata-path');
 var path = require('path');
 var cliColor = require('cli-color');
 var titleCase = require('title-case');
-var fs = require('fs');
 var asyncRetry = require('async-retry');
-var openai = require('openai');
+var fs = require('fs');
 var gpt3Encoder = require('gpt-3-encoder');
+var openai = require('openai');
 var deepAssign = require('deep-assign');
 var excelJs = require('exceljs');
 var esprima = require('esprima');
@@ -39,8 +39,8 @@ var EventEmitter__default = /*#__PURE__*/_interopDefaultLegacy(EventEmitter);
 var hash__default = /*#__PURE__*/_interopDefaultLegacy(hash);
 var getAppDataPath__default = /*#__PURE__*/_interopDefaultLegacy(getAppDataPath);
 var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
-var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
 var asyncRetry__default = /*#__PURE__*/_interopDefaultLegacy(asyncRetry);
+var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
 var deepAssign__default = /*#__PURE__*/_interopDefaultLegacy(deepAssign);
 var excelJs__default = /*#__PURE__*/_interopDefaultLegacy(excelJs);
 var pdf__default = /*#__PURE__*/_interopDefaultLegacy(pdf);
@@ -667,6 +667,113 @@ ApiReponseCache.optionsDefaults = {
 };
 
 /**
+ * Merges two objects deeply, returning a new object that has the combined properties of both.
+ * If a property exists in both objects, the value from the source object will be used.
+ * @template T - The type of the target object.
+ * @template U - The type of the source object.
+ * @param target The target object to which properties will be added.
+ * @param source The source object from which properties will be copied.
+ * @returns A new object that has the combined properties of both the target and source objects.
+ * @example ```ts
+ * objAssignDeep({ a: 1, b: 2 }, { b: 3, c: 4 });;
+ * //=> { a: 1, b: 3, c: 4 }
+ * ```
+ */
+function objAssignDeep(target, source) {
+    return deepAssign__default["default"](target, source);
+}
+
+/**
+ * Filters the properties of an object based on a callback function.
+ * @param object The object to filter.
+ * @param callback The callback function used to filter the object properties.
+ * @template T - The type of the values in the object.
+ * @param - The function to get the keys of the object. Defaults to `Object.keys`.
+ * @returns A new object with the properties that passed the test. If no properties passed the test, an empty object will be returned.
+ * @param getKeys The function used to get the keys of the object.
+ * @example ```ts
+ * const obj = { a: 1, b: 2, c: 3 };
+ * objFilter(obj, (value, key) => value > 1);
+ * //=> { b: 2, c: 3 }
+ * ```
+ */
+function objFilter(object, callback, getKeys = Object.keys) {
+    const result = {};
+    for (const key of getKeys(object)) {
+        if (callback(object[key], key)) {
+            result[key] = object[key];
+        }
+    }
+    return result;
+}
+
+/**
+ * Deletes specified keys from an object. This function takes an object and an array of keys to be deleted from the object. It returns a new object with the specified keys removed.
+ * @param obj The object from which keys are to be deleted.
+ * @template V - The type of the values in the object.
+ * @returns A new object with the specified keys deleted.
+ * @param keys The keys to be deleted from the object.
+ * @example ```ts
+ * const obj = { a: 1, b: 2, c: 3 };
+ * objDeleteKeys(obj, 'a', 'c');
+ * //=> { b: 2 }
+ * ```
+ */
+function objDeleteKeys(obj, ...keys) {
+    return objFilter(obj, (_, key) => !keys.includes(key));
+}
+
+/**
+ * Deletes the specified keys from an object in a mutable way.
+ * @param obj The object from which to delete the keys.
+ * @returns The modified object with the specified keys deleted.
+ * @typeparam V - The type of the values in the object.
+ * @param keys The keys to delete from the object.
+ * @example ```ts
+ * const obj = { a: 1, b: 2, c: 3 };
+ * objDeleteKeysMutable(obj, 'a', 'c');
+ * //=> { b: 2 }
+ * ```
+ */
+function objDeleteKeysMutable(obj, ...keys) {
+    for (const key of keys) {
+        Reflect.deleteProperty(obj, key);
+    }
+    return obj;
+}
+
+/**
+ * Sets the specified properties of an object as non-enumerable.
+ * @remarks This function modifies the original object by setting the specified properties as non-enumerable.
+ * If the object or any of the property names are not valid, it throws an error.
+ * @param object The object whose properties are to be set as non-enumerable.
+ * @param propertyNames The names of the properties to be set as non-enumerable.
+ * @throws Will throw an error if the first argument is not an object.
+ * @throws Will throw an error if any of the specified properties do not exist on the object.
+ * @throws Will throw an error if any of the specified properties do not have a descriptor.
+ * @example ```ts
+ * setNonEnumerable({ a: 1, b: 2, c: 3 }, 'a', 'b');
+ * Object.keys({ a: 1, b: 2, c: 3 });;
+ * //=> ['c']
+ * ```
+ */
+function setNonEnumerable(object, ...propertyNames) {
+    if (!object || typeof object !== 'object') {
+        throw new Error(`setValueAsGetter() requires an object as the first argument.`);
+    }
+    for (const propertyName of propertyNames) {
+        if (!Object.hasOwn(object, propertyName)) {
+            throw new Error(`Property '${propertyName}' does not exist on object.`);
+        }
+        const des = Object.getOwnPropertyDescriptor(object, propertyName);
+        if (!des)
+            throw new Error(`Property '${propertyName}' does not have a descriptor.`);
+        des.enumerable = false;
+        Object.defineProperty(object, propertyName, des);
+    }
+}
+
+/**
  * Checks if the provided value is a valid number.
  * @remarks This function checks if the provided value is a finite number and not NaN.
  * @param number The value to check.
@@ -784,113 +891,6 @@ OpenaiTokenUsage.prices = {
     editText: { in: 0, out: 0 },
     editCode: { in: 0, out: 0 },
 };
-
-/**
- * Sets the specified properties of an object as non-enumerable.
- * @remarks This function modifies the original object by setting the specified properties as non-enumerable.
- * If the object or any of the property names are not valid, it throws an error.
- * @param object The object whose properties are to be set as non-enumerable.
- * @param propertyNames The names of the properties to be set as non-enumerable.
- * @throws Will throw an error if the first argument is not an object.
- * @throws Will throw an error if any of the specified properties do not exist on the object.
- * @throws Will throw an error if any of the specified properties do not have a descriptor.
- * @example ```ts
- * setNonEnumerable({ a: 1, b: 2, c: 3 }, 'a', 'b');
- * Object.keys({ a: 1, b: 2, c: 3 });;
- * //=> ['c']
- * ```
- */
-function setNonEnumerable(object, ...propertyNames) {
-    if (!object || typeof object !== 'object') {
-        throw new Error(`setValueAsGetter() requires an object as the first argument.`);
-    }
-    for (const propertyName of propertyNames) {
-        if (!Object.hasOwn(object, propertyName)) {
-            throw new Error(`Property '${propertyName}' does not exist on object.`);
-        }
-        const des = Object.getOwnPropertyDescriptor(object, propertyName);
-        if (!des)
-            throw new Error(`Property '${propertyName}' does not have a descriptor.`);
-        des.enumerable = false;
-        Object.defineProperty(object, propertyName, des);
-    }
-}
-
-/**
- * Merges two objects deeply, returning a new object that has the combined properties of both.
- * If a property exists in both objects, the value from the source object will be used.
- * @template T - The type of the target object.
- * @template U - The type of the source object.
- * @param target The target object to which properties will be added.
- * @param source The source object from which properties will be copied.
- * @returns A new object that has the combined properties of both the target and source objects.
- * @example ```ts
- * objAssignDeep({ a: 1, b: 2 }, { b: 3, c: 4 });;
- * //=> { a: 1, b: 3, c: 4 }
- * ```
- */
-function objAssignDeep(target, source) {
-    return deepAssign__default["default"](target, source);
-}
-
-/**
- * Deletes the specified keys from an object in a mutable way.
- * @param obj The object from which to delete the keys.
- * @returns The modified object with the specified keys deleted.
- * @typeparam V - The type of the values in the object.
- * @param keys The keys to delete from the object.
- * @example ```ts
- * const obj = { a: 1, b: 2, c: 3 };
- * objDeleteKeysMutable(obj, 'a', 'c');
- * //=> { b: 2 }
- * ```
- */
-function objDeleteKeysMutable(obj, ...keys) {
-    for (const key of keys) {
-        Reflect.deleteProperty(obj, key);
-    }
-    return obj;
-}
-
-/**
- * Filters the properties of an object based on a callback function.
- * @param object The object to filter.
- * @param callback The callback function used to filter the object properties.
- * @template T - The type of the values in the object.
- * @param - The function to get the keys of the object. Defaults to `Object.keys`.
- * @returns A new object with the properties that passed the test. If no properties passed the test, an empty object will be returned.
- * @param getKeys The function used to get the keys of the object.
- * @example ```ts
- * const obj = { a: 1, b: 2, c: 3 };
- * objFilter(obj, (value, key) => value > 1);
- * //=> { b: 2, c: 3 }
- * ```
- */
-function objFilter(object, callback, getKeys = Object.keys) {
-    const result = {};
-    for (const key of getKeys(object)) {
-        if (callback(object[key], key)) {
-            result[key] = object[key];
-        }
-    }
-    return result;
-}
-
-/**
- * Deletes specified keys from an object. This function takes an object and an array of keys to be deleted from the object. It returns a new object with the specified keys removed.
- * @param obj The object from which keys are to be deleted.
- * @template V - The type of the values in the object.
- * @returns A new object with the specified keys deleted.
- * @param keys The keys to be deleted from the object.
- * @example ```ts
- * const obj = { a: 1, b: 2, c: 3 };
- * objDeleteKeys(obj, 'a', 'c');
- * //=> { b: 2 }
- * ```
- */
-function objDeleteKeys(obj, ...keys) {
-    return objFilter(obj, (_, key) => !keys.includes(key));
-}
 
 class OpenaiApiClientBase {
     handleOptions(options) {
@@ -1359,6 +1359,39 @@ function arrFilterMutable(input, f) {
         }
     }
     return input;
+}
+
+/**
+ * Returns an array of indices where the predicate function returns true for the corresponding element in the input array.
+ * @param input - The array to search.
+ * @param predicate - The function to test each element of the array.
+ * @returns An array of indices where the predicate function returns true.
+ */
+function arrFindIndicesOf(input, predicate) {
+    const result = [];
+    for (let i = 0; i < input.length; i++) {
+        if (predicate(input[i])) {
+            result.push(i);
+        }
+    }
+    return result;
+}
+
+function arrFindLast(input, predicate) {
+    for (let i = input.length - 1; i >= 0; i--) {
+        if (predicate(input[i])) {
+            return input[i];
+        }
+    }
+}
+
+function arrFindLastIndexOf(input, predicate) {
+    for (let i = input.length - 1; i >= 0; i--) {
+        if (predicate(input[i])) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 /**
@@ -3824,6 +3857,61 @@ function ensureValidWindowsPath(path, options) {
 }
 
 /**
+ * Represents a file in the filesystem.
+ */
+class File {
+    /**
+     * Creates a new SourceFile instance.
+     * @param filepath The absolute path to the source file.
+     */
+    constructor(filepath) {
+        this.filepath = filepath;
+    }
+    /**
+     * The file extension of the source file.
+     */
+    get fileExtension() {
+        return path__default["default"].extname(this.filepath);
+    }
+    /**
+     * The name of the source file's exported member.
+     */
+    get exportName() {
+        return this.filename.substring(0, this.filename.indexOf('.'));
+    }
+    /**
+     * The name of the source file.
+     */
+    get filename() {
+        return path__default["default"].basename(this.filepath);
+    }
+    /**
+     * The name of the directory of the source file.
+     */
+    get dirname() {
+        return path__default["default"].basename(this.dirpath);
+    }
+    /**
+     * The absolute path to the directory of the source file.
+     */
+    get dirpath() {
+        return path__default["default"].dirname(this.filepath);
+    }
+    /**
+     * The relative path to the source file from the working directory.
+     */
+    get relative() {
+        return absoluteToRelativePath(this.filepath);
+    }
+    /**
+     * Returns whether the source file exists.
+     */
+    fileExists() {
+        return fs__default["default"].existsSync(this.filepath);
+    }
+}
+
+/**
  * This function retrieves all the values from a given Excel file worksheet.
  * It iterates over each row and cell in the worksheet, converting the cell values to strings and trimming any excess whitespace.
  * The result is a two-dimensional array of strings, where each inner array represents a row in the worksheet.
@@ -3902,21 +3990,6 @@ function readExcelFileWorksheet(filepath, worksheetIndexOrName = 0) {
             : workbook.getWorksheet(worksheetIndexOrName);
         return getExcelFileWorksheetValues(worksheet);
     });
-}
-
-/**
- * Takes a filepath and returns its utf8 contents as a single string.
- * @remarks This function is part of the `fs` module.
- * @returns The content of the file as a string.
- * @throws Will throw an error if the file cannot be read.
- * @param path path to the file
- * @example ```ts
- * readFileStringSync('/path/to/file.txt');;
- * //=> "{file content}"
- * ```
- */
-function readFileStringSync(path) {
-    return fs__default["default"].readFileSync(path, 'utf8').toString();
 }
 
 /**
@@ -7200,6 +7273,7 @@ function tsCountExports(code) {
 /**
  * This function extracts all import statements from a given TypeScript code string.
  * @param code The TypeScript code as a string from which to extract import statements.
+ * @returns An array of import statements.
  */
 function tsExtractImports(code) {
     const isFirstLine = /^import /;
@@ -7246,10 +7320,6 @@ function tsExtractImports(code) {
  * @param code The string to parse Jest tests from.
  * @returns The extracted Jest tests as a string.
  * @throws Throws an error if the tests could not be parsed from the input source code.
- * @example ```ts
- * parseJestTests('test("should pass", () => { expect(true).toBe(true); });');;
- * //=> 'should pass'
- * ```
  */
 function tsExtractJestTests(code) {
     var _a;
@@ -7261,6 +7331,20 @@ function tsExtractJestTests(code) {
 
 /**
  * Returns a map of the private and protected class properties and methods of the provided TypeScript code for a class.
+ * @remarks
+ * This function does not handle public class members as they do not explicitly have an access modifier in TypeScript.
+ * @param code - The TypeScript code string to extract the class member access modifiers from.
+ * @returns A record where the keys are the names of the class members and the values are their corresponding access modifiers.
+ * @throws an error if the provided code string is not valid TypeScript code.
+ * @example ```ts
+ * const code = `
+ * class MyClass {
+ *   private myPrivateMethod() {}
+ *   protected myProtectedMethod() {}
+ * }`;
+ * tsGetClassMemberAccessModifiers(code);
+ * //=> { myPrivateMethod: 'private', myProtectedMethod: 'protected' }
+ * ```
  */
 function tsGetClassMemberAccessModifiers(code) {
     const regex = /^\s*(?<privacy>protected|private) ((static|abstract|optional|readonly|get|set|async) )*(?<name>\w+)/gm;
@@ -7320,50 +7404,6 @@ function tsSimpleMinifyCode(string) {
 }
 
 /**
- * This function takes a source string, and parses all TSDoc block comments in it..
- * @param code The source code string.
- */
-function* tsDocExtractAllComments(code) {
-    let lines = code.split(/\r?\n/);
-    let offset = 0;
-    while (true) {
-        const index = lines.findIndex((line) => line.trim() === '/**');
-        const lastIndex = lines.findIndex((line) => line.trim() === '*/');
-        if (index !== -1 && lastIndex !== -1) {
-            let nextLine;
-            if (lastIndex + 1 < lines.length)
-                nextLine = lines[lastIndex + 1];
-            if ((nextLine === null || nextLine === void 0 ? void 0 : nextLine.trim()) === '' && lastIndex + 2 < lines.length)
-                nextLine = lines[lastIndex + 2];
-            yield {
-                start: index + offset,
-                end: lastIndex + offset,
-                match: lines.slice(index, lastIndex + 1).join('\n'),
-                nextLine,
-            };
-            lines = lines.slice(lastIndex + 1);
-            offset += lastIndex + 1;
-        }
-        else {
-            break;
-        }
-    }
-}
-
-/**
- * Strips block comments from the provided TypeScript code.
- */
-function tsStripBlockComments(code) {
-    const lines = code.split('\n');
-    const remove = new Set();
-    for (const { start, end } of tsDocExtractAllComments(code)) {
-        for (const int of numRange(start, end))
-            remove.add(int);
-    }
-    return lines.filter((_, i) => !remove.has(i)).join('\n');
-}
-
-/**
  * Removes lines that consist of only a double-slash comment, from the given code.
  * @remarks This function uses a regular expression to remove all lines that start with a single-line comment.
  * @returns The TypeScript code without single-line comments.
@@ -7381,10 +7421,58 @@ function tsStripFullSlashCommentLines(code) {
 }
 
 /**
+ * This function takes a source string, and yields each TSDoc block comments in it.
+ * @param code The source code string.
+ * @returns A generator that yields each TSDoc block comment in the source code.
+ * @yields Each TSDoc block comment in the source code.
+ */
+function* tsDocExtractAllComments(code) {
+    const reStart = /^\s*\/\*\*\s*$/;
+    const reEnd = /^\s*\*\/\s*$/;
+    let lines = code.split(/\r?\n/);
+    let offset = 0;
+    while (true) {
+        const indexStart = lines.findIndex((line) => reStart.test(line));
+        const indexEnd = lines.findIndex((line) => reEnd.test(line));
+        if (indexStart !== -1 && indexEnd !== -1) {
+            let nextLine;
+            if (indexEnd + 1 < lines.length)
+                nextLine = lines[indexEnd + 1];
+            if ((nextLine === null || nextLine === void 0 ? void 0 : nextLine.trim()) === '' && indexEnd + 2 < lines.length)
+                nextLine = lines[indexEnd + 2];
+            yield {
+                start: indexStart + offset,
+                end: indexEnd + offset,
+                match: lines.slice(indexStart, indexEnd + 1).join('\n'),
+                nextLine,
+            };
+            lines = lines.slice(indexEnd + 1);
+            offset += indexEnd + 1;
+        }
+        else {
+            break;
+        }
+    }
+}
+
+/**
+ * Strips block comments from the provided TypeScript code.
+ */
+function tsStripTsDocBlockComments(code) {
+    const lines = code.split('\n');
+    const remove = new Set();
+    for (const { start, end } of tsDocExtractAllComments(code)) {
+        for (const int of numRange(start, end))
+            remove.add(int);
+    }
+    return lines.filter((_, i) => !remove.has(i)).join('\n');
+}
+
+/**
  * Removes all comments from JavaScript or TypeScript code.
  */
 function tsStripComments(code) {
-    return tsStripFullSlashCommentLines(tsStripBlockComments(code));
+    return tsStripFullSlashCommentLines(tsStripTsDocBlockComments(code));
 }
 
 /**
@@ -7448,13 +7536,12 @@ function tsStripImports(code) {
 /**
  * Walks through the imports of a TypeScript file and its dependencies up to a specified depth.
  * @remarks This function uses synchronous file operations and may block the event loop if used with large files or deep import trees.
- * @param rootfile The root TypeScript file to start the walk from.
+ * @param rootfile The filepath to the TypeScript file to start the walk from.
  * @param maxDepth The maximum depth to walk through the imports. Default is 0, which means no limit.
  * @returns A `WalkImportsResult` object that maps each file path to its import details.
  * @throws Will throw an error if the file does not exist or if it is an external module.
  * @example ```ts
- * tsWalkImports('./src/index.ts', 2);;
- * //=> {result}
+ * tsWalkImports('/src/index.ts', 2)
  * ```
  */
 function tsWalkImports(rootfile, maxDepth = 0) {
@@ -7465,7 +7552,7 @@ function tsWalkImports(rootfile, maxDepth = 0) {
                 result.set(filepath, { depth, match, error: 'External module' });
                 return result;
             }
-            const source = readFileStringSync(filepath);
+            const source = fs__default["default"].readFileSync(filepath).toString();
             result.set(filepath, { depth, match, source });
             // recurse
             if (maxDepth && depth > maxDepth)
@@ -7490,42 +7577,6 @@ function tsWalkImports(rootfile, maxDepth = 0) {
         }
         return result;
     })(path__default["default"].normalize(rootfile));
-}
-
-/**
- * Checks if the provided code string is a valid TSDoc comment.
- * @remarks This function tests each line of the provided code string against a regular expression that matches the TSDoc comment syntax.
- * @param code The source code string to be checked.
- * @returns A boolean indicating whether the provided code string is a valid TSDoc comment.
- */
-function isValidTsDocComment(code) {
-    if (!code)
-        return false;
-    const lines = code.split(/\r?\n/);
-    if (lines.length < 3)
-        return false;
-    const last = lines.pop();
-    if (last && !last.trimStart().startsWith('*/'))
-        return false;
-    const first = lines.shift();
-    if (first && !first.trimStart().startsWith('/**'))
-        return false;
-    for (const line of lines) {
-        if (!line.trimStart().startsWith('*'))
-            return false;
-    }
-    return true;
-}
-// export function isValidTsDocComment(code: string): boolean {
-//   if (!code) return false
-//   const lines = code.split(/\r?\n/)
-//   const re = /^ *(\/\*\*|\*\/|\*)/
-//   return arrEvery(lines, (line) => re.test(line))
-// }
-
-function assertValidTsDocComment(code) {
-    if (!isValidTsDocComment(code))
-        throw new Error('Invalid TSDoc comment');
 }
 
 /**
@@ -7576,59 +7627,170 @@ function isNamedTsDocTag(tag) {
 }
 
 /**
- * Unwraps a TSDoc block comment, removing the comment markers and leading asterisks.
- * Throws an error if the provided string is not a valid TSDoc block comment.
- * @param code The TSDoc block comment to unwrap.
- * @returns The unwrapped TSDoc comment.
- * @remarks This function will throw an error if the provided string is not a valid TSDoc block comment.
- * @throws If the provided string is not a valid TSDoc block comment.
+ * Checks if the provided code string is a valid TSDoc comment.
+ * @remarks This function tests each line of the provided code string against a regular expression that matches the TSDoc comment syntax.
+ * @param code The source code string to be checked.
+ * @returns A boolean indicating whether the provided code string is a valid TSDoc comment.
  */
-function tsDocUnwrapComment(code) {
-    assertValidTsDocComment(code);
-    code = strRemoveFirstAndLastLine(code);
-    code = code.replace(/^ *\*( |$)/gm, '');
-    code = strTrimLinesRight(code);
-    return code;
+function isValidTsDocComment(code) {
+    code = code.trim();
+    if (!code)
+        return false;
+    const lines = code.split(/\r?\n/);
+    if (lines.length < 2)
+        return false;
+    const first = lines[0].trim();
+    if (first !== '/**')
+        return false;
+    const last = lines[lines.length - 1].trim();
+    if (last !== '*/')
+        return false;
+    if (lines.length === 2)
+        return true;
+    for (let i = 1; i < lines.length - 1; i++) {
+        const line = lines[i].trimStart();
+        if (!line.startsWith('*'))
+            return false;
+    }
+    return true;
+}
+// export function isValidTsDocComment(code: string): boolean {
+//   if (!code) return false
+//   const lines = code.split(/\r?\n/)
+//   const re = /^ *(\/\*\*|\*\/|\*)/
+//   return arrEvery(lines, (line) => re.test(line))
+// }
+
+/**
+ * Normalizes known tag names to their TypeScript equivalents.
+ * If the tag name is not found in the map, it returns the input tag name.
+ * @param lc The tag name to normalize.
+ * @remarks This function is case-insensitive.
+ * @returns The normalized tag name.
+ * @example ```ts
+ * tsDocNormalizeTagName("TagName");;
+ * //=> "tagname"
+ * ```
+ */
+function tsDocNormalizeTagName(tag) {
+    const lc = tag.toLowerCase();
+    if (lc === 'virtual')
+        return 'abstract';
+    if (lc === 'augments')
+        return 'extends';
+    if (lc === 'constructor')
+        return 'class';
+    if (lc === 'const')
+        return 'constant';
+    if (lc === 'defaultvalue')
+        return 'default';
+    if (lc === 'desc')
+        return 'description';
+    if (lc === 'host')
+        return 'external';
+    if (lc === 'fileoverview')
+        return 'file';
+    if (lc === 'fires')
+        return 'emits';
+    if (lc === 'func')
+        return 'function';
+    if (lc === 'var')
+        return 'member';
+    if (lc === 'arg')
+        return 'param';
+    if (lc === 'prop')
+        return 'property';
+    if (lc === 'return')
+        return 'returns';
+    if (lc === 'exception')
+        return 'throws';
+    if (lc === 'yield')
+        return 'yields';
+    return tag;
 }
 
 /**
- * A tag in a TsDoc instance.
+ * A tag belonging to a TSDoc.
+ * This does not follow the official TSDoc spec. It is a simplified version.
  */
 class TsDocTag {
     /**
-     * @param tag The kind of tag.
-     * @param name The tag's name parameter, if it has one.
+     * @param tag The kind of tag. Rules:
+     * - May only consist of letters a-z.
+     * - Certain tags are normalized to other synonymous tags.
+     * - Custom tag names are allowed as long as they follow the above rules.
+     * @param name The tag's name parameter. Rules:
+     * - Only used for named tags.
+     * - Must start with a letter.
+     * - May only contain word characters and ".".
+     * @param description The tag's description. Rules:
+     * - Unnamed tags must have a description.
+     * - Example tags are formatted as markdown ts-code blocks.
+     * - Leading dash in the first line is normalized (removed).
+     * @throws on named tag missing name.
+     * @throws on unnamed tag missing description.
+     * @throws on unnamed tag trying to set name.
+     * @throws on invalid tag name.
+     * @throws on invalid name.
+     * @throws on invalid markdown code block for example tag.
      */
-    constructor(tag, name, description) {
+    constructor(tag, name = '', description = []) {
+        // tag
+        tag = tsDocNormalizeTagName(tag);
+        if (!/^[a-z]+$/i.test(tag))
+            throw new Error('Invalid tag name: ' + tag);
         this.tag = tag;
-        this.name = name;
-        this.description = description;
-        if (tag === 'example') {
-            const des = this.description.join('\n').trim().split('\n');
-            if (arrLast(des).includes('```')) {
-                des.pop();
-            }
-            if (des[0].includes('```')) {
-                des.shift();
-            }
-            this.description = des;
+        // name
+        if (isNamedMultiTsDocTag(tag)) {
+            if (!description.join('').trim())
+                throw new Error('Tag @' + tag + ' requires a description.');
         }
+        if (isNamedTsDocTag(tag)) {
+            if (!name)
+                throw new Error('Tag @' + tag + ' requires a name parameter.');
+            if (!/^[a-z]/i.test(name))
+                throw new Error('Name must start with char a-z: ' + name);
+            if (!/^[\w.]+$/i.test(name))
+                throw new Error('Name may contain word chars and ".": ' + name);
+        }
+        else {
+            if (name)
+                throw new Error('Tag @' + tag + ' does not support a name parameter.');
+            if (!description.join('').trim())
+                throw new Error('Tag @' + tag + ' requires a description.');
+        }
+        this.name = name;
+        // description
+        if (this.tag === 'example') {
+            description = description
+                .join('\n')
+                .trim()
+                .replace(/^ ?- ?/, ' ')
+                .split('\n');
+            const indicies = arrFindIndicesOf(description, (s) => s.includes('```'));
+            if (indicies.length === 2) {
+                const first = indicies[0];
+                const last = indicies[1];
+                description = description.slice(first + 1, last);
+            }
+            else if (indicies.length !== 0) {
+                throw new Error('Invalid example tag: markdown code block not closed.');
+            }
+            description = ['```ts', ...description, '```'];
+        }
+        this.description = description;
     }
     /**
-     * Renders the tag as a string.
+     * Renders the tag as a TSDoc string.
      * @remarks Ensures that example tags are formatted as markdown ts-code blocks.
      */
     toString() {
         let result = this.tag === 'description' ? '' : '@' + this.tag;
-        result = result.trim();
         if (this.name)
             result += ' ' + this.name;
+        result = result.trim();
         if (this.description.length) {
-            let des = this.description.join('\n');
-            if (this.tag === 'example') {
-                des = '```ts\n' + des + '\n```';
-            }
-            result += ' ' + des;
+            result += ' ' + this.description.join('\n');
             result = result.trim();
         }
         return result;
@@ -7636,50 +7798,70 @@ class TsDocTag {
 }
 
 /**
- * Normalizes a tag name by converting it to lowercase.
- * If the tag name is not found in the map, it returns the original tag name.
- * @param code The tag name to normalize.
- * @remarks This function is case-insensitive and will return the input string if no equivalent TypeScript keyword is found.
- * @returns The normalized tag name.
+ * Strips JSDoc style types and default values from the provided code.
+ * @remarks This function is useful when you want to remove TypeScript types from a code string.
+ * @param code The TypeScript code string from which types should be stripped.
+ * @returns The provided code string with all TypeScript types removed.
  * @example ```ts
- * tsDocNormalizeTagName("TagName");;
- * //=> "tagname"
+ * const code = [
+ *   '/**',
+ *   ' * @returns {string} a string',
+ *   ' *\/',
+ *   //
+ * ].join('\n')
+ * const actual = tsDocStripTypesAndDefaults(code)
+ * const expected = [
+ *   '/**',
+ *   ' * @returns a string',
+ *   ' *\/',
+ *   //
+ * ].join('\n')
  * ```
  */
-function tsDocNormalizeTagName(code) {
-    code = code.toLowerCase();
-    if (code === 'virtual')
-        return 'abstract';
-    if (code === 'augments')
-        return 'extends';
-    if (code === 'constructor')
-        return 'class';
-    if (code === 'const')
-        return 'constant';
-    if (code === 'defaultvalue')
-        return 'default';
-    if (code === 'desc')
-        return 'description';
-    if (code === 'host')
-        return 'external';
-    if (code === 'fileoverview')
-        return 'file';
-    if (code === 'fires')
-        return 'emits';
-    if (code === 'func')
-        return 'function';
-    if (code === 'var')
-        return 'member';
-    if (code === 'arg')
-        return 'param';
-    if (code === 'prop')
-        return 'property';
-    if (code === 'return')
-        return 'returns';
-    if (code === 'exception')
-        return 'throws';
-    if (code === 'yield')
-        return 'yields';
+function tsDocStripTypesAndDefaults(code) {
+    for (const match of rexec(/^\s*(\* +)?@\w+ (?<type>\{.+\} )/gm, code)) {
+        code = code.replace(match.groups.type, '');
+    }
+    for (const match of rexec(/^\s*(\* +)?@\w+ (?<defaultValue>\[.+\] )/gm, code)) {
+        const tagName = match.groups.defaultValue.split('=')[0].trim().substring(1) + ' ';
+        code = code.replace(match.groups.defaultValue, tagName);
+    }
+    return code;
+}
+
+/**
+ * Unwraps a TSDoc block comment, removing the comment markers and leading asterisks.
+ * Throws an error if the provided string is not a valid TSDoc block comment.
+ * @remarks This function will throw an error if the provided string is not a valid TSDoc block comment.
+ * @param code The TSDoc block comment to unwrap.
+ * @returns The unwrapped TSDoc comment.
+ * @throws Will throw an error if the provided code is not a valid TSDoc comment.
+ * @example ```ts
+ * const actual = tsDocUnwrapComment([
+ *   '/**',
+ *   ' * Checks if the provided (...)',
+ *   ' * @remarks This function (...)',
+ *   ' * @param code The source (...)',
+ *   ' * @returns A boolean ind (...)',
+ *   ' *\/',
+ * ].join('\n'))
+ * const expected = [
+ *   'Checks if the provided (...)',
+ *   '@remarks This function (...)',
+ *   '@param code The source (...)',
+ *   '@returns A boolean ind (...)',
+ * ].join('\n')
+ * actual === expected
+ * //=> true
+ * ```
+ */
+function tsDocUnwrapComment(code) {
+    if (!isValidTsDocComment(code))
+        throw new Error('Invalid TSDoc comment');
+    code = code.trim();
+    code = strRemoveFirstAndLastLine(code);
+    code = code.replace(/^ *\*( |$)/gm, '');
+    code = strTrimLinesRight(code);
     return code;
 }
 
@@ -7691,23 +7873,6 @@ function tsDocNormalizeTagName(code) {
  */
 function tsDocWrapAsComment(string) {
     return ['/**', strPrependLines(string, ' * '), ' */'].join('\n');
-}
-
-/**
- * Strips TypeScript types from the provided code string.
- * @remarks This function is useful when you want to remove TypeScript types from a code string.
- * @param code The TypeScript code string from which types should be stripped.
- * @returns The provided code string with all TypeScript types removed.
- * @example ```ts
- * tsDocStripTypes('let x: number = 5;');;
- * //=> 'let x = 5;'
- * ```
- */
-function tsDocStripTypes(code) {
-    for (const match of rexec(/^( *\* +)?@\w+ (?<trash>(\{|\[).+(\}|\]) )/gm, code)) {
-        code = code.replace(match.groups.trash, '');
-    }
-    return code;
 }
 
 class TsDoc {
@@ -7739,27 +7904,37 @@ class TsDoc {
         if (code)
             this.addBlockComment(code);
     }
+    /**
+     * Parses a TSDoc block comment and adds the tags to the TsDoc instance.
+     * @param code The TSDoc block comment soruce code.
+     */
     addBlockComment(code) {
+        code = tsDocStripTypesAndDefaults(code);
         code = tsDocUnwrapComment(code);
-        code = tsDocStripTypes(code);
         if (!code.startsWith('@'))
             code = 'description ' + code;
-        const lines = code.split(/^@/gm);
-        for (const line of lines) {
-            const desc = line.trimEnd().split(/\r?\n/);
-            const words = desc[0].split(' ');
-            const tag = tsDocNormalizeTagName(words.shift() || '');
+        const tags = code.split(/^@/gm);
+        for (const str of tags) {
+            const description = str.trimEnd().split(/\r?\n/);
+            const words = description[0].split(' ');
+            const tag = words.shift();
+            if (!tag)
+                continue;
             if (!this.getTagOrder().includes(tag))
-                return this;
+                continue;
             const isNamed = isNamedTsDocTag(tag);
-            const name = isNamed ? words.shift() || '' : '';
-            if (!name && isNamed)
-                return this;
-            desc[0] = words.join(' ').trim();
-            arrFilterMutable(desc, (line) => !!line.trim());
-            if (!desc.length)
-                return this;
-            this.addTag(new TsDocTag(tag, name, desc));
+            const name = isNamed ? words.shift() : '';
+            if (isNamed && !name)
+                continue;
+            description[0] = words.join(' ').trim();
+            let instance;
+            try {
+                instance = new TsDocTag(tag, name, description);
+            }
+            catch (error) {
+                continue;
+            }
+            this.addTag(instance);
         }
         return this;
     }
@@ -7932,7 +8107,7 @@ class TsDoc {
 TsDoc.defaultTagOrder = [
     'description',
     'remarks',
-    'typeparam',
+    'typeParam',
     'template',
     'param',
     'returns',
@@ -8038,23 +8213,18 @@ function tsDocRemoveEmptyLines(string) {
  * @example ```ts
  * const source = `
  * /**
+ *  * Adds two numbers.
  *  * @param a - The first number.
  *  * @param b - The second number.
  *  * @returns The sum of a and b.
  *  * @throws If a or b is not a number.
  *  *\/
- * function add(a, b) {
- *   if (typeof a !== 'number' || typeof b !== 'number') {
- *     throw new Error('Both a and b must be numbers.');
- *   }
- *   return a + b;
- * }
  * `;
  * tsDocStripAllTagsExcepThrowsParamDescription(source);
- * //=> result
+ * //=> removes the returns-tag.
  * ```
  */
-function tsDocStripAllTagsExcepThrowsParamDescription(source) {
+function tsDocStripAllTagsButThrowsParamDescription(source) {
     let result = source + '';
     for (const { match } of tsDocExtractAllComments(source)) {
         const tsdoc = new TsDoc(match);
@@ -8073,8 +8243,19 @@ function tsDocStripAllTagsExcepThrowsParamDescription(source) {
     return result;
 }
 
-function tsDocStripExample(string) {
-    return string.replace(regTsDocExampleLines, '').replace(/\n +\* +@example *\n/g, '\n');
+/**
+ * This function takes a source string, extracts all TSDoc comments from it, and then strips all example TSDoc tags from these comments.
+ * @param source - The source string from which TSDoc comments are to be extracted and modified.
+ * @returns The modified source string with all example TSDoc tags stripped.
+ */
+function tsDocStripExample(source) {
+    let result = source + '';
+    for (const { match } of tsDocExtractAllComments(source)) {
+        const tsdoc = new TsDoc(match);
+        tsdoc.removeTags('example');
+        result = result === null || result === void 0 ? void 0 : result.replace(match, tsdoc.render());
+    }
+    return result;
 }
 
 /**
@@ -8336,6 +8517,7 @@ function isSocialSecurityNumberDK(ssn) {
 exports.A1ToColRow = A1ToColRow;
 exports.ApiReponseCache = ApiReponseCache;
 exports.ExtensibleFunction = ExtensibleFunction;
+exports.File = File;
 exports.HtmlGenerator = HtmlGenerator;
 exports.MS_IN_DAY = MS_IN_DAY;
 exports.MS_IN_HOUR = MS_IN_HOUR;
@@ -8364,6 +8546,9 @@ exports.arrAverage = arrAverage;
 exports.arrEachToString = arrEachToString;
 exports.arrEvery = arrEvery;
 exports.arrFilterMutable = arrFilterMutable;
+exports.arrFindIndicesOf = arrFindIndicesOf;
+exports.arrFindLast = arrFindLast;
+exports.arrFindLastIndexOf = arrFindLastIndexOf;
 exports.arrFlatten = arrFlatten;
 exports.arrIndicesOf = arrIndicesOf;
 exports.arrLast = arrLast;
@@ -8390,7 +8575,6 @@ exports.assertValidDateDay = assertValidDateDay;
 exports.assertValidDateMonth = assertValidDateMonth;
 exports.assertValidDateYear = assertValidDateYear;
 exports.assertValidNumber = assertValidNumber;
-exports.assertValidTsDocComment = assertValidTsDocComment;
 exports.asyncTasksLimit = asyncTasksLimit;
 exports.asyncTasksParallel = asyncTasksParallel;
 exports.asyncTasksSerial = asyncTasksSerial;
@@ -8524,7 +8708,6 @@ exports.pdfSplitPages = pdfSplitPages;
 exports.randomIntBetween = randomIntBetween;
 exports.readExcelFile = readExcelFile;
 exports.readExcelFileWorksheet = readExcelFileWorksheet;
-exports.readFileStringSync = readFileStringSync;
 exports.readJsonFile = readJsonFile;
 exports.readJsonFileSync = readJsonFileSync;
 exports.regBlockCommentsWithIndent = regBlockCommentsWithIndent;
@@ -8626,9 +8809,9 @@ exports.tsDocExtractFirstComment = tsDocExtractFirstComment;
 exports.tsDocFixSpacingBeforeAfter = tsDocFixSpacingBeforeAfter;
 exports.tsDocNormalizeTagName = tsDocNormalizeTagName;
 exports.tsDocRemoveEmptyLines = tsDocRemoveEmptyLines;
-exports.tsDocStripAllTagsExcepThrowsParamDescription = tsDocStripAllTagsExcepThrowsParamDescription;
+exports.tsDocStripAllTagsButThrowsParamDescription = tsDocStripAllTagsButThrowsParamDescription;
 exports.tsDocStripExample = tsDocStripExample;
-exports.tsDocStripTypes = tsDocStripTypes;
+exports.tsDocStripTypesAndDefaults = tsDocStripTypesAndDefaults;
 exports.tsDocUnwrapComment = tsDocUnwrapComment;
 exports.tsDocWrapAsComment = tsDocWrapAsComment;
 exports.tsDocWrapExample = tsDocWrapExample;
@@ -8639,12 +8822,12 @@ exports.tsHasDefaultExport = tsHasDefaultExport;
 exports.tsJestConvertExportNameString = tsJestConvertExportNameString;
 exports.tsJestFixLineSpacing = tsJestFixLineSpacing;
 exports.tsSimpleMinifyCode = tsSimpleMinifyCode;
-exports.tsStripBlockComments = tsStripBlockComments;
 exports.tsStripComments = tsStripComments;
 exports.tsStripDeclSourceMapComments = tsStripDeclSourceMapComments;
 exports.tsStripExportKeyword = tsStripExportKeyword;
 exports.tsStripFullSlashCommentLines = tsStripFullSlashCommentLines;
 exports.tsStripImports = tsStripImports;
+exports.tsStripTsDocBlockComments = tsStripTsDocBlockComments;
 exports.tsWalkImports = tsWalkImports;
 exports.weeksSinceDate = weeksSinceDate;
 exports.writeExcelFile = writeExcelFile;

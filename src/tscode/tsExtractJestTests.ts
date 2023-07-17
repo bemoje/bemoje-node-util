@@ -7,10 +7,6 @@ import { regJestTests } from '../regexlib/regJestTests'
  * @param code The string to parse Jest tests from.
  * @returns The extracted Jest tests as a string.
  * @throws Throws an error if the tests could not be parsed from the input source code.
- * @example ```ts
- * parseJestTests('test("should pass", () => { expect(true).toBe(true); });');;
- * //=> 'should pass'
- * ```
  */
 export function tsExtractJestTests(code: string): string {
   const result = rexecFirstMatch(regJestTests, code)?.match.trim()

@@ -97,7 +97,7 @@ Readable.constructor
 
 #### Defined in
 
-src/node/StringStream.ts:10
+[src/node/StringStream.ts:10](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/StringStream.ts#L10)
 
 ## Properties
 
@@ -147,7 +147,7 @@ ___
 
 #### Defined in
 
-src/node/StringStream.ts:8
+[src/node/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/StringStream.ts#L8)
 
 ___
 
@@ -361,7 +361,7 @@ ___
 
 #### Defined in
 
-src/node/StringStream.ts:7
+[src/node/StringStream.ts:7](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/StringStream.ts#L7)
 
 ___
 
@@ -512,7 +512,7 @@ Readable.\_read
 
 #### Defined in
 
-src/node/StringStream.ts:16
+[src/node/StringStream.ts:16](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/StringStream.ts#L16)
 
 ___
 

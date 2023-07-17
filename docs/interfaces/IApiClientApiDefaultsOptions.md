@@ -22,7 +22,7 @@
 
 #### Defined in
 
-src/api/types/IApiClientApiDefaultsOptions.ts:7
+[src/api/types/IApiClientApiDefaultsOptions.ts:7](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L7)
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientApiDefaultsOptions.ts:5
+[src/api/types/IApiClientApiDefaultsOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L5)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientApiDefaultsOptions.ts:9
+[src/api/types/IApiClientApiDefaultsOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L9)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientApiDefaultsOptions.ts:15
+[src/api/types/IApiClientApiDefaultsOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L15)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientApiDefaultsOptions.ts:3
+[src/api/types/IApiClientApiDefaultsOptions.ts:3](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L3)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientApiDefaultsOptions.ts:13
+[src/api/types/IApiClientApiDefaultsOptions.ts:13](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L13)
 
 ___
 
@@ -82,4 +82,4 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientApiDefaultsOptions.ts:11
+[src/api/types/IApiClientApiDefaultsOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L11)

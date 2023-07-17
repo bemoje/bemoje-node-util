@@ -5,19 +5,19 @@ import { walkSourceFiles } from './walkSourceFiles'
 /**
  * Generate a indes.ts file in the source root directory that exports all the source files.
  */
-export function generateEntryPoint(): void {
+function generateEntryPoint(): void {
   const srcdir = path.join(process.cwd(), 'src')
-  const sourceFiles = walkSourceFiles(srcdir).filter((o) => !o.isPrivate)
-  const entrypoint = path.join(srcdir, 'index.ts')
+  const sourceFiles = walkSourceFiles(srcdir).filter((file) => !file.isPrivate)
   const lines = sourceFiles
-    .filter((o) => !o.isPrivate)
-    .map((o) => {
-      return `export * from '${o.relative
+    .filter((file) => !file.isPrivate)
+    .map((file) => {
+      return `export * from '${file.relative
         .replace('src', '.')
         .replace(/\\/g, '/')
         .replace(/\.ts$/i, '')}'`
     })
   const code = lines.join('\n') + '\n'
+  const entrypoint = path.join(srcdir, 'index.ts')
   fs.writeFileSync(entrypoint, code, 'utf8')
   console.log(`\n${sourceFiles.length} files are exported from entry point: ${entrypoint}`)
 }
@@ -25,6 +25,7 @@ export function generateEntryPoint(): void {
 /**
  * Main
  */
-;(function main() {
+function main() {
   generateEntryPoint()
-})()
+}
+main()

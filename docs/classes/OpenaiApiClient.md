@@ -81,7 +81,7 @@ const openai = new OpenaiAPIClient({ apiKey: "API_KEY" })
 
 #### Defined in
 
-src/api/OpenaiApiClient.ts:14
+[src/api/OpenaiApiClient.ts:14](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L14)
 
 ## Properties
 
@@ -95,7 +95,7 @@ src/api/OpenaiApiClient.ts:14
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:49
+[src/api/OpenaiApiClientBase.ts:39](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L39)
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:43
+[src/api/OpenaiApiClientBase.ts:33](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L33)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:66
+[src/api/OpenaiApiClientBase.ts:56](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L56)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:37
+[src/api/OpenaiApiClientBase.ts:27](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L27)
 
 ___
 
@@ -151,7 +151,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:40
+[src/api/OpenaiApiClientBase.ts:30](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L30)
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:60
+[src/api/OpenaiApiClientBase.ts:50](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L50)
 
 ___
 
@@ -179,7 +179,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:46
+[src/api/OpenaiApiClientBase.ts:36](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L36)
 
 ## Methods
 
@@ -210,7 +210,7 @@ It handles retrying, cache, hashing, and emitting events.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:284
+[src/api/OpenaiApiClientBase.ts:274](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L274)
 
 ___
 
@@ -236,7 +236,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:254
+[src/api/OpenaiApiClientBase.ts:244](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L244)
 
 ___
 
@@ -262,7 +262,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:241
+[src/api/OpenaiApiClientBase.ts:231](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L231)
 
 ___
 
@@ -288,7 +288,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:267
+[src/api/OpenaiApiClientBase.ts:257](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L257)
 
 ___
 
@@ -314,7 +314,7 @@ Assert that the response data is complete by verifying that all returned choices
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:334
+[src/api/OpenaiApiClientBase.ts:329](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L329)
 
 ___
 
@@ -341,7 +341,7 @@ Uses model: 'gpt-3.5-turbo-16k'.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:113
+[src/api/OpenaiApiClientBase.ts:103](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L103)
 
 ___
 
@@ -368,7 +368,7 @@ Uses model: 'gpt-3.5-turbo'.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:105
+[src/api/OpenaiApiClientBase.ts:95](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L95)
 
 ___
 
@@ -395,7 +395,7 @@ Uses model: 'gpt-4'.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:122
+[src/api/OpenaiApiClientBase.ts:112](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L112)
 
 ___
 
@@ -421,7 +421,7 @@ Send a completion request to the openai api.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:97
+[src/api/OpenaiApiClientBase.ts:87](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L87)
 
 ___
 
@@ -447,7 +447,7 @@ Count the number of tokens in a string.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:152
+[src/api/OpenaiApiClientBase.ts:142](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L142)
 
 ___
 
@@ -478,7 +478,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:310
+[src/api/OpenaiApiClientBase.ts:305](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L305)
 
 ___
 
@@ -504,7 +504,7 @@ Edit code.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:137
+[src/api/OpenaiApiClientBase.ts:127](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L127)
 
 ___
 
@@ -530,7 +530,7 @@ Edit text.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:130
+[src/api/OpenaiApiClientBase.ts:120](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L120)
 
 ___
 
@@ -563,7 +563,7 @@ Emit an event but adds 'this' as an extra trailing argument.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:356
+[src/api/OpenaiApiClientBase.ts:354](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L354)
 
 ___
 
@@ -581,7 +581,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:344
+[src/api/OpenaiApiClientBase.ts:342](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L342)
 
 ___
 
@@ -605,7 +605,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:237
+[src/api/OpenaiApiClientBase.ts:227](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L227)
 
 ___
 
@@ -629,7 +629,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:187
+[src/api/OpenaiApiClientBase.ts:177](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L177)
 
 ___
 
@@ -653,7 +653,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:156
+[src/api/OpenaiApiClientBase.ts:146](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L146)
 
 ___
 
@@ -677,7 +677,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:207
+[src/api/OpenaiApiClientBase.ts:197](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L197)
 
 ___
 
@@ -701,7 +701,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:70
+[src/api/OpenaiApiClientBase.ts:60](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L60)
 
 ___
 
@@ -725,7 +725,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:226
+[src/api/OpenaiApiClientBase.ts:216](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L216)
 
 ___
 
@@ -747,7 +747,7 @@ this (chainable)
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:365
+[src/api/OpenaiApiClientBase.ts:363](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L363)
 
 ___
 
@@ -771,7 +771,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:298
+[src/api/OpenaiApiClientBase.ts:291](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L291)
 
 ___
 
@@ -802,7 +802,7 @@ await openai.proofread('java', `System.out.println("Hello")`)
 
 #### Defined in
 
-src/api/OpenaiApiClient.ts:27
+[src/api/OpenaiApiClient.ts:27](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L27)
 
 ___
 
@@ -832,7 +832,7 @@ await openai.proofread('java', `System.out.println("Hello")`)
 
 #### Defined in
 
-src/api/OpenaiApiClient.ts:50
+[src/api/OpenaiApiClient.ts:50](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L50)
 
 ___
 
@@ -858,7 +858,7 @@ Encode a string into tokens.
 
 #### Defined in
 
-src/api/OpenaiApiClientBase.ts:145
+[src/api/OpenaiApiClientBase.ts:135](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L135)
 
 ___
 
@@ -889,7 +889,7 @@ await openai.translateEnglishTo('Spanish', 'Clear', { instruction: 'This is a co
 
 #### Defined in
 
-src/api/OpenaiApiClient.ts:92
+[src/api/OpenaiApiClient.ts:92](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L92)
 
 ___
 
@@ -921,4 +921,4 @@ await openai.translateFrom('English', 'Spanish', 'Clear', { instruction: 'This i
 
 #### Defined in
 
-src/api/OpenaiApiClient.ts:69
+[src/api/OpenaiApiClient.ts:69](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L69)

@@ -1,36 +1,26 @@
-import type {
-  CreateCompletionResponseChoicesInner,
-  CreateChatCompletionResponseChoicesInner,
-  CreateChatCompletionResponse,
-  CreateChatCompletionRequest,
-  ChatCompletionRequestMessage,
-  CreateCompletionRequest,
-  CreateEditRequest,
-  CreateCompletionResponse,
-  CreateEditResponse,
-} from 'openai'
 import type { Options as AsyncRetryOptions } from 'async-retry'
-import type { IApiResponseCacheOptions } from './types/IApiResponseCacheOptions'
-import type { ICompletionRequestOptions } from './types/ICompletionRequestOptions'
-import type { IChatRequestOptions } from './types/IChatRequestOptions'
-import type { IEditRequestOptions } from './types/IEditRequestOptions'
-import type { IApiClientApiDefaultsOptions } from './types/IApiClientApiDefaultsOptions'
-import type { IResponseCacheOptions } from './types/IResponseCacheOptions'
-import type { IApiClientOptions } from './types/IApiClientOptions'
-import fs from 'fs'
-import path from 'path'
 import asyncRetry from 'async-retry'
 import EventEmitter from 'events'
-import { Configuration, OpenAIApi } from 'openai'
-import { ApiReponseCache } from './ApiReponseCache'
-import { log } from '../node/log'
+import fs from 'fs'
 import { encode } from 'gpt-3-encoder'
-import { OpenaiTokenUsage } from './OpenaiTokenUsage'
-import { setNonEnumerable } from '../object/setNonEnumerable'
-import { objAssignDeep } from '../object/objAssignDeep'
-import { objDeleteKeysMutable } from '../object/objDeleteKeysMutable'
-import { objDeleteKeys } from '../object/objDeleteKeys'
+import type * as openai from 'openai'
+import { Configuration, OpenAIApi } from 'openai'
+import path from 'path'
 import { _printEmitterEvents } from '../node/_printEmitterEvents'
+import { log } from '../node/log'
+import { objAssignDeep } from '../object/objAssignDeep'
+import { objDeleteKeys } from '../object/objDeleteKeys'
+import { objDeleteKeysMutable } from '../object/objDeleteKeysMutable'
+import { setNonEnumerable } from '../object/setNonEnumerable'
+import { ApiReponseCache } from './ApiReponseCache'
+import { OpenaiTokenUsage } from './OpenaiTokenUsage'
+import type { IApiClientApiDefaultsOptions } from './types/IApiClientApiDefaultsOptions'
+import type { IApiClientOptions } from './types/IApiClientOptions'
+import type { IApiResponseCacheOptions } from './types/IApiResponseCacheOptions'
+import type { IChatRequestOptions } from './types/IChatRequestOptions'
+import type { ICompletionRequestOptions } from './types/ICompletionRequestOptions'
+import type { IEditRequestOptions } from './types/IEditRequestOptions'
+import type { IResponseCacheOptions } from './types/IResponseCacheOptions'
 
 export class OpenaiApiClientBase {
   // API client instance
@@ -155,7 +145,7 @@ export class OpenaiApiClientBase {
 
   protected handleCompletionOptions(
     options: ICompletionRequestOptions,
-  ): [CreateCompletionRequest, AsyncRetryOptions, IResponseCacheOptions] {
+  ): [openai.CreateCompletionRequest, AsyncRetryOptions, IResponseCacheOptions] {
     options = this.deleteDefaultOrUndefined(options, {
       presence_penalty: 0,
       frequency_penalty: 0,
@@ -178,7 +168,7 @@ export class OpenaiApiClientBase {
       'instruction',
       'response_max_tokens',
     )
-    const request = options as CreateCompletionRequest
+    const request = options as openai.CreateCompletionRequest
     const retry = this.handleRetryOptions(options.retry)
     const cache = this.handleCacheOptions(options.cache)
     return this.emit('request', [request, retry, cache])
@@ -186,7 +176,7 @@ export class OpenaiApiClientBase {
 
   protected handleChatOptions(
     options: IChatRequestOptions,
-  ): [CreateChatCompletionRequest, AsyncRetryOptions, IResponseCacheOptions] {
+  ): [openai.CreateChatCompletionRequest, AsyncRetryOptions, IResponseCacheOptions] {
     options = this.deleteDefaultOrUndefined(options, {
       presence_penalty: 0,
       frequency_penalty: 0,
@@ -194,19 +184,19 @@ export class OpenaiApiClientBase {
     const retry = this.handleRetryOptions(options.retry)
     const cache = this.handleCacheOptions(options.cache)
     const model = this.apiDefaults.chat3_8Model
-    const messages: ChatCompletionRequestMessage[] = []
+    const messages: openai.ChatCompletionRequestMessage[] = []
     if (options.instruction) messages.push({ role: 'system', content: options.instruction })
     if (options.prompt) messages.push({ role: 'user', content: options.prompt })
     if (options.messages) messages.push(...options.messages)
     if (!messages.length) messages.push({ role: 'user', content: '' })
     options = objDeleteKeysMutable<any>(options, 'prompt', 'instruction', 'retry', 'cache')
-    const request = { model, ...options, messages } as CreateChatCompletionRequest
+    const request = { model, ...options, messages } as openai.CreateChatCompletionRequest
     return this.emit('request', [request, retry, cache])
   }
 
   protected handleEditOptions(
     options: IEditRequestOptions,
-  ): [CreateEditRequest, AsyncRetryOptions, IResponseCacheOptions] {
+  ): [openai.CreateEditRequest, AsyncRetryOptions, IResponseCacheOptions] {
     options = this.deleteDefaultOrUndefined(options, {})
     const retry = this.handleRetryOptions(options.retry)
     const cache = this.handleCacheOptions(options.cache)
@@ -219,7 +209,7 @@ export class OpenaiApiClientBase {
       ..._options,
       instruction,
       input,
-    } as CreateEditRequest
+    } as openai.CreateEditRequest
     return this.emit('request', [request, retry, cache])
   }
 
@@ -239,7 +229,7 @@ export class OpenaiApiClientBase {
   }
 
   protected async _completion(
-    request: CreateCompletionRequest,
+    request: openai.CreateCompletionRequest,
     retry: AsyncRetryOptions,
     cache: IResponseCacheOptions,
   ): Promise<string> {
@@ -252,7 +242,7 @@ export class OpenaiApiClientBase {
   }
 
   protected async _chat(
-    request: CreateChatCompletionRequest,
+    request: openai.CreateChatCompletionRequest,
     retry: AsyncRetryOptions,
     cache: IResponseCacheOptions,
   ): Promise<string> {
@@ -265,7 +255,7 @@ export class OpenaiApiClientBase {
   }
 
   protected async _edit(
-    request: CreateEditRequest,
+    request: openai.CreateEditRequest,
     retry: AsyncRetryOptions,
     cache: IResponseCacheOptions,
   ): Promise<string> {
@@ -282,7 +272,10 @@ export class OpenaiApiClientBase {
    * It handles retrying, cache, hashing, and emitting events.
    */
   protected async _apiRequest(
-    request: CreateEditRequest | CreateCompletionRequest | CreateChatCompletionRequest,
+    request:
+      | openai.CreateEditRequest
+      | openai.CreateCompletionRequest
+      | openai.CreateChatCompletionRequest,
     retry: AsyncRetryOptions,
     cache: IResponseCacheOptions,
     apiRequest: () => Promise<string[]>,
@@ -296,7 +289,9 @@ export class OpenaiApiClientBase {
   }
 
   protected parseChoices(
-    choices: CreateChatCompletionResponseChoicesInner[] | CreateCompletionResponseChoicesInner[],
+    choices:
+      | openai.CreateChatCompletionResponseChoicesInner[]
+      | openai.CreateCompletionResponseChoicesInner[],
   ): string[] {
     return choices.map((choice) => {
       if (Reflect.has(choice, 'text')) {
@@ -332,7 +327,10 @@ export class OpenaiApiClientBase {
    * Assert that the response data is complete by verifying that all returned choices have finish_reason: stop.
    */
   protected assertReponseDataComplete(
-    data: CreateChatCompletionResponse | CreateCompletionResponse | CreateEditResponse,
+    data:
+      | openai.CreateChatCompletionResponse
+      | openai.CreateCompletionResponse
+      | openai.CreateEditResponse,
   ): void {
     for (const choice of data.choices) {
       if (choice.finish_reason !== 'stop') {

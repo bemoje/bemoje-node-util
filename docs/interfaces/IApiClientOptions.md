@@ -21,7 +21,7 @@
 
 #### Defined in
 
-src/api/types/IApiClientOptions.ts:14
+[src/api/types/IApiClientOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L14)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientOptions.ts:8
+[src/api/types/IApiClientOptions.ts:8](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L8)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientOptions.ts:18
+[src/api/types/IApiClientOptions.ts:18](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L18)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientOptions.ts:12
+[src/api/types/IApiClientOptions.ts:12](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L12)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientOptions.ts:10
+[src/api/types/IApiClientOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L10)
 
 ___
 
@@ -71,4 +71,4 @@ ___
 
 #### Defined in
 
-src/api/types/IApiClientOptions.ts:16
+[src/api/types/IApiClientOptions.ts:16](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L16)

@@ -7,4 +7,13 @@ describe('setNonWritable', () => {
     expect(() => (o.a = 2)).toThrowError()
     expect(o.a).toBe(1)
   })
+
+  it('should set the property for multiple inputs.', () => {
+    const o = { a: 1, b: 1 }
+    setNonWritable(o, 'a', 'b')
+    expect(() => (o.a = 2)).toThrowError()
+    expect(() => (o.b = 2)).toThrowError()
+    expect(o.a).toBe(1)
+    expect(o.b).toBe(1)
+  })
 })

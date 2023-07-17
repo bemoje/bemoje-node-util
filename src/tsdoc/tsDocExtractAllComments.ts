@@ -1,27 +1,31 @@
 import { IExtractedTsDocComment } from './types/IExtractedTsDocComment'
 
 /**
- * This function takes a source string, and parses all TSDoc block comments in it..
+ * This function takes a source string, and yields each TSDoc block comments in it.
  * @param code The source code string.
+ * @returns A generator that yields each TSDoc block comment in the source code.
+ * @yields Each TSDoc block comment in the source code.
  */
 export function* tsDocExtractAllComments(code: string): Generator<IExtractedTsDocComment> {
+  const reStart = /^\s*\/\*\*\s*$/
+  const reEnd = /^\s*\*\/\s*$/
   let lines = code.split(/\r?\n/)
   let offset = 0
   while (true) {
-    const index = lines.findIndex((line) => line.trim() === '/**')
-    const lastIndex = lines.findIndex((line) => line.trim() === '*/')
-    if (index !== -1 && lastIndex !== -1) {
+    const indexStart = lines.findIndex((line) => reStart.test(line))
+    const indexEnd = lines.findIndex((line) => reEnd.test(line))
+    if (indexStart !== -1 && indexEnd !== -1) {
       let nextLine
-      if (lastIndex + 1 < lines.length) nextLine = lines[lastIndex + 1]
-      if (nextLine?.trim() === '' && lastIndex + 2 < lines.length) nextLine = lines[lastIndex + 2]
+      if (indexEnd + 1 < lines.length) nextLine = lines[indexEnd + 1]
+      if (nextLine?.trim() === '' && indexEnd + 2 < lines.length) nextLine = lines[indexEnd + 2]
       yield {
-        start: index + offset,
-        end: lastIndex + offset,
-        match: lines.slice(index, lastIndex + 1).join('\n'),
+        start: indexStart + offset,
+        end: indexEnd + offset,
+        match: lines.slice(indexStart, indexEnd + 1).join('\n'),
         nextLine,
       }
-      lines = lines.slice(lastIndex + 1)
-      offset += lastIndex + 1
+      lines = lines.slice(indexEnd + 1)
+      offset += indexEnd + 1
     } else {
       break
     }

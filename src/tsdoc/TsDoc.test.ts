@@ -43,14 +43,14 @@ describe(TsDoc.name, () => {
 
     it('should not add a single tag if the tag is not in the tagOrder', () => {
       const tsDoc = new TsDoc()
-      const tag = new TsDocTag('asdf', '', [])
+      const tag = new TsDocTag('asdf', '', ['fdsa'])
       tsDoc.addTag(tag)
       expect(tsDoc.single.has('asdf')).toBe(false)
     })
 
     it('should remove a single tag', () => {
       const tsDoc = new TsDoc()
-      const tag = new TsDocTag('description', '', [])
+      const tag = new TsDocTag('description', '', ['this is something'])
       tsDoc.addTag(tag)
       tsDoc.removeTags('description')
       expect(tsDoc.single.has('description')).toBe(false)
@@ -60,26 +60,26 @@ describe(TsDoc.name, () => {
   describe('multi', () => {
     it('should add a multi tag', () => {
       const tsDoc = new TsDoc()
-      const tag1 = new TsDocTag('throws', '', ['when sad'])
-      const tag2 = new TsDocTag('throws', '', ['when happy'])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
-      expect(tsDoc.multi.get('throws')).toEqual([tag1, tag2])
+      const taga = new TsDocTag('throws', '', ['when sad'])
+      const tagb = new TsDocTag('throws', '', ['when happy'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
+      expect(tsDoc.multi.get('throws')).toEqual([taga, tagb])
     })
 
     it('should not add a multi tag if the tag is not in the tagOrder', () => {
       const tsDoc = new TsDoc()
-      const tag = new TsDocTag('unknown', '', [])
+      const tag = new TsDocTag('unknown', '', ['unknown'])
       tsDoc.addTag(tag)
       expect(tsDoc.multi.has('unknown')).toBe(false)
     })
 
     it('should remove a multi tag', () => {
       const tsDoc = new TsDoc()
-      const tag1 = new TsDocTag('throws', '', [])
-      const tag2 = new TsDocTag('throws', '', [])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
+      const taga = new TsDocTag('throws', '', ['an error'])
+      const tagb = new TsDocTag('throws', '', ['an error'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
       expect(tsDoc.multi.has('throws')).toBe(true)
       tsDoc.removeTags('throws')
       expect(tsDoc.multi.has('throws')).toBe(false)
@@ -89,33 +89,33 @@ describe(TsDoc.name, () => {
   describe('namedMulti', () => {
     it('should add a named multi tag', () => {
       const tsDoc = new TsDoc()
-      const tag1 = new TsDocTag('param', 'firstName', ['the first name'])
-      const tag2 = new TsDocTag('param', 'lastName', ['the last name'])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
+      const taga = new TsDocTag('param', 'firstName', ['the first name'])
+      const tagb = new TsDocTag('param', 'lastName', ['the last name'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
       expect(tsDoc.namedMulti.get('param')).toEqual(
         new Map([
-          ['firstName', tag1],
-          ['lastName', tag2],
+          ['firstName', taga],
+          ['lastName', tagb],
         ]),
       )
     })
 
     it('should not add a named multi tag if the tag is not in the tagOrder', () => {
       const tsDoc = new TsDoc()
-      const tag = new TsDocTag('unknown', 'name', [])
+      const tag = new TsDocTag('throws', '', ['an error'])
       tsDoc.addTag(tag)
-      expect(tsDoc.namedMulti.has('unknown')).toBe(false)
+      expect(tsDoc.namedMulti.has('throws')).toBe(false)
     })
 
     it('should remove a named multi tag', () => {
       const tsDoc = new TsDoc()
-      const tag1 = new TsDocTag('param', 'firstName', ['the first name'])
-      const tag2 = new TsDocTag('param', 'lastName', ['the last name'])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
+      const taga = new TsDocTag('param', 'firstName', ['the first name'])
+      const tagb = new TsDocTag('param', 'lastName', ['the last name'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
       tsDoc.removeTags('param', 'firstName')
-      expect(tsDoc.namedMulti.get('param')).toEqual(new Map([['lastName', tag2]]))
+      expect(tsDoc.namedMulti.get('param')).toEqual(new Map([['lastName', tagb]]))
     })
   })
 
@@ -174,10 +174,10 @@ describe(TsDoc.name, () => {
 
     it('should remove all named multi TsDocTags with the provided tag from the TsDoc instance if name is not provided', () => {
       const tsDoc = new TsDoc()
-      const tag1 = new TsDocTag('param', 'name1', ['The name 1.'])
-      const tag2 = new TsDocTag('param', 'name2', ['The name 2.'])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
+      const taga = new TsDocTag('param', 'name1', ['The name 1.'])
+      const tagb = new TsDocTag('param', 'name2', ['The name 2.'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
       tsDoc.removeTags('param')
       expect(tsDoc.size).toBe(0)
     })
@@ -194,10 +194,10 @@ describe(TsDoc.name, () => {
   describe('size', () => {
     it('should return the correct size', () => {
       const tsDoc = new TsDoc()
-      const tag1 = new TsDocTag('description', '', ['asd'])
-      const tag2 = new TsDocTag('returns', '', ['asd'])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
+      const taga = new TsDocTag('description', '', ['asd'])
+      const tagb = new TsDocTag('returns', '', ['asd'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
       expect(tsDoc.size).toBe(2)
     })
   })
@@ -219,10 +219,10 @@ describe(TsDoc.name, () => {
   describe('clear', () => {
     it('should delete all tags', () => {
       const tsDoc = new TsDoc()
-      const tag1 = new TsDocTag('description', '', ['asd'])
-      const tag2 = new TsDocTag('returns', '', ['asd'])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
+      const taga = new TsDocTag('description', '', ['asd'])
+      const tagb = new TsDocTag('returns', '', ['asd'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
       expect(tsDoc.size).toBe(2)
       tsDoc.clear()
       expect(tsDoc.size).toBe(0)
@@ -231,38 +231,38 @@ describe(TsDoc.name, () => {
 
   describe('iterateTags', () => {
     it('should iterate over all tags in the order specified by tagOrder', () => {
-      const tsDoc = new TsDoc('', { tagOrder: ['tag2', 'tag1', 'tag4', 'tag3'] })
-      const tag1 = new TsDocTag('tag1', '', [])
-      const tag2 = new TsDocTag('tag2', '', [])
-      const tag3 = new TsDocTag('tag3', '', [])
-      const tag4 = new TsDocTag('tag4', '', [])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
-      tsDoc.addTag(tag3)
-      tsDoc.addTag(tag4)
+      const tsDoc = new TsDoc('', { tagOrder: ['tagb', 'taga', 'tagd', 'tagc'] })
+      const taga = new TsDocTag('taga', '', ['a'])
+      const tagb = new TsDocTag('tagb', '', ['b'])
+      const tagc = new TsDocTag('tagc', '', ['c'])
+      const tagd = new TsDocTag('tagd', '', ['d'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
+      tsDoc.addTag(tagc)
+      tsDoc.addTag(tagd)
       const tags = Array.from(tsDoc.iterateTags())
-      expect(tags).toEqual([tag2, tag1, tag4, tag3])
+      expect(tags).toEqual([tagb, taga, tagd, tagc])
     })
 
     it('should include empty strings if withSpaces is true', () => {
-      const tsDoc = new TsDoc('', { tagOrder: ['tag1', '', 'tag2', 'tag3', '', 'tag4'] })
-      const tag1 = new TsDocTag('tag1', '', [])
-      const tag2 = new TsDocTag('tag2', '', [])
-      const tag3 = new TsDocTag('tag3', '', [])
-      const tag4 = new TsDocTag('tag4', '', [])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
-      tsDoc.addTag(tag3)
-      tsDoc.addTag(tag4)
+      const tsDoc = new TsDoc('', { tagOrder: ['taga', '', 'tagb', 'tagc', '', 'tagd'] })
+      const taga = new TsDocTag('taga', '', ['a'])
+      const tagb = new TsDocTag('tagb', '', ['b'])
+      const tagc = new TsDocTag('tagc', '', ['c'])
+      const tagd = new TsDocTag('tagd', '', ['d'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
+      tsDoc.addTag(tagc)
+      tsDoc.addTag(tagd)
       const tags = Array.from(tsDoc.iterateTags(true))
-      expect(tags).toEqual([tag1, '', tag2, tag3, '', tag4])
+      expect(tags).toEqual([taga, '', tagb, tagc, '', tagd])
     })
   })
 
   describe('clone', () => {
     it('should return a deep clone of the TsDoc instance', () => {
       const tsDoc = new TsDoc()
-      const tag = new TsDocTag('tag', '', [])
+      const tag = new TsDocTag('tag', '', ['tag'])
       tsDoc.addTag(tag)
       const clone = tsDoc.clone()
       expect(clone).not.toBe(tsDoc)
@@ -288,54 +288,54 @@ describe(TsDoc.name, () => {
 
     it('should merge tags from another TsDoc instance 2', () => {
       const tsDoc1 = new TsDoc()
-      const tag1 = new TsDocTag('description', '', ['This is a description.'])
-      tsDoc1.addTag(tag1)
+      const taga = new TsDocTag('description', '', ['This is a description.'])
+      tsDoc1.addTag(taga)
 
       const tsDoc2 = new TsDoc()
-      const tag2 = new TsDocTag('param', 'name', ['The name.'])
-      tsDoc2.addTag(tag2)
+      const tagb = new TsDocTag('param', 'name', ['The name.'])
+      tsDoc2.addTag(tagb)
 
       tsDoc1.assign(tsDoc2)
       expect(tsDoc1.size).toBe(2)
-      expect(tsDoc1.single.get('description')).toBe(tag1)
+      expect(tsDoc1.single.get('description')).toBe(taga)
       expect(tsDoc1.namedMulti.get('param')).toBeDefined()
-      expect(tsDoc1.namedMulti.get('param')?.get('name')).toBe(tag2)
+      expect(tsDoc1.namedMulti.get('param')?.get('name')).toBe(tagb)
     })
   })
 
   describe('reorderParams', () => {
     it('should sort the param tags according to the order specified in the paramOrder property', () => {
       const tsDoc = new TsDoc('', { paramOrder: ['c', 'a', 'b'] })
-      const tag1 = new TsDocTag('param', 'b', [])
-      const tag2 = new TsDocTag('param', 'a', [])
-      const tag3 = new TsDocTag('param', 'c', [])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
-      tsDoc.addTag(tag3)
+      const taga = new TsDocTag('param', 'b', ['b'])
+      const tagb = new TsDocTag('param', 'a', ['a'])
+      const tagc = new TsDocTag('param', 'c', ['c'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
+      tsDoc.addTag(tagc)
       tsDoc.reorderParams()
       const tags = Array.from(tsDoc.iterateTags())
-      expect(tags).toEqual([tag3, tag2, tag1])
+      expect(tags).toEqual([tagc, tagb, taga])
     })
   })
 
   describe('render', () => {
     it('should render a TSDoc block comment string with all tags in the order specified by the tagOrder property', () => {
-      const tsDoc = new TsDoc('', { tagOrder: ['tag3', 'tag1', 'tag2'] })
-      const tag1 = new TsDocTag('tag1', 'a', [])
-      const tag2 = new TsDocTag('tag2', 'b', [])
-      const tag3 = new TsDocTag('tag3', 'c', [])
-      tsDoc.addTag(tag1)
-      tsDoc.addTag(tag2)
-      tsDoc.addTag(tag3)
+      const tsDoc = new TsDoc('', { tagOrder: ['tagc', 'taga', 'tagb'] })
+      const taga = new TsDocTag('taga', '', ['a'])
+      const tagb = new TsDocTag('tagb', '', ['b'])
+      const tagc = new TsDocTag('tagc', '', ['c'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
+      tsDoc.addTag(tagc)
       const rendered = tsDoc.render()
-      expect(rendered).toBe('/**\n * @tag3 c\n * @tag1 a\n * @tag2 b\n */')
+      expect(rendered).toBe('/**\n * @tagc c\n * @taga a\n * @tagb b\n */')
     })
   })
 
   describe('getTagOrder', () => {
     it('should return the tagOrder property if it is defined', () => {
-      const tsDoc = new TsDoc(undefined, { tagOrder: ['tag1', 'tag2'] })
-      expect(tsDoc.getTagOrder()).toEqual(['tag1', 'tag2'])
+      const tsDoc = new TsDoc(undefined, { tagOrder: ['taga', 'tagb'] })
+      expect(tsDoc.getTagOrder()).toEqual(['taga', 'tagb'])
     })
 
     it('should return TsDoc.defaultTagOrder if the tagOrder property is not defined', () => {

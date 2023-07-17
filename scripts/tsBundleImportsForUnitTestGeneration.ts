@@ -10,7 +10,6 @@ export function tsBundleImportsForUnitTestGeneration(filepath: string): string[]
 
   const bundle2 = tsBundleImports(filepath, {
     maxDepth: 2,
-    // declarations: true,
     stripExportKeywords: true,
     stripSlashComments: true,
     stripEmptyLines: true,

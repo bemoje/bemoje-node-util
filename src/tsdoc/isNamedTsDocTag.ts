@@ -1,5 +1,3 @@
-import { setIntersection } from '../set/setIntersection'
-
 /**
  * Checks if the given tag is a named TSDoc tag.
  * @param tag The tag to check.

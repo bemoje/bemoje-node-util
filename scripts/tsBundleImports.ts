@@ -1,17 +1,17 @@
+import fs from 'fs'
 import path from 'path'
-import { tsStripImports } from '../src/tscode/tsStripImports'
 import { strRemoveEmptyLines } from '../src/string/strRemoveEmptyLines'
-import { tsDocStripExample } from '../src/tsdoc/tsDocStripExample'
-import { tsDocRemoveEmptyLines } from '../src/tsdoc/tsDocRemoveEmptyLines'
-import { tsStripBlockComments } from '../src/tscode/tsStripBlockComments'
-import { tsStripFullSlashCommentLines } from '../src/tscode/tsStripFullSlashCommentLines'
 import { strTrimLinesLeft } from '../src/string/strTrimLinesLeft'
-import { tsStripExportKeyword } from '../src/tscode/tsStripExportKeyword'
-import { tsDocStripAllTagsExcepThrowsParamDescription } from '../src/tsdoc/tsDocStripAllTagsExcepThrowsParamDescription'
-import { tsWalkImports } from '../src/tscode/tsWalkImports'
-import { ITsBundleImportsOptions } from './ITsBundleImportsOptions'
-import { readFileStringSync } from '../src/filesystem/readFileStringSync'
 import { tsStripDeclSourceMapComments } from '../src/tscode/tsStripDeclSourceMapComments'
+import { tsStripExportKeyword } from '../src/tscode/tsStripExportKeyword'
+import { tsStripFullSlashCommentLines } from '../src/tscode/tsStripFullSlashCommentLines'
+import { tsStripImports } from '../src/tscode/tsStripImports'
+import { tsStripTsDocBlockComments } from '../src/tscode/tsStripTsDocBlockComments'
+import { tsWalkImports } from '../src/tscode/tsWalkImports'
+import { tsDocRemoveEmptyLines } from '../src/tsdoc/tsDocRemoveEmptyLines'
+import { tsDocStripAllTagsButThrowsParamDescription } from '../src/tsdoc/tsDocStripAllTagsButThrowsParamDescription'
+import { tsDocStripExample } from '../src/tsdoc/tsDocStripExample'
+import { ITsBundleImportsOptions } from './types/ITsBundleImportsOptions'
 
 /**
  * Bundles TypeScript imports from a root file and returns them as a 2D array of strings.
@@ -44,16 +44,16 @@ export function tsBundleImports(rootfile: string, options?: ITsBundleImportsOpti
       try {
         const relpath = fpath.replace(process.cwd(), '').replace(/\.ts$/g, '.d.ts')
         const dpath = path.join(process.cwd(), 'types', relpath)
-        const dsrc = tsStripImports(tsStripDeclSourceMapComments(readFileStringSync(dpath)))
+        const dsrc = tsStripImports(tsStripDeclSourceMapComments(fs.readFileSync(dpath).toString()))
         if (dsrc.includes('/' + '**')) src = dsrc
       } catch (error) {
         console.error(error?.toString())
       }
     }
     if (opt.stripSlashComments) src = tsStripFullSlashCommentLines(src)
-    if (opt.stripBlockComments) src = tsStripBlockComments(src)
+    if (opt.stripBlockComments) src = tsStripTsDocBlockComments(src)
     else {
-      if (opt.stripTsDocSoOnlyDescription) src = tsDocStripAllTagsExcepThrowsParamDescription(src)
+      if (opt.stripTsDocSoOnlyDescription) src = tsDocStripAllTagsButThrowsParamDescription(src)
       else if (opt.stripTsDocExample) src = tsDocStripExample(src)
       if (opt.stripTsDocEmptyLines) src = tsDocRemoveEmptyLines(src)
     }

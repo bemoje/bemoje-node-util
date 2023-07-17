@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-src/api/types/ICompletionRequestOptions.ts:15
+[src/api/types/ICompletionRequestOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L15)
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 #### Defined in
 
-src/api/types/ICompletionRequestOptions.ts:13
+[src/api/types/ICompletionRequestOptions.ts:13](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L13)
 
 ___
 
@@ -181,7 +181,7 @@ ___
 
 #### Defined in
 
-src/api/types/ICompletionRequestOptions.ts:7
+[src/api/types/ICompletionRequestOptions.ts:7](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L7)
 
 ___
 
@@ -249,7 +249,7 @@ ___
 
 #### Defined in
 
-src/api/types/ICompletionRequestOptions.ts:9
+[src/api/types/ICompletionRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L9)
 
 ___
 
@@ -259,7 +259,7 @@ ___
 
 #### Defined in
 
-src/api/types/ICompletionRequestOptions.ts:11
+[src/api/types/ICompletionRequestOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L11)
 
 ___
 

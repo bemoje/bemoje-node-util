@@ -16,4 +16,4 @@
 
 #### Defined in
 
-src/api/types/IResponseCacheOptions.ts:3
+[src/api/types/IResponseCacheOptions.ts:3](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IResponseCacheOptions.ts#L3)

@@ -47,7 +47,7 @@ Clears the console by printing a number of blank lines.
 
 #### Defined in
 
-src/node/log.ts:59
+[src/node/log.ts:59](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L59)
 
 ___
 
@@ -75,7 +75,7 @@ Logs a (red) error message to the console.
 
 #### Defined in
 
-src/node/log.ts:27
+[src/node/log.ts:27](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L27)
 
 ___
 
@@ -104,7 +104,7 @@ Logs a (cyan) message the console.
 
 #### Defined in
 
-src/node/log.ts:11
+[src/node/log.ts:11](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L11)
 
 ___
 
@@ -126,7 +126,7 @@ Prints a light dotted line to the console.
 
 #### Defined in
 
-src/node/log.ts:66
+[src/node/log.ts:66](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L66)
 
 ___
 
@@ -159,7 +159,7 @@ Generic function for logging to console, used by the log-level specific function
 
 #### Defined in
 
-src/node/log.ts:77
+[src/node/log.ts:77](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L77)
 
 ___
 
@@ -188,7 +188,7 @@ Wrap an async function as a task, logging the start and end of the task.
 
 #### Defined in
 
-src/node/log.ts:37
+[src/node/log.ts:37](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L37)
 
 ___
 
@@ -217,7 +217,7 @@ Wrap a synchronous function as a task, logging the start and end of the task.
 
 #### Defined in
 
-src/node/log.ts:48
+[src/node/log.ts:48](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L48)
 
 ___
 
@@ -245,4 +245,4 @@ Logs a (yellow) warning message to the console.
 
 #### Defined in
 
-src/node/log.ts:19
+[src/node/log.ts:19](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L19)

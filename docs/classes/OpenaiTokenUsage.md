@@ -35,7 +35,7 @@ For monitoring openai api token usage.
 
 #### Defined in
 
-src/api/OpenaiTokenUsage.ts:22
+[src/api/OpenaiTokenUsage.ts:22](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiTokenUsage.ts#L22)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiTokenUsage.ts:32
+[src/api/OpenaiTokenUsage.ts:32](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiTokenUsage.ts#L32)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiTokenUsage.ts:24
+[src/api/OpenaiTokenUsage.ts:24](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiTokenUsage.ts#L24)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 #### Defined in
 
-src/api/OpenaiTokenUsage.ts:14
+[src/api/OpenaiTokenUsage.ts:14](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiTokenUsage.ts#L14)
 
 ## Methods
 
@@ -155,4 +155,4 @@ Submit usage data from an openai api response.
 
 #### Defined in
 
-src/api/OpenaiTokenUsage.ts:37
+[src/api/OpenaiTokenUsage.ts:37](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiTokenUsage.ts#L37)

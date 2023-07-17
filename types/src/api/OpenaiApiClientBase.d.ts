@@ -1,16 +1,16 @@
 /// <reference types="node" />
-import type { CreateCompletionResponseChoicesInner, CreateChatCompletionResponseChoicesInner, CreateChatCompletionResponse, CreateChatCompletionRequest, CreateCompletionRequest, CreateEditRequest, CreateCompletionResponse, CreateEditResponse } from 'openai';
 import type { Options as AsyncRetryOptions } from 'async-retry';
-import type { ICompletionRequestOptions } from './types/ICompletionRequestOptions';
-import type { IChatRequestOptions } from './types/IChatRequestOptions';
-import type { IEditRequestOptions } from './types/IEditRequestOptions';
-import type { IApiClientApiDefaultsOptions } from './types/IApiClientApiDefaultsOptions';
-import type { IResponseCacheOptions } from './types/IResponseCacheOptions';
-import type { IApiClientOptions } from './types/IApiClientOptions';
 import EventEmitter from 'events';
+import type * as openai from 'openai';
 import { OpenAIApi } from 'openai';
 import { ApiReponseCache } from './ApiReponseCache';
 import { OpenaiTokenUsage } from './OpenaiTokenUsage';
+import type { IApiClientApiDefaultsOptions } from './types/IApiClientApiDefaultsOptions';
+import type { IApiClientOptions } from './types/IApiClientOptions';
+import type { IChatRequestOptions } from './types/IChatRequestOptions';
+import type { ICompletionRequestOptions } from './types/ICompletionRequestOptions';
+import type { IEditRequestOptions } from './types/IEditRequestOptions';
+import type { IResponseCacheOptions } from './types/IResponseCacheOptions';
 export declare class OpenaiApiClientBase {
     readonly client: OpenAIApi;
     readonly events: EventEmitter;
@@ -59,26 +59,26 @@ export declare class OpenaiApiClientBase {
      * Count the number of tokens in a string.
      */
     countTokens(string: string): number;
-    protected handleCompletionOptions(options: ICompletionRequestOptions): [CreateCompletionRequest, AsyncRetryOptions, IResponseCacheOptions];
-    protected handleChatOptions(options: IChatRequestOptions): [CreateChatCompletionRequest, AsyncRetryOptions, IResponseCacheOptions];
-    protected handleEditOptions(options: IEditRequestOptions): [CreateEditRequest, AsyncRetryOptions, IResponseCacheOptions];
+    protected handleCompletionOptions(options: ICompletionRequestOptions): [openai.CreateCompletionRequest, AsyncRetryOptions, IResponseCacheOptions];
+    protected handleChatOptions(options: IChatRequestOptions): [openai.CreateChatCompletionRequest, AsyncRetryOptions, IResponseCacheOptions];
+    protected handleEditOptions(options: IEditRequestOptions): [openai.CreateEditRequest, AsyncRetryOptions, IResponseCacheOptions];
     protected handleRetryOptions(retryOptions?: AsyncRetryOptions): AsyncRetryOptions;
     protected handleCacheOptions(cacheOptions?: IResponseCacheOptions): IResponseCacheOptions;
-    protected _completion(request: CreateCompletionRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string>;
-    protected _chat(request: CreateChatCompletionRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string>;
-    protected _edit(request: CreateEditRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string>;
+    protected _completion(request: openai.CreateCompletionRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string>;
+    protected _chat(request: openai.CreateChatCompletionRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string>;
+    protected _edit(request: openai.CreateEditRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string>;
     /**
      * Generic function for sending requests to the openai api.
      * This is used for all the API endpoints.
      * It handles retrying, cache, hashing, and emitting events.
      */
-    protected _apiRequest(request: CreateEditRequest | CreateCompletionRequest | CreateChatCompletionRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions, apiRequest: () => Promise<string[]>): Promise<string>;
-    protected parseChoices(choices: CreateChatCompletionResponseChoicesInner[] | CreateCompletionResponseChoicesInner[]): string[];
+    protected _apiRequest(request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions, apiRequest: () => Promise<string[]>): Promise<string>;
+    protected parseChoices(choices: openai.CreateChatCompletionResponseChoicesInner[] | openai.CreateCompletionResponseChoicesInner[]): string[];
     protected deleteDefaultOrUndefined<T extends Record<string, any>>(options: T, defaults?: Record<string, any>): T;
     /**
      * Assert that the response data is complete by verifying that all returned choices have finish_reason: stop.
      */
-    protected assertReponseDataComplete(data: CreateChatCompletionResponse | CreateCompletionResponse | CreateEditResponse): void;
+    protected assertReponseDataComplete(data: openai.CreateChatCompletionResponse | openai.CreateCompletionResponse | openai.CreateEditResponse): void;
     protected getDefaultApiKey(): string;
     /**
      * Emit an event but adds 'this' as an extra trailing argument.

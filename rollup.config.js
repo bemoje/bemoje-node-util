@@ -36,6 +36,7 @@ export default {
     'util',
     'child_process',
     'deep-assign',
+    'esprima',
   ],
   output: [
     {

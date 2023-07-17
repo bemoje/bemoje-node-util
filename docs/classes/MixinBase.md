@@ -43,7 +43,7 @@ typeof [`MixinBase`](/docs/classes/MixinBase.md)
 
 #### Defined in
 
-src/mixins/MixinBase.ts:8
+[src/mixins/MixinBase.ts:8](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/mixins/MixinBase.ts#L8)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-src/mixins/MixinBase.ts:12
+[src/mixins/MixinBase.ts:12](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/mixins/MixinBase.ts#L12)
 
 ___
 
@@ -73,7 +73,7 @@ Make the properties with property names that start with an underscore non-enumer
 
 #### Defined in
 
-src/mixins/MixinBase.ts:19
+[src/mixins/MixinBase.ts:19](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/mixins/MixinBase.ts#L19)
 
 ___
 
@@ -95,4 +95,4 @@ Make the properties with the given property names non-enumerable.
 
 #### Defined in
 
-src/mixins/MixinBase.ts:26
+[src/mixins/MixinBase.ts:26](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/mixins/MixinBase.ts#L26)

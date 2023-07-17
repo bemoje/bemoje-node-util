@@ -29,7 +29,7 @@
 
 #### Defined in
 
-src/api/types/IEditRequestOptions.ts:13
+[src/api/types/IEditRequestOptions.ts:13](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IEditRequestOptions.ts#L13)
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 #### Defined in
 
-src/api/types/IEditRequestOptions.ts:7
+[src/api/types/IEditRequestOptions.ts:7](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IEditRequestOptions.ts#L7)
 
 ___
 
@@ -89,7 +89,7 @@ ___
 
 #### Defined in
 
-src/api/types/IEditRequestOptions.ts:9
+[src/api/types/IEditRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IEditRequestOptions.ts#L9)
 
 ___
 
@@ -99,7 +99,7 @@ ___
 
 #### Defined in
 
-src/api/types/IEditRequestOptions.ts:11
+[src/api/types/IEditRequestOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IEditRequestOptions.ts#L11)
 
 ___
 

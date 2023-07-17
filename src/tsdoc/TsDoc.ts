@@ -1,14 +1,14 @@
-import { arrFilterMutable } from '../array/arrFilterMutable'
-import { isNamedTsDocTag } from './isNamedTsDocTag'
-import { isNamedMultiTsDocTag } from './isNamedMultiTsDocTag'
-import { tsDocUnwrapComment } from './tsDocUnwrapComment'
-import { TsDocTag } from './TsDocTag'
-import { tsDocNormalizeTagName } from './tsDocNormalizeTagName'
-import { tsDocWrapAsComment } from './tsDocWrapAsComment'
-import { tsDocStripTypes } from './tsDocStripTypes'
-import { mapGetOrElse } from '../map/mapGetOrElse'
-import { isMultiTsDocTag } from './isMultiTsDocTag'
 import { arrShallowEquals } from '../array/arrShallowEquals'
+import { mapGetOrElse } from '../map/mapGetOrElse'
+import { TsDocTag } from './TsDocTag'
+import { isMultiTsDocTag } from './isMultiTsDocTag'
+import { isNamedMultiTsDocTag } from './isNamedMultiTsDocTag'
+import { isNamedTsDocTag } from './isNamedTsDocTag'
+import { tsDocNormalizeTagName } from './tsDocNormalizeTagName'
+import { tsDocStripTypesAndDefaults } from './tsDocStripTypesAndDefaults'
+import { tsDocUnwrapComment } from './tsDocUnwrapComment'
+import { tsDocWrapAsComment } from './tsDocWrapAsComment'
+import { TsDocOptions } from './types/TsDocOptions'
 
 export class TsDoc {
   /**
@@ -17,7 +17,7 @@ export class TsDoc {
   static defaultTagOrder = [
     'description',
     'remarks',
-    'typeparam',
+    'typeParam',
     'template',
     'param',
     'returns',
@@ -60,13 +60,7 @@ export class TsDoc {
    * @param options Options for the TSDoc instance.
    * @throws If the provided code is not a valid TSDoc block comment.
    */
-  constructor(
-    code?: string,
-    options?: {
-      tagOrder?: Iterable<string>
-      paramOrder?: Iterable<string>
-    },
-  ) {
+  constructor(code?: string, options?: TsDocOptions) {
     if (options) {
       if (options.tagOrder) this.tagOrder = Array.from(options.tagOrder)
       if (options.paramOrder) this.paramOrder = new Set(options.paramOrder)
@@ -74,23 +68,32 @@ export class TsDoc {
     if (code) this.addBlockComment(code)
   }
 
+  /**
+   * Parses a TSDoc block comment and adds the tags to the TsDoc instance.
+   * @param code The TSDoc block comment soruce code.
+   */
   addBlockComment(code: string): this {
+    code = tsDocStripTypesAndDefaults(code)
     code = tsDocUnwrapComment(code)
-    code = tsDocStripTypes(code)
     if (!code.startsWith('@')) code = 'description ' + code
-    const lines = code.split(/^@/gm)
-    for (const line of lines) {
-      const desc = line.trimEnd().split(/\r?\n/)
-      const words = desc[0].split(' ')
-      const tag = tsDocNormalizeTagName(words.shift() || '')
-      if (!this.getTagOrder().includes(tag)) return this
+    const tags = code.split(/^@/gm)
+    for (const str of tags) {
+      const description = str.trimEnd().split(/\r?\n/)
+      const words = description[0].split(' ')
+      const tag = words.shift()
+      if (!tag) continue
+      if (!this.getTagOrder().includes(tag)) continue
       const isNamed = isNamedTsDocTag(tag)
-      const name = isNamed ? words.shift() || '' : ''
-      if (!name && isNamed) return this
-      desc[0] = words.join(' ').trim()
-      arrFilterMutable(desc, (line: string) => !!line.trim())
-      if (!desc.length) return this
-      this.addTag(new TsDocTag(tag, name, desc))
+      const name = isNamed ? words.shift() : ''
+      if (isNamed && !name) continue
+      description[0] = words.join(' ').trim()
+      let instance
+      try {
+        instance = new TsDocTag(tag, name, description)
+      } catch (error) {
+        continue
+      }
+      this.addTag(instance)
     }
     return this
   }

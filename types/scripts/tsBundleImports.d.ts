@@ -1,4 +1,4 @@
-import { ITsBundleImportsOptions } from './ITsBundleImportsOptions';
+import { ITsBundleImportsOptions } from './types/ITsBundleImportsOptions';
 /**
  * Bundles TypeScript imports from a root file and returns them as a 2D array of strings.
  * Each sub-array represents a depth level of imports.

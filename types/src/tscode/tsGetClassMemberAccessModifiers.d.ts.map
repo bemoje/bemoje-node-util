@@ -1,1 +1,1 @@
-{"version":3,"file":"tsGetClassMemberAccessModifiers.d.ts","sourceRoot":"","sources":["../../../src/tscode/tsGetClassMemberAccessModifiers.ts"],"names":[],"mappings":"AAEA;;GAEG;AACH,wBAAgB,+BAA+B,CAC7C,IAAI,EAAE,MAAM,GACX,MAAM,CAAC,MAAM,EAAE,WAAW,GAAG,SAAS,CAAC,CAQzC"}
+{"version":3,"file":"tsGetClassMemberAccessModifiers.d.ts","sourceRoot":"","sources":["../../../src/tscode/tsGetClassMemberAccessModifiers.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;;;;;;;GAgBG;AACH,wBAAgB,+BAA+B,CAC7C,IAAI,EAAE,MAAM,GACX,MAAM,CAAC,MAAM,EAAE,WAAW,GAAG,SAAS,CAAC,CAQzC"}

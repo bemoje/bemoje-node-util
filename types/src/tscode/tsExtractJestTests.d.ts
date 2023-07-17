@@ -4,10 +4,6 @@
  * @param code The string to parse Jest tests from.
  * @returns The extracted Jest tests as a string.
  * @throws Throws an error if the tests could not be parsed from the input source code.
- * @example ```ts
- * parseJestTests('test("should pass", () => { expect(true).toBe(true); });');;
- * //=> 'should pass'
- * ```
  */
 export declare function tsExtractJestTests(code: string): string;
 //# sourceMappingURL=tsExtractJestTests.d.ts.map

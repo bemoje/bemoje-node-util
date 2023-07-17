@@ -1,7 +1,7 @@
 import { Stats } from 'fs'
 import path from 'path'
-import walkdir from 'walkdir'
 import type { WalkOptions } from 'walkdir'
+import walkdir from 'walkdir'
 import { SourceFile } from './SourceFile'
 
 /**

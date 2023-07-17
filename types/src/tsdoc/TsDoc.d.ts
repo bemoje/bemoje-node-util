@@ -1,4 +1,5 @@
 import { TsDocTag } from './TsDocTag';
+import { TsDocOptions } from './types/TsDocOptions';
 export declare class TsDoc {
     /**
      * The default order in which tags are rendered in the TSDoc comment.
@@ -31,10 +32,11 @@ export declare class TsDoc {
      * @param options Options for the TSDoc instance.
      * @throws If the provided code is not a valid TSDoc block comment.
      */
-    constructor(code?: string, options?: {
-        tagOrder?: Iterable<string>;
-        paramOrder?: Iterable<string>;
-    });
+    constructor(code?: string, options?: TsDocOptions);
+    /**
+     * Parses a TSDoc block comment and adds the tags to the TsDoc instance.
+     * @param code The TSDoc block comment soruce code.
+     */
     addBlockComment(code: string): this;
     /**
      * The number of tags in the TsDoc instance.

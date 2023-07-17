@@ -16,9 +16,11 @@
 
 • **end**: `number`
 
+The line index of the last line of the import statement.
+
 #### Defined in
 
-src/tscode/types/ITsExtractImportsResult.ts:3
+[src/tscode/types/ITsExtractImportsResult.ts:9](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tscode/types/ITsExtractImportsResult.ts#L9)
 
 ___
 
@@ -26,9 +28,11 @@ ___
 
 • **match**: `string`
 
+The import statement.
+
 #### Defined in
 
-src/tscode/types/ITsExtractImportsResult.ts:4
+[src/tscode/types/ITsExtractImportsResult.ts:13](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tscode/types/ITsExtractImportsResult.ts#L13)
 
 ___
 
@@ -36,6 +40,8 @@ ___
 
 • **start**: `number`
 
+The line index where the import statement starts.
+
 #### Defined in
 
-src/tscode/types/ITsExtractImportsResult.ts:2
+[src/tscode/types/ITsExtractImportsResult.ts:5](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tscode/types/ITsExtractImportsResult.ts#L5)

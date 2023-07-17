@@ -19,7 +19,7 @@ Constructor options for the TsDoc class.
 
 #### Defined in
 
-src/tsdoc/types/TsDocOptions.ts:6
+[src/tsdoc/types/TsDocOptions.ts:6](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/types/TsDocOptions.ts#L6)
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 #### Defined in
 
-src/tsdoc/types/TsDocOptions.ts:5
+[src/tsdoc/types/TsDocOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/types/TsDocOptions.ts#L5)

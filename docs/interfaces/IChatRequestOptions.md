@@ -39,7 +39,7 @@
 
 #### Defined in
 
-src/api/types/IChatRequestOptions.ts:18
+[src/api/types/IChatRequestOptions.ts:18](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L18)
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 #### Defined in
 
-src/api/types/IChatRequestOptions.ts:14
+[src/api/types/IChatRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L14)
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 #### Defined in
 
-src/api/types/IChatRequestOptions.ts:10
+[src/api/types/IChatRequestOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L10)
 
 ___
 
@@ -167,7 +167,7 @@ ___
 
 #### Defined in
 
-src/api/types/IChatRequestOptions.ts:8
+[src/api/types/IChatRequestOptions.ts:8](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L8)
 
 ___
 
@@ -217,7 +217,7 @@ ___
 
 #### Defined in
 
-src/api/types/IChatRequestOptions.ts:12
+[src/api/types/IChatRequestOptions.ts:12](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L12)
 
 ___
 
@@ -227,7 +227,7 @@ ___
 
 #### Defined in
 
-src/api/types/IChatRequestOptions.ts:16
+[src/api/types/IChatRequestOptions.ts:16](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L16)
 
 ___
 

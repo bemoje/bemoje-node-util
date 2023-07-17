@@ -1,26 +1,30 @@
+import getAppDataPath from 'appdata-path'
 import fs from 'fs'
 import path from 'path'
-import getAppDataPath from 'appdata-path'
-import { absoluteToRelativePath } from '../src/filesystem/absoluteToRelativePath'
-import { TsDoc } from '../src/tsdoc/TsDoc'
-import { tsExtractImports } from '../src/tscode/tsExtractImports'
-import { tsStripDeclSourceMapComments } from '../src/tscode/tsStripDeclSourceMapComments'
+import { strRemoveEmptyLines } from '../src'
+import { File } from '../src/filesystem/File'
 import { createDirectorySync } from '../src/filesystem/createDirectorySync'
-import { readFileStringSync } from '../src/filesystem/readFileStringSync'
+import { funParseClass } from '../src/function/funParseClass'
 import { funParseFunction } from '../src/function/funParseFunction'
 import { setNonEnumerable } from '../src/object/setNonEnumerable'
-import { tsDocExtractFirstComment } from '../src/tsdoc/tsDocExtractFirstComment'
-import { funParseClass } from '../src/function/funParseClass'
-import { tsGetClassMemberAccessModifiers } from '../src/tscode/tsGetClassMemberAccessModifiers'
-import { ISourceFileParseClassResult } from './types/ISourceFileParseClassResult'
-import { tsCountExports } from '../src/tscode/tsCountExports'
-import { tsHasDefaultExport } from '../src/tscode/tsHasDefaultExport'
 import { strCountCharOccurances } from '../src/string/strCountCharOccurances'
-import { ITsExtractImportsResult } from '../src/tscode/types/ITsExtractImportsResult'
-import { tsStripImports } from '../src/tscode/tsStripImports'
+import { tsCountExports } from '../src/tscode/tsCountExports'
+import { tsExtractImports } from '../src/tscode/tsExtractImports'
+import { tsGetClassMemberAccessModifiers } from '../src/tscode/tsGetClassMemberAccessModifiers'
+import { tsHasDefaultExport } from '../src/tscode/tsHasDefaultExport'
+import { tsStripDeclSourceMapComments } from '../src/tscode/tsStripDeclSourceMapComments'
 import { tsStripFullSlashCommentLines } from '../src/tscode/tsStripFullSlashCommentLines'
+import { tsStripImports } from '../src/tscode/tsStripImports'
+import { tsStripTsDocBlockComments } from '../src/tscode/tsStripTsDocBlockComments'
+import { ITsExtractImportsResult } from '../src/tscode/types/ITsExtractImportsResult'
+import { TsDoc } from '../src/tsdoc/TsDoc'
+import { tsDocExtractFirstComment } from '../src/tsdoc/tsDocExtractFirstComment'
+import { ISourceFileParseClassResult } from './types/ISourceFileParseClassResult'
 
-export class SourceFile {
+/**
+ * Represents a TypeScript source file.
+ */
+export class SourceFile extends File {
   /**
    * An in-memory cache for source file requires/evals.
    * If not set when ´evalSourceFileExport´ is first invoked, the entire ´SourceFile.sourceDir´ directory is evaluted and its exports are placed here..
@@ -54,11 +58,6 @@ export class SourceFile {
   static backupDir = path.join(getAppDataPath(), 'SourceFileBackups', path.basename(this.workdir))
 
   /**
-   * The relative path from the working directory to the source file.
-   */
-  readonly relative: string
-
-  /**
    * The source code of the source file.
    */
   source: string
@@ -74,8 +73,8 @@ export class SourceFile {
    * @param filepath The absolute path to the source file.
    */
   constructor(filepath: string) {
-    this.relative = absoluteToRelativePath(filepath)
-    this.source = readFileStringSync(this.filepath)
+    super(filepath)
+    this.source = fs.readFileSync(this.filepath).toString()
     this.exportType = this.getExportType()
     this.assertTsFile()
     this.assertMatchingFileAndExportName()
@@ -93,45 +92,10 @@ export class SourceFile {
   }
 
   /**
-   * The file extension of the source file.
-   */
-  get fileExtension(): string {
-    return '.ts'
-  }
-
-  /**
    * The name of the source file's exported member.
    */
   get exportName(): string {
     return this.filename.substring(0, this.filename.indexOf('.'))
-  }
-
-  /**
-   * The name of the source file.
-   */
-  get filename(): string {
-    return path.basename(this.filepath)
-  }
-
-  /**
-   * The name of the directory of the source file.
-   */
-  get dirname(): string {
-    return path.basename(this.dirpath)
-  }
-
-  /**
-   * The absolute path to the directory of the source file.
-   */
-  get dirpath(): string {
-    return path.dirname(this.filepath)
-  }
-
-  /**
-   * The absolute path to the source file.
-   */
-  get filepath(): string {
-    return path.join(SourceFile.workdir, this.relative)
   }
 
   /**
@@ -156,13 +120,6 @@ export class SourceFile {
   }
 
   /**
-   * Returns whether the source file exists.
-   */
-  fileExists(): boolean {
-    return fs.existsSync(this.filepath)
-  }
-
-  /**
    * Returns whether the test file exists.
    */
   testFileExists(): boolean {
@@ -180,15 +137,37 @@ export class SourceFile {
    * Returns the source code code of the test file.
    */
   testFileSource(): string {
-    return readFileStringSync(this.testFilepath)
+    return fs.readFileSync(this.testFilepath).toString()
   }
 
   /**
    * Returns the source code of the declaration file emitted for this source file.
+   * @param stripSourceMapComments Whether or not to strip source map comments from the declaration file.
+   * Example of such a line: "//# sourceMappingURL=filename.d.ts.map"
    */
   declarationFileSource(stripSourceMapComments = false): string {
-    const source = readFileStringSync(this.declarationFilepath)
+    const source = fs.readFileSync(this.declarationFilepath).toString()
     return stripSourceMapComments ? tsStripDeclSourceMapComments(source) : source
+  }
+
+  /**
+   * Returns the number of lines of code in this source file, not including import satements, comments and empty lines.
+   */
+  countLinesOfCode(): number {
+    let code = this.source
+    code = tsStripImports(code)
+    code = tsStripTsDocBlockComments(code)
+    code = tsStripFullSlashCommentLines(code)
+    code = strRemoveEmptyLines(code)
+    return code.split('\n').length
+  }
+
+  /**
+   * Returns the number of tests in the test file.
+   */
+  countTests(): number {
+    if (!this.testFileExists()) return 0
+    return this.testFileSource().split(/\n\s+it\(/).length - 1
   }
 
   /**
@@ -196,22 +175,6 @@ export class SourceFile {
    */
   getImports(): ITsExtractImportsResult[] {
     return tsExtractImports(this.source)
-  }
-
-  /**
-   * Removes all import statements from the source code.
-   */
-  stripImports(): this {
-    this.source = tsStripImports(this.source)
-    return this
-  }
-
-  /**
-   * Removes lines from the source code that consist of only a double-slash comment.
-   */
-  stripFullSlashCommentLines(): this {
-    this.source = tsStripFullSlashCommentLines(this.source)
-    return this
   }
 
   /**
@@ -235,12 +198,12 @@ export class SourceFile {
   }
 
   /**
+   * Sets the TSDoc block comment of this source file.
    * @returns The new TSDoc instance.
    */
   setTsDoc(newTsDoc: TsDoc, overwrite?: boolean): TsDoc {
     const code = this.source
     const lines = code.split('\n')
-    const oldDoc = this.getTsDocComment()
     const data = this.getTsDoc()
     if (!data) {
       const line = lines.find((line) => line.startsWith('export ')) as string
@@ -250,8 +213,6 @@ export class SourceFile {
     let { tsdoc } = data
     if (overwrite) tsdoc.clear()
     tsdoc.assign(newTsDoc)
-    // if (!oldDoc) return tsdoc
-    // this.source = code.split(oldDoc.match).join(tsdoc.render())
     lines.splice(data.start, data.end - data.start + 1, ...tsdoc.render().split('\n'))
     this.source = lines.join('\n')
     return tsdoc
@@ -327,6 +288,9 @@ export class SourceFile {
       : typeof _export
   }
 
+  /**
+   * Evaluates the source file and returns the export.
+   */
   protected evalSourceFileExport<T>(): T {
     let exp
     if (!SourceFile.entryPointImport) {
@@ -349,11 +313,17 @@ export class SourceFile {
     return exp
   }
 
+  /**
+   * Asserts that the source file is a TypeScript file.
+   */
   protected assertTsFile(): void {
     if (path.extname(this.filename) !== '.ts')
       throw new Error(`Expected file to be a TypeScript file: ${this.filepath}`)
   }
 
+  /**
+   * Asserts that the export name matches the filename.
+   */
   protected assertMatchingFileAndExportName() {
     const exportLine = this.source.split(/\r?\n/).find((line) => line.startsWith('export '))
     if (!exportLine?.includes(this.exportName)) {
@@ -361,12 +331,18 @@ export class SourceFile {
     }
   }
 
+  /**
+   * Asserts that the source file has a valid filename. A valid filename is one that has only one period.
+   */
   protected assertValidFilename() {
     if (strCountCharOccurances(this.filename, '.') !== 1) {
       throw new Error(`Expected source file to only have one period. Got: ${this.filename}`)
     }
   }
 
+  /**
+   * Asserts that the source file has exactly one export.
+   */
   protected assertExactlyOneNamedExport(): void {
     const code = this.source
     const count = tsCountExports(code)
