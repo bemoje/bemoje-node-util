@@ -1,6 +1,6 @@
 {
   "name": "@bemoje/node-util",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Various utilities for development in node-js",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -8,10 +8,9 @@
   "scripts": {
     "ts": "ts-node",
     "entrypoint": "ts-node scripts/generateEntryPoint.ts",
-    "stats": "ts-node scripts/generateUnitTestStats.ts",
+    "teststats": "ts-node scripts/generateUnitTestStats.ts",
     "gendocs": "ts-node scripts/generateTsDocs.ts",
     "gentests": "ts-node scripts/generateUnitTests.ts",
-    "tests": "jest --preset ts-jest --coverage --verbose",
     "test": "jest --preset ts-jest --coverage",
     "lint": "eslint \"*/**/*.{ts,js,json}\" --fix",
     "build": "npm run entrypoint && npm run lint && rimraf dist && rimraf types && rollup --config ./rollup.config.js",
