@@ -1,1 +1,1 @@
-{"version":3,"file":"arrLast.d.ts","sourceRoot":"","sources":["../../../src/array/arrLast.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;GAaG;AACH,wBAAgB,OAAO,CAAC,CAAC,EAAE,KAAK,EAAE,CAAC,EAAE,GAAG,CAAC,CAGxC"}
+{"version":3,"file":"arrLast.d.ts","sourceRoot":"","sources":["../../src/array/arrLast.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;GAUG;AACH,wBAAgB,OAAO,CAAC,CAAC,EAAE,KAAK,EAAE,CAAC,EAAE,GAAG,CAAC,CAGxC"}

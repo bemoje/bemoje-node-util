@@ -17,11 +17,8 @@ import { rexec } from '../regex/rexec'
  * //=> { myPrivateMethod: 'private', myProtectedMethod: 'protected' }
  * ```
  */
-export function tsGetClassMemberAccessModifiers(
-  code: string,
-): Record<string, 'protected' | 'private'> {
-  const regex =
-    /^\s*(?<privacy>protected|private) ((static|abstract|optional|readonly|get|set|async) )*(?<name>\w+)/gm
+export function tsGetClassMemberAccessModifiers(code: string): Record<string, 'protected' | 'private'> {
+  const regex = /^\s*(?<privacy>protected|private) ((static|abstract|optional|readonly|get|set|async) )*(?<name>\w+)/gm
   const result: Record<string, 'protected' | 'private'> = {}
   for (const { groups } of rexec(regex, code)) {
     result[groups.name] = groups.privacy as 'protected' | 'private'

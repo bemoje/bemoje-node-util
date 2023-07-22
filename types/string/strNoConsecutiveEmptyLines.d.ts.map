@@ -1,1 +1,1 @@
-{"version":3,"file":"strNoConsecutiveEmptyLines.d.ts","sourceRoot":"","sources":["../../../src/string/strNoConsecutiveEmptyLines.ts"],"names":[],"mappings":"AAAA;;;;;;;GAOG;AACH,wBAAgB,0BAA0B,CAAC,IAAI,EAAE,MAAM,GAAG,MAAM,CAE/D"}
+{"version":3,"file":"strNoConsecutiveEmptyLines.d.ts","sourceRoot":"","sources":["../../src/string/strNoConsecutiveEmptyLines.ts"],"names":[],"mappings":"AAAA;;;;;;;GAOG;AACH,wBAAgB,0BAA0B,CAAC,IAAI,EAAE,MAAM,GAAG,MAAM,CAE/D"}

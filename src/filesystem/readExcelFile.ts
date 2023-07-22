@@ -1,16 +1,15 @@
+import type { Row } from 'exceljs'
 import excelJs from 'exceljs'
-import { getExcelFileWorksheetValues } from './getExcelFileWorksheetValues.p'
 
 /**
- * Reads an Excel file and returns a record where each key is the name of a worksheet and the value is a 2D array of the worksheet's cell values.
- * @remarks This function is asynchronous and returns a Promise.
- * @param filepath The path to the Excel file to read.
- * @returns A Promise that resolves to a Record. Each key in the Record is the name of a worksheet in the Excel file. Each value is a 2D array of strings, where each string is the value of a cell in the worksheet.
- * @throws Will throw an error if the file at the provided filepath cannot be read.
+ * Reads an Excel file and returns its content as a record where each key is the name of a worksheet and its value is a 2D array of strings representing the rows and cells of the worksheet.
+ * @remarks This function uses the `exceljs` library to read the Excel file. It will throw an error if the file does not exist or is not a valid Excel file.
+ * @param filepath - The path to the Excel file to read.
+ * @returns A Promise that resolves to a record where each key is the name of a worksheet and its value is a 2D array of strings representing the rows and cells of the worksheet.
+ * @throws Will throw an error if the file does not exist or is not a valid Excel file.
  * @example ```ts
- * readExcelFile('path/to/excel/file.xlsx').then((worksheets) => {
- *   worksheets['Sheet1'];;
- * //=> {result}
+ * readExcelFile('path/to/file.xlsx').then((worksheets) => {
+ *   console.log(worksheets['Sheet1']); // logs the content of 'Sheet1'
  * });
  * ```
  */
@@ -19,7 +18,15 @@ export async function readExcelFile(filepath: string): Promise<Record<string, st
   await workbook.xlsx.readFile(filepath)
   const worksheets: Record<string, string[][]> = {}
   workbook.eachSheet((worksheet) => {
-    worksheets[worksheet.name] = getExcelFileWorksheetValues(worksheet)
+    const rows: string[][] = []
+    worksheet.eachRow((cells: Row) => {
+      const row: string[] = []
+      cells.eachCell((cell) => {
+        row.push(String(cell.value).trim())
+      })
+      rows.push(row)
+    })
+    worksheets[worksheet.name] = rows
   })
   return worksheets
 }

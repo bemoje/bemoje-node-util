@@ -11,11 +11,5 @@
 export function padArrayBytesRight(a: number[]): number[] {
   if (!a.length) return [0, 0, 0, 0]
   const l = a.length
-  return l === 4
-    ? a
-    : l === 1
-    ? [a[0], 0, 0, 0]
-    : l === 2
-    ? [a[0], a[1], 0, 0]
-    : [a[0], a[1], a[2], 0]
+  return l === 4 ? a : l === 1 ? [a[0], 0, 0, 0] : l === 2 ? [a[0], a[1], 0, 0] : [a[0], a[1], a[2], 0]
 }

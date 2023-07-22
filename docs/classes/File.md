@@ -18,14 +18,9 @@ Represents a file in the filesystem.
 
 - [dirname](/docs/classes/File.md#dirname)
 - [dirpath](/docs/classes/File.md#dirpath)
-- [exportName](/docs/classes/File.md#exportname)
 - [fileExtension](/docs/classes/File.md#fileextension)
 - [filename](/docs/classes/File.md#filename)
 - [relative](/docs/classes/File.md#relative)
-
-### Methods
-
-- [fileExists](/docs/classes/File.md#fileexists)
 
 ## Constructors
 
@@ -43,7 +38,7 @@ Creates a new SourceFile instance.
 
 #### Defined in
 
-src/filesystem/File.ts:18
+[src/filesystem/File.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/File.ts#L17)
 
 ## Properties
 
@@ -55,7 +50,7 @@ The aboslute path to the source file.
 
 #### Defined in
 
-src/filesystem/File.ts:12
+[src/filesystem/File.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/File.ts#L11)
 
 ## Accessors
 
@@ -71,7 +66,7 @@ The name of the directory of the source file.
 
 #### Defined in
 
-src/filesystem/File.ts:46
+[src/filesystem/File.ts:39](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/File.ts#L39)
 
 ___
 
@@ -87,23 +82,7 @@ The absolute path to the directory of the source file.
 
 #### Defined in
 
-src/filesystem/File.ts:53
-
-___
-
-### exportName
-
-• `get` **exportName**(): `string`
-
-The name of the source file's exported member.
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-src/filesystem/File.ts:32
+[src/filesystem/File.ts:46](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/File.ts#L46)
 
 ___
 
@@ -117,9 +96,11 @@ The file extension of the source file.
 
 `string`
 
+The file extension, including the leading dot.
+
 #### Defined in
 
-src/filesystem/File.ts:25
+[src/filesystem/File.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/File.ts#L25)
 
 ___
 
@@ -127,7 +108,7 @@ ___
 
 • `get` **filename**(): `string`
 
-The name of the source file.
+The filename including the file extension.
 
 #### Returns
 
@@ -135,7 +116,7 @@ The name of the source file.
 
 #### Defined in
 
-src/filesystem/File.ts:39
+[src/filesystem/File.ts:32](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/File.ts#L32)
 
 ___
 
@@ -151,20 +132,4 @@ The relative path to the source file from the working directory.
 
 #### Defined in
 
-src/filesystem/File.ts:60
-
-## Methods
-
-### fileExists
-
-▸ **fileExists**(): `boolean`
-
-Returns whether the source file exists.
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-src/filesystem/File.ts:67
+[src/filesystem/File.ts:53](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/File.ts#L53)

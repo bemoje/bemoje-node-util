@@ -1,28 +1,35 @@
 import ExcelJS from 'exceljs'
 
 /**
- * Writes a 2D array to an Excel file.
- * @remarks This function is asynchronous and returns a Promise that resolves to `void`.
- * @typeparam T - The type of elements in the 2D array.
- * @param filepath The path where the Excel file will be written.
- * @param table The 2D array to be written to the Excel file.
- * @param worksheetName The name of the worksheet where the array will be written. Defaults to 'Sheet1'.
- * @returns A Promise that resolves to `void`.
+ * Write multiple tables to an Excel file as worksheets.
+ * @remarks
+ * This function creates a new Excel file or overwrites an existing one.
+ * Each key in the data object will be used as a worksheet name, and the corresponding 2D array will be written to that worksheet.
+ * @typeParam T - The type of the data that will be written to the Excel file.
+ * @param filepath - The path where the Excel file will be written.
+ * @param data - An object where each key is a worksheet name and the corresponding value is a 2D array of data to be written to that worksheet.
+ * @returns A Promise that resolves when the file has been written.
+ * @throws If there is an error writing the file.
  * @example ```ts
- * [['Name', 'Age'], ['John Doe', 30], ['Jane Doe', 25]];;
- * //=> data
- * writeExcelFile('path/to/file.xlsx', data, 'People');;
- * //=> Promise<void>
+ * await writeExcelFile('path/to/file.xlsx', {
+ *   employees: [
+ *     ['Name', 'Age', 'Title'],
+ *     ['John', 30, 'Software Developer'],
+ *     ['Jane', 28, 'Data Scientist'],
+ *   ],
+ *   locations: [
+ *     ['ID', 'Country', 'City'],
+ *     [1, 'DK', 'Aarhus'],
+ *     [2, 'DK', 'Copenhagen'],
+ *   ],
+ * })
  * ```
- * @throws If the file cannot be written.
  */
-export async function writeExcelFile<T>(
-  filepath: string,
-  table: T[][],
-  worksheetName = 'Sheet1',
-): Promise<void> {
+export async function writeExcelFile<T>(filepath: string, data: Record<string, T[][]>): Promise<void> {
   const workbook = new ExcelJS.Workbook()
-  const worksheet = workbook.addWorksheet(worksheetName)
-  worksheet.addRows(table)
+  for (const [worksheetName, table] of Object.entries(data)) {
+    const worksheet = workbook.addWorksheet(worksheetName)
+    worksheet.addRows(table)
+  }
   await workbook.xlsx.writeFile(filepath)
 }

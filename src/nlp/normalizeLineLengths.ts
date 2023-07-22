@@ -4,11 +4,7 @@
  * @param lowerBound Will try to merge sentences if the length of the current sentence is less than this value. If no user input is given, this value is automatically determined by calculating statistics on the data.
  * @param upperBound Will not merge sentences if the conbined length of the sentences is greater than this value. If no user input is given, this value is automatically determined by calculating statistics on the data.
  */
-export function normalizeLineLengths(
-  sentences: string[],
-  lowerBound?: number,
-  upperBound?: number,
-): string[] {
+export function normalizeLineLengths(sentences: string[], lowerBound?: number, upperBound?: number): string[] {
   function singlePass(sentences: string[], lowerBound?: number, upperBound?: number): string[] {
     // determine lower and upper bounds if not given
     if (lowerBound === undefined || upperBound === undefined) {
@@ -27,10 +23,7 @@ export function normalizeLineLengths(
     for (let i = 1; i < sentences.length; i++) {
       const cur = sentences[i]
       const pre = sentences[i - 1]
-      if (
-        cur.length + pre.length < upperBound &&
-        (cur.length < lowerBound || pre.length < lowerBound)
-      ) {
+      if (cur.length + pre.length < upperBound && (cur.length < lowerBound || pre.length < lowerBound)) {
         sentences[i] = `${pre} ${cur}`
         sentences[i - 1] = ''
       }

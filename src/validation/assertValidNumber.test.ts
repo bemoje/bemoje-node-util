@@ -9,24 +9,18 @@ describe('assertValidNumber', () => {
   it('should throw an error if the number is NaN', () => {
     const invalidNumber = NaN
     expect(() => assertValidNumber(invalidNumber)).toThrow(TypeError)
-    expect(() => assertValidNumber(invalidNumber)).toThrow(
-      'Expected number to be finite and not NaN. Got: NaN',
-    )
+    expect(() => assertValidNumber(invalidNumber)).toThrow('Expected number to be finite and not NaN. Got: NaN')
   })
 
   it('should throw an error if the number is Infinity', () => {
     const invalidNumber = Infinity
     expect(() => assertValidNumber(invalidNumber)).toThrow(TypeError)
-    expect(() => assertValidNumber(invalidNumber)).toThrow(
-      'Expected number to be finite and not NaN. Got: Infinity',
-    )
+    expect(() => assertValidNumber(invalidNumber)).toThrow('Expected number to be finite and not NaN. Got: Infinity')
   })
 
   it('should throw an error if the number is negative Infinity', () => {
     const invalidNumber = -Infinity
     expect(() => assertValidNumber(invalidNumber)).toThrow(TypeError)
-    expect(() => assertValidNumber(invalidNumber)).toThrow(
-      'Expected number to be finite and not NaN. Got: -Infinity',
-    )
+    expect(() => assertValidNumber(invalidNumber)).toThrow('Expected number to be finite and not NaN. Got: -Infinity')
   })
 })

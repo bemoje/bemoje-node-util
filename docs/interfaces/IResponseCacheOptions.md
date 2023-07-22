@@ -14,6 +14,8 @@
 
 • `Optional` **overwrite**: `boolean`
 
+Whether to overwrite existing cached data instead of using it even if it exists.
+
 #### Defined in
 
-[src/api/types/IResponseCacheOptions.ts:3](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IResponseCacheOptions.ts#L3)
+[src/api/types/IResponseCacheOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IResponseCacheOptions.ts#L5)

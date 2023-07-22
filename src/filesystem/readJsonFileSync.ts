@@ -5,11 +5,10 @@ import fs from 'fs'
  * @template T The expected return type of the JSON data.
  * @param filepath The path to the JSON file to read.
  * @returns A Promise that resolves with the parsed JSON data.
- * @throws Will throw an error if the file cannot be read or the JSON cannot be parsed.
- * Read a JSON file and return the parsed content (sync).
+ * @throws If the file cannot be read or the content cannot be parsed as JSON.
  * @example ```ts
- * readJsonFileSync<MyType>('/path/to/file.json');
- * //=> {result}
+ * const data = await readJsonFileSync<MyType>('/path/to/file.json');
+ * console.log(data);
  * ```
  */
 export function readJsonFileSync<T>(filepath: string): Promise<T> {

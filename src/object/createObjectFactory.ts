@@ -10,10 +10,7 @@
  * //=> { key1: 'value1', key2: 'default2' }
  * ```
  */
-export function createObjectFactory<T>(
-  keys: string[],
-  defaultValues?: T[],
-): (values?: T[]) => Record<string, T> {
+export function createObjectFactory<T>(keys: string[], defaultValues?: T[]): (values?: T[]) => Record<string, T> {
   const numKeys = keys.length
   if (defaultValues && defaultValues.length > numKeys) {
     throw new Error('defaultValues length larger than keys length.')

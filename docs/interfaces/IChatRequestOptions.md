@@ -37,9 +37,11 @@
 
 • `Optional` **cache**: [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)
 
+Cache options
+
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:18](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L18)
+[src/api/types/IChatRequestOptions.ts:34](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IChatRequestOptions.ts#L34)
 
 ___
 
@@ -105,9 +107,11 @@ ___
 
 • `Optional` **instruction**: `string`
 
+System instructions message inserted before all user and assistant messages
+
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L14)
+[src/api/types/IChatRequestOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IChatRequestOptions.ts#L24)
 
 ___
 
@@ -155,9 +159,11 @@ ___
 
 • `Optional` **messages**: `ChatCompletionRequestMessage`[]
 
+Message history
+
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L10)
+[src/api/types/IChatRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IChatRequestOptions.ts#L14)
 
 ___
 
@@ -165,9 +171,11 @@ ___
 
 • `Optional` **model**: `string`
 
+The model to use if not the defeault one.
+
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:8](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L8)
+[src/api/types/IChatRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IChatRequestOptions.ts#L9)
 
 ___
 
@@ -215,9 +223,11 @@ ___
 
 • `Optional` **prompt**: `string`
 
+A user message inserted before all other messages, except the system instructions message if provided
+
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:12](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L12)
+[src/api/types/IChatRequestOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IChatRequestOptions.ts#L19)
 
 ___
 
@@ -225,9 +235,11 @@ ___
 
 • `Optional` **retry**: `Options`
 
+API request retry options
+
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:16](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IChatRequestOptions.ts#L16)
+[src/api/types/IChatRequestOptions.ts:29](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IChatRequestOptions.ts#L29)
 
 ___
 

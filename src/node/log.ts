@@ -1,4 +1,4 @@
-import { magenta, green, cyan, yellow, red, bold, blackBright, blue, Format } from 'cli-color'
+import { blackBright, blue, bold, cyan, Format, green, magenta, red, yellow } from 'cli-color'
 import { strRepeat } from '../string/strRepeat'
 
 /**
@@ -7,6 +7,8 @@ import { strRepeat } from '../string/strRepeat'
 export class log {
   /**
    * Logs a (cyan) message the console.
+   * @param message The message to print to console.
+   * @param depth The depth to which to print object properties.
    */
   static info<T>(message: T, depth?: number | null): T {
     this.logToConsole('INFO', message, magenta, green, cyan, depth)
@@ -15,6 +17,7 @@ export class log {
 
   /**
    * Logs a (yellow) warning message to the console.
+   * @param message The message to print to console.
    */
   static warn<T>(message: T): T {
     this.logToConsole('WARN', message, magenta, yellow, yellow)
@@ -23,6 +26,7 @@ export class log {
 
   /**
    * Logs a (red) error message to the console.
+   * @param error The Error object or message to print to console.
    */
   static error<T>(error: T): T {
     const strError = JSON.stringify(error, null, 2)
@@ -33,6 +37,7 @@ export class log {
 
   /**
    * Wrap an async function as a task, logging the start and end of the task.
+   * @param description The description of the task.
    */
   static async task<T>(description: string, task: () => Promise<T>): Promise<T> {
     this.info(`Began: ${description}.`)
@@ -44,6 +49,7 @@ export class log {
 
   /**
    * Wrap a synchronous function as a task, logging the start and end of the task.
+   * @param description The description of the task.
    */
   static taskSync<T>(description: string, task: () => T): T {
     this.info(`Began: ${description}.`)
@@ -55,6 +61,7 @@ export class log {
 
   /**
    * Clears the console by printing a number of blank lines.
+   * @param numLines The number of blank lines to print.
    */
   static clear(numLines = 10): void {
     console.log(strRepeat('\n', numLines))
@@ -62,6 +69,7 @@ export class log {
 
   /**
    * Prints a light dotted line to the console.
+   * @param numLines The number of blank lines to print.
    */
   static line(numLines = 1): void {
     const string = blackBright(strRepeat('-', 80))
@@ -73,9 +81,15 @@ export class log {
 
   /**
    * Generic function for logging to console, used by the log-level specific functions.
+   * @param level The log level.
+   * @param message The message to print to console.
+   * @param timestampColor A 'cli-color' module function to wrap the timestamp-part of the string in color formatting.
+   * @param timestampColor A 'cli-color' module function to wrap the level-part of the string in color formatting.
+   * @param timestampColor A 'cli-color' module function to wrap the output-part of the string in color formatting.
+   * @param depth The depth to which to print object properties.
    */
   private static logToConsole<T>(
-    level: string,
+    level: 'ERROR' | 'WARN' | 'INFO',
     message: T,
     timestampColor: Format,
     levelColor: Format,

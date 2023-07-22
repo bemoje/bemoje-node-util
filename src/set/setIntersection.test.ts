@@ -2,15 +2,11 @@ import { setIntersection } from './setIntersection'
 
 describe('setIntersection', () => {
   it('example', () => {
-    expect(Array.from(setIntersection([new Set([1, 2, 3]), new Set([2, 3, 4])]))).toStrictEqual([
-      2, 3,
-    ])
+    expect(Array.from(setIntersection([new Set([1, 2, 3]), new Set([2, 3, 4])]))).toStrictEqual([2, 3])
   })
 
   it('handles many sets', () => {
-    expect(
-      Array.from(setIntersection([new Set([1, 2, 3]), new Set([2, 3, 4]), new Set([3, 4, 5])])),
-    ).toStrictEqual([3])
+    expect(Array.from(setIntersection([new Set([1, 2, 3]), new Set([2, 3, 4]), new Set([3, 4, 5])]))).toStrictEqual([3])
   })
 
   it('handles empty sets', () => {

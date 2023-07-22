@@ -3,21 +3,17 @@ import { setUnion } from './setUnion'
 
 describe('setUnion', () => {
   it('example', () => {
-    expect(Array.from(setUnion([new Set([1, 2, 3]), new Set([2, 3, 4])]))).toStrictEqual(
-      arrSortNumeric([1, 2, 3, 4]),
-    )
+    expect(Array.from(setUnion([new Set([1, 2, 3]), new Set([2, 3, 4])]))).toStrictEqual(arrSortNumeric([1, 2, 3, 4]))
   })
 
   it('handles many sets', () => {
-    expect(
-      Array.from(setUnion([new Set([1, 2, 3]), new Set([2, 3, 4]), new Set([3, 4, 5])])),
-    ).toStrictEqual(arrSortNumeric([1, 2, 3, 4, 5]))
+    expect(Array.from(setUnion([new Set([1, 2, 3]), new Set([2, 3, 4]), new Set([3, 4, 5])]))).toStrictEqual(
+      arrSortNumeric([1, 2, 3, 4, 5]),
+    )
   })
 
   it('handles empty sets', () => {
-    expect(Array.from(setUnion([new Set([1, 2, 3]), new Set([])]))).toStrictEqual(
-      arrSortNumeric([1, 2, 3]),
-    )
+    expect(Array.from(setUnion([new Set([1, 2, 3]), new Set([])]))).toStrictEqual(arrSortNumeric([1, 2, 3]))
     expect(Array.from(setUnion([new Set([]), new Set([])]))).toStrictEqual([])
   })
 

@@ -13,9 +13,7 @@ import { normalizeFileExtension } from './normalizeFileExtension'
  * //=> false
  * ```
  */
-export function createFileExtensionFilter(
-  ...fileExtensions: string[]
-): (filepath: string) => boolean {
+export function createFileExtensionFilter(...fileExtensions: string[]): (filepath: string) => boolean {
   if (!fileExtensions.length) return () => true
   return (filepath: string) => {
     for (const ext of fileExtensions.map(normalizeFileExtension)) {

@@ -17,9 +17,9 @@ const options = {
   extends: [
     'eslint:recommended',
     'plugin:prettier/recommended',
-    //'prettier:@typescript-eslint',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   rules: {
     'semi': 0,

@@ -10,6 +10,14 @@ describe('Matrix', () => {
       const m = Matrix.fromArray(arr)
       expect(m.deepEquals(arr)).toBe(true)
     })
+
+    it('throws if rows not same length', () => {
+      const arr = [
+        [1, 2],
+        [3, 4, 5],
+      ]
+      expect(() => Matrix.fromArray(arr)).toThrowError('All rows must have the same length.')
+    })
   })
 
   describe('static fromIterable', () => {
@@ -218,6 +226,16 @@ describe('Matrix', () => {
       expect(clone).toStrictEqual(m)
       expect(clone).toBeInstanceOf(Matrix)
       expect(m).not.toBe(clone)
+    })
+  })
+
+  describe('values', () => {
+    it('example', () => {
+      const m = Matrix.fromArray([
+        [1, 2],
+        [3, 4],
+      ])
+      expect([...m.values()]).toEqual([1, 2, 3, 4])
     })
   })
 
@@ -931,6 +949,21 @@ describe('Matrix', () => {
           [86, 64, 100],
         ]),
       ).toBe(true)
+    })
+
+    it('throws if cols and rows do not match.', () => {
+      const m1 = Matrix.fromArray([
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+      ])
+      const m2 = Matrix.fromArray([
+        [1, 2, 1],
+        [2, 4, 6],
+      ])
+      expect(() => m1.dotProduct(m2)).toThrowError(
+        'A*B dot product not possible unless the number of columns in A and number of rows in B are the same.',
+      )
     })
   })
 })

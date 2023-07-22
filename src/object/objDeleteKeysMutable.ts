@@ -10,10 +10,7 @@
  * //=> { b: 2 }
  * ```
  */
-export function objDeleteKeysMutable<V>(
-  obj: Record<string, V>,
-  ...keys: string[]
-): Record<string, V> {
+export function objDeleteKeysMutable<V>(obj: Record<string, V>, ...keys: string[]): Record<string, V> {
   for (const key of keys) {
     Reflect.deleteProperty(obj, key)
   }

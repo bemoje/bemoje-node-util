@@ -17,26 +17,15 @@ const doc = Doc.simple({
           ['Ananas', 'Bongo', 'Cirkus'],
         ]),
       ),
-      el.div(
-        attr.class('col'),
-        el.h3('Text'),
-        el.p('This is a paragraph.'),
-        el.p('This is a one more.'),
-      ),
+      el.div(attr.class('col'), el.h3('Text'), el.p('This is a paragraph.'), el.p('This is a one more.')),
       el.div(
         attr.class('row'),
         el.div(
           attr.class('col'),
           el.h3('List'),
-          el.ul(
-            ['one', 'two', 'three', 'four'].map((item) => el.li(attr.contenteditable(true), item)),
-          ),
+          el.ul(['one', 'two', 'three', 'four'].map((item) => el.li(attr.contenteditable(true), item))),
         ),
-        el.div(
-          attr.class('col'),
-          el.h3('Button'),
-          el.button([attr.class('btn btn-primary'), attr.onclick('doit()')], 'Click me!'),
-        ),
+        el.div(attr.class('col'), el.h3('Button'), el.button([attr.class('btn btn-primary'), attr.onclick('doit()')], 'Click me!')),
       ),
     ),
   ],

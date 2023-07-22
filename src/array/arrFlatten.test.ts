@@ -34,9 +34,9 @@ describe('arrFlatten', () => {
   })
 
   it('flattens complex array', () => {
-    expect(
-      arrFlatten([[[1, [[2, [3, [4]], 6]]]], 1, [2, [3, [4]], 6], 8, 2, [], 5, [9]]),
-    ).toStrictEqual([1, 2, 3, 4, 6, 1, 2, 3, 4, 6, 8, 2, 5, 9])
+    expect(arrFlatten([[[1, [[2, [3, [4]], 6]]]], 1, [2, [3, [4]], 6], 8, 2, [], 5, [9]])).toStrictEqual([
+      1, 2, 3, 4, 6, 1, 2, 3, 4, 6, 8, 2, 5, 9,
+    ])
   })
 
   it('should return an empty array if the input is an empty array', () => {

@@ -12,10 +12,6 @@ import { ObjectKey } from '../types/ObjectKey'
  * //=> { a: 2, b: 2 }
  * ```
  */
-export function objUpdate<V>(
-  obj: Record<ObjectKey, V>,
-  key: ObjectKey,
-  callback: (value: V | undefined, key: ObjectKey) => V,
-): V {
+export function objUpdate<V>(obj: Record<ObjectKey, V>, key: ObjectKey, callback: (value: V | undefined, key: ObjectKey) => V): V {
   return (obj[key] = callback(obj[key], key))
 }

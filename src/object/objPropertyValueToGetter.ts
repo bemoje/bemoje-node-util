@@ -20,10 +20,7 @@ import { ObjectKey } from '../types/ObjectKey'
  * //=> 3
  * ```
  */
-export function objPropertyValueToGetter<V, T extends Record<ObjectKey, V>>(
-  object: T,
-  ...propertyNames: ObjectKey[]
-): T {
+export function objPropertyValueToGetter<V, T extends Record<ObjectKey, V>>(object: T, ...propertyNames: ObjectKey[]): T {
   for (const propertyName of propertyNames) {
     const descriptor = Object.getOwnPropertyDescriptor(object, propertyName)
     if (!descriptor) throw new Error(`Property descriptor for '${String(propertyName)}' not found.`)

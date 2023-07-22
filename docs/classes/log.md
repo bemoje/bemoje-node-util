@@ -37,9 +37,9 @@ Clears the console by printing a number of blank lines.
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `numLines` | `number` | `10` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `numLines` | `number` | `10` | The number of blank lines to print. |
 
 #### Returns
 
@@ -47,7 +47,7 @@ Clears the console by printing a number of blank lines.
 
 #### Defined in
 
-[src/node/log.ts:59](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L59)
+[src/node/log.ts:66](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L66)
 
 ___
 
@@ -65,9 +65,9 @@ Logs a (red) error message to the console.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `error` | `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `error` | `T` | The Error object or message to print to console. |
 
 #### Returns
 
@@ -75,7 +75,7 @@ Logs a (red) error message to the console.
 
 #### Defined in
 
-[src/node/log.ts:27](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L27)
+[src/node/log.ts:31](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L31)
 
 ___
 
@@ -93,10 +93,10 @@ Logs a (cyan) message the console.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | `T` |
-| `depth?` | ``null`` \| `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | `T` | The message to print to console. |
+| `depth?` | ``null`` \| `number` | The depth to which to print object properties. |
 
 #### Returns
 
@@ -104,7 +104,7 @@ Logs a (cyan) message the console.
 
 #### Defined in
 
-[src/node/log.ts:11](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L11)
+[src/node/log.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L13)
 
 ___
 
@@ -116,9 +116,9 @@ Prints a light dotted line to the console.
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `numLines` | `number` | `1` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `numLines` | `number` | `1` | The number of blank lines to print. |
 
 #### Returns
 
@@ -126,7 +126,7 @@ Prints a light dotted line to the console.
 
 #### Defined in
 
-[src/node/log.ts:66](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L66)
+[src/node/log.ts:74](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L74)
 
 ___
 
@@ -144,14 +144,14 @@ Generic function for logging to console, used by the log-level specific function
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `level` | `string` |
-| `message` | `T` |
-| `timestampColor` | `Format` |
-| `levelColor` | `Format` |
-| `outputColor` | `Format` |
-| `depth?` | ``null`` \| `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `level` | ``"ERROR"`` \| ``"WARN"`` \| ``"INFO"`` | The log level. |
+| `message` | `T` | The message to print to console. |
+| `timestampColor` | `Format` | A 'cli-color' module function to wrap the timestamp-part of the string in color formatting. |
+| `levelColor` | `Format` | - |
+| `outputColor` | `Format` | - |
+| `depth?` | ``null`` \| `number` | The depth to which to print object properties. |
 
 #### Returns
 
@@ -159,7 +159,7 @@ Generic function for logging to console, used by the log-level specific function
 
 #### Defined in
 
-[src/node/log.ts:77](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L77)
+[src/node/log.ts:91](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L91)
 
 ___
 
@@ -177,10 +177,10 @@ Wrap an async function as a task, logging the start and end of the task.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `description` | `string` |
-| `task` | () => `Promise`<`T`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `description` | `string` | The description of the task. |
+| `task` | () => `Promise`<`T`\> | - |
 
 #### Returns
 
@@ -188,7 +188,7 @@ Wrap an async function as a task, logging the start and end of the task.
 
 #### Defined in
 
-[src/node/log.ts:37](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L37)
+[src/node/log.ts:42](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L42)
 
 ___
 
@@ -206,10 +206,10 @@ Wrap a synchronous function as a task, logging the start and end of the task.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `description` | `string` |
-| `task` | () => `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `description` | `string` | The description of the task. |
+| `task` | () => `T` | - |
 
 #### Returns
 
@@ -217,7 +217,7 @@ Wrap a synchronous function as a task, logging the start and end of the task.
 
 #### Defined in
 
-[src/node/log.ts:48](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L48)
+[src/node/log.ts:54](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L54)
 
 ___
 
@@ -235,9 +235,9 @@ Logs a (yellow) warning message to the console.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `message` | `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | `T` | The message to print to console. |
 
 #### Returns
 
@@ -245,4 +245,4 @@ Logs a (yellow) warning message to the console.
 
 #### Defined in
 
-[src/node/log.ts:19](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/log.ts#L19)
+[src/node/log.ts:22](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L22)

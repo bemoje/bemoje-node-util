@@ -39,9 +39,7 @@ describe('asyncWithTimeout', () => {
   })
 
   it('should reject with a timeout error if the task does not complete before the timeout', async () => {
-    const task = jest
-      .fn()
-      .mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 2000)))
+    const task = jest.fn().mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 2000)))
     await expect(asyncWithTimeout(1000, task)).rejects.toThrow('Timed out after 1000 ms.')
     expect(task).toHaveBeenCalled()
   })

@@ -1,1 +1,1 @@
-{"version":3,"file":"strRemoveFirstAndLastLine.d.ts","sourceRoot":"","sources":["../../../src/string/strRemoveFirstAndLastLine.ts"],"names":[],"mappings":"AAAA;;;;;;;GAOG;AACH,wBAAgB,yBAAyB,CAAC,MAAM,EAAE,MAAM,GAAG,MAAM,CAIhE"}
+{"version":3,"file":"strRemoveFirstAndLastLine.d.ts","sourceRoot":"","sources":["../../src/string/strRemoveFirstAndLastLine.ts"],"names":[],"mappings":"AAAA;;;;;;;GAOG;AACH,wBAAgB,yBAAyB,CAAC,MAAM,EAAE,MAAM,GAAG,MAAM,CAIhE"}

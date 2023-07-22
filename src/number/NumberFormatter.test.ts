@@ -34,6 +34,13 @@ describe('NumberFormatter', () => {
   })
 
   describe('Locales', () => {
+    it('static getLocales', () => {
+      expect([...NumberFormatter.getLocales().entries()]).toEqual([
+        ['en-US', [',', '.']],
+        ['da-DK', ['.', ',']],
+      ])
+    })
+
     it('should  not throw on valid locale', () => {
       expect(() => {
         new NumberFormatter().locale('en-US')

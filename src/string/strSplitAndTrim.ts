@@ -11,11 +11,7 @@
  * //=> ["Hello", "world", ""]
  * ```
  */
-export function strSplitAndTrim(
-  string: string,
-  delimiter: string,
-  removeEmptyLines = false,
-): string[] {
+export function strSplitAndTrim(string: string, delimiter: string, removeEmptyLines = false): string[] {
   const lines = string.split(delimiter).map((s) => s.trim())
   return removeEmptyLines ? lines.filter((s) => !!s.trim()) : lines
 }

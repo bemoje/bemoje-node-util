@@ -44,21 +44,11 @@ describe('strSplitCamelCase', () => {
 
   it('should handle strings with numeric characters', () => {
     expect(strSplitCamelCase('camelCase1Word')).toEqual(['camel', 'Case1', 'Word'])
-    expect(strSplitCamelCase('anotherCamelCase2Word')).toEqual([
-      'another',
-      'Camel',
-      'Case2',
-      'Word',
-    ])
+    expect(strSplitCamelCase('anotherCamelCase2Word')).toEqual(['another', 'Camel', 'Case2', 'Word'])
   })
 
   it('should handle strings with special characters', () => {
     expect(strSplitCamelCase('camelCase$Word')).toEqual(['camel', 'Case$', 'Word'])
-    expect(strSplitCamelCase('anotherCamelCase#Word')).toEqual([
-      'another',
-      'Camel',
-      'Case#',
-      'Word',
-    ])
+    expect(strSplitCamelCase('anotherCamelCase#Word')).toEqual(['another', 'Camel', 'Case#', 'Word'])
   })
 })

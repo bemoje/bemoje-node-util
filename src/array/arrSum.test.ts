@@ -22,8 +22,6 @@ describe('arrSum', () => {
   })
 
   it('should return the sum of large numbers', () => {
-    expect(arrSum([Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER])).toBe(
-      Number.MAX_SAFE_INTEGER * 2,
-    )
+    expect(arrSum([Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER])).toBe(Number.MAX_SAFE_INTEGER * 2)
   })
 })

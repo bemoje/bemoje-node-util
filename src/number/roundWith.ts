@@ -15,11 +15,7 @@ import { assertValidNumber } from '../validation/assertValidNumber'
  * //=> 1.24
  * ```
  */
-export function roundWith(
-  number: number,
-  precision: number,
-  func: (n: number) => number = Math.round,
-): number {
+export function roundWith(number: number, precision: number, func: (n: number) => number = Math.round): number {
   const pair1 = (assertValidNumber(number) + 'e').split('e')
   const pair2 = (func(+(pair1[0] + 'e' + (+pair1[1] + precision))) + 'e').split('e')
   return +(pair2[0] + 'e' + (+pair2[1] - precision))

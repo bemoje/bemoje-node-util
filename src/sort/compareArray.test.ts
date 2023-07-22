@@ -20,6 +20,17 @@ describe('compareArray', () => {
       [3, 0, 1],
     ])
   })
+  it('identical rows are unchanged', () => {
+    const arr = [
+      [1, 2, 3],
+      [1, 2, 3],
+    ]
+    const compare = compareArray(compareNumber)
+    expect(arr.sort(compare)).toStrictEqual([
+      [1, 2, 3],
+      [1, 2, 3],
+    ])
+  })
 
   it('is compatible with descending sorting comparator', () => {
     const arr = [
@@ -85,39 +96,15 @@ describe('compareArray', () => {
   })
 
   it('should sort an array of strings in ascending order', () => {
-    const arr = [
-      ['a', 'b', 'c'],
-      ['a', 'b'],
-      ['a'],
-      ['a', 'b', 'c', 'd'],
-      ['a', 'b', 'c', 'd', 'e'],
-    ]
-    const expected = [
-      ['a'],
-      ['a', 'b'],
-      ['a', 'b', 'c'],
-      ['a', 'b', 'c', 'd'],
-      ['a', 'b', 'c', 'd', 'e'],
-    ]
+    const arr = [['a', 'b', 'c'], ['a', 'b'], ['a'], ['a', 'b', 'c', 'd'], ['a', 'b', 'c', 'd', 'e']]
+    const expected = [['a'], ['a', 'b'], ['a', 'b', 'c'], ['a', 'b', 'c', 'd'], ['a', 'b', 'c', 'd', 'e']]
     const result = arr.sort(compareArray(compareString))
     expect(result).toEqual(expected)
   })
 
   it('should sort an array of strings in descending order', () => {
-    const arr = [
-      ['a', 'b', 'c'],
-      ['a', 'b'],
-      ['a'],
-      ['a', 'b', 'c', 'd'],
-      ['a', 'b', 'c', 'd', 'e'],
-    ]
-    const expected = [
-      ['a', 'b', 'c', 'd', 'e'],
-      ['a', 'b', 'c', 'd'],
-      ['a', 'b', 'c'],
-      ['a', 'b'],
-      ['a'],
-    ]
+    const arr = [['a', 'b', 'c'], ['a', 'b'], ['a'], ['a', 'b', 'c', 'd'], ['a', 'b', 'c', 'd', 'e']]
+    const expected = [['a', 'b', 'c', 'd', 'e'], ['a', 'b', 'c', 'd'], ['a', 'b', 'c'], ['a', 'b'], ['a']]
     const result = arr.sort(compareArray(compareString, true))
     expect(result).toEqual(expected)
   })

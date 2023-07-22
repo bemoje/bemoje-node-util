@@ -20,9 +20,11 @@
 
 • `Optional` **chat3\_16Model**: `string`
 
+Default model to use for chat gpt3 16k tokens completion requests
+
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:7](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L7)
+[src/api/types/IApiClientApiDefaultsOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientApiDefaultsOptions.ts#L15)
 
 ___
 
@@ -30,9 +32,11 @@ ___
 
 • `Optional` **chat3\_8Model**: `string`
 
+Default model to use for chat gpt3 8k tokens completion requests
+
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L5)
+[src/api/types/IApiClientApiDefaultsOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientApiDefaultsOptions.ts#L10)
 
 ___
 
@@ -40,9 +44,11 @@ ___
 
 • `Optional` **chat4\_8Model**: `string`
 
+Default model to use for chat gpt4 8k tokens completion requests
+
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L9)
+[src/api/types/IApiClientApiDefaultsOptions.ts:20](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientApiDefaultsOptions.ts#L20)
 
 ___
 
@@ -50,9 +56,11 @@ ___
 
 • `Optional` **choicesDelimiter**: `string`
 
+If openai api returns more than one choice, this string will be used to delimit them.
+
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L15)
+[src/api/types/IApiClientApiDefaultsOptions.ts:35](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientApiDefaultsOptions.ts#L35)
 
 ___
 
@@ -60,9 +68,11 @@ ___
 
 • `Optional` **completionModel**: `string`
 
+Default model to use for completion requests
+
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:3](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L3)
+[src/api/types/IApiClientApiDefaultsOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientApiDefaultsOptions.ts#L5)
 
 ___
 
@@ -70,9 +80,11 @@ ___
 
 • `Optional` **editCodeModel**: `string`
 
+Default model to use for code edit requests
+
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:13](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L13)
+[src/api/types/IApiClientApiDefaultsOptions.ts:30](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientApiDefaultsOptions.ts#L30)
 
 ___
 
@@ -80,6 +92,8 @@ ___
 
 • `Optional` **editTextModel**: `string`
 
+Default model to use for text edit requests
+
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientApiDefaultsOptions.ts#L11)
+[src/api/types/IApiClientApiDefaultsOptions.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientApiDefaultsOptions.ts#L25)

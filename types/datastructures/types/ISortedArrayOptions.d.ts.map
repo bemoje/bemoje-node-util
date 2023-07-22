@@ -1,0 +1,1 @@
+{"version":3,"file":"ISortedArrayOptions.d.ts","sourceRoot":"","sources":["../../../src/datastructures/types/ISortedArrayOptions.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,mBAAmB,CAAC,CAAC;IACpC,OAAO,CAAC,EAAE,CAAC,CAAC,EAAE,GAAG,EAAE,CAAC,EAAE,GAAG,KAAK,MAAM,CAAA;IACpC,IAAI,CAAC,EAAE,QAAQ,CAAC,CAAC,CAAC,CAAA;IAClB,eAAe,CAAC,EAAE,OAAO,CAAA;CAC1B"}

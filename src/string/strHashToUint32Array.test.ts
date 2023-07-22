@@ -5,9 +5,7 @@ describe('strHashToUint32Array', () => {
     const string = 'hello'
     const algorithm = 'sha256'
     const result = strHashToUint32Array(string, algorithm)
-    const expected = new Uint32Array([
-      3125670444, 245608543, 708569126, 2665658821, 1545475611, 1581426463, 1647510643, 613976979,
-    ])
+    const expected = new Uint32Array([3125670444, 245608543, 708569126, 2665658821, 1545475611, 1581426463, 1647510643, 613976979])
     expect(result).toEqual(expected)
   })
 })

@@ -13,7 +13,5 @@
  */
 export function tsJestConvertExportNameString(code: string, funName: string): string {
   const replaceWith = 'describe(' + funName + '.name'
-  return code
-    .replace("describe('" + funName + "'", replaceWith)
-    .replace('describe("' + funName + '"', replaceWith)
+  return code.replace("describe('" + funName + "'", replaceWith).replace('describe("' + funName + '"', replaceWith)
 }

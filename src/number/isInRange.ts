@@ -23,10 +23,6 @@ import { isBetween } from './isBetween'
  * //=> false
  * ```
  */
-export function isInRange(
-  n: number,
-  range: [number, number],
-  exclusive: [boolean, boolean] = [false, false],
-): boolean {
+export function isInRange(n: number, range: [number, number], exclusive: [boolean, boolean] = [false, false]): boolean {
   return isBetween(n, ...range, ...exclusive)
 }

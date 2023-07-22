@@ -66,7 +66,7 @@ Function.constructor
 
 #### Defined in
 
-[src/function/ExtensibleFunction.ts:20](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/function/ExtensibleFunction.ts#L20)
+[src/function/ExtensibleFunction.ts:20](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/function/ExtensibleFunction.ts#L20)
 
 ## Properties
 
@@ -80,7 +80,7 @@ Function.arguments
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:304
+node_modules/typescript/lib/lib.es5.d.ts:305
 
 ___
 
@@ -94,7 +94,7 @@ Function.caller
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:305
+node_modules/typescript/lib/lib.es5.d.ts:306
 
 ___
 
@@ -108,7 +108,7 @@ Function.length
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:301
+node_modules/typescript/lib/lib.es5.d.ts:302
 
 ___
 
@@ -124,7 +124,7 @@ Function.name
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.core.d.ts:97
+node_modules/typescript/lib/lib.es2015.core.d.ts:95
 
 ___
 
@@ -138,7 +138,7 @@ Function.prototype
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:300
+node_modules/typescript/lib/lib.es5.d.ts:301
 
 ## Methods
 
@@ -164,11 +164,11 @@ A constructor function can control which objects are recognized as its instances
 
 #### Inherited from
 
-Function.\_\_@hasInstance@79
+Function.[hasInstance]
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts:162
+node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts:164
 
 ___
 
@@ -196,7 +196,7 @@ Function.apply
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:280
+node_modules/typescript/lib/lib.es5.d.ts:281
 
 ___
 
@@ -225,7 +225,7 @@ Function.bind
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:295
+node_modules/typescript/lib/lib.es5.d.ts:296
 
 ___
 
@@ -253,7 +253,7 @@ Function.call
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:287
+node_modules/typescript/lib/lib.es5.d.ts:288
 
 ___
 
@@ -273,4 +273,4 @@ Function.toString
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:298
+node_modules/typescript/lib/lib.es5.d.ts:299

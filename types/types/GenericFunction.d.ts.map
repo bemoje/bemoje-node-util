@@ -1,1 +1,1 @@
-{"version":3,"file":"GenericFunction.d.ts","sourceRoot":"","sources":["../../../src/types/GenericFunction.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,eAAe,GAAG,CAAC,GAAG,IAAI,EAAE,GAAG,EAAE,KAAK,GAAG,CAAA"}
+{"version":3,"file":"GenericFunction.d.ts","sourceRoot":"","sources":["../../src/types/GenericFunction.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,eAAe,GAAG,CAAC,GAAG,IAAI,EAAE,GAAG,EAAE,KAAK,GAAG,CAAA"}

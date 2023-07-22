@@ -27,10 +27,10 @@ describe('secondsSinceDate', () => {
 
   it('should return negative value for a date in the future', () => {
     const date = new Date()
-    date.setSeconds(date.getSeconds() + 5) // 5 seconds in the future
+    date.setSeconds(date.getSeconds() + 10) // 5 seconds in the future
 
     const result = secondsSinceDate(date)
 
-    expect(result).toBe(-5)
+    expect(result).toBe(-10)
   })
 })

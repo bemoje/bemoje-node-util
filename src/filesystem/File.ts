@@ -1,4 +1,3 @@
-import fs from 'fs'
 import path from 'path'
 import { absoluteToRelativePath } from './absoluteToRelativePath'
 
@@ -16,25 +15,19 @@ export class File {
    * @param filepath The absolute path to the source file.
    */
   constructor(filepath: string) {
-    this.filepath = filepath
+    this.filepath = path.normalize(filepath)
   }
 
   /**
    * The file extension of the source file.
+   * @returns The file extension, including the leading dot.
    */
   get fileExtension(): string {
     return path.extname(this.filepath)
   }
 
   /**
-   * The name of the source file's exported member.
-   */
-  get exportName(): string {
-    return this.filename.substring(0, this.filename.indexOf('.'))
-  }
-
-  /**
-   * The name of the source file.
+   * The filename including the file extension.
    */
   get filename(): string {
     return path.basename(this.filepath)
@@ -59,12 +52,5 @@ export class File {
    */
   get relative(): string {
     return absoluteToRelativePath(this.filepath)
-  }
-
-  /**
-   * Returns whether the source file exists.
-   */
-  fileExists(): boolean {
-    return fs.existsSync(this.filepath)
   }
 }

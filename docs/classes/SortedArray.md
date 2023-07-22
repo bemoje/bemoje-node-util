@@ -22,6 +22,7 @@
 
 ### Properties
 
+- [[unscopables]](/docs/classes/SortedArray.md#[unscopables])
 - [allowDuplicates](/docs/classes/SortedArray.md#allowduplicates)
 - [compare](/docs/classes/SortedArray.md#compare)
 - [length](/docs/classes/SortedArray.md#length)
@@ -30,7 +31,6 @@
 ### Methods
 
 - [[iterator]](/docs/classes/SortedArray.md#[iterator])
-- [[unscopables]](/docs/classes/SortedArray.md#[unscopables])
 - [add](/docs/classes/SortedArray.md#add)
 - [addMany](/docs/classes/SortedArray.md#addmany)
 - [at](/docs/classes/SortedArray.md#at)
@@ -42,6 +42,8 @@
 - [filter](/docs/classes/SortedArray.md#filter)
 - [find](/docs/classes/SortedArray.md#find)
 - [findIndex](/docs/classes/SortedArray.md#findindex)
+- [findLast](/docs/classes/SortedArray.md#findlast)
+- [findLastIndex](/docs/classes/SortedArray.md#findlastindex)
 - [firstIndexOfCompare](/docs/classes/SortedArray.md#firstindexofcompare)
 - [firstInsertionIndex](/docs/classes/SortedArray.md#firstinsertionindex)
 - [flat](/docs/classes/SortedArray.md#flat)
@@ -103,9 +105,68 @@ Array.constructor
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:10](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L10)
+[src/datastructures/SortedArray.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L10)
 
 ## Properties
+
+### [unscopables]
+
+• `Readonly` **[unscopables]**: `Object`
+
+Is an object whose properties have the value 'true'
+when they will be absent when used in a 'with' statement.
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `[unscopables]?` | `boolean` | Is an object whose properties have the value 'true' when they will be absent when used in a 'with' statement. |
+| `length?` | `boolean` | Gets or sets the length of the array. This is a number one higher than the highest index in the array. |
+| `[iterator]?` | {} | - |
+| `at?` | {} | - |
+| `concat?` | {} | - |
+| `copyWithin?` | {} | - |
+| `entries?` | {} | - |
+| `every?` | {} | - |
+| `fill?` | {} | - |
+| `filter?` | {} | - |
+| `find?` | {} | - |
+| `findIndex?` | {} | - |
+| `findLast?` | {} | - |
+| `findLastIndex?` | {} | - |
+| `flat?` | {} | - |
+| `flatMap?` | {} | - |
+| `forEach?` | {} | - |
+| `includes?` | {} | - |
+| `indexOf?` | {} | - |
+| `join?` | {} | - |
+| `keys?` | {} | - |
+| `lastIndexOf?` | {} | - |
+| `map?` | {} | - |
+| `pop?` | {} | - |
+| `push?` | {} | - |
+| `reduce?` | {} | - |
+| `reduceRight?` | {} | - |
+| `reverse?` | {} | - |
+| `shift?` | {} | - |
+| `slice?` | {} | - |
+| `some?` | {} | - |
+| `sort?` | {} | - |
+| `splice?` | {} | - |
+| `toLocaleString?` | {} | - |
+| `toString?` | {} | - |
+| `unshift?` | {} | - |
+| `values?` | {} | - |
+
+#### Inherited from
+
+Array.[unscopables]
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts:97
+
+___
 
 ### allowDuplicates
 
@@ -113,7 +174,7 @@ Array.constructor
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:8](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L8)
+[src/datastructures/SortedArray.ts:8](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L8)
 
 ___
 
@@ -138,7 +199,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L7)
+[src/datastructures/SortedArray.ts:7](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L7)
 
 ___
 
@@ -154,7 +215,7 @@ Array.length
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1304
+node_modules/typescript/lib/lib.es5.d.ts:1318
 
 ___
 
@@ -164,11 +225,11 @@ ___
 
 #### Inherited from
 
-Array.\_\_@species@607
+Array.[species]
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts:314
+node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts:316
 
 ## Methods
 
@@ -184,42 +245,11 @@ Iterator
 
 #### Inherited from
 
-Array.\_\_@iterator@87
+Array.[iterator]
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.iterable.d.ts:60
-
-___
-
-### [unscopables]
-
-▸ **[unscopables]**(): `Object`
-
-Returns an object whose properties have the value 'true'
-when they will be absent when used in a 'with' statement.
-
-#### Returns
-
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `copyWithin` | `boolean` |
-| `entries` | `boolean` |
-| `fill` | `boolean` |
-| `find` | `boolean` |
-| `findIndex` | `boolean` |
-| `keys` | `boolean` |
-| `values` | `boolean` |
-
-#### Inherited from
-
-Array.\_\_@unscopables@89
-
-#### Defined in
-
-node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts:99
+node_modules/typescript/lib/lib.es2015.iterable.d.ts:58
 
 ___
 
@@ -239,7 +269,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:39](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L39)
+[src/datastructures/SortedArray.ts:39](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L39)
 
 ___
 
@@ -261,7 +291,7 @@ Add elements to the sorted array.
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:54](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L54)
+[src/datastructures/SortedArray.ts:54](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L54)
 
 ___
 
@@ -287,7 +317,7 @@ Array.at
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2022.array.d.ts:26
+node_modules/typescript/lib/lib.es2022.array.d.ts:24
 
 ___
 
@@ -314,7 +344,7 @@ Array.concat
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1328
+node_modules/typescript/lib/lib.es5.d.ts:1342
 
 ▸ **concat**(`...items`): `any`[]
 
@@ -337,13 +367,13 @@ Array.concat
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1334
+node_modules/typescript/lib/lib.es5.d.ts:1348
 
 ___
 
 ### copyWithin
 
-▸ **copyWithin**(`target`, `start`, `end?`): [`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
+▸ **copyWithin**(`target`, `start?`, `end?`): [`SortedArray`](/docs/classes/SortedArray.md)<`T`\>
 
 Returns the this object after copying a section of the array identified by start and end
 to the same array starting at position target
@@ -353,7 +383,7 @@ to the same array starting at position target
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `target` | `number` | If target is negative, it is treated as length+target where length is the length of the array. |
-| `start` | `number` | If start is negative, it is treated as length+start. If end is negative, it is treated as length+end. |
+| `start?` | `number` | If start is negative, it is treated as length+start. If end is negative, it is treated as length+end. If start is omitted, `0` is used. |
 | `end?` | `number` | If not specified, length of the this object is used as its default value. |
 
 #### Returns
@@ -366,7 +396,7 @@ Array.copyWithin
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.core.d.ts:64
+node_modules/typescript/lib/lib.es2015.core.d.ts:62
 
 ___
 
@@ -386,7 +416,7 @@ Array.entries
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.iterable.d.ts:65
+node_modules/typescript/lib/lib.es2015.iterable.d.ts:63
 
 ___
 
@@ -419,7 +449,7 @@ Array.every
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1411
+node_modules/typescript/lib/lib.es5.d.ts:1425
 
 ▸ **every**(`predicate`, `thisArg?`): `boolean`
 
@@ -442,7 +472,7 @@ Array.every
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1420
+node_modules/typescript/lib/lib.es5.d.ts:1434
 
 ___
 
@@ -470,7 +500,7 @@ Array.fill
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.core.d.ts:53
+node_modules/typescript/lib/lib.es2015.core.d.ts:51
 
 ___
 
@@ -503,7 +533,7 @@ Array.filter
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1447
+node_modules/typescript/lib/lib.es5.d.ts:1461
 
 ▸ **filter**(`predicate`, `thisArg?`): `any`[]
 
@@ -526,7 +556,7 @@ Array.filter
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1453
+node_modules/typescript/lib/lib.es5.d.ts:1467
 
 ___
 
@@ -547,7 +577,7 @@ otherwise.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `predicate` | (`this`: `void`, `value`: `any`, `index`: `number`, `obj`: `any`[]) => value is S | find calls predicate once for each element of the array, in ascending order, until it finds one where predicate returns true. If such an element is found, find immediately returns that element value. Otherwise, find returns undefined. |
+| `predicate` | (`value`: `any`, `index`: `number`, `obj`: `any`[]) => value is S | find calls predicate once for each element of the array, in ascending order, until it finds one where predicate returns true. If such an element is found, find immediately returns that element value. Otherwise, find returns undefined. |
 | `thisArg?` | `any` | If provided, it will be used as the this value for each invocation of predicate. If it is not provided, undefined is used instead. |
 
 #### Returns
@@ -560,7 +590,7 @@ Array.find
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.core.d.ts:31
+node_modules/typescript/lib/lib.es2015.core.d.ts:29
 
 ▸ **find**(`predicate`, `thisArg?`): `any`
 
@@ -581,7 +611,7 @@ Array.find
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.core.d.ts:32
+node_modules/typescript/lib/lib.es2015.core.d.ts:30
 
 ___
 
@@ -609,7 +639,90 @@ Array.findIndex
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.core.d.ts:43
+node_modules/typescript/lib/lib.es2015.core.d.ts:41
+
+___
+
+### findLast
+
+▸ **findLast**<`S`\>(`predicate`, `thisArg?`): `undefined` \| `S`
+
+Returns the value of the last element in the array where predicate is true, and undefined
+otherwise.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `S` | extends `any` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | (`value`: `any`, `index`: `number`, `array`: `any`[]) => value is S | findLast calls predicate once for each element of the array, in descending order, until it finds one where predicate returns true. If such an element is found, findLast immediately returns that element value. Otherwise, findLast returns undefined. |
+| `thisArg?` | `any` | If provided, it will be used as the this value for each invocation of predicate. If it is not provided, undefined is used instead. |
+
+#### Returns
+
+`undefined` \| `S`
+
+#### Inherited from
+
+Array.findLast
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es2023.array.d.ts:29
+
+▸ **findLast**(`predicate`, `thisArg?`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | (`value`: `any`, `index`: `number`, `array`: `any`[]) => `unknown` |
+| `thisArg?` | `any` |
+
+#### Returns
+
+`any`
+
+#### Inherited from
+
+Array.findLast
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es2023.array.d.ts:30
+
+___
+
+### findLastIndex
+
+▸ **findLastIndex**(`predicate`, `thisArg?`): `number`
+
+Returns the index of the last element in the array where predicate is true, and -1
+otherwise.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `predicate` | (`value`: `any`, `index`: `number`, `array`: `any`[]) => `unknown` | findLastIndex calls predicate once for each element of the array, in descending order, until it finds one where predicate returns true. If such an element is found, findLastIndex immediately returns that element index. Otherwise, findLastIndex returns -1. |
+| `thisArg?` | `any` | If provided, it will be used as the this value for each invocation of predicate. If it is not provided, undefined is used instead. |
+
+#### Returns
+
+`number`
+
+#### Inherited from
+
+Array.findLastIndex
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es2023.array.d.ts:41
 
 ___
 
@@ -631,7 +744,7 @@ Returns the index of the first element that is determined equal by the compare f
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:150](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L150)
+[src/datastructures/SortedArray.ts:150](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L150)
 
 ___
 
@@ -653,7 +766,7 @@ Returns a tuple containing the first index of where to add an element to keep th
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:105](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L105)
+[src/datastructures/SortedArray.ts:105](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L105)
 
 ___
 
@@ -688,7 +801,7 @@ Array.flat
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2019.array.d.ts:81
+node_modules/typescript/lib/lib.es2019.array.d.ts:79
 
 ___
 
@@ -724,7 +837,7 @@ Array.flatMap
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2019.array.d.ts:70
+node_modules/typescript/lib/lib.es2019.array.d.ts:68
 
 ___
 
@@ -751,7 +864,7 @@ Array.forEach
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1435
+node_modules/typescript/lib/lib.es5.d.ts:1449
 
 ___
 
@@ -778,7 +891,7 @@ Array.includes
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2016.array.include.d.ts:27
+node_modules/typescript/lib/lib.es2016.array.include.d.ts:25
 
 ___
 
@@ -805,7 +918,7 @@ Array.indexOf
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1396
+node_modules/typescript/lib/lib.es5.d.ts:1410
 
 ___
 
@@ -827,7 +940,7 @@ Returns the index of the first element found that is determined equal by the com
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:139](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L139)
+[src/datastructures/SortedArray.ts:139](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L139)
 
 ___
 
@@ -849,7 +962,7 @@ Returns all indices at which element exists. Equality is determined by the compa
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:172](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L172)
+[src/datastructures/SortedArray.ts:172](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L172)
 
 ___
 
@@ -871,7 +984,7 @@ Returns a tuple containing the index of where to add an element to keep the arra
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:84](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L84)
+[src/datastructures/SortedArray.ts:84](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L84)
 
 ___
 
@@ -893,7 +1006,7 @@ Returns the interestion of this and another sorted array.
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:204](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L204)
+[src/datastructures/SortedArray.ts:204](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L204)
 
 ___
 
@@ -919,7 +1032,7 @@ Array.join
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1339
+node_modules/typescript/lib/lib.es5.d.ts:1353
 
 ___
 
@@ -939,7 +1052,7 @@ Array.keys
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.iterable.d.ts:70
+node_modules/typescript/lib/lib.es2015.iterable.d.ts:68
 
 ___
 
@@ -966,7 +1079,7 @@ Array.lastIndexOf
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1402
+node_modules/typescript/lib/lib.es5.d.ts:1416
 
 ___
 
@@ -988,7 +1101,7 @@ Returns the index of the last element that is determined equal by the compare fu
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:161](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L161)
+[src/datastructures/SortedArray.ts:161](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L161)
 
 ___
 
@@ -1010,7 +1123,7 @@ Returns a tuple containing the last index of where to add an element to keep the
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:122](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L122)
+[src/datastructures/SortedArray.ts:122](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L122)
 
 ___
 
@@ -1043,7 +1156,7 @@ Array.map
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1441
+node_modules/typescript/lib/lib.es5.d.ts:1455
 
 ___
 
@@ -1064,7 +1177,7 @@ Array.pop
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1317
+node_modules/typescript/lib/lib.es5.d.ts:1331
 
 ___
 
@@ -1090,7 +1203,7 @@ Array.push
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:226](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L226)
+[src/datastructures/SortedArray.ts:226](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L226)
 
 ___
 
@@ -1116,7 +1229,7 @@ Array.reduce
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1459
+node_modules/typescript/lib/lib.es5.d.ts:1473
 
 ▸ **reduce**(`callbackfn`, `initialValue`): `any`
 
@@ -1137,7 +1250,7 @@ Array.reduce
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1460
+node_modules/typescript/lib/lib.es5.d.ts:1474
 
 ▸ **reduce**<`U`\>(`callbackfn`, `initialValue`): `U`
 
@@ -1166,7 +1279,7 @@ Array.reduce
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1466
+node_modules/typescript/lib/lib.es5.d.ts:1480
 
 ___
 
@@ -1192,7 +1305,7 @@ Array.reduceRight
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1472
+node_modules/typescript/lib/lib.es5.d.ts:1486
 
 ▸ **reduceRight**(`callbackfn`, `initialValue`): `any`
 
@@ -1213,7 +1326,7 @@ Array.reduceRight
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1473
+node_modules/typescript/lib/lib.es5.d.ts:1487
 
 ▸ **reduceRight**<`U`\>(`callbackfn`, `initialValue`): `U`
 
@@ -1242,7 +1355,7 @@ Array.reduceRight
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1479
+node_modules/typescript/lib/lib.es5.d.ts:1493
 
 ___
 
@@ -1262,7 +1375,7 @@ Array.reverse
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:234](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L234)
+[src/datastructures/SortedArray.ts:234](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L234)
 
 ___
 
@@ -1283,7 +1396,7 @@ Array.shift
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1349
+node_modules/typescript/lib/lib.es5.d.ts:1363
 
 ___
 
@@ -1312,7 +1425,7 @@ Array.slice
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1359
+node_modules/typescript/lib/lib.es5.d.ts:1373
 
 ___
 
@@ -1339,7 +1452,7 @@ Array.some
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1429
+node_modules/typescript/lib/lib.es5.d.ts:1443
 
 ___
 
@@ -1366,7 +1479,7 @@ Array.sort
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1370
+node_modules/typescript/lib/lib.es5.d.ts:1384
 
 ___
 
@@ -1393,7 +1506,7 @@ Array.splice
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:241](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L241)
+[src/datastructures/SortedArray.ts:241](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L241)
 
 ___
 
@@ -1409,7 +1522,7 @@ Convert to a normal Array instance
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:35](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L35)
+[src/datastructures/SortedArray.ts:35](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L35)
 
 ___
 
@@ -1429,7 +1542,7 @@ Array.toLocaleString
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1312
+node_modules/typescript/lib/lib.es5.d.ts:1326
 
 ___
 
@@ -1449,7 +1562,7 @@ Array.toString
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1308
+node_modules/typescript/lib/lib.es5.d.ts:1322
 
 ___
 
@@ -1465,7 +1578,7 @@ Remove all duplicate elements in the sorted array, leaving only unique values. E
 
 #### Defined in
 
-[src/datastructures/SortedArray.ts:65](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SortedArray.ts#L65)
+[src/datastructures/SortedArray.ts:65](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SortedArray.ts#L65)
 
 ___
 
@@ -1491,7 +1604,7 @@ Array.unshift
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1390
+node_modules/typescript/lib/lib.es5.d.ts:1404
 
 ___
 
@@ -1511,7 +1624,7 @@ Array.values
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.iterable.d.ts:75
+node_modules/typescript/lib/lib.es2015.iterable.d.ts:73
 
 ___
 
@@ -1543,7 +1656,7 @@ Array.from
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.core.d.ts:72
+node_modules/typescript/lib/lib.es2015.core.d.ts:70
 
 ▸ `Static` **from**<`T`, `U`\>(`arrayLike`, `mapfn`, `thisArg?`): `U`[]
 
@@ -1574,7 +1687,7 @@ Array.from
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.core.d.ts:80
+node_modules/typescript/lib/lib.es2015.core.d.ts:78
 
 ▸ `Static` **from**<`T`\>(`iterable`): `T`[]
 
@@ -1602,7 +1715,7 @@ Array.from
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.iterable.d.ts:83
+node_modules/typescript/lib/lib.es2015.iterable.d.ts:81
 
 ▸ `Static` **from**<`T`, `U`\>(`iterable`, `mapfn`, `thisArg?`): `U`[]
 
@@ -1633,7 +1746,7 @@ Array.from
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.iterable.d.ts:91
+node_modules/typescript/lib/lib.es2015.iterable.d.ts:89
 
 ___
 
@@ -1657,7 +1770,7 @@ Array.isArray
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1491
+node_modules/typescript/lib/lib.es5.d.ts:1505
 
 ___
 
@@ -1689,4 +1802,4 @@ Array.of
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es2015.core.d.ts:86
+node_modules/typescript/lib/lib.es2015.core.d.ts:84

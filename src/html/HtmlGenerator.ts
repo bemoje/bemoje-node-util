@@ -1,7 +1,7 @@
-import { _HTML_VOID_ELEMENTS } from './HtmlMetaData/_HTML_VOID_ELEMENTS'
-import { _HTML_ELEMENTS } from './HtmlMetaData/_HTML_ELEMENTS'
 import { _HTML_ATTRIBUTES } from './HtmlMetaData/_HTML_ATTRIBUTES'
 import { _HTML_BOOLEAN_ATTRIBUTES } from './HtmlMetaData/_HTML_BOOLEAN_ATTRIBUTES'
+import { _HTML_ELEMENTS } from './HtmlMetaData/_HTML_ELEMENTS'
+import { _HTML_VOID_ELEMENTS } from './HtmlMetaData/_HTML_VOID_ELEMENTS'
 
 type ElemConstructorArgs = Attr[] | Attr | Elem | Elem[] | string | string[]
 
@@ -9,7 +9,10 @@ const el: Record<string, (...args: ElemConstructorArgs[]) => Elem> = {}
 const attr: Record<string, (value?: string | number | boolean) => Attr> = {}
 
 class Attr {
-  constructor(public name: string, public value?: string | number | boolean) {}
+  constructor(
+    public name: string,
+    public value?: string | number | boolean,
+  ) {}
 
   get isBoolean(): boolean {
     return _HTML_BOOLEAN_ATTRIBUTES.has(this.name)
@@ -24,7 +27,10 @@ class Elem {
   attributes: Map<string, Attr> = new Map()
   children: (Elem | string)[] = []
 
-  constructor(public tag: string, ...args: ElemConstructorArgs[]) {
+  constructor(
+    public tag: string,
+    ...args: ElemConstructorArgs[]
+  ) {
     for (const arg of args.flat()) {
       if (arg instanceof Attr) {
         this.attributes.set(arg.name, arg)
@@ -44,9 +50,9 @@ class Elem {
   }
 
   toString(): string {
-    return `<${this.tag}${
-      this.attributes.size ? ' ' + Array.from(this.attributes.values()).join(' ') : ''
-    }${this.isVoid ? ' />' : `>${this.children.join('')}</${this.tag}>`}`
+    return `<${this.tag}${this.attributes.size ? ' ' + Array.from(this.attributes.values()).join(' ') : ''}${
+      this.isVoid ? ' />' : `>${this.children.join('')}</${this.tag}>`
+    }`
   }
 
   toHtmlElement(): HTMLElement {
@@ -69,12 +75,7 @@ class Doc extends Elem {
   /**
    * Generate simple HTML page with reasonable defaults.
    */
-  static simple(options: {
-    title: string
-    head?: (Elem | string)[]
-    body?: (Elem | string)[]
-    scripts?: Elem[]
-  }): Doc {
+  static simple(options: { title: string; head?: (Elem | string)[]; body?: (Elem | string)[]; scripts?: Elem[] }): Doc {
     return new Doc(
       attr.lang('en'),
       el.head(
@@ -84,16 +85,12 @@ class Doc extends Elem {
         comment('Bootstrap CSS'),
         el.link(
           attr.rel('stylesheet'),
-          attr.href(
-            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css',
-          ),
+          attr.href('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css'),
           attr.integrity('sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ'),
           attr.crossorigin('anonymous'),
         ),
         comment('Custom CSS'),
-        el.style(
-          'body { margin: 50px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; }',
-        ),
+        el.style('body { margin: 50px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; }'),
         ...(options.head || []),
       ),
       el.body(
@@ -101,9 +98,7 @@ class Doc extends Elem {
         el.div(attr.id('root'), attr.class('container'), ...(options.body || [])),
         comment('Bootstrap JS'),
         el.script(
-          attr.src(
-            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js',
-          ),
+          attr.src('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js'),
           attr.integrity('sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe'),
           attr.crossorigin('anonymous'),
         ),

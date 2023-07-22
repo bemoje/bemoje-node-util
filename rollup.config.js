@@ -1,6 +1,7 @@
-// @ts-check
-import typescript2 from 'rollup-plugin-typescript2'
-import PKG from './package.json'
+// import typescript2 from 'rollup-plugin-typescript2'
+const typescript2 = require('rollup-plugin-typescript2')
+// import PKG from './package.json'
+const PKG = require('./package.json')
 
 const banner = `/*!
  * ${PKG.name} v${PKG.version}
@@ -10,7 +11,7 @@ const banner = `/*!
  */
 `
 
-export default {
+exports.default = {
   input: './src/index.ts',
   external: [
     'fs',
@@ -37,6 +38,8 @@ export default {
     'child_process',
     'deep-assign',
     'esprima',
+    'csv-parser',
+    'strip-comments',
   ],
   output: [
     {

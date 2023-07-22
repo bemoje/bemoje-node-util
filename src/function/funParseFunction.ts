@@ -10,10 +10,7 @@ export function funParseFunction(func: (...args: any[]) => any): ITsParseFunctio
   if (root?.type === 'FunctionDeclaration') {
     name = root?.id?.name || ''
     params = root?.params?.map((param: any) => param?.name) || []
-  } else if (
-    root?.type === 'ExpressionStatement' &&
-    root?.expression.type === 'ArrowFunctionExpression'
-  ) {
+  } else if (root?.type === 'ExpressionStatement' && root?.expression.type === 'ArrowFunctionExpression') {
     params = root?.expression?.params?.map((param: any) => param?.name) || []
   }
   return { name, params }

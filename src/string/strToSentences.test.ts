@@ -6,13 +6,8 @@ describe('strToSentences', () => {
   })
 
   it('should return an array of sentences when the input is a string with multiple sentences', () => {
-    const text =
-      'This is the first sentence. This is the second sentence. And this is the third one.'
-    const expected = [
-      'This is the first sentence.',
-      'This is the second sentence.',
-      'And this is the third one.',
-    ]
+    const text = 'This is the first sentence. This is the second sentence. And this is the third one.'
+    const expected = ['This is the first sentence.', 'This is the second sentence.', 'And this is the third one.']
     expect(strToSentences(text)).toEqual(expected)
   })
 

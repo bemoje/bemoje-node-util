@@ -10,4 +10,9 @@ describe('isValidDateDay', () => {
     expect(isValidDateDay(0, 1)).toBe(false)
     expect(isValidDateDay(32, 1)).toBe(false)
   })
+  it('return false on non integer', () => {
+    expect(isValidDateDay(1.1, 1)).toBe(false)
+    expect(isValidDateDay(1, 1.1)).toBe(false)
+    expect(isValidDateDay(1, 1, 1.1)).toBe(false)
+  })
 })

@@ -16,11 +16,7 @@
  * //=> 2
  * ```
  */
-export function mapUpdate<K, V>(
-  map: Map<K, V>,
-  key: K,
-  fun: (value: V | undefined, key: K) => V,
-): V {
+export function mapUpdate<K, V>(map: Map<K, V>, key: K, fun: (value: V | undefined, key: K) => V): V {
   const value = fun(map.get(key), key)
   map.set(key, value)
   return value

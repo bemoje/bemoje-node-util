@@ -1,1 +1,1 @@
-{"version":3,"file":"strNoConsecutiveWhitespace.d.ts","sourceRoot":"","sources":["../../../src/string/strNoConsecutiveWhitespace.ts"],"names":[],"mappings":"AAAA;;;;;;;GAOG;AACH,wBAAgB,0BAA0B,CAAC,MAAM,EAAE,MAAM,GAAG,MAAM,CAEjE"}
+{"version":3,"file":"strNoConsecutiveWhitespace.d.ts","sourceRoot":"","sources":["../../src/string/strNoConsecutiveWhitespace.ts"],"names":[],"mappings":"AAAA;;;;;;;GAOG;AACH,wBAAgB,0BAA0B,CAAC,MAAM,EAAE,MAAM,GAAG,MAAM,CAEjE"}

@@ -15,15 +15,9 @@
  * // Path: b.d[1], Value: 4
  * ```
  */
-export function objWalk(
-  node: Record<string, any>,
-  callback: (value: any, path: string[]) => void,
-): void {
-  const hasOwn = Object.prototype.hasOwnProperty
+export function objWalk(node: Record<string, any>, callback: (value: any, path: string[]) => void): void {
   function recurse(node: Record<string, any>, path: string[] = []) {
-    for (const key in node) {
-      if (!hasOwn.call(node, key)) continue
-      const child = node[key]
+    for (const [key, child] of Object.entries(node)) {
       if (typeof child === 'object' && child !== null) {
         if (Array.isArray(child)) {
           child.forEach((node, index) => {

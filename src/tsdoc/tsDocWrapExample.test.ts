@@ -9,8 +9,7 @@ describe('tsDocWrapExample', () => {
 
   it('should wrap multiple lines of code in a TSDoc block comment with an @example tag', () => {
     const code = 'const greeting = "Hello, World!";\nconsole.log(greeting);'
-    const expected =
-      ' * @example ```ts\n * const greeting = "Hello, World!";\n * console.log(greeting);\n * ```'
+    const expected = ' * @example ```ts\n * const greeting = "Hello, World!";\n * console.log(greeting);\n * ```'
     expect(tsDocWrapExample(code)).toBe(expected)
   })
 

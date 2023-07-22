@@ -6,30 +6,13 @@ describe('iteratePrototypeChain', () => {
   class C extends B {}
   const instance = new C()
   it('iterates prototype chain for class constructor', () => {
-    expect([...iteratePrototypeChain(C)]).toStrictEqual([
-      C,
-      B,
-      A,
-      Function.prototype,
-      Object.prototype,
-    ])
+    expect([...iteratePrototypeChain(C)]).toStrictEqual([C, B, A, Function.prototype, Object.prototype])
   })
   it('iterates prototype chain for class prototype', () => {
-    expect([...iteratePrototypeChain(C.prototype)]).toStrictEqual([
-      C.prototype,
-      B.prototype,
-      A.prototype,
-      Object.prototype,
-    ])
+    expect([...iteratePrototypeChain(C.prototype)]).toStrictEqual([C.prototype, B.prototype, A.prototype, Object.prototype])
   })
   it('iterates prototype chain for class instance', () => {
-    expect([...iteratePrototypeChain(instance)]).toStrictEqual([
-      instance,
-      C.prototype,
-      B.prototype,
-      A.prototype,
-      Object.prototype,
-    ])
+    expect([...iteratePrototypeChain(instance)]).toStrictEqual([instance, C.prototype, B.prototype, A.prototype, Object.prototype])
   })
 
   it('should return a generator that yields the object and its prototype chain', () => {

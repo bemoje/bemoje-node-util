@@ -1,1 +1,1 @@
-{"version":3,"file":"roundUp.d.ts","sourceRoot":"","sources":["../../../src/number/roundUp.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;;;;GAaG;AACH,wBAAgB,OAAO,CAAC,MAAM,EAAE,MAAM,EAAE,SAAS,SAAI,GAAG,MAAM,CAE7D"}
+{"version":3,"file":"roundUp.d.ts","sourceRoot":"","sources":["../../src/number/roundUp.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;;;;GAaG;AACH,wBAAgB,OAAO,CAAC,MAAM,EAAE,MAAM,EAAE,SAAS,SAAI,GAAG,MAAM,CAE7D"}

@@ -2,18 +2,16 @@ import fs from 'fs'
 import { toJson } from '../object/toJson'
 
 /**
- * Writes a JSON file to the specified filepath with the provided data.
- * @remarks This function is asynchronous and returns a Promise that resolves to `void`.
- * @param filepath The path where the JSON file will be written.
- * @param data The data to be written to the JSON file.
- * @param pretty Optional parameter. If true, the JSON file will be formatted in a pretty, human-readable format. Default is `false`.
- * @typeparam T - The type of the data to be written to the JSON file.
- * @returns A Promise that resolves to `void`.
- * @throws If there's an error writing the file.
- * Write a JSON file (async).
+ * Writes a JSON file to the specified filepath. The data to be written is passed as an argument.
+ * If the 'pretty' argument is set to true, the JSON data will be formatted in a more human-readable way.
+ * @template T - The type of the data to be written to the file.
+ * @param filepath - The path to the file where the data should be written.
+ * @param data - The data to be written to the file.
+ * @param pretty - Optional. If set to true, formats the JSON data in a more human-readable way. Default is false.
+ * @returns A Promise that resolves when the file has been successfully written.
  * @example ```ts
- * writeJsonFile('./data.json', { name: 'John', age: 30 }, true);;
- * //=> undefined
+ * const data = { name: 'John', age: 30 };
+ * await writeJsonFile('./data.json', data, true);
  * ```
  */
 export async function writeJsonFile<T>(filepath: string, data: T, pretty = false): Promise<void> {

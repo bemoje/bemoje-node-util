@@ -30,14 +30,11 @@ describe('parseMarkdownCodeBlock', () => {
 
   it('should throw an error if the markdown code block cannot be parsed', () => {
     const markdown = "console.log('Hello, world!');"
-    expect(() => parseMarkdownCodeBlock(markdown)).toThrow(
-      'Could not parse the markdown code block.',
-    )
+    expect(() => parseMarkdownCodeBlock(markdown)).toThrow('Could not parse the markdown code block.')
   })
 
   it('should handle multiline code blocks', () => {
-    const markdown =
-      "```javascript\nconsole.log('Hello, world!');\nconsole.log('Goodbye, world!');\n```"
+    const markdown = "```javascript\nconsole.log('Hello, world!');\nconsole.log('Goodbye, world!');\n```"
     const result = parseMarkdownCodeBlock(markdown)
     expect(result).toEqual({
       language: 'javascript',

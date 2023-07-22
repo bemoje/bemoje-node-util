@@ -30,8 +30,6 @@ describe('isValidDate', () => {
   })
 
   it('should return false for undefined inputs', () => {
-    expect(
-      isValidDate(undefined, undefined, undefined, undefined, undefined, undefined, undefined),
-    ).toBe(false)
+    expect(isValidDate(undefined, undefined, undefined, undefined, undefined, undefined, undefined)).toBe(false)
   })
 })

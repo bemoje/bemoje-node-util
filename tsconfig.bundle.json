@@ -2,13 +2,13 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     //   // Transpilation settings.
-    //   "module": "ES6",
-    //   "target": "ES6",
+      "module": "ES6",
+      "target": "ES6",
 
     //   // Output settings.
     //   "charset": "utf-8",
     //   "newLine": "LF",
-    //   "sourceMap": true,
+      "sourceMap": true,
     //   "removeComments": false,
 
     // Type declaration settings.

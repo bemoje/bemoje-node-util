@@ -515,6 +515,13 @@ describe('indicesOfCompare', () => {
     const indices = new SortedArray().indicesOfCompare('a')
     expect(indices).toStrictEqual([])
   })
+  it('returns empty array when no duplicates are allowed.', () => {
+    const indices = new SortedArray({
+      data: Array.from('abc'),
+      allowDuplicates: false,
+    }).indicesOfCompare('b')
+    expect(indices).toStrictEqual([])
+  })
   it('works when array has 1 non-identical element - before', () => {
     const indices = new SortedArray({
       data: Array.from('b'),
@@ -650,5 +657,140 @@ describe('addMany', () => {
   it('adds multiple elements', () => {
     const a = new SortedArray({ data: [0] })
     expect(a.addMany(2, 1, 3).toArray()).toStrictEqual([0, 1, 2, 3])
+  })
+
+  describe('unique', () => {
+    test('should remove duplicate elements from the sorted array', () => {
+      const array = new SortedArray<number>({ data: [1, 2, 2, 3, 4, 4, 4, 5] })
+      array.unique()
+      expect(array.toArray()).toEqual([1, 2, 3, 4, 5])
+    })
+
+    test('should not remove any elements if there are no duplicates', () => {
+      const array = new SortedArray<number>({ data: [1, 2, 3, 4, 5] })
+      array.unique()
+      expect(array.toArray()).toEqual([1, 2, 3, 4, 5])
+    })
+
+    test('should handle empty array', () => {
+      const array = new SortedArray<number>()
+      array.unique()
+      expect(array.toArray()).toEqual([])
+    })
+
+    test('should handle array with a single element', () => {
+      const array = new SortedArray<number>({ data: [1] })
+      array.unique()
+      expect(array.toArray()).toEqual([1])
+    })
+
+    test('should handle array with multiple duplicate elements', () => {
+      const array = new SortedArray<number>({ data: [1, 1, 1, 1, 1] })
+      array.unique()
+      expect(array.toArray()).toEqual([1])
+    })
+
+    test('should handle array with mixed types', () => {
+      const array = new SortedArray<any>({ data: [1, '2', '2', 3, 4, 4, 4, 5] })
+      array.unique()
+      expect(array.toArray()).toEqual([1, '2', 3, 4, 5])
+    })
+
+    test('should handle custom compare function', () => {
+      const compare = (a: string, b: string) => a.toLowerCase().localeCompare(b.toLowerCase())
+      const array = new SortedArray<string>({ data: ['a', 'A', 'b', 'B'], compare })
+      array.unique()
+      expect(array.toArray()).toEqual(['a', 'b'])
+    })
+
+    test('should handle allowDuplicates option', () => {
+      const array = new SortedArray<number>({ data: [1, 2, 2, 3, 4, 4, 4, 5], allowDuplicates: false })
+      array.unique()
+      expect(array.toArray()).toEqual([1, 2, 3, 4, 5])
+    })
+  })
+
+  describe('intersection', () => {
+    it('should return an empty array when there are no common elements', () => {
+      const arr1 = new SortedArray<number>({ data: [1, 2, 3, 4] })
+      const arr2 = new SortedArray<number>({ data: [5, 6, 7, 8] })
+      const result = arr1.intersection(arr2)
+      expect(result).toEqual([])
+    })
+
+    it('should return the common elements between two sorted arrays', () => {
+      const arr1 = new SortedArray<number>({ data: [1, 2, 3, 4] })
+      const arr2 = new SortedArray<number>({ data: [3, 4, 5, 6] })
+      const result = arr1.intersection(arr2)
+      expect(result).toEqual([3, 4])
+    })
+
+    it('should return an empty array when one of the arrays is empty', () => {
+      const arr1 = new SortedArray<number>({ data: [1, 2, 3, 4] })
+      const arr2 = new SortedArray<number>({ data: [] })
+      const result = arr1.intersection(arr2)
+      expect(result).toEqual([])
+    })
+
+    it('should return an empty array when both arrays are empty', () => {
+      const arr1 = new SortedArray<number>({ data: [] })
+      const arr2 = new SortedArray<number>({ data: [] })
+      const result = arr1.intersection(arr2)
+      expect(result).toEqual([])
+    })
+
+    it('should return the common elements between two sorted arrays with duplicates', () => {
+      const arr1 = new SortedArray<number>({ data: [1, 2, 2, 3, 4] })
+      const arr2 = new SortedArray<number>({ data: [2, 3, 3, 4, 5, 6] })
+      const result = arr1.intersection(arr2)
+      expect(result).toEqual([2, 3, 4])
+    })
+
+    it('should return the common elements between two sorted arrays with custom compare function', () => {
+      const compare = (a: string, b: string) => a.length - b.length
+      const arr1 = new SortedArray<string>({ data: ['apple', 'banana', 'orange'], compare })
+      const arr2 = new SortedArray<string>({ data: ['pear', 'kiwi', 'apple'], compare })
+      const result = arr1.intersection(arr2)
+      expect(result).toEqual(['apple'])
+    })
+  })
+
+  describe('push', () => {
+    it('should add elements to the sorted array and keep it sorted', () => {
+      const sortedArray = new SortedArray<string>()
+      sortedArray.push('c')
+      sortedArray.push('a')
+      sortedArray.push('b')
+      expect(sortedArray.toArray()).toEqual(['a', 'b', 'c'])
+    })
+
+    it('should return the new length of the sorted array', () => {
+      const sortedArray = new SortedArray<number>({ compare: (a, b) => a - b })
+      expect(sortedArray.push(1)).toBe(1)
+      expect(sortedArray.push(2, 3)).toBe(3)
+    })
+  })
+
+  describe('reverse', () => {
+    it('should throw an error', () => {
+      const sortedArray = new SortedArray<number>()
+      expect(() => {
+        sortedArray.reverse()
+      }).toThrowError('Cannot reverse a SortedArray since it would then no longer be sorted.')
+    })
+  })
+
+  describe('splice', () => {
+    it('should remove elements from the sorted array', () => {
+      const sortedArray = new SortedArray<number>({ data: [1, 2, 3, 4, 5] })
+      sortedArray.splice(1, 2)
+      expect(sortedArray.toArray()).toEqual([1, 4, 5])
+    })
+
+    it('should return the removed elements as a new SortedArray', () => {
+      const sortedArray = new SortedArray<number>({ data: [1, 2, 3, 4, 5] })
+      const removed = sortedArray.splice(1, 2)
+      expect(removed.toArray()).toEqual([2, 3])
+    })
   })
 })

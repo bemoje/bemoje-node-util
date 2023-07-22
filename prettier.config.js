@@ -6,7 +6,7 @@ const options = {
   quoteProps: 'consistent',
   singleQuote: true,
   trailingComma: 'all',
-  printWidth: 100,
+  printWidth: 140,
   semi: false,
 }
 

@@ -20,12 +20,6 @@ import { isLT } from './isLT'
  * //=> false
  * ```
  */
-export function isBetween(
-  n: number,
-  min: number,
-  max: number,
-  minExcl = false,
-  maxExcl = false,
-): boolean {
+export function isBetween(n: number, min: number, max: number, minExcl = false, maxExcl = false): boolean {
   return (minExcl ? isGT : isGTE)(n, min) && (maxExcl ? isLT : isLTE)(n, max)
 }

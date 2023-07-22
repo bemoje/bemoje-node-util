@@ -37,9 +37,7 @@ describe('objPropertyValueToGetter', () => {
 
   it('should throw an error if property descriptor is not found', () => {
     const obj = { a: 1, b: 2, c: 3 }
-    expect(() => objPropertyValueToGetter(obj, 'd')).toThrowError(
-      "Property descriptor for 'd' not found.",
-    )
+    expect(() => objPropertyValueToGetter(obj, 'd')).toThrowError("Property descriptor for 'd' not found.")
   })
 
   it('should handle symbol properties', () => {

@@ -19,9 +19,11 @@
 
 • `Optional` **apiDefaults**: [`IApiClientApiDefaultsOptions`](/docs/interfaces/IApiClientApiDefaultsOptions.md)
 
+Defaults for API requests. Can be overriden in individual method calls.
+
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L14)
+[src/api/types/IApiClientOptions.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientOptions.ts#L25)
 
 ___
 
@@ -29,9 +31,11 @@ ___
 
 • `Optional` **apiKey**: `string`
 
+OpenAI API key
+
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:8](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L8)
+[src/api/types/IApiClientOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientOptions.ts#L10)
 
 ___
 
@@ -39,9 +43,11 @@ ___
 
 • `Optional` **cacheDefaults**: [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)
 
+Defaults for API request cache behaviour. Can be overriden in individual method calls.
+
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:18](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L18)
+[src/api/types/IApiClientOptions.ts:35](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientOptions.ts#L35)
 
 ___
 
@@ -49,9 +55,11 @@ ___
 
 • `Optional` **cacheInit**: [`IApiResponseCacheOptions`](/docs/interfaces/IApiResponseCacheOptions.md)
 
+Options for initialization the cache
+
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:12](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L12)
+[src/api/types/IApiClientOptions.ts:20](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientOptions.ts#L20)
 
 ___
 
@@ -59,9 +67,11 @@ ___
 
 • `Optional` **logAllEvents**: `boolean`
 
+Output all events to console
+
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L10)
+[src/api/types/IApiClientOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientOptions.ts#L15)
 
 ___
 
@@ -69,6 +79,8 @@ ___
 
 • `Optional` **retryDefaults**: `Options`
 
+Defaults for API request retry behaviour. Can be overriden in individual method calls.
+
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:16](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/IApiClientOptions.ts#L16)
+[src/api/types/IApiClientOptions.ts:30](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IApiClientOptions.ts#L30)

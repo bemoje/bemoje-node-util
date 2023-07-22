@@ -1,1 +1,1 @@
-{"version":3,"file":"trimArrayBytesRight.d.ts","sourceRoot":"","sources":["../../../src/binary/trimArrayBytesRight.ts"],"names":[],"mappings":"AAAA;;;;;;;;GAQG;AACH,wBAAgB,mBAAmB,CAAC,CAAC,EAAE,MAAM,EAAE,GAAG,MAAM,EAAE,CAWzD"}
+{"version":3,"file":"trimArrayBytesRight.d.ts","sourceRoot":"","sources":["../../src/binary/trimArrayBytesRight.ts"],"names":[],"mappings":"AAAA;;;;;;;;GAQG;AACH,wBAAgB,mBAAmB,CAAC,CAAC,EAAE,MAAM,EAAE,GAAG,MAAM,EAAE,CAWzD"}

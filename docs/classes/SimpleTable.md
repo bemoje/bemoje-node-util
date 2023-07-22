@@ -75,7 +75,7 @@ Creates a new SimpleTable.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:38](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L38)
+[src/datastructures/SimpleTable.ts:38](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L38)
 
 ## Properties
 
@@ -87,7 +87,7 @@ Map from column names to column indices.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:12](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L12)
+[src/datastructures/SimpleTable.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L12)
 
 ___
 
@@ -99,7 +99,7 @@ The data of the table.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:22](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L22)
+[src/datastructures/SimpleTable.ts:22](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L22)
 
 ___
 
@@ -111,7 +111,7 @@ The headers of the table.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:17](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L17)
+[src/datastructures/SimpleTable.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L17)
 
 ## Accessors
 
@@ -127,7 +127,7 @@ Returns the table as a two-dimensional array, without column headers.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:94](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L94)
+[src/datastructures/SimpleTable.ts:93](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L93)
 
 ___
 
@@ -143,7 +143,7 @@ Gets the column headers.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:87](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L87)
+[src/datastructures/SimpleTable.ts:86](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L86)
 
 ___
 
@@ -159,7 +159,7 @@ Gets the number of cols in the table, not including headers.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:73](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L73)
+[src/datastructures/SimpleTable.ts:72](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L72)
 
 ___
 
@@ -175,7 +175,7 @@ Gets the number of rows in the table, not including headers.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:80](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L80)
+[src/datastructures/SimpleTable.ts:79](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L79)
 
 ## Methods
 
@@ -197,7 +197,7 @@ Checks if a row has the correct length.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:65](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L65)
+[src/datastructures/SimpleTable.ts:65](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L65)
 
 ___
 
@@ -220,7 +220,7 @@ Returns a value at a given (row, col) position.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:103](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L103)
+[src/datastructures/SimpleTable.ts:102](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L102)
 
 ___
 
@@ -238,7 +238,7 @@ typeof [`MixinBase`](/docs/classes/MixinBase.md)
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:8](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/mixins/MixinBase.ts#L8)
+[src/mixins/MixinBase.ts:8](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/mixins/MixinBase.ts#L8)
 
 ___
 
@@ -256,7 +256,7 @@ ___
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:12](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/mixins/MixinBase.ts#L12)
+[src/mixins/MixinBase.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/mixins/MixinBase.ts#L12)
 
 ___
 
@@ -280,7 +280,7 @@ Inserts a given value at a given (row, col) position.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:116](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L116)
+[src/datastructures/SimpleTable.ts:115](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L115)
 
 ___
 
@@ -300,7 +300,7 @@ Make the properties with property names that start with an underscore non-enumer
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:19](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/mixins/MixinBase.ts#L19)
+[src/mixins/MixinBase.ts:19](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/mixins/MixinBase.ts#L19)
 
 ___
 
@@ -326,7 +326,7 @@ Make the properties with the given property names non-enumerable.
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:26](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/mixins/MixinBase.ts#L26)
+[src/mixins/MixinBase.ts:26](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/mixins/MixinBase.ts#L26)
 
 ___
 
@@ -342,7 +342,7 @@ Returns the table as a two-dimensional array, including row and column headers..
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:127](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L127)
+[src/datastructures/SimpleTable.ts:126](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L126)
 
 ___
 
@@ -358,7 +358,7 @@ Override of the native toJSON method. When parsing the returned json string, it 
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:135](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L135)
+[src/datastructures/SimpleTable.ts:134](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L134)
 
 ___
 
@@ -386,4 +386,4 @@ Revive a stringified Table object.
 
 #### Defined in
 
-[src/datastructures/SimpleTable.ts:28](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/SimpleTable.ts#L28)
+[src/datastructures/SimpleTable.ts:28](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/SimpleTable.ts#L28)

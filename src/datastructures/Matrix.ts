@@ -343,9 +343,7 @@ export class Matrix {
    */
   public dotProduct(other: Matrix): Matrix {
     if (this.cols !== other.rows) {
-      throw new Error(
-        'A*B dot product not possible unless the number of columns in A and number of rows in B are the same.',
-      )
+      throw new Error('A*B dot product not possible unless the number of columns in A and number of rows in B are the same.')
     }
     const rows = this.rows
     const cols = other.cols

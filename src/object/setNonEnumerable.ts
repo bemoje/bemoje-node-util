@@ -16,9 +16,6 @@ import { ObjectKey } from '../types/ObjectKey'
  * ```
  */
 export function setNonEnumerable(object: Record<ObjectKey, any>, ...propertyNames: string[]): void {
-  if (!object || typeof object !== 'object') {
-    throw new Error(`setValueAsGetter() requires an object as the first argument.`)
-  }
   for (const propertyName of propertyNames) {
     if (!Object.hasOwn(object, propertyName)) {
       throw new Error(`Property '${propertyName}' does not exist on object.`)

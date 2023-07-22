@@ -24,12 +24,8 @@ describe('bytesToInt', () => {
   })
 
   it('throws when passed an invalid byte-array', () => {
-    expect(() => bytesToInt([252, 252])).toThrowError(
-      `Invalid first byte. Got length: 2, and bytes: [252, 252]`,
-    )
-    expect(() => bytesToInt([253, 5, 1])).toThrowError(
-      `Invalid first byte. Got length: 3, and bytes: [253, 5, 1]`,
-    )
+    expect(() => bytesToInt([252, 252])).toThrowError(`Invalid first byte. Got length: 2, and bytes: [252, 252]`)
+    expect(() => bytesToInt([253, 5, 1])).toThrowError(`Invalid first byte. Got length: 3, and bytes: [253, 5, 1]`)
     expect(() => bytesToInt([255, 7, 15, 255, 255, 255, 240, 81])).toThrowError(
       `Invalid bytes. Got [255, 7, 15, 255, 255, 255, 240, 81] = 1099511627776.0625`,
     )

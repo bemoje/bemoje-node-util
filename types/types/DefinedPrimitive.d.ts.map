@@ -1,1 +1,1 @@
-{"version":3,"file":"DefinedPrimitive.d.ts","sourceRoot":"","sources":["../../../src/types/DefinedPrimitive.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,gBAAgB,GAAG,MAAM,GAAG,OAAO,GAAG,MAAM,GAAG,MAAM,GAAG,MAAM,CAAA"}
+{"version":3,"file":"DefinedPrimitive.d.ts","sourceRoot":"","sources":["../../src/types/DefinedPrimitive.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,gBAAgB,GAAG,MAAM,GAAG,OAAO,GAAG,MAAM,GAAG,MAAM,GAAG,MAAM,CAAA"}

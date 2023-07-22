@@ -1,1 +1,0 @@
-{"version":3,"file":"WalkImportsResult.d.ts","sourceRoot":"","sources":["../../../../src/tscode/types/WalkImportsResult.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,iBAAiB,GAAG,GAAG,CACjC,MAAM,EACN;IACE,KAAK,EAAE,MAAM,CAAA;IACb,KAAK,EAAE,MAAM,CAAA;IACb,MAAM,CAAC,EAAE,MAAM,CAAA;IACf,KAAK,CAAC,EAAE,OAAO,CAAA;CAChB,CACF,CAAA"}

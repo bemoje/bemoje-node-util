@@ -59,9 +59,11 @@ ___
 
 • `Optional` **cache**: [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)
 
+Cache options
+
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L15)
+[src/api/types/ICompletionRequestOptions.ts:29](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/ICompletionRequestOptions.ts#L29)
 
 ___
 
@@ -109,9 +111,11 @@ ___
 
 • `Optional` **instruction**: `string`
 
+Instructions message prepended to the prompt
+
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:13](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L13)
+[src/api/types/ICompletionRequestOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/ICompletionRequestOptions.ts#L24)
 
 ___
 
@@ -179,9 +183,11 @@ ___
 
 • `Optional` **model**: `string`
 
+The model to use if not the defeault one.
+
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:7](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L7)
+[src/api/types/ICompletionRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/ICompletionRequestOptions.ts#L9)
 
 ___
 
@@ -247,9 +253,11 @@ ___
 
 • `Optional` **response\_max\_tokens**: `number`
 
+Alternative to max_tokens. The maximum number of tokens to generate. Requests can use either max_tokens or response_max_tokens.
+
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L9)
+[src/api/types/ICompletionRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/ICompletionRequestOptions.ts#L14)
 
 ___
 
@@ -257,9 +265,11 @@ ___
 
 • `Optional` **retry**: `Options`
 
+API request retry options
+
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/types/ICompletionRequestOptions.ts#L11)
+[src/api/types/ICompletionRequestOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/ICompletionRequestOptions.ts#L19)
 
 ___
 

@@ -10,6 +10,9 @@ import { tsDocUnwrapComment } from './tsDocUnwrapComment'
 import { tsDocWrapAsComment } from './tsDocWrapAsComment'
 import { TsDocOptions } from './types/TsDocOptions'
 
+/**
+ * A class representing a TSDoc block comment.
+ */
 export class TsDoc {
   /**
    * The default order in which tags are rendered in the TSDoc comment.

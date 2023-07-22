@@ -1,1 +1,1 @@
-{"version":3,"file":"regNumberDotSepCommaDecimal.d.ts","sourceRoot":"","sources":["../../../src/regexlib/regNumberDotSepCommaDecimal.ts"],"names":[],"mappings":"AAAA;;;GAGG;AACH,eAAO,MAAM,2BAA2B,QAAgC,CAAA"}
+{"version":3,"file":"regNumberDotSepCommaDecimal.d.ts","sourceRoot":"","sources":["../../src/regexlib/regNumberDotSepCommaDecimal.ts"],"names":[],"mappings":"AAAA;;;GAGG;AACH,eAAO,MAAM,2BAA2B,QAAgC,CAAA"}

@@ -39,19 +39,12 @@ export function bytesToInt(bytes: number[]): number {
             ? bytesToInt([bytes[1], bytes[2], bytes[3] + 21])
             : 0
         const int = 251 + m / Math.pow(2, 32 - n)
-        if (!Number.isInteger(int))
-          throw new Error(`Invalid bytes. Got [${bytes.join(', ')}] = ${int}`)
+        if (!Number.isInteger(int)) throw new Error(`Invalid bytes. Got [${bytes.join(', ')}] = ${int}`)
         if (int > 1099511627776)
-          throw new Error(
-            `Bytes must correspond to an integer less than or equal to 256^5. Got [${bytes.join(
-              ', ',
-            )}] = ${int}`,
-          )
+          throw new Error(`Bytes must correspond to an integer less than or equal to 256^5. Got [${bytes.join(', ')}] = ${int}`)
         return int
       })()
     : (() => {
-        throw new Error(
-          `Invalid first byte. Got length: ${bytes.length}, and bytes: [${bytes.join(', ')}]`,
-        )
+        throw new Error(`Invalid first byte. Got length: ${bytes.length}, and bytes: [${bytes.join(', ')}]`)
       })()
 }

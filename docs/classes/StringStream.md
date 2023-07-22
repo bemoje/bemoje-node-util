@@ -4,6 +4,10 @@
 
 Extension of Node's native Readable class for converting a string into a Readable stream.
 
+**`Param`**
+
+The string to create the stream from.
+
 ## Hierarchy
 
 - `Readable`
@@ -31,7 +35,7 @@ Extension of Node's native Readable class for converting a string into a Readabl
 - [readableHighWaterMark](/docs/classes/StringStream.md#readablehighwatermark)
 - [readableLength](/docs/classes/StringStream.md#readablelength)
 - [readableObjectMode](/docs/classes/StringStream.md#readableobjectmode)
-- [str](/docs/classes/StringStream.md#str)
+- [string](/docs/classes/StringStream.md#string)
 - [captureRejectionSymbol](/docs/classes/StringStream.md#capturerejectionsymbol)
 - [captureRejections](/docs/classes/StringStream.md#capturerejections)
 - [defaultMaxListeners](/docs/classes/StringStream.md#defaultmaxlisteners)
@@ -83,13 +87,13 @@ Extension of Node's native Readable class for converting a string into a Readabl
 
 ### constructor
 
-• **new StringStream**(`str`)
+• **new StringStream**(`string`)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `str` | `string` |
+| `string` | `string` |
 
 #### Overrides
 
@@ -97,7 +101,7 @@ Readable.constructor
 
 #### Defined in
 
-[src/node/StringStream.ts:10](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/StringStream.ts#L10)
+[src/node/StringStream.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/StringStream.ts#L11)
 
 ## Properties
 
@@ -105,7 +109,7 @@ Readable.constructor
 
 • `Readonly` **closed**: `boolean`
 
-Is true after 'close' has been emitted.
+Is `true` after `'close'` has been emitted.
 
 **`Since`**
 
@@ -117,7 +121,7 @@ Readable.closed
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:134
+node_modules/@types/node/stream.d.ts:106
 
 ___
 
@@ -137,17 +141,17 @@ Readable.destroyed
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:129
+node_modules/@types/node/stream.d.ts:101
 
 ___
 
 ### ended
 
-• `Private` **ended**: `boolean`
+• **ended**: `boolean`
 
 #### Defined in
 
-[src/node/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/StringStream.ts#L8)
+[src/node/StringStream.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/StringStream.ts#L9)
 
 ___
 
@@ -167,7 +171,7 @@ Readable.errored
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:139
+node_modules/@types/node/stream.d.ts:111
 
 ___
 
@@ -188,7 +192,7 @@ Readable.readable
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:85
+node_modules/@types/node/stream.d.ts:57
 
 ___
 
@@ -208,7 +212,7 @@ Readable.readableAborted
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:79
+node_modules/@types/node/stream.d.ts:51
 
 ___
 
@@ -228,7 +232,7 @@ Readable.readableDidRead
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:91
+node_modules/@types/node/stream.d.ts:63
 
 ___
 
@@ -248,7 +252,7 @@ Readable.readableEncoding
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:96
+node_modules/@types/node/stream.d.ts:68
 
 ___
 
@@ -268,7 +272,7 @@ Readable.readableEnded
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:101
+node_modules/@types/node/stream.d.ts:73
 
 ___
 
@@ -289,7 +293,7 @@ Readable.readableFlowing
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:107
+node_modules/@types/node/stream.d.ts:79
 
 ___
 
@@ -309,7 +313,7 @@ Readable.readableHighWaterMark
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:112
+node_modules/@types/node/stream.d.ts:84
 
 ___
 
@@ -331,7 +335,7 @@ Readable.readableLength
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:119
+node_modules/@types/node/stream.d.ts:91
 
 ___
 
@@ -351,17 +355,17 @@ Readable.readableObjectMode
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:124
+node_modules/@types/node/stream.d.ts:96
 
 ___
 
-### str
+### string
 
-• `Private` **str**: `string`
+• **string**: `string`
 
 #### Defined in
 
-[src/node/StringStream.ts:7](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/StringStream.ts#L7)
+[src/node/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/StringStream.ts#L8)
 
 ___
 
@@ -369,13 +373,21 @@ ___
 
 ▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](/docs/classes/StringStream.md#capturerejectionsymbol)
 
+Value: `Symbol.for('nodejs.rejection')`
+
+See how to write a custom `rejection handler`.
+
+**`Since`**
+
+v13.4.0, v12.16.0
+
 #### Inherited from
 
 Readable.captureRejectionSymbol
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:328
+node_modules/@types/node/events.d.ts:326
 
 ___
 
@@ -383,7 +395,13 @@ ___
 
 ▪ `Static` **captureRejections**: `boolean`
 
-Sets or gets the default captureRejection value for all emitters.
+Value: [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type)
+
+Change the default `captureRejections` option on all new `EventEmitter` objects.
+
+**`Since`**
+
+v13.4.0, v12.16.0
 
 #### Inherited from
 
@@ -399,13 +417,51 @@ ___
 
 ▪ `Static` **defaultMaxListeners**: `number`
 
+By default, a maximum of `10` listeners can be registered for any single
+event. This limit can be changed for individual `EventEmitter` instances
+using the `emitter.setMaxListeners(n)` method. To change the default
+for _all_`EventEmitter` instances, the `events.defaultMaxListeners`property can be used. If this value is not a positive number, a `RangeError`is thrown.
+
+Take caution when setting the `events.defaultMaxListeners` because the
+change affects _all_`EventEmitter` instances, including those created before
+the change is made. However, calling `emitter.setMaxListeners(n)` still has
+precedence over `events.defaultMaxListeners`.
+
+This is not a hard limit. The `EventEmitter` instance will allow
+more listeners to be added but will output a trace warning to stderr indicating
+that a "possible EventEmitter memory leak" has been detected. For any single`EventEmitter`, the `emitter.getMaxListeners()` and `emitter.setMaxListeners()`methods can be used to
+temporarily avoid this warning:
+
+```js
+import { EventEmitter } from 'node:events';
+const emitter = new EventEmitter();
+emitter.setMaxListeners(emitter.getMaxListeners() + 1);
+emitter.once('event', () => {
+  // do stuff
+  emitter.setMaxListeners(Math.max(emitter.getMaxListeners() - 1, 0));
+});
+```
+
+The `--trace-warnings` command-line flag can be used to display the
+stack trace for such warnings.
+
+The emitted warning can be inspected with `process.on('warning')` and will
+have the additional `emitter`, `type`, and `count` properties, referring to
+the event emitter instance, the event's name and the number of attached
+listeners, respectively.
+Its `name` property is set to `'MaxListenersExceededWarning'`.
+
+**`Since`**
+
+v0.11.2
+
 #### Inherited from
 
 Readable.defaultMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:334
+node_modules/@types/node/events.d.ts:370
 
 ___
 
@@ -413,13 +469,14 @@ ___
 
 ▪ `Static` `Readonly` **errorMonitor**: typeof [`errorMonitor`](/docs/classes/StringStream.md#errormonitor)
 
-This symbol shall be used to install a listener for only monitoring `'error'`
-events. Listeners installed using this symbol are called before the regular
-`'error'` listeners are called.
+This symbol shall be used to install a listener for only monitoring `'error'`events. Listeners installed using this symbol are called before the regular`'error'` listeners are called.
 
-Installing a listener using this symbol does not change the behavior once an
-`'error'` event is emitted, therefore the process will still crash if no
+Installing a listener using this symbol does not change the behavior once an`'error'` event is emitted. Therefore, the process will still crash if no
 regular `'error'` listener is installed.
+
+**`Since`**
+
+v13.6.0, v12.17.0
 
 #### Inherited from
 
@@ -427,7 +484,7 @@ Readable.errorMonitor
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:327
+node_modules/@types/node/events.d.ts:319
 
 ## Methods
 
@@ -441,11 +498,11 @@ node_modules/@types/node/events.d.ts:327
 
 #### Inherited from
 
-Readable.\_\_@asyncIterator@21671
+Readable.[asyncIterator]
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:503
+node_modules/@types/node/stream.d.ts:475
 
 ___
 
@@ -469,7 +526,7 @@ Readable.\_construct
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:141
+node_modules/@types/node/stream.d.ts:113
 
 ___
 
@@ -494,7 +551,7 @@ Readable.\_destroy
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:423
+node_modules/@types/node/stream.d.ts:395
 
 ___
 
@@ -512,7 +569,7 @@ Readable.\_read
 
 #### Defined in
 
-[src/node/StringStream.ts:16](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/node/StringStream.ts#L16)
+[src/node/StringStream.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/StringStream.ts#L17)
 
 ___
 
@@ -547,7 +604,7 @@ Readable.addListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:447
+node_modules/@types/node/stream.d.ts:419
 
 ▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -568,7 +625,7 @@ Readable.addListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:448
+node_modules/@types/node/stream.d.ts:420
 
 ▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -589,7 +646,7 @@ Readable.addListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:449
+node_modules/@types/node/stream.d.ts:421
 
 ▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -610,7 +667,7 @@ Readable.addListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:450
+node_modules/@types/node/stream.d.ts:422
 
 ▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -631,7 +688,7 @@ Readable.addListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:451
+node_modules/@types/node/stream.d.ts:423
 
 ▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -652,7 +709,7 @@ Readable.addListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:452
+node_modules/@types/node/stream.d.ts:424
 
 ▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -673,7 +730,7 @@ Readable.addListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:453
+node_modules/@types/node/stream.d.ts:425
 
 ▸ **addListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -694,7 +751,7 @@ Readable.addListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:454
+node_modules/@types/node/stream.d.ts:426
 
 ___
 
@@ -730,7 +787,7 @@ Readable.destroy
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:435
+node_modules/@types/node/stream.d.ts:407
 
 ___
 
@@ -754,7 +811,7 @@ Readable.emit
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:455
+node_modules/@types/node/stream.d.ts:427
 
 ▸ **emit**(`event`, `chunk`): `boolean`
 
@@ -775,7 +832,7 @@ Readable.emit
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:456
+node_modules/@types/node/stream.d.ts:428
 
 ▸ **emit**(`event`): `boolean`
 
@@ -795,7 +852,7 @@ Readable.emit
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:457
+node_modules/@types/node/stream.d.ts:429
 
 ▸ **emit**(`event`, `err`): `boolean`
 
@@ -816,7 +873,7 @@ Readable.emit
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:458
+node_modules/@types/node/stream.d.ts:430
 
 ▸ **emit**(`event`): `boolean`
 
@@ -836,7 +893,7 @@ Readable.emit
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:459
+node_modules/@types/node/stream.d.ts:431
 
 ▸ **emit**(`event`): `boolean`
 
@@ -856,7 +913,7 @@ Readable.emit
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:460
+node_modules/@types/node/stream.d.ts:432
 
 ▸ **emit**(`event`): `boolean`
 
@@ -876,7 +933,7 @@ Readable.emit
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:461
+node_modules/@types/node/stream.d.ts:433
 
 ▸ **emit**(`event`, `...args`): `boolean`
 
@@ -897,7 +954,7 @@ Readable.emit
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:462
+node_modules/@types/node/stream.d.ts:434
 
 ___
 
@@ -909,7 +966,8 @@ Returns an array listing the events for which the emitter has registered
 listeners. The values in the array are strings or `Symbol`s.
 
 ```js
-const EventEmitter = require('events');
+import { EventEmitter } from 'node:events';
+
 const myEE = new EventEmitter();
 myEE.on('foo', () => {});
 myEE.on('bar', () => {});
@@ -935,7 +993,7 @@ Readable.eventNames
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:673
+node_modules/@types/node/events.d.ts:715
 
 ___
 
@@ -960,7 +1018,7 @@ Readable.getMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:526
+node_modules/@types/node/events.d.ts:567
 
 ___
 
@@ -996,7 +1054,7 @@ Readable.isPaused
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:302
+node_modules/@types/node/stream.d.ts:274
 
 ___
 
@@ -1004,10 +1062,9 @@ ___
 
 ▸ **listenerCount**(`eventName`, `listener?`): `number`
 
-Returns the number of listeners listening to the event named `eventName`.
-
-If `listener` is provided, it will return how many times the listener
-is found in the list of the listeners of the event.
+Returns the number of listeners listening for the event named `eventName`.
+If `listener` is provided, it will return how many times the listener is found
+in the list of the listeners of the event.
 
 **`Since`**
 
@@ -1030,7 +1087,7 @@ Readable.listenerCount
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:620
+node_modules/@types/node/events.d.ts:661
 
 ___
 
@@ -1068,7 +1125,7 @@ Readable.listeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:539
+node_modules/@types/node/events.d.ts:580
 
 ___
 
@@ -1099,7 +1156,7 @@ Readable.off
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:499
+node_modules/@types/node/events.d.ts:540
 
 ___
 
@@ -1124,7 +1181,7 @@ Readable.on
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:463
+node_modules/@types/node/stream.d.ts:435
 
 ▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1145,7 +1202,7 @@ Readable.on
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:464
+node_modules/@types/node/stream.d.ts:436
 
 ▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1166,7 +1223,7 @@ Readable.on
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:465
+node_modules/@types/node/stream.d.ts:437
 
 ▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1187,7 +1244,7 @@ Readable.on
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:466
+node_modules/@types/node/stream.d.ts:438
 
 ▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1208,7 +1265,7 @@ Readable.on
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:467
+node_modules/@types/node/stream.d.ts:439
 
 ▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1229,7 +1286,7 @@ Readable.on
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:468
+node_modules/@types/node/stream.d.ts:440
 
 ▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1250,7 +1307,7 @@ Readable.on
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:469
+node_modules/@types/node/stream.d.ts:441
 
 ▸ **on**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1271,7 +1328,7 @@ Readable.on
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:470
+node_modules/@types/node/stream.d.ts:442
 
 ___
 
@@ -1296,7 +1353,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:471
+node_modules/@types/node/stream.d.ts:443
 
 ▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1317,7 +1374,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:472
+node_modules/@types/node/stream.d.ts:444
 
 ▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1338,7 +1395,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:473
+node_modules/@types/node/stream.d.ts:445
 
 ▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1359,7 +1416,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:474
+node_modules/@types/node/stream.d.ts:446
 
 ▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1380,7 +1437,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:475
+node_modules/@types/node/stream.d.ts:447
 
 ▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1401,7 +1458,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:476
+node_modules/@types/node/stream.d.ts:448
 
 ▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1422,7 +1479,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:477
+node_modules/@types/node/stream.d.ts:449
 
 ▸ **once**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1443,7 +1500,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:478
+node_modules/@types/node/stream.d.ts:450
 
 ___
 
@@ -1484,7 +1541,7 @@ Readable.pause
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:266
+node_modules/@types/node/stream.d.ts:238
 
 ___
 
@@ -1496,7 +1553,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `WritableStream`<`T`\> |
+| `T` | extends `WritableStream` |
 
 #### Parameters
 
@@ -1541,7 +1598,7 @@ Readable.prependListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:479
+node_modules/@types/node/stream.d.ts:451
 
 ▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1562,7 +1619,7 @@ Readable.prependListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:480
+node_modules/@types/node/stream.d.ts:452
 
 ▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1583,7 +1640,7 @@ Readable.prependListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:481
+node_modules/@types/node/stream.d.ts:453
 
 ▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1604,7 +1661,7 @@ Readable.prependListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:482
+node_modules/@types/node/stream.d.ts:454
 
 ▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1625,7 +1682,7 @@ Readable.prependListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:483
+node_modules/@types/node/stream.d.ts:455
 
 ▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1646,7 +1703,7 @@ Readable.prependListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:484
+node_modules/@types/node/stream.d.ts:456
 
 ▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1667,7 +1724,7 @@ Readable.prependListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:485
+node_modules/@types/node/stream.d.ts:457
 
 ▸ **prependListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1688,7 +1745,7 @@ Readable.prependListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:486
+node_modules/@types/node/stream.d.ts:458
 
 ___
 
@@ -1713,7 +1770,7 @@ Readable.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:487
+node_modules/@types/node/stream.d.ts:459
 
 ▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1734,7 +1791,7 @@ Readable.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:488
+node_modules/@types/node/stream.d.ts:460
 
 ▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1755,7 +1812,7 @@ Readable.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:489
+node_modules/@types/node/stream.d.ts:461
 
 ▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1776,7 +1833,7 @@ Readable.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:490
+node_modules/@types/node/stream.d.ts:462
 
 ▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1797,7 +1854,7 @@ Readable.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:491
+node_modules/@types/node/stream.d.ts:463
 
 ▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1818,7 +1875,7 @@ Readable.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:492
+node_modules/@types/node/stream.d.ts:464
 
 ▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1839,7 +1896,7 @@ Readable.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:493
+node_modules/@types/node/stream.d.ts:465
 
 ▸ **prependOnceListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -1860,7 +1917,7 @@ Readable.prependOnceListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:494
+node_modules/@types/node/stream.d.ts:466
 
 ___
 
@@ -1885,7 +1942,7 @@ Readable.push
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:422
+node_modules/@types/node/stream.d.ts:394
 
 ___
 
@@ -1897,6 +1954,7 @@ Returns a copy of the array of listeners for the event named `eventName`,
 including any wrappers (such as those created by `.once()`).
 
 ```js
+import { EventEmitter } from 'node:events';
 const emitter = new EventEmitter();
 emitter.once('log', () => console.log('log once'));
 
@@ -1940,7 +1998,7 @@ Readable.rawListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:569
+node_modules/@types/node/events.d.ts:611
 
 ___
 
@@ -2041,7 +2099,7 @@ Readable.read
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:219
+node_modules/@types/node/stream.d.ts:191
 
 ___
 
@@ -2077,7 +2135,7 @@ Readable.removeAllListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:510
+node_modules/@types/node/events.d.ts:551
 
 ___
 
@@ -2102,7 +2160,7 @@ Readable.removeListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:495
+node_modules/@types/node/stream.d.ts:467
 
 ▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -2123,7 +2181,7 @@ Readable.removeListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:496
+node_modules/@types/node/stream.d.ts:468
 
 ▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -2144,7 +2202,7 @@ Readable.removeListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:497
+node_modules/@types/node/stream.d.ts:469
 
 ▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -2165,7 +2223,7 @@ Readable.removeListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:498
+node_modules/@types/node/stream.d.ts:470
 
 ▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -2186,7 +2244,7 @@ Readable.removeListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:499
+node_modules/@types/node/stream.d.ts:471
 
 ▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -2207,7 +2265,7 @@ Readable.removeListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:500
+node_modules/@types/node/stream.d.ts:472
 
 ▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -2228,7 +2286,7 @@ Readable.removeListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:501
+node_modules/@types/node/stream.d.ts:473
 
 ▸ **removeListener**(`event`, `listener`): [`StringStream`](/docs/classes/StringStream.md)
 
@@ -2249,7 +2307,7 @@ Readable.removeListener
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:502
+node_modules/@types/node/stream.d.ts:474
 
 ___
 
@@ -2287,7 +2345,7 @@ Readable.resume
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:285
+node_modules/@types/node/stream.d.ts:257
 
 ___
 
@@ -2336,7 +2394,7 @@ Readable.setEncoding
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:244
+node_modules/@types/node/stream.d.ts:216
 
 ___
 
@@ -2371,7 +2429,7 @@ Readable.setMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:520
+node_modules/@types/node/events.d.ts:561
 
 ___
 
@@ -2388,7 +2446,7 @@ If the `destination` is specified, but no pipe is set up for it, then
 the method does nothing.
 
 ```js
-const fs = require('fs');
+const fs = require('node:fs');
 const readable = getReadableStreamSomehow();
 const writable = fs.createWriteStream('file.txt');
 // All the data from readable goes into 'file.txt',
@@ -2422,7 +2480,7 @@ Readable.unpipe
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:329
+node_modules/@types/node/stream.d.ts:301
 
 ___
 
@@ -2450,7 +2508,7 @@ use of a `Transform` stream instead. See the `API for stream implementers` secti
 // Pull off a header delimited by \n\n.
 // Use unshift() if we get too much.
 // Call the callback with (error, header, stream).
-const { StringDecoder } = require('string_decoder');
+const { StringDecoder } = require('node:string_decoder');
 function parseHeader(stream, callback) {
   stream.on('error', callback);
   stream.on('readable', onReadable);
@@ -2498,7 +2556,7 @@ v0.9.11
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `chunk` | `any` | Chunk of data to unshift onto the read queue. For streams not operating in object mode, `chunk` must be a string, `Buffer`, `Uint8Array` or `null`. For object mode streams, `chunk` may be any JavaScript value. |
+| `chunk` | `any` | Chunk of data to unshift onto the read queue. For streams not operating in object mode, `chunk` must be a string, `Buffer`, `Uint8Array`, or `null`. For object mode streams, `chunk` may be any JavaScript value. |
 | `encoding?` | `BufferEncoding` | Encoding of string chunks. Must be a valid `Buffer` encoding, such as `'utf8'` or `'ascii'`. |
 
 #### Returns
@@ -2511,7 +2569,7 @@ Readable.unshift
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:395
+node_modules/@types/node/stream.d.ts:367
 
 ___
 
@@ -2519,8 +2577,8 @@ ___
 
 ▸ **wrap**(`stream`): [`StringStream`](/docs/classes/StringStream.md)
 
-Prior to Node.js 0.10, streams did not implement the entire `stream` module API
-as it is currently defined. (See `Compatibility` for more information.)
+Prior to Node.js 0.10, streams did not implement the entire `node:stream`module API as it is currently defined. (See `Compatibility` for more
+information.)
 
 When using an older Node.js library that emits `'data'` events and has a [pause](/docs/classes/StringStream.md#pause) method that is advisory only, the`readable.wrap()` method can be used to create a `Readable`
 stream that uses
@@ -2532,7 +2590,7 @@ libraries.
 
 ```js
 const { OldReader } = require('./old-api-module.js');
-const { Readable } = require('stream');
+const { Readable } = require('node:stream');
 const oreader = new OldReader();
 const myReader = new Readable().wrap(oreader);
 
@@ -2561,7 +2619,7 @@ Readable.wrap
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:421
+node_modules/@types/node/stream.d.ts:393
 
 ___
 
@@ -2588,7 +2646,7 @@ Readable.from
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:56
+node_modules/@types/node/stream.d.ts:40
 
 ___
 
@@ -2619,7 +2677,7 @@ Readable.fromWeb
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:62
+node_modules/@types/node/stream.d.ts:791
 
 ___
 
@@ -2636,19 +2694,19 @@ For `EventTarget`s this is the only way to get the event listeners for the
 event target. This is useful for debugging and diagnostic purposes.
 
 ```js
-const { getEventListeners, EventEmitter } = require('events');
+import { getEventListeners, EventEmitter } from 'node:events';
 
 {
   const ee = new EventEmitter();
   const listener = () => console.log('Events are fun');
   ee.on('foo', listener);
-  getEventListeners(ee, 'foo'); // [listener]
+  console.log(getEventListeners(ee, 'foo')); // [ [Function: listener] ]
 }
 {
   const et = new EventTarget();
   const listener = () => console.log('Events are fun');
   et.addEventListener('foo', listener);
-  getEventListeners(et, 'foo'); // [listener]
+  console.log(getEventListeners(et, 'foo')); // [ [Function: listener] ]
 }
 ```
 
@@ -2673,7 +2731,7 @@ Readable.getEventListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:299
+node_modules/@types/node/events.d.ts:296
 
 ___
 
@@ -2703,7 +2761,7 @@ Readable.isDisturbed
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:67
+node_modules/@types/node/stream.d.ts:45
 
 ___
 
@@ -2714,7 +2772,8 @@ ___
 A class method that returns the number of listeners for the given `eventName`registered on the given `emitter`.
 
 ```js
-const { EventEmitter, listenerCount } = require('events');
+import { EventEmitter, listenerCount } from 'node:events';
+
 const myEmitter = new EventEmitter();
 myEmitter.on('event', () => {});
 myEmitter.on('event', () => {});
@@ -2747,7 +2806,7 @@ Readable.listenerCount
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:271
+node_modules/@types/node/events.d.ts:268
 
 ___
 
@@ -2756,25 +2815,24 @@ ___
 ▸ `Static` **on**(`emitter`, `eventName`, `options?`): `AsyncIterableIterator`<`any`\>
 
 ```js
-const { on, EventEmitter } = require('events');
+import { on, EventEmitter } from 'node:events';
+import process from 'node:process';
 
-(async () => {
-  const ee = new EventEmitter();
+const ee = new EventEmitter();
 
-  // Emit later on
-  process.nextTick(() => {
-    ee.emit('foo', 'bar');
-    ee.emit('foo', 42);
-  });
+// Emit later on
+process.nextTick(() => {
+  ee.emit('foo', 'bar');
+  ee.emit('foo', 42);
+});
 
-  for await (const event of on(ee, 'foo')) {
-    // The execution of this inner block is synchronous and it
-    // processes one event at a time (even with await). Do not use
-    // if concurrent execution is required.
-    console.log(event); // prints ['bar'] [42]
-  }
-  // Unreachable here
-})();
+for await (const event of on(ee, 'foo')) {
+  // The execution of this inner block is synchronous and it
+  // processes one event at a time (even with await). Do not use
+  // if concurrent execution is required.
+  console.log(event); // prints ['bar'] [42]
+}
+// Unreachable here
 ```
 
 Returns an `AsyncIterator` that iterates `eventName` events. It will throw
@@ -2785,7 +2843,9 @@ composed of the emitted event arguments.
 An `AbortSignal` can be used to cancel waiting on events:
 
 ```js
-const { on, EventEmitter } = require('events');
+import { on, EventEmitter } from 'node:events';
+import process from 'node:process';
+
 const ac = new AbortController();
 
 (async () => {
@@ -2833,7 +2893,7 @@ Readable.on
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:254
+node_modules/@types/node/events.d.ts:250
 
 ___
 
@@ -2850,31 +2910,28 @@ This method is intentionally generic and works with the web platform [EventTarge
 semantics and does not listen to the `'error'` event.
 
 ```js
-const { once, EventEmitter } = require('events');
+import { once, EventEmitter } from 'node:events';
+import process from 'node:process';
 
-async function run() {
-  const ee = new EventEmitter();
+const ee = new EventEmitter();
 
-  process.nextTick(() => {
-    ee.emit('myevent', 42);
-  });
+process.nextTick(() => {
+  ee.emit('myevent', 42);
+});
 
-  const [value] = await once(ee, 'myevent');
-  console.log(value);
+const [value] = await once(ee, 'myevent');
+console.log(value);
 
-  const err = new Error('kaboom');
-  process.nextTick(() => {
-    ee.emit('error', err);
-  });
+const err = new Error('kaboom');
+process.nextTick(() => {
+  ee.emit('error', err);
+});
 
-  try {
-    await once(ee, 'myevent');
-  } catch (err) {
-    console.log('error happened', err);
-  }
+try {
+  await once(ee, 'myevent');
+} catch (err) {
+  console.error('error happened', err);
 }
-
-run();
 ```
 
 The special handling of the `'error'` event is only used when `events.once()`is used to wait for another event. If `events.once()` is used to wait for the
@@ -2882,13 +2939,13 @@ The special handling of the `'error'` event is only used when `events.once()`is 
 special handling:
 
 ```js
-const { EventEmitter, once } = require('events');
+import { EventEmitter, once } from 'node:events';
 
 const ee = new EventEmitter();
 
 once(ee, 'error')
   .then(([err]) => console.log('ok', err.message))
-  .catch((err) => console.log('error', err.message));
+  .catch((err) => console.error('error', err.message));
 
 ee.emit('error', new Error('boom'));
 
@@ -2898,7 +2955,7 @@ ee.emit('error', new Error('boom'));
 An `AbortSignal` can be used to cancel waiting for the event:
 
 ```js
-const { EventEmitter, once } = require('events');
+import { EventEmitter, once } from 'node:events';
 
 const ee = new EventEmitter();
 const ac = new AbortController();
@@ -2943,7 +3000,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:194
+node_modules/@types/node/events.d.ts:189
 
 ▸ `Static` **once**(`emitter`, `eventName`, `options?`): `Promise`<`any`[]\>
 
@@ -2965,7 +3022,7 @@ Readable.once
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:195
+node_modules/@types/node/events.d.ts:190
 
 ___
 
@@ -2974,10 +3031,7 @@ ___
 ▸ `Static` **setMaxListeners**(`n?`, `...eventTargets`): `void`
 
 ```js
-const {
-  setMaxListeners,
-  EventEmitter
-} = require('events');
+import { setMaxListeners, EventEmitter } from 'node:events';
 
 const target = new EventTarget();
 const emitter = new EventEmitter();
@@ -3006,7 +3060,7 @@ Readable.setMaxListeners
 
 #### Defined in
 
-node_modules/@types/node/events.d.ts:317
+node_modules/@types/node/events.d.ts:311
 
 ___
 
@@ -3036,4 +3090,4 @@ Readable.toWeb
 
 #### Defined in
 
-node_modules/@types/node/stream.d.ts:73
+node_modules/@types/node/stream.d.ts:797

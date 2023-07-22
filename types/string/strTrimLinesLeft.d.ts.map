@@ -1,1 +1,1 @@
-{"version":3,"file":"strTrimLinesLeft.d.ts","sourceRoot":"","sources":["../../../src/string/strTrimLinesLeft.ts"],"names":[],"mappings":"AAAA;;;;;;;GAOG;AACH,wBAAgB,gBAAgB,CAAC,MAAM,EAAE,MAAM,GAAG,MAAM,CAKvD"}
+{"version":3,"file":"strTrimLinesLeft.d.ts","sourceRoot":"","sources":["../../src/string/strTrimLinesLeft.ts"],"names":[],"mappings":"AAAA;;;;;;;GAOG;AACH,wBAAgB,gBAAgB,CAAC,MAAM,EAAE,MAAM,GAAG,MAAM,CAKvD"}

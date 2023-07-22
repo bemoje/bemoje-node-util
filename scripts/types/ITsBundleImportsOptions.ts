@@ -22,7 +22,7 @@ export interface ITsBundleImportsOptions {
   /**
    * Removes all lines that consist of only a double slash comment. Inline comments are not affected.
    */
-  stripSlashComments?: boolean
+  stripInlineComments?: boolean
 
   /**
    * Removes all block comments, including TSDoc block comments.

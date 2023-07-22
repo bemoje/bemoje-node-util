@@ -1,1 +1,1 @@
-{"version":3,"file":"regNumberNoThousandSepCommaDecimal.d.ts","sourceRoot":"","sources":["../../../src/regexlib/regNumberNoThousandSepCommaDecimal.ts"],"names":[],"mappings":"AAAA;;;GAGG;AACH,eAAO,MAAM,kCAAkC,QAAe,CAAA"}
+{"version":3,"file":"regNumberNoThousandSepCommaDecimal.d.ts","sourceRoot":"","sources":["../../src/regexlib/regNumberNoThousandSepCommaDecimal.ts"],"names":[],"mappings":"AAAA;;;GAGG;AACH,eAAO,MAAM,kCAAkC,QAAe,CAAA"}

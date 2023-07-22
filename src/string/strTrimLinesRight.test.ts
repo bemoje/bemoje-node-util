@@ -2,16 +2,8 @@ import { strTrimLinesRight } from './strTrimLinesRight'
 
 describe('strTrimLinesRight', () => {
   it('trims all lines', () => {
-    const str = [
-      'list:',
-      ' 1. some text  ',
-      ' 2. some text\t',
-      '   a. some text   ',
-      '   b. some text',
-    ].join('\n')
-    expect(strTrimLinesRight(str)).toBe(
-      ['list:', ' 1. some text', ' 2. some text', '   a. some text', '   b. some text'].join('\n'),
-    )
+    const str = ['list:', ' 1. some text  ', ' 2. some text\t', '   a. some text   ', '   b. some text'].join('\n')
+    expect(strTrimLinesRight(str)).toBe(['list:', ' 1. some text', ' 2. some text', '   a. some text', '   b. some text'].join('\n'))
   })
 
   it('should trim trailing whitespace from each line in a string', () => {

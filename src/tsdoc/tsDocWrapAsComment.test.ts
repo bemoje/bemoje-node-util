@@ -31,16 +31,7 @@ describe(tsDocWrapAsComment.name, () => {
 
   it('should handle a string with empty lines', () => {
     const input = '\nLine 1\nLine 2\n\nLine 3\n'
-    const expected = [
-      '/**',
-      ' * ',
-      ' * Line 1',
-      ' * Line 2',
-      ' * ',
-      ' * Line 3',
-      ' * ',
-      ' */',
-    ].join('\n')
+    const expected = ['/**', ' * ', ' * Line 1', ' * Line 2', ' * ', ' * Line 3', ' * ', ' */'].join('\n')
     const result = tsDocWrapAsComment(input)
     expect(result).toEqual(expected)
   })

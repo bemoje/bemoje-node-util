@@ -15,22 +15,14 @@ import { strReplaceAll } from '../string/strReplaceAll'
  *   ['Alice', '30', 'Canada'],
  *   ['Bob', '35', 'UK'],
  * ];
- * arrTableToCSV(input);
+ * arrTableToCsv(input);
  * //=> "Name;Age;Country\nJohn;25;USA\nAlice;30;Canada\nBob;35;UK"
  * ```
  */
-export function arrTableToCSV<T>(
-  input: T[][],
-  delimiter = ';',
-  replaceLinebreakWith = '|',
-): string {
+export function arrTableToCsv<T>(input: T[][], delimiter = ';', replaceLinebreakWith = '|'): string {
   return input
     .map((row) => {
-      return row
-        .map((item) =>
-          strReplaceAll(item + '', delimiter, '').replace(/(\r*\n)+/g, replaceLinebreakWith),
-        )
-        .join(delimiter)
+      return row.map((item) => strReplaceAll(item + '', delimiter, '').replace(/\r*\n/g, replaceLinebreakWith)).join(delimiter)
     })
     .join('\n')
 }

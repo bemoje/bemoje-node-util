@@ -1,16 +1,16 @@
 /*!
- * @bemoje/node-util v0.4.0
+ * @bemoje/node-util v0.4.1
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
  */
 
-import { Level } from 'level';
-import EventEmitter from 'events';
-import hash from 'object-hash';
-import { mkdirpSync, mkdirp } from 'mkdirp';
 import getAppDataPath from 'appdata-path';
+import EventEmitter from 'events';
+import { Level } from 'level';
+import hash from 'object-hash';
 import path from 'path';
+import { mkdirpSync, mkdirp } from 'mkdirp';
 import { magenta, green, cyan, yellow, bold, red, blackBright, blue } from 'cli-color';
 import { titleCase } from 'title-case';
 import asyncRetry from 'async-retry';
@@ -21,15 +21,16 @@ import deepAssign from 'deep-assign';
 import excelJs from 'exceljs';
 import { parseScript } from 'esprima';
 import { createHash } from 'crypto';
-import { promisify } from 'util';
-import { exec } from 'child_process';
+import childProcess from 'child_process';
 import { Readable } from 'stream';
+import parseCSV from 'csv-parser';
 import pdf from 'pdf-parse';
 import { PDFDocument } from 'pdf-lib';
 import { words } from 'lodash';
 import { split } from 'sentence-splitter';
+import strip from 'strip-comments';
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -43,6 +44,8 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
+/* global Reflect, Promise, SuppressedError, Symbol */
+
 
 function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -89,6 +92,11 @@ function __asyncValues(o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 }
+
+typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
 
 /**
  * Create a directory at a given path if it does not exist.
@@ -139,6 +147,8 @@ function strRepeat(input, n) {
 class log {
     /**
      * Logs a (cyan) message the console.
+     * @param message The message to print to console.
+     * @param depth The depth to which to print object properties.
      */
     static info(message, depth) {
         this.logToConsole('INFO', message, magenta, green, cyan, depth);
@@ -146,6 +156,7 @@ class log {
     }
     /**
      * Logs a (yellow) warning message to the console.
+     * @param message The message to print to console.
      */
     static warn(message) {
         this.logToConsole('WARN', message, magenta, yellow, yellow);
@@ -153,6 +164,7 @@ class log {
     }
     /**
      * Logs a (red) error message to the console.
+     * @param error The Error object or message to print to console.
      */
     static error(error) {
         const strError = JSON.stringify(error, null, 2);
@@ -162,6 +174,7 @@ class log {
     }
     /**
      * Wrap an async function as a task, logging the start and end of the task.
+     * @param description The description of the task.
      */
     static task(description, task) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -174,6 +187,7 @@ class log {
     }
     /**
      * Wrap a synchronous function as a task, logging the start and end of the task.
+     * @param description The description of the task.
      */
     static taskSync(description, task) {
         this.info(`Began: ${description}.`);
@@ -184,12 +198,14 @@ class log {
     }
     /**
      * Clears the console by printing a number of blank lines.
+     * @param numLines The number of blank lines to print.
      */
     static clear(numLines = 10) {
         console.log(strRepeat('\n', numLines));
     }
     /**
      * Prints a light dotted line to the console.
+     * @param numLines The number of blank lines to print.
      */
     static line(numLines = 1) {
         const string = blackBright(strRepeat('-', 80));
@@ -200,6 +216,12 @@ class log {
     }
     /**
      * Generic function for logging to console, used by the log-level specific functions.
+     * @param level The log level.
+     * @param message The message to print to console.
+     * @param timestampColor A 'cli-color' module function to wrap the timestamp-part of the string in color formatting.
+     * @param timestampColor A 'cli-color' module function to wrap the level-part of the string in color formatting.
+     * @param timestampColor A 'cli-color' module function to wrap the output-part of the string in color formatting.
+     * @param depth The depth to which to print object properties.
      */
     static logToConsole(level, message, timestampColor, levelColor, outputColor, depth) {
         timestampColor(new Date().toISOString());
@@ -241,7 +263,7 @@ class log {
  *   warn: ['event3', 'event4'],
  *   error: ['event5', 'event6']
  * });;
- * //=> {result}
+ * //=> result
  * ```
  */
 function _printEmitterEvents(self, emitter, eventLogLevels) {
@@ -279,6 +301,7 @@ function _printEmitterEvents(self, emitter, eventLogLevels) {
 class ApiReponseCache {
     /**
      * Create a new instance.
+     * @param options - Options for creating a new instance.
      */
     constructor(options) {
         /**
@@ -291,16 +314,19 @@ class ApiReponseCache {
             this.logAllEvents();
         this.emit('options', _options);
         this.maxAgeMs = maxAgeMs;
-        this.db = new Level(createDirectorySync(path.join(dirpath, name)));
+        const dbpath = createDirectorySync(path.join(dirpath, name));
+        this.db = new Level(dbpath);
     }
     /**
      * Hash any type of key.
+     * @param key - The key to hash.
      */
     hashKey(key) {
         return hash(key === undefined ? 'undefined' : key, { algorithm: 'sha1', encoding: 'base64' });
     }
     /**
      * Get a value for a given hash key if it exists. Otherwise, get retrive a value with a given function and then store that value in the cache.
+     * @param hash - The hash key.
      * @param apiRequest - function that returns a new value for a given key if it doesn't exist in the cache.
      */
     getOrElse(hash, apiRequest) {
@@ -319,6 +345,7 @@ class ApiReponseCache {
     }
     /**
      * Get a value for a given hash key.
+     * @param hash - The hash key.
      * @throws if the value does not exist for the give hash.
      */
     get(hash) {
@@ -333,6 +360,7 @@ class ApiReponseCache {
     }
     /**
      * Get a value for a given hash key.
+     * @param hash - The hash key.
      */
     getSafe(hash) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -349,6 +377,7 @@ class ApiReponseCache {
     }
     /**
      * Returns whether a value exists for a given key.
+     * @param hash - The hash key.
      */
     has(hash) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -363,6 +392,9 @@ class ApiReponseCache {
     }
     /**
      * Set a given value for a given hash key.
+     * @param hash - The hash key.
+     * @param value - The value to store.
+     * @throws if the value does not exist for the give hash.
      */
     put(hash, value) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -375,8 +407,8 @@ class ApiReponseCache {
         });
     }
     /**
-     * Delete a given value for a given hash key.
-     * @throws if the value does not exist for the give hash.
+     * Delete a given value for a given hash key if it exists.
+     * @param hash - The hash key.
      */
     delete(hash) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -386,21 +418,19 @@ class ApiReponseCache {
             }));
         });
     }
-    /**
-     * Delete a given value for a given hash key.
-     */
-    deleteSafe(hash) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.db.del(hash);
-                this.emit('delete', hash);
-                return true;
-            }
-            catch (e) {
-                return false;
-            }
-        });
-    }
+    // /**
+    //  * Delete a given value for a given hash key.
+    //  * @param hash - The hash key.
+    //  */
+    // async deleteSafe(hash: string): Promise<boolean> {
+    //   try {
+    //     await this.db.del(hash)
+    //     this.emit('delete', hash)
+    //     return true
+    //   } catch (e) {
+    //     return false
+    //   }
+    // }
     /**
      * Delete all expired data.
      */
@@ -408,15 +438,10 @@ class ApiReponseCache {
         var _a, e_1, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield _e.next(), _a = _f.done, !_a;) {
+                for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
                     _c = _f.value;
                     _d = false;
-                    try {
-                        const _ = _c;
-                    }
-                    finally {
-                        _d = true;
-                    }
+                    const _ = _c;
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -434,7 +459,7 @@ class ApiReponseCache {
      */
     deleteEverything() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
+            return this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
                 yield this.db.clear();
                 this.emit('delete', 'All cache data was deleted.');
             }));
@@ -448,19 +473,14 @@ class ApiReponseCache {
             var _a, e_2, _b, _c;
             try {
                 try {
-                    for (var _d = true, _e = __asyncValues(this.db.iterator()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a;) {
+                    for (var _d = true, _e = __asyncValues(this.db.iterator()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a; _d = true) {
                         _c = _f.value;
                         _d = false;
-                        try {
-                            const [hash, serialized] = _c;
-                            if (this.isExpired(serialized)) {
-                                this.db.del(hash).then(() => this.emit('expired', hash));
-                            }
-                            yield yield __await([hash, this.parseSerializedValue(serialized)]);
+                        const [hash, serialized] = _c;
+                        if (this.isExpired(serialized)) {
+                            this.db.del(hash).then(() => this.emit('expired', hash));
                         }
-                        finally {
-                            _d = true;
-                        }
+                        yield yield __await([hash, this.parseSerializedValue(serialized)]);
                     }
                 }
                 catch (e_2_1) { e_2 = { error: e_2_1 }; }
@@ -484,16 +504,11 @@ class ApiReponseCache {
             var _a, e_3, _b, _c;
             try {
                 try {
-                    for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a;) {
+                    for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a; _d = true) {
                         _c = _f.value;
                         _d = false;
-                        try {
-                            const [hash] = _c;
-                            yield yield __await(hash);
-                        }
-                        finally {
-                            _d = true;
-                        }
+                        const [hash] = _c;
+                        yield yield __await(hash);
                     }
                 }
                 catch (e_3_1) { e_3 = { error: e_3_1 }; }
@@ -517,16 +532,11 @@ class ApiReponseCache {
             var _a, e_4, _b, _c;
             try {
                 try {
-                    for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a;) {
+                    for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a; _d = true) {
                         _c = _f.value;
                         _d = false;
-                        try {
-                            const [_, value] = _c;
-                            yield yield __await(value);
-                        }
-                        finally {
-                            _d = true;
-                        }
+                        const [_, value] = _c;
+                        yield yield __await(value);
                     }
                 }
                 catch (e_4_1) { e_4 = { error: e_4_1 }; }
@@ -550,16 +560,11 @@ class ApiReponseCache {
         return __awaiter(this, void 0, void 0, function* () {
             let size = 0;
             try {
-                for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield _e.next(), _a = _f.done, !_a;) {
+                for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
                     _c = _f.value;
                     _d = false;
-                    try {
-                        const _ = _c;
-                        size++;
-                    }
-                    finally {
-                        _d = true;
-                    }
+                    const _ = _c;
+                    size++;
                 }
             }
             catch (e_5_1) { e_5 = { error: e_5_1 }; }
@@ -584,6 +589,9 @@ class ApiReponseCache {
     }
     /**
      * Deletes a value from the cache if it is expired.
+     * @param hash - The hash key.
+     * @param serialized - The serialized value.
+     * @throws if the value is expired.
      */
     ensureNotExpired(hash, serialized) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -596,6 +604,7 @@ class ApiReponseCache {
     }
     /**
      * Check if a still raw serialized value string is expired.
+     * @param serialized - The serialized value.
      */
     isExpired(serialized) {
         if (!this.maxAgeMs)
@@ -604,18 +613,21 @@ class ApiReponseCache {
     }
     /**
      * Custom JSON stringify function that prepends a timestamp to the stringified object.
+     * @param value - The value to serialize.
      */
     serializeValue(value) {
         return Date.now() + JSON.stringify(value);
     }
     /**
      * Parse the timestamp part of a raw serialized value string from the database.
+     * @param serialized - The serialized value.
      */
     parseSerializedTimestamp(serialized) {
         return parseInt(serialized.substring(0, 13));
     }
     /**
      * Parse the json part of a raw serialized value string from the database.
+     * @param serialized - The serialized value.
      */
     parseSerializedValue(serialized) {
         return JSON.parse(serialized.substring(13));
@@ -623,6 +635,7 @@ class ApiReponseCache {
     /**
      * Shorthand for try/catch block with error-handling
      * Wrap a function in a try catch block and emit an error event if an error occurs.
+     * @param fn - The function to wrap.
      */
     orThrow(fn) {
         try {
@@ -634,6 +647,7 @@ class ApiReponseCache {
     }
     /**
      * Emit an event but this automatically adds 'this' as an extra argument.
+     * @param eventName - The event name.
      */
     emit(eventName, arg) {
         this.events.emit(eventName, arg, this);
@@ -742,9 +756,6 @@ function objDeleteKeysMutable(obj, ...keys) {
  * ```
  */
 function setNonEnumerable(object, ...propertyNames) {
-    if (!object || typeof object !== 'object') {
-        throw new Error(`setValueAsGetter() requires an object as the first argument.`);
-    }
     for (const propertyName of propertyNames) {
         if (!Object.hasOwn(object, propertyName)) {
             throw new Error(`Property '${propertyName}' does not exist on object.`);
@@ -757,126 +768,11 @@ function setNonEnumerable(object, ...propertyNames) {
     }
 }
 
-/**
- * Checks if the provided value is a valid number.
- * @remarks This function checks if the provided value is a finite number and not NaN.
- * @param number The value to check.
- * @returns A boolean indicating whether the provided value is a valid number.
- * @example ```ts
- * isValidNumber(123);
- * //=> true
- * isValidNumber(NaN);
- * //=> false
- * isValidNumber(Infinity);
- * //=> false
- * ```
- */
-function isValidNumber(number) {
-    return isFinite(number) && !isNaN(number);
-}
-
-/**
- * Asserts that the provided value is a valid number. If the value is not a valid number, it throws a TypeError.
- * A valid number is a finite number and not NaN.
- * @param number The number to be validated.
- * @returns Returns the validated number if it is valid.
- * @throws Throws an error if the provided number is not valid.
- * @example ```ts
- * assertValidNumber(5);;
- * //=> 5
- * assertValidNumber(NaN);;
- * //=> throws TypeError
- * ```
- */
-function assertValidNumber(number) {
-    if (isValidNumber(number))
-        return number;
-    throw new TypeError('Expected number to be finite and not NaN. Got: ' + number);
-}
-
-/**
- * Round a given number with a given precision and rounding function.
- * Shifts with exponential notation to avoid floating-point issues.
- * @param number the number to round.
- * @param precision the number of decimal points.
- * @param func the rounding function to use.
- * @returns The rounded number.
- * @throws if the given number is not finite or NaN.
- * @example ```ts
- * roundWith(1.2345, 2);;
- * //=> 1.23
- * roundWith(1.2345, 2, Math.ceil);;
- * //=> 1.24
- * ```
- */
-function roundWith(number, precision, func = Math.round) {
-    const pair1 = (assertValidNumber(number) + 'e').split('e');
-    const pair2 = (func(+(pair1[0] + 'e' + (+pair1[1] + precision))) + 'e').split('e');
-    return +(pair2[0] + 'e' + (+pair2[1] - precision));
-}
-
-/**
- * Round a given number with a given precision.
- * Shifts with exponential notation to avoid floating-point issues.
- * @param number the number to round.
- * @param precision the number of decimal points.
- * @param - The number of decimal places to round to. Defaults to 0 if not specified.
- * @returns The rounded number.
- * @throws if the given number is not finite or NaN.
- * @example ```ts
- * round(1.2345, 2);;
- * //=> 1.23
- * round(1.2345);;
- * //=> 1
- * ```
- */
-function round(number, precision = 0) {
-    return roundWith(number, precision, Math.round);
-}
-
-/**
- * For monitoring openai api token usage.
- */
-class OpenaiTokenUsage {
-    constructor() {
-        this.events = new EventEmitter();
-        this.usage = {
-            completion: { in: { tokens: 0, USD: 0 }, out: { tokens: 0, USD: 0 } },
-            chat: { in: { tokens: 0, USD: 0 }, out: { tokens: 0, USD: 0 } },
-            chat16k: { in: { tokens: 0, USD: 0 }, out: { tokens: 0, USD: 0 } },
-            editText: { in: { tokens: 0, USD: 0 }, out: { tokens: 0, USD: 0 } },
-            editCode: { in: { tokens: 0, USD: 0 }, out: { tokens: 0, USD: 0 } },
-        };
-        this.total = { total_tokens: 0, total_USD: 0 };
-    }
-    /**
-     * Submit usage data from an openai api response.
-     */
-    submit(endpoint, data) {
-        const usage = data.usage;
-        const { prompt_tokens, completion_tokens } = usage;
-        const prices = OpenaiTokenUsage.prices[endpoint];
-        const stats = this.usage[endpoint];
-        const total = this.total;
-        stats.in.tokens += prompt_tokens;
-        stats.out.tokens += completion_tokens;
-        stats.in.USD = round(stats.in.USD + prompt_tokens * prices.in, 7);
-        stats.out.USD = round(stats.out.USD + completion_tokens * prices.out, 7);
-        total.total_tokens += prompt_tokens + completion_tokens;
-        total.total_USD = round(total.total_USD + (prompt_tokens * prices.in + completion_tokens * prices.out), 7);
-        this.events.emit('usage', usage, this);
-        this.events.emit('total', this.total, this);
-    }
-}
-OpenaiTokenUsage.prices = {
-    completion: { in: 0.00002, out: 0.00002 },
-    chat: { in: 0.0000015, out: 0.000002 },
-    chat16k: { in: 0.000003, out: 0.000004 },
-    editText: { in: 0, out: 0 },
-    editCode: { in: 0, out: 0 },
-};
-
 class OpenaiApiClientBase {
+    /**
+     * Handle the options passed to the constructor.
+     * @param options - The options to handle.
+     */
     handleOptions(options) {
         if (!options.cacheInit)
             options.cacheInit = {};
@@ -895,13 +791,16 @@ class OpenaiApiClientBase {
     }
     /**
      * Create a new OpenaiApiClient instance.
+     * @param options - The constructor options to use.
      */
     constructor(options = {}) {
-        // Event emitter for cache events
+        /**
+         * Event emitter for cache events
+         */
         this.events = new EventEmitter();
-        // OpenAI API token usage statistics
-        this.usage = new OpenaiTokenUsage();
-        // Defaults for API requests. Can be overriden in individual method calls.
+        /**
+         * Defaults for API requests. Can be overriden in individual method calls.
+         */
         this.apiDefaults = {
             completionModel: 'text-davinci-003',
             chat3_8Model: 'gpt-3.5-turbo',
@@ -911,12 +810,17 @@ class OpenaiApiClientBase {
             editCodeModel: 'code-davinci-edit-001',
             choicesDelimiter: '\n---------------\n',
         };
-        // Options for async-retry
+        /**
+         * Options for async-retry
+         */
         this.retryDefaults = {
-            retries: 3,
+            retries: 10,
+            factor: 1.5,
             onRetry: (error) => this.emit('retry', error),
         };
-        // Options for whether to overwrite existing cached data by default for api requests
+        /**
+         * Options for whether to overwrite existing cached data by default for api requests
+         */
         this.cacheDefaults = {
             overwrite: false,
         };
@@ -928,6 +832,7 @@ class OpenaiApiClientBase {
     }
     /**
      * Send a completion request to the openai api.
+     * @param options - The options to use.
      */
     completion(options) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -937,6 +842,7 @@ class OpenaiApiClientBase {
     /**
      * Send a chat completion request to the openai api with a max_tokens cap of 4096.
      * Uses model: 'gpt-3.5-turbo'.
+     * @param options - The options to use.
      */
     chat3_8(options) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -946,25 +852,28 @@ class OpenaiApiClientBase {
     /**
      * Send a chat completion request to the openai api with a max_tokens cap of 16384.
      * Uses model: 'gpt-3.5-turbo-16k'.
+     * @param options - The options to use.
      */
     chat3_16(options) {
         return __awaiter(this, void 0, void 0, function* () {
-            options.model = 'gpt-3.5-turbo-16k';
+            options.model = this.apiDefaults.chat3_16Model;
             return yield this._chat(...this.handleChatOptions(options));
         });
     }
     /**
      * Send a gpt4 chat completion request to the openai api with a max_tokens cap of 8k.
      * Uses model: 'gpt-4'.
+     * @param options - The options to use.
      */
     chat4_8(options) {
         return __awaiter(this, void 0, void 0, function* () {
-            options.model = 'gpt-4';
+            options.model = this.apiDefaults.chat4_8Model;
             return yield this._chat(...this.handleChatOptions(options));
         });
     }
     /**
      * Edit text.
+     * @param options - The options to use.
      */
     editText(options) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -973,6 +882,7 @@ class OpenaiApiClientBase {
     }
     /**
      * Edit code.
+     * @param options - The options to use.
      */
     editCode(options) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -983,18 +893,24 @@ class OpenaiApiClientBase {
     }
     /**
      * Encode a string into tokens.
+     * @param string - The string to encode.
      */
     stringTokens(string) {
         return encode(string);
     }
     /**
      * Count the number of tokens in a string.
+     * @param string - The string to count tokens in.
      */
     countTokens(string) {
         return encode(string).length;
     }
+    /**
+     * Handle completion options.
+     * @param options - The options to handle.
+     */
     handleCompletionOptions(options) {
-        options = this.deleteDefaultOrUndefined(options, {
+        options = this.deleteDefaultOrUndefinedOptions(options, {
             presence_penalty: 0,
             frequency_penalty: 0,
             best_of: 1,
@@ -1018,8 +934,12 @@ class OpenaiApiClientBase {
         const cache = this.handleCacheOptions(options.cache);
         return this.emit('request', [request, retry, cache]);
     }
+    /**
+     * Handle chat options.
+     * @param options - The options to handle.
+     */
     handleChatOptions(options) {
-        options = this.deleteDefaultOrUndefined(options, {
+        options = this.deleteDefaultOrUndefinedOptions(options, {
             presence_penalty: 0,
             frequency_penalty: 0,
         });
@@ -1039,8 +959,12 @@ class OpenaiApiClientBase {
         const request = Object.assign(Object.assign({ model }, options), { messages });
         return this.emit('request', [request, retry, cache]);
     }
+    /**
+     * Handle edit options.
+     * @param options - The options to handle.
+     */
     handleEditOptions(options) {
-        options = this.deleteDefaultOrUndefined(options, {});
+        options = this.deleteDefaultOrUndefinedOptions(options, {});
         const retry = this.handleRetryOptions(options.retry);
         const cache = this.handleCacheOptions(options.cache);
         const model = this.apiDefaults.editTextModel;
@@ -1051,6 +975,10 @@ class OpenaiApiClientBase {
             input });
         return this.emit('request', [request, retry, cache]);
     }
+    /**
+     * Handle retry options.
+     * @param retryOptions - The retry options to handle.
+     */
     handleRetryOptions(retryOptions) {
         if (retryOptions === null || retryOptions === void 0 ? void 0 : retryOptions.onRetry) {
             const onRetry = retryOptions.onRetry;
@@ -1061,34 +989,56 @@ class OpenaiApiClientBase {
         }
         return retryOptions ? Object.assign({}, this.retryDefaults, retryOptions) : this.retryDefaults;
     }
+    /**
+     * Handle cache options.
+     * @param cacheOptions - The cache options to handle.
+     */
     handleCacheOptions(cacheOptions) {
         return cacheOptions ? Object.assign({}, this.cacheDefaults, cacheOptions) : this.cacheDefaults;
     }
+    /**
+     * Send completion request to the openai API.
+     * This is used by all the preset methods, the public methods: completion.
+     * @param request - The request object to send to the openai api.
+     * @param retry - The retry options.
+     * @param cache - The cache options.
+     */
     _completion(request, retry, cache) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this._apiRequest(request, retry, cache, () => __awaiter(this, void 0, void 0, function* () {
                 const { data } = yield this.client.createCompletion(request);
-                this.usage.submit('completion', data);
                 this.assertReponseDataComplete(data);
                 return this.parseChoices(data.choices);
             }));
         });
     }
+    /**
+     * Send chat request to the openai API.
+     * This is used by all the preset methods, the public methods: chat3_8, chat3_16, and chat4_8.
+     * @param request - The request object to send to the openai api.
+     * @param retry - The retry options.
+     * @param cache - The cache options.
+     */
     _chat(request, retry, cache) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this._apiRequest(request, retry, cache, () => __awaiter(this, void 0, void 0, function* () {
                 const { data } = yield this.client.createChatCompletion(request);
-                this.usage.submit(request.model.endsWith('16k') ? 'chat16k' : 'chat', data);
                 this.assertReponseDataComplete(data);
                 return this.parseChoices(data.choices);
             }));
         });
     }
+    /**
+     * Send edit request to the openai API.
+     * This is used by all the preset methods, the public methods: editText, editCode
+     * @param request - The request object to send to the openai api.
+     * @param retry - The retry options.
+     * @param cache - The cache options.
+     */
     _edit(request, retry, cache) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this._apiRequest(request, retry, cache, () => __awaiter(this, void 0, void 0, function* () {
                 const { data } = yield this.client.createEdit(request);
-                this.usage.submit(request.model.startsWith('text') ? 'editText' : 'editCode', data);
                 return this.parseChoices(data.choices);
             }));
         });
@@ -1097,18 +1047,25 @@ class OpenaiApiClientBase {
      * Generic function for sending requests to the openai api.
      * This is used for all the API endpoints.
      * It handles retrying, cache, hashing, and emitting events.
+     * @param request - The request object to send to the openai api.
+     * @param retry - The retry options.
+     * @param cache - The cache options.
      */
     _apiRequest(request, retry, cache, apiRequest) {
         return __awaiter(this, void 0, void 0, function* () {
             const hash = this.cache.hashKey(request);
             const results = yield asyncRetry(() => __awaiter(this, void 0, void 0, function* () {
                 if (cache.overwrite)
-                    yield this.cache.deleteSafe(hash);
+                    yield this.cache.delete(hash);
                 return yield this.cache.getOrElse(hash, apiRequest);
             }), retry);
             return this.emit('response', results.join(this.apiDefaults.choicesDelimiter));
         });
     }
+    /**
+     * Extract the actual concent from the 'choices' object from the response data.
+     * @param choices - The choices object from the response data.
+     */
     parseChoices(choices) {
         return choices.map((choice) => {
             if (Reflect.has(choice, 'text')) {
@@ -1119,7 +1076,14 @@ class OpenaiApiClientBase {
             }
         });
     }
-    deleteDefaultOrUndefined(options, defaults = {}) {
+    /**
+     * Delete all options that are undefined or equal to the default value.
+     * The response cache uses hashed options to determine if the request has already been made.
+     * Removing default values and undefined values normalizes the options object so it hashes the same.
+     * @param options - The options to delete from.
+     * @param defaults - The default values to compare against.
+     */
+    deleteDefaultOrUndefinedOptions(options, defaults = {}) {
         options = Object.assign({}, options);
         defaults.temperature = 1;
         defaults.top_p = 1;
@@ -1146,6 +1110,9 @@ class OpenaiApiClientBase {
             }
         }
     }
+    /**
+     * Get the default api key from 'process.env.USERPROFILE/repos/apikeys/openai.txt'
+     */
     getDefaultApiKey() {
         try {
             const filepath = path.join(process.env.USERPROFILE || '', 'repos', 'apikeys', 'openai.txt');
@@ -1164,17 +1131,12 @@ class OpenaiApiClientBase {
     }
     /**
      * console.log all emitted events
-     * @returns this (chainable)
      */
     logAllEvents() {
         log.line(3);
         _printEmitterEvents(this, this.events, {
             info: ['options', 'ready', 'request', 'response'],
             error: ['error', 'retry'],
-        });
-        _printEmitterEvents(this.usage, this.usage.events, {
-            info: ['usage', 'total'],
-            error: ['error'],
         });
         return this;
     }
@@ -1219,8 +1181,7 @@ class OpenaiApiClient extends OpenaiApiClientBase {
     proofreadEnglish(prompt, options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
             options.instruction =
-                (options.instruction ? options.instruction + '\n\n' : '') +
-                    'Proofread and correct English.\n\nRespond the corrected version.';
+                (options.instruction ? options.instruction + '\n\n' : '') + 'Proofread and correct English.\n\nRespond the corrected version.';
             return yield this.chat3_8(Object.assign(Object.assign({ temperature: 0 }, options), { prompt }));
         });
     }
@@ -1232,11 +1193,10 @@ class OpenaiApiClient extends OpenaiApiClientBase {
      * await openai.translateFrom('English', 'Spanish', 'Clear', { instruction: 'This is a color.' })
      * ```
      */
-    translateFrom(fromLanguage, toLanguage, prompt, options = {}) {
+    translateFromTo(fromLanguage, toLanguage, prompt, options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
             options.instruction =
-                (options.instruction ? options.instruction + '\n\n' : '') +
-                    `Translate from ${titleCase(fromLanguage)} to ${titleCase(toLanguage)}.`;
+                (options.instruction ? options.instruction + '\n\n' : '') + `Translate from ${titleCase(fromLanguage)} to ${titleCase(toLanguage)}.`;
             return yield this.chat3_8(Object.assign(Object.assign({ temperature: 0.3 }, options), { prompt }));
         });
     }
@@ -1249,7 +1209,7 @@ class OpenaiApiClient extends OpenaiApiClientBase {
      */
     translateEnglishTo(language, prompt, options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.translateFrom('English', language, prompt, options);
+            return yield this.translateFromTo('English', language, prompt, options);
         });
     }
 }
@@ -1270,8 +1230,8 @@ function arrSum(array) {
 
 /**
  * Calculates the average of an array of numbers.
- * @returns The average of all numbers in the array. Returns 0 if the array is empty.
- * @throws Will throw an error if the array is not of type number[].
+ * @returns The average of all numbers in the array.
+ * @throws an error if the input array is empty.
  * @param array The array of numbers.
  * @example ```ts
  * const numbers = [1, 2, 3, 4, 5];
@@ -1281,7 +1241,7 @@ function arrSum(array) {
  */
 function arrAverage(array) {
     if (!array.length)
-        return 0;
+        throw new Error('Cannot take an average of zero values.');
     return arrSum(array) / array.length;
 }
 
@@ -1325,27 +1285,6 @@ function arrEvery(input, predicate) {
 }
 
 /**
- * This function filters an array based on a predicate function, modifying the original array.
- * @template T The type of elements in the input array.
- * @param input The array to be filtered.
- * @param f The predicate function to determine which elements to keep. This function takes three arguments: the current element, its index, and the original array.
- * @returns The original array, now filtered based on the predicate function.
- * @example ```ts
- * arrFilterMutable([1, 2, 3, 4, 5], (num: number) => num % 2 === 0);;
- * //=> [2, 4]
- * ```
- */
-function arrFilterMutable(input, f) {
-    for (let i = 0; i < input.length; i++) {
-        if (!f(input[i], i, input)) {
-            input.splice(i, 1);
-            i--;
-        }
-    }
-    return input;
-}
-
-/**
  * Returns an array of indices where the predicate function returns true for the corresponding element in the input array.
  * @param input - The array to search.
  * @param predicate - The function to test each element of the array.
@@ -1361,14 +1300,36 @@ function arrFindIndicesOf(input, predicate) {
     return result;
 }
 
+/**
+ * Searches for the last element in an array that satisfies a provided testing function.
+ * @typeParam T - The type of elements in the input array.
+ * @param input - The array to search within.
+ * @param predicate - The function to test each element for a condition.
+ * @returns The last element in the array that satisfies the provided testing function. Otherwise, undefined if no elements satisfy the testing function.
+ * @example const numbers = [1, 2, 3, 4, 5, 6];
+ * arrFindLast(numbers, num => num % 2 === 0);
+ * //=> 6
+ */
 function arrFindLast(input, predicate) {
     for (let i = input.length - 1; i >= 0; i--) {
-        if (predicate(input[i])) {
+        if (predicate(input[i]) === true) {
             return input[i];
         }
     }
 }
 
+/**
+ * Searches for an element in an array in reverse order and returns the index of the last occurrence of the element for which the provided testing function returns true.
+ * If no such element is found, it returns -1.
+ * @param input - The array to search in.
+ * @param predicate - The testing function. Takes a value and returns a boolean.
+ * @returns The index of the last occurrence of the element in the array that passes the test. If no such element is found, it returns -1.
+ * @example ```ts
+ * const arr = [1, 2, 3, 4, 5, 4, 3];
+ * arrFindLastIndexOf(arr, (value) => value === 4);
+ * //=> 5
+ * ```
+ */
 function arrFindLastIndexOf(input, predicate) {
     for (let i = input.length - 1; i >= 0; i--) {
         if (predicate(input[i])) {
@@ -1433,17 +1394,14 @@ function arrIndicesOf(input, element) {
 
 /**
  * Returns the last element of an array.
- * @param array The array from which to retrieve the last element.
- * @template T - The type of elements in the array.
+ * Throws an error if the array is empty.
+ * @template T The type of elements in the array.
+ * @param array The array to get the last element from.
  * @returns The last element of the array.
  * @throws If the array is empty.
- * @example ```ts
- * const numbers = [1, 2, 3, 4, 5];
- * arrLast(numbers);
+ * @example const numbers = [1, 2, 3, 4, 5];
+ * const lastNumber = arrLast(numbers);
  * //=> 5
- * const emptyArray = [];
- * arrLast(emptyArray); // Throws an error
- * ```
  */
 function arrLast(array) {
     if (!array.length)
@@ -1800,16 +1758,14 @@ function strReplaceAll(input, replace, replaceWith, flags = 'g') {
  *   ['Alice', '30', 'Canada'],
  *   ['Bob', '35', 'UK'],
  * ];
- * arrTableToCSV(input);
+ * arrTableToCsv(input);
  * //=> "Name;Age;Country\nJohn;25;USA\nAlice;30;Canada\nBob;35;UK"
  * ```
  */
-function arrTableToCSV(input, delimiter = ';', replaceLinebreakWith = '|') {
+function arrTableToCsv(input, delimiter = ';', replaceLinebreakWith = '|') {
     return input
         .map((row) => {
-        return row
-            .map((item) => strReplaceAll(item + '', delimiter, '').replace(/(\r*\n)+/g, replaceLinebreakWith))
-            .join(delimiter);
+        return row.map((item) => strReplaceAll(item + '', delimiter, '').replace(/\r*\n/g, replaceLinebreakWith)).join(delimiter);
     })
         .join('\n');
 }
@@ -2041,6 +1997,18 @@ function asyncWithTimeout(timeout, task) {
 }
 
 /**
+ * This function waits for a specified number of seconds before resolving a promise.
+ * @returns A promise that resolves after the specified number of seconds.
+ */
+function waitSeconds(secs = 0) {
+    return new Promise((resolve) => {
+        if (secs < 0)
+            throw new Error('secs must be a positive number');
+        setTimeout(resolve, Math.floor(secs * 1000));
+    });
+}
+
+/**
  * Decodes a base64 encoded string into a Buffer.
  * @param str The base64 encoded string to decode.
  * @example ```ts
@@ -2173,13 +2141,7 @@ function intToBytes(int) {
                 : x < 16777216
                     ? [253, Math.floor(x / 65536), Math.floor(x / 256) % 256, x % 256]
                     : x < 4294967296
-                        ? [
-                            254,
-                            Math.floor(x / 16777216),
-                            Math.floor(x / 65536) % 256,
-                            Math.floor(x / 256) % 256,
-                            x % 256,
-                        ]
+                        ? [254, Math.floor(x / 16777216), Math.floor(x / 65536) % 256, Math.floor(x / 256) % 256, x % 256]
                         : (() => {
                             const exp = Math.floor(Math.log(x) / Math.log(2)) - 32;
                             const bytes = [255, ...intToBytes(exp)];
@@ -2205,13 +2167,7 @@ function padArrayBytesLeft(a) {
     if (!a.length)
         return [0, 0, 0, 0];
     const l = a.length;
-    return l === 4
-        ? a
-        : l === 1
-            ? [0, 0, 0, a[0]]
-            : l === 2
-                ? [0, 0, a[0], a[1]]
-                : [0, a[0], a[1], a[2]];
+    return l === 4 ? a : l === 1 ? [0, 0, 0, a[0]] : l === 2 ? [0, 0, a[0], a[1]] : [0, a[0], a[1], a[2]];
 }
 
 /**
@@ -2228,13 +2184,7 @@ function padArrayBytesRight(a) {
     if (!a.length)
         return [0, 0, 0, 0];
     const l = a.length;
-    return l === 4
-        ? a
-        : l === 1
-            ? [a[0], 0, 0, 0]
-            : l === 2
-                ? [a[0], a[1], 0, 0]
-                : [a[0], a[1], a[2], 0];
+    return l === 4 ? a : l === 1 ? [a[0], 0, 0, 0] : l === 2 ? [a[0], a[1], 0, 0] : [a[0], a[1], a[2], 0];
 }
 
 /**
@@ -3274,6 +3224,10 @@ function numDaysInMonth(month, year) {
 function isValidDateDay(day, month, year) {
     if (!Number.isInteger(day))
         return false;
+    if (!Number.isInteger(month))
+        return false;
+    if (year && !Number.isInteger(year))
+        return false;
     if (day < 1)
         return false;
     if (day > numDaysInMonth(month, year))
@@ -3341,7 +3295,7 @@ const MS_IN_YEAR = 1000 * 60 * 60 * 24 * 365;
  * @returns A Date object representing the date that is the specified number of days in the past.
  * @example ```ts
  * dateDaysAgo(5);;
- * //=> {result}
+ * //=> result
  * ```
  */
 function dateDaysAgo(days) {
@@ -3540,97 +3494,20 @@ function yearsSinceDate(date) {
  * ```
  */
 function absoluteToRelativePath(absolute, workingDirectory = process.cwd()) {
-    return path
-        .normalize(absolute)
-        .replace(new RegExp(regexEscapeString(path.normalize(workingDirectory) + path.sep), 'i'), '');
-}
-
-/**
- * Cleans a directory by removing files that match a filter.
- * @remarks This function is asynchronous and returns a promise that resolves to the path of the cleaned directory.
- * @param dirpath The path of the directory to clean.
- * @param filter A function that takes a filename and returns a boolean. Files for which this function returns `true` will be removed.
- * @returns A promise that resolves to the path of the cleaned directory.
- * @throws If the directory cannot be read or a file cannot be removed.
- * @example ```ts
- * cleanDirectory('./src', (filename: string) => filename.endsWith('.ts'));
- * ```
- */
-function cleanDirectory(dirpath, filter) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const options = { recursive: true, force: true };
-        for (const filename of yield fs.promises.readdir(dirpath)) {
-            if (!filter(filename))
-                continue;
-            yield fs.promises.rm(path.join(dirpath, filename), options);
-        }
-        return dirpath;
-    });
-}
-
-/**
- * Cleans a directory in a safe manner by checking if the directory exists before attempting to clean it.
- * The cleaning process is determined by a filter function that is passed as an argument.
- * @param dirpath The path of the directory to be cleaned.
- * @param filter A function that takes a filename as an argument and returns a boolean.
- * Files for which this function returns `true` will be deleted.
- * @returns A promise that resolves to the path of the directory.
- * @example ```ts
- * cleanDirectorySafe('./src', (filename: string) => filename.endsWith('.ts'));
- * ```
- */
-function cleanDirectorySafe(dirpath, filter) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!fs.existsSync(dirpath))
-            return dirpath;
-        return yield cleanDirectory(dirpath, filter);
-    });
-}
-
-/**
- * Synchronously cleans a directory by removing files that match a provided filter function.
- * @param dirpath The path to the directory to clean.
- * @param filter A function that takes a filename as a parameter and returns a boolean. Files for which this function returns `true` will be removed.
- * @returns The path to the cleaned directory.
- * @throws Will throw an error if the directory does not exist or if an error occurs while removing a file.
- * @example ```ts
- * cleanDirectorySync('./src', (filename: string) => filename.endsWith('.ts'));
- * ```
- */
-function cleanDirectorySync(dirpath, filter) {
-    const options = { recursive: true, force: true };
-    for (const filename of fs.readdirSync(dirpath)) {
-        if (!filter(filename))
-            continue;
-        fs.rmSync(path.join(dirpath, filename), options);
-    }
-    return dirpath;
-}
-
-/**
- * Synchronously cleans a directory in a safe manner. If the directory does not exist, it will return the directory path without making any changes.
- * @param dirpath The path of the directory to clean.
- * @param filter A function that takes a filename as a parameter and returns a boolean. If the function returns true, the file will be kept; otherwise, it will be deleted.
- * @returns The path of the directory.
- * @example ```ts
- * cleanDirectorySafeSync('./src', (filename: string) => filename.endsWith('.ts'));
- * ```
- * @throws If the directory path is not a string or the filter is not a function.
- */
-function cleanDirectorySafeSync(dirpath, filter) {
-    if (!fs.existsSync(dirpath))
-        return dirpath;
-    return cleanDirectorySync(dirpath, filter);
+    return path.normalize(absolute).replace(new RegExp(regexEscapeString(path.normalize(workingDirectory) + path.sep), 'i'), '');
 }
 
 /**
  * Create a directory at a given path if it does not exist.
  * Automatically creates parent directories if they do not exist.
- * @param dirpath The path where the directory should be created.
  * @remarks This function uses the `mkdirp` package to create directories.
+ * @param dirpath The path where the directory should be created.
  * @returns The path of the directory.
+ * @throws Will throw an error if the directory cannot be created.
  * @example ```ts
- * createDirectory('/path/to/directory')
+ * createDirectory('/path/to/directory').then((dirpath) => {
+ *   //=> `Directory created at ${dirpath}`
+ * });
  * ```
  */
 function createDirectory(dirpath) {
@@ -3728,8 +3605,7 @@ function createFileExtensionFilter(...fileExtensions) {
  * @returns A Promise that resolves when the directory has been deleted.
  * @throws Will throw an error if the directory does not exist, or if there was a problem deleting the directory.
  * @example ```ts
- * deleteDirectory('/path/to/directory');;
- * //=> undefined
+ * deleteDirectory('/path/to/directory');
  * ```
  */
 function deleteDirectory(dirpath) {
@@ -3849,22 +3725,17 @@ class File {
      * @param filepath The absolute path to the source file.
      */
     constructor(filepath) {
-        this.filepath = filepath;
+        this.filepath = path.normalize(filepath);
     }
     /**
      * The file extension of the source file.
+     * @returns The file extension, including the leading dot.
      */
     get fileExtension() {
         return path.extname(this.filepath);
     }
     /**
-     * The name of the source file's exported member.
-     */
-    get exportName() {
-        return this.filename.substring(0, this.filename.indexOf('.'));
-    }
-    /**
-     * The name of the source file.
+     * The filename including the file extension.
      */
     get filename() {
         return path.basename(this.filepath);
@@ -3887,50 +3758,17 @@ class File {
     get relative() {
         return absoluteToRelativePath(this.filepath);
     }
-    /**
-     * Returns whether the source file exists.
-     */
-    fileExists() {
-        return fs.existsSync(this.filepath);
-    }
 }
 
 /**
- * This function retrieves all the values from a given Excel file worksheet.
- * It iterates over each row and cell in the worksheet, converting the cell values to strings and trimming any excess whitespace.
- * The result is a two-dimensional array of strings, where each inner array represents a row in the worksheet.
- * @param worksheet The Excel file worksheet to retrieve values from.
- * @remarks This function is useful when you need to extract all the data from an Excel worksheet and manipulate it in your TypeScript application.
- * @returns A two-dimensional array of strings representing the values in the worksheet.
+ * Reads an Excel file and returns its content as a record where each key is the name of a worksheet and its value is a 2D array of strings representing the rows and cells of the worksheet.
+ * @remarks This function uses the `exceljs` library to read the Excel file. It will throw an error if the file does not exist or is not a valid Excel file.
+ * @param filepath - The path to the Excel file to read.
+ * @returns A Promise that resolves to a record where each key is the name of a worksheet and its value is a 2D array of strings representing the rows and cells of the worksheet.
+ * @throws Will throw an error if the file does not exist or is not a valid Excel file.
  * @example ```ts
- * import { Worksheet } from 'exceljs';
- * // Assuming 'worksheet' is an instance of 'Worksheet'
- * getExcelFileWorksheetValues(worksheet);;
- * //=> {result}
- * ```
- */
-function getExcelFileWorksheetValues(worksheet) {
-    const rows = [];
-    worksheet.eachRow((cells) => {
-        const row = [];
-        cells.eachCell((cell) => {
-            row.push(String(cell.value).trim());
-        });
-        rows.push(row);
-    });
-    return rows;
-}
-
-/**
- * Reads an Excel file and returns a record where each key is the name of a worksheet and the value is a 2D array of the worksheet's cell values.
- * @remarks This function is asynchronous and returns a Promise.
- * @param filepath The path to the Excel file to read.
- * @returns A Promise that resolves to a Record. Each key in the Record is the name of a worksheet in the Excel file. Each value is a 2D array of strings, where each string is the value of a cell in the worksheet.
- * @throws Will throw an error if the file at the provided filepath cannot be read.
- * @example ```ts
- * readExcelFile('path/to/excel/file.xlsx').then((worksheets) => {
- *   worksheets['Sheet1'];;
- * //=> {result}
+ * readExcelFile('path/to/file.xlsx').then((worksheets) => {
+ *   console.log(worksheets['Sheet1']); // logs the content of 'Sheet1'
  * });
  * ```
  */
@@ -3940,53 +3778,29 @@ function readExcelFile(filepath) {
         yield workbook.xlsx.readFile(filepath);
         const worksheets = {};
         workbook.eachSheet((worksheet) => {
-            worksheets[worksheet.name] = getExcelFileWorksheetValues(worksheet);
+            const rows = [];
+            worksheet.eachRow((cells) => {
+                const row = [];
+                cells.eachCell((cell) => {
+                    row.push(String(cell.value).trim());
+                });
+                rows.push(row);
+            });
+            worksheets[worksheet.name] = rows;
         });
         return worksheets;
     });
 }
 
 /**
- * Reads an Excel file and returns the values of a specified worksheet as a 2D string array.
- * @remarks This function uses the `exceljs` library to read the Excel file and extract the worksheet data.
- * @param filepath The path to the Excel file to read.
- * @param worksheetIndexOrName The index or name of the worksheet to read. Defaults to the first worksheet (index 0) if not provided.
- * @returns A Promise that resolves to a 2D string array containing the values of the specified worksheet.
- * @throws Will throw an error if the specified file does not exist or if the specified worksheet does not exist in the file.
- * @example ```ts
- * readExcelFileWorksheet('path/to/file.xlsx', 'Sheet1').then((data) => {
- *   data;;
- * //=> {result}
- * });
- * ```
- * @example ```ts
- * readExcelFileWorksheet('path/to/file.xlsx', 0).then((data) => {
- *   console.log(data); // Logs the values of the first worksheet in 'file.xlsx'
- * });
- * ```
- */
-function readExcelFileWorksheet(filepath, worksheetIndexOrName = 0) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const workbook = new excelJs.Workbook();
-        yield workbook.xlsx.readFile(filepath);
-        const worksheet = typeof worksheetIndexOrName === 'number'
-            ? workbook.worksheets[worksheetIndexOrName]
-            : workbook.getWorksheet(worksheetIndexOrName);
-        return getExcelFileWorksheetValues(worksheet);
-    });
-}
-
-/**
- * Reads a JSON file and returns its content as a Promise.
- * @remarks This function is asynchronous and should be awaited.
+ * Reads a JSON file from the given filepath and returns its content as a Promise.
+ * The Promise will resolve with the parsed JSON content as an object of type T.
+ * @template T The expected return type of the JSON object.
  * @param filepath The path to the JSON file to read.
- * @typeparam T - The expected return type of the JSON file content.
- * @returns A Promise that resolves to the content of the JSON file.
- * @throws Will throw an error if the file cannot be read or parsed.
- * Read a JSON file and return the parsed content (async).
+ * @returns A Promise that resolves with the parsed JSON content as an object of type T.
+ * @throws Will throw an error if reading the file fails for any reason.
  * @example ```ts
- * readJsonFile<MyType>('/path/to/file.json');;
- * //=> {result}
+ * const data: MyType = await readJsonFile<MyType>('path/to/myfile.json');
  * ```
  */
 function readJsonFile(filepath) {
@@ -4000,11 +3814,10 @@ function readJsonFile(filepath) {
  * @template T The expected return type of the JSON data.
  * @param filepath The path to the JSON file to read.
  * @returns A Promise that resolves with the parsed JSON data.
- * @throws Will throw an error if the file cannot be read or the JSON cannot be parsed.
- * Read a JSON file and return the parsed content (sync).
+ * @throws If the file cannot be read or the content cannot be parsed as JSON.
  * @example ```ts
- * readJsonFileSync<MyType>('/path/to/file.json');
- * //=> {result}
+ * const data = await readJsonFileSync<MyType>('/path/to/file.json');
+ * console.log(data);
  * ```
  */
 function readJsonFileSync(filepath) {
@@ -4012,26 +3825,37 @@ function readJsonFileSync(filepath) {
 }
 
 /**
- * Writes a 2D array to an Excel file.
- * @remarks This function is asynchronous and returns a Promise that resolves to `void`.
- * @typeparam T - The type of elements in the 2D array.
- * @param filepath The path where the Excel file will be written.
- * @param table The 2D array to be written to the Excel file.
- * @param worksheetName The name of the worksheet where the array will be written. Defaults to 'Sheet1'.
- * @returns A Promise that resolves to `void`.
+ * Write multiple tables to an Excel file as worksheets.
+ * @remarks
+ * This function creates a new Excel file or overwrites an existing one.
+ * Each key in the data object will be used as a worksheet name, and the corresponding 2D array will be written to that worksheet.
+ * @typeParam T - The type of the data that will be written to the Excel file.
+ * @param filepath - The path where the Excel file will be written.
+ * @param data - An object where each key is a worksheet name and the corresponding value is a 2D array of data to be written to that worksheet.
+ * @returns A Promise that resolves when the file has been written.
+ * @throws If there is an error writing the file.
  * @example ```ts
- * [['Name', 'Age'], ['John Doe', 30], ['Jane Doe', 25]];;
- * //=> data
- * writeExcelFile('path/to/file.xlsx', data, 'People');;
- * //=> Promise<void>
+ * await writeExcelFile('path/to/file.xlsx', {
+ *   employees: [
+ *     ['Name', 'Age', 'Title'],
+ *     ['John', 30, 'Software Developer'],
+ *     ['Jane', 28, 'Data Scientist'],
+ *   ],
+ *   locations: [
+ *     ['ID', 'Country', 'City'],
+ *     [1, 'DK', 'Aarhus'],
+ *     [2, 'DK', 'Copenhagen'],
+ *   ],
+ * })
  * ```
- * @throws If the file cannot be written.
  */
-function writeExcelFile(filepath, table, worksheetName = 'Sheet1') {
+function writeExcelFile(filepath, data) {
     return __awaiter(this, void 0, void 0, function* () {
         const workbook = new excelJs.Workbook();
-        const worksheet = workbook.addWorksheet(worksheetName);
-        worksheet.addRows(table);
+        for (const [worksheetName, table] of Object.entries(data)) {
+            const worksheet = workbook.addWorksheet(worksheetName);
+            worksheet.addRows(table);
+        }
         yield workbook.xlsx.writeFile(filepath);
     });
 }
@@ -4052,18 +3876,16 @@ function toJson(data, pretty = false) {
 }
 
 /**
- * Writes a JSON file to the specified filepath with the provided data.
- * @remarks This function is asynchronous and returns a Promise that resolves to `void`.
- * @param filepath The path where the JSON file will be written.
- * @param data The data to be written to the JSON file.
- * @param pretty Optional parameter. If true, the JSON file will be formatted in a pretty, human-readable format. Default is `false`.
- * @typeparam T - The type of the data to be written to the JSON file.
- * @returns A Promise that resolves to `void`.
- * @throws If there's an error writing the file.
- * Write a JSON file (async).
+ * Writes a JSON file to the specified filepath. The data to be written is passed as an argument.
+ * If the 'pretty' argument is set to true, the JSON data will be formatted in a more human-readable way.
+ * @template T - The type of the data to be written to the file.
+ * @param filepath - The path to the file where the data should be written.
+ * @param data - The data to be written to the file.
+ * @param pretty - Optional. If set to true, formats the JSON data in a more human-readable way. Default is false.
+ * @returns A Promise that resolves when the file has been successfully written.
  * @example ```ts
- * writeJsonFile('./data.json', { name: 'John', age: 30 }, true);;
- * //=> undefined
+ * const data = { name: 'John', age: 30 };
+ * await writeJsonFile('./data.json', data, true);
  * ```
  */
 function writeJsonFile(filepath, data, pretty = false) {
@@ -4073,17 +3895,15 @@ function writeJsonFile(filepath, data, pretty = false) {
 }
 
 /**
- * Writes JSON data to a file synchronously.
- * @remarks This method will throw an error if the file cannot be written.
- * @param filepath The path of the file where the data will be written.
- * @param data The data to be written to the file.
- * @param pretty Optional parameter. If true, the JSON data will be formatted in a pretty, human-readable format. Default is false.
- * @typeparam T - The type of the data to be written to the file.
- * @throws Will throw an error if the file cannot be written.
- * Write a JSON file (sync).
+ * Writes a JSON object to a file synchronously.
+ * @typeParam T - The type of the JSON object.
+ * @param filepath - The path of the file where the JSON object will be written.
+ * @param data - The JSON object that will be written to the file.
+ * @param pretty - If true, the JSON object will be formatted with indentation and line breaks. Default is false.
+ * @throws If the file cannot be written.
  * @example ```ts
- * writeJsonFileSync("./path/to/file.json", { key: "value" }, true);
- * //=> undefined
+ * const data = { name: 'John', age: 30 };
+ * writeJsonFileSync('./data.json', data, true);
  * ```
  */
 function writeJsonFileSync(filepath, data, pretty = false) {
@@ -4161,8 +3981,7 @@ function funParseFunction(func) {
         name = ((_b = root === null || root === void 0 ? void 0 : root.id) === null || _b === void 0 ? void 0 : _b.name) || '';
         params = ((_c = root === null || root === void 0 ? void 0 : root.params) === null || _c === void 0 ? void 0 : _c.map((param) => param === null || param === void 0 ? void 0 : param.name)) || [];
     }
-    else if ((root === null || root === void 0 ? void 0 : root.type) === 'ExpressionStatement' &&
-        (root === null || root === void 0 ? void 0 : root.expression.type) === 'ArrowFunctionExpression') {
+    else if ((root === null || root === void 0 ? void 0 : root.type) === 'ExpressionStatement' && (root === null || root === void 0 ? void 0 : root.expression.type) === 'ArrowFunctionExpression') {
         params = ((_e = (_d = root === null || root === void 0 ? void 0 : root.expression) === null || _d === void 0 ? void 0 : _d.params) === null || _e === void 0 ? void 0 : _e.map((param) => param === null || param === void 0 ? void 0 : param.name)) || [];
     }
     return { name, params };
@@ -4185,21 +4004,21 @@ function funSetName(name, fun) {
     return fun;
 }
 
-function _toSet(string, ...concatSets) {
-    return new Set(string.split(',').concat(concatSets.map((set) => Array.from(set)).flat()));
-}
+const _HTML_BOOLEAN_ATTRIBUTES = new Set('async,autocomplete,autofocus,autoplay,border,challenge,checked,compact,contenteditable,controls,default,defer,disabled,formNoValidate,frameborder,hidden,indeterminate,ismap,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,readonly,required,reversed,scoped,scrolling,seamless,selected,sortable,spellcheck,translate'.split(','));
 
-const _HTML_VOID_ELEMENTS = _toSet('area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr');
+const _HTML_EVENT_ATTRIBUTES = new Set('onabort,onautocomplete,onautocompleteerror,onblur,oncancel,oncanplay,oncanplaythrough,onchange,onclick,onclose,oncontextmenu,oncuechange,ondblclick,ondrag,ondragend,ondragenter,ondragleave,ondragover,ondragstart,ondrop,ondurationchange,onemptied,onended,onerror,onfocus,oninput,oninvalid,onkeydown,onkeypress,onkeyup,onload,onloadeddata,onloadedmetadata,onloadstart,onmousedown,onmouseenter,onmouseleave,onmousemove,onmouseout,onmouseover,onmouseup,onmousewheel,onpause,onplay,onplaying,onprogress,onratechange,onreset,onresize,onscroll,onseeked,onseeking,onselect,onshow,onsort,onstalled,onsubmit,onsuspend,ontimeupdate,ontoggle,onvolumechange,onwaiting'.split(','));
 
-const _HTML_ELEMENTS = _toSet('a,area,audio,button,col,colgroup,details,dialog,embed,fieldset,form,html,iframe,img,input,link,map,math,meta,object,ol,optgroup,option,script,select,td,textarea,th,video,abbr,acronym,address,applet,article,aside,b,basefont,bdi,bdo,bgsound,big,blink,blockquote,body,canvas,caption,center,cite,code,data,datalist,dd,del,dfn,dir,div,dl,dt,em,figcaption,figure,font,footer,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hgroup,i,ins,isindex,kbd,label,legend,li,listing,main,mark,marquee,menu,meter,multicol,nav,nextid,nobr,noembed,noframes,noscript,output,p,picture,plaintext,pre,progress,q,rb,rp,rt,rtc,ruby,s,samp,section,slot,small,spacer,span,strike,strong,style,sub,summary,sup,svg,svg:desc,svg:title,table,tbody,template,tfoot,thead,time,title,tr,tt,u,ul,var,xmp', _HTML_VOID_ELEMENTS);
+const _HTML_GLOBAL_ATTRIBUTES = new Set('accesskey,autocapitalize,class,contenteditable,contextmenu,dir,draggable,dropzone,hidden,id,itemprop,lang,slot,spellcheck,style,tabindex,title'.split(','));
 
-const _HTML_BOOLEAN_ATTRIBUTES = _toSet('async,autocomplete,autofocus,autoplay,border,challenge,checked,compact,contenteditable,controls,default,defer,disabled,formNoValidate,frameborder,hidden,indeterminate,ismap,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,readonly,required,reversed,scoped,scrolling,seamless,selected,sortable,spellcheck,translate');
+const _HTML_ATTRIBUTES = new Set('charset,coords,datafld,datasrc,download,href,hreflang,methods,name,ping,referrerpolicy,rel,shape,target,type,urn,alt,crossorigin,preload,alink,background,bgcolor,link,marginbottom,marginheight,marginleft,marginright,margintop,marginwidth,text,vlink,clear,dataformatas,formaction,formenctype,formmethod,formnovalidate,formtarget,align,char,charoff,span,valign,width,src,action,accept,method,profile,color,size,version,allowtransparency,hspace,vspace,decoding,lowsrc,srcset,capture,inputmode,usemap,as,blocking,integrity,display,overflow,content,http-equiv,scheme,archive,classid,code,codebase,codetype,data,declare,standby,valuetype,event,for,language,nomodule,bordercolor,cellpadding,cellspacing,datapagesize,frame,rules,summary,axis,colspan,height,rowspan,scope,cols,maxlength,minlength,rows,wrap,allow,buffered,cite,csp,datetime,dirname,enctype,enterkeyhint,form,headers,high,icon,importance,intrinsicsize,keytype,kind,label,loading,list,low,manifest,max,media,min,optimum,pattern,placeholder,poster,radiogroup,sandbox,sizes,srcdoc,srclang,start,step,value'
+    .split(',')
+    .concat(..._HTML_GLOBAL_ATTRIBUTES, ..._HTML_EVENT_ATTRIBUTES, ..._HTML_BOOLEAN_ATTRIBUTES));
 
-const _HTML_EVENT_ATTRIBUTES = _toSet('onabort,onautocomplete,onautocompleteerror,onblur,oncancel,oncanplay,oncanplaythrough,onchange,onclick,onclose,oncontextmenu,oncuechange,ondblclick,ondrag,ondragend,ondragenter,ondragleave,ondragover,ondragstart,ondrop,ondurationchange,onemptied,onended,onerror,onfocus,oninput,oninvalid,onkeydown,onkeypress,onkeyup,onload,onloadeddata,onloadedmetadata,onloadstart,onmousedown,onmouseenter,onmouseleave,onmousemove,onmouseout,onmouseover,onmouseup,onmousewheel,onpause,onplay,onplaying,onprogress,onratechange,onreset,onresize,onscroll,onseeked,onseeking,onselect,onshow,onsort,onstalled,onsubmit,onsuspend,ontimeupdate,ontoggle,onvolumechange,onwaiting');
+const _HTML_VOID_ELEMENTS = new Set('area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr'.split(','));
 
-const _HTML_GLOBAL_ATTRIBUTES = _toSet('accesskey,autocapitalize,class,contenteditable,contextmenu,dir,draggable,dropzone,hidden,id,itemprop,lang,slot,spellcheck,style,tabindex,title');
-
-const _HTML_ATTRIBUTES = _toSet('charset,coords,datafld,datasrc,download,href,hreflang,methods,name,ping,referrerpolicy,rel,shape,target,type,urn,alt,crossorigin,preload,alink,background,bgcolor,link,marginbottom,marginheight,marginleft,marginright,margintop,marginwidth,text,vlink,clear,dataformatas,formaction,formenctype,formmethod,formnovalidate,formtarget,align,char,charoff,span,valign,width,src,action,accept,method,profile,color,size,version,allowtransparency,hspace,vspace,decoding,lowsrc,srcset,capture,inputmode,usemap,as,blocking,integrity,display,overflow,content,http-equiv,scheme,archive,classid,code,codebase,codetype,data,declare,standby,valuetype,event,for,language,nomodule,bordercolor,cellpadding,cellspacing,datapagesize,frame,rules,summary,axis,colspan,height,rowspan,scope,cols,maxlength,minlength,rows,wrap,allow,buffered,cite,csp,datetime,dirname,enctype,enterkeyhint,form,headers,high,icon,importance,intrinsicsize,keytype,kind,label,loading,list,low,manifest,max,media,min,optimum,pattern,placeholder,poster,radiogroup,sandbox,sizes,srcdoc,srclang,start,step,value', _HTML_GLOBAL_ATTRIBUTES, _HTML_EVENT_ATTRIBUTES, _HTML_BOOLEAN_ATTRIBUTES);
+const _HTML_ELEMENTS = new Set('a,area,audio,button,col,colgroup,details,dialog,embed,fieldset,form,html,iframe,img,input,link,map,math,meta,object,ol,optgroup,option,script,select,td,textarea,th,video,abbr,acronym,address,applet,article,aside,b,basefont,bdi,bdo,bgsound,big,blink,blockquote,body,canvas,caption,center,cite,code,data,datalist,dd,del,dfn,dir,div,dl,dt,em,figcaption,figure,font,footer,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hgroup,i,ins,isindex,kbd,label,legend,li,listing,main,mark,marquee,menu,meter,multicol,nav,nextid,nobr,noembed,noframes,noscript,output,p,picture,plaintext,pre,progress,q,rb,rp,rt,rtc,ruby,s,samp,section,slot,small,spacer,span,strike,strong,style,sub,summary,sup,svg,svg:desc,svg:title,table,tbody,template,tfoot,thead,time,title,tr,tt,u,ul,var,xmp'
+    .split(',')
+    .concat(..._HTML_VOID_ELEMENTS));
 
 const el = {};
 const attr = {};
@@ -4434,32 +4253,6 @@ function MixinIndexed(BaseConstructor) {
 }
 
 /**
- * This function is a mixin that adds options management to a base class.
- * @template TBase The type of the base class to which this mixin is applied.
- * @param BaseConstructor The base class to which this mixin is applied.
- * @returns The resulting class with the mixin applied.
- */
-function MixinOptions(BaseConstructor) {
-    return class Options extends BaseConstructor {
-        constructor(...args) {
-            super(...args);
-        }
-        assertOptionsNoIllegalConcurrent(options, ...keys) {
-            if (keys.filter((key) => options[key] !== undefined).length < 2)
-                return options;
-            throw new Error(`Cannot use these options simultanously: ${keys.join(', ')}`);
-        }
-        assertOptionsNoMissingDependencies(options, key, ...dependencies) {
-            if (options[key] === undefined ||
-                arrEvery(dependencies, (d) => options[d] !== undefined)) {
-                return options;
-            }
-            throw new Error(`Cannot use the '${key}' option without: ${dependencies.join(', ')}`);
-        }
-    };
-}
-
-/**
  * This function is a mixin that adds timestamp functionality to a base class.
  * @template TBase - The type of the base constructor.
  * @param BaseConstructor The base constructor that the mixin is applied to.
@@ -4505,8 +4298,7 @@ function normalizeLineLengths(sentences, lowerBound, upperBound) {
         for (let i = 1; i < sentences.length; i++) {
             const cur = sentences[i];
             const pre = sentences[i - 1];
-            if (cur.length + pre.length < upperBound &&
-                (cur.length < lowerBound || pre.length < lowerBound)) {
+            if (cur.length + pre.length < upperBound && (cur.length < lowerBound || pre.length < lowerBound)) {
                 sentences[i] = `${pre} ${cur}`;
                 sentences[i - 1] = '';
             }
@@ -4519,27 +4311,6 @@ function normalizeLineLengths(sentences, lowerBound, upperBound) {
         newSentences = singlePass(sentences, lowerBound, upperBound);
     }
     return newSentences;
-}
-
-const _exec = promisify(exec);
-/**
- * Executes a shell command and returns an object that contains the standard output and standard error.
- * @remarks This function is asynchronous and returns a Promise.
- * @param command The shell command to execute.
- * @returns A Promise that resolves to an object with `stdout` and `stderr` properties.
- * @throws Will throw an error if the command execution fails.
- * @example ```ts
- * executeCommand('ls -la')
- *   .then(result => result.stdout);
- * //=> "expected stdout result"
- *   .catch(error => error.stderr);;
- * //=> "expected stderr result"
- * ```
- */
-function executeCommand(command) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield _exec(command);
-    });
 }
 
 /**
@@ -4572,6 +4343,53 @@ function memoryUsage() {
 }
 
 /**
+ * Executes a shell command and returns a Promise that resolves with an object containing the command, stdout, and stderr.
+ * The stdout and stderr are returned as arrays of strings, where each string represents a line of output.
+ * If the command fails to execute, the Promise is rejected with an error.
+ * @param command - The shell command to execute.
+ * @returns A Promise that resolves with an object containing the command, stdout, and stderr.
+ * @throws Will throw an error if the command fails to execute.
+ * @example ```ts
+ * shellCommand('ls -l').then(result => {
+ *   console.log(result.cmd); // 'ls -l'
+ *   console.log(result.stdout); // ['total 0', 'drwxr-xr-x  5 user  group  160 Jan 14 10:53 Documents', ...]
+ *   console.log(result.stderr); // []
+ * }).catch(error => {
+ *   console.error(error);
+ * });
+ * ```
+ */
+function shellCommand(command) {
+    return new Promise((resolve, reject) => {
+        var _a, _b;
+        const child = childProcess.exec(command);
+        const stdout = [];
+        const stderr = [];
+        (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.on('data', (data) => {
+            const string = data.toString().trim();
+            console.log(string);
+            stdout.push(string);
+        });
+        (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.on('data', (data) => {
+            const string = data.toString().trim();
+            console.error(string);
+            stderr.push(string);
+        });
+        child.on('error', (error) => {
+            reject(error);
+        });
+        child.on('close', (code) => {
+            const data = {
+                cmd: command,
+                stdout,
+                stderr,
+            };
+            resolve(data);
+        });
+    });
+}
+
+/**
  * Drain a Readable into a string.
  * @remarks This function is asynchronous and returns a promise that resolves to a string.
  * If an error occurs during the conversion, it returns an empty string.
@@ -4591,16 +4409,11 @@ function streamToString(stream) {
         const chunks = [];
         try {
             try {
-                for (_a = true, stream_1 = __asyncValues(stream); stream_1_1 = yield stream_1.next(), _b = stream_1_1.done, !_b;) {
+                for (_a = true, stream_1 = __asyncValues(stream); stream_1_1 = yield stream_1.next(), _b = stream_1_1.done, !_b; _a = true) {
                     _d = stream_1_1.value;
                     _a = false;
-                    try {
-                        const chunk = _d;
-                        chunks.push(Buffer.from(chunk).toString());
-                    }
-                    finally {
-                        _a = true;
-                    }
+                    const chunk = _d;
+                    chunks.push(Buffer.from(chunk).toString());
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -4620,17 +4433,18 @@ function streamToString(stream) {
 
 /**
  * Extension of Node's native Readable class for converting a string into a Readable stream.
+ * @param string - The string to create the stream from.
  */
 class StringStream extends Readable {
-    constructor(str) {
+    constructor(string) {
         super();
-        this.str = str;
+        this.string = string;
         this.ended = false;
     }
     _read() {
         if (!this.ended) {
             process.nextTick(() => {
-                this.push(Buffer.from(this.str));
+                this.push(Buffer.from(this.string));
                 this.push(null);
             });
             this.ended = true;
@@ -4790,6 +4604,83 @@ function isOdd(n) {
     return n % 2 !== 0;
 }
 
+/**
+ * Checks if the provided value is a valid number.
+ * @remarks This function checks if the provided value is a finite number and not NaN.
+ * @param number The value to check.
+ * @returns A boolean indicating whether the provided value is a valid number.
+ * @example ```ts
+ * isValidNumber(123);
+ * //=> true
+ * isValidNumber(NaN);
+ * //=> false
+ * isValidNumber(Infinity);
+ * //=> false
+ * ```
+ */
+function isValidNumber(number) {
+    return isFinite(number) && !isNaN(number);
+}
+
+/**
+ * Asserts that the provided value is a valid number. If the value is not a valid number, it throws a TypeError.
+ * A valid number is a finite number and not NaN.
+ * @param number The number to be validated.
+ * @returns Returns the validated number if it is valid.
+ * @throws Throws an error if the provided number is not valid.
+ * @example ```ts
+ * assertValidNumber(5);;
+ * //=> 5
+ * assertValidNumber(NaN);;
+ * //=> throws TypeError
+ * ```
+ */
+function assertValidNumber(number) {
+    if (isValidNumber(number))
+        return number;
+    throw new TypeError('Expected number to be finite and not NaN. Got: ' + number);
+}
+
+/**
+ * Round a given number with a given precision and rounding function.
+ * Shifts with exponential notation to avoid floating-point issues.
+ * @param number the number to round.
+ * @param precision the number of decimal points.
+ * @param func the rounding function to use.
+ * @returns The rounded number.
+ * @throws if the given number is not finite or NaN.
+ * @example ```ts
+ * roundWith(1.2345, 2);;
+ * //=> 1.23
+ * roundWith(1.2345, 2, Math.ceil);;
+ * //=> 1.24
+ * ```
+ */
+function roundWith(number, precision, func = Math.round) {
+    const pair1 = (assertValidNumber(number) + 'e').split('e');
+    const pair2 = (func(+(pair1[0] + 'e' + (+pair1[1] + precision))) + 'e').split('e');
+    return +(pair2[0] + 'e' + (+pair2[1] - precision));
+}
+
+/**
+ * Round a given number with a given precision.
+ * Shifts with exponential notation to avoid floating-point issues.
+ * @param number the number to round.
+ * @param precision the number of decimal points.
+ * @param - The number of decimal places to round to. Defaults to 0 if not specified.
+ * @returns The rounded number.
+ * @throws if the given number is not finite or NaN.
+ * @example ```ts
+ * round(1.2345, 2);;
+ * //=> 1.23
+ * round(1.2345);;
+ * //=> 1
+ * ```
+ */
+function round(number, precision = 0) {
+    return roundWith(number, precision, Math.round);
+}
+
 const locales = new Map([
     ['en-US', [',', '.']],
     ['da-DK', ['.', ',']],
@@ -4840,9 +4731,7 @@ class NumberFormatter {
         assertValidNumber(number);
         const negative = number >= 0 ? '' : '-';
         const split = Math.abs(round(number, this.precision)).toString().split('.');
-        const decimals = this.precision
-            ? this.decimalSeparator + (split[1] || '').padEnd(this.precision, '0')
-            : '';
+        const decimals = this.precision ? this.decimalSeparator + (split[1] || '').padEnd(this.precision, '0') : '';
         let result = '';
         for (let i = 0; i < split[0].length; i++) {
             if (i % 3 === 0 && i !== 0) {
@@ -5051,8 +4940,6 @@ function inheritStaticMembers(target, source, ignoreKeys = []) {
         if (Reflect.has(target, key))
             continue;
         const des = Object.getOwnPropertyDescriptor(source, key);
-        if (!des)
-            continue;
         Object.defineProperty(target, key, des);
     }
     return target;
@@ -5107,10 +4994,7 @@ function isPrototype(value) {
  * ```
  */
 function isConstructor(value) {
-    return (typeof value === 'function' &&
-        'prototype' in value &&
-        isPrototype(value.prototype) &&
-        value === value.prototype.constructor);
+    return typeof value === 'function' && 'prototype' in value && isPrototype(value.prototype) && value === value.prototype.constructor;
 }
 
 /**
@@ -5135,8 +5019,6 @@ function isConstructor(value) {
  * ```
  */
 function* iteratePrototypeChain(object) {
-    if (object == null)
-        return;
     if (
     // if the below false, then object must be an instance
     !isPrototype(object) &&
@@ -5657,12 +5539,8 @@ function objValuesArray(obj) {
  * ```
  */
 function objWalk(node, callback) {
-    const hasOwn = Object.prototype.hasOwnProperty;
     function recurse(node, path = []) {
-        for (const key in node) {
-            if (!hasOwn.call(node, key))
-                continue;
-            const child = node[key];
+        for (const [key, child] of Object.entries(node)) {
             if (typeof child === 'object' && child !== null) {
                 if (Array.isArray(child)) {
                     child.forEach((node, index) => {
@@ -5728,39 +5606,6 @@ function setNonConfigurable(object, ...propertyNames) {
 }
 
 /**
- * Sets the specified properties of an object as non-enumerable.
- * @remarks This function modifies the original object by setting the enumerable attribute of the specified properties to false.
- * If the object does not have the specified property, it will be ignored.
- * If the object is not an object, an error will be thrown.
- * @typeparam T - The type of the object.
- * @param object The object whose properties are to be set as non-enumerable.
- * @param propertyNames The names of the properties to be set as non-enumerable.
- * @throws Will throw an error if the first argument is not an object.
- * @throws Will throw an error if a specified property does not have a descriptor.
- * @example ```ts
- * const obj = { a: 1, b: 2, c: 3 };
- * setNonEnumerableSafe(obj, 'a', 'b');
- * Object.keys(obj);;
- * //=> ['c']
- * ```
- */
-function setNonEnumerableSafe(object, ...propertyNames) {
-    if (!object || typeof object !== 'object') {
-        throw new Error(`setValueAsGetter() requires an object as the first argument.`);
-    }
-    for (const propertyName of propertyNames) {
-        if (!Object.hasOwn(object, propertyName)) {
-            continue;
-        }
-        const des = Object.getOwnPropertyDescriptor(object, propertyName);
-        if (!des)
-            throw new Error(`Property '${propertyName}' does not have a descriptor.`);
-        des.enumerable = false;
-        Object.defineProperty(object, propertyName, des);
-    }
-}
-
-/**
  * Sets the specified properties of an object to be non-writable.
  * @template T - The type of the object.
  * @param object The object whose properties are to be made non-writable.
@@ -5803,6 +5648,38 @@ function setWritable(object, ...propertyNames) {
     for (const propertyName of propertyNames) {
         Object.defineProperty(object, propertyName, { writable: true });
     }
+}
+
+/**
+ * Parse a Readable stream of CSV lines into an array of objects.
+ * @param stream The Readable stream of CSV lines.
+ * @param options The options to pass to the CSV parser.
+ * @returns An array of objects, where each object represents a row in the CSV.
+ * @example ```ts
+ * // parse a CSV file
+ * const stream = fs.createReadStream('data.csv');
+ * const options = { separator: ';', strict: true };
+ * const data = await csvParseStream(stream, options);
+ * // parse a CSV string
+ * const stream = new StringSteam('Name;Age;Country\nJohn;25;USA\nAlice;30;Canada\n');
+ * const options = { separator: ';', strict: true };
+ * const data = await csvParseStream(stream, options);
+ * //=> [{Name:'John',Age:'25',Country:'USA'},{Name:'Alice',Age:'30',Country:'Canada'}]
+ * ```
+ */
+function csvParseStream(stream, options) {
+    return new Promise((resolve, reject) => {
+        const data = [];
+        stream
+            .pipe(parseCSV(options))
+            .on('data', (o) => {
+            data.push(o);
+        })
+            .on('end', () => {
+            resolve(data);
+        })
+            .on('error', reject);
+    });
 }
 
 /**
@@ -5946,6 +5823,16 @@ function parseMarkdownTable(string) {
 
 /**
  * Parse text content of each page in a PDF file. Array indices correspond to page numbers.
+ * @param filepath - The path to the PDF file.
+ * @param begin - The page number to start from. If not provided, defaults to the first page.
+ * @param end - The page number to end at. If not provided, defaults to the last page.
+ * @returns An async generator that yields the text content of each page in the PDF.
+ * @throws Will yield an empty string if an error occurs while processing a page.
+ * @example ```ts
+ * for await (const pageText of pdfIteratePages('path/to/file.pdf')) {
+ *   console.log(pageText);
+ * }
+ * ```
  */
 function pdfIteratePages(filepath, begin, end) {
     return __asyncGenerator(this, arguments, function* pdfIteratePages_1() {
@@ -5973,23 +5860,26 @@ function pdfIteratePages(filepath, begin, end) {
 }
 
 /**
- * Parse text content of each page in a PDF file. Array indices correspond to page numbers.
+ * Parse text content of each page in a PDF file.
+ * @param filepath - The path to the PDF file.
+ * @param begin - The starting page number for the range of pages to retrieve. Optional.
+ * @param end - The ending page number for the range of pages to retrieve. Optional.
+ * @returns A Promise that resolves to an array of strings, where each string represents a page in the PDF.
+ * @example ```ts
+ * const pages = await pdfGetPages('/path/to/pdf', 1, 5);
+ * console.log(pages); // logs the first 5 pages of the PDF
+ * ```
  */
 function pdfGetPages(filepath, begin, end) {
     var _a, e_1, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const result = [];
         try {
-            for (var _d = true, _e = __asyncValues(pdfIteratePages(filepath, begin, end)), _f; _f = yield _e.next(), _a = _f.done, !_a;) {
+            for (var _d = true, _e = __asyncValues(pdfIteratePages(filepath, begin, end)), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
                 _c = _f.value;
                 _d = false;
-                try {
-                    const page = _c;
-                    result.push(page);
-                }
-                finally {
-                    _d = true;
-                }
+                const page = _c;
+                result.push(page);
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -6005,7 +5895,21 @@ function pdfGetPages(filepath, begin, end) {
 
 /**
  * Split a given PDF file into separate single-page-files.
- * @returns Array of filepaths of the split files. Array indices correspond to page numbers.
+ * @remarks
+ * This function reads a PDF file from the provided filepath, splits it into separate pages,
+ * and saves each page as a separate PDF file in the specified output directory.
+ * The filenames of the output files are zero-padded based on the total number of pages in the original document.
+ * @param filepath - The path to the PDF file to be split.
+ * @param outputDirpath - The directory where the split PDF pages should be saved.
+ * @returns A promise that resolves to an array of filepaths for the split PDF pages.
+ * @throws Will throw an error if the input file cannot be read or the output directory cannot be created.
+ * @example ```ts
+ * const inputFilePath = '/path/to/input.pdf';
+ * const outputDirPath = '/path/to/output/directory';
+ * pdfSplitPages(inputFilePath, outputDirPath)
+ *   .then(filepaths => console.log(filepaths))
+ *   .catch(error => console.error(error));
+ * ```
  */
 function pdfSplitPages(filepath, outputDirpath) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -6218,9 +6122,7 @@ function compareArray(compareAt, descending = false) {
 function regexScopeTree(left, right) {
     function parseParam(param) {
         const isString = typeof param === 'string';
-        const reg = isString
-            ? new RegExp(regexEscapeString(param), 'g')
-            : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'));
+        const reg = isString ? new RegExp(regexEscapeString(param), 'g') : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'));
         const regValidate = new RegExp('^' + reg.source + '$', '');
         return [reg, regValidate];
     }
@@ -6237,8 +6139,6 @@ function regexScopeTree(left, right) {
             }
             else if (regRightValidate.test(match.match)) {
                 const left = stack.pop();
-                if (!left)
-                    continue;
                 const right = match;
                 const depth = stack.length;
                 const node = {
@@ -6267,9 +6167,6 @@ function regexScopeTree(left, right) {
                 if (yieldOnlyRootNodes && depth > 0)
                     continue;
                 yield node;
-            }
-            else {
-                throw new Error('Match does not recognize itself as neither left nor right, which should be impossible.');
             }
         }
     };
@@ -6423,11 +6320,6 @@ const regRepeatingWhiteSpace = /((\r?\r?\n)|\s|\t){2,}/g;
  * Example: 151199-1512
  */
 const regSocialSecurityNumbersDK = /(?<dd>[0-3][0-9])(?<mm>[0-1][0-9])(?<yy>[0-9]{2}).?(?<id4>[0-9]{4})/g;
-
-/**
- * Matches TSDoc example-tag content wrapped in markdown typescript code blocks.
- */
-const regTsDocExampleCode = buildRegexBetween(/```(ts|typescript)/i, ' * ```');
 
 /**
  * Matches TSDoc example-tag content wrapped in markdown typescript code blocks.
@@ -6892,6 +6784,17 @@ function strParseBoolean(string) {
     return string.trim().toLowerCase() === 'true';
 }
 
+/**
+ * Prepend each line of a string with a specified string.
+ * @param string - The string to be processed.
+ * @param toPrepend - The string to prepend to each line.
+ * @returns The processed string with each line prepended by the specified string.
+ * @example ```ts
+ * const myString = 'Hello\nWorld';
+ * strPrependLines(myString, '--');
+ * //=> '--Hello\n--World'
+ * ```
+ */
 function strPrependLines(string, toPrepend) {
     return string
         .split(/\r?\n/)
@@ -7130,9 +7033,7 @@ function strTrimLinesRight(string) {
  * ```
  */
 function strUnwrap(input, left, right, flags = '') {
-    return input
-        .replace(new RegExp('^' + regexEscapeString(left), flags), '')
-        .replace(new RegExp(regexEscapeString(right) + '$', flags), '');
+    return input.replace(new RegExp('^' + regexEscapeString(left), flags), '').replace(new RegExp(regexEscapeString(right) + '$', flags), '');
 }
 
 /**
@@ -7255,9 +7156,59 @@ function tsCountExports(code) {
 }
 
 /**
- * This function extracts all import statements from a given TypeScript code string.
+ * This function takes a source string, and yields each TSDoc block comments in it.
+ * @param code The source code string.
+ * @returns A generator that yields each TSDoc block comment in the source code.
+ * @yields Each TSDoc block comment in the source code.
+ */
+function* tsDocExtractAllComments(code) {
+    const reStart = /^\s*\/\*\*\s*$/;
+    const reEnd = /^\s*\*\/\s*$/;
+    let lines = code.split(/\r?\n/);
+    let offset = 0;
+    while (true) {
+        const indexStart = lines.findIndex((line) => reStart.test(line));
+        const indexEnd = lines.findIndex((line) => reEnd.test(line));
+        if (indexStart !== -1 && indexEnd !== -1) {
+            let nextLine;
+            if (indexEnd + 1 < lines.length)
+                nextLine = lines[indexEnd + 1];
+            if ((nextLine === null || nextLine === void 0 ? void 0 : nextLine.trim()) === '' && indexEnd + 2 < lines.length)
+                nextLine = lines[indexEnd + 2];
+            yield {
+                start: indexStart + offset,
+                end: indexEnd + offset,
+                match: lines.slice(indexStart, indexEnd + 1).join('\n'),
+                nextLine,
+            };
+            lines = lines.slice(indexEnd + 1);
+            offset += indexEnd + 1;
+        }
+        else {
+            break;
+        }
+    }
+}
+
+/**
+ * Strip block comments from the provided TypeScript code.
+ * @param code - The TypeScript code string from which to remove block comments.
+ * @returns The TypeScript code string with all block comments removed.
+ */
+function tsStripBlockComments(code) {
+    const lines = code.split('\n');
+    const remove = new Set();
+    for (const { start, end } of tsDocExtractAllComments(code)) {
+        for (const int of numRange(start, end))
+            remove.add(int);
+    }
+    return strip.block(lines.filter((_, i) => !remove.has(i)).join('\n'));
+}
+
+/**
+ * Extract all import statements from a given TypeScript source code string.
  * @param code The TypeScript code as a string from which to extract import statements.
- * @returns An array of import statements.
+ * @returns An array of objects, each representing an import statement. Each object includes the start and end line numbers (0-indexed) of the import statement in the original code, and the full text of the import statement.
  */
 function tsExtractImports(code) {
     const isFirstLine = /^import /;
@@ -7299,18 +7250,86 @@ function tsExtractImports(code) {
 }
 
 /**
- * Parses the Jest tests from the given string.
- * @remarks This function uses the `rexecFirstMatch` function from the `regex` module and the `regJestTests` function from the `regexlib` module.
- * @param code The string to parse Jest tests from.
+ * Strips all import statements from a given TypeScript code string.
+ * @param code - The TypeScript code to strip import statements from.
+ * @returns The TypeScript code without import statements.
+ * @example ```ts
+ * const code = `
+ * import { Component } from '@angular/core';
+ * import { OnInit } from '@angular/core';
+ * const a = 1;
+ * `.trim()
+ * tsStripImports(code)
+ * //=> 'const a = 1;'
+ * ```
+ */
+function tsStripImports(code) {
+    const lines = code.split('\n');
+    const imports = tsExtractImports(code);
+    const remove = new Set();
+    for (const { start, end } of imports) {
+        for (const int of numRange(start, end))
+            remove.add(int);
+    }
+    return lines
+        .filter((_, i) => !remove.has(i))
+        .join('\n')
+        .trimStart();
+}
+
+/**
+ * Removes lines that consist of only a double-slash comment, from the given code.
+ * @remarks This function uses a regular expression to remove all lines that start with a single-line comment.
+ * @returns The TypeScript code without single-line comments.
+ * @param code The code from which to remove the comments.
+ * @example ```ts
+ * const code = `const x = 5;
+ * // This is a comment
+ * const y = 10;`;
+ * stripSlashComments(code);
+ * //=> "const x = 5;\nconst y = 10;"
+ * ```
+ */
+function tsStripInlineComments(code) {
+    return strip.line(code.replace(/\n\s*\/\/.*\n/g, '\n').replace(/(^|\n)\s*\/\/.*(\n|$)/g, ''));
+}
+
+/**
+ * Returns the number of lines of code in the given source code, not including import satements, comments or empty lines.
+ * @param code - The TypeScript code to count the lines of.
+ * @returns The number of lines of code in the given TypeScript code string.
+ */
+function tsCountLinesOfCode(code) {
+    code = tsStripImports(code);
+    code = tsStripBlockComments(code);
+    code = tsStripInlineComments(code);
+    code = strRemoveEmptyLines(code);
+    if (!code.trim())
+        return 0;
+    return code.split('\n').length;
+}
+
+/**
+ * Extracts Jest test cases from a given TypeScript code string.
+ * @remarks
+ * This function is useful when you want to isolate and analyze test cases from a larger codebase.
+ * It works by finding the first line that starts with 'describe(' and the last line that is '})', and returns the lines in between.
+ * If it cannot find these lines, it throws an error.
+ * @param code - The TypeScript code string to extract Jest tests from.
  * @returns The extracted Jest tests as a string.
- * @throws Throws an error if the tests could not be parsed from the input source code.
+ * @throws Will throw an error if the input source code does not contain Jest tests.
  */
 function tsExtractJestTests(code) {
-    var _a;
-    const result = (_a = rexecFirstMatch(regJestTests, code)) === null || _a === void 0 ? void 0 : _a.match.trim();
-    if (!result)
+    const lines = code.split(/\r?\n/);
+    const index = lines.findIndex((line) => line.startsWith('describe('));
+    const lastIndex = arrFindLastIndexOf(lines, (line) => line.startsWith('})'));
+    if (index === -1 || lastIndex === -1) {
         throw new Error('Could not parse the tests from the input source code.');
-    return result;
+    }
+    return lines
+        .slice(index, lastIndex + 1)
+        .join('\n')
+        .trim();
 }
 
 /**
@@ -7339,8 +7358,19 @@ function tsGetClassMemberAccessModifiers(code) {
     return result;
 }
 
+/**
+ * Checks if the provided TypeScript code has a default export.
+ * @param code - The TypeScript code to check.
+ * @returns A boolean indicating whether the provided TypeScript code has a default export.
+ * @example ```ts
+ * const code = `export default function() {}`;
+ * tsHasDefaultExport(code);
+ * //=> true
+ * ```
+ */
 function tsHasDefaultExport(code) {
     return /^export default /m.test(code);
+    //
 }
 
 /**
@@ -7358,19 +7388,13 @@ function tsHasDefaultExport(code) {
  */
 function tsJestConvertExportNameString(code, funName) {
     const replaceWith = 'describe(' + funName + '.name';
-    return code
-        .replace("describe('" + funName + "'", replaceWith)
-        .replace('describe("' + funName + '"', replaceWith);
+    return code.replace("describe('" + funName + "'", replaceWith).replace('describe("' + funName + '"', replaceWith);
 }
 
-function tsJestFixLineSpacing(code) {
+function tsJestEnsureLineSpacing(code) {
     return strRemoveEmptyLines(code)
         .split('\n')
-        .map((line) => {
-        if (/^(describe|it)\(/.test(line.trimStart()))
-            return '\n' + line;
-        return line;
-    })
+        .map((line) => (/^(describe|it|test)\(/.test(line.trimStart()) ? '\n' + line : line))
         .join('\n');
 }
 
@@ -7388,75 +7412,14 @@ function tsSimpleMinifyCode(string) {
 }
 
 /**
- * Removes lines that consist of only a double-slash comment, from the given code.
- * @remarks This function uses a regular expression to remove all lines that start with a single-line comment.
- * @returns The TypeScript code without single-line comments.
- * @param code The code from which to remove the comments.
- * @example ```ts
- * const code = `const x = 5;
- * // This is a comment
- * const y = 10;`;
- * stripSlashComments(code);
- * //=> "const x = 5;\nconst y = 10;"
- * ```
- */
-function tsStripFullSlashCommentLines(code) {
-    return code.replace(/\n\s*\/\/.*\n/g, '\n').replace(/(^|\n)\s*\/\/.*(\n|$)/g, '');
-}
-
-/**
- * This function takes a source string, and yields each TSDoc block comments in it.
- * @param code The source code string.
- * @returns A generator that yields each TSDoc block comment in the source code.
- * @yields Each TSDoc block comment in the source code.
- */
-function* tsDocExtractAllComments(code) {
-    const reStart = /^\s*\/\*\*\s*$/;
-    const reEnd = /^\s*\*\/\s*$/;
-    let lines = code.split(/\r?\n/);
-    let offset = 0;
-    while (true) {
-        const indexStart = lines.findIndex((line) => reStart.test(line));
-        const indexEnd = lines.findIndex((line) => reEnd.test(line));
-        if (indexStart !== -1 && indexEnd !== -1) {
-            let nextLine;
-            if (indexEnd + 1 < lines.length)
-                nextLine = lines[indexEnd + 1];
-            if ((nextLine === null || nextLine === void 0 ? void 0 : nextLine.trim()) === '' && indexEnd + 2 < lines.length)
-                nextLine = lines[indexEnd + 2];
-            yield {
-                start: indexStart + offset,
-                end: indexEnd + offset,
-                match: lines.slice(indexStart, indexEnd + 1).join('\n'),
-                nextLine,
-            };
-            lines = lines.slice(indexEnd + 1);
-            offset += indexEnd + 1;
-        }
-        else {
-            break;
-        }
-    }
-}
-
-/**
- * Strips block comments from the provided TypeScript code.
- */
-function tsStripTsDocBlockComments(code) {
-    const lines = code.split('\n');
-    const remove = new Set();
-    for (const { start, end } of tsDocExtractAllComments(code)) {
-        for (const int of numRange(start, end))
-            remove.add(int);
-    }
-    return lines.filter((_, i) => !remove.has(i)).join('\n');
-}
-
-/**
  * Removes all comments from JavaScript or TypeScript code.
+ * @remarks
+ * This function uses `tsStripBlockComments` and `tsStripInlineComments` to remove both block and inline comments.
+ * @param code - The TypeScript code from which to remove comments.
+ * @returns The TypeScript code without any comments.
  */
 function tsStripComments(code) {
-    return tsStripFullSlashCommentLines(tsStripTsDocBlockComments(code));
+    return tsStripBlockComments(tsStripInlineComments(code));
 }
 
 /**
@@ -7487,80 +7450,6 @@ function tsStripDeclSourceMapComments(code) {
  */
 function tsStripExportKeyword(source) {
     return source.replace(/^export /gm, '');
-}
-
-/**
- * Strips all import statements from a given TypeScript code string.
- * @param code - The TypeScript code to strip import statements from.
- * @returns The TypeScript code without import statements.
- * @example ```ts
- * const code = `
- * import { Component } from '@angular/core';
- * import { OnInit } from '@angular/core';
- * const a = 1;
- * `.trim()
- * tsStripImports(code)
- * //=> 'const a = 1;'
- * ```
- */
-function tsStripImports(code) {
-    const lines = code.split('\n');
-    const imports = tsExtractImports(code);
-    const remove = new Set();
-    for (const { start, end } of imports) {
-        for (const int of numRange(start, end))
-            remove.add(int);
-    }
-    return lines
-        .filter((_, i) => !remove.has(i))
-        .join('\n')
-        .trimStart();
-}
-
-/**
- * Walks through the imports of a TypeScript file and its dependencies up to a specified depth.
- * @remarks This function uses synchronous file operations and may block the event loop if used with large files or deep import trees.
- * @param rootfile The filepath to the TypeScript file to start the walk from.
- * @param maxDepth The maximum depth to walk through the imports. Default is 0, which means no limit.
- * @returns A `WalkImportsResult` object that maps each file path to its import details.
- * @throws Will throw an error if the file does not exist or if it is an external module.
- * @example ```ts
- * tsWalkImports('/src/index.ts', 2)
- * ```
- */
-function tsWalkImports(rootfile, maxDepth = 0) {
-    const result = new Map();
-    return (function recurse(filepath, match = '', depth = 1) {
-        try {
-            if (!fs.existsSync(filepath) || filepath.includes('node_modules')) {
-                result.set(filepath, { depth, match, error: 'External module' });
-                return result;
-            }
-            const source = fs.readFileSync(filepath).toString();
-            result.set(filepath, { depth, match, source });
-            // recurse
-            if (maxDepth && depth > maxDepth)
-                return result;
-            const imports = tsExtractImports(source).map(({ match }) => {
-                const arr = match.split("'");
-                const from = arr[arr.length - 2];
-                return [match, from];
-            });
-            for (const [match, from] of imports) {
-                const relative = from;
-                const resolved = path.isAbsolute(relative)
-                    ? relative
-                    : path.resolve(path.dirname(filepath), relative + '.ts');
-                if (result.has(resolved))
-                    continue;
-                recurse(resolved, match, depth + 1);
-            }
-        }
-        catch (error) {
-            result.set(filepath, { depth, match, error });
-        }
-        return result;
-    })(path.normalize(rootfile));
 }
 
 /**
@@ -7859,6 +7748,9 @@ function tsDocWrapAsComment(string) {
     return ['/**', strPrependLines(string, ' * '), ' */'].join('\n');
 }
 
+/**
+ * A class representing a TSDoc block comment.
+ */
 class TsDoc {
     /**
      * Creates a new TSDoc comment.
@@ -8101,37 +7993,6 @@ TsDoc.defaultTagOrder = [
     'method',
     'example',
 ];
-
-/**
- * Extracts the first TSDoc @example code block from the given code string.
- * @param code The code string to extract the TSDoc @example from.
- * @returns The extracted TSDoc @example code block.
- * @remarks This function uses regular expressions to find the @example tag in a TSDoc comment and extracts the code within it.
- * If no @example tag is found, it throws an error.
- * @throws Throws an error if a TSDoc @example cannot be found in the code.
- * @example ```ts
- * `
- * /**
- *  * @example
- *  * 'Hello, world!';
- * //=> "Hello, world!"
- *  *\/
- * function helloWorld() {
- *   return 'Hello, world!'
- * }
- * `
- * tsDocExtractExample(code);
- * //=> "return 'Hello, world!'"
- * ```
- */
-function tsDocExtractExample(code) {
-    var _a, _b;
-    const match = rexecFirstMatch(regTsDocExampleCode, code);
-    const result = (_b = (_a = match === null || match === void 0 ? void 0 : match.groups) === null || _a === void 0 ? void 0 : _a.mid) === null || _b === void 0 ? void 0 : _b.replace(/^ \* /gm, '').trim();
-    if (!result)
-        throw new Error('Could not find a TSDoc @example in the code.');
-    return result;
-}
 
 /**
  * Extracts the first TSDoc block comment from the provided TypeScript code.
@@ -8498,5 +8359,5 @@ function isSocialSecurityNumberDK(ssn) {
     return !!parseSocialSecurityNumberDK(ssn);
 }
 
-export { A1ToColRow, ApiReponseCache, ExtensibleFunction, File, HtmlGenerator, MS_IN_DAY, MS_IN_HOUR, MS_IN_MINUTE, MS_IN_MONTH, MS_IN_SECOND, MS_IN_WEEK, MS_IN_YEAR, Matrix, MixinBase, MixinIndexed, MixinOptions, MixinTimestamped, NumberFormatter, OpenaiApiClient, OpenaiApiClientBase, OpenaiTokenUsage, Queue, SimpleTable, SortedArray, StringStream, TsDoc, TsDocTag, absoluteToRelativePath, arrAverage, arrEachToString, arrEvery, arrFilterMutable, arrFindIndicesOf, arrFindLast, arrFindLastIndexOf, arrFlatten, arrIndicesOf, arrLast, arrMapMutable, arrObjectsToTable, arrObjectsUniqueKeys, arrRemoveDuplicates, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSum, arrSwap, arrTableAssertRowsSameLength, arrTableEachToString, arrTableToCSV, arrTableToObjects, assertInteger, assertNegativeInteger, assertPositiveInteger, assertPowerOfTen, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, assertValidNumber, asyncTasksLimit, asyncTasksParallel, asyncTasksSerial, asyncWithTimeout, atob, btoa, buildRegexBetween, bytesToInt, cleanDirectory, cleanDirectorySafe, cleanDirectorySafeSync, cleanDirectorySync, colRowToA1, colToLetter, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createDirectory, createDirectorySync, createFileExtensionFilter, createObjectFactory, dateDaysAgo, daysSinceDate, deleteDirectory, deleteDirectorySafe, deleteDirectorySafeSync, deleteDirectorySync, ensureValidWindowsPath, executeCommand, funParseClass, funParseFunction, funSetName, getCentury, getConstructor, getCurrentYear, getPrototype, hoursSinceDate, inheritStaticMembers, intToArrayBytes, intToBuffer, intToBytes, isBetween, isConstructor, isEven, isGT, isGTE, isHex, isHexOrUnicode, isInRange, isInteger, isIterable, isLT, isLTE, isLeapYear, isMultiTsDocTag, isNamedMultiTsDocTag, isNamedTsDocTag, isNegativeInteger, isNumericString, isObject, isOdd, isPositiveInteger, isPowerOfTen, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, isValidNumber, isValidTsDocComment, isoDateTimestamp, isoDateTimestampForFilename, iterableFirstElement, iteratePrototypeChain, letterToCol, log, mapGetOrElse, mapReverse, mapUpdate, markdownWrapCodeBlock, memoryUsage, minutesSinceDate, monthsSinceDate, msSinceDate, normalizeFileExtension, normalizeLineLengths, numDaysInMonth, numRange, objAssignDeep, objDeepFreeze, objDelete, objDeleteKeys, objDeleteKeysMutable, objEntries, objEntriesArray, objFilter, objForEach, objGet, objGetOrElse, objHas, objIsEmpty, objKeys, objKeysArray, objMap, objMapKeys, objMapMutable, objPropertyValueToGetter, objReduce, objReverse, objSet, objSize, objSortKeys, objToMap, objUpdate, objValues, objValuesArray, objWalk, padArrayBytesLeft, padArrayBytesRight, parseMarkdownCodeBlock, parseMarkdownTable, parseSocialSecurityNumberDK, pdfGetPages, pdfIteratePages, pdfSplitPages, randomIntBetween, readExcelFile, readExcelFileWorksheet, readJsonFile, readJsonFileSync, regBlockCommentsWithIndent, regFunctionsExports, regHex, regHexPrefix, regInteger$1 as regInteger, regJestTests, regLocaleAlpha, regLocaleAlphaNumeric, regNumberCommaSepDotDecimal, regNumberDotSepCommaDecimal, regNumberNoThousandSepCommaDecimal, regNumberNoThousandSepDotDecimal, regPowerOfTen, regRepeatingWhiteSpace, regSocialSecurityNumbersDK, regTsDocExampleCode, regTsDocExampleLines, regWords, regexClone, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexMatcherToValidater, regexScopeTree, regexValidFlags, rexec, rexecFirstMatch, round, roundDown, roundToNearest, roundToNearestPow10, roundUp, roundWith, secondsSinceDate, setDifference, setEnumerable, setIntersection, setIsSuperset, setNonConfigurable, setNonEnumerable, setNonEnumerablePrivateProperties, setNonEnumerableSafe, setNonWritable, setSymmetricDifference, setUnion, setWritable, strCountCharOccurances, strCountChars, strCountWords, strEnsureEndsWith, strFirstCharToUpperCase, strHashToBuffer, strHashToString, strHashToUint32Array, strIsLowerCase, strIsMultiLine, strIsUpperCase, strNoConsecutiveEmptyLines, strNoConsecutiveWhitespace, strParseBoolean, strPrependLines, strRemoveDuplicateChars, strRemoveEmptyLines, strRemoveFirstAndLastLine, strRemoveNewLines, strRepeat, strReplaceAll, strSortChars, strSplitAndTrim, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToSortedCharSet, strToWords, strTrimLines, strTrimLinesLeft, strTrimLinesRight, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, toJson, trimArrayBytesLeft, trimArrayBytesRight, tsCountExports, tsDocExtractAllComments, tsDocExtractExample, tsDocExtractFirstComment, tsDocFixSpacingBeforeAfter, tsDocNormalizeTagName, tsDocRemoveEmptyLines, tsDocStripAllTagsButThrowsParamDescription, tsDocStripExample, tsDocStripTypesAndDefaults, tsDocUnwrapComment, tsDocWrapAsComment, tsDocWrapExample, tsExtractImports, tsExtractJestTests, tsGetClassMemberAccessModifiers, tsHasDefaultExport, tsJestConvertExportNameString, tsJestFixLineSpacing, tsSimpleMinifyCode, tsStripComments, tsStripDeclSourceMapComments, tsStripExportKeyword, tsStripFullSlashCommentLines, tsStripImports, tsStripTsDocBlockComments, tsWalkImports, weeksSinceDate, writeExcelFile, writeJsonFile, writeJsonFileSync, yearsSinceDate };
+export { A1ToColRow, ApiReponseCache, ExtensibleFunction, File, HtmlGenerator, MS_IN_DAY, MS_IN_HOUR, MS_IN_MINUTE, MS_IN_MONTH, MS_IN_SECOND, MS_IN_WEEK, MS_IN_YEAR, Matrix, MixinBase, MixinIndexed, MixinTimestamped, NumberFormatter, OpenaiApiClient, OpenaiApiClientBase, Queue, SimpleTable, SortedArray, StringStream, TsDoc, TsDocTag, absoluteToRelativePath, arrAverage, arrEachToString, arrEvery, arrFindIndicesOf, arrFindLast, arrFindLastIndexOf, arrFlatten, arrIndicesOf, arrLast, arrMapMutable, arrObjectsToTable, arrObjectsUniqueKeys, arrRemoveDuplicates, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSum, arrSwap, arrTableAssertRowsSameLength, arrTableEachToString, arrTableToCsv, arrTableToObjects, assertInteger, assertNegativeInteger, assertPositiveInteger, assertPowerOfTen, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, assertValidNumber, asyncTasksLimit, asyncTasksParallel, asyncTasksSerial, asyncWithTimeout, atob, btoa, buildRegexBetween, bytesToInt, colRowToA1, colToLetter, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createDirectory, createDirectorySync, createFileExtensionFilter, createObjectFactory, csvParseStream, dateDaysAgo, daysSinceDate, deleteDirectory, deleteDirectorySafe, deleteDirectorySafeSync, deleteDirectorySync, ensureValidWindowsPath, funParseClass, funParseFunction, funSetName, getCentury, getConstructor, getCurrentYear, getPrototype, hoursSinceDate, inheritStaticMembers, intToArrayBytes, intToBuffer, intToBytes, isBetween, isConstructor, isEven, isGT, isGTE, isHex, isHexOrUnicode, isInRange, isInteger, isIterable, isLT, isLTE, isLeapYear, isMultiTsDocTag, isNamedMultiTsDocTag, isNamedTsDocTag, isNegativeInteger, isNumericString, isObject, isOdd, isPositiveInteger, isPowerOfTen, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, isValidNumber, isValidTsDocComment, isoDateTimestamp, isoDateTimestampForFilename, iterableFirstElement, iteratePrototypeChain, letterToCol, log, mapGetOrElse, mapReverse, mapUpdate, markdownWrapCodeBlock, memoryUsage, minutesSinceDate, monthsSinceDate, msSinceDate, normalizeFileExtension, normalizeLineLengths, numDaysInMonth, numRange, objAssignDeep, objDeepFreeze, objDelete, objDeleteKeys, objDeleteKeysMutable, objEntries, objEntriesArray, objFilter, objForEach, objGet, objGetOrElse, objHas, objIsEmpty, objKeys, objKeysArray, objMap, objMapKeys, objMapMutable, objPropertyValueToGetter, objReduce, objReverse, objSet, objSize, objSortKeys, objToMap, objUpdate, objValues, objValuesArray, objWalk, padArrayBytesLeft, padArrayBytesRight, parseMarkdownCodeBlock, parseMarkdownTable, parseSocialSecurityNumberDK, pdfGetPages, pdfIteratePages, pdfSplitPages, randomIntBetween, readExcelFile, readJsonFile, readJsonFileSync, regBlockCommentsWithIndent, regFunctionsExports, regHex, regHexPrefix, regInteger$1 as regInteger, regJestTests, regLocaleAlpha, regLocaleAlphaNumeric, regNumberCommaSepDotDecimal, regNumberDotSepCommaDecimal, regNumberNoThousandSepCommaDecimal, regNumberNoThousandSepDotDecimal, regPowerOfTen, regRepeatingWhiteSpace, regSocialSecurityNumbersDK, regTsDocExampleLines, regWords, regexClone, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexMatcherToValidater, regexScopeTree, regexValidFlags, rexec, rexecFirstMatch, round, roundDown, roundToNearest, roundToNearestPow10, roundUp, roundWith, secondsSinceDate, setDifference, setEnumerable, setIntersection, setIsSuperset, setNonConfigurable, setNonEnumerable, setNonEnumerablePrivateProperties, setNonWritable, setSymmetricDifference, setUnion, setWritable, shellCommand, strCountCharOccurances, strCountChars, strCountWords, strEnsureEndsWith, strFirstCharToUpperCase, strHashToBuffer, strHashToString, strHashToUint32Array, strIsLowerCase, strIsMultiLine, strIsUpperCase, strNoConsecutiveEmptyLines, strNoConsecutiveWhitespace, strParseBoolean, strPrependLines, strRemoveDuplicateChars, strRemoveEmptyLines, strRemoveFirstAndLastLine, strRemoveNewLines, strRepeat, strReplaceAll, strSortChars, strSplitAndTrim, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToSortedCharSet, strToWords, strTrimLines, strTrimLinesLeft, strTrimLinesRight, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, toJson, trimArrayBytesLeft, trimArrayBytesRight, tsCountExports, tsCountLinesOfCode, tsDocExtractAllComments, tsDocExtractFirstComment, tsDocFixSpacingBeforeAfter, tsDocNormalizeTagName, tsDocRemoveEmptyLines, tsDocStripAllTagsButThrowsParamDescription, tsDocStripExample, tsDocStripTypesAndDefaults, tsDocUnwrapComment, tsDocWrapAsComment, tsDocWrapExample, tsExtractImports, tsExtractJestTests, tsGetClassMemberAccessModifiers, tsHasDefaultExport, tsJestConvertExportNameString, tsJestEnsureLineSpacing, tsSimpleMinifyCode, tsStripBlockComments, tsStripComments, tsStripDeclSourceMapComments, tsStripExportKeyword, tsStripImports, tsStripInlineComments, waitSeconds, weeksSinceDate, writeExcelFile, writeJsonFile, writeJsonFileSync, yearsSinceDate };
 //# sourceMappingURL=index.esm.js.map

@@ -1,1 +1,1 @@
-{"version":3,"file":"pdfGetPages.d.ts","sourceRoot":"","sources":["../../../src/pdf/pdfGetPages.ts"],"names":[],"mappings":"AAEA;;GAEG;AACH,wBAAsB,WAAW,CAC/B,QAAQ,EAAE,MAAM,EAChB,KAAK,CAAC,EAAE,MAAM,EACd,GAAG,CAAC,EAAE,MAAM,GACX,OAAO,CAAC,MAAM,EAAE,CAAC,CAMnB"}
+{"version":3,"file":"pdfGetPages.d.ts","sourceRoot":"","sources":["../../src/pdf/pdfGetPages.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;GAUG;AACH,wBAAsB,WAAW,CAAC,QAAQ,EAAE,MAAM,EAAE,KAAK,CAAC,EAAE,MAAM,EAAE,GAAG,CAAC,EAAE,MAAM,GAAG,OAAO,CAAC,MAAM,EAAE,CAAC,CAMnG"}

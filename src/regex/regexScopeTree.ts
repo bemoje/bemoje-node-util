@@ -1,10 +1,10 @@
-import { strRemoveDuplicateChars } from '../string/strRemoveDuplicateChars'
-import { compareArray } from '../sort/compareArray'
 import { setNonEnumerable } from '../object/setNonEnumerable'
+import { compareArray } from '../sort/compareArray'
+import { strRemoveDuplicateChars } from '../string/strRemoveDuplicateChars'
 import { regexEscapeString } from './regexEscapeString'
 import { rexec } from './rexec'
-import type { RexecYield } from './types/RexecYield'
 import { RegexScopeTreeNode } from './types/RegexScopeTreeNode'
+import type { RexecYield } from './types/RexecYield'
 
 /**
  * Builds a regex that matches a string between two strings. Supports regex instead of string.
@@ -25,9 +25,7 @@ export function regexScopeTree(
 ): (string: string, yieldOnlyRootNodes?: boolean) => Generator<RegexScopeTreeNode> {
   function parseParam(param: string | RegExp): [RegExp, RegExp] {
     const isString = typeof param === 'string'
-    const reg = isString
-      ? new RegExp(regexEscapeString(param), 'g')
-      : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'))
+    const reg = isString ? new RegExp(regexEscapeString(param), 'g') : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'))
     const regValidate = new RegExp('^' + reg.source + '$', '')
     return [reg, regValidate]
   }
@@ -42,8 +40,7 @@ export function regexScopeTree(
       if (regLeftValidate.test(match.match)) {
         stack.push(match)
       } else if (regRightValidate.test(match.match)) {
-        const left = stack.pop()
-        if (!left) continue
+        const left = stack.pop() as RexecYield
         const right = match
         const depth = stack.length
         const node: RegexScopeTreeNode = {
@@ -61,8 +58,7 @@ export function regexScopeTree(
         }
         setNonEnumerable(node, 'parent')
         for (let i = nodes.length - 1; i >= 0; i--) {
-          if (left.index >= nodes[i].left.index || right.lastIndex <= nodes[i].right.lastIndex)
-            break
+          if (left.index >= nodes[i].left.index || right.lastIndex <= nodes[i].right.lastIndex) break
           node.children.push(nodes[i])
           if (nodes[i].parent !== null) continue
           nodes[i].parent = node
@@ -70,10 +66,6 @@ export function regexScopeTree(
         nodes.push(node)
         if (yieldOnlyRootNodes && depth > 0) continue
         yield node
-      } else {
-        throw new Error(
-          'Match does not recognize itself as neither left nor right, which should be impossible.',
-        )
       }
     }
   }

@@ -63,8 +63,7 @@ export class SimpleTable<T> extends MixinBase {
    * @param row The row to check.
    */
   protected assertRowValidLength(row: T[]): void {
-    if (row.length !== this._headers.length)
-      throw new Error('Row length does not match headers length.')
+    if (row.length !== this._headers.length) throw new Error('Row length does not match headers length.')
   }
 
   /**

@@ -13,11 +13,7 @@ describe(numRange.name, () => {
   })
 
   it('should throw an error if start is greater than end', () => {
-    expect(() => numRange(5, 1)).toThrowError(
-      'Expected start to be less than or equal to end. Got: 5 > 1',
-    )
-    expect(() => numRange(0, -1)).toThrowError(
-      'Expected start to be less than or equal to end. Got: 0 > -1',
-    )
+    expect(() => numRange(5, 1)).toThrowError('Expected start to be less than or equal to end. Got: 5 > 1')
+    expect(() => numRange(0, -1)).toThrowError('Expected start to be less than or equal to end. Got: 0 > -1')
   })
 })

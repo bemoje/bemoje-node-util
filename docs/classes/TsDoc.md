@@ -2,6 +2,8 @@
 
 # Class: TsDoc
 
+A class representing a TSDoc block comment.
+
 ## Table of contents
 
 ### Constructors
@@ -57,7 +59,7 @@ If the provided code is not a valid TSDoc block comment.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:63](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L63)
+[src/tsdoc/TsDoc.ts:66](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L66)
 
 ## Properties
 
@@ -69,7 +71,7 @@ Multi tags are tags that can appear multiple times in a TSDoc comment, but each 
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:50](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L50)
+[src/tsdoc/TsDoc.ts:53](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L53)
 
 ___
 
@@ -81,7 +83,7 @@ Named multi tags are tags that can appear multiple times in a TSDoc comment, but
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:55](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L55)
+[src/tsdoc/TsDoc.ts:58](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L58)
 
 ___
 
@@ -93,7 +95,7 @@ Can be used to specify the order in which param-tags are rendered in the TSDoc c
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:40](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L40)
+[src/tsdoc/TsDoc.ts:43](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L43)
 
 ___
 
@@ -105,7 +107,7 @@ Single tags are tags that can only appear once in a TSDoc comment.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:45](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L45)
+[src/tsdoc/TsDoc.ts:48](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L48)
 
 ___
 
@@ -118,7 +120,7 @@ Empty strings means spacing between tags when iterating and rendering.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:35](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L35)
+[src/tsdoc/TsDoc.ts:38](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L38)
 
 ___
 
@@ -130,7 +132,7 @@ The default order in which tags are rendered in the TSDoc comment.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:17](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L17)
+[src/tsdoc/TsDoc.ts:20](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L20)
 
 ## Accessors
 
@@ -146,7 +148,7 @@ Returns whether the TsDoc instance has no tags.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:114](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L114)
+[src/tsdoc/TsDoc.ts:117](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L117)
 
 ___
 
@@ -162,7 +164,7 @@ The number of tags in the TsDoc instance.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:104](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L104)
+[src/tsdoc/TsDoc.ts:107](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L107)
 
 ## Methods
 
@@ -184,7 +186,7 @@ Parses a TSDoc block comment and adds the tags to the TsDoc instance.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:75](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L75)
+[src/tsdoc/TsDoc.ts:78](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L78)
 
 ___
 
@@ -206,7 +208,7 @@ Adds a TsDocTag to the TsDoc instance.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:133](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L133)
+[src/tsdoc/TsDoc.ts:136](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L136)
 
 ___
 
@@ -228,7 +230,7 @@ Merge tags from another TsDoc instance.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:202](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L202)
+[src/tsdoc/TsDoc.ts:205](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L205)
 
 ___
 
@@ -245,7 +247,7 @@ The tagOrder and paramOrder properties are not affected.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:122](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L122)
+[src/tsdoc/TsDoc.ts:125](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L125)
 
 ___
 
@@ -261,7 +263,7 @@ Returns a deep clone of this instance.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:195](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L195)
+[src/tsdoc/TsDoc.ts:198](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L198)
 
 ___
 
@@ -278,7 +280,7 @@ If no tagOrder was specified in the constructor options, TsDoc.defaultTagOrder i
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:244](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L244)
+[src/tsdoc/TsDoc.ts:247](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L247)
 
 ___
 
@@ -300,7 +302,7 @@ Iterate tags in the order specified in the ´tagOrder´ and ´paramOrder´ prope
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:175](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L175)
+[src/tsdoc/TsDoc.ts:178](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L178)
 
 ___
 
@@ -324,7 +326,7 @@ If name is not provided, all tags matching the provided tag are deleted.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:157](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L157)
+[src/tsdoc/TsDoc.ts:160](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L160)
 
 ___
 
@@ -340,7 +342,7 @@ Renders a TSDoc block comment string with all tags in the order specified by the
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:228](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L228)
+[src/tsdoc/TsDoc.ts:231](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L231)
 
 ___
 
@@ -356,7 +358,7 @@ Sort the param tags according to the order specified in the paramOrder property.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:212](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L212)
+[src/tsdoc/TsDoc.ts:215](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L215)
 
 ___
 
@@ -376,4 +378,4 @@ Identical to the `render` method.
 
 #### Defined in
 
-[src/tsdoc/TsDoc.ts:236](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/tsdoc/TsDoc.ts#L236)
+[src/tsdoc/TsDoc.ts:239](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/TsDoc.ts#L239)

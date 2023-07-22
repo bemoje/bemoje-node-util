@@ -1,16 +1,14 @@
 import fs from 'fs'
 
 /**
- * Reads a JSON file and returns its content as a Promise.
- * @remarks This function is asynchronous and should be awaited.
+ * Reads a JSON file from the given filepath and returns its content as a Promise.
+ * The Promise will resolve with the parsed JSON content as an object of type T.
+ * @template T The expected return type of the JSON object.
  * @param filepath The path to the JSON file to read.
- * @typeparam T - The expected return type of the JSON file content.
- * @returns A Promise that resolves to the content of the JSON file.
- * @throws Will throw an error if the file cannot be read or parsed.
- * Read a JSON file and return the parsed content (async).
+ * @returns A Promise that resolves with the parsed JSON content as an object of type T.
+ * @throws Will throw an error if reading the file fails for any reason.
  * @example ```ts
- * readJsonFile<MyType>('/path/to/file.json');;
- * //=> {result}
+ * const data: MyType = await readJsonFile<MyType>('path/to/myfile.json');
  * ```
  */
 export async function readJsonFile<T>(filepath: string): Promise<T> {

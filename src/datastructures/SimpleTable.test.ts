@@ -17,9 +17,7 @@ describe('SimpleTable', () => {
       [4, 5],
     ]
     const headers = ['a', 'b', 'c']
-    expect(() => new SimpleTable(data, headers)).toThrowError(
-      'Row length does not match headers length.',
-    )
+    expect(() => new SimpleTable(data, headers)).toThrowError('Row length does not match headers length.')
   })
 
   it('should throw an error if no headers are provided', () => {
@@ -60,6 +58,16 @@ describe('SimpleTable', () => {
     const headers = ['a', 'b', 'c']
     const table = new SimpleTable(data, headers)
     expect(table.headers).toEqual(headers)
+  })
+
+  it('should derive headers from first row if headers undefined', () => {
+    const data = [
+      ['a', 'b', 'c'],
+      [1, 2, 3],
+      [4, 5, 6],
+    ]
+    const table = new SimpleTable<any>(data)
+    expect(table.headers).toEqual(['a', 'b', 'c'])
   })
 
   it('should return the data', () => {

@@ -1,1 +1,1 @@
-{"version":3,"file":"_HTML_ATTRIBUTES.d.ts","sourceRoot":"","sources":["../../../../src/html/HtmlMetaData/_HTML_ATTRIBUTES.ts"],"names":[],"mappings":"AAKA,eAAO,MAAM,gBAAgB,EAAE,GAAG,CAAC,MAAM,CAKxC,CAAA"}
+{"version":3,"file":"_HTML_ATTRIBUTES.d.ts","sourceRoot":"","sources":["../../../src/html/HtmlMetaData/_HTML_ATTRIBUTES.ts"],"names":[],"mappings":"AAIA,eAAO,MAAM,gBAAgB,EAAE,GAAG,CAAC,MAAM,CAIxC,CAAA"}

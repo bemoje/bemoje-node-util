@@ -8,8 +8,7 @@ import fs from 'fs'
  * @returns A Promise that resolves when the directory has been deleted.
  * @throws Will throw an error if the directory does not exist, or if there was a problem deleting the directory.
  * @example ```ts
- * deleteDirectory('/path/to/directory');;
- * //=> undefined
+ * deleteDirectory('/path/to/directory');
  * ```
  */
 export async function deleteDirectory(dirpath: string): Promise<void> {

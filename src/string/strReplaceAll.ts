@@ -14,12 +14,7 @@ import { regexEscapeString } from '../regex/regexEscapeString'
  * //=> 'Hell0, w0rld!'
  * ```
  */
-export function strReplaceAll(
-  input: string,
-  replace: string,
-  replaceWith: string,
-  flags = 'g',
-): string {
+export function strReplaceAll(input: string, replace: string, replaceWith: string, flags = 'g'): string {
   if (!input || !replace) return input
   return input.replace(new RegExp(regexEscapeString(replace), flags), replaceWith)
 }

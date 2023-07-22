@@ -18,7 +18,7 @@ import { log } from './log'
  *   warn: ['event3', 'event4'],
  *   error: ['event5', 'event6']
  * });;
- * //=> {result}
+ * //=> result
  * ```
  */
 export function _printEmitterEvents<T>(

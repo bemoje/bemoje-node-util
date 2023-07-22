@@ -2,21 +2,22 @@ import { Readable } from 'stream'
 
 /**
  * Extension of Node's native Readable class for converting a string into a Readable stream.
+ * @param string - The string to create the stream from.
  */
 export class StringStream extends Readable {
-  private str: string
-  private ended: boolean
+  string: string
+  ended: boolean
 
-  constructor(str: string) {
+  constructor(string: string) {
     super()
-    this.str = str
+    this.string = string
     this.ended = false
   }
 
   _read(): void {
     if (!this.ended) {
       process.nextTick(() => {
-        this.push(Buffer.from(this.str))
+        this.push(Buffer.from(this.string))
         this.push(null)
       })
       this.ended = true

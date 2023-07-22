@@ -1,59 +1,52 @@
 import { Stats } from 'fs'
 import path from 'path'
-import { absoluteToRelativePath } from '../src'
 import { OpenaiApiClient } from '../src/api/OpenaiApiClient'
 import { IChatRequestOptions } from '../src/api/types/IChatRequestOptions'
 import { asyncTasksLimit } from '../src/async/asyncTasksLimit'
-import { strRemoveFirstAndLastLine } from '../src/string/strRemoveFirstAndLastLine'
-import { strTrimLinesRight } from '../src/string/strTrimLinesRight'
+import { absoluteToRelativePath } from '../src/filesystem/absoluteToRelativePath'
+import { tsStripBlockComments } from '../src/tscode/tsStripBlockComments'
 import { tsStripImports } from '../src/tscode/tsStripImports'
-import { tsStripTsDocBlockComments } from '../src/tscode/tsStripTsDocBlockComments'
 import { TsDoc } from '../src/tsdoc/TsDoc'
 import { tsDocExtractFirstComment } from '../src/tsdoc/tsDocExtractFirstComment'
-import { SourceFile } from './SourceFile'
-import { walkSourceFiles } from './walkSourceFiles'
+import { SourceFile } from './lib/SourceFile'
+import { walkTsSourceFiles } from './lib/walkTsSourceFiles'
 
-async function writeFunctionTsDoc(
-  openai: OpenaiApiClient,
-  file: SourceFile,
-  options: IChatRequestOptions = {},
-): Promise<TsDoc> {
+async function writeFunctionTsDoc(openai: OpenaiApiClient, file: SourceFile, options: IChatRequestOptions = {}): Promise<TsDoc> {
   const response = await openai.chat4_8({
     temperature: 1,
     top_p: 0,
     ...options,
     instruction: [
-      'For the exported TypeScript function, ' +
-        file.exportName +
-        ', write a TSDoc block comment that has all relevant TSDoc tags documented.',
+      `For the exported TypeScript function, ${file.exportName}, write a TSDoc block comment that has all relevant TSDoc tags documented.`,
 
-      'Do not insert types in braces or default values ub brackets. This is TSDoc for TypeScript, so it is not needed.',
+      'Do not insert types in braces or default values in brackets. This is TSDoc for TypeScript, so it is not needed.',
 
       'If using the @example tag, always wrap the example code in a markdown ts-code block.',
 
       'Your response should be only the resulting TSDoc block comment and nothing else.',
     ].join('\n\n'),
-    prompt: tsStripImports(tsStripTsDocBlockComments(file.source)),
+    prompt: tsStripImports(tsStripBlockComments(file.readFileSync())),
   })
   const newTsDocSrc = tsDocExtractFirstComment(response)?.match
   const newTsdoc = new TsDoc(newTsDocSrc)
-  const example = newTsdoc.single.get('example')
-  if (!example) return newTsdoc
-  example.description = strTrimLinesRight(
-    await openai.chat4_8({
-      temperature: 0,
-      ...options,
-      instruction: [
-        'Edit the TypeScript usage example code so that it never uses console.log.',
+  // const curExample = newTsdoc.single.get('example')
+  // if (!curExample) return newTsdoc
+  // const description = strTrimLinesRight(
+  //   await openai.chat4_8({
+  //     temperature: 0,
+  //     ...options,
+  //     instruction: [
+  //       'Edit the TypeScript usage example code so that it never uses console.log.',
 
-        'Instead, use "//=> result" on the following line, ' +
-          'after the expression for which to indicate its expected value.',
+  //       'Instead, use "//=> result" on the following line, ' + 'after the expression for which to indicate its expected value.',
 
-        'Do not store the result in a variable like this: "const result = ...".',
-      ].join('\n'),
-      prompt: strRemoveFirstAndLastLine(example.toString()),
-    }),
-  ).split('\n')
+  //       'Do not store the result in a variable like this: "const result = ...".',
+  //     ].join('\n'),
+  //     prompt: strRemoveFirstAndLastLine(curExample.toString()),
+  //   }),
+  // ).split('\n')
+  // const newExample = new TsDocTag('example', '', description)
+  // newTsdoc.single.set('example', newExample)
   return newTsdoc
 }
 
@@ -64,21 +57,23 @@ async function generateTsDocs(
   overwriteMode = false,
   filter: (filepath: string, stat: Stats) => boolean,
 ) {
-  const tasks = walkSourceFiles(srcdir, filter).map((file, i) => async () => {
+  const tasks = walkTsSourceFiles(srcdir, filter).map((file, i) => async () => {
     try {
-      const oldCode = file.source
+      const curCode = file.readFileSync()
+      const isClass = file.exportType === 'class'
+      console.log({ exportName: file.exportName, isClass })
+      if (isClass) return
       const newTsDoc = await writeFunctionTsDoc(openai, file)
-      file.setTsDoc(newTsDoc, overwriteMode)
-      if (oldCode !== file.source) {
-        file.writeBackupFile()
-        file.writeFileSource()
+      const newCode = file.setTsDoc(newTsDoc, overwriteMode)
+      if (curCode !== newCode) {
+        file.writeFileSync(newCode)
         try {
           if (!require(file.filepath)) {
+            console.log(curCode)
             throw new Error('Cannot require object')
           }
         } catch (error) {
-          file.source = oldCode
-          file.writeFileSource()
+          file.writeFileSync(curCode)
           console.error(error?.toString())
           return
         }
@@ -105,15 +100,15 @@ async function main() {
   // await openai.cache.deleteEverything()
 
   const cmdLineArgs = process.argv.slice(2)
-  const searchArgument = cmdLineArgs[0]
+  const search = cmdLineArgs[0]
   const overwriteMode = cmdLineArgs[1] === '--overwrite'
   // console.log({ searchArgument, overwriteMode })
   const sourceRoot = path.join(process.cwd(), 'src')
   const concurrency = 12
   const filter = (filepath: string) => {
-    if (!searchArgument || searchArgument === '*') return true
+    // if (!search || search === '*') return true
     // console.log(absoluteToRelativePath(filepath).toLowerCase())
-    return absoluteToRelativePath(filepath).toLowerCase().includes(searchArgument.toLowerCase())
+    return absoluteToRelativePath(filepath).toLowerCase().includes(search.toLowerCase())
   }
 
   await generateTsDocs(openai, sourceRoot, concurrency, overwriteMode, filter)

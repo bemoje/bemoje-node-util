@@ -13,7 +13,6 @@ import { objDeleteKeys } from '../object/objDeleteKeys'
 import { objDeleteKeysMutable } from '../object/objDeleteKeysMutable'
 import { setNonEnumerable } from '../object/setNonEnumerable'
 import { ApiReponseCache } from './ApiReponseCache'
-import { OpenaiTokenUsage } from './OpenaiTokenUsage'
 import type { IApiClientApiDefaultsOptions } from './types/IApiClientApiDefaultsOptions'
 import type { IApiClientOptions } from './types/IApiClientOptions'
 import type { IApiResponseCacheOptions } from './types/IApiResponseCacheOptions'
@@ -23,19 +22,24 @@ import type { IEditRequestOptions } from './types/IEditRequestOptions'
 import type { IResponseCacheOptions } from './types/IResponseCacheOptions'
 
 export class OpenaiApiClientBase {
-  // API client instance
+  /**
+   * API client instance
+   */
   readonly client: OpenAIApi
 
-  // Event emitter for cache events
+  /**
+   * Event emitter for cache events
+   */
   readonly events = new EventEmitter()
 
-  // API response cache
+  /**
+   * API response cache
+   */
   readonly cache: ApiReponseCache<string[]>
 
-  // OpenAI API token usage statistics
-  readonly usage = new OpenaiTokenUsage()
-
-  // Defaults for API requests. Can be overriden in individual method calls.
+  /**
+   * Defaults for API requests. Can be overriden in individual method calls.
+   */
   readonly apiDefaults: IApiClientApiDefaultsOptions = {
     completionModel: 'text-davinci-003',
     chat3_8Model: 'gpt-3.5-turbo',
@@ -46,17 +50,26 @@ export class OpenaiApiClientBase {
     choicesDelimiter: '\n---------------\n',
   }
 
-  // Options for async-retry
+  /**
+   * Options for async-retry
+   */
   readonly retryDefaults: AsyncRetryOptions = {
-    retries: 3,
+    retries: 10,
+    factor: 1.5,
     onRetry: (error) => this.emit('retry', error),
   }
 
-  // Options for whether to overwrite existing cached data by default for api requests
+  /**
+   * Options for whether to overwrite existing cached data by default for api requests
+   */
   readonly cacheDefaults: IResponseCacheOptions = {
     overwrite: false,
   }
 
+  /**
+   * Handle the options passed to the constructor.
+   * @param options - The options to handle.
+   */
   protected handleOptions(options: IApiClientOptions): IApiClientOptions {
     if (!options.cacheInit) options.cacheInit = {}
     if (!options.cacheInit.name) options.cacheInit.name = 'OpenaiApiClient'
@@ -72,6 +85,7 @@ export class OpenaiApiClientBase {
 
   /**
    * Create a new OpenaiApiClient instance.
+   * @param options - The constructor options to use.
    */
   constructor(options: IApiClientOptions = {}) {
     options = this.handleOptions(options)
@@ -83,6 +97,7 @@ export class OpenaiApiClientBase {
 
   /**
    * Send a completion request to the openai api.
+   * @param options - The options to use.
    */
   async completion(options: ICompletionRequestOptions): Promise<string> {
     return await this._completion(...this.handleCompletionOptions(options))
@@ -91,6 +106,7 @@ export class OpenaiApiClientBase {
   /**
    * Send a chat completion request to the openai api with a max_tokens cap of 4096.
    * Uses model: 'gpt-3.5-turbo'.
+   * @param options - The options to use.
    */
   async chat3_8(options: IChatRequestOptions): Promise<string> {
     return await this._chat(...this.handleChatOptions(options))
@@ -99,23 +115,26 @@ export class OpenaiApiClientBase {
   /**
    * Send a chat completion request to the openai api with a max_tokens cap of 16384.
    * Uses model: 'gpt-3.5-turbo-16k'.
+   * @param options - The options to use.
    */
   async chat3_16(options: IChatRequestOptions): Promise<string> {
-    options.model = 'gpt-3.5-turbo-16k'
+    options.model = this.apiDefaults.chat3_16Model
     return await this._chat(...this.handleChatOptions(options))
   }
 
   /**
    * Send a gpt4 chat completion request to the openai api with a max_tokens cap of 8k.
    * Uses model: 'gpt-4'.
+   * @param options - The options to use.
    */
   async chat4_8(options: IChatRequestOptions): Promise<string> {
-    options.model = 'gpt-4'
+    options.model = this.apiDefaults.chat4_8Model
     return await this._chat(...this.handleChatOptions(options))
   }
 
   /**
    * Edit text.
+   * @param options - The options to use.
    */
   async editText(options: IEditRequestOptions): Promise<string> {
     return await this._edit(...this.handleEditOptions(options))
@@ -123,6 +142,7 @@ export class OpenaiApiClientBase {
 
   /**
    * Edit code.
+   * @param options - The options to use.
    */
   async editCode(options: IEditRequestOptions): Promise<string> {
     if (!options.model) options.model = this.apiDefaults.editCodeModel
@@ -131,6 +151,7 @@ export class OpenaiApiClientBase {
 
   /**
    * Encode a string into tokens.
+   * @param string - The string to encode.
    */
   stringTokens(string: string): number[] {
     return encode(string)
@@ -138,15 +159,20 @@ export class OpenaiApiClientBase {
 
   /**
    * Count the number of tokens in a string.
+   * @param string - The string to count tokens in.
    */
   countTokens(string: string): number {
     return encode(string).length
   }
 
+  /**
+   * Handle completion options.
+   * @param options - The options to handle.
+   */
   protected handleCompletionOptions(
     options: ICompletionRequestOptions,
   ): [openai.CreateCompletionRequest, AsyncRetryOptions, IResponseCacheOptions] {
-    options = this.deleteDefaultOrUndefined(options, {
+    options = this.deleteDefaultOrUndefinedOptions(options, {
       presence_penalty: 0,
       frequency_penalty: 0,
       best_of: 1,
@@ -161,23 +187,21 @@ export class OpenaiApiClientBase {
         options.max_tokens = 4096 - count
       }
     }
-    options = objDeleteKeysMutable<any>(
-      options,
-      'retry',
-      'cache',
-      'instruction',
-      'response_max_tokens',
-    )
+    options = objDeleteKeysMutable<any>(options, 'retry', 'cache', 'instruction', 'response_max_tokens')
     const request = options as openai.CreateCompletionRequest
     const retry = this.handleRetryOptions(options.retry)
     const cache = this.handleCacheOptions(options.cache)
     return this.emit('request', [request, retry, cache])
   }
 
+  /**
+   * Handle chat options.
+   * @param options - The options to handle.
+   */
   protected handleChatOptions(
     options: IChatRequestOptions,
   ): [openai.CreateChatCompletionRequest, AsyncRetryOptions, IResponseCacheOptions] {
-    options = this.deleteDefaultOrUndefined(options, {
+    options = this.deleteDefaultOrUndefinedOptions(options, {
       presence_penalty: 0,
       frequency_penalty: 0,
     })
@@ -194,10 +218,12 @@ export class OpenaiApiClientBase {
     return this.emit('request', [request, retry, cache])
   }
 
-  protected handleEditOptions(
-    options: IEditRequestOptions,
-  ): [openai.CreateEditRequest, AsyncRetryOptions, IResponseCacheOptions] {
-    options = this.deleteDefaultOrUndefined(options, {})
+  /**
+   * Handle edit options.
+   * @param options - The options to handle.
+   */
+  protected handleEditOptions(options: IEditRequestOptions): [openai.CreateEditRequest, AsyncRetryOptions, IResponseCacheOptions] {
+    options = this.deleteDefaultOrUndefinedOptions(options, {})
     const retry = this.handleRetryOptions(options.retry)
     const cache = this.handleCacheOptions(options.cache)
     const model = this.apiDefaults.editTextModel
@@ -213,6 +239,10 @@ export class OpenaiApiClientBase {
     return this.emit('request', [request, retry, cache])
   }
 
+  /**
+   * Handle retry options.
+   * @param retryOptions - The retry options to handle.
+   */
   protected handleRetryOptions(retryOptions?: AsyncRetryOptions): AsyncRetryOptions {
     if (retryOptions?.onRetry) {
       const onRetry = retryOptions.onRetry
@@ -224,10 +254,21 @@ export class OpenaiApiClientBase {
     return retryOptions ? Object.assign({}, this.retryDefaults, retryOptions) : this.retryDefaults
   }
 
+  /**
+   * Handle cache options.
+   * @param cacheOptions - The cache options to handle.
+   */
   protected handleCacheOptions(cacheOptions?: IResponseCacheOptions): IResponseCacheOptions {
     return cacheOptions ? Object.assign({}, this.cacheDefaults, cacheOptions) : this.cacheDefaults
   }
 
+  /**
+   * Send completion request to the openai API.
+   * This is used by all the preset methods, the public methods: completion.
+   * @param request - The request object to send to the openai api.
+   * @param retry - The retry options.
+   * @param cache - The cache options.
+   */
   protected async _completion(
     request: openai.CreateCompletionRequest,
     retry: AsyncRetryOptions,
@@ -235,12 +276,18 @@ export class OpenaiApiClientBase {
   ): Promise<string> {
     return await this._apiRequest(request, retry, cache, async () => {
       const { data } = await this.client.createCompletion(request)
-      this.usage.submit('completion', data)
       this.assertReponseDataComplete(data)
       return this.parseChoices(data.choices)
     })
   }
 
+  /**
+   * Send chat request to the openai API.
+   * This is used by all the preset methods, the public methods: chat3_8, chat3_16, and chat4_8.
+   * @param request - The request object to send to the openai api.
+   * @param retry - The retry options.
+   * @param cache - The cache options.
+   */
   protected async _chat(
     request: openai.CreateChatCompletionRequest,
     retry: AsyncRetryOptions,
@@ -248,20 +295,21 @@ export class OpenaiApiClientBase {
   ): Promise<string> {
     return await this._apiRequest(request, retry, cache, async () => {
       const { data } = await this.client.createChatCompletion(request)
-      this.usage.submit(request.model.endsWith('16k') ? 'chat16k' : 'chat', data)
       this.assertReponseDataComplete(data)
       return this.parseChoices(data.choices)
     })
   }
 
-  protected async _edit(
-    request: openai.CreateEditRequest,
-    retry: AsyncRetryOptions,
-    cache: IResponseCacheOptions,
-  ): Promise<string> {
+  /**
+   * Send edit request to the openai API.
+   * This is used by all the preset methods, the public methods: editText, editCode
+   * @param request - The request object to send to the openai api.
+   * @param retry - The retry options.
+   * @param cache - The cache options.
+   */
+  protected async _edit(request: openai.CreateEditRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string> {
     return await this._apiRequest(request, retry, cache, async () => {
       const { data } = await this.client.createEdit(request)
-      this.usage.submit(request.model.startsWith('text') ? 'editText' : 'editCode', data)
       return this.parseChoices(data.choices)
     })
   }
@@ -270,28 +318,30 @@ export class OpenaiApiClientBase {
    * Generic function for sending requests to the openai api.
    * This is used for all the API endpoints.
    * It handles retrying, cache, hashing, and emitting events.
+   * @param request - The request object to send to the openai api.
+   * @param retry - The retry options.
+   * @param cache - The cache options.
    */
   protected async _apiRequest(
-    request:
-      | openai.CreateEditRequest
-      | openai.CreateCompletionRequest
-      | openai.CreateChatCompletionRequest,
+    request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest,
     retry: AsyncRetryOptions,
     cache: IResponseCacheOptions,
     apiRequest: () => Promise<string[]>,
   ): Promise<string> {
     const hash = this.cache.hashKey(request)
     const results = await asyncRetry(async () => {
-      if (cache.overwrite) await this.cache.deleteSafe(hash)
+      if (cache.overwrite) await this.cache.delete(hash)
       return await this.cache.getOrElse(hash, apiRequest)
     }, retry)
     return this.emit('response', results.join(this.apiDefaults.choicesDelimiter))
   }
 
+  /**
+   * Extract the actual concent from the 'choices' object from the response data.
+   * @param choices - The choices object from the response data.
+   */
   protected parseChoices(
-    choices:
-      | openai.CreateChatCompletionResponseChoicesInner[]
-      | openai.CreateCompletionResponseChoicesInner[],
+    choices: openai.CreateChatCompletionResponseChoicesInner[] | openai.CreateCompletionResponseChoicesInner[],
   ): string[] {
     return choices.map((choice) => {
       if (Reflect.has(choice, 'text')) {
@@ -302,10 +352,14 @@ export class OpenaiApiClientBase {
     })
   }
 
-  protected deleteDefaultOrUndefined<T extends Record<string, any>>(
-    options: T,
-    defaults: Record<string, any> = {},
-  ): T {
+  /**
+   * Delete all options that are undefined or equal to the default value.
+   * The response cache uses hashed options to determine if the request has already been made.
+   * Removing default values and undefined values normalizes the options object so it hashes the same.
+   * @param options - The options to delete from.
+   * @param defaults - The default values to compare against.
+   */
+  protected deleteDefaultOrUndefinedOptions<T extends Record<string, any>>(options: T, defaults: Record<string, any> = {}): T {
     options = Object.assign({}, options)
     defaults.temperature = 1
     defaults.top_p = 1
@@ -327,10 +381,7 @@ export class OpenaiApiClientBase {
    * Assert that the response data is complete by verifying that all returned choices have finish_reason: stop.
    */
   protected assertReponseDataComplete(
-    data:
-      | openai.CreateChatCompletionResponse
-      | openai.CreateCompletionResponse
-      | openai.CreateEditResponse,
+    data: openai.CreateChatCompletionResponse | openai.CreateCompletionResponse | openai.CreateEditResponse,
   ): void {
     for (const choice of data.choices) {
       if (choice.finish_reason !== 'stop') {
@@ -339,6 +390,9 @@ export class OpenaiApiClientBase {
     }
   }
 
+  /**
+   * Get the default api key from 'process.env.USERPROFILE/repos/apikeys/openai.txt'
+   */
   protected getDefaultApiKey(): string {
     try {
       const filepath = path.join(process.env.USERPROFILE || '', 'repos', 'apikeys', 'openai.txt')
@@ -358,17 +412,12 @@ export class OpenaiApiClientBase {
 
   /**
    * console.log all emitted events
-   * @returns this (chainable)
    */
   protected logAllEvents(): this {
     log.line(3)
     _printEmitterEvents(this, this.events, {
       info: ['options', 'ready', 'request', 'response'],
       error: ['error', 'retry'],
-    })
-    _printEmitterEvents(this.usage, this.usage.events, {
-      info: ['usage', 'total'],
-      error: ['error'],
     })
     return this
   }

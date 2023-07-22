@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[src/datastructures/types/ISortedArrayOptions.ts:4](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/types/ISortedArrayOptions.ts#L4)
+[src/datastructures/types/ISortedArrayOptions.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/types/ISortedArrayOptions.ts#L4)
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/types/ISortedArrayOptions.ts:2](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/types/ISortedArrayOptions.ts#L2)
+[src/datastructures/types/ISortedArrayOptions.ts:2](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/types/ISortedArrayOptions.ts#L2)
 
 ___
 
@@ -59,4 +59,4 @@ ___
 
 #### Defined in
 
-[src/datastructures/types/ISortedArrayOptions.ts:3](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/datastructures/types/ISortedArrayOptions.ts#L3)
+[src/datastructures/types/ISortedArrayOptions.ts:3](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/datastructures/types/ISortedArrayOptions.ts#L3)

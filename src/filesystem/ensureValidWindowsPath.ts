@@ -21,10 +21,7 @@ import { IEnsureValidWindowsPathOptions } from './types/IEnsureValidWindowsPathO
  * //=> true
  * ```
  */
-export function ensureValidWindowsPath(
-  path: string,
-  options?: IEnsureValidWindowsPathOptions,
-): boolean {
+export function ensureValidWindowsPath(path: string, options?: IEnsureValidWindowsPathOptions): boolean {
   const throwOrFalse = (msg: string) => {
     if (options && options.assert === true) {
       throw new Error(`Invalid windows path. ${msg}  |  input received: ${path}`)

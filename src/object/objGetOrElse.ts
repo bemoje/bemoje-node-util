@@ -13,11 +13,7 @@ import { ObjectKey } from '../types/ObjectKey'
  * ```
  * @typeparam V - The type of the values in the object.
  */
-export function objGetOrElse<V>(
-  obj: Record<ObjectKey, V>,
-  key: ObjectKey,
-  callback: (key: ObjectKey) => V,
-): V {
+export function objGetOrElse<V>(obj: Record<ObjectKey, V>, key: ObjectKey, callback: (key: ObjectKey) => V): V {
   const value = obj[key]
   if (value !== undefined) return value
   return (obj[key] = callback(key))

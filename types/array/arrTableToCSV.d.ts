@@ -13,9 +13,9 @@
  *   ['Alice', '30', 'Canada'],
  *   ['Bob', '35', 'UK'],
  * ];
- * arrTableToCSV(input);
+ * arrTableToCsv(input);
  * //=> "Name;Age;Country\nJohn;25;USA\nAlice;30;Canada\nBob;35;UK"
  * ```
  */
-export declare function arrTableToCSV<T>(input: T[][], delimiter?: string, replaceLinebreakWith?: string): string;
-//# sourceMappingURL=arrTableToCSV.d.ts.map
+export declare function arrTableToCsv<T>(input: T[][], delimiter?: string, replaceLinebreakWith?: string): string;
+//# sourceMappingURL=arrTableToCsv.d.ts.map

@@ -12,10 +12,7 @@ import { ObjectKey } from '../types/ObjectKey'
  * //=> { name: 'John' }
  * ```
  */
-export function objDelete<K extends ObjectKey, V>(
-  obj: Record<K, V>,
-  key: K,
-): Omit<Record<K, V>, K> {
+export function objDelete<K extends ObjectKey, V>(obj: Record<K, V>, key: K): Omit<Record<K, V>, K> {
   delete obj[key]
   return obj
 }

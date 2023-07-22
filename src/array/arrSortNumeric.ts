@@ -13,8 +13,6 @@ import { compareNumeric } from '../sort/compareNumeric'
  * //=> [false, true, 2n, 5, 10]
  * ```
  */
-export function arrSortNumeric(
-  input: Array<number | bigint | boolean>,
-): Array<number | bigint | boolean> {
+export function arrSortNumeric(input: Array<number | bigint | boolean>): Array<number | bigint | boolean> {
   return input.sort(compareNumeric)
 }

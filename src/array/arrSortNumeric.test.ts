@@ -25,13 +25,7 @@ describe('arrSortNumeric', () => {
   })
 
   it('should sort an array of bigints in ascending order', () => {
-    const input: Array<number | bigint | boolean> = [
-      BigInt(5),
-      BigInt(2),
-      BigInt(8),
-      BigInt(1),
-      BigInt(3),
-    ]
+    const input: Array<number | bigint | boolean> = [BigInt(5), BigInt(2), BigInt(8), BigInt(1), BigInt(3)]
     const result = arrSortNumeric(input)
     expect(result).toEqual([BigInt(1), BigInt(2), BigInt(3), BigInt(5), BigInt(8)])
   })

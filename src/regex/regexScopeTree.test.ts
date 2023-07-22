@@ -1,7 +1,7 @@
 import { regexScopeTree } from './regexScopeTree'
 
 describe('regexScopeTree', () => {
-  const parenthesesTree = regexScopeTree('(', ')')
+  const parenthesesTree = regexScopeTree('(', /\)/)
   const string = '((3+(2))+(1))'
   const resExample = {
     depth: 2,

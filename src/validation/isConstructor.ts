@@ -14,10 +14,5 @@ import { isPrototype } from './isPrototype'
  * ```
  */
 export function isConstructor<T>(value: T): boolean {
-  return (
-    typeof value === 'function' &&
-    'prototype' in value &&
-    isPrototype(value.prototype) &&
-    value === value.prototype.constructor
-  )
+  return typeof value === 'function' && 'prototype' in value && isPrototype(value.prototype) && value === value.prototype.constructor
 }

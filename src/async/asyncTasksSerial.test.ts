@@ -66,11 +66,7 @@ describe('asyncTasksSerial', () => {
   })
 
   it('should throw an error if any of the tasks fail', async () => {
-    const tasks = [
-      () => Promise.resolve(1),
-      () => Promise.reject(new Error('Task failed')),
-      () => Promise.resolve(3),
-    ]
+    const tasks = [() => Promise.resolve(1), () => Promise.reject(new Error('Task failed')), () => Promise.resolve(3)]
     await expect(asyncTasksSerial(tasks)).rejects.toThrow('Task failed')
   })
 

@@ -9,6 +9,7 @@ describe('ExtensibleFunction', () => {
           // do something with self
           return f.call(self, ...args)
         })
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         self = this
       }
     }

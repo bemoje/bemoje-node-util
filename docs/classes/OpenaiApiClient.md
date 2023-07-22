@@ -22,7 +22,6 @@
 - [client](/docs/classes/OpenaiApiClient.md#client)
 - [events](/docs/classes/OpenaiApiClient.md#events)
 - [retryDefaults](/docs/classes/OpenaiApiClient.md#retrydefaults)
-- [usage](/docs/classes/OpenaiApiClient.md#usage)
 
 ### Methods
 
@@ -36,7 +35,7 @@
 - [chat4\_8](/docs/classes/OpenaiApiClient.md#chat4_8)
 - [completion](/docs/classes/OpenaiApiClient.md#completion)
 - [countTokens](/docs/classes/OpenaiApiClient.md#counttokens)
-- [deleteDefaultOrUndefined](/docs/classes/OpenaiApiClient.md#deletedefaultorundefined)
+- [deleteDefaultOrUndefinedOptions](/docs/classes/OpenaiApiClient.md#deletedefaultorundefinedoptions)
 - [editCode](/docs/classes/OpenaiApiClient.md#editcode)
 - [editText](/docs/classes/OpenaiApiClient.md#edittext)
 - [emit](/docs/classes/OpenaiApiClient.md#emit)
@@ -53,7 +52,7 @@
 - [proofreadEnglish](/docs/classes/OpenaiApiClient.md#proofreadenglish)
 - [stringTokens](/docs/classes/OpenaiApiClient.md#stringtokens)
 - [translateEnglishTo](/docs/classes/OpenaiApiClient.md#translateenglishto)
-- [translateFrom](/docs/classes/OpenaiApiClient.md#translatefrom)
+- [translateFromTo](/docs/classes/OpenaiApiClient.md#translatefromto)
 
 ## Constructors
 
@@ -81,7 +80,7 @@ const openai = new OpenaiAPIClient({ apiKey: "API_KEY" })
 
 #### Defined in
 
-[src/api/OpenaiApiClient.ts:14](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L14)
+[src/api/OpenaiApiClient.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClient.ts#L14)
 
 ## Properties
 
@@ -89,13 +88,15 @@ const openai = new OpenaiAPIClient({ apiKey: "API_KEY" })
 
 • `Readonly` **apiDefaults**: [`IApiClientApiDefaultsOptions`](/docs/interfaces/IApiClientApiDefaultsOptions.md)
 
+Defaults for API requests. Can be overriden in individual method calls.
+
 #### Inherited from
 
 [OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[apiDefaults](/docs/classes/OpenaiApiClientBase.md#apidefaults)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:39](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L39)
+[src/api/OpenaiApiClientBase.ts:43](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L43)
 
 ___
 
@@ -103,13 +104,15 @@ ___
 
 • `Readonly` **cache**: [`ApiReponseCache`](/docs/classes/ApiReponseCache.md)<`string`[]\>
 
+API response cache
+
 #### Inherited from
 
 [OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[cache](/docs/classes/OpenaiApiClientBase.md#cache)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:33](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L33)
+[src/api/OpenaiApiClientBase.ts:38](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L38)
 
 ___
 
@@ -117,13 +120,15 @@ ___
 
 • `Readonly` **cacheDefaults**: [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)
 
+Options for whether to overwrite existing cached data by default for api requests
+
 #### Inherited from
 
 [OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[cacheDefaults](/docs/classes/OpenaiApiClientBase.md#cachedefaults)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:56](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L56)
+[src/api/OpenaiApiClientBase.ts:65](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L65)
 
 ___
 
@@ -131,13 +136,15 @@ ___
 
 • `Readonly` **client**: `OpenAIApi`
 
+API client instance
+
 #### Inherited from
 
 [OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[client](/docs/classes/OpenaiApiClientBase.md#client)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:27](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L27)
+[src/api/OpenaiApiClientBase.ts:28](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L28)
 
 ___
 
@@ -145,13 +152,15 @@ ___
 
 • `Readonly` **events**: `EventEmitter`
 
+Event emitter for cache events
+
 #### Inherited from
 
 [OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[events](/docs/classes/OpenaiApiClientBase.md#events)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:30](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L30)
+[src/api/OpenaiApiClientBase.ts:33](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L33)
 
 ___
 
@@ -159,27 +168,15 @@ ___
 
 • `Readonly` **retryDefaults**: `Options`
 
+Options for async-retry
+
 #### Inherited from
 
 [OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[retryDefaults](/docs/classes/OpenaiApiClientBase.md#retrydefaults)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:50](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L50)
-
-___
-
-### usage
-
-• `Readonly` **usage**: [`OpenaiTokenUsage`](/docs/classes/OpenaiTokenUsage.md)
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[usage](/docs/classes/OpenaiApiClientBase.md#usage)
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:36](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L36)
+[src/api/OpenaiApiClientBase.ts:56](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L56)
 
 ## Methods
 
@@ -193,12 +190,12 @@ It handles retrying, cache, hashing, and emitting events.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `request` | `CreateChatCompletionRequest` \| `CreateCompletionRequest` \| `CreateEditRequest` |
-| `retry` | `Options` |
-| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) |
-| `apiRequest` | () => `Promise`<`string`[]\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `request` | `CreateChatCompletionRequest` \| `CreateCompletionRequest` \| `CreateEditRequest` | The request object to send to the openai api. |
+| `retry` | `Options` | The retry options. |
+| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
+| `apiRequest` | () => `Promise`<`string`[]\> | - |
 
 #### Returns
 
@@ -210,7 +207,7 @@ It handles retrying, cache, hashing, and emitting events.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:274](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L274)
+[src/api/OpenaiApiClientBase.ts:325](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L325)
 
 ___
 
@@ -218,13 +215,16 @@ ___
 
 ▸ `Protected` **_chat**(`request`, `retry`, `cache`): `Promise`<`string`\>
 
+Send chat request to the openai API.
+This is used by all the preset methods, the public methods: chat3_8, chat3_16, and chat4_8.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `request` | `CreateChatCompletionRequest` |
-| `retry` | `Options` |
-| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `request` | `CreateChatCompletionRequest` | The request object to send to the openai api. |
+| `retry` | `Options` | The retry options. |
+| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
 
 #### Returns
 
@@ -236,7 +236,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:244](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L244)
+[src/api/OpenaiApiClientBase.ts:291](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L291)
 
 ___
 
@@ -244,13 +244,16 @@ ___
 
 ▸ `Protected` **_completion**(`request`, `retry`, `cache`): `Promise`<`string`\>
 
+Send completion request to the openai API.
+This is used by all the preset methods, the public methods: completion.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `request` | `CreateCompletionRequest` |
-| `retry` | `Options` |
-| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `request` | `CreateCompletionRequest` | The request object to send to the openai api. |
+| `retry` | `Options` | The retry options. |
+| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
 
 #### Returns
 
@@ -262,7 +265,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:231](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L231)
+[src/api/OpenaiApiClientBase.ts:272](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L272)
 
 ___
 
@@ -270,13 +273,16 @@ ___
 
 ▸ `Protected` **_edit**(`request`, `retry`, `cache`): `Promise`<`string`\>
 
+Send edit request to the openai API.
+This is used by all the preset methods, the public methods: editText, editCode
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `request` | `CreateEditRequest` |
-| `retry` | `Options` |
-| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `request` | `CreateEditRequest` | The request object to send to the openai api. |
+| `retry` | `Options` | The retry options. |
+| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
 
 #### Returns
 
@@ -288,7 +294,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:257](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L257)
+[src/api/OpenaiApiClientBase.ts:310](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L310)
 
 ___
 
@@ -314,7 +320,7 @@ Assert that the response data is complete by verifying that all returned choices
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:329](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L329)
+[src/api/OpenaiApiClientBase.ts:383](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L383)
 
 ___
 
@@ -327,9 +333,9 @@ Uses model: 'gpt-3.5-turbo-16k'.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | The options to use. |
 
 #### Returns
 
@@ -341,7 +347,7 @@ Uses model: 'gpt-3.5-turbo-16k'.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:103](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L103)
+[src/api/OpenaiApiClientBase.ts:120](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L120)
 
 ___
 
@@ -354,9 +360,9 @@ Uses model: 'gpt-3.5-turbo'.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | The options to use. |
 
 #### Returns
 
@@ -368,7 +374,7 @@ Uses model: 'gpt-3.5-turbo'.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:95](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L95)
+[src/api/OpenaiApiClientBase.ts:111](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L111)
 
 ___
 
@@ -381,9 +387,9 @@ Uses model: 'gpt-4'.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | The options to use. |
 
 #### Returns
 
@@ -395,7 +401,7 @@ Uses model: 'gpt-4'.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:112](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L112)
+[src/api/OpenaiApiClientBase.ts:130](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L130)
 
 ___
 
@@ -407,9 +413,9 @@ Send a completion request to the openai api.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`ICompletionRequestOptions`](/docs/interfaces/ICompletionRequestOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`ICompletionRequestOptions`](/docs/interfaces/ICompletionRequestOptions.md) | The options to use. |
 
 #### Returns
 
@@ -421,7 +427,7 @@ Send a completion request to the openai api.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:87](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L87)
+[src/api/OpenaiApiClientBase.ts:102](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L102)
 
 ___
 
@@ -433,9 +439,9 @@ Count the number of tokens in a string.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `string` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to count tokens in. |
 
 #### Returns
 
@@ -447,13 +453,17 @@ Count the number of tokens in a string.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:142](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L142)
+[src/api/OpenaiApiClientBase.ts:164](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L164)
 
 ___
 
-### deleteDefaultOrUndefined
+### deleteDefaultOrUndefinedOptions
 
-▸ `Protected` **deleteDefaultOrUndefined**<`T`\>(`options`, `defaults?`): `T`
+▸ `Protected` **deleteDefaultOrUndefinedOptions**<`T`\>(`options`, `defaults?`): `T`
+
+Delete all options that are undefined or equal to the default value.
+The response cache uses hashed options to determine if the request has already been made.
+Removing default values and undefined values normalizes the options object so it hashes the same.
 
 #### Type parameters
 
@@ -463,10 +473,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | `T` |
-| `defaults` | `Record`<`string`, `any`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | `T` | The options to delete from. |
+| `defaults` | `Record`<`string`, `any`\> | The default values to compare against. |
 
 #### Returns
 
@@ -474,11 +484,11 @@ ___
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[deleteDefaultOrUndefined](/docs/classes/OpenaiApiClientBase.md#deletedefaultorundefined)
+[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[deleteDefaultOrUndefinedOptions](/docs/classes/OpenaiApiClientBase.md#deletedefaultorundefinedoptions)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:305](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L305)
+[src/api/OpenaiApiClientBase.ts:362](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L362)
 
 ___
 
@@ -490,9 +500,9 @@ Edit code.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`IEditRequestOptions`](/docs/interfaces/IEditRequestOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IEditRequestOptions`](/docs/interfaces/IEditRequestOptions.md) | The options to use. |
 
 #### Returns
 
@@ -504,7 +514,7 @@ Edit code.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:127](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L127)
+[src/api/OpenaiApiClientBase.ts:147](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L147)
 
 ___
 
@@ -516,9 +526,9 @@ Edit text.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`IEditRequestOptions`](/docs/interfaces/IEditRequestOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IEditRequestOptions`](/docs/interfaces/IEditRequestOptions.md) | The options to use. |
 
 #### Returns
 
@@ -530,7 +540,7 @@ Edit text.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:120](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L120)
+[src/api/OpenaiApiClientBase.ts:139](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L139)
 
 ___
 
@@ -563,13 +573,15 @@ Emit an event but adds 'this' as an extra trailing argument.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:354](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L354)
+[src/api/OpenaiApiClientBase.ts:408](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L408)
 
 ___
 
 ### getDefaultApiKey
 
 ▸ `Protected` **getDefaultApiKey**(): `string`
+
+Get the default api key from 'process.env.USERPROFILE/repos/apikeys/openai.txt'
 
 #### Returns
 
@@ -581,7 +593,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:342](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L342)
+[src/api/OpenaiApiClientBase.ts:396](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L396)
 
 ___
 
@@ -589,11 +601,13 @@ ___
 
 ▸ `Protected` **handleCacheOptions**(`cacheOptions?`): [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)
 
+Handle cache options.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cacheOptions?` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `cacheOptions?` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options to handle. |
 
 #### Returns
 
@@ -605,7 +619,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:227](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L227)
+[src/api/OpenaiApiClientBase.ts:261](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L261)
 
 ___
 
@@ -613,11 +627,13 @@ ___
 
 ▸ `Protected` **handleChatOptions**(`options`): [`CreateChatCompletionRequest`, `Options`, [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
 
+Handle chat options.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | The options to handle. |
 
 #### Returns
 
@@ -629,7 +645,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:177](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L177)
+[src/api/OpenaiApiClientBase.ts:201](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L201)
 
 ___
 
@@ -637,11 +653,13 @@ ___
 
 ▸ `Protected` **handleCompletionOptions**(`options`): [`CreateCompletionRequest`, `Options`, [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
 
+Handle completion options.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`ICompletionRequestOptions`](/docs/interfaces/ICompletionRequestOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`ICompletionRequestOptions`](/docs/interfaces/ICompletionRequestOptions.md) | The options to handle. |
 
 #### Returns
 
@@ -653,7 +671,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:146](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L146)
+[src/api/OpenaiApiClientBase.ts:172](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L172)
 
 ___
 
@@ -661,11 +679,13 @@ ___
 
 ▸ `Protected` **handleEditOptions**(`options`): [`CreateEditRequest`, `Options`, [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
 
+Handle edit options.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`IEditRequestOptions`](/docs/interfaces/IEditRequestOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IEditRequestOptions`](/docs/interfaces/IEditRequestOptions.md) | The options to handle. |
 
 #### Returns
 
@@ -677,7 +697,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:197](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L197)
+[src/api/OpenaiApiClientBase.ts:225](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L225)
 
 ___
 
@@ -685,11 +705,13 @@ ___
 
 ▸ `Protected` **handleOptions**(`options`): [`IApiClientOptions`](/docs/interfaces/IApiClientOptions.md)
 
+Handle the options passed to the constructor.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`IApiClientOptions`](/docs/interfaces/IApiClientOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IApiClientOptions`](/docs/interfaces/IApiClientOptions.md) | The options to handle. |
 
 #### Returns
 
@@ -701,7 +723,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:60](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L60)
+[src/api/OpenaiApiClientBase.ts:73](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L73)
 
 ___
 
@@ -709,11 +731,13 @@ ___
 
 ▸ `Protected` **handleRetryOptions**(`retryOptions?`): `Options`
 
+Handle retry options.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `retryOptions?` | `Options` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `retryOptions?` | `Options` | The retry options to handle. |
 
 #### Returns
 
@@ -725,7 +749,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:216](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L216)
+[src/api/OpenaiApiClientBase.ts:246](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L246)
 
 ___
 
@@ -739,15 +763,13 @@ console.log all emitted events
 
 [`OpenaiApiClient`](/docs/classes/OpenaiApiClient.md)
 
-this (chainable)
-
 #### Inherited from
 
 [OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[logAllEvents](/docs/classes/OpenaiApiClientBase.md#logallevents)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:363](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L363)
+[src/api/OpenaiApiClientBase.ts:416](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L416)
 
 ___
 
@@ -755,11 +777,13 @@ ___
 
 ▸ `Protected` **parseChoices**(`choices`): `string`[]
 
+Extract the actual concent from the 'choices' object from the response data.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `choices` | `CreateChatCompletionResponseChoicesInner`[] \| `CreateCompletionResponseChoicesInner`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `choices` | `CreateChatCompletionResponseChoicesInner`[] \| `CreateCompletionResponseChoicesInner`[] | The choices object from the response data. |
 
 #### Returns
 
@@ -771,7 +795,7 @@ ___
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:291](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L291)
+[src/api/OpenaiApiClientBase.ts:343](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L343)
 
 ___
 
@@ -802,7 +826,7 @@ await openai.proofread('java', `System.out.println("Hello")`)
 
 #### Defined in
 
-[src/api/OpenaiApiClient.ts:27](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L27)
+[src/api/OpenaiApiClient.ts:27](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClient.ts#L27)
 
 ___
 
@@ -832,7 +856,7 @@ await openai.proofread('java', `System.out.println("Hello")`)
 
 #### Defined in
 
-[src/api/OpenaiApiClient.ts:50](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L50)
+[src/api/OpenaiApiClient.ts:46](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClient.ts#L46)
 
 ___
 
@@ -844,9 +868,9 @@ Encode a string into tokens.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `string` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `string` | `string` | The string to encode. |
 
 #### Returns
 
@@ -858,7 +882,7 @@ Encode a string into tokens.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:135](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClientBase.ts#L135)
+[src/api/OpenaiApiClientBase.ts:156](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClientBase.ts#L156)
 
 ___
 
@@ -889,13 +913,13 @@ await openai.translateEnglishTo('Spanish', 'Clear', { instruction: 'This is a co
 
 #### Defined in
 
-[src/api/OpenaiApiClient.ts:92](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L92)
+[src/api/OpenaiApiClient.ts:81](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClient.ts#L81)
 
 ___
 
-### translateFrom
+### translateFromTo
 
-▸ **translateFrom**(`fromLanguage`, `toLanguage`, `prompt`, `options?`): `Promise`<`string`\>
+▸ **translateFromTo**(`fromLanguage`, `toLanguage`, `prompt`, `options?`): `Promise`<`string`\>
 
 Translate text from one language to another.
 For short input text, use options.instruction to provide context.
@@ -921,4 +945,4 @@ await openai.translateFrom('English', 'Spanish', 'Clear', { instruction: 'This i
 
 #### Defined in
 
-[src/api/OpenaiApiClient.ts:69](https://github.com/bemoje/bemoje-node-util/blob/6c46bb4/src/api/OpenaiApiClient.ts#L69)
+[src/api/OpenaiApiClient.ts:64](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/OpenaiApiClient.ts#L64)

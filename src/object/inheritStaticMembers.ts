@@ -23,18 +23,13 @@ import type { Constructor } from '../types/Constructor'
  * Child.parentStaticMethod() //=> 'Parent static method'
  * ```
  */
-export function inheritStaticMembers(
-  target: Constructor,
-  source: Constructor,
-  ignoreKeys: string[] = [],
-): Constructor {
+export function inheritStaticMembers(target: Constructor, source: Constructor, ignoreKeys: string[] = []): Constructor {
   const ignore: Set<string | symbol> = new Set([...ignoreKeys, 'prototype', 'name', 'constructor'])
   for (const key of Reflect.ownKeys(source)) {
     if (ignore.has(key)) continue
     if (Reflect.has(target, key)) continue
     const des = Object.getOwnPropertyDescriptor(source, key)
-    if (!des) continue
-    Object.defineProperty(target, key, des)
+    Object.defineProperty(target, key, des as PropertyDescriptor)
   }
   return target
 }

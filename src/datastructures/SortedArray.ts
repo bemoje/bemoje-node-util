@@ -1,6 +1,6 @@
+import { setNonEnumerable } from '../object/setNonEnumerable'
 import { compareNumber } from '../sort/compareNumber'
 import { compareString } from '../sort/compareString'
-import { setNonEnumerable } from '../object/setNonEnumerable'
 import { ISortedArrayOptions } from './types/ISortedArrayOptions'
 
 export class SortedArray<T> extends Array {
@@ -32,7 +32,7 @@ export class SortedArray<T> extends Array {
   /**
    * Convert to a normal Array instance
    */
-  public toArray(): Array<T> {
+  public toArray(): T[] {
     return Array.from(this)
   }
 
@@ -201,7 +201,7 @@ export class SortedArray<T> extends Array {
    * Returns the interestion of this and another sorted array.
    * @param sorted - another sorted array with which to find intersections
    */
-  public intersection(sorted: Array<T>): Array<T> {
+  public intersection(sorted: T[]): T[] {
     const result = []
     let i1 = 0
     let i2 = 0

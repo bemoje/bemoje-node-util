@@ -1,5 +1,5 @@
-import { isPrototype } from '../validation/isPrototype'
 import { isConstructor } from '../validation/isConstructor'
+import { isPrototype } from '../validation/isPrototype'
 
 /**
  * Iterate the prototype chain of a given object.
@@ -22,10 +22,7 @@ import { isConstructor } from '../validation/isConstructor'
  * //=> [instance, C.prototype, B.prototype, A.prototype, Object.prototype]
  * ```
  */
-export function* iteratePrototypeChain(
-  object: Record<string, any>,
-): Generator<Record<string, any>> {
-  if (object == null) return
+export function* iteratePrototypeChain(object: Record<string, any>): Generator<Record<string, any>> {
   if (
     // if the below false, then object must be an instance
     !isPrototype(object) &&

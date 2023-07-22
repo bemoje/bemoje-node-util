@@ -47,16 +47,9 @@ describe(tsDocStripAllTagsButThrowsParamDescription.name, () => {
     ].join('\n')
 
     expect(tsDocStripAllTagsButThrowsParamDescription(code)).toBe(
-      [
-        '/**',
-        ' * This explains the thing.',
-        ' */',
-        '',
-        '/**',
-        ' * This explains the other thing.',
-        ' * @throws an error.',
-        ' */',
-      ].join('\n'),
+      ['/**', ' * This explains the thing.', ' */', '', '/**', ' * This explains the other thing.', ' * @throws an error.', ' */'].join(
+        '\n',
+      ),
     )
   })
 })

@@ -189,6 +189,11 @@ describe(TsDoc.name, () => {
       tsDoc.removeTags('example')
       expect(tsDoc.size).toBe(0)
     })
+
+    it('should return self when tag is not defined in the tag order.', () => {
+      const tsDoc = new TsDoc()
+      expect(tsDoc.removeTags('sometag')).toBe(tsDoc)
+    })
   })
 
   describe('size', () => {
@@ -316,6 +321,10 @@ describe(TsDoc.name, () => {
       const tags = Array.from(tsDoc.iterateTags())
       expect(tags).toEqual([tagc, tagb, taga])
     })
+    it('should return self if there are no params', () => {
+      const tsDoc = new TsDoc('', { paramOrder: ['c', 'a', 'b'] })
+      expect(tsDoc.reorderParams()).toBe(tsDoc)
+    })
   })
 
   describe('render', () => {
@@ -332,6 +341,19 @@ describe(TsDoc.name, () => {
     })
   })
 
+  describe('toString', () => {
+    it('Should call the render method and this behave identically.', () => {
+      const tsDoc = new TsDoc('', { tagOrder: ['tagc', 'taga', 'tagb'] })
+      const taga = new TsDocTag('taga', '', ['a'])
+      const tagb = new TsDocTag('tagb', '', ['b'])
+      const tagc = new TsDocTag('tagc', '', ['c'])
+      tsDoc.addTag(taga)
+      tsDoc.addTag(tagb)
+      tsDoc.addTag(tagc)
+      expect(tsDoc.render()).toBe(tsDoc.toString())
+    })
+  })
+
   describe('getTagOrder', () => {
     it('should return the tagOrder property if it is defined', () => {
       const tsDoc = new TsDoc(undefined, { tagOrder: ['taga', 'tagb'] })
@@ -341,6 +363,161 @@ describe(TsDoc.name, () => {
     it('should return TsDoc.defaultTagOrder if the tagOrder property is not defined', () => {
       const tsDoc = new TsDoc()
       expect(tsDoc.getTagOrder()).toEqual(TsDoc.defaultTagOrder)
+    })
+  })
+
+  describe('addBlockComment', () => {
+    test('should add tags to the TsDoc instance', () => {
+      const tsDoc = new TsDoc()
+      const code = `
+        /**
+         * Description of the thing
+         * @returns - The greeting message.
+         */
+      `
+      tsDoc.addBlockComment(code)
+
+      expect(tsDoc.size).toBe(2)
+      expect(tsDoc.single.has('description')).toBe(true)
+      expect(tsDoc.single.has('returns')).toBe(true)
+
+      const returnsTag = tsDoc.single.get('returns')
+      if (!returnsTag) throw new Error('paramTags is undefined')
+      expect(returnsTag.tag).toBe('returns')
+      expect(returnsTag.name).toBe('')
+      expect(returnsTag.description).toEqual(['- The greeting message.'])
+    })
+
+    test('should ignore tags that are not in the tagOrder', () => {
+      const tsDoc = new TsDoc()
+      const code = `
+        /**
+         * @returns - The greeting message.
+         * @unknownTag - Unknown tag.
+         */
+      `
+      tsDoc.addBlockComment(code)
+
+      expect(tsDoc.size).toBe(1)
+      expect(tsDoc.single.has('returns')).toBe(true)
+      expect(tsDoc.single.has('unknownTag')).toBe(false)
+    })
+
+    test('should add multiple instances of multi tags', () => {
+      const tsDoc = new TsDoc()
+      const code = `
+        /**
+         * @param name - The name of the person.
+         * @param age - The age of the person.
+         */
+      `
+      tsDoc.addBlockComment(code)
+
+      expect(tsDoc.size).toBe(2)
+      expect(tsDoc.namedMulti.has('param')).toBe(true)
+
+      const paramTags = tsDoc.namedMulti.get('param')
+      if (!paramTags) throw new Error('paramTags is undefined')
+      expect(paramTags.size).toBe(2)
+
+      const firstParamTag = paramTags.get('name') as TsDocTag
+      expect(firstParamTag.tag).toBe('param')
+      expect(firstParamTag.name).toBe('name')
+      expect(firstParamTag.description).toEqual(['- The name of the person.'])
+
+      const secondParamTag = paramTags.get('age') as TsDocTag
+      expect(secondParamTag.tag).toBe('param')
+      expect(secondParamTag.name).toBe('age')
+      expect(secondParamTag.description).toEqual(['- The age of the person.'])
+    })
+
+    test('should add multiple instances of named multi tags', () => {
+      const tsDoc = new TsDoc()
+      const code = `
+        /**
+         * @param name - The name of the person.
+         * @param age - The age of the person.
+         * @param name - The name of the person.
+         */
+      `
+      tsDoc.addBlockComment(code)
+
+      expect(tsDoc.size).toBe(2)
+      expect(tsDoc.namedMulti.has('param')).toBe(true)
+
+      const paramTags = tsDoc.namedMulti.get('param')
+      if (!paramTags) throw new Error('paramTags is undefined')
+      expect(paramTags.size).toBe(2)
+
+      const firstParamTag = paramTags.get('name')
+      expect(firstParamTag?.tag).toBe('param')
+      expect(firstParamTag?.name).toBe('name')
+      expect(firstParamTag?.description).toEqual(['- The name of the person.'])
+
+      const secondParamTag = paramTags.get('age')
+      expect(secondParamTag?.tag).toBe('param')
+      expect(secondParamTag?.name).toBe('age')
+      expect(secondParamTag?.description).toEqual(['- The age of the person.'])
+    })
+
+    test('should ignore tags with missing name parameter', () => {
+      const tsDoc = new TsDoc()
+      const code = `
+        /**
+         * @param - The name of the person.
+         * @returns - The greeting message.
+         */
+      `
+      tsDoc.addBlockComment(code)
+
+      expect(tsDoc.size).toBe(1)
+      expect(tsDoc.single.has('returns')).toBe(true)
+      expect(tsDoc.single.has('param')).toBe(false)
+    })
+
+    test('should ignore tags with missing description', () => {
+      const tsDoc = new TsDoc()
+      const code = `
+        /**
+         * @param name
+         * @returns - The greeting message.
+         */
+      `
+      tsDoc.addBlockComment(code)
+
+      expect(tsDoc.size).toBe(1)
+      expect(tsDoc.single.has('returns')).toBe(true)
+      expect(tsDoc.single.has('param')).toBe(false)
+    })
+
+    test('should ignore tags with invalid name', () => {
+      const tsDoc = new TsDoc()
+      const code = `
+        /**
+         * @param 123name - The name of the person.
+         * @returns - The greeting message.
+         */
+      `
+      tsDoc.addBlockComment(code)
+
+      expect(tsDoc.size).toBe(1)
+      expect(tsDoc.single.has('returns')).toBe(true)
+      expect(tsDoc.single.has('param')).toBe(false)
+    })
+
+    test('should ignore tags with invalid tag name', () => {
+      const tsDoc = new TsDoc()
+      const code = `
+        /**
+         * @unknownTag - Unknown tag.
+         * @returns - The greeting message.
+         */
+      `
+      tsDoc.addBlockComment(code)
+
+      expect(tsDoc.size).toBe(1)
+      expect(tsDoc.single.has('returns')).toBe(true)
+      expect(tsDoc.single.has('unknownTag')).toBe(false)
     })
   })
 })

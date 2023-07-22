@@ -1,9 +1,9 @@
-import { Level } from 'level'
-import EventEmitter from 'events'
-import hash from 'object-hash'
-import { createDirectorySync } from '../filesystem/createDirectorySync'
 import getAppDataPath from 'appdata-path'
+import EventEmitter from 'events'
+import { Level } from 'level'
+import hash from 'object-hash'
 import path from 'path'
+import { createDirectorySync } from '../filesystem/createDirectorySync'
 import { _printEmitterEvents } from '../node/_printEmitterEvents'
 import { IApiResponseCacheOptions } from './types/IApiResponseCacheOptions'
 
@@ -15,10 +15,12 @@ export class ApiReponseCache<V> {
    * Level database instance
    */
   readonly db: Level<string, string>
+
   /**
    * Event emitter for cache events
    */
   readonly events: EventEmitter = new EventEmitter()
+
   /**
    * Max age of cached data in milliseconds. Defaults to 0 (no max age).
    */
@@ -36,6 +38,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Create a new instance.
+   * @param options - Options for creating a new instance.
    */
   constructor(options: IApiResponseCacheOptions) {
     const _options = Object.assign({}, ApiReponseCache.optionsDefaults, options)
@@ -43,11 +46,13 @@ export class ApiReponseCache<V> {
     if (logAllEvents) this.logAllEvents()
     this.emit('options', _options)
     this.maxAgeMs = maxAgeMs
-    this.db = new Level(createDirectorySync(path.join(dirpath, name)))
+    const dbpath = createDirectorySync(path.join(dirpath, name))
+    this.db = new Level(dbpath)
   }
 
   /**
    * Hash any type of key.
+   * @param key - The key to hash.
    */
   hashKey(key: unknown): string {
     return hash(key === undefined ? 'undefined' : key, { algorithm: 'sha1', encoding: 'base64' })
@@ -55,6 +60,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Get a value for a given hash key if it exists. Otherwise, get retrive a value with a given function and then store that value in the cache.
+   * @param hash - The hash key.
    * @param apiRequest - function that returns a new value for a given key if it doesn't exist in the cache.
    */
   async getOrElse(hash: string, apiRequest: () => V | Promise<V>): Promise<V> {
@@ -71,6 +77,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Get a value for a given hash key.
+   * @param hash - The hash key.
    * @throws if the value does not exist for the give hash.
    */
   async get(hash: string): Promise<V> {
@@ -84,6 +91,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Get a value for a given hash key.
+   * @param hash - The hash key.
    */
   async getSafe(hash: string): Promise<V | undefined> {
     try {
@@ -98,6 +106,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Returns whether a value exists for a given key.
+   * @param hash - The hash key.
    */
   async has(hash: string): Promise<boolean> {
     try {
@@ -110,6 +119,9 @@ export class ApiReponseCache<V> {
 
   /**
    * Set a given value for a given hash key.
+   * @param hash - The hash key.
+   * @param value - The value to store.
+   * @throws if the value does not exist for the give hash.
    */
   async put(hash: string, value: V): Promise<V> {
     return this.orThrow(async () => {
@@ -121,8 +133,8 @@ export class ApiReponseCache<V> {
   }
 
   /**
-   * Delete a given value for a given hash key.
-   * @throws if the value does not exist for the give hash.
+   * Delete a given value for a given hash key if it exists.
+   * @param hash - The hash key.
    */
   async delete(hash: string): Promise<void> {
     return this.orThrow(async () => {
@@ -131,18 +143,19 @@ export class ApiReponseCache<V> {
     })
   }
 
-  /**
-   * Delete a given value for a given hash key.
-   */
-  async deleteSafe(hash: string): Promise<boolean> {
-    try {
-      await this.db.del(hash)
-      this.emit('delete', hash)
-      return true
-    } catch (e) {
-      return false
-    }
-  }
+  // /**
+  //  * Delete a given value for a given hash key.
+  //  * @param hash - The hash key.
+  //  */
+  // async deleteSafe(hash: string): Promise<boolean> {
+  //   try {
+  //     await this.db.del(hash)
+  //     this.emit('delete', hash)
+  //     return true
+  //   } catch (e) {
+  //     return false
+  //   }
+  // }
 
   /**
    * Delete all expired data.
@@ -158,7 +171,7 @@ export class ApiReponseCache<V> {
    * Delete all cached API responses.
    */
   async deleteEverything(): Promise<void> {
-    this.orThrow(async () => {
+    return this.orThrow(async () => {
       await this.db.clear()
       this.emit('delete', 'All cache data was deleted.')
     })
@@ -230,6 +243,9 @@ export class ApiReponseCache<V> {
 
   /**
    * Deletes a value from the cache if it is expired.
+   * @param hash - The hash key.
+   * @param serialized - The serialized value.
+   * @throws if the value is expired.
    */
   protected async ensureNotExpired(hash: string, serialized: string): Promise<void> {
     if (this.isExpired(serialized)) {
@@ -241,6 +257,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Check if a still raw serialized value string is expired.
+   * @param serialized - The serialized value.
    */
   protected isExpired(serialized: string): boolean {
     if (!this.maxAgeMs) return false
@@ -249,6 +266,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Custom JSON stringify function that prepends a timestamp to the stringified object.
+   * @param value - The value to serialize.
    */
   protected serializeValue(value: V): string {
     return Date.now() + JSON.stringify(value)
@@ -256,6 +274,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Parse the timestamp part of a raw serialized value string from the database.
+   * @param serialized - The serialized value.
    */
   protected parseSerializedTimestamp(serialized: string): number {
     return parseInt(serialized.substring(0, 13))
@@ -263,6 +282,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Parse the json part of a raw serialized value string from the database.
+   * @param serialized - The serialized value.
    */
   protected parseSerializedValue(serialized: string): V {
     return JSON.parse(serialized.substring(13))
@@ -271,6 +291,7 @@ export class ApiReponseCache<V> {
   /**
    * Shorthand for try/catch block with error-handling
    * Wrap a function in a try catch block and emit an error event if an error occurs.
+   * @param fn - The function to wrap.
    */
   protected orThrow<T>(fn: () => T | Promise<T>): T | Promise<T> {
     try {
@@ -282,6 +303,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Emit an event but this automatically adds 'this' as an extra argument.
+   * @param eventName - The event name.
    */
   protected emit<T>(eventName: string, arg: T): T {
     this.events.emit(eventName, arg, this)

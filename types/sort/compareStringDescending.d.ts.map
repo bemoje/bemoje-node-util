@@ -1,1 +1,1 @@
-{"version":3,"file":"compareStringDescending.d.ts","sourceRoot":"","sources":["../../../src/sort/compareStringDescending.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;GAaG;AACH,wBAAgB,uBAAuB,CAAC,CAAC,EAAE,MAAM,EAAE,CAAC,EAAE,MAAM,GAAG,MAAM,CAEpE"}
+{"version":3,"file":"compareStringDescending.d.ts","sourceRoot":"","sources":["../../src/sort/compareStringDescending.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;GAaG;AACH,wBAAgB,uBAAuB,CAAC,CAAC,EAAE,MAAM,EAAE,CAAC,EAAE,MAAM,GAAG,MAAM,CAEpE"}

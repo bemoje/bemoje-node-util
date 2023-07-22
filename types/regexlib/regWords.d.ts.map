@@ -1,1 +1,1 @@
-{"version":3,"file":"regWords.d.ts","sourceRoot":"","sources":["../../../src/regexlib/regWords.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,eAAO,MAAM,QAAQ,QAAc,CAAA"}
+{"version":3,"file":"regWords.d.ts","sourceRoot":"","sources":["../../src/regexlib/regWords.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,eAAO,MAAM,QAAQ,QAAc,CAAA"}
