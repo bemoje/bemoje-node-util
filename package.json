@@ -1,6 +1,6 @@
 {
   "name": "@bemoje/node-util",
-  "version": "0.4.2",
+  "version": "0.4.4",
   "description": "Various utilities for development in node-js",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -15,7 +15,7 @@
     "gentests": "ts-node scripts/generateUnitTests.ts",
     "gendocstests": "scripts\\gendocstests.bat",
     "test": "jest --preset ts-jest --coverage",
-    "rollup": "rollup --config ./rollup.config.js",
+    "rollup": "rollup --config ./rollup.config.js --bundleConfigAsCjs",
     "build": "npm run entrypoint && npm run lint && rimraf dist && rimraf types && npm run rollup",
     "docs": "rimraf docs && typedoc --out docs src/index.ts --readme none --plugin typedoc-plugin-markdown --theme markdown --entryDocument index.md --publicPath /docs/",
     "prepublish": "npm run build && npm run test && npm run docs"
@@ -64,7 +64,7 @@
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "deep-assign": "^3.0.0",
-    "esprima": "^4.0.1",
+    "esprima": "^4.0.1npm ",
     "exceljs": "^4.3.0",
     "express": "^4.18.2",
     "gpt-3-encoder": "^1.1.4",

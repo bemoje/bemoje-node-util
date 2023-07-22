@@ -20,7 +20,7 @@ The line index of the last line of the import statement.
 
 #### Defined in
 
-[src/tscode/types/ITsExtractImportsResult.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/types/ITsExtractImportsResult.ts#L9)
+[src/tscode/types/ITsExtractImportsResult.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/types/ITsExtractImportsResult.ts#L9)
 
 ___
 
@@ -32,7 +32,7 @@ The import statement.
 
 #### Defined in
 
-[src/tscode/types/ITsExtractImportsResult.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/types/ITsExtractImportsResult.ts#L13)
+[src/tscode/types/ITsExtractImportsResult.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/types/ITsExtractImportsResult.ts#L13)
 
 ___
 
@@ -44,4 +44,4 @@ The line index where the import statement starts.
 
 #### Defined in
 
-[src/tscode/types/ITsExtractImportsResult.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/types/ITsExtractImportsResult.ts#L5)
+[src/tscode/types/ITsExtractImportsResult.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/types/ITsExtractImportsResult.ts#L5)

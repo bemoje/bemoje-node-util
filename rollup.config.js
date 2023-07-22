@@ -1,7 +1,6 @@
-// import typescript2 from 'rollup-plugin-typescript2'
-const typescript2 = require('rollup-plugin-typescript2')
-// import PKG from './package.json'
-const PKG = require('./package.json')
+// @ts-check
+import typescript2 from 'rollup-plugin-typescript2'
+import PKG from './package.json'
 
 const banner = `/*!
  * ${PKG.name} v${PKG.version}
@@ -11,7 +10,7 @@ const banner = `/*!
  */
 `
 
-exports.default = {
+export default {
   input: './src/index.ts',
   external: [
     'fs',

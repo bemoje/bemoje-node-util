@@ -295,5 +295,5 @@
     /* Skip type checking all .d.ts files. */
     "skipLibCheck": false
   },
-  "include": ["./tests/**/*.ts", "./tests/**/*.tsx", "./src/**/*.ts", "./src/**/*.tsx"]
+  "include": ["./src/**/*.ts"]
 }

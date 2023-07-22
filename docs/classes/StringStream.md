@@ -101,7 +101,7 @@ Readable.constructor
 
 #### Defined in
 
-[src/node/StringStream.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/StringStream.ts#L11)
+[src/node/StringStream.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/StringStream.ts#L11)
 
 ## Properties
 
@@ -151,7 +151,7 @@ ___
 
 #### Defined in
 
-[src/node/StringStream.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/StringStream.ts#L9)
+[src/node/StringStream.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/StringStream.ts#L9)
 
 ___
 
@@ -365,13 +365,13 @@ ___
 
 #### Defined in
 
-[src/node/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/StringStream.ts#L8)
+[src/node/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/StringStream.ts#L8)
 
 ___
 
 ### captureRejectionSymbol
 
-▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](/docs/classes/StringStream.md#capturerejectionsymbol)
+▪ `Static` `Readonly` **captureRejectionSymbol**: typeof [`captureRejectionSymbol`](/docs/classes/PQueue.md#capturerejectionsymbol)
 
 Value: `Symbol.for('nodejs.rejection')`
 
@@ -467,7 +467,7 @@ ___
 
 ### errorMonitor
 
-▪ `Static` `Readonly` **errorMonitor**: typeof [`errorMonitor`](/docs/classes/StringStream.md#errormonitor)
+▪ `Static` `Readonly` **errorMonitor**: typeof [`errorMonitor`](/docs/classes/PQueue.md#errormonitor)
 
 This symbol shall be used to install a listener for only monitoring `'error'`events. Listeners installed using this symbol are called before the regular`'error'` listeners are called.
 
@@ -569,7 +569,7 @@ Readable.\_read
 
 #### Defined in
 
-[src/node/StringStream.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/StringStream.ts#L17)
+[src/node/StringStream.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/StringStream.ts#L17)
 
 ___
 

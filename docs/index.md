@@ -14,6 +14,8 @@
 - [NumberFormatter](/docs/classes/NumberFormatter.md)
 - [OpenaiApiClient](/docs/classes/OpenaiApiClient.md)
 - [OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md)
+- [PQueue](/docs/classes/PQueue.md)
+- [PriorityQueue](/docs/classes/PriorityQueue.md)
 - [Queue](/docs/classes/Queue.md)
 - [SimpleTable](/docs/classes/SimpleTable.md)
 - [SortedArray](/docs/classes/SortedArray.md)
@@ -32,9 +34,15 @@
 - [IEditRequestOptions](/docs/interfaces/IEditRequestOptions.md)
 - [IEnsureValidWindowsPathOptions](/docs/interfaces/IEnsureValidWindowsPathOptions.md)
 - [IExtractedTsDocComment](/docs/interfaces/IExtractedTsDocComment.md)
+- [IPQueueOptions](/docs/interfaces/IPQueueOptions.md)
+- [IPriorityQueueOptions](/docs/interfaces/IPriorityQueueOptions.md)
+- [IQueue](/docs/interfaces/IQueue.md)
+- [IQueueAddOptions](/docs/interfaces/IQueueAddOptions.md)
 - [IResponseCacheOptions](/docs/interfaces/IResponseCacheOptions.md)
 - [ISimpleTableSerializedForm](/docs/interfaces/ISimpleTableSerializedForm.md)
 - [ISortedArrayOptions](/docs/interfaces/ISortedArrayOptions.md)
+- [ITaskOptions](/docs/interfaces/ITaskOptions.md)
+- [ITimeoutOptions](/docs/interfaces/ITimeoutOptions.md)
 - [ITsExtractImportsResult](/docs/interfaces/ITsExtractImportsResult.md)
 - [ITsParseClassResult](/docs/interfaces/ITsParseClassResult.md)
 - [ITsParseFunctionResult](/docs/interfaces/ITsParseFunctionResult.md)
@@ -63,6 +71,7 @@
 - [RGB](/docs/index.md#rgb)
 - [RegexScopeTreeNode](/docs/index.md#regexscopetreenode)
 - [RexecYield](/docs/index.md#rexecyield)
+- [RunFunction](/docs/index.md#runfunction)
 - [WalkImportsResult](/docs/index.md#walkimportsresult)
 
 ### Variables
@@ -116,6 +125,7 @@
 - [arrShuffle](/docs/index.md#arrshuffle)
 - [arrSome](/docs/index.md#arrsome)
 - [arrSortNumeric](/docs/index.md#arrsortnumeric)
+- [arrSortedInsertionIndex](/docs/index.md#arrsortedinsertionindex)
 - [arrSum](/docs/index.md#arrsum)
 - [arrSwap](/docs/index.md#arrswap)
 - [arrTableAssertRowsSameLength](/docs/index.md#arrtableassertrowssamelength)
@@ -160,6 +170,7 @@
 - [deleteDirectorySafeSync](/docs/index.md#deletedirectorysafesync)
 - [deleteDirectorySync](/docs/index.md#deletedirectorysync)
 - [ensureValidWindowsPath](/docs/index.md#ensurevalidwindowspath)
+- [funAsyncRateLimit](/docs/index.md#funasyncratelimit)
 - [funParseClass](/docs/index.md#funparseclass)
 - [funParseFunction](/docs/index.md#funparsefunction)
 - [funSetName](/docs/index.md#funsetname)
@@ -409,7 +420,7 @@ A boolean indicating whether the current element passes the test.
 
 #### Defined in
 
-[src/types/ArrayPredicate.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/ArrayPredicate.ts#L10)
+[src/types/ArrayPredicate.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/ArrayPredicate.ts#L10)
 
 ___
 
@@ -441,7 +452,7 @@ ___
 
 #### Defined in
 
-[src/types/ArrayValueCallback.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/ArrayValueCallback.ts#L1)
+[src/types/ArrayValueCallback.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/ArrayValueCallback.ts#L1)
 
 ___
 
@@ -473,7 +484,7 @@ ___
 
 #### Defined in
 
-[src/types/ArrayVoidCallback.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/ArrayVoidCallback.ts#L1)
+[src/types/ArrayVoidCallback.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/ArrayVoidCallback.ts#L1)
 
 ___
 
@@ -483,7 +494,7 @@ ___
 
 #### Defined in
 
-[src/types/Bit.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/Bit.ts#L1)
+[src/types/Bit.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/Bit.ts#L1)
 
 ___
 
@@ -493,7 +504,7 @@ ___
 
 #### Defined in
 
-[src/types/BitArray.ts:3](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/BitArray.ts#L3)
+[src/types/BitArray.ts:3](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/BitArray.ts#L3)
 
 ___
 
@@ -503,7 +514,7 @@ ___
 
 #### Defined in
 
-[src/types/ByteArray.ts:3](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/ByteArray.ts#L3)
+[src/types/ByteArray.ts:3](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/ByteArray.ts#L3)
 
 ___
 
@@ -513,7 +524,7 @@ ___
 
 #### Defined in
 
-[src/types/ByteInt.ts:3](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/ByteInt.ts#L3)
+[src/types/ByteInt.ts:3](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/ByteInt.ts#L3)
 
 ___
 
@@ -538,7 +549,7 @@ ___
 
 #### Defined in
 
-[src/types/Comparator.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/Comparator.ts#L1)
+[src/types/Comparator.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/Comparator.ts#L1)
 
 ___
 
@@ -566,7 +577,7 @@ This type represents a constructor function. It is a function that can be called
 
 #### Defined in
 
-[src/types/Constructor.ts:7](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/Constructor.ts#L7)
+[src/types/Constructor.ts:7](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/Constructor.ts#L7)
 
 ___
 
@@ -596,7 +607,7 @@ ___
 
 #### Defined in
 
-[src/types/ConstructorOf.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/ConstructorOf.ts#L1)
+[src/types/ConstructorOf.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/ConstructorOf.ts#L1)
 
 ___
 
@@ -606,7 +617,7 @@ ___
 
 #### Defined in
 
-[src/types/DefinedPrimitive.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/DefinedPrimitive.ts#L1)
+[src/types/DefinedPrimitive.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/DefinedPrimitive.ts#L1)
 
 ___
 
@@ -630,7 +641,7 @@ ___
 
 #### Defined in
 
-[src/types/GenericFunction.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/GenericFunction.ts#L1)
+[src/types/GenericFunction.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/GenericFunction.ts#L1)
 
 ___
 
@@ -649,7 +660,7 @@ ___
 
 #### Defined in
 
-[src/node/types/MemoryUsageResult.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/types/MemoryUsageResult.ts#L1)
+[src/node/types/MemoryUsageResult.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/types/MemoryUsageResult.ts#L1)
 
 ___
 
@@ -665,7 +676,7 @@ ___
 
 #### Defined in
 
-[src/types/NestedArray.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/NestedArray.ts#L1)
+[src/types/NestedArray.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/NestedArray.ts#L1)
 
 ___
 
@@ -675,7 +686,7 @@ ___
 
 #### Defined in
 
-[src/types/ObjectKey.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/ObjectKey.ts#L1)
+[src/types/ObjectKey.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/ObjectKey.ts#L1)
 
 ___
 
@@ -695,7 +706,7 @@ ___
 
 #### Defined in
 
-[src/validation/types/ParsedSocialSecurityNumberDK.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/types/ParsedSocialSecurityNumberDK.ts#L1)
+[src/validation/types/ParsedSocialSecurityNumberDK.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/types/ParsedSocialSecurityNumberDK.ts#L1)
 
 ___
 
@@ -731,7 +742,7 @@ This type uses TypeScript's conditional types and recursive types to calculate t
 
 #### Defined in
 
-[src/types/PositiveIntegerLessThan.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/PositiveIntegerLessThan.ts#L10)
+[src/types/PositiveIntegerLessThan.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/PositiveIntegerLessThan.ts#L10)
 
 ___
 
@@ -741,7 +752,7 @@ ___
 
 #### Defined in
 
-[src/types/Primitive.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/Primitive.ts#L1)
+[src/types/Primitive.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/Primitive.ts#L1)
 
 ___
 
@@ -751,7 +762,7 @@ ___
 
 #### Defined in
 
-[src/types/RGB.ts:3](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/types/RGB.ts#L3)
+[src/types/RGB.ts:3](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/types/RGB.ts#L3)
 
 ___
 
@@ -772,7 +783,7 @@ ___
 
 #### Defined in
 
-[src/regex/types/RegexScopeTreeNode.ts:3](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/types/RegexScopeTreeNode.ts#L3)
+[src/regex/types/RegexScopeTreeNode.ts:3](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/types/RegexScopeTreeNode.ts#L3)
 
 ___
 
@@ -791,7 +802,25 @@ ___
 
 #### Defined in
 
-[src/regex/types/RexecYield.ts:1](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/types/RexecYield.ts#L1)
+[src/regex/types/RexecYield.ts:1](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/types/RexecYield.ts#L1)
+
+___
+
+### RunFunction
+
+Ƭ **RunFunction**: () => `Promise`<`unknown`\>
+
+#### Type declaration
+
+▸ (): `Promise`<`unknown`\>
+
+##### Returns
+
+`Promise`<`unknown`\>
+
+#### Defined in
+
+src/datastructures/types/RunFunction.ts:1
 
 ___
 
@@ -805,7 +834,7 @@ The object contains properties for depth, match, source, and error.
 
 #### Defined in
 
-[src/tscode/types/WalkImportsResult.ts:6](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/types/WalkImportsResult.ts#L6)
+[src/tscode/types/WalkImportsResult.ts:6](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/types/WalkImportsResult.ts#L6)
 
 ## Variables
 
@@ -827,7 +856,7 @@ The object contains properties for depth, match, source, and error.
 
 #### Defined in
 
-[src/html/HtmlGenerator.ts:146](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/html/HtmlGenerator.ts#L146)
+[src/html/HtmlGenerator.ts:146](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/html/HtmlGenerator.ts#L146)
 
 ___
 
@@ -839,7 +868,7 @@ The number of milliseconds in a day.
 
 #### Defined in
 
-[src/date/constants/MS_IN_DAY.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/constants/MS_IN_DAY.ts#L4)
+[src/date/constants/MS_IN_DAY.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/constants/MS_IN_DAY.ts#L4)
 
 ___
 
@@ -851,7 +880,7 @@ The number of milliseconds in an hour.
 
 #### Defined in
 
-[src/date/constants/MS_IN_HOUR.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/constants/MS_IN_HOUR.ts#L4)
+[src/date/constants/MS_IN_HOUR.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/constants/MS_IN_HOUR.ts#L4)
 
 ___
 
@@ -863,7 +892,7 @@ The number of milliseconds in a minute.
 
 #### Defined in
 
-[src/date/constants/MS_IN_MINUTE.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/constants/MS_IN_MINUTE.ts#L4)
+[src/date/constants/MS_IN_MINUTE.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/constants/MS_IN_MINUTE.ts#L4)
 
 ___
 
@@ -875,7 +904,7 @@ The number of milliseconds in a month.
 
 #### Defined in
 
-[src/date/constants/MS_IN_MONTH.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/constants/MS_IN_MONTH.ts#L4)
+[src/date/constants/MS_IN_MONTH.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/constants/MS_IN_MONTH.ts#L4)
 
 ___
 
@@ -887,7 +916,7 @@ The number of milliseconds in a second.
 
 #### Defined in
 
-[src/date/constants/MS_IN_SECOND.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/constants/MS_IN_SECOND.ts#L4)
+[src/date/constants/MS_IN_SECOND.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/constants/MS_IN_SECOND.ts#L4)
 
 ___
 
@@ -899,7 +928,7 @@ The number of milliseconds in a week.
 
 #### Defined in
 
-[src/date/constants/MS_IN_WEEK.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/constants/MS_IN_WEEK.ts#L4)
+[src/date/constants/MS_IN_WEEK.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/constants/MS_IN_WEEK.ts#L4)
 
 ___
 
@@ -911,7 +940,7 @@ The number of milliseconds in a year.
 
 #### Defined in
 
-[src/date/constants/MS_IN_YEAR.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/constants/MS_IN_YEAR.ts#L4)
+[src/date/constants/MS_IN_YEAR.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/constants/MS_IN_YEAR.ts#L4)
 
 ___
 
@@ -923,7 +952,7 @@ Matches block comments including if they are indented.
 
 #### Defined in
 
-[src/regexlib/regBlockCommentsWithIndent.ts:6](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regBlockCommentsWithIndent.ts#L6)
+[src/regexlib/regBlockCommentsWithIndent.ts:6](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regBlockCommentsWithIndent.ts#L6)
 
 ___
 
@@ -935,7 +964,7 @@ Matches exported functions in TypeScript source code.
 
 #### Defined in
 
-[src/regexlib/regFunctionsExports.ts:6](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regFunctionsExports.ts#L6)
+[src/regexlib/regFunctionsExports.ts:6](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regFunctionsExports.ts#L6)
 
 ___
 
@@ -947,7 +976,7 @@ Understands prefixes for hex colors, hex decimal and regexp unicode hex.
 
 #### Defined in
 
-[src/regexlib/regHex.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regHex.ts#L4)
+[src/regexlib/regHex.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regHex.ts#L4)
 
 ___
 
@@ -959,7 +988,7 @@ Prefixes for hex colors, hex decimal and regexp unicode hex
 
 #### Defined in
 
-[src/regexlib/regHexPrefix.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regHexPrefix.ts#L4)
+[src/regexlib/regHexPrefix.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regHexPrefix.ts#L4)
 
 ___
 
@@ -972,7 +1001,7 @@ Example: -20
 
 #### Defined in
 
-[src/regexlib/regInteger.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regInteger.ts#L5)
+[src/regexlib/regInteger.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regInteger.ts#L5)
 
 ___
 
@@ -984,7 +1013,7 @@ Matches root level Jest describe() tests.
 
 #### Defined in
 
-[src/regexlib/regJestTests.ts:6](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regJestTests.ts#L6)
+[src/regexlib/regJestTests.ts:6](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regJestTests.ts#L6)
 
 ___
 
@@ -996,7 +1025,7 @@ For checking if a string is of only alpha characters for a specific locale.
 
 #### Defined in
 
-[src/regexlib/regLocaleAlpha.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regLocaleAlpha.ts#L4)
+[src/regexlib/regLocaleAlpha.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regLocaleAlpha.ts#L4)
 
 ___
 
@@ -1008,7 +1037,7 @@ For checking if a string is of only alpha-numeric characters for a specific loca
 
 #### Defined in
 
-[src/regexlib/regLocaleAlphaNumeric.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regLocaleAlphaNumeric.ts#L4)
+[src/regexlib/regLocaleAlphaNumeric.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regLocaleAlphaNumeric.ts#L4)
 
 ___
 
@@ -1021,7 +1050,7 @@ Example: -20,412.34
 
 #### Defined in
 
-[src/regexlib/regNumberCommaSepDotDecimal.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regNumberCommaSepDotDecimal.ts#L5)
+[src/regexlib/regNumberCommaSepDotDecimal.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regNumberCommaSepDotDecimal.ts#L5)
 
 ___
 
@@ -1034,7 +1063,7 @@ Example: -20.412,34
 
 #### Defined in
 
-[src/regexlib/regNumberDotSepCommaDecimal.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regNumberDotSepCommaDecimal.ts#L5)
+[src/regexlib/regNumberDotSepCommaDecimal.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regNumberDotSepCommaDecimal.ts#L5)
 
 ___
 
@@ -1047,7 +1076,7 @@ Example: -20412,3461
 
 #### Defined in
 
-[src/regexlib/regNumberNoThousandSepCommaDecimal.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regNumberNoThousandSepCommaDecimal.ts#L5)
+[src/regexlib/regNumberNoThousandSepCommaDecimal.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regNumberNoThousandSepCommaDecimal.ts#L5)
 
 ___
 
@@ -1060,7 +1089,7 @@ Example: -20412.3461
 
 #### Defined in
 
-[src/regexlib/regNumberNoThousandSepDotDecimal.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regNumberNoThousandSepDotDecimal.ts#L5)
+[src/regexlib/regNumberNoThousandSepDotDecimal.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regNumberNoThousandSepDotDecimal.ts#L5)
 
 ___
 
@@ -1073,7 +1102,7 @@ Requires that thousand-separators removed.
 
 #### Defined in
 
-[src/regexlib/regPowerOfTen.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regPowerOfTen.ts#L5)
+[src/regexlib/regPowerOfTen.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regPowerOfTen.ts#L5)
 
 ___
 
@@ -1085,7 +1114,7 @@ Matches 2 or more consecutive whitespace characters, including line terminators,
 
 #### Defined in
 
-[src/regexlib/regRepeatingWhiteSpace.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regRepeatingWhiteSpace.ts#L4)
+[src/regexlib/regRepeatingWhiteSpace.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regRepeatingWhiteSpace.ts#L4)
 
 ___
 
@@ -1098,7 +1127,7 @@ Example: 151199-1512
 
 #### Defined in
 
-[src/regexlib/regSocialSecurityNumbersDK.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regSocialSecurityNumbersDK.ts#L5)
+[src/regexlib/regSocialSecurityNumbersDK.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regSocialSecurityNumbersDK.ts#L5)
 
 ___
 
@@ -1110,7 +1139,7 @@ Matches TSDoc example-tag content wrapped in markdown typescript code blocks.
 
 #### Defined in
 
-[src/regexlib/regTsDocExampleLines.ts:6](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regTsDocExampleLines.ts#L6)
+[src/regexlib/regTsDocExampleLines.ts:6](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regTsDocExampleLines.ts#L6)
 
 ___
 
@@ -1122,7 +1151,7 @@ Matches words in a text string.
 
 #### Defined in
 
-[src/regexlib/regWords.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regexlib/regWords.ts#L4)
+[src/regexlib/regWords.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regexlib/regWords.ts#L4)
 
 ## Functions
 
@@ -1159,7 +1188,7 @@ An array where the first element is the column index and the second element is t
 
 #### Defined in
 
-[src/spreadsheet/A1ToColRow.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/spreadsheet/A1ToColRow.ts#L17)
+[src/spreadsheet/A1ToColRow.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/spreadsheet/A1ToColRow.ts#L17)
 
 ___
 
@@ -1199,7 +1228,7 @@ A constructor for a class that extends the base constructor and includes an inde
 
 #### Defined in
 
-[src/mixins/MixinIndexed.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/mixins/MixinIndexed.ts#L15)
+[src/mixins/MixinIndexed.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinIndexed.ts#L15)
 
 ___
 
@@ -1235,7 +1264,7 @@ The constructor of the new class with the timestamp functionality.
 
 #### Defined in
 
-[src/mixins/MixinTimestamped.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/mixins/MixinTimestamped.ts#L12)
+[src/mixins/MixinTimestamped.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinTimestamped.ts#L12)
 
 ___
 
@@ -1272,7 +1301,7 @@ The relative path.
 
 #### Defined in
 
-[src/filesystem/absoluteToRelativePath.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/absoluteToRelativePath.ts#L16)
+[src/filesystem/absoluteToRelativePath.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/absoluteToRelativePath.ts#L16)
 
 ___
 
@@ -1308,7 +1337,7 @@ The average of all numbers in the array.
 
 #### Defined in
 
-[src/array/arrAverage.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrAverage.ts#L14)
+[src/array/arrAverage.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrAverage.ts#L14)
 
 ___
 
@@ -1346,7 +1375,7 @@ A new array where each element is the string representation of the corresponding
 
 #### Defined in
 
-[src/array/arrEachToString.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrEachToString.ts#L12)
+[src/array/arrEachToString.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrEachToString.ts#L12)
 
 ___
 
@@ -1388,7 +1417,7 @@ Returns `true` if all elements pass the predicate check, else `false`.
 
 #### Defined in
 
-[src/array/arrEvery.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrEvery.ts#L18)
+[src/array/arrEvery.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrEvery.ts#L18)
 
 ___
 
@@ -1419,7 +1448,7 @@ An array of indices where the predicate function returns true.
 
 #### Defined in
 
-[src/array/arrFindIndicesOf.ts:7](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrFindIndicesOf.ts#L7)
+[src/array/arrFindIndicesOf.ts:7](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrFindIndicesOf.ts#L7)
 
 ___
 
@@ -1458,7 +1487,7 @@ The last element in the array that satisfies the provided testing function. Othe
 
 #### Defined in
 
-[src/array/arrFindLast.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrFindLast.ts#L11)
+[src/array/arrFindLast.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrFindLast.ts#L11)
 
 ___
 
@@ -1498,7 +1527,7 @@ The index of the last occurrence of the element in the array that passes the tes
 
 #### Defined in
 
-[src/array/arrFindLastIndexOf.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrFindLastIndexOf.ts#L13)
+[src/array/arrFindLastIndexOf.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrFindLastIndexOf.ts#L13)
 
 ___
 
@@ -1541,7 +1570,7 @@ The flattened array.
 
 #### Defined in
 
-[src/array/arrFlatten.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrFlatten.ts#L17)
+[src/array/arrFlatten.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrFlatten.ts#L17)
 
 ___
 
@@ -1581,7 +1610,7 @@ An array of indices where the specified element can be found.
 
 #### Defined in
 
-[src/array/arrIndicesOf.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrIndicesOf.ts#L14)
+[src/array/arrIndicesOf.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrIndicesOf.ts#L14)
 
 ___
 
@@ -1624,7 +1653,7 @@ The last element of the array.
 
 #### Defined in
 
-[src/array/arrLast.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrLast.ts#L12)
+[src/array/arrLast.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrLast.ts#L12)
 
 ___
 
@@ -1662,7 +1691,7 @@ The original array, mutated by the callback function.
 
 #### Defined in
 
-[src/array/arrMapMutable.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrMapMutable.ts#L14)
+[src/array/arrMapMutable.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrMapMutable.ts#L14)
 
 ___
 
@@ -1708,7 +1737,7 @@ A 2D array (table) where each row represents an object and each column represent
 
 #### Defined in
 
-[src/array/arrObjectsToTable.ts:21](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrObjectsToTable.ts#L21)
+[src/array/arrObjectsToTable.ts:21](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrObjectsToTable.ts#L21)
 
 ___
 
@@ -1750,7 +1779,7 @@ An array of unique keys present in the input objects.
 
 #### Defined in
 
-[src/array/arrObjectsUniqueKeys.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrObjectsUniqueKeys.ts#L16)
+[src/array/arrObjectsUniqueKeys.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrObjectsUniqueKeys.ts#L16)
 
 ___
 
@@ -1796,7 +1825,7 @@ The new array with duplicates removed.
 
 #### Defined in
 
-[src/array/arrRemoveDuplicates.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrRemoveDuplicates.ts#L13)
+[src/array/arrRemoveDuplicates.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrRemoveDuplicates.ts#L13)
 
 ___
 
@@ -1836,7 +1865,7 @@ A boolean indicating whether the two arrays are shallowly equal.
 
 #### Defined in
 
-[src/array/arrShallowEquals.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrShallowEquals.ts#L17)
+[src/array/arrShallowEquals.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrShallowEquals.ts#L17)
 
 ___
 
@@ -1882,7 +1911,7 @@ The same array, but shuffled.
 
 #### Defined in
 
-[src/array/arrShuffle.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrShuffle.ts#L17)
+[src/array/arrShuffle.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrShuffle.ts#L17)
 
 ___
 
@@ -1922,7 +1951,7 @@ Returns `true` if at least one element in the array passes the test implemented 
 
 #### Defined in
 
-[src/array/arrSome.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrSome.ts#L16)
+[src/array/arrSome.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrSome.ts#L16)
 
 ___
 
@@ -1963,7 +1992,50 @@ The sorted array.
 
 #### Defined in
 
-[src/array/arrSortNumeric.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrSortNumeric.ts#L16)
+[src/array/arrSortNumeric.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrSortNumeric.ts#L16)
+
+___
+
+### arrSortedInsertionIndex
+
+▸ **arrSortedInsertionIndex**<`T`\>(`array`, `value`, `comparator`): `number`
+
+Returns an index in the sorted array where the specified value could be inserted while maintaining the sorted order of the array.
+If the element is already in the array, returns the index after the last instance of the element.
+
+**`Example`**
+
+```ts
+const array = [1, 2, 3, 5, 6];
+const value = 4;
+const comparator = (a, b) => a - b;
+const index = arrSortedLowerBound(array, value, comparator);
+console.log(index); // Output: 3
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `array` | readonly `T`[] | The sorted array to search. |
+| `value` | `T` | The value to locate in the array. |
+| `comparator` | (`a`: `T`, `b`: `T`) => `number` | A function that defines the sort order. If omitted, the array elements are converted to strings, then sorted according to each character's Unicode code point value. |
+
+#### Returns
+
+`number`
+
+The index at which the value could be inserted into array to maintain the array's sorted order.
+
+#### Defined in
+
+src/array/arrSortedInsertionIndex.ts:16
 
 ___
 
@@ -1995,7 +2067,7 @@ The sum of all numbers in the array.
 
 #### Defined in
 
-[src/array/arrSum.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrSum.ts#L11)
+[src/array/arrSum.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrSum.ts#L11)
 
 ___
 
@@ -2038,7 +2110,7 @@ The modified array with swapped elements.
 
 #### Defined in
 
-[src/array/arrSwap.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrSwap.ts#L14)
+[src/array/arrSwap.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrSwap.ts#L14)
 
 ___
 
@@ -2094,7 +2166,7 @@ T - The type of elements in the rows.
 
 #### Defined in
 
-[src/array/arrTableAssertRowsSameLength.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrTableAssertRowsSameLength.ts#L25)
+[src/array/arrTableAssertRowsSameLength.ts:25](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrTableAssertRowsSameLength.ts#L25)
 
 ___
 
@@ -2132,7 +2204,7 @@ The converted 2D array where each element is a string.
 
 #### Defined in
 
-[src/array/arrTableEachToString.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrTableEachToString.ts#L14)
+[src/array/arrTableEachToString.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrTableEachToString.ts#L14)
 
 ___
 
@@ -2235,7 +2307,7 @@ An array of objects, where each object represents a row in the table.
 
 #### Defined in
 
-[src/array/arrTableToObjects.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/array/arrTableToObjects.ts#L24)
+[src/array/arrTableToObjects.ts:24](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/array/arrTableToObjects.ts#L24)
 
 ___
 
@@ -2272,7 +2344,7 @@ Returns the input value if it is an integer.
 
 #### Defined in
 
-[src/validation/assertInteger.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/assertInteger.ts#L13)
+[src/validation/assertInteger.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/assertInteger.ts#L13)
 
 ___
 
@@ -2310,7 +2382,7 @@ Returns the number if it is a negative integer.
 
 #### Defined in
 
-[src/validation/assertNegativeInteger.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/assertNegativeInteger.ts#L14)
+[src/validation/assertNegativeInteger.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/assertNegativeInteger.ts#L14)
 
 ___
 
@@ -2350,7 +2422,7 @@ The same number if it is a positive integer.
 
 #### Defined in
 
-[src/validation/assertPositiveInteger.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/assertPositiveInteger.ts#L16)
+[src/validation/assertPositiveInteger.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/assertPositiveInteger.ts#L16)
 
 ___
 
@@ -2389,7 +2461,7 @@ Returns the number if it is a power of ten.
 
 #### Defined in
 
-[src/validation/assertPowerOfTen.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/assertPowerOfTen.ts#L17)
+[src/validation/assertPowerOfTen.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/assertPowerOfTen.ts#L17)
 
 ___
 
@@ -2430,7 +2502,7 @@ assertValidDate(2021, 13, 31, 23, 59, 59, 999);;
 
 #### Defined in
 
-[src/date/assertValidDate.ts:20](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/assertValidDate.ts#L20)
+[src/date/assertValidDate.ts:20](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/assertValidDate.ts#L20)
 
 ___
 
@@ -2468,7 +2540,7 @@ assertValidDateDay(29, 2, 2020);;
 
 #### Defined in
 
-[src/date/assertValidDateDay.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/assertValidDateDay.ts#L17)
+[src/date/assertValidDateDay.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/assertValidDateDay.ts#L17)
 
 ___
 
@@ -2503,7 +2575,7 @@ assertValidDateMonth(1);;
 
 #### Defined in
 
-[src/date/assertValidDateMonth.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/assertValidDateMonth.ts#L14)
+[src/date/assertValidDateMonth.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/assertValidDateMonth.ts#L14)
 
 ___
 
@@ -2540,7 +2612,7 @@ void
 
 #### Defined in
 
-[src/date/assertValidDateYear.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/assertValidDateYear.ts#L15)
+[src/date/assertValidDateYear.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/assertValidDateYear.ts#L15)
 
 ___
 
@@ -2578,7 +2650,7 @@ Returns the validated number if it is valid.
 
 #### Defined in
 
-[src/validation/assertValidNumber.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/assertValidNumber.ts#L16)
+[src/validation/assertValidNumber.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/assertValidNumber.ts#L16)
 
 ___
 
@@ -2634,7 +2706,7 @@ array of return values which are ordered with indices identical to their respect
 
 #### Defined in
 
-[src/async/asyncTasksLimit.ts:23](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/async/asyncTasksLimit.ts#L23)
+[src/async/asyncTasksLimit.ts:23](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/async/asyncTasksLimit.ts#L23)
 
 ___
 
@@ -2683,7 +2755,7 @@ A Promise that resolves to an array of results of type T.
 
 #### Defined in
 
-[src/async/asyncTasksParallel.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/async/asyncTasksParallel.ts#L16)
+[src/async/asyncTasksParallel.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/async/asyncTasksParallel.ts#L16)
 
 ___
 
@@ -2725,7 +2797,7 @@ A promise that resolves with an array of results of each task.
 
 #### Defined in
 
-[src/async/asyncTasksSerial.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/async/asyncTasksSerial.ts#L13)
+[src/async/asyncTasksSerial.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/async/asyncTasksSerial.ts#L13)
 
 ___
 
@@ -2779,7 +2851,7 @@ A promise that resolves with the task's result or rejects with an error.
 
 #### Defined in
 
-[src/async/asyncWithTimeout.ts:26](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/async/asyncWithTimeout.ts#L26)
+[src/async/asyncWithTimeout.ts:26](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/async/asyncWithTimeout.ts#L26)
 
 ___
 
@@ -2808,7 +2880,7 @@ atob(encodedString) //=> <Buffer 48 65 6c 6c 6f 20 77 6f 72 6c 64>
 
 #### Defined in
 
-[src/binary/atob.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/atob.ts#L9)
+[src/binary/atob.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/atob.ts#L9)
 
 ___
 
@@ -2838,7 +2910,7 @@ btoa(buffer);
 
 #### Defined in
 
-[src/binary/btoa.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/btoa.ts#L10)
+[src/binary/btoa.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/btoa.ts#L10)
 
 ___
 
@@ -2877,7 +2949,7 @@ A regular expression that matches text between the left and right patterns.
 
 #### Defined in
 
-[src/regex/buildRegexBetween.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/buildRegexBetween.ts#L17)
+[src/regex/buildRegexBetween.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/buildRegexBetween.ts#L17)
 
 ___
 
@@ -2911,7 +2983,7 @@ bytesToInt(bytes);
 
 #### Defined in
 
-[src/binary/bytesToInt.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/bytesToInt.ts#L11)
+[src/binary/bytesToInt.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/bytesToInt.ts#L11)
 
 ___
 
@@ -2957,7 +3029,7 @@ The A1 notation of the column and row index.
 
 #### Defined in
 
-[src/spreadsheet/colRowToA1.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/spreadsheet/colRowToA1.ts#L18)
+[src/spreadsheet/colRowToA1.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/spreadsheet/colRowToA1.ts#L18)
 
 ___
 
@@ -3001,7 +3073,7 @@ The column letter corresponding to the column number.
 
 #### Defined in
 
-[src/spreadsheet/colToLetter.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/spreadsheet/colToLetter.ts#L17)
+[src/spreadsheet/colToLetter.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/spreadsheet/colToLetter.ts#L17)
 
 ___
 
@@ -3043,7 +3115,7 @@ A comparator function that can be used for sorting arrays with the Array.prototy
 
 #### Defined in
 
-[src/sort/compareArray.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/sort/compareArray.ts#L24)
+[src/sort/compareArray.ts:24](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/sort/compareArray.ts#L24)
 
 ___
 
@@ -3079,7 +3151,7 @@ The difference between the two numbers
 
 #### Defined in
 
-[src/sort/compareNumber.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/sort/compareNumber.ts#L12)
+[src/sort/compareNumber.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/sort/compareNumber.ts#L12)
 
 ___
 
@@ -3111,7 +3183,7 @@ The difference between the two numbers (b - a). If the result is positive, `b` i
 
 #### Defined in
 
-[src/sort/compareNumberDescending.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/sort/compareNumberDescending.ts#L11)
+[src/sort/compareNumberDescending.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/sort/compareNumberDescending.ts#L11)
 
 ___
 
@@ -3146,7 +3218,7 @@ A number indicating the relationship between the two numbers:
 
 #### Defined in
 
-[src/sort/compareNumeric.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/sort/compareNumeric.ts#L14)
+[src/sort/compareNumeric.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/sort/compareNumeric.ts#L14)
 
 ___
 
@@ -3182,7 +3254,7 @@ A number indicating the sort order. -1 if `a` is greater than `b`, 1 if `a` is l
 
 #### Defined in
 
-[src/sort/compareNumericDescending.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/sort/compareNumericDescending.ts#L12)
+[src/sort/compareNumericDescending.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/sort/compareNumericDescending.ts#L12)
 
 ___
 
@@ -3218,7 +3290,7 @@ A number indicating whether a reference string comes before or after or is the s
 
 #### Defined in
 
-[src/sort/compareString.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/sort/compareString.ts#L15)
+[src/sort/compareString.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/sort/compareString.ts#L15)
 
 ___
 
@@ -3254,7 +3326,7 @@ A negative number if `a` is greater than `b`, a positive number if `a` is less t
 
 #### Defined in
 
-[src/sort/compareStringDescending.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/sort/compareStringDescending.ts#L15)
+[src/sort/compareStringDescending.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/sort/compareStringDescending.ts#L15)
 
 ___
 
@@ -3295,7 +3367,7 @@ The path of the directory.
 
 #### Defined in
 
-[src/filesystem/createDirectory.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/createDirectory.ts#L16)
+[src/filesystem/createDirectory.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/createDirectory.ts#L16)
 
 ___
 
@@ -3330,7 +3402,7 @@ The path of the directory.
 
 #### Defined in
 
-[src/filesystem/createDirectorySync.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/createDirectorySync.ts#L13)
+[src/filesystem/createDirectorySync.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/createDirectorySync.ts#L13)
 
 ___
 
@@ -3379,7 +3451,7 @@ A function that takes a filepath and returns true if the filepath has one of the
 
 #### Defined in
 
-[src/filesystem/createFileExtensionFilter.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/createFileExtensionFilter.ts#L16)
+[src/filesystem/createFileExtensionFilter.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/createFileExtensionFilter.ts#L16)
 
 ___
 
@@ -3433,7 +3505,7 @@ An `ObjectFactory` function. When called, this function takes an optional array 
 
 #### Defined in
 
-[src/object/createObjectFactory.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/createObjectFactory.ts#L13)
+[src/object/createObjectFactory.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/createObjectFactory.ts#L13)
 
 ___
 
@@ -3472,7 +3544,7 @@ An array of objects, where each object represents a row in the CSV.
 
 #### Defined in
 
-src/parse/csvParseStream.ts:21
+[src/parse/csvParseStream.ts:21](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/parse/csvParseStream.ts#L21)
 
 ___
 
@@ -3503,7 +3575,7 @@ A Date object representing the date that is the specified number of days in the 
 
 #### Defined in
 
-[src/date/dateDaysAgo.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/dateDaysAgo.ts#L10)
+[src/date/dateDaysAgo.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/dateDaysAgo.ts#L10)
 
 ___
 
@@ -3536,7 +3608,7 @@ The number of days since the given date.
 
 #### Defined in
 
-[src/date/daysSinceDate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/daysSinceDate.ts#L15)
+[src/date/daysSinceDate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/daysSinceDate.ts#L15)
 
 ___
 
@@ -3575,7 +3647,7 @@ A Promise that resolves when the directory has been deleted.
 
 #### Defined in
 
-[src/filesystem/deleteDirectory.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/deleteDirectory.ts#L14)
+[src/filesystem/deleteDirectory.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/deleteDirectory.ts#L14)
 
 ___
 
@@ -3615,7 +3687,7 @@ A promise that resolves to `void` when the directory has been deleted.
 
 #### Defined in
 
-[src/filesystem/deleteDirectorySafe.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/deleteDirectorySafe.ts#L15)
+[src/filesystem/deleteDirectorySafe.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/deleteDirectorySafe.ts#L15)
 
 ___
 
@@ -3650,7 +3722,7 @@ The path of the directory that was intended to be deleted.
 
 #### Defined in
 
-[src/filesystem/deleteDirectorySafeSync.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/deleteDirectorySafeSync.ts#L13)
+[src/filesystem/deleteDirectorySafeSync.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/deleteDirectorySafeSync.ts#L13)
 
 ___
 
@@ -3689,7 +3761,7 @@ The path of the deleted directory.
 
 #### Defined in
 
-[src/filesystem/deleteDirectorySync.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/deleteDirectorySync.ts#L14)
+[src/filesystem/deleteDirectorySync.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/deleteDirectorySync.ts#L14)
 
 ___
 
@@ -3732,7 +3804,83 @@ A boolean indicating whether the path is valid. If the `assert` option is true, 
 
 #### Defined in
 
-[src/filesystem/ensureValidWindowsPath.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/ensureValidWindowsPath.ts#L24)
+[src/filesystem/ensureValidWindowsPath.ts:24](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/ensureValidWindowsPath.ts#L24)
+
+___
+
+### funAsyncRateLimit
+
+▸ **funAsyncRateLimit**<`QueueType`, `EnqueueOptionsType`\>(`fun`, `options?`): [[`PQueue`](/docs/classes/PQueue.md)<`QueueType`, `EnqueueOptionsType`\>, (...`args`: `any`[]) => `Promise`<`any`\>]
+
+Function call rate limiter / concurrency control.
+
+**`Example`**
+
+```ts
+const [queue, waitSecondsLimited] = funAsyncRateLimit(waitSeconds, {
+  // Whether the task must finish in the given interval or will be carried over into the next interval count.
+  carryoverConcurrencyCount: false,
+  // max 50
+  intervalCap: 50,
+  // per minute
+  interval: 1000 * 60,
+  // max 3 concurrent
+  concurrency: 3,
+  // whether to start immediately when pushed to queue
+  autoStart: true,
+  priority: 0,
+  timeout: 0,
+  throwOnTimeout: false,
+})
+
+queue.onEmpty().then(() => {
+  console.log('Queue empty')
+})
+
+for (let i = 0; i < 7; i++) {
+  console.log({ i, inQueueBefore: queue.size })
+  waitSecondsLimited(2).then((returnValue) => {
+    console.log({ i, inQueueAfter: queue.size, returnValue })
+  })
+}
+//=> { i: 0, inQueueBefore: 0 }
+//=> { i: 1, inQueueBefore: 0 }
+//=> { i: 2, inQueueBefore: 0 }
+//=> { i: 3, inQueueBefore: 0 }
+//=> { i: 4, inQueueBefore: 1 }
+//=> { i: 5, inQueueBefore: 2 }
+//=> { i: 6, inQueueBefore: 3 }
+//=> Queue empty
+//=> { i: 0, inQueueAfter: 3, returnValue: undefined }
+//=> { i: 1, inQueueAfter: 2, returnValue: undefined }
+//=> { i: 2, inQueueAfter: 1, returnValue: undefined }
+//=> { i: 3, inQueueAfter: 0, returnValue: undefined }
+//=> { i: 4, inQueueAfter: 0, returnValue: undefined }
+//=> { i: 5, inQueueAfter: 0, returnValue: undefined }
+//=> { i: 6, inQueueAfter: 0, returnValue: undefined }
+```
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `QueueType` | extends [`IQueue`](/docs/interfaces/IQueue.md)<[`RunFunction`](/docs/index.md#runfunction), `EnqueueOptionsType`\> |
+| `EnqueueOptionsType` | extends [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md) |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fun` | (...`args`: `any`[]) => `any` | Function to be rate limited. |
+| `options` | [`IPQueueOptions`](/docs/interfaces/IPQueueOptions.md)<`QueueType`, `EnqueueOptionsType`\> | Options for the rate limiter. |
+
+#### Returns
+
+[[`PQueue`](/docs/classes/PQueue.md)<`QueueType`, `EnqueueOptionsType`\>, (...`args`: `any`[]) => `Promise`<`any`\>]
+
+#### Defined in
+
+src/function/funAsyncRateLimit.ts:56
 
 ___
 
@@ -3752,7 +3900,7 @@ ___
 
 #### Defined in
 
-[src/function/funParseClass.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/function/funParseClass.ts#L5)
+[src/function/funParseClass.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/function/funParseClass.ts#L5)
 
 ___
 
@@ -3772,7 +3920,7 @@ ___
 
 #### Defined in
 
-[src/function/funParseFunction.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/function/funParseFunction.ts#L4)
+[src/function/funParseFunction.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/function/funParseFunction.ts#L4)
 
 ___
 
@@ -3811,7 +3959,7 @@ The function with the new name.
 
 #### Defined in
 
-[src/function/funSetName.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/function/funSetName.ts#L13)
+[src/function/funSetName.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/function/funSetName.ts#L13)
 
 ___
 
@@ -3848,7 +3996,7 @@ The century the year belongs to.
 
 #### Defined in
 
-[src/date/getCentury.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/getCentury.ts#L15)
+[src/date/getCentury.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/getCentury.ts#L15)
 
 ___
 
@@ -3886,7 +4034,7 @@ The constructor of the object.
 
 #### Defined in
 
-[src/object/getConstructor.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/getConstructor.ts#L14)
+[src/object/getConstructor.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/getConstructor.ts#L14)
 
 ___
 
@@ -3915,7 +4063,7 @@ The current year as a number.
 
 #### Defined in
 
-[src/date/getCurrentYear.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/getCurrentYear.ts#L10)
+[src/date/getCurrentYear.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/getCurrentYear.ts#L10)
 
 ___
 
@@ -3950,7 +4098,7 @@ The prototype of the specified object.
 
 #### Defined in
 
-[src/object/getPrototype.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/getPrototype.ts#L11)
+[src/object/getPrototype.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/getPrototype.ts#L11)
 
 ___
 
@@ -3983,7 +4131,7 @@ The number of hours that have passed since the given date.
 
 #### Defined in
 
-[src/date/hoursSinceDate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/hoursSinceDate.ts#L15)
+[src/date/hoursSinceDate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/hoursSinceDate.ts#L15)
 
 ___
 
@@ -4030,7 +4178,7 @@ The target constructor with the inherited static members.
 
 #### Defined in
 
-[src/object/inheritStaticMembers.ts:26](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/inheritStaticMembers.ts#L26)
+[src/object/inheritStaticMembers.ts:26](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/inheritStaticMembers.ts#L26)
 
 ___
 
@@ -4059,7 +4207,7 @@ intToArrayBytes(1234567890);
 
 #### Defined in
 
-[src/binary/intToArrayBytes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/intToArrayBytes.ts#L9)
+[src/binary/intToArrayBytes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/intToArrayBytes.ts#L9)
 
 ___
 
@@ -4088,7 +4236,7 @@ intToBuffer(int) //=> <Buffer 00 00 00 2a>
 
 #### Defined in
 
-[src/binary/intToBuffer.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/intToBuffer.ts#L11)
+[src/binary/intToBuffer.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/intToBuffer.ts#L11)
 
 ___
 
@@ -4121,7 +4269,7 @@ intToBytes(12345);
 
 #### Defined in
 
-[src/binary/intToBytes.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/intToBytes.ts#L10)
+[src/binary/intToBytes.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/intToBytes.ts#L10)
 
 ___
 
@@ -4160,7 +4308,7 @@ A boolean indicating whether the number is between the two boundaries.
 
 #### Defined in
 
-[src/number/isBetween.ts:23](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/isBetween.ts#L23)
+[src/number/isBetween.ts:23](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/isBetween.ts#L23)
 
 ___
 
@@ -4200,7 +4348,7 @@ A boolean indicating whether the value is a constructor or not.
 
 #### Defined in
 
-[src/validation/isConstructor.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isConstructor.ts#L16)
+[src/validation/isConstructor.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isConstructor.ts#L16)
 
 ___
 
@@ -4241,7 +4389,7 @@ A boolean indicating whether the number is even.
 
 #### Defined in
 
-[src/number/isEven.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/isEven.ts#L14)
+[src/number/isEven.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/isEven.ts#L14)
 
 ___
 
@@ -4275,7 +4423,7 @@ A boolean indicating whether the number is greater than the lower bound.
 
 #### Defined in
 
-[src/number/isGT.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/isGT.ts#L13)
+[src/number/isGT.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/isGT.ts#L13)
 
 ___
 
@@ -4309,7 +4457,7 @@ A boolean indicating whether the number is greater than or equal to the lower bo
 
 #### Defined in
 
-[src/number/isGTE.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/isGTE.ts#L13)
+[src/number/isGTE.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/isGTE.ts#L13)
 
 ___
 
@@ -4347,7 +4495,7 @@ A boolean indicating whether the string is a hexadecimal number.
 
 #### Defined in
 
-[src/validation/isHex.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isHex.ts#L16)
+[src/validation/isHex.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isHex.ts#L16)
 
 ___
 
@@ -4386,7 +4534,7 @@ A boolean value indicating whether the string is a hexadecimal or unicode.
 
 #### Defined in
 
-[src/validation/isHexOrUnicode.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isHexOrUnicode.ts#L15)
+[src/validation/isHexOrUnicode.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isHexOrUnicode.ts#L15)
 
 ___
 
@@ -4431,7 +4579,7 @@ A boolean indicating whether the number is within the range.
 
 #### Defined in
 
-[src/number/isInRange.ts:26](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/isInRange.ts#L26)
+[src/number/isInRange.ts:26](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/isInRange.ts#L26)
 
 ___
 
@@ -4468,7 +4616,7 @@ A boolean indicating whether the provided number is an integer.
 
 #### Defined in
 
-[src/validation/isInteger.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isInteger.ts#L13)
+[src/validation/isInteger.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isInteger.ts#L13)
 
 ___
 
@@ -4515,7 +4663,7 @@ A boolean indicating whether the object is iterable.
 
 #### Defined in
 
-[src/validation/isIterable.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isIterable.ts#L14)
+[src/validation/isIterable.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isIterable.ts#L14)
 
 ___
 
@@ -4554,7 +4702,7 @@ A boolean indicating whether the number is less than the upper bound.
 
 #### Defined in
 
-[src/number/isLT.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/isLT.ts#L15)
+[src/number/isLT.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/isLT.ts#L15)
 
 ___
 
@@ -4588,7 +4736,7 @@ A boolean indicating whether the number is less than or equal to the upper bound
 
 #### Defined in
 
-[src/number/isLTE.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/isLTE.ts#L13)
+[src/number/isLTE.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/isLTE.ts#L13)
 
 ___
 
@@ -4627,7 +4775,7 @@ isLeapYear(2001); ;
 
 #### Defined in
 
-[src/date/isLeapYear.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/isLeapYear.ts#L17)
+[src/date/isLeapYear.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/isLeapYear.ts#L17)
 
 ___
 
@@ -4664,7 +4812,7 @@ A boolean indicating whether the tag is a multi TSDoc tag.
 
 #### Defined in
 
-[src/tsdoc/isMultiTsDocTag.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/isMultiTsDocTag.ts#L13)
+[src/tsdoc/isMultiTsDocTag.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/isMultiTsDocTag.ts#L13)
 
 ___
 
@@ -4698,7 +4846,7 @@ Returns true if the tag is a named multi TSDoc tag, false otherwise.
 
 #### Defined in
 
-[src/tsdoc/isNamedMultiTsDocTag.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/isNamedMultiTsDocTag.ts#L13)
+[src/tsdoc/isNamedMultiTsDocTag.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/isNamedMultiTsDocTag.ts#L13)
 
 ___
 
@@ -4731,7 +4879,7 @@ A boolean indicating whether the tag is a named TSDoc tag.
 
 #### Defined in
 
-[src/tsdoc/isNamedTsDocTag.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/isNamedTsDocTag.ts#L12)
+[src/tsdoc/isNamedTsDocTag.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/isNamedTsDocTag.ts#L12)
 
 ___
 
@@ -4770,7 +4918,7 @@ A boolean indicating whether the input is a negative integer.
 
 #### Defined in
 
-[src/validation/isNegativeInteger.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isNegativeInteger.ts#L15)
+[src/validation/isNegativeInteger.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isNegativeInteger.ts#L15)
 
 ___
 
@@ -4807,7 +4955,7 @@ A boolean indicating whether the string is numeric or not.
 
 #### Defined in
 
-[src/validation/isNumericString.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isNumericString.ts#L13)
+[src/validation/isNumericString.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isNumericString.ts#L13)
 
 ___
 
@@ -4846,7 +4994,7 @@ A boolean indicating whether the provided value is an object.
 
 #### Defined in
 
-[src/validation/isObject.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isObject.ts#L13)
+[src/validation/isObject.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isObject.ts#L13)
 
 ___
 
@@ -4887,7 +5035,7 @@ A boolean indicating whether the number is odd.
 
 #### Defined in
 
-[src/number/isOdd.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/isOdd.ts#L14)
+[src/number/isOdd.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/isOdd.ts#L14)
 
 ___
 
@@ -4928,7 +5076,7 @@ A boolean indicating whether the input is a positive integer.
 
 #### Defined in
 
-[src/validation/isPositiveInteger.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isPositiveInteger.ts#L17)
+[src/validation/isPositiveInteger.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isPositiveInteger.ts#L17)
 
 ___
 
@@ -4965,7 +5113,7 @@ A boolean indicating whether the integer is a power of ten.
 
 #### Defined in
 
-[src/validation/isPowerOfTen.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isPowerOfTen.ts#L15)
+[src/validation/isPowerOfTen.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isPowerOfTen.ts#L15)
 
 ___
 
@@ -5004,7 +5152,7 @@ A boolean indicating whether the value is a prototype.
 
 #### Defined in
 
-[src/validation/isPrototype.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isPrototype.ts#L13)
+[src/validation/isPrototype.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isPrototype.ts#L13)
 
 ___
 
@@ -5045,7 +5193,7 @@ A boolean indicating whether the string is a valid Danish SSN.
 
 #### Defined in
 
-[src/validation/isSocialSecurityNumberDK.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isSocialSecurityNumberDK.ts#L16)
+[src/validation/isSocialSecurityNumberDK.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isSocialSecurityNumberDK.ts#L16)
 
 ___
 
@@ -5086,7 +5234,7 @@ A boolean indicating whether the provided date and time values form a valid date
 
 #### Defined in
 
-[src/date/isValidDate.ts:20](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/isValidDate.ts#L20)
+[src/date/isValidDate.ts:20](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/isValidDate.ts#L20)
 
 ___
 
@@ -5123,7 +5271,7 @@ A boolean indicating whether the day is valid for the given month and year.
 
 #### Defined in
 
-[src/date/isValidDateDay.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/isValidDateDay.ts#L18)
+[src/date/isValidDateDay.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/isValidDateDay.ts#L18)
 
 ___
 
@@ -5156,7 +5304,7 @@ A boolean indicating whether the month is valid.
 
 #### Defined in
 
-[src/date/isValidDateMonth.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/isValidDateMonth.ts#L12)
+[src/date/isValidDateMonth.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/isValidDateMonth.ts#L12)
 
 ___
 
@@ -5195,7 +5343,7 @@ A boolean indicating whether the year is valid or not.
 
 #### Defined in
 
-[src/date/isValidDateYear.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/isValidDateYear.ts#L15)
+[src/date/isValidDateYear.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/isValidDateYear.ts#L15)
 
 ___
 
@@ -5234,7 +5382,7 @@ A boolean indicating whether the provided value is a valid number.
 
 #### Defined in
 
-[src/validation/isValidNumber.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/isValidNumber.ts#L15)
+[src/validation/isValidNumber.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/isValidNumber.ts#L15)
 
 ___
 
@@ -5262,7 +5410,7 @@ A boolean indicating whether the provided code string is a valid TSDoc comment.
 
 #### Defined in
 
-[src/tsdoc/isValidTsDocComment.ts:7](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/isValidTsDocComment.ts#L7)
+[src/tsdoc/isValidTsDocComment.ts:7](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/isValidTsDocComment.ts#L7)
 
 ___
 
@@ -5301,7 +5449,7 @@ The ISO date timestamp string.
 
 #### Defined in
 
-[src/date/isoDateTimestamp.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/isoDateTimestamp.ts#L15)
+[src/date/isoDateTimestamp.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/isoDateTimestamp.ts#L15)
 
 ___
 
@@ -5333,7 +5481,7 @@ A string in the format "YYYY-MM-DD-HH-MM-SS-SSS".
 
 #### Defined in
 
-[src/date/isoDateTimestampForFilename.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/isoDateTimestampForFilename.ts#L11)
+[src/date/isoDateTimestampForFilename.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/isoDateTimestampForFilename.ts#L11)
 
 ___
 
@@ -5370,7 +5518,7 @@ The first element of the iterable object, or `undefined` if the iterable is empt
 
 #### Defined in
 
-[src/object/iterableFirstElement.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/iterableFirstElement.ts#L11)
+[src/object/iterableFirstElement.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/iterableFirstElement.ts#L11)
 
 ___
 
@@ -5419,7 +5567,7 @@ A generator that yields each prototype in the chain.
 
 #### Defined in
 
-[src/object/iteratePrototypeChain.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/iteratePrototypeChain.ts#L25)
+[src/object/iteratePrototypeChain.ts:25](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/iteratePrototypeChain.ts#L25)
 
 ___
 
@@ -5461,7 +5609,7 @@ The column number corresponding to the input column letter.
 
 #### Defined in
 
-[src/spreadsheet/letterToCol.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/spreadsheet/letterToCol.ts#L18)
+[src/spreadsheet/letterToCol.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/spreadsheet/letterToCol.ts#L18)
 
 ___
 
@@ -5502,7 +5650,7 @@ The value retrieved from the Map or generated by the callback function.
 
 #### Defined in
 
-[src/map/mapGetOrElse.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/map/mapGetOrElse.ts#L14)
+[src/map/mapGetOrElse.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/map/mapGetOrElse.ts#L14)
 
 ___
 
@@ -5553,7 +5701,7 @@ A new Map with the entries of the original Map in reverse order.
 
 #### Defined in
 
-[src/map/mapReverse.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/map/mapReverse.ts#L14)
+[src/map/mapReverse.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/map/mapReverse.ts#L14)
 
 ___
 
@@ -5597,7 +5745,7 @@ map.get('a')
 
 #### Defined in
 
-[src/map/mapUpdate.ts:19](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/map/mapUpdate.ts#L19)
+[src/map/mapUpdate.ts:19](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/map/mapUpdate.ts#L19)
 
 ___
 
@@ -5633,7 +5781,7 @@ The code string wrapped in a markdown code block.
 
 #### Defined in
 
-[src/parse/markdownWrapCodeBlock.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/parse/markdownWrapCodeBlock.ts#L12)
+[src/parse/markdownWrapCodeBlock.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/parse/markdownWrapCodeBlock.ts#L12)
 
 ___
 
@@ -5667,7 +5815,7 @@ Returns an object about the process memory usage for: process allocation, heap a
 
 #### Defined in
 
-[src/node/memoryUsage.ts:21](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/memoryUsage.ts#L21)
+[src/node/memoryUsage.ts:21](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/memoryUsage.ts#L21)
 
 ___
 
@@ -5700,7 +5848,7 @@ The number of minutes that have passed since the given date.
 
 #### Defined in
 
-[src/date/minutesSinceDate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/minutesSinceDate.ts#L15)
+[src/date/minutesSinceDate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/minutesSinceDate.ts#L15)
 
 ___
 
@@ -5733,7 +5881,7 @@ The number of months that have passed since the provided date.
 
 #### Defined in
 
-[src/date/monthsSinceDate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/monthsSinceDate.ts#L15)
+[src/date/monthsSinceDate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/monthsSinceDate.ts#L15)
 
 ___
 
@@ -5764,7 +5912,7 @@ The number of milliseconds that have passed since the provided date.
 
 #### Defined in
 
-[src/date/msSinceDate.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/msSinceDate.ts#L10)
+[src/date/msSinceDate.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/msSinceDate.ts#L10)
 
 ___
 
@@ -5810,7 +5958,7 @@ The normalized file extension.
 
 #### Defined in
 
-[src/filesystem/normalizeFileExtension.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/normalizeFileExtension.ts#L24)
+[src/filesystem/normalizeFileExtension.ts:24](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/normalizeFileExtension.ts#L24)
 
 ___
 
@@ -5834,7 +5982,7 @@ Normalize line lengths. Tries to merge sentences with its neighboring sentences 
 
 #### Defined in
 
-[src/nlp/normalizeLineLengths.ts:7](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/nlp/normalizeLineLengths.ts#L7)
+[src/nlp/normalizeLineLengths.ts:7](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/nlp/normalizeLineLengths.ts#L7)
 
 ___
 
@@ -5875,7 +6023,7 @@ The number of days in the given month for the specified year.
 
 #### Defined in
 
-[src/date/numDaysInMonth.ts:20](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/numDaysInMonth.ts#L20)
+[src/date/numDaysInMonth.ts:20](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/numDaysInMonth.ts#L20)
 
 ___
 
@@ -5913,7 +6061,7 @@ An array of numbers from start to end, inclusive.
 
 #### Defined in
 
-[src/number/numRange.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/numRange.ts#L14)
+[src/number/numRange.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/numRange.ts#L14)
 
 ___
 
@@ -5953,7 +6101,7 @@ A new object that has the combined properties of both the target and source obje
 
 #### Defined in
 
-[src/object/objAssignDeep.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objAssignDeep.ts#L16)
+[src/object/objAssignDeep.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objAssignDeep.ts#L16)
 
 ___
 
@@ -6008,7 +6156,7 @@ The same object, but deeply frozen.
 
 #### Defined in
 
-[src/object/objDeepFreeze.ts:29](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objDeepFreeze.ts#L29)
+[src/object/objDeepFreeze.ts:29](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objDeepFreeze.ts#L29)
 
 ___
 
@@ -6048,7 +6196,7 @@ The modified object with the key deleted.
 
 #### Defined in
 
-[src/object/objDelete.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objDelete.ts#L15)
+[src/object/objDelete.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objDelete.ts#L15)
 
 ___
 
@@ -6087,7 +6235,7 @@ A new object with the specified keys deleted.
 
 #### Defined in
 
-[src/object/objDeleteKeys.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objDeleteKeys.ts#L15)
+[src/object/objDeleteKeys.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objDeleteKeys.ts#L15)
 
 ___
 
@@ -6130,7 +6278,7 @@ The modified object with the specified keys deleted.
 
 #### Defined in
 
-[src/object/objDeleteKeysMutable.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objDeleteKeysMutable.ts#L13)
+[src/object/objDeleteKeysMutable.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objDeleteKeysMutable.ts#L13)
 
 ___
 
@@ -6177,7 +6325,7 @@ An iterable of tuples where each tuple is a key-value pair from the object.
 
 #### Defined in
 
-[src/object/objEntries.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objEntries.ts#L16)
+[src/object/objEntries.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objEntries.ts#L16)
 
 ___
 
@@ -6224,7 +6372,7 @@ An array of entries, where each entry is a tuple of a string and a value of type
 
 #### Defined in
 
-[src/object/objEntriesArray.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objEntriesArray.ts#L16)
+[src/object/objEntriesArray.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objEntriesArray.ts#L16)
 
 ___
 
@@ -6264,7 +6412,7 @@ A new object with the properties that passed the test. If no properties passed t
 
 #### Defined in
 
-[src/object/objFilter.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objFilter.ts#L15)
+[src/object/objFilter.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objFilter.ts#L15)
 
 ___
 
@@ -6305,7 +6453,7 @@ The original object.
 
 #### Defined in
 
-[src/object/objForEach.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objForEach.ts#L16)
+[src/object/objForEach.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objForEach.ts#L16)
 
 ___
 
@@ -6348,7 +6496,7 @@ The value of the specified key in the object, or `undefined` if the key does not
 
 #### Defined in
 
-[src/object/objGet.ts:19](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objGet.ts#L19)
+[src/object/objGet.ts:19](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objGet.ts#L19)
 
 ___
 
@@ -6392,7 +6540,7 @@ The value associated with the key in the object, or the result of the callback f
 
 #### Defined in
 
-[src/object/objGetOrElse.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objGetOrElse.ts#L16)
+[src/object/objGetOrElse.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objGetOrElse.ts#L16)
 
 ___
 
@@ -6433,7 +6581,7 @@ Returns true if the object has the key, false otherwise.
 
 #### Defined in
 
-[src/object/objHas.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objHas.ts#L17)
+[src/object/objHas.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objHas.ts#L17)
 
 ___
 
@@ -6483,7 +6631,7 @@ A boolean indicating whether the object is empty or not.
 
 #### Defined in
 
-[src/object/objIsEmpty.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objIsEmpty.ts#L17)
+[src/object/objIsEmpty.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objIsEmpty.ts#L17)
 
 ___
 
@@ -6531,7 +6679,7 @@ An iterable of the object's keys.
 
 #### Defined in
 
-[src/object/objKeys.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objKeys.ts#L17)
+[src/object/objKeys.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objKeys.ts#L17)
 
 ___
 
@@ -6577,7 +6725,7 @@ The array of keys of the input object.
 
 #### Defined in
 
-[src/object/objKeysArray.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objKeysArray.ts#L15)
+[src/object/objKeysArray.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objKeysArray.ts#L15)
 
 ___
 
@@ -6617,7 +6765,7 @@ A new object with the same keys as the input object, but with each value transfo
 
 #### Defined in
 
-[src/object/objMap.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objMap.ts#L15)
+[src/object/objMap.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objMap.ts#L15)
 
 ___
 
@@ -6658,7 +6806,7 @@ A new object with the keys mapped.
 
 #### Defined in
 
-[src/object/objMapKeys.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objMapKeys.ts#L16)
+[src/object/objMapKeys.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objMapKeys.ts#L16)
 
 ___
 
@@ -6699,7 +6847,7 @@ The mutated object.
 
 #### Defined in
 
-[src/object/objMapMutable.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objMapMutable.ts#L16)
+[src/object/objMapMutable.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objMapMutable.ts#L16)
 
 ___
 
@@ -6748,7 +6896,7 @@ The object with the specified properties converted into getter functions.
 
 #### Defined in
 
-[src/object/objPropertyValueToGetter.ts:23](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objPropertyValueToGetter.ts#L23)
+[src/object/objPropertyValueToGetter.ts:23](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objPropertyValueToGetter.ts#L23)
 
 ___
 
@@ -6792,7 +6940,7 @@ The final accumulated value.
 
 #### Defined in
 
-[src/object/objReduce.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objReduce.ts#L18)
+[src/object/objReduce.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objReduce.ts#L18)
 
 ___
 
@@ -6837,7 +6985,7 @@ A new object with the properties of the input object in reverse order. The retur
 
 #### Defined in
 
-[src/object/objReverse.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objReverse.ts#L15)
+[src/object/objReverse.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objReverse.ts#L15)
 
 ___
 
@@ -6876,7 +7024,7 @@ The value that was set.
 
 #### Defined in
 
-[src/object/objSet.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objSet.ts#L16)
+[src/object/objSet.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objSet.ts#L16)
 
 ___
 
@@ -6921,7 +7069,7 @@ The size of the object.
 
 #### Defined in
 
-[src/object/objSize.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objSize.ts#L14)
+[src/object/objSize.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objSize.ts#L14)
 
 ___
 
@@ -6967,7 +7115,7 @@ A new object with the same values as the original, but with keys sorted in ascen
 
 #### Defined in
 
-[src/object/objSortKeys.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objSortKeys.ts#L15)
+[src/object/objSortKeys.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objSortKeys.ts#L15)
 
 ___
 
@@ -7016,7 +7164,7 @@ A new Map object populated with the [key, value] pairs from the original object.
 
 #### Defined in
 
-[src/object/objToMap.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objToMap.ts#L18)
+[src/object/objToMap.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objToMap.ts#L18)
 
 ___
 
@@ -7055,7 +7203,7 @@ The new value.
 
 #### Defined in
 
-[src/object/objUpdate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objUpdate.ts#L15)
+[src/object/objUpdate.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objUpdate.ts#L15)
 
 ___
 
@@ -7107,7 +7255,7 @@ An iterable that yields all the values of the given object.
 
 #### Defined in
 
-[src/object/objValues.ts:21](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objValues.ts#L21)
+[src/object/objValues.ts:21](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objValues.ts#L21)
 
 ___
 
@@ -7153,7 +7301,7 @@ An array of the values of the object.
 
 #### Defined in
 
-[src/object/objValuesArray.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objValuesArray.ts#L15)
+[src/object/objValuesArray.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objValuesArray.ts#L15)
 
 ___
 
@@ -7191,7 +7339,7 @@ objWalk(obj, (value, path) => {
 
 #### Defined in
 
-[src/object/objWalk.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/objWalk.ts#L18)
+[src/object/objWalk.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/objWalk.ts#L18)
 
 ___
 
@@ -7222,7 +7370,7 @@ padArrayBytesLeft([1]);
 
 #### Defined in
 
-[src/binary/padArrayBytesLeft.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/padArrayBytesLeft.ts#L11)
+[src/binary/padArrayBytesLeft.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/padArrayBytesLeft.ts#L11)
 
 ___
 
@@ -7253,7 +7401,7 @@ padArrayBytesRight([1]);
 
 #### Defined in
 
-[src/binary/padArrayBytesRight.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/padArrayBytesRight.ts#L11)
+[src/binary/padArrayBytesRight.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/padArrayBytesRight.ts#L11)
 
 ___
 
@@ -7298,7 +7446,7 @@ An object containing the language and the code from the markdown code block.
 
 #### Defined in
 
-[src/parse/parseMarkdownCodeBlock.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/parse/parseMarkdownCodeBlock.ts#L15)
+[src/parse/parseMarkdownCodeBlock.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/parse/parseMarkdownCodeBlock.ts#L15)
 
 ___
 
@@ -7339,7 +7487,7 @@ A 2D array of strings, where each inner array represents a row of the table, and
 
 #### Defined in
 
-[src/parse/parseMarkdownTable.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/parse/parseMarkdownTable.ts#L17)
+[src/parse/parseMarkdownTable.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/parse/parseMarkdownTable.ts#L17)
 
 ___
 
@@ -7376,7 +7524,7 @@ An object containing the birth year, month, day, id, and sex of the individual.
 
 #### Defined in
 
-[src/validation/parseSocialSecurityNumberDK.ts:21](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/validation/parseSocialSecurityNumberDK.ts#L21)
+[src/validation/parseSocialSecurityNumberDK.ts:21](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/validation/parseSocialSecurityNumberDK.ts#L21)
 
 ___
 
@@ -7409,7 +7557,7 @@ A Promise that resolves to an array of strings, where each string represents a p
 
 #### Defined in
 
-[src/pdf/pdfGetPages.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/pdf/pdfGetPages.ts#L14)
+[src/pdf/pdfGetPages.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/pdf/pdfGetPages.ts#L14)
 
 ___
 
@@ -7447,7 +7595,7 @@ An async generator that yields the text content of each page in the PDF.
 
 #### Defined in
 
-[src/pdf/pdfIteratePages.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/pdf/pdfIteratePages.ts#L18)
+[src/pdf/pdfIteratePages.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/pdf/pdfIteratePages.ts#L18)
 
 ___
 
@@ -7492,7 +7640,7 @@ A promise that resolves to an array of filepaths for the split PDF pages.
 
 #### Defined in
 
-[src/pdf/pdfSplitPages.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/pdf/pdfSplitPages.ts#L24)
+[src/pdf/pdfSplitPages.ts:24](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/pdf/pdfSplitPages.ts#L24)
 
 ___
 
@@ -7532,7 +7680,7 @@ A random integer between min and max.
 
 #### Defined in
 
-[src/number/randomIntBetween.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/randomIntBetween.ts#L15)
+[src/number/randomIntBetween.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/randomIntBetween.ts#L15)
 
 ___
 
@@ -7572,7 +7720,7 @@ A Promise that resolves to a record where each key is the name of a worksheet an
 
 #### Defined in
 
-[src/filesystem/readExcelFile.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/readExcelFile.ts#L16)
+[src/filesystem/readExcelFile.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/readExcelFile.ts#L16)
 
 ___
 
@@ -7613,7 +7761,7 @@ A Promise that resolves with the parsed JSON content as an object of type T.
 
 #### Defined in
 
-[src/filesystem/readJsonFile.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/readJsonFile.ts#L14)
+[src/filesystem/readJsonFile.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/readJsonFile.ts#L14)
 
 ___
 
@@ -7654,7 +7802,7 @@ A Promise that resolves with the parsed JSON data.
 
 #### Defined in
 
-[src/filesystem/readJsonFileSync.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/readJsonFileSync.ts#L14)
+[src/filesystem/readJsonFileSync.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/readJsonFileSync.ts#L14)
 
 ___
 
@@ -7691,7 +7839,7 @@ A new RegExp instance with the same source and flags as the provided regular exp
 
 #### Defined in
 
-[src/regex/regexClone.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/regexClone.ts#L13)
+[src/regex/regexClone.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/regexClone.ts#L13)
 
 ___
 
@@ -7723,7 +7871,7 @@ The escaped string.
 
 #### Defined in
 
-[src/regex/regexEscapeString.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/regexEscapeString.ts#L11)
+[src/regex/regexEscapeString.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/regexEscapeString.ts#L11)
 
 ___
 
@@ -7766,7 +7914,7 @@ The processed string of regex flags.
 
 #### Defined in
 
-[src/regex/regexFixFlags.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/regexFixFlags.ts#L16)
+[src/regex/regexFixFlags.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/regexFixFlags.ts#L16)
 
 ___
 
@@ -7801,7 +7949,7 @@ An array of group names.
 
 #### Defined in
 
-[src/regex/regexGetGroupNames.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/regexGetGroupNames.ts#L13)
+[src/regex/regexGetGroupNames.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/regexGetGroupNames.ts#L13)
 
 ___
 
@@ -7837,7 +7985,7 @@ Checks if a string is a valid regex flags string.
 
 #### Defined in
 
-[src/regex/regexIsValidFlags.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/regexIsValidFlags.ts#L14)
+[src/regex/regexIsValidFlags.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/regexIsValidFlags.ts#L14)
 
 ___
 
@@ -7871,7 +8019,7 @@ A new regular expression that matches the entire string.
 
 #### Defined in
 
-[src/regex/regexMatcherToValidater.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/regexMatcherToValidater.ts#L13)
+[src/regex/regexMatcherToValidater.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/regexMatcherToValidater.ts#L13)
 
 ___
 
@@ -7922,7 +8070,7 @@ The generator function yields nodes of type IRegexScopeTreeNode.
 
 #### Defined in
 
-[src/regex/regexScopeTree.ts:22](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/regexScopeTree.ts#L22)
+[src/regex/regexScopeTree.ts:22](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/regexScopeTree.ts#L22)
 
 ___
 
@@ -7947,7 +8095,7 @@ Returns an array of all valid flags for a regular expression.
 
 #### Defined in
 
-[src/regex/regexValidFlags.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/regexValidFlags.ts#L9)
+[src/regex/regexValidFlags.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/regexValidFlags.ts#L9)
 
 ___
 
@@ -7998,7 +8146,7 @@ A generator that yields an object for each match.
 
 #### Defined in
 
-[src/regex/rexec.ts:30](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/rexec.ts#L30)
+[src/regex/rexec.ts:30](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/rexec.ts#L30)
 
 ___
 
@@ -8034,7 +8182,7 @@ The first match as an `RexecYield` object, or `undefined` if no match is found.
 
 #### Defined in
 
-[src/regex/rexecFirstMatch.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/regex/rexecFirstMatch.ts#L16)
+[src/regex/rexecFirstMatch.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/regex/rexecFirstMatch.ts#L16)
 
 ___
 
@@ -8073,7 +8221,7 @@ The rounded number.
 
 #### Defined in
 
-[src/number/round.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/round.ts#L18)
+[src/number/round.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/round.ts#L18)
 
 ___
 
@@ -8112,7 +8260,7 @@ The rounded down number.
 
 #### Defined in
 
-[src/number/roundDown.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/roundDown.ts#L17)
+[src/number/roundDown.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/roundDown.ts#L17)
 
 ___
 
@@ -8151,7 +8299,7 @@ The rounded number.
 
 #### Defined in
 
-[src/number/roundToNearest.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/roundToNearest.ts#L17)
+[src/number/roundToNearest.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/roundToNearest.ts#L17)
 
 ___
 
@@ -8194,7 +8342,7 @@ The rounded integer.
 
 #### Defined in
 
-[src/number/roundToNearestPow10.ts:19](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/roundToNearestPow10.ts#L19)
+[src/number/roundToNearestPow10.ts:19](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/roundToNearestPow10.ts#L19)
 
 ___
 
@@ -8233,7 +8381,7 @@ The rounded number.
 
 #### Defined in
 
-[src/number/roundUp.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/roundUp.ts#L17)
+[src/number/roundUp.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/roundUp.ts#L17)
 
 ___
 
@@ -8273,7 +8421,7 @@ The rounded number.
 
 #### Defined in
 
-[src/number/roundWith.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/number/roundWith.ts#L18)
+[src/number/roundWith.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/number/roundWith.ts#L18)
 
 ___
 
@@ -8304,7 +8452,7 @@ The number of seconds since the given date.
 
 #### Defined in
 
-[src/date/secondsSinceDate.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/secondsSinceDate.ts#L13)
+[src/date/secondsSinceDate.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/secondsSinceDate.ts#L13)
 
 ___
 
@@ -8346,7 +8494,7 @@ A new set that contains all elements of the first set that are not in the second
 
 #### Defined in
 
-[src/set/setDifference.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/set/setDifference.ts#L16)
+[src/set/setDifference.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/set/setDifference.ts#L16)
 
 ___
 
@@ -8398,7 +8546,7 @@ void
 
 #### Defined in
 
-[src/object/setEnumerable.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/setEnumerable.ts#L17)
+[src/object/setEnumerable.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/setEnumerable.ts#L17)
 
 ___
 
@@ -8442,7 +8590,7 @@ The intersection of all sets in the array.
 
 #### Defined in
 
-[src/set/setIntersection.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/set/setIntersection.ts#L14)
+[src/set/setIntersection.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/set/setIntersection.ts#L14)
 
 ___
 
@@ -8490,7 +8638,7 @@ A boolean indicating whether the set is a superset of the subset.
 
 #### Defined in
 
-[src/set/setIsSuperset.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/set/setIsSuperset.ts#L15)
+[src/set/setIsSuperset.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/set/setIsSuperset.ts#L15)
 
 ___
 
@@ -8544,7 +8692,7 @@ Object.getOwnPropertyDescriptor({ a: 1, b: 2, c: 3 }, 'c');;
 
 #### Defined in
 
-[src/object/setNonConfigurable.ts:19](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/setNonConfigurable.ts#L19)
+[src/object/setNonConfigurable.ts:19](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/setNonConfigurable.ts#L19)
 
 ___
 
@@ -8592,7 +8740,7 @@ Object.keys({ a: 1, b: 2, c: 3 });;
 
 #### Defined in
 
-[src/object/setNonEnumerable.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/setNonEnumerable.ts#L18)
+[src/object/setNonEnumerable.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/setNonEnumerable.ts#L18)
 
 ___
 
@@ -8632,7 +8780,7 @@ void
 
 #### Defined in
 
-[src/object/setNonEnumerablePrivateProperties.ts:19](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/setNonEnumerablePrivateProperties.ts#L19)
+[src/object/setNonEnumerablePrivateProperties.ts:19](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/setNonEnumerablePrivateProperties.ts#L19)
 
 ___
 
@@ -8678,7 +8826,7 @@ void
 
 #### Defined in
 
-[src/object/setNonWritable.ts:20](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/setNonWritable.ts#L20)
+[src/object/setNonWritable.ts:20](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/setNonWritable.ts#L20)
 
 ___
 
@@ -8718,7 +8866,7 @@ A new Set containing the symmetric difference between the input sets.
 
 #### Defined in
 
-[src/set/setSymmetricDifference.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/set/setSymmetricDifference.ts#L14)
+[src/set/setSymmetricDifference.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/set/setSymmetricDifference.ts#L14)
 
 ___
 
@@ -8766,7 +8914,7 @@ A new set that is the union of all sets in the input array.
 
 #### Defined in
 
-[src/set/setUnion.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/set/setUnion.ts#L15)
+[src/set/setUnion.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/set/setUnion.ts#L15)
 
 ___
 
@@ -8810,7 +8958,7 @@ void
 
 #### Defined in
 
-[src/object/setWritable.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/setWritable.ts#L15)
+[src/object/setWritable.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/setWritable.ts#L15)
 
 ___
 
@@ -8852,7 +9000,7 @@ A Promise that resolves with an object containing the command, stdout, and stder
 
 #### Defined in
 
-src/node/shellCommand.ts:20
+[src/node/shellCommand.ts:20](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/shellCommand.ts#L20)
 
 ___
 
@@ -8886,7 +9034,7 @@ strCountCharOccurances('hello world', 'o');;
 
 #### Defined in
 
-[src/string/strCountCharOccurances.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strCountCharOccurances.ts#L11)
+[src/string/strCountCharOccurances.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strCountCharOccurances.ts#L11)
 
 ___
 
@@ -8915,7 +9063,7 @@ strCountChars("hello");;
 
 #### Defined in
 
-[src/string/strCountChars.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strCountChars.ts#L9)
+[src/string/strCountChars.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strCountChars.ts#L9)
 
 ___
 
@@ -8945,7 +9093,7 @@ strCountWords(inputString);
 
 #### Defined in
 
-[src/string/strCountWords.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strCountWords.ts#L12)
+[src/string/strCountWords.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strCountWords.ts#L12)
 
 ___
 
@@ -8977,7 +9125,7 @@ strEnsureEndsWith('Hello World', ' World');
 
 #### Defined in
 
-[src/string/strEnsureEndsWith.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strEnsureEndsWith.ts#L12)
+[src/string/strEnsureEndsWith.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strEnsureEndsWith.ts#L12)
 
 ___
 
@@ -9006,7 +9154,7 @@ strFirstCharToUpperCase('hello');
 
 #### Defined in
 
-[src/string/strFirstCharToUpperCase.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strFirstCharToUpperCase.ts#L9)
+[src/string/strFirstCharToUpperCase.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strFirstCharToUpperCase.ts#L9)
 
 ___
 
@@ -9040,7 +9188,7 @@ strHash.toBuffer('hello')
 
 #### Defined in
 
-[src/string/strHashToBuffer.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strHashToBuffer.ts#L13)
+[src/string/strHashToBuffer.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strHashToBuffer.ts#L13)
 
 ___
 
@@ -9075,7 +9223,7 @@ strHash.toString('hello', 'sha256', 'hex')
 
 #### Defined in
 
-[src/string/strHashToString.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strHashToString.ts#L15)
+[src/string/strHashToString.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strHashToString.ts#L15)
 
 ___
 
@@ -9113,7 +9261,7 @@ strHash.toUint32Array('hello')
 
 #### Defined in
 
-[src/string/strHashToUint32Array.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strHashToUint32Array.ts#L15)
+[src/string/strHashToUint32Array.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strHashToUint32Array.ts#L15)
 
 ___
 
@@ -9144,7 +9292,7 @@ strIsLowerCase('Hello');
 
 #### Defined in
 
-[src/string/strIsLowerCase.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strIsLowerCase.ts#L11)
+[src/string/strIsLowerCase.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strIsLowerCase.ts#L11)
 
 ___
 
@@ -9175,7 +9323,7 @@ strIsMultiLine("Hello World");
 
 #### Defined in
 
-[src/string/strIsMultiLine.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strIsMultiLine.ts#L11)
+[src/string/strIsMultiLine.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strIsMultiLine.ts#L11)
 
 ___
 
@@ -9206,7 +9354,7 @@ strIsUpperCase('Hello');;
 
 #### Defined in
 
-[src/string/strIsUpperCase.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strIsUpperCase.ts#L11)
+[src/string/strIsUpperCase.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strIsUpperCase.ts#L11)
 
 ___
 
@@ -9235,7 +9383,7 @@ strNoConsecutiveEmptyLines("Hello\n\n\nWorld");;
 
 #### Defined in
 
-[src/string/strNoConsecutiveEmptyLines.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strNoConsecutiveEmptyLines.ts#L9)
+[src/string/strNoConsecutiveEmptyLines.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strNoConsecutiveEmptyLines.ts#L9)
 
 ___
 
@@ -9264,7 +9412,7 @@ strNoConsecutiveWhitespace('Hello   World');
 
 #### Defined in
 
-[src/string/strNoConsecutiveWhitespace.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strNoConsecutiveWhitespace.ts#L9)
+[src/string/strNoConsecutiveWhitespace.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strNoConsecutiveWhitespace.ts#L9)
 
 ___
 
@@ -9295,7 +9443,7 @@ strParseBoolean('False');
 
 #### Defined in
 
-[src/string/strParseBoolean.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strParseBoolean.ts#L11)
+[src/string/strParseBoolean.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strParseBoolean.ts#L11)
 
 ___
 
@@ -9328,7 +9476,7 @@ The processed string with each line prepended by the specified string.
 
 #### Defined in
 
-[src/string/strPrependLines.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strPrependLines.ts#L12)
+[src/string/strPrependLines.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strPrependLines.ts#L12)
 
 ___
 
@@ -9361,7 +9509,7 @@ strRemoveDuplicateChars('hello');
 
 #### Defined in
 
-[src/string/strRemoveDuplicateChars.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strRemoveDuplicateChars.ts#L10)
+[src/string/strRemoveDuplicateChars.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strRemoveDuplicateChars.ts#L10)
 
 ___
 
@@ -9390,7 +9538,7 @@ strRemoveEmptyLines('Hello\n\nWorld\n\n!');;
 
 #### Defined in
 
-[src/string/strRemoveEmptyLines.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strRemoveEmptyLines.ts#L9)
+[src/string/strRemoveEmptyLines.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strRemoveEmptyLines.ts#L9)
 
 ___
 
@@ -9419,7 +9567,7 @@ strRemoveFirstAndLastLine('Line1\nLine2\nLine3');;
 
 #### Defined in
 
-[src/string/strRemoveFirstAndLastLine.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strRemoveFirstAndLastLine.ts#L9)
+[src/string/strRemoveFirstAndLastLine.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strRemoveFirstAndLastLine.ts#L9)
 
 ___
 
@@ -9457,7 +9605,7 @@ console.log(result); // 'Hello World'
 
 #### Defined in
 
-[src/string/strRemoveNewLines.ts:15](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strRemoveNewLines.ts#L15)
+[src/string/strRemoveNewLines.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strRemoveNewLines.ts#L15)
 
 ___
 
@@ -9487,7 +9635,7 @@ strRepeat('abc', 3);;
 
 #### Defined in
 
-[src/string/strRepeat.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strRepeat.ts#L10)
+[src/string/strRepeat.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strRepeat.ts#L10)
 
 ___
 
@@ -9522,7 +9670,7 @@ strReplaceAll(input, replace, replaceWith);
 
 #### Defined in
 
-[src/string/strReplaceAll.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strReplaceAll.ts#L17)
+[src/string/strReplaceAll.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strReplaceAll.ts#L17)
 
 ___
 
@@ -9551,7 +9699,7 @@ strSortChars('dcba');
 
 #### Defined in
 
-[src/string/strSortChars.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strSortChars.ts#L9)
+[src/string/strSortChars.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strSortChars.ts#L9)
 
 ___
 
@@ -9585,7 +9733,7 @@ strSplitAndTrim("  Hello ;  world ; ". ";", false;
 
 #### Defined in
 
-[src/string/strSplitAndTrim.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strSplitAndTrim.ts#L14)
+[src/string/strSplitAndTrim.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strSplitAndTrim.ts#L14)
 
 ___
 
@@ -9618,7 +9766,7 @@ strSplitCamelCase('someCamel10Case')
 
 #### Defined in
 
-[src/string/strSplitCamelCase.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strSplitCamelCase.ts#L14)
+[src/string/strSplitCamelCase.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strSplitCamelCase.ts#L14)
 
 ___
 
@@ -9647,7 +9795,7 @@ strToCharCodes('Hello');;
 
 #### Defined in
 
-[src/string/strToCharCodes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strToCharCodes.ts#L9)
+[src/string/strToCharCodes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strToCharCodes.ts#L9)
 
 ___
 
@@ -9676,7 +9824,7 @@ strToCharSet('hello');;
 
 #### Defined in
 
-[src/string/strToCharSet.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strToCharSet.ts#L9)
+[src/string/strToCharSet.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strToCharSet.ts#L9)
 
 ___
 
@@ -9709,7 +9857,7 @@ strToSentences('Hello world. How are you?');
 
 #### Defined in
 
-[src/string/strToSentences.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strToSentences.ts#L12)
+[src/string/strToSentences.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strToSentences.ts#L12)
 
 ___
 
@@ -9738,7 +9886,7 @@ strToSortedCharSet('banana');
 
 #### Defined in
 
-[src/string/strToSortedCharSet.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strToSortedCharSet.ts#L9)
+[src/string/strToSortedCharSet.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strToSortedCharSet.ts#L9)
 
 ___
 
@@ -9768,7 +9916,7 @@ strToWords('How are you?')
 
 #### Defined in
 
-[src/string/strToWords.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strToWords.ts#L12)
+[src/string/strToWords.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strToWords.ts#L12)
 
 ___
 
@@ -9797,7 +9945,7 @@ strTrimLines('  Hello, world!  \n  How are you?  ');;
 
 #### Defined in
 
-[src/string/strTrimLines.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strTrimLines.ts#L9)
+[src/string/strTrimLines.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strTrimLines.ts#L9)
 
 ___
 
@@ -9826,7 +9974,7 @@ strTrimLinesLeft('   line1\n   line2\n   line3');;
 
 #### Defined in
 
-[src/string/strTrimLinesLeft.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strTrimLinesLeft.ts#L9)
+[src/string/strTrimLinesLeft.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strTrimLinesLeft.ts#L9)
 
 ___
 
@@ -9855,7 +10003,7 @@ strTrimLinesRight('  Hello, world!  \n  How are you?  ');;
 
 #### Defined in
 
-[src/string/strTrimLinesRight.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strTrimLinesRight.ts#L9)
+[src/string/strTrimLinesRight.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strTrimLinesRight.ts#L9)
 
 ___
 
@@ -9890,7 +10038,7 @@ strUnwrap(input, left, right);
 
 #### Defined in
 
-[src/string/strUnwrap.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strUnwrap.ts#L17)
+[src/string/strUnwrap.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strUnwrap.ts#L17)
 
 ___
 
@@ -9921,7 +10069,7 @@ strWrapBetween('Hello', '<', '>');;
 
 #### Defined in
 
-[src/string/strWrapBetween.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strWrapBetween.ts#L11)
+[src/string/strWrapBetween.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strWrapBetween.ts#L11)
 
 ___
 
@@ -9951,7 +10099,7 @@ strWrapIn('hello', '*');;
 
 #### Defined in
 
-[src/string/strWrapIn.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strWrapIn.ts#L10)
+[src/string/strWrapIn.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strWrapIn.ts#L10)
 
 ___
 
@@ -9980,7 +10128,7 @@ strWrapInAngleBrackets('example');;
 
 #### Defined in
 
-[src/string/strWrapInAngleBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strWrapInAngleBrackets.ts#L9)
+[src/string/strWrapInAngleBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strWrapInAngleBrackets.ts#L9)
 
 ___
 
@@ -10009,7 +10157,7 @@ strWrapInBraces('hello');
 
 #### Defined in
 
-[src/string/strWrapInBraces.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strWrapInBraces.ts#L9)
+[src/string/strWrapInBraces.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strWrapInBraces.ts#L9)
 
 ___
 
@@ -10038,7 +10186,7 @@ strWrapInBrackets('test');
 
 #### Defined in
 
-[src/string/strWrapInBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strWrapInBrackets.ts#L9)
+[src/string/strWrapInBrackets.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strWrapInBrackets.ts#L9)
 
 ___
 
@@ -10067,7 +10215,7 @@ strWrapInDoubleQuotes('Hello World');
 
 #### Defined in
 
-[src/string/strWrapInDoubleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strWrapInDoubleQuotes.ts#L9)
+[src/string/strWrapInDoubleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strWrapInDoubleQuotes.ts#L9)
 
 ___
 
@@ -10096,7 +10244,7 @@ strWrapInParenthesis('hello');
 
 #### Defined in
 
-[src/string/strWrapInParenthesis.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strWrapInParenthesis.ts#L9)
+[src/string/strWrapInParenthesis.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strWrapInParenthesis.ts#L9)
 
 ___
 
@@ -10125,7 +10273,7 @@ strWrapInSingleQuotes('Hello World');
 
 #### Defined in
 
-[src/string/strWrapInSingleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/string/strWrapInSingleQuotes.ts#L9)
+[src/string/strWrapInSingleQuotes.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/string/strWrapInSingleQuotes.ts#L9)
 
 ___
 
@@ -10163,7 +10311,7 @@ A promise that resolves to a string.
 
 #### Defined in
 
-[src/node/streamToString.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/streamToString.ts#L16)
+[src/node/streamToString.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/streamToString.ts#L16)
 
 ___
 
@@ -10201,7 +10349,7 @@ The JSON string representation of the given data.
 
 #### Defined in
 
-[src/object/toJson.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/object/toJson.ts#L12)
+[src/object/toJson.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/object/toJson.ts#L12)
 
 ___
 
@@ -10231,7 +10379,7 @@ trimArrayBytesLeft(input);
 
 #### Defined in
 
-[src/binary/trimArrayBytesLeft.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/trimArrayBytesLeft.ts#L10)
+[src/binary/trimArrayBytesLeft.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/trimArrayBytesLeft.ts#L10)
 
 ___
 
@@ -10261,7 +10409,7 @@ trimArrayBytesRight(input);
 
 #### Defined in
 
-[src/binary/trimArrayBytesRight.ts:10](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/binary/trimArrayBytesRight.ts#L10)
+[src/binary/trimArrayBytesRight.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/binary/trimArrayBytesRight.ts#L10)
 
 ___
 
@@ -10298,7 +10446,7 @@ The number of export statements found in the code.
 
 #### Defined in
 
-[src/tscode/tsCountExports.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsCountExports.ts#L16)
+[src/tscode/tsCountExports.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsCountExports.ts#L16)
 
 ___
 
@@ -10322,7 +10470,7 @@ The number of lines of code in the given TypeScript code string.
 
 #### Defined in
 
-src/tscode/tsCountLinesOfCode.ts:11
+[src/tscode/tsCountLinesOfCode.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsCountLinesOfCode.ts#L11)
 
 ___
 
@@ -10350,7 +10498,7 @@ A generator that yields each TSDoc block comment in the source code.
 
 #### Defined in
 
-[src/tsdoc/tsDocExtractAllComments.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocExtractAllComments.ts#L9)
+[src/tsdoc/tsDocExtractAllComments.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocExtractAllComments.ts#L9)
 
 ___
 
@@ -10372,7 +10520,7 @@ Extracts the first TSDoc block comment from the provided TypeScript code.
 
 #### Defined in
 
-[src/tsdoc/tsDocExtractFirstComment.ts:8](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocExtractFirstComment.ts#L8)
+[src/tsdoc/tsDocExtractFirstComment.ts:8](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocExtractFirstComment.ts#L8)
 
 ___
 
@@ -10416,7 +10564,7 @@ The TypeScript code with fixed spacing.
 
 #### Defined in
 
-[src/tsdoc/tsDocFixSpacingBeforeAfter.ts:23](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocFixSpacingBeforeAfter.ts#L23)
+[src/tsdoc/tsDocFixSpacingBeforeAfter.ts:23](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocFixSpacingBeforeAfter.ts#L23)
 
 ___
 
@@ -10452,7 +10600,7 @@ The normalized tag name.
 
 #### Defined in
 
-[src/tsdoc/tsDocNormalizeTagName.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocNormalizeTagName.ts#L12)
+[src/tsdoc/tsDocNormalizeTagName.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocNormalizeTagName.ts#L12)
 
 ___
 
@@ -10478,7 +10626,7 @@ This function is particularly useful when dealing with multi-line strings that m
 
 #### Defined in
 
-[src/tsdoc/tsDocRemoveEmptyLines.ts:6](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocRemoveEmptyLines.ts#L6)
+[src/tsdoc/tsDocRemoveEmptyLines.ts:6](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocRemoveEmptyLines.ts#L6)
 
 ___
 
@@ -10527,7 +10675,7 @@ The modified source string with all TSDoc tags stripped except for the 'throws' 
 
 #### Defined in
 
-[src/tsdoc/tsDocStripAllTagsButThrowsParamDescription.ts:25](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocStripAllTagsButThrowsParamDescription.ts#L25)
+[src/tsdoc/tsDocStripAllTagsButThrowsParamDescription.ts:25](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocStripAllTagsButThrowsParamDescription.ts#L25)
 
 ___
 
@@ -10551,7 +10699,7 @@ The modified source string with all example TSDoc tags stripped.
 
 #### Defined in
 
-[src/tsdoc/tsDocStripExample.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocStripExample.ts#L9)
+[src/tsdoc/tsDocStripExample.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocStripExample.ts#L9)
 
 ___
 
@@ -10597,7 +10745,7 @@ The provided code string with all TypeScript types removed.
 
 #### Defined in
 
-[src/tsdoc/tsDocStripTypesAndDefaults.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocStripTypesAndDefaults.ts#L24)
+[src/tsdoc/tsDocStripTypesAndDefaults.ts:24](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocStripTypesAndDefaults.ts#L24)
 
 ___
 
@@ -10651,7 +10799,7 @@ The unwrapped TSDoc comment.
 
 #### Defined in
 
-[src/tsdoc/tsDocUnwrapComment.ts:31](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocUnwrapComment.ts#L31)
+[src/tsdoc/tsDocUnwrapComment.ts:31](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocUnwrapComment.ts#L31)
 
 ___
 
@@ -10679,7 +10827,7 @@ The input string wrapped into a TSDoc block comment.
 
 #### Defined in
 
-[src/tsdoc/tsDocWrapAsComment.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocWrapAsComment.ts#L9)
+[src/tsdoc/tsDocWrapAsComment.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocWrapAsComment.ts#L9)
 
 ___
 
@@ -10718,7 +10866,7 @@ The wrapped TypeScript code.
 
 #### Defined in
 
-[src/tsdoc/tsDocWrapExample.ts:12](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/tsDocWrapExample.ts#L12)
+[src/tsdoc/tsDocWrapExample.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/tsDocWrapExample.ts#L12)
 
 ___
 
@@ -10742,7 +10890,7 @@ An array of objects, each representing an import statement. Each object includes
 
 #### Defined in
 
-[src/tscode/tsExtractImports.ts:8](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsExtractImports.ts#L8)
+[src/tscode/tsExtractImports.ts:8](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsExtractImports.ts#L8)
 
 ___
 
@@ -10776,7 +10924,7 @@ The extracted Jest tests as a string.
 
 #### Defined in
 
-[src/tscode/tsExtractJestTests.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsExtractJestTests.ts#L13)
+[src/tscode/tsExtractJestTests.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsExtractJestTests.ts#L13)
 
 ___
 
@@ -10820,7 +10968,7 @@ A record where the keys are the names of the class members and the values are th
 
 #### Defined in
 
-[src/tscode/tsGetClassMemberAccessModifiers.ts:20](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsGetClassMemberAccessModifiers.ts#L20)
+[src/tscode/tsGetClassMemberAccessModifiers.ts:20](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsGetClassMemberAccessModifiers.ts#L20)
 
 ___
 
@@ -10852,7 +11000,7 @@ A boolean indicating whether the provided TypeScript code has a default export.
 
 #### Defined in
 
-[src/tscode/tsHasDefaultExport.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsHasDefaultExport.ts#L11)
+[src/tscode/tsHasDefaultExport.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsHasDefaultExport.ts#L11)
 
 ___
 
@@ -10887,7 +11035,7 @@ The modified source code.
 
 #### Defined in
 
-[src/tscode/tsJestConvertExportNameString.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsJestConvertExportNameString.ts#L14)
+[src/tscode/tsJestConvertExportNameString.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsJestConvertExportNameString.ts#L14)
 
 ___
 
@@ -10907,7 +11055,7 @@ ___
 
 #### Defined in
 
-src/tscode/tsJestEnsureLineSpacing.ts:3
+[src/tscode/tsJestEnsureLineSpacing.ts:3](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsJestEnsureLineSpacing.ts#L3)
 
 ___
 
@@ -10941,7 +11089,7 @@ The minified TypeScript code.
 
 #### Defined in
 
-[src/tscode/tsSimpleMinifyCode.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsSimpleMinifyCode.ts#L13)
+[src/tscode/tsSimpleMinifyCode.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsSimpleMinifyCode.ts#L13)
 
 ___
 
@@ -10965,7 +11113,7 @@ The TypeScript code string with all block comments removed.
 
 #### Defined in
 
-src/tscode/tsStripBlockComments.ts:10
+[src/tscode/tsStripBlockComments.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsStripBlockComments.ts#L10)
 
 ___
 
@@ -10993,7 +11141,7 @@ The TypeScript code without any comments.
 
 #### Defined in
 
-[src/tscode/tsStripComments.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsStripComments.ts#L11)
+[src/tscode/tsStripComments.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsStripComments.ts#L11)
 
 ___
 
@@ -11030,7 +11178,7 @@ The cleaned TypeScript code string without source map comments.
 
 #### Defined in
 
-[src/tscode/tsStripDeclSourceMapComments.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsStripDeclSourceMapComments.ts#L13)
+[src/tscode/tsStripDeclSourceMapComments.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsStripDeclSourceMapComments.ts#L13)
 
 ___
 
@@ -11065,7 +11213,7 @@ The source string with the 'export' keyword stripped from the beginning of each 
 
 #### Defined in
 
-[src/tscode/tsStripExportKeyword.ts:11](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsStripExportKeyword.ts#L11)
+[src/tscode/tsStripExportKeyword.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsStripExportKeyword.ts#L11)
 
 ___
 
@@ -11101,7 +11249,7 @@ The TypeScript code without import statements.
 
 #### Defined in
 
-[src/tscode/tsStripImports.ts:18](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tscode/tsStripImports.ts#L18)
+[src/tscode/tsStripImports.ts:18](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsStripImports.ts#L18)
 
 ___
 
@@ -11139,7 +11287,7 @@ The TypeScript code without single-line comments.
 
 #### Defined in
 
-src/tscode/tsStripInlineComments.ts:16
+[src/tscode/tsStripInlineComments.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tscode/tsStripInlineComments.ts#L16)
 
 ___
 
@@ -11163,7 +11311,7 @@ A promise that resolves after the specified number of seconds.
 
 #### Defined in
 
-src/async/waitSeconds.ts:5
+[src/async/waitSeconds.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/async/waitSeconds.ts#L5)
 
 ___
 
@@ -11194,7 +11342,7 @@ The number of weeks since the provided date.
 
 #### Defined in
 
-[src/date/weeksSinceDate.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/weeksSinceDate.ts#L13)
+[src/date/weeksSinceDate.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/weeksSinceDate.ts#L13)
 
 ___
 
@@ -11251,7 +11399,7 @@ A Promise that resolves when the file has been written.
 
 #### Defined in
 
-[src/filesystem/writeExcelFile.ts:28](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/writeExcelFile.ts#L28)
+[src/filesystem/writeExcelFile.ts:28](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/writeExcelFile.ts#L28)
 
 ___
 
@@ -11291,7 +11439,7 @@ A Promise that resolves when the file has been successfully written.
 
 #### Defined in
 
-[src/filesystem/writeJsonFile.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/writeJsonFile.ts#L17)
+[src/filesystem/writeJsonFile.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/writeJsonFile.ts#L17)
 
 ___
 
@@ -11332,7 +11480,7 @@ writeJsonFileSync('./data.json', data, true);
 
 #### Defined in
 
-[src/filesystem/writeJsonFileSync.ts:16](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/writeJsonFileSync.ts#L16)
+[src/filesystem/writeJsonFileSync.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/writeJsonFileSync.ts#L16)
 
 ___
 
@@ -11363,4 +11511,4 @@ The number of years that have passed since the provided date.
 
 #### Defined in
 
-[src/date/yearsSinceDate.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/date/yearsSinceDate.ts#L13)
+[src/date/yearsSinceDate.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/date/yearsSinceDate.ts#L13)

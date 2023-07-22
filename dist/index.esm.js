@@ -1,5 +1,5 @@
 /*!
- * @bemoje/node-util v0.4.1
+ * @bemoje/node-util v0.4.3
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
@@ -91,6 +91,19 @@ function __asyncValues(o) {
     return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 
 typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
@@ -1624,6 +1637,38 @@ function arrSome(input, predicate) {
 }
 
 /**
+ * Returns an index in the sorted array where the specified value could be inserted while maintaining the sorted order of the array.
+ * If the element is already in the array, returns the index after the last instance of the element.
+ * @param array - The sorted array to search.
+ * @param value - The value to locate in the array.
+ * @param comparator - A function that defines the sort order. If omitted, the array elements are converted to strings, then sorted according to each character's Unicode code point value.
+ * @returns The index at which the value could be inserted into array to maintain the array's sorted order.
+ * @example ```ts
+ * const array = [1, 2, 3, 5, 6];
+ * const value = 4;
+ * const comparator = (a, b) => a - b;
+ * const index = arrSortedLowerBound(array, value, comparator);
+ * console.log(index); // Output: 3
+ * ```
+ */
+function arrSortedInsertionIndex(array, value, comparator) {
+    let first = 0;
+    let count = array.length;
+    while (count > 0) {
+        const step = Math.trunc(count / 2);
+        let it = first + step;
+        if (comparator(array[it], value) <= 0) {
+            first = ++it;
+            count -= step + 1;
+        }
+        else {
+            count = step;
+        }
+    }
+    return first;
+}
+
+/**
  * number, bigint, boolean comparator function (ascending)
  * @param a first value to compare
  * @param b second value to compare
@@ -1994,6 +2039,445 @@ function asyncWithTimeout(timeout, task) {
             reject(error);
         });
     });
+}
+
+var _PriorityQueue_queue;
+/**
+ * A class representing a priority queue for async functions.
+ */
+class PriorityQueue {
+    constructor() {
+        /**
+         * Queue of functions to run
+         */
+        _PriorityQueue_queue.set(this, []
+        /**
+         * Get the number of functions in the queue
+         */
+        );
+    }
+    /**
+     * Get the number of functions in the queue
+     */
+    get size() {
+        return __classPrivateFieldGet(this, _PriorityQueue_queue, "f").length;
+    }
+    /**
+     * Add a function to the queue
+     * @param run Function to run
+     * @param options Options for the queue
+     */
+    enqueue(run, options) {
+        options = Object.assign({ priority: 0 }, options);
+        const element = {
+            priority: options.priority,
+            run,
+        };
+        if (this.size && __classPrivateFieldGet(this, _PriorityQueue_queue, "f")[this.size - 1].priority >= options.priority) {
+            __classPrivateFieldGet(this, _PriorityQueue_queue, "f").push(element);
+            return;
+        }
+        const index = arrSortedInsertionIndex(__classPrivateFieldGet(this, _PriorityQueue_queue, "f"), element, (a, b) => b.priority - a.priority);
+        __classPrivateFieldGet(this, _PriorityQueue_queue, "f").splice(index, 0, element);
+    }
+    /**
+     * Remove a function from the queue
+     */
+    dequeue() {
+        const item = __classPrivateFieldGet(this, _PriorityQueue_queue, "f").shift();
+        return item === null || item === void 0 ? void 0 : item.run;
+    }
+    /**
+     * Get the functions with the given priority.
+     * @param options Options for the queue
+     */
+    filter(options) {
+        return __classPrivateFieldGet(this, _PriorityQueue_queue, "f")
+            .filter((element) => element.priority === options.priority)
+            .map((element) => element.run);
+    }
+}
+_PriorityQueue_queue = new WeakMap();
+
+var _PQueue_instances, _PQueue_carryoverConcurrencyCount, _PQueue_isIntervalIgnored, _PQueue_intervalCount, _PQueue_intervalCap, _PQueue_interval, _PQueue_intervalEnd, _PQueue_intervalId, _PQueue_timeoutId, _PQueue_queue, _PQueue_queueClass, _PQueue_pending, _PQueue_concurrency, _PQueue_isPaused, _PQueue_throwOnTimeout, _PQueue_doesIntervalAllowAnother_get, _PQueue_doesConcurrentAllowAnother_get, _PQueue_next, _PQueue_onResumeInterval, _PQueue_isIntervalPaused_get, _PQueue_tryToStartAnother, _PQueue_initializeIntervalIfNeeded, _PQueue_onInterval, _PQueue_processQueue, _PQueue_throwOnAbort, _PQueue_onEvent;
+/**
+ * Promise queue with concurrency control.
+ * ESM compatible port from https://www.npmjs.com/package/p-queue
+ */
+class PQueue extends EventEmitter {
+    constructor(options) {
+        var _a, _b, _c, _d;
+        super();
+        _PQueue_instances.add(this);
+        _PQueue_carryoverConcurrencyCount.set(this, void 0);
+        _PQueue_isIntervalIgnored.set(this, void 0);
+        _PQueue_intervalCount.set(this, 0);
+        _PQueue_intervalCap.set(this, void 0);
+        _PQueue_interval.set(this, void 0);
+        _PQueue_intervalEnd.set(this, 0);
+        _PQueue_intervalId.set(this, void 0);
+        _PQueue_timeoutId.set(this, void 0);
+        _PQueue_queue.set(this, void 0);
+        _PQueue_queueClass.set(this, void 0);
+        _PQueue_pending.set(this, 0);
+        _PQueue_concurrency.set(this, void 0);
+        _PQueue_isPaused.set(this, void 0);
+        _PQueue_throwOnTimeout.set(this, void 0);
+        options = Object.assign({ carryoverConcurrencyCount: false, intervalCap: Number.POSITIVE_INFINITY, interval: 0, concurrency: Number.POSITIVE_INFINITY, autoStart: true, queueClass: PriorityQueue }, options);
+        if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
+            throw new TypeError(`Expected \`intervalCap\` to be a number from 1 and up, got \`${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\` (${typeof options.intervalCap})`);
+        }
+        if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
+            throw new TypeError(`Expected \`interval\` to be a finite number >= 0, got \`${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\` (${typeof options.interval})`);
+        }
+        __classPrivateFieldSet(this, _PQueue_carryoverConcurrencyCount, options.carryoverConcurrencyCount, "f");
+        __classPrivateFieldSet(this, _PQueue_isIntervalIgnored, options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0, "f");
+        __classPrivateFieldSet(this, _PQueue_intervalCap, options.intervalCap, "f");
+        __classPrivateFieldSet(this, _PQueue_interval, options.interval, "f");
+        __classPrivateFieldSet(this, _PQueue_queue, new options.queueClass(), "f");
+        __classPrivateFieldSet(this, _PQueue_queueClass, options.queueClass, "f");
+        this.concurrency = options.concurrency;
+        this.timeout = options.timeout;
+        __classPrivateFieldSet(this, _PQueue_throwOnTimeout, options.throwOnTimeout === true, "f");
+        __classPrivateFieldSet(this, _PQueue_isPaused, options.autoStart === false, "f");
+    }
+    get concurrency() {
+        return __classPrivateFieldGet(this, _PQueue_concurrency, "f");
+    }
+    set concurrency(newConcurrency) {
+        if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
+            throw new TypeError(`Expected \`concurrency\` to be a number from 1 and up, got \`${newConcurrency}\` (${typeof newConcurrency})`);
+        }
+        __classPrivateFieldSet(this, _PQueue_concurrency, newConcurrency, "f");
+        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
+    }
+    add(function_, options = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
+            options = Object.assign({ timeout: this.timeout, throwOnTimeout: __classPrivateFieldGet(this, _PQueue_throwOnTimeout, "f") }, options);
+            return new Promise((resolve, reject) => {
+                __classPrivateFieldGet(this, _PQueue_queue, "f").enqueue(() => __awaiter(this, void 0, void 0, function* () {
+                    var _a;
+                    var _b, _c;
+                    __classPrivateFieldSet(this, _PQueue_pending, (_b = __classPrivateFieldGet(this, _PQueue_pending, "f"), _b++, _b), "f");
+                    __classPrivateFieldSet(this, _PQueue_intervalCount, (_c = __classPrivateFieldGet(this, _PQueue_intervalCount, "f"), _c++, _c), "f");
+                    try {
+                        if ((_a = options.signal) === null || _a === void 0 ? void 0 : _a.aborted) {
+                            throw new PQueueAbortError('The task was aborted.');
+                        }
+                        let operation = function_({ signal: options.signal });
+                        if (options.timeout) {
+                            operation = pTimeout(Promise.resolve(operation), options.timeout);
+                        }
+                        if (options.signal) {
+                            operation = Promise.race([operation, __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_throwOnAbort).call(this, options.signal)]);
+                        }
+                        const result = yield operation;
+                        resolve(result);
+                        this.emit('completed', result);
+                    }
+                    catch (error) {
+                        if (error instanceof PQueueTimeoutError && !options.throwOnTimeout) {
+                            resolve();
+                            return;
+                        }
+                        reject(error);
+                        this.emit('error', error);
+                    }
+                    finally {
+                        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_next).call(this);
+                    }
+                }), options);
+                this.emit('add');
+                __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this);
+            });
+        });
+    }
+    addAll(functions, options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Promise.all(functions.map((function_) => __awaiter(this, void 0, void 0, function* () { return this.add(function_, options); })));
+        });
+    }
+    /**
+     * Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via `options.autoStart = false` or by `.pause()` method.)
+     */
+    start() {
+        if (!__classPrivateFieldGet(this, _PQueue_isPaused, "f")) {
+            return this;
+        }
+        __classPrivateFieldSet(this, _PQueue_isPaused, false, "f");
+        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
+        return this;
+    }
+    /**
+     * Put queue execution on hold.
+     */
+    pause() {
+        __classPrivateFieldSet(this, _PQueue_isPaused, true, "f");
+    }
+    /**
+     * Clear the queue.
+     */
+    clear() {
+        __classPrivateFieldSet(this, _PQueue_queue, new (__classPrivateFieldGet(this, _PQueue_queueClass, "f"))(), "f");
+    }
+    /**
+     * Can be called multiple times. Useful if you for example add additional items at a later time.
+     * @returns A promise that settles when the queue becomes empty.
+     */
+    onEmpty() {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Instantly resolve if the queue is empty
+            if (__classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
+                return;
+            }
+            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'empty');
+        });
+    }
+    /**
+     * @returns A promise that settles when the queue size is less than the given limit: `queue.size < limit`.
+     * If you want to avoid having the queue grow beyond a certain size you can `await queue.onSizeLessThan()` before adding a new item.
+     * Note that this only limits the number of items waiting to start. There could still be up to `concurrency` jobs already running that this call does not include in its calculation.
+     */
+    onSizeLessThan(limit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Instantly resolve if the queue is empty.
+            if (__classPrivateFieldGet(this, _PQueue_queue, "f").size < limit) {
+                return;
+            }
+            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'next', () => __classPrivateFieldGet(this, _PQueue_queue, "f").size < limit);
+        });
+    }
+    /**
+     * The difference with `.onEmpty` is that `.onIdle` guarantees that all work from the queue has finished. `.onEmpty` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
+     * @returns A promise that settles when the queue becomes empty, and all promises have completed; `queue.size === 0 && queue.pending === 0`.
+     */
+    onIdle() {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Instantly resolve if none pending and if nothing else is queued
+            if (__classPrivateFieldGet(this, _PQueue_pending, "f") === 0 && __classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
+                return;
+            }
+            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'idle');
+        });
+    }
+    /**
+     * Size of the queue, the number of queued items waiting to run.
+     */
+    get size() {
+        return __classPrivateFieldGet(this, _PQueue_queue, "f").size;
+    }
+    /**
+     * Size of the queue, filtered by the given options.
+     * For example, this can be used to find the number of items remaining in the queue with a specific priority level.
+     */
+    sizeBy(options) {
+        return __classPrivateFieldGet(this, _PQueue_queue, "f").filter(options).length;
+    }
+    /**
+     * Number of running items (no longer in the queue).
+     */
+    get pending() {
+        return __classPrivateFieldGet(this, _PQueue_pending, "f");
+    }
+    /**
+     * Whether the queue is currently paused.
+     */
+    get isPaused() {
+        return __classPrivateFieldGet(this, _PQueue_isPaused, "f");
+    }
+}
+_PQueue_carryoverConcurrencyCount = new WeakMap(), _PQueue_isIntervalIgnored = new WeakMap(), _PQueue_intervalCount = new WeakMap(), _PQueue_intervalCap = new WeakMap(), _PQueue_interval = new WeakMap(), _PQueue_intervalEnd = new WeakMap(), _PQueue_intervalId = new WeakMap(), _PQueue_timeoutId = new WeakMap(), _PQueue_queue = new WeakMap(), _PQueue_queueClass = new WeakMap(), _PQueue_pending = new WeakMap(), _PQueue_concurrency = new WeakMap(), _PQueue_isPaused = new WeakMap(), _PQueue_throwOnTimeout = new WeakMap(), _PQueue_instances = new WeakSet(), _PQueue_doesIntervalAllowAnother_get = function _PQueue_doesIntervalAllowAnother_get() {
+    return __classPrivateFieldGet(this, _PQueue_isIntervalIgnored, "f") || __classPrivateFieldGet(this, _PQueue_intervalCount, "f") < __classPrivateFieldGet(this, _PQueue_intervalCap, "f");
+}, _PQueue_doesConcurrentAllowAnother_get = function _PQueue_doesConcurrentAllowAnother_get() {
+    return __classPrivateFieldGet(this, _PQueue_pending, "f") < __classPrivateFieldGet(this, _PQueue_concurrency, "f");
+}, _PQueue_next = function _PQueue_next() {
+    var _a;
+    __classPrivateFieldSet(this, _PQueue_pending, (_a = __classPrivateFieldGet(this, _PQueue_pending, "f"), _a--, _a), "f");
+    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this);
+    this.emit('next');
+}, _PQueue_onResumeInterval = function _PQueue_onResumeInterval() {
+    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onInterval).call(this);
+    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_initializeIntervalIfNeeded).call(this);
+    __classPrivateFieldSet(this, _PQueue_timeoutId, undefined, "f");
+}, _PQueue_isIntervalPaused_get = function _PQueue_isIntervalPaused_get() {
+    const now = Date.now();
+    if (__classPrivateFieldGet(this, _PQueue_intervalId, "f") === undefined) {
+        const delay = __classPrivateFieldGet(this, _PQueue_intervalEnd, "f") - now;
+        if (delay < 0) {
+            // Act as the interval was done
+            // We don't need to resume it here because it will be resumed on line 160
+            __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, "f") ? __classPrivateFieldGet(this, _PQueue_pending, "f") : 0, "f");
+        }
+        else {
+            // Act as the interval is pending
+            if (__classPrivateFieldGet(this, _PQueue_timeoutId, "f") === undefined) {
+                __classPrivateFieldSet(this, _PQueue_timeoutId, setTimeout(() => {
+                    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onResumeInterval).call(this);
+                }, delay), "f");
+            }
+            return true;
+        }
+    }
+    return false;
+}, _PQueue_tryToStartAnother = function _PQueue_tryToStartAnother() {
+    if (__classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
+        // We can clear the interval ("pause")
+        // Because we can redo it later ("resume")
+        if (__classPrivateFieldGet(this, _PQueue_intervalId, "f")) {
+            clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, "f"));
+        }
+        __classPrivateFieldSet(this, _PQueue_intervalId, undefined, "f");
+        this.emit('empty');
+        if (__classPrivateFieldGet(this, _PQueue_pending, "f") === 0) {
+            this.emit('idle');
+        }
+        return false;
+    }
+    if (!__classPrivateFieldGet(this, _PQueue_isPaused, "f")) {
+        const canInitializeInterval = !__classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_isIntervalPaused_get);
+        if (__classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_doesIntervalAllowAnother_get) && __classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_doesConcurrentAllowAnother_get)) {
+            const job = __classPrivateFieldGet(this, _PQueue_queue, "f").dequeue();
+            if (!job) {
+                return false;
+            }
+            this.emit('active');
+            job();
+            if (canInitializeInterval) {
+                __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_initializeIntervalIfNeeded).call(this);
+            }
+            return true;
+        }
+    }
+    return false;
+}, _PQueue_initializeIntervalIfNeeded = function _PQueue_initializeIntervalIfNeeded() {
+    if (__classPrivateFieldGet(this, _PQueue_isIntervalIgnored, "f") || __classPrivateFieldGet(this, _PQueue_intervalId, "f") !== undefined) {
+        return;
+    }
+    __classPrivateFieldSet(this, _PQueue_intervalId, setInterval(() => {
+        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onInterval).call(this);
+    }, __classPrivateFieldGet(this, _PQueue_interval, "f")), "f");
+    __classPrivateFieldSet(this, _PQueue_intervalEnd, Date.now() + __classPrivateFieldGet(this, _PQueue_interval, "f"), "f");
+}, _PQueue_onInterval = function _PQueue_onInterval() {
+    if (__classPrivateFieldGet(this, _PQueue_intervalCount, "f") === 0 && __classPrivateFieldGet(this, _PQueue_pending, "f") === 0 && __classPrivateFieldGet(this, _PQueue_intervalId, "f")) {
+        clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, "f"));
+        __classPrivateFieldSet(this, _PQueue_intervalId, undefined, "f");
+    }
+    __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, "f") ? __classPrivateFieldGet(this, _PQueue_pending, "f") : 0, "f");
+    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
+}, _PQueue_processQueue = function _PQueue_processQueue() {
+    // eslint-disable-next-line no-empty
+    while (__classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this)) { }
+}, _PQueue_throwOnAbort = function _PQueue_throwOnAbort(signal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((_resolve, reject) => {
+            signal.addEventListener('abort', () => {
+                reject(new PQueueAbortError('The task was aborted.'));
+            }, { once: true });
+        });
+    });
+}, _PQueue_onEvent = function _PQueue_onEvent(event, filter) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve) => {
+            const listener = () => {
+                if (filter && !filter()) {
+                    return;
+                }
+                this.off(event, listener);
+                resolve();
+            };
+            this.on(event, listener);
+        });
+    });
+};
+/**
+ * ESM compatible port of https://www.npmjs.com/package/p-timeout
+ */
+function pTimeout(promise, options) {
+    const getDOMException = (errorMessage) => {
+        return globalThis.DOMException === undefined ? new PQueueAbortError(errorMessage) : new DOMException(errorMessage);
+    };
+    const getAbortedReason = (signal) => {
+        const reason = signal.reason === undefined ? getDOMException('This operation was aborted.') : signal.reason;
+        return reason instanceof Error ? reason : getDOMException(reason);
+    };
+    const { milliseconds, fallback, message, customTimers = { setTimeout, clearTimeout } } = options;
+    let timer;
+    const wrappedPromise = new Promise((resolve, reject) => {
+        if (typeof milliseconds !== 'number' || Math.sign(milliseconds) !== 1) {
+            throw new TypeError(`Expected \`milliseconds\` to be a positive number, got \`${milliseconds}\``);
+        }
+        if (options.signal) {
+            const { signal } = options;
+            if (signal.aborted) {
+                reject(getAbortedReason(signal));
+            }
+            signal.addEventListener('abort', () => {
+                reject(getAbortedReason(signal));
+            });
+        }
+        if (milliseconds === Number.POSITIVE_INFINITY) {
+            promise.then(resolve, reject);
+            return;
+        }
+        // We create the error outside of `setTimeout` to preserve the stack trace.
+        const timeoutError = new PQueueTimeoutError();
+        timer = customTimers.setTimeout.call(undefined, () => {
+            if (fallback) {
+                try {
+                    resolve(fallback());
+                }
+                catch (error) {
+                    reject(error);
+                }
+                return;
+            }
+            if (typeof promise.cancel === 'function') {
+                promise.cancel();
+            }
+            if (message === false) {
+                resolve(undefined);
+            }
+            else if (message instanceof Error) {
+                reject(message);
+            }
+            else {
+                timeoutError.message = message !== null && message !== void 0 ? message : `Promise timed out after ${milliseconds} milliseconds`;
+                reject(timeoutError);
+            }
+        }, milliseconds);
+        (() => __awaiter(this, void 0, void 0, function* () {
+            try {
+                resolve(yield promise);
+            }
+            catch (error) {
+                reject(error);
+            }
+        }))();
+    });
+    const cancelablePromise = wrappedPromise.finally(() => {
+        cancelablePromise.clear();
+    });
+    cancelablePromise.clear = () => {
+        customTimers.clearTimeout.call(undefined, timer);
+        timer = undefined;
+    };
+    return cancelablePromise;
+}
+/**
+ * The error thrown by `queue.add()` when a job is aborted before it is run. See `signal`.
+ */
+class PQueueAbortError extends Error {
+    constructor(message) {
+        super();
+        this.name = 'AbortError';
+        this.message = message;
+    }
+}
+class PQueueTimeoutError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'TimeoutError';
+    }
 }
 
 /**
@@ -3934,6 +4418,83 @@ class ExtensibleFunction extends Function {
     }
 }
 
+/**
+ * This function sets the name of a function and returns the function with the new name.
+ * @template T - The type of the function.
+ * @param name The new name to be set for the function.
+ * @param fun The function whose name is to be set.
+ * @returns The function with the new name.
+ * @example ```ts
+ * const myFun = () => 'Hello World';
+ * funSetName('newFun', myFun).name;;
+ * //=> 'newFun'
+ * ```
+ */
+function funSetName(name, fun) {
+    Object.defineProperty(fun, 'name', { value: name, configurable: true });
+    return fun;
+}
+
+/**
+ * Function call rate limiter / concurrency control.
+ * @param fun Function to be rate limited.
+ * @param options Options for the rate limiter.
+ * @example ```ts
+ * const [queue, waitSecondsLimited] = funAsyncRateLimit(waitSeconds, {
+ *   // Whether the task must finish in the given interval or will be carried over into the next interval count.
+ *   carryoverConcurrencyCount: false,
+ *   // max 50
+ *   intervalCap: 50,
+ *   // per minute
+ *   interval: 1000 * 60,
+ *   // max 3 concurrent
+ *   concurrency: 3,
+ *   // whether to start immediately when pushed to queue
+ *   autoStart: true,
+ *   priority: 0,
+ *   timeout: 0,
+ *   throwOnTimeout: false,
+ * })
+ *
+ * queue.onEmpty().then(() => {
+ *   console.log('Queue empty')
+ * })
+ *
+ * for (let i = 0; i < 7; i++) {
+ *   console.log({ i, inQueueBefore: queue.size })
+ *   waitSecondsLimited(2).then((returnValue) => {
+ *     console.log({ i, inQueueAfter: queue.size, returnValue })
+ *   })
+ * }
+ * //=> { i: 0, inQueueBefore: 0 }
+ * //=> { i: 1, inQueueBefore: 0 }
+ * //=> { i: 2, inQueueBefore: 0 }
+ * //=> { i: 3, inQueueBefore: 0 }
+ * //=> { i: 4, inQueueBefore: 1 }
+ * //=> { i: 5, inQueueBefore: 2 }
+ * //=> { i: 6, inQueueBefore: 3 }
+ * //=> Queue empty
+ * //=> { i: 0, inQueueAfter: 3, returnValue: undefined }
+ * //=> { i: 1, inQueueAfter: 2, returnValue: undefined }
+ * //=> { i: 2, inQueueAfter: 1, returnValue: undefined }
+ * //=> { i: 3, inQueueAfter: 0, returnValue: undefined }
+ * //=> { i: 4, inQueueAfter: 0, returnValue: undefined }
+ * //=> { i: 5, inQueueAfter: 0, returnValue: undefined }
+ * //=> { i: 6, inQueueAfter: 0, returnValue: undefined }
+ * ```
+ */
+function funAsyncRateLimit(fun, options = {}) {
+    const queue = new PQueue(options);
+    const result = funSetName(fun.name, function (...args) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield queue.add(() => __awaiter(this, void 0, void 0, function* () {
+                return yield fun.call(queue, ...args);
+            }));
+        });
+    });
+    return [queue, result];
+}
+
 function funParseClass(ctor) {
     var _a, _b, _c;
     const node = (_a = parseScript(ctor.toString(), {
@@ -3985,23 +4546,6 @@ function funParseFunction(func) {
         params = ((_e = (_d = root === null || root === void 0 ? void 0 : root.expression) === null || _d === void 0 ? void 0 : _d.params) === null || _e === void 0 ? void 0 : _e.map((param) => param === null || param === void 0 ? void 0 : param.name)) || [];
     }
     return { name, params };
-}
-
-/**
- * This function sets the name of a function and returns the function with the new name.
- * @template T - The type of the function.
- * @param name The new name to be set for the function.
- * @param fun The function whose name is to be set.
- * @returns The function with the new name.
- * @example ```ts
- * const myFun = () => 'Hello World';
- * funSetName('newFun', myFun).name;;
- * //=> 'newFun'
- * ```
- */
-function funSetName(name, fun) {
-    Object.defineProperty(fun, 'name', { value: name, configurable: true });
-    return fun;
 }
 
 const _HTML_BOOLEAN_ATTRIBUTES = new Set('async,autocomplete,autofocus,autoplay,border,challenge,checked,compact,contenteditable,controls,default,defer,disabled,formNoValidate,frameborder,hidden,indeterminate,ismap,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,readonly,required,reversed,scoped,scrolling,seamless,selected,sortable,spellcheck,translate'.split(','));
@@ -7729,8 +8273,10 @@ function tsDocStripTypesAndDefaults(code) {
  * ```
  */
 function tsDocUnwrapComment(code) {
-    if (!isValidTsDocComment(code))
+    if (!isValidTsDocComment(code)) {
+        console.log(code);
         throw new Error('Invalid TSDoc comment');
+    }
     code = code.trim();
     code = strRemoveFirstAndLastLine(code);
     code = code.replace(/^ *\*( |$)/gm, '');
@@ -8359,5 +8905,5 @@ function isSocialSecurityNumberDK(ssn) {
     return !!parseSocialSecurityNumberDK(ssn);
 }
 
-export { A1ToColRow, ApiReponseCache, ExtensibleFunction, File, HtmlGenerator, MS_IN_DAY, MS_IN_HOUR, MS_IN_MINUTE, MS_IN_MONTH, MS_IN_SECOND, MS_IN_WEEK, MS_IN_YEAR, Matrix, MixinBase, MixinIndexed, MixinTimestamped, NumberFormatter, OpenaiApiClient, OpenaiApiClientBase, Queue, SimpleTable, SortedArray, StringStream, TsDoc, TsDocTag, absoluteToRelativePath, arrAverage, arrEachToString, arrEvery, arrFindIndicesOf, arrFindLast, arrFindLastIndexOf, arrFlatten, arrIndicesOf, arrLast, arrMapMutable, arrObjectsToTable, arrObjectsUniqueKeys, arrRemoveDuplicates, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSum, arrSwap, arrTableAssertRowsSameLength, arrTableEachToString, arrTableToCsv, arrTableToObjects, assertInteger, assertNegativeInteger, assertPositiveInteger, assertPowerOfTen, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, assertValidNumber, asyncTasksLimit, asyncTasksParallel, asyncTasksSerial, asyncWithTimeout, atob, btoa, buildRegexBetween, bytesToInt, colRowToA1, colToLetter, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createDirectory, createDirectorySync, createFileExtensionFilter, createObjectFactory, csvParseStream, dateDaysAgo, daysSinceDate, deleteDirectory, deleteDirectorySafe, deleteDirectorySafeSync, deleteDirectorySync, ensureValidWindowsPath, funParseClass, funParseFunction, funSetName, getCentury, getConstructor, getCurrentYear, getPrototype, hoursSinceDate, inheritStaticMembers, intToArrayBytes, intToBuffer, intToBytes, isBetween, isConstructor, isEven, isGT, isGTE, isHex, isHexOrUnicode, isInRange, isInteger, isIterable, isLT, isLTE, isLeapYear, isMultiTsDocTag, isNamedMultiTsDocTag, isNamedTsDocTag, isNegativeInteger, isNumericString, isObject, isOdd, isPositiveInteger, isPowerOfTen, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, isValidNumber, isValidTsDocComment, isoDateTimestamp, isoDateTimestampForFilename, iterableFirstElement, iteratePrototypeChain, letterToCol, log, mapGetOrElse, mapReverse, mapUpdate, markdownWrapCodeBlock, memoryUsage, minutesSinceDate, monthsSinceDate, msSinceDate, normalizeFileExtension, normalizeLineLengths, numDaysInMonth, numRange, objAssignDeep, objDeepFreeze, objDelete, objDeleteKeys, objDeleteKeysMutable, objEntries, objEntriesArray, objFilter, objForEach, objGet, objGetOrElse, objHas, objIsEmpty, objKeys, objKeysArray, objMap, objMapKeys, objMapMutable, objPropertyValueToGetter, objReduce, objReverse, objSet, objSize, objSortKeys, objToMap, objUpdate, objValues, objValuesArray, objWalk, padArrayBytesLeft, padArrayBytesRight, parseMarkdownCodeBlock, parseMarkdownTable, parseSocialSecurityNumberDK, pdfGetPages, pdfIteratePages, pdfSplitPages, randomIntBetween, readExcelFile, readJsonFile, readJsonFileSync, regBlockCommentsWithIndent, regFunctionsExports, regHex, regHexPrefix, regInteger$1 as regInteger, regJestTests, regLocaleAlpha, regLocaleAlphaNumeric, regNumberCommaSepDotDecimal, regNumberDotSepCommaDecimal, regNumberNoThousandSepCommaDecimal, regNumberNoThousandSepDotDecimal, regPowerOfTen, regRepeatingWhiteSpace, regSocialSecurityNumbersDK, regTsDocExampleLines, regWords, regexClone, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexMatcherToValidater, regexScopeTree, regexValidFlags, rexec, rexecFirstMatch, round, roundDown, roundToNearest, roundToNearestPow10, roundUp, roundWith, secondsSinceDate, setDifference, setEnumerable, setIntersection, setIsSuperset, setNonConfigurable, setNonEnumerable, setNonEnumerablePrivateProperties, setNonWritable, setSymmetricDifference, setUnion, setWritable, shellCommand, strCountCharOccurances, strCountChars, strCountWords, strEnsureEndsWith, strFirstCharToUpperCase, strHashToBuffer, strHashToString, strHashToUint32Array, strIsLowerCase, strIsMultiLine, strIsUpperCase, strNoConsecutiveEmptyLines, strNoConsecutiveWhitespace, strParseBoolean, strPrependLines, strRemoveDuplicateChars, strRemoveEmptyLines, strRemoveFirstAndLastLine, strRemoveNewLines, strRepeat, strReplaceAll, strSortChars, strSplitAndTrim, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToSortedCharSet, strToWords, strTrimLines, strTrimLinesLeft, strTrimLinesRight, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, toJson, trimArrayBytesLeft, trimArrayBytesRight, tsCountExports, tsCountLinesOfCode, tsDocExtractAllComments, tsDocExtractFirstComment, tsDocFixSpacingBeforeAfter, tsDocNormalizeTagName, tsDocRemoveEmptyLines, tsDocStripAllTagsButThrowsParamDescription, tsDocStripExample, tsDocStripTypesAndDefaults, tsDocUnwrapComment, tsDocWrapAsComment, tsDocWrapExample, tsExtractImports, tsExtractJestTests, tsGetClassMemberAccessModifiers, tsHasDefaultExport, tsJestConvertExportNameString, tsJestEnsureLineSpacing, tsSimpleMinifyCode, tsStripBlockComments, tsStripComments, tsStripDeclSourceMapComments, tsStripExportKeyword, tsStripImports, tsStripInlineComments, waitSeconds, weeksSinceDate, writeExcelFile, writeJsonFile, writeJsonFileSync, yearsSinceDate };
+export { A1ToColRow, ApiReponseCache, ExtensibleFunction, File, HtmlGenerator, MS_IN_DAY, MS_IN_HOUR, MS_IN_MINUTE, MS_IN_MONTH, MS_IN_SECOND, MS_IN_WEEK, MS_IN_YEAR, Matrix, MixinBase, MixinIndexed, MixinTimestamped, NumberFormatter, OpenaiApiClient, OpenaiApiClientBase, PQueue, PriorityQueue, Queue, SimpleTable, SortedArray, StringStream, TsDoc, TsDocTag, absoluteToRelativePath, arrAverage, arrEachToString, arrEvery, arrFindIndicesOf, arrFindLast, arrFindLastIndexOf, arrFlatten, arrIndicesOf, arrLast, arrMapMutable, arrObjectsToTable, arrObjectsUniqueKeys, arrRemoveDuplicates, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSortedInsertionIndex, arrSum, arrSwap, arrTableAssertRowsSameLength, arrTableEachToString, arrTableToCsv, arrTableToObjects, assertInteger, assertNegativeInteger, assertPositiveInteger, assertPowerOfTen, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, assertValidNumber, asyncTasksLimit, asyncTasksParallel, asyncTasksSerial, asyncWithTimeout, atob, btoa, buildRegexBetween, bytesToInt, colRowToA1, colToLetter, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createDirectory, createDirectorySync, createFileExtensionFilter, createObjectFactory, csvParseStream, dateDaysAgo, daysSinceDate, deleteDirectory, deleteDirectorySafe, deleteDirectorySafeSync, deleteDirectorySync, ensureValidWindowsPath, funAsyncRateLimit, funParseClass, funParseFunction, funSetName, getCentury, getConstructor, getCurrentYear, getPrototype, hoursSinceDate, inheritStaticMembers, intToArrayBytes, intToBuffer, intToBytes, isBetween, isConstructor, isEven, isGT, isGTE, isHex, isHexOrUnicode, isInRange, isInteger, isIterable, isLT, isLTE, isLeapYear, isMultiTsDocTag, isNamedMultiTsDocTag, isNamedTsDocTag, isNegativeInteger, isNumericString, isObject, isOdd, isPositiveInteger, isPowerOfTen, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, isValidNumber, isValidTsDocComment, isoDateTimestamp, isoDateTimestampForFilename, iterableFirstElement, iteratePrototypeChain, letterToCol, log, mapGetOrElse, mapReverse, mapUpdate, markdownWrapCodeBlock, memoryUsage, minutesSinceDate, monthsSinceDate, msSinceDate, normalizeFileExtension, normalizeLineLengths, numDaysInMonth, numRange, objAssignDeep, objDeepFreeze, objDelete, objDeleteKeys, objDeleteKeysMutable, objEntries, objEntriesArray, objFilter, objForEach, objGet, objGetOrElse, objHas, objIsEmpty, objKeys, objKeysArray, objMap, objMapKeys, objMapMutable, objPropertyValueToGetter, objReduce, objReverse, objSet, objSize, objSortKeys, objToMap, objUpdate, objValues, objValuesArray, objWalk, padArrayBytesLeft, padArrayBytesRight, parseMarkdownCodeBlock, parseMarkdownTable, parseSocialSecurityNumberDK, pdfGetPages, pdfIteratePages, pdfSplitPages, randomIntBetween, readExcelFile, readJsonFile, readJsonFileSync, regBlockCommentsWithIndent, regFunctionsExports, regHex, regHexPrefix, regInteger$1 as regInteger, regJestTests, regLocaleAlpha, regLocaleAlphaNumeric, regNumberCommaSepDotDecimal, regNumberDotSepCommaDecimal, regNumberNoThousandSepCommaDecimal, regNumberNoThousandSepDotDecimal, regPowerOfTen, regRepeatingWhiteSpace, regSocialSecurityNumbersDK, regTsDocExampleLines, regWords, regexClone, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexMatcherToValidater, regexScopeTree, regexValidFlags, rexec, rexecFirstMatch, round, roundDown, roundToNearest, roundToNearestPow10, roundUp, roundWith, secondsSinceDate, setDifference, setEnumerable, setIntersection, setIsSuperset, setNonConfigurable, setNonEnumerable, setNonEnumerablePrivateProperties, setNonWritable, setSymmetricDifference, setUnion, setWritable, shellCommand, strCountCharOccurances, strCountChars, strCountWords, strEnsureEndsWith, strFirstCharToUpperCase, strHashToBuffer, strHashToString, strHashToUint32Array, strIsLowerCase, strIsMultiLine, strIsUpperCase, strNoConsecutiveEmptyLines, strNoConsecutiveWhitespace, strParseBoolean, strPrependLines, strRemoveDuplicateChars, strRemoveEmptyLines, strRemoveFirstAndLastLine, strRemoveNewLines, strRepeat, strReplaceAll, strSortChars, strSplitAndTrim, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToSortedCharSet, strToWords, strTrimLines, strTrimLinesLeft, strTrimLinesRight, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, toJson, trimArrayBytesLeft, trimArrayBytesRight, tsCountExports, tsCountLinesOfCode, tsDocExtractAllComments, tsDocExtractFirstComment, tsDocFixSpacingBeforeAfter, tsDocNormalizeTagName, tsDocRemoveEmptyLines, tsDocStripAllTagsButThrowsParamDescription, tsDocStripExample, tsDocStripTypesAndDefaults, tsDocUnwrapComment, tsDocWrapAsComment, tsDocWrapExample, tsExtractImports, tsExtractJestTests, tsGetClassMemberAccessModifiers, tsHasDefaultExport, tsJestConvertExportNameString, tsJestEnsureLineSpacing, tsSimpleMinifyCode, tsStripBlockComments, tsStripComments, tsStripDeclSourceMapComments, tsStripExportKeyword, tsStripImports, tsStripInlineComments, waitSeconds, weeksSinceDate, writeExcelFile, writeJsonFile, writeJsonFileSync, yearsSinceDate };
 //# sourceMappingURL=index.esm.js.map

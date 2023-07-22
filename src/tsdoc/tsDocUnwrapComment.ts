@@ -1,5 +1,5 @@
-import { strTrimLinesRight } from '../string/strTrimLinesRight'
 import { strRemoveFirstAndLastLine } from '../string/strRemoveFirstAndLastLine'
+import { strTrimLinesRight } from '../string/strTrimLinesRight'
 import { isValidTsDocComment } from './isValidTsDocComment'
 
 /**
@@ -29,7 +29,10 @@ import { isValidTsDocComment } from './isValidTsDocComment'
  * ```
  */
 export function tsDocUnwrapComment(code: string): string {
-  if (!isValidTsDocComment(code)) throw new Error('Invalid TSDoc comment')
+  if (!isValidTsDocComment(code)) {
+    console.log(code)
+    throw new Error('Invalid TSDoc comment')
+  }
   code = code.trim()
   code = strRemoveFirstAndLastLine(code)
   code = code.replace(/^ *\*( |$)/gm, '')

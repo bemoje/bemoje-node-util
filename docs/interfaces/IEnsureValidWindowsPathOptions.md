@@ -19,7 +19,7 @@ Throw if not valid, otherwise return false.
 
 #### Defined in
 
-[src/filesystem/types/IEnsureValidWindowsPathOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/types/IEnsureValidWindowsPathOptions.ts#L9)
+[src/filesystem/types/IEnsureValidWindowsPathOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/types/IEnsureValidWindowsPathOptions.ts#L9)
 
 ___
 
@@ -31,4 +31,4 @@ On most versions of windows, the max allowed length of paths has been raised.
 
 #### Defined in
 
-[src/filesystem/types/IEnsureValidWindowsPathOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/filesystem/types/IEnsureValidWindowsPathOptions.ts#L5)
+[src/filesystem/types/IEnsureValidWindowsPathOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/types/IEnsureValidWindowsPathOptions.ts#L5)

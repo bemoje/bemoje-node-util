@@ -47,7 +47,7 @@ Clears the console by printing a number of blank lines.
 
 #### Defined in
 
-[src/node/log.ts:66](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L66)
+[src/node/log.ts:66](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/log.ts#L66)
 
 ___
 
@@ -75,7 +75,7 @@ Logs a (red) error message to the console.
 
 #### Defined in
 
-[src/node/log.ts:31](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L31)
+[src/node/log.ts:31](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/log.ts#L31)
 
 ___
 
@@ -104,7 +104,7 @@ Logs a (cyan) message the console.
 
 #### Defined in
 
-[src/node/log.ts:13](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L13)
+[src/node/log.ts:13](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/log.ts#L13)
 
 ___
 
@@ -126,7 +126,7 @@ Prints a light dotted line to the console.
 
 #### Defined in
 
-[src/node/log.ts:74](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L74)
+[src/node/log.ts:74](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/log.ts#L74)
 
 ___
 
@@ -159,7 +159,7 @@ Generic function for logging to console, used by the log-level specific function
 
 #### Defined in
 
-[src/node/log.ts:91](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L91)
+[src/node/log.ts:91](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/log.ts#L91)
 
 ___
 
@@ -188,7 +188,7 @@ Wrap an async function as a task, logging the start and end of the task.
 
 #### Defined in
 
-[src/node/log.ts:42](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L42)
+[src/node/log.ts:42](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/log.ts#L42)
 
 ___
 
@@ -217,7 +217,7 @@ Wrap a synchronous function as a task, logging the start and end of the task.
 
 #### Defined in
 
-[src/node/log.ts:54](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L54)
+[src/node/log.ts:54](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/log.ts#L54)
 
 ___
 
@@ -245,4 +245,4 @@ Logs a (yellow) warning message to the console.
 
 #### Defined in
 
-[src/node/log.ts:22](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/node/log.ts#L22)
+[src/node/log.ts:22](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/log.ts#L22)

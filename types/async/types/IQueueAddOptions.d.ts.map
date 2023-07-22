@@ -1,0 +1,1 @@
+{"version":3,"file":"IQueueAddOptions.d.ts","sourceRoot":"","sources":["../../../src/async/types/IQueueAddOptions.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,gBAAgB,CAAA;AAC7C,OAAO,EAAE,eAAe,EAAE,MAAM,mBAAmB,CAAA;AAEnD,MAAM,WAAW,gBAAiB,SAAQ,YAAY,EAAE,eAAe;IACrE;;;OAGG;IACH,QAAQ,CAAC,QAAQ,CAAC,EAAE,MAAM,CAAA;CAC3B"}

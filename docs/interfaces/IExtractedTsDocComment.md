@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[src/tsdoc/types/IExtractedTsDocComment.ts:3](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/types/IExtractedTsDocComment.ts#L3)
+[src/tsdoc/types/IExtractedTsDocComment.ts:3](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/types/IExtractedTsDocComment.ts#L3)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[src/tsdoc/types/IExtractedTsDocComment.ts:4](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/types/IExtractedTsDocComment.ts#L4)
+[src/tsdoc/types/IExtractedTsDocComment.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/types/IExtractedTsDocComment.ts#L4)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[src/tsdoc/types/IExtractedTsDocComment.ts:5](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/types/IExtractedTsDocComment.ts#L5)
+[src/tsdoc/types/IExtractedTsDocComment.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/types/IExtractedTsDocComment.ts#L5)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[src/tsdoc/types/IExtractedTsDocComment.ts:2](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/tsdoc/types/IExtractedTsDocComment.ts#L2)
+[src/tsdoc/types/IExtractedTsDocComment.ts:2](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/tsdoc/types/IExtractedTsDocComment.ts#L2)

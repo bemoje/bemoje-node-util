@@ -31,7 +31,7 @@ Cache options
 
 #### Defined in
 
-[src/api/types/IEditRequestOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IEditRequestOptions.ts#L24)
+[src/api/types/IEditRequestOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IEditRequestOptions.ts#L24)
 
 ___
 
@@ -63,7 +63,7 @@ The model to use if not the defeault one.
 
 #### Defined in
 
-[src/api/types/IEditRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IEditRequestOptions.ts#L9)
+[src/api/types/IEditRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IEditRequestOptions.ts#L9)
 
 ___
 
@@ -95,7 +95,7 @@ prompt alias for input
 
 #### Defined in
 
-[src/api/types/IEditRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IEditRequestOptions.ts#L14)
+[src/api/types/IEditRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IEditRequestOptions.ts#L14)
 
 ___
 
@@ -107,7 +107,7 @@ API request retry options
 
 #### Defined in
 
-[src/api/types/IEditRequestOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/types/IEditRequestOptions.ts#L19)
+[src/api/types/IEditRequestOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IEditRequestOptions.ts#L19)
 
 ___
 

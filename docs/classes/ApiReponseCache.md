@@ -69,7 +69,7 @@ Create a new instance.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:43](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L43)
+[src/api/ApiReponseCache.ts:43](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L43)
 
 ## Properties
 
@@ -81,7 +81,7 @@ Level database instance
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:17](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L17)
+[src/api/ApiReponseCache.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L17)
 
 ___
 
@@ -93,7 +93,7 @@ Event emitter for cache events
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:22](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L22)
+[src/api/ApiReponseCache.ts:22](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L22)
 
 ___
 
@@ -105,7 +105,7 @@ Max age of cached data in milliseconds. Defaults to 0 (no max age).
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:27](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L27)
+[src/api/ApiReponseCache.ts:27](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L27)
 
 ___
 
@@ -126,7 +126,7 @@ Default options for creating new instances
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:32](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L32)
+[src/api/ApiReponseCache.ts:32](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L32)
 
 ## Methods
 
@@ -148,7 +148,7 @@ Delete a given value for a given hash key if it exists.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:139](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L139)
+[src/api/ApiReponseCache.ts:139](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L139)
 
 ___
 
@@ -164,7 +164,7 @@ Delete all cached API responses.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:173](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L173)
+[src/api/ApiReponseCache.ts:173](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L173)
 
 ___
 
@@ -180,7 +180,7 @@ Delete all expired data.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:163](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L163)
+[src/api/ApiReponseCache.ts:163](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L163)
 
 ___
 
@@ -209,7 +209,7 @@ Emit an event but this automatically adds 'this' as an extra argument.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:308](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L308)
+[src/api/ApiReponseCache.ts:308](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L308)
 
 ___
 
@@ -236,7 +236,7 @@ if the value is expired.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:250](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L250)
+[src/api/ApiReponseCache.ts:250](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L250)
 
 ___
 
@@ -252,7 +252,7 @@ Iterate over all [key, value] pairs in the cache.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:183](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L183)
+[src/api/ApiReponseCache.ts:183](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L183)
 
 ___
 
@@ -278,7 +278,7 @@ if the value does not exist for the give hash.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:83](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L83)
+[src/api/ApiReponseCache.ts:83](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L83)
 
 ___
 
@@ -301,7 +301,7 @@ Get a value for a given hash key if it exists. Otherwise, get retrive a value wi
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:66](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L66)
+[src/api/ApiReponseCache.ts:66](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L66)
 
 ___
 
@@ -323,7 +323,7 @@ Get a value for a given hash key.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:96](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L96)
+[src/api/ApiReponseCache.ts:96](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L96)
 
 ___
 
@@ -345,7 +345,7 @@ Returns whether a value exists for a given key.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:111](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L111)
+[src/api/ApiReponseCache.ts:111](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L111)
 
 ___
 
@@ -367,7 +367,7 @@ Hash any type of key.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:57](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L57)
+[src/api/ApiReponseCache.ts:57](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L57)
 
 ___
 
@@ -389,7 +389,7 @@ Check if a still raw serialized value string is expired.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:262](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L262)
+[src/api/ApiReponseCache.ts:262](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L262)
 
 ___
 
@@ -405,7 +405,7 @@ Iterate over all keys in the cache.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:199](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L199)
+[src/api/ApiReponseCache.ts:199](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L199)
 
 ___
 
@@ -421,7 +421,7 @@ Output all events to the console.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:236](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L236)
+[src/api/ApiReponseCache.ts:236](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L236)
 
 ___
 
@@ -450,7 +450,7 @@ Wrap a function in a try catch block and emit an error event if an error occurs.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:296](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L296)
+[src/api/ApiReponseCache.ts:296](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L296)
 
 ___
 
@@ -472,7 +472,7 @@ Parse the timestamp part of a raw serialized value string from the database.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:279](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L279)
+[src/api/ApiReponseCache.ts:279](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L279)
 
 ___
 
@@ -494,7 +494,7 @@ Parse the json part of a raw serialized value string from the database.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:287](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L287)
+[src/api/ApiReponseCache.ts:287](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L287)
 
 ___
 
@@ -521,7 +521,7 @@ if the value does not exist for the give hash.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:126](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L126)
+[src/api/ApiReponseCache.ts:126](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L126)
 
 ___
 
@@ -543,7 +543,7 @@ Custom JSON stringify function that prepends a timestamp to the stringified obje
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:271](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L271)
+[src/api/ApiReponseCache.ts:271](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L271)
 
 ___
 
@@ -559,7 +559,7 @@ Get the number of entries in the cache.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:225](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L225)
+[src/api/ApiReponseCache.ts:225](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L225)
 
 ___
 
@@ -575,4 +575,4 @@ Iterate over all values in the cache.
 
 #### Defined in
 
-[src/api/ApiReponseCache.ts:212](https://github.com/bemoje/bemoje-node-util/blob/ca2fc78/src/api/ApiReponseCache.ts#L212)
+[src/api/ApiReponseCache.ts:212](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/ApiReponseCache.ts#L212)
