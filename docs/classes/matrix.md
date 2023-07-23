@@ -80,7 +80,7 @@
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:35](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L35)
+[src/datastructures/Matrix.ts:35](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L35)
 
 ## Properties
 
@@ -90,7 +90,7 @@
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:3](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L3)
+[src/datastructures/Matrix.ts:3](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L3)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:2](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L2)
+[src/datastructures/Matrix.ts:2](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L2)
 
 ## Accessors
 
@@ -114,7 +114,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:48](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L48)
+[src/datastructures/Matrix.ts:48](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L48)
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:44](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L44)
+[src/datastructures/Matrix.ts:44](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L44)
 
 ## Methods
 
@@ -142,7 +142,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:157](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L157)
+[src/datastructures/Matrix.ts:157](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L157)
 
 ___
 
@@ -162,7 +162,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:213](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L213)
+[src/datastructures/Matrix.ts:213](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L213)
 
 ___
 
@@ -183,7 +183,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:253](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L253)
+[src/datastructures/Matrix.ts:253](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L253)
 
 ___
 
@@ -204,7 +204,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:233](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L233)
+[src/datastructures/Matrix.ts:233](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L233)
 
 ___
 
@@ -224,7 +224,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:198](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L198)
+[src/datastructures/Matrix.ts:198](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L198)
 
 ___
 
@@ -244,7 +244,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:185](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L185)
+[src/datastructures/Matrix.ts:185](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L185)
 
 ___
 
@@ -258,7 +258,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:99](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L99)
+[src/datastructures/Matrix.ts:99](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L99)
 
 ___
 
@@ -278,7 +278,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:65](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L65)
+[src/datastructures/Matrix.ts:65](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L65)
 
 ___
 
@@ -298,7 +298,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:228](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L228)
+[src/datastructures/Matrix.ts:228](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L228)
 
 ___
 
@@ -319,7 +319,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:268](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L268)
+[src/datastructures/Matrix.ts:268](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L268)
 
 ___
 
@@ -340,7 +340,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:248](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L248)
+[src/datastructures/Matrix.ts:248](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L248)
 
 ___
 
@@ -362,7 +362,7 @@ Performs dot product of the matrix with another given matrix.
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:344](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L344)
+[src/datastructures/Matrix.ts:344](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L344)
 
 ___
 
@@ -382,7 +382,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:304](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L304)
+[src/datastructures/Matrix.ts:304](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L304)
 
 ___
 
@@ -402,7 +402,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:109](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L109)
+[src/datastructures/Matrix.ts:109](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L109)
 
 ___
 
@@ -423,7 +423,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:129](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L129)
+[src/datastructures/Matrix.ts:129](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L129)
 
 ___
 
@@ -443,7 +443,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:138](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L138)
+[src/datastructures/Matrix.ts:138](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L138)
 
 ___
 
@@ -464,7 +464,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:120](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L120)
+[src/datastructures/Matrix.ts:120](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L120)
 
 ___
 
@@ -485,7 +485,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:83](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L83)
+[src/datastructures/Matrix.ts:83](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L83)
 
 ___
 
@@ -499,7 +499,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:56](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L56)
+[src/datastructures/Matrix.ts:56](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L56)
 
 ___
 
@@ -520,7 +520,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:87](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L87)
+[src/datastructures/Matrix.ts:87](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L87)
 
 ___
 
@@ -541,7 +541,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:315](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L315)
+[src/datastructures/Matrix.ts:315](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L315)
 
 ___
 
@@ -561,7 +561,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:52](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L52)
+[src/datastructures/Matrix.ts:52](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L52)
 
 ___
 
@@ -577,7 +577,7 @@ Returns whether the matrix is a square matrix that has identical values on its d
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:326](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L326)
+[src/datastructures/Matrix.ts:326](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L326)
 
 ___
 
@@ -591,7 +591,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:319](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L319)
+[src/datastructures/Matrix.ts:319](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L319)
 
 ___
 
@@ -605,7 +605,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:337](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L337)
+[src/datastructures/Matrix.ts:337](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L337)
 
 ___
 
@@ -625,7 +625,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:147](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L147)
+[src/datastructures/Matrix.ts:147](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L147)
 
 ___
 
@@ -646,7 +646,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:177](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L177)
+[src/datastructures/Matrix.ts:177](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L177)
 
 ___
 
@@ -667,7 +667,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:169](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L169)
+[src/datastructures/Matrix.ts:169](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L169)
 
 ___
 
@@ -687,7 +687,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:223](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L223)
+[src/datastructures/Matrix.ts:223](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L223)
 
 ___
 
@@ -708,7 +708,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:263](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L263)
+[src/datastructures/Matrix.ts:263](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L263)
 
 ___
 
@@ -729,7 +729,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:243](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L243)
+[src/datastructures/Matrix.ts:243](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L243)
 
 ___
 
@@ -751,7 +751,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:77](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L77)
+[src/datastructures/Matrix.ts:77](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L77)
 
 ___
 
@@ -771,7 +771,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:60](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L60)
+[src/datastructures/Matrix.ts:60](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L60)
 
 ___
 
@@ -791,7 +791,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:293](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L293)
+[src/datastructures/Matrix.ts:293](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L293)
 
 ___
 
@@ -811,7 +811,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:218](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L218)
+[src/datastructures/Matrix.ts:218](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L218)
 
 ___
 
@@ -832,7 +832,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:258](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L258)
+[src/datastructures/Matrix.ts:258](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L258)
 
 ___
 
@@ -853,7 +853,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:238](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L238)
+[src/datastructures/Matrix.ts:238](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L238)
 
 ___
 
@@ -874,7 +874,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:282](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L282)
+[src/datastructures/Matrix.ts:282](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L282)
 
 ___
 
@@ -895,7 +895,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:273](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L273)
+[src/datastructures/Matrix.ts:273](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L273)
 
 ___
 
@@ -909,7 +909,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:91](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L91)
+[src/datastructures/Matrix.ts:91](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L91)
 
 ___
 
@@ -923,7 +923,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:165](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L165)
+[src/datastructures/Matrix.ts:165](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L165)
 
 ___
 
@@ -943,7 +943,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:5](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L5)
+[src/datastructures/Matrix.ts:5](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L5)
 
 ___
 
@@ -963,7 +963,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:19](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L19)
+[src/datastructures/Matrix.ts:19](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L19)
 
 ___
 
@@ -983,4 +983,4 @@ ___
 
 #### Defined in
 
-[src/datastructures/Matrix.ts:27](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Matrix.ts#L27)
+[src/datastructures/Matrix.ts:27](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/Matrix.ts#L27)

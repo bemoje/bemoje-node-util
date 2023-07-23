@@ -121,7 +121,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/async/PQueue.ts:55](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L55)
+[src/async/PQueue.ts:55](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L55)
 
 ## Properties
 
@@ -131,7 +131,7 @@ EventEmitter.constructor
 
 #### Defined in
 
-[src/async/PQueue.ts:21](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L21)
+[src/async/PQueue.ts:21](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L21)
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:43](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L43)
+[src/async/PQueue.ts:43](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L43)
 
 ___
 
@@ -151,7 +151,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:29](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L29)
+[src/async/PQueue.ts:29](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L29)
 
 ___
 
@@ -161,7 +161,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:27](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L27)
+[src/async/PQueue.ts:27](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L27)
 
 ___
 
@@ -171,7 +171,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:25](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L25)
+[src/async/PQueue.ts:25](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L25)
 
 ___
 
@@ -181,7 +181,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:31](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L31)
+[src/async/PQueue.ts:31](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L31)
 
 ___
 
@@ -191,7 +191,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:33](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L33)
+[src/async/PQueue.ts:33](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L33)
 
 ___
 
@@ -201,7 +201,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:23](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L23)
+[src/async/PQueue.ts:23](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L23)
 
 ___
 
@@ -211,7 +211,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:45](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L45)
+[src/async/PQueue.ts:45](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L45)
 
 ___
 
@@ -221,7 +221,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:41](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L41)
+[src/async/PQueue.ts:41](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L41)
 
 ___
 
@@ -231,7 +231,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:37](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L37)
+[src/async/PQueue.ts:37](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L37)
 
 ___
 
@@ -245,7 +245,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:39](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L39)
+[src/async/PQueue.ts:39](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L39)
 
 ___
 
@@ -255,7 +255,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:47](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L47)
+[src/async/PQueue.ts:47](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L47)
 
 ___
 
@@ -265,7 +265,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:35](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L35)
+[src/async/PQueue.ts:35](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L35)
 
 ___
 
@@ -278,7 +278,7 @@ Applies to each future operation.
 
 #### Defined in
 
-[src/async/PQueue.ts:53](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L53)
+[src/async/PQueue.ts:53](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L53)
 
 ___
 
@@ -411,7 +411,7 @@ node_modules/@types/node/events.d.ts:319
 
 #### Defined in
 
-[src/async/PQueue.ts:98](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L98)
+[src/async/PQueue.ts:98](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L98)
 
 ___
 
@@ -425,7 +425,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:94](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L94)
+[src/async/PQueue.ts:94](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L94)
 
 ___
 
@@ -439,7 +439,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:114](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L114)
+[src/async/PQueue.ts:114](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L114)
 
 ___
 
@@ -453,7 +453,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:209](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L209)
+[src/async/PQueue.ts:209](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L209)
 
 • `set` **concurrency**(`newConcurrency`): `void`
 
@@ -469,7 +469,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:213](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L213)
+[src/async/PQueue.ts:213](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L213)
 
 ___
 
@@ -485,7 +485,7 @@ Whether the queue is currently paused.
 
 #### Defined in
 
-[src/async/PQueue.ts:419](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L419)
+[src/async/PQueue.ts:419](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L419)
 
 ___
 
@@ -501,7 +501,7 @@ Number of running items (no longer in the queue).
 
 #### Defined in
 
-[src/async/PQueue.ts:412](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L412)
+[src/async/PQueue.ts:412](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L412)
 
 ___
 
@@ -517,7 +517,7 @@ Size of the queue, the number of queued items waiting to run.
 
 #### Defined in
 
-[src/async/PQueue.ts:397](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L397)
+[src/async/PQueue.ts:397](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L397)
 
 ## Methods
 
@@ -531,7 +531,7 @@ Size of the queue, the number of queued items waiting to run.
 
 #### Defined in
 
-[src/async/PQueue.ts:179](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L179)
+[src/async/PQueue.ts:179](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L179)
 
 ___
 
@@ -545,7 +545,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:102](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L102)
+[src/async/PQueue.ts:102](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L102)
 
 ___
 
@@ -566,7 +566,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:379](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L379)
+[src/async/PQueue.ts:379](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L379)
 
 ___
 
@@ -580,7 +580,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:191](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L191)
+[src/async/PQueue.ts:191](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L191)
 
 ___
 
@@ -594,7 +594,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:108](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L108)
+[src/async/PQueue.ts:108](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L108)
 
 ___
 
@@ -610,7 +610,7 @@ Executes all queued functions until it reaches the limit.
 
 #### Defined in
 
-[src/async/PQueue.ts:204](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L204)
+[src/async/PQueue.ts:204](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L204)
 
 ___
 
@@ -630,7 +630,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:223](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L223)
+[src/async/PQueue.ts:223](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L223)
 
 ___
 
@@ -644,7 +644,7 @@ ___
 
 #### Defined in
 
-[src/async/PQueue.ts:138](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L138)
+[src/async/PQueue.ts:138](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L138)
 
 ___
 
@@ -673,7 +673,7 @@ Adds a sync or async task to the queue. Always returns a promise.
 
 #### Defined in
 
-[src/async/PQueue.ts:238](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L238)
+[src/async/PQueue.ts:238](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L238)
 
 ▸ **add**<`TaskResultType`\>(`function_`, `options?`): `Promise`<`void` \| `TaskResultType`\>
 
@@ -696,7 +696,7 @@ Adds a sync or async task to the queue. Always returns a promise.
 
 #### Defined in
 
-[src/async/PQueue.ts:242](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L242)
+[src/async/PQueue.ts:242](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L242)
 
 ___
 
@@ -727,7 +727,7 @@ A promise that resolves when all functions are resolved.
 
 #### Defined in
 
-[src/async/PQueue.ts:296](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L296)
+[src/async/PQueue.ts:296](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L296)
 
 ▸ **addAll**<`TaskResultsType`\>(`functions`, `options?`): `Promise`<(`void` \| `TaskResultsType`)[]\>
 
@@ -750,7 +750,7 @@ A promise that resolves when all functions are resolved.
 
 #### Defined in
 
-[src/async/PQueue.ts:300](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L300)
+[src/async/PQueue.ts:300](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L300)
 
 ___
 
@@ -797,7 +797,7 @@ Clear the queue.
 
 #### Defined in
 
-[src/async/PQueue.ts:335](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L335)
+[src/async/PQueue.ts:335](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L335)
 
 ___
 
@@ -1104,7 +1104,7 @@ A promise that settles when the queue becomes empty.
 
 #### Defined in
 
-[src/async/PQueue.ts:343](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L343)
+[src/async/PQueue.ts:343](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L343)
 
 ___
 
@@ -1122,7 +1122,7 @@ A promise that settles when the queue becomes empty, and all promises have compl
 
 #### Defined in
 
-[src/async/PQueue.ts:370](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L370)
+[src/async/PQueue.ts:370](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L370)
 
 ___
 
@@ -1146,7 +1146,7 @@ Note that this only limits the number of items waiting to start. There could sti
 
 #### Defined in
 
-[src/async/PQueue.ts:357](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L357)
+[src/async/PQueue.ts:357](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L357)
 
 ___
 
@@ -1216,7 +1216,7 @@ Put queue execution on hold.
 
 #### Defined in
 
-[src/async/PQueue.ts:328](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L328)
+[src/async/PQueue.ts:328](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L328)
 
 ___
 
@@ -1557,7 +1557,7 @@ For example, this can be used to find the number of items remaining in the queue
 
 #### Defined in
 
-[src/async/PQueue.ts:405](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L405)
+[src/async/PQueue.ts:405](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L405)
 
 ___
 
@@ -1573,7 +1573,7 @@ Start (or resume) executing enqueued tasks within concurrency limit. No need to 
 
 #### Defined in
 
-[src/async/PQueue.ts:314](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/PQueue.ts#L314)
+[src/async/PQueue.ts:314](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/PQueue.ts#L314)
 
 ___
 

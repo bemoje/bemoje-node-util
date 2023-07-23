@@ -41,7 +41,7 @@ Cache options
 
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:34](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IChatRequestOptions.ts#L34)
+[src/api/types/IChatRequestOptions.ts:34](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IChatRequestOptions.ts#L34)
 
 ___
 
@@ -111,7 +111,7 @@ System instructions message inserted before all user and assistant messages
 
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IChatRequestOptions.ts#L24)
+[src/api/types/IChatRequestOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IChatRequestOptions.ts#L24)
 
 ___
 
@@ -163,7 +163,7 @@ Message history
 
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IChatRequestOptions.ts#L14)
+[src/api/types/IChatRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IChatRequestOptions.ts#L14)
 
 ___
 
@@ -175,7 +175,7 @@ The model to use if not the defeault one.
 
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IChatRequestOptions.ts#L9)
+[src/api/types/IChatRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IChatRequestOptions.ts#L9)
 
 ___
 
@@ -227,7 +227,7 @@ A user message inserted before all other messages, except the system instruction
 
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IChatRequestOptions.ts#L19)
+[src/api/types/IChatRequestOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IChatRequestOptions.ts#L19)
 
 ___
 
@@ -239,7 +239,7 @@ API request retry options
 
 #### Defined in
 
-[src/api/types/IChatRequestOptions.ts:29](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IChatRequestOptions.ts#L29)
+[src/api/types/IChatRequestOptions.ts:29](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IChatRequestOptions.ts#L29)
 
 ___
 

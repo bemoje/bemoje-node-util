@@ -60,7 +60,7 @@ if the time is invalid.
 
 #### Defined in
 
-src/time/Time.ts:27
+[src/time/Time.ts:27](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L27)
 
 ## Properties
 
@@ -73,7 +73,7 @@ This is the only value stored internally.
 
 #### Defined in
 
-src/time/Time.ts:20
+[src/time/Time.ts:20](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L20)
 
 ## Accessors
 
@@ -89,7 +89,7 @@ Returns the hours.
 
 #### Defined in
 
-src/time/Time.ts:137
+[src/time/Time.ts:137](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L137)
 
 • `set` **hours**(`value`): `void`
 
@@ -111,7 +111,7 @@ if the value is invalid.
 
 #### Defined in
 
-src/time/Time.ts:146
+[src/time/Time.ts:146](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L146)
 
 ___
 
@@ -127,7 +127,7 @@ Returns the milliseconds.
 
 #### Defined in
 
-src/time/Time.ts:188
+[src/time/Time.ts:188](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L188)
 
 • `set` **milliseconds**(`value`): `void`
 
@@ -149,7 +149,7 @@ if the value is invalid.
 
 #### Defined in
 
-src/time/Time.ts:197
+[src/time/Time.ts:197](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L197)
 
 ___
 
@@ -165,7 +165,7 @@ Returns the minutes.
 
 #### Defined in
 
-src/time/Time.ts:154
+[src/time/Time.ts:154](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L154)
 
 • `set` **minutes**(`value`): `void`
 
@@ -187,7 +187,7 @@ if the value is invalid.
 
 #### Defined in
 
-src/time/Time.ts:163
+[src/time/Time.ts:163](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L163)
 
 ___
 
@@ -203,7 +203,7 @@ Returns the seconds.
 
 #### Defined in
 
-src/time/Time.ts:171
+[src/time/Time.ts:171](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L171)
 
 • `set` **seconds**(`value`): `void`
 
@@ -225,7 +225,7 @@ if the value is invalid.
 
 #### Defined in
 
-src/time/Time.ts:180
+[src/time/Time.ts:180](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L180)
 
 ## Methods
 
@@ -252,7 +252,7 @@ if the time becomes invalid after the operation.
 
 #### Defined in
 
-src/time/Time.ts:44
+[src/time/Time.ts:44](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L44)
 
 ___
 
@@ -279,7 +279,7 @@ if the time becomes invalid after the operation.
 
 #### Defined in
 
-src/time/Time.ts:80
+[src/time/Time.ts:80](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L80)
 
 ___
 
@@ -306,7 +306,7 @@ if the time becomes invalid after the operation.
 
 #### Defined in
 
-src/time/Time.ts:56
+[src/time/Time.ts:56](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L56)
 
 ___
 
@@ -333,7 +333,7 @@ if the time becomes invalid after the operation.
 
 #### Defined in
 
-src/time/Time.ts:68
+[src/time/Time.ts:68](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L68)
 
 ___
 
@@ -349,7 +349,7 @@ Returns a new Time instance.
 
 #### Defined in
 
-src/time/Time.ts:252
+[src/time/Time.ts:252](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L252)
 
 ___
 
@@ -375,7 +375,7 @@ difference for getting the difference as a new Time instance.
 
 #### Defined in
 
-src/time/Time.ts:236
+[src/time/Time.ts:236](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L236)
 
 ___
 
@@ -401,7 +401,7 @@ compareTo for getting the difference in milliseconds.
 
 #### Defined in
 
-src/time/Time.ts:245
+[src/time/Time.ts:245](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L245)
 
 ___
 
@@ -428,7 +428,7 @@ if the time becomes invalid after the operation.
 
 #### Defined in
 
-src/time/Time.ts:92
+[src/time/Time.ts:92](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L92)
 
 ___
 
@@ -455,7 +455,7 @@ if the time becomes invalid after the operation.
 
 #### Defined in
 
-src/time/Time.ts:128
+[src/time/Time.ts:128](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L128)
 
 ___
 
@@ -482,7 +482,7 @@ if the time becomes invalid after the operation.
 
 #### Defined in
 
-src/time/Time.ts:104
+[src/time/Time.ts:104](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L104)
 
 ___
 
@@ -509,7 +509,7 @@ if the time becomes invalid after the operation.
 
 #### Defined in
 
-src/time/Time.ts:116
+[src/time/Time.ts:116](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L116)
 
 ___
 
@@ -525,7 +525,7 @@ Returns the time as an array in the format [HH, MM, SS, mmm].
 
 #### Defined in
 
-src/time/Time.ts:205
+[src/time/Time.ts:205](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L205)
 
 ___
 
@@ -541,7 +541,7 @@ Returns the time in millisecond representation.
 
 #### Defined in
 
-src/time/Time.ts:220
+[src/time/Time.ts:220](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L220)
 
 ___
 
@@ -563,7 +563,7 @@ Returns the time as a string in the format "HH:MM:SS.mmm".
 
 #### Defined in
 
-src/time/Time.ts:213
+[src/time/Time.ts:213](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L213)
 
 ___
 
@@ -579,4 +579,4 @@ Returns the time in millisecond representation.
 
 #### Defined in
 
-src/time/Time.ts:227
+[src/time/Time.ts:227](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/Time.ts#L227)

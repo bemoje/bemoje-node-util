@@ -76,15 +76,14 @@ export class NumberFormatter {
    * Parse a formatted string to a number.
    */
   parse(string: string): number {
-    return assertValidNumber(
-      Number(
-        strReplaceAll(string, this.thousandSeparator, '')
-          .replace(this.decimalSeparator, '.')
-          .replace(/[^\d.-]/g, '')
-          .split('.')
-          .map((s) => parseInt(s))
-          .join('.'),
-      ),
-    )
+    string = strReplaceAll(string, this.thousandSeparator, '')
+      .replace(this.decimalSeparator, '.')
+      .replace(/[^\d.-]/g, '')
+      .split('.')
+      .map((s) => parseInt(s))
+      .join('.')
+    const n = Number(string)
+    assertValidNumber(n)
+    return n
   }
 }

@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[src/datastructures/types/IQueue.ts:4](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/types/IQueue.ts#L4)
+[src/datastructures/types/IQueue.ts:4](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/types/IQueue.ts#L4)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/types/IQueue.ts:5](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/types/IQueue.ts#L5)
+[src/datastructures/types/IQueue.ts:5](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/types/IQueue.ts#L5)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/types/IQueue.ts:3](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/types/IQueue.ts#L3)
+[src/datastructures/types/IQueue.ts:3](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/types/IQueue.ts#L3)
 
 ___
 
@@ -97,4 +97,4 @@ ___
 
 #### Defined in
 
-[src/datastructures/types/IQueue.ts:2](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/types/IQueue.ts#L2)
+[src/datastructures/types/IQueue.ts:2](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/types/IQueue.ts#L2)

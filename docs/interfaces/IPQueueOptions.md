@@ -44,7 +44,7 @@ true
 
 #### Defined in
 
-[src/async/types/IPQueueOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/types/IPQueueOptions.ts#L19)
+[src/async/types/IPQueueOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/IPQueueOptions.ts#L19)
 
 ___
 
@@ -62,7 +62,7 @@ false
 
 #### Defined in
 
-[src/async/types/IPQueueOptions.ts:44](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/types/IPQueueOptions.ts#L44)
+[src/async/types/IPQueueOptions.ts:44](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/IPQueueOptions.ts#L44)
 
 ___
 
@@ -81,7 +81,7 @@ Infinity
 
 #### Defined in
 
-[src/async/types/IPQueueOptions.ts:13](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/types/IPQueueOptions.ts#L13)
+[src/async/types/IPQueueOptions.ts:13](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/IPQueueOptions.ts#L13)
 
 ___
 
@@ -100,7 +100,7 @@ The length of time in milliseconds before the interval count resets. Must be fin
 
 #### Defined in
 
-[src/async/types/IPQueueOptions.ts:38](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/types/IPQueueOptions.ts#L38)
+[src/async/types/IPQueueOptions.ts:38](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/IPQueueOptions.ts#L38)
 
 ___
 
@@ -119,7 +119,7 @@ Infinity
 
 #### Defined in
 
-[src/async/types/IPQueueOptions.ts:31](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/types/IPQueueOptions.ts#L31)
+[src/async/types/IPQueueOptions.ts:31](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/IPQueueOptions.ts#L31)
 
 ___
 
@@ -135,7 +135,7 @@ Class with a `enqueue` and `dequeue` method, and a `size` getter. See the [Custo
 
 #### Defined in
 
-[src/async/types/IPQueueOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/types/IPQueueOptions.ts#L24)
+[src/async/types/IPQueueOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/IPQueueOptions.ts#L24)
 
 ___
 
@@ -157,7 +157,7 @@ false
 
 #### Defined in
 
-[src/async/types/ITimeoutOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/types/ITimeoutOptions.ts#L11)
+[src/async/types/ITimeoutOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/ITimeoutOptions.ts#L11)
 
 ___
 
@@ -173,4 +173,4 @@ Per-operation timeout in milliseconds. Operations fulfill once `timeout` elapses
 
 #### Defined in
 
-[src/async/types/ITimeoutOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/types/ITimeoutOptions.ts#L5)
+[src/async/types/ITimeoutOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/ITimeoutOptions.ts#L5)

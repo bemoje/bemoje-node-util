@@ -23,7 +23,7 @@ Defaults for API requests. Can be overriden in individual method calls.
 
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:25](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientOptions.ts#L25)
+[src/api/types/IApiClientOptions.ts:25](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IApiClientOptions.ts#L25)
 
 ___
 
@@ -35,7 +35,7 @@ OpenAI API key
 
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientOptions.ts#L10)
+[src/api/types/IApiClientOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IApiClientOptions.ts#L10)
 
 ___
 
@@ -47,7 +47,7 @@ Defaults for API request cache behaviour. Can be overriden in individual method 
 
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:35](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientOptions.ts#L35)
+[src/api/types/IApiClientOptions.ts:35](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IApiClientOptions.ts#L35)
 
 ___
 
@@ -59,7 +59,7 @@ Options for initialization the cache
 
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:20](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientOptions.ts#L20)
+[src/api/types/IApiClientOptions.ts:20](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IApiClientOptions.ts#L20)
 
 ___
 
@@ -71,7 +71,7 @@ Output all events to console
 
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientOptions.ts#L15)
+[src/api/types/IApiClientOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IApiClientOptions.ts#L15)
 
 ___
 
@@ -83,4 +83,4 @@ Defaults for API request retry behaviour. Can be overriden in individual method 
 
 #### Defined in
 
-[src/api/types/IApiClientOptions.ts:30](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientOptions.ts#L30)
+[src/api/types/IApiClientOptions.ts:30](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IApiClientOptions.ts#L30)

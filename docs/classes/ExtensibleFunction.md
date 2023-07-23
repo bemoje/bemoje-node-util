@@ -66,7 +66,7 @@ Function.constructor
 
 #### Defined in
 
-[src/function/ExtensibleFunction.ts:20](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/function/ExtensibleFunction.ts#L20)
+[src/function/ExtensibleFunction.ts:20](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/function/ExtensibleFunction.ts#L20)
 
 ## Properties
 

@@ -1,3 +1,6 @@
+import { ObjectKey } from '../types/ObjectKey'
+import { objUpdatePropertyDescriptors } from './objUpdatePropertyDescriptors'
+
 /**
  * Sets the enumerable property of the specified properties of an object to true.
  * @template T - The type of the object.
@@ -11,11 +14,12 @@
  * //=> ['a', 'b']
  * ```
  * @remarks This function uses `Object.defineProperty` to set the enumerable property.
- * @throws This function will throw an error if the property does not exist on the object.
+ * @throws Will throw an error if any of the specified properties do not exist on the object.
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty | Object.defineProperty}
  */
-export function setEnumerable<T>(object: T, ...propertyNames: string[]): void {
-  for (const propertyName of propertyNames) {
-    Object.defineProperty(object, propertyName, { enumerable: true })
-  }
+export function setEnumerable(object: Record<ObjectKey, any>, ...properties: string[]): void {
+  objUpdatePropertyDescriptors(object, properties, (descriptor) => {
+    descriptor.enumerable = true
+    return descriptor
+  })
 }

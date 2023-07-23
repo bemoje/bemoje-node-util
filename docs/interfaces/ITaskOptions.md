@@ -22,4 +22,4 @@
 
 #### Defined in
 
-[src/async/types/ITaskOptions.ts:2](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/async/types/ITaskOptions.ts#L2)
+[src/async/types/ITaskOptions.ts:2](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/ITaskOptions.ts#L2)

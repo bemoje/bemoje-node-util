@@ -14,11 +14,11 @@ describe(setNonEnumerable.name, () => {
     }
 
     it('should throw an error when one property does not exist', () => {
-      expect(() => setNonEnumerable(object, 'prop2')).toThrow("Property 'prop2' does not exist on object.")
+      expect(() => setNonEnumerable(object, 'prop2')).toThrow("Property, 'prop2' does not exist on object.")
     })
 
     it('should throw an error when multiple properties do not exist', () => {
-      expect(() => setNonEnumerable(object, 'prop2', 'prop3')).toThrow("Property 'prop2' does not exist on object.")
+      expect(() => setNonEnumerable(object, 'prop2', 'prop3')).toThrow("Property, 'prop2' does not exist on object.")
     })
   })
 

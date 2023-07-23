@@ -18,4 +18,4 @@ Whether to overwrite existing cached data instead of using it even if it exists.
 
 #### Defined in
 
-[src/api/types/IResponseCacheOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IResponseCacheOptions.ts#L5)
+[src/api/types/IResponseCacheOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/types/IResponseCacheOptions.ts#L5)

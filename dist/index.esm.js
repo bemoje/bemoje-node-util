@@ -1,5 +1,5 @@
 /*!
- * @bemoje/node-util v0.4.4
+ * @bemoje/node-util v0.4.5
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
@@ -1289,31 +1289,47 @@ function objDeleteKeysMutable(obj, ...keys) {
 }
 
 /**
+ * Updates the property descriptors of the specified properties on the given object.
+ * @param object - The object whose property descriptors are to be updated.
+ * @param properties - An array of property names for which the descriptors are to be updated.
+ * @param update - A function that takes a property descriptor and a property name, and returns a new property descriptor.
+ * @throws Will throw an error if any of the specified properties do not exist on the object.
+ * @example ```ts
+ * const obj = { a: 1, b: 2 };
+ * objUpdatePropertyDescriptors(obj, ['a', 'b'], (descriptor, property) => {
+ *   descriptor.writable = true;
+ *   return obj;
+ * });
+ * ```
+ */
+function objUpdatePropertyDescriptors(object, properties, update) {
+    for (const p of properties) {
+        if (!Object.hasOwn(object, p)) {
+            throw new Error(`Property, '${p}' does not exist on object.`);
+        }
+        const descriptor = update(Object.getOwnPropertyDescriptor(object, p), p);
+        Object.defineProperty(object, p, descriptor);
+    }
+}
+
+/**
  * Sets the specified properties of an object as non-enumerable.
  * @remarks This function modifies the original object by setting the specified properties as non-enumerable.
  * If the object or any of the property names are not valid, it throws an error.
  * @param object The object whose properties are to be set as non-enumerable.
- * @param propertyNames The names of the properties to be set as non-enumerable.
- * @throws Will throw an error if the first argument is not an object.
+ * @param properties The names of the properties to be set as non-enumerable.
  * @throws Will throw an error if any of the specified properties do not exist on the object.
- * @throws Will throw an error if any of the specified properties do not have a descriptor.
  * @example ```ts
  * setNonEnumerable({ a: 1, b: 2, c: 3 }, 'a', 'b');
  * Object.keys({ a: 1, b: 2, c: 3 });;
  * //=> ['c']
  * ```
  */
-function setNonEnumerable(object, ...propertyNames) {
-    for (const propertyName of propertyNames) {
-        if (!Object.hasOwn(object, propertyName)) {
-            throw new Error(`Property '${propertyName}' does not exist on object.`);
-        }
-        const des = Object.getOwnPropertyDescriptor(object, propertyName);
-        if (!des)
-            throw new Error(`Property '${propertyName}' does not have a descriptor.`);
-        des.enumerable = false;
-        Object.defineProperty(object, propertyName, des);
-    }
+function setNonEnumerable(object, ...properties) {
+    objUpdatePropertyDescriptors(object, properties, (descriptor) => {
+        descriptor.enumerable = false;
+        return descriptor;
+    });
 }
 
 /**
@@ -4565,43 +4581,519 @@ function funParseFunction(func) {
     return { name, params };
 }
 
-const _HTML_BOOLEAN_ATTRIBUTES = new Set('async,autocomplete,autofocus,autoplay,border,challenge,checked,compact,contenteditable,controls,default,defer,disabled,formNoValidate,frameborder,hidden,indeterminate,ismap,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,readonly,required,reversed,scoped,scrolling,seamless,selected,sortable,spellcheck,translate'.split(','));
+/**
+ * All common boolean attributes in HTML.
+ */
+const _HTML_BOOLEAN_ATTRIBUTES = new Set([
+    'async',
+    'autocomplete',
+    'autofocus',
+    'autoplay',
+    'border',
+    'challenge',
+    'checked',
+    'compact',
+    'contenteditable',
+    'controls',
+    'default',
+    'defer',
+    'disabled',
+    'formNoValidate',
+    'frameborder',
+    'hidden',
+    'indeterminate',
+    'ismap',
+    'loop',
+    'multiple',
+    'muted',
+    'nohref',
+    'noresize',
+    'noshade',
+    'novalidate',
+    'nowrap',
+    'open',
+    'readonly',
+    'required',
+    'reversed',
+    'scoped',
+    'scrolling',
+    'seamless',
+    'selected',
+    'sortable',
+    'spellcheck',
+    'translate',
+]);
 
-const _HTML_EVENT_ATTRIBUTES = new Set('onabort,onautocomplete,onautocompleteerror,onblur,oncancel,oncanplay,oncanplaythrough,onchange,onclick,onclose,oncontextmenu,oncuechange,ondblclick,ondrag,ondragend,ondragenter,ondragleave,ondragover,ondragstart,ondrop,ondurationchange,onemptied,onended,onerror,onfocus,oninput,oninvalid,onkeydown,onkeypress,onkeyup,onload,onloadeddata,onloadedmetadata,onloadstart,onmousedown,onmouseenter,onmouseleave,onmousemove,onmouseout,onmouseover,onmouseup,onmousewheel,onpause,onplay,onplaying,onprogress,onratechange,onreset,onresize,onscroll,onseeked,onseeking,onselect,onshow,onsort,onstalled,onsubmit,onsuspend,ontimeupdate,ontoggle,onvolumechange,onwaiting'.split(','));
+/**
+ * Boolean HTML attributes only used on events.
+ */
+const _HTML_EVENT_ATTRIBUTES = new Set([
+    'onabort',
+    'onautocomplete',
+    'onautocompleteerror',
+    'onblur',
+    'oncancel',
+    'oncanplay',
+    'oncanplaythrough',
+    'onchange',
+    'onclick',
+    'onclose',
+    'oncontextmenu',
+    'oncuechange',
+    'ondblclick',
+    'ondrag',
+    'ondragend',
+    'ondragenter',
+    'ondragleave',
+    'ondragover',
+    'ondragstart',
+    'ondrop',
+    'ondurationchange',
+    'onemptied',
+    'onended',
+    'onerror',
+    'onfocus',
+    'oninput',
+    'oninvalid',
+    'onkeydown',
+    'onkeypress',
+    'onkeyup',
+    'onload',
+    'onloadeddata',
+    'onloadedmetadata',
+    'onloadstart',
+    'onmousedown',
+    'onmouseenter',
+    'onmouseleave',
+    'onmousemove',
+    'onmouseout',
+    'onmouseover',
+    'onmouseup',
+    'onmousewheel',
+    'onpause',
+    'onplay',
+    'onplaying',
+    'onprogress',
+    'onratechange',
+    'onreset',
+    'onresize',
+    'onscroll',
+    'onseeked',
+    'onseeking',
+    'onselect',
+    'onshow',
+    'onsort',
+    'onstalled',
+    'onsubmit',
+    'onsuspend',
+    'ontimeupdate',
+    'ontoggle',
+    'onvolumechange',
+    'onwaiting',
+]);
 
-const _HTML_GLOBAL_ATTRIBUTES = new Set('accesskey,autocapitalize,class,contenteditable,contextmenu,dir,draggable,dropzone,hidden,id,itemprop,lang,slot,spellcheck,style,tabindex,title'.split(','));
+/**
+ * Atrtibutes that are common to all HTML elements.
+ */
+const _HTML_GLOBAL_ATTRIBUTES = new Set([
+    'accesskey',
+    'autocapitalize',
+    'class',
+    'contenteditable',
+    'contextmenu',
+    'dir',
+    'draggable',
+    'dropzone',
+    'hidden',
+    'id',
+    'itemprop',
+    'lang',
+    'slot',
+    'spellcheck',
+    'style',
+    'tabindex',
+    'title',
+]);
 
-const _HTML_ATTRIBUTES = new Set('charset,coords,datafld,datasrc,download,href,hreflang,methods,name,ping,referrerpolicy,rel,shape,target,type,urn,alt,crossorigin,preload,alink,background,bgcolor,link,marginbottom,marginheight,marginleft,marginright,margintop,marginwidth,text,vlink,clear,dataformatas,formaction,formenctype,formmethod,formnovalidate,formtarget,align,char,charoff,span,valign,width,src,action,accept,method,profile,color,size,version,allowtransparency,hspace,vspace,decoding,lowsrc,srcset,capture,inputmode,usemap,as,blocking,integrity,display,overflow,content,http-equiv,scheme,archive,classid,code,codebase,codetype,data,declare,standby,valuetype,event,for,language,nomodule,bordercolor,cellpadding,cellspacing,datapagesize,frame,rules,summary,axis,colspan,height,rowspan,scope,cols,maxlength,minlength,rows,wrap,allow,buffered,cite,csp,datetime,dirname,enctype,enterkeyhint,form,headers,high,icon,importance,intrinsicsize,keytype,kind,label,loading,list,low,manifest,max,media,min,optimum,pattern,placeholder,poster,radiogroup,sandbox,sizes,srcdoc,srclang,start,step,value'
-    .split(',')
-    .concat(..._HTML_GLOBAL_ATTRIBUTES, ..._HTML_EVENT_ATTRIBUTES, ..._HTML_BOOLEAN_ATTRIBUTES));
+/**
+ * All common HTML attributes.
+ */
+const _HTML_ATTRIBUTES = new Set([
+    ..._HTML_GLOBAL_ATTRIBUTES,
+    ..._HTML_EVENT_ATTRIBUTES,
+    ..._HTML_BOOLEAN_ATTRIBUTES,
+    'charset',
+    'coords',
+    'datafld',
+    'datasrc',
+    'download',
+    'href',
+    'hreflang',
+    'methods',
+    'name',
+    'ping',
+    'referrerpolicy',
+    'rel',
+    'shape',
+    'target',
+    'type',
+    'urn',
+    'alt',
+    'crossorigin',
+    'preload',
+    'alink',
+    'background',
+    'bgcolor',
+    'link',
+    'marginbottom',
+    'marginheight',
+    'marginleft',
+    'marginright',
+    'margintop',
+    'marginwidth',
+    'text',
+    'vlink',
+    'clear',
+    'dataformatas',
+    'formaction',
+    'formenctype',
+    'formmethod',
+    'formnovalidate',
+    'formtarget',
+    'align',
+    'char',
+    'charoff',
+    'span',
+    'valign',
+    'width',
+    'src',
+    'action',
+    'accept',
+    'method',
+    'profile',
+    'color',
+    'size',
+    'version',
+    'allowtransparency',
+    'hspace',
+    'vspace',
+    'decoding',
+    'lowsrc',
+    'srcset',
+    'capture',
+    'inputmode',
+    'usemap',
+    'as',
+    'blocking',
+    'integrity',
+    'display',
+    'overflow',
+    'content',
+    'http-equiv',
+    'scheme',
+    'archive',
+    'classid',
+    'code',
+    'codebase',
+    'codetype',
+    'data',
+    'declare',
+    'standby',
+    'valuetype',
+    'event',
+    'for',
+    'language',
+    'nomodule',
+    'bordercolor',
+    'cellpadding',
+    'cellspacing',
+    'datapagesize',
+    'frame',
+    'rules',
+    'summary',
+    'axis',
+    'colspan',
+    'height',
+    'rowspan',
+    'scope',
+    'cols',
+    'maxlength',
+    'minlength',
+    'rows',
+    'wrap',
+    'allow',
+    'buffered',
+    'cite',
+    'csp',
+    'datetime',
+    'dirname',
+    'enctype',
+    'enterkeyhint',
+    'form',
+    'headers',
+    'high',
+    'icon',
+    'importance',
+    'intrinsicsize',
+    'keytype',
+    'kind',
+    'label',
+    'loading',
+    'list',
+    'low',
+    'manifest',
+    'max',
+    'media',
+    'min',
+    'optimum',
+    'pattern',
+    'placeholder',
+    'poster',
+    'radiogroup',
+    'sandbox',
+    'sizes',
+    'srcdoc',
+    'srclang',
+    'start',
+    'step',
+    'value',
+]);
 
-const _HTML_VOID_ELEMENTS = new Set('area,base,br,col,embed,hr,img,input,keygen,link,meta,param,source,track,wbr'.split(','));
-
-const _HTML_ELEMENTS = new Set('a,area,audio,button,col,colgroup,details,dialog,embed,fieldset,form,html,iframe,img,input,link,map,math,meta,object,ol,optgroup,option,script,select,td,textarea,th,video,abbr,acronym,address,applet,article,aside,b,basefont,bdi,bdo,bgsound,big,blink,blockquote,body,canvas,caption,center,cite,code,data,datalist,dd,del,dfn,dir,div,dl,dt,em,figcaption,figure,font,footer,frame,frameset,h1,h2,h3,h4,h5,h6,head,header,hgroup,i,ins,isindex,kbd,label,legend,li,listing,main,mark,marquee,menu,meter,multicol,nav,nextid,nobr,noembed,noframes,noscript,output,p,picture,plaintext,pre,progress,q,rb,rp,rt,rtc,ruby,s,samp,section,slot,small,spacer,span,strike,strong,style,sub,summary,sup,svg,svg:desc,svg:title,table,tbody,template,tfoot,thead,time,title,tr,tt,u,ul,var,xmp'
-    .split(',')
-    .concat(..._HTML_VOID_ELEMENTS));
-
-const el = {};
-const attr = {};
-class Attr {
+/**
+ * Represents an HTML attribute.
+ * @remarks Can be rendered as real html or converted to a real DOM attribute from the _HtmlElement class.
+ */
+class _HtmlAttribute {
+    /**
+     * Creates an _HtmlAttribute instance.
+     * @param name The attribute's name
+     * @param value The attribute's value
+     */
     constructor(name, value) {
         this.name = name;
         this.value = value;
     }
+    /**
+     * Whether the attribute is a boolean attribute.
+     */
     get isBoolean() {
         return _HTML_BOOLEAN_ATTRIBUTES.has(this.name);
     }
+    /**
+     * Render the HTML attribute as a string.
+     */
     toString() {
         return `${this.name}${this.isBoolean ? '' : `="${this.value || ''}"`}`;
     }
 }
-class Elem {
+
+/**
+ * Attribute name to _HtmlAttribute instance map.
+ * The common HTML attributes are instantiated on module initialization.
+ */
+const attr = (() => {
+    const attributes = {};
+    for (const name of _HTML_ATTRIBUTES) {
+        attributes[name] = (value) => new _HtmlAttribute(name, value);
+    }
+    return attributes;
+})();
+
+/**
+ * Render an HTML comment.
+ */
+const comment = (comment) => {
+    return '<!-- ' + comment + ' -->';
+};
+
+/**
+ * Elements that are void and do not have an end tag.
+ * @example ```html
+ * <br />
+ * ```
+ */
+const _HTML_VOID_ELEMENTS = new Set([
+    'area',
+    'base',
+    'br',
+    'col',
+    'embed',
+    'hr',
+    'img',
+    'input',
+    'keygen',
+    'link',
+    'meta',
+    'param',
+    'source',
+    'track',
+    'wbr',
+]);
+
+/**
+ * The most common HTML elements.
+ */
+const _HTML_ELEMENTS = new Set([
+    ..._HTML_VOID_ELEMENTS,
+    'a',
+    'area',
+    'audio',
+    'button',
+    'col',
+    'colgroup',
+    'details',
+    'dialog',
+    'embed',
+    'fieldset',
+    'form',
+    'html',
+    'iframe',
+    'img',
+    'input',
+    'link',
+    'map',
+    'math',
+    'meta',
+    'object',
+    'ol',
+    'optgroup',
+    'option',
+    'script',
+    'select',
+    'td',
+    'textarea',
+    'th',
+    'video',
+    'abbr',
+    'acronym',
+    'address',
+    'applet',
+    'article',
+    'aside',
+    'b',
+    'basefont',
+    'bdi',
+    'bdo',
+    'bgsound',
+    'big',
+    'blink',
+    'blockquote',
+    'body',
+    'canvas',
+    'caption',
+    'center',
+    'cite',
+    'code',
+    'data',
+    'datalist',
+    'dd',
+    'del',
+    'dfn',
+    'dir',
+    'div',
+    'dl',
+    'dt',
+    'em',
+    'figcaption',
+    'figure',
+    'font',
+    'footer',
+    'frame',
+    'frameset',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'head',
+    'header',
+    'hgroup',
+    'i',
+    'ins',
+    'isindex',
+    'kbd',
+    'label',
+    'legend',
+    'li',
+    'listing',
+    'main',
+    'mark',
+    'marquee',
+    'menu',
+    'meter',
+    'multicol',
+    'nav',
+    'nextid',
+    'nobr',
+    'noembed',
+    'noframes',
+    'noscript',
+    'output',
+    'p',
+    'picture',
+    'plaintext',
+    'pre',
+    'progress',
+    'q',
+    'rb',
+    'rp',
+    'rt',
+    'rtc',
+    'ruby',
+    's',
+    'samp',
+    'section',
+    'slot',
+    'small',
+    'spacer',
+    'span',
+    'strike',
+    'strong',
+    'style',
+    'sub',
+    'summary',
+    'sup',
+    'svg',
+    'svg:desc',
+    'svg:title',
+    'table',
+    'tbody',
+    'template',
+    'tfoot',
+    'thead',
+    'time',
+    'title',
+    'tr',
+    'tt',
+    'u',
+    'ul',
+    'var',
+    'xmp',
+]);
+
+/**
+ * Represents an HTML element.
+ * @remarks Can be rendered as real html or converted to a real DOM element.
+ */
+class _HtmlElement {
+    /**
+     * Creates an _HtmlElement instance.
+     * @param tag The element's tag
+     * @param args The element's attributes and children
+     */
     constructor(tag, ...args) {
         this.tag = tag;
+        /**
+         * The element's attributes.
+         */
         this.attributes = new Map();
+        /**
+         * The element's children.
+         */
         this.children = [];
         for (const arg of args.flat()) {
-            if (arg instanceof Attr) {
+            if (arg instanceof _HtmlAttribute) {
                 this.attributes.set(arg.name, arg);
             }
             else if (typeof arg === 'string' && tag !== 'script' && tag !== 'style') {
@@ -4615,12 +5107,15 @@ class Elem {
             throw new Error('Void elements cannot have children.');
         }
     }
+    /**
+     * Whether the element is a void element.
+     */
     get isVoid() {
         return _HTML_VOID_ELEMENTS.has(this.tag);
     }
-    toString() {
-        return `<${this.tag}${this.attributes.size ? ' ' + Array.from(this.attributes.values()).join(' ') : ''}${this.isVoid ? ' />' : `>${this.children.join('')}</${this.tag}>`}`;
-    }
+    /**
+     * Returns this instance as an actual DOM HTMLElement.
+     */
     toHtmlElement() {
         var _a;
         const elem = document.createElement(this.tag);
@@ -4637,47 +5132,125 @@ class Elem {
         }
         return elem;
     }
+    /**
+     * Render the HTML element as a string.
+     */
+    toString() {
+        return `<${this.tag}${this.attributes.size ? ' ' + Array.from(this.attributes.values()).join(' ') : ''}${this.isVoid ? ' />' : `>${this.children.join('')}</${this.tag}>`}`;
+    }
 }
-class Doc extends Elem {
+
+/**
+ * Represents an HTML document.
+ * @remarks Can be rendered as real html.
+ * @example ```ts
+ * import { html } from './html'
+ * const { el, attr, tableFrom, comment } = html
+ *
+ * const doc = _HtmlDocument.simple({
+ *   title: 'index',
+ *   head: [el.style('.row { margin-top: 10px } .col { margin: 20px }')],
+ *   body: [
+ *     comment('First row'),
+ *     el.div(
+ *       attr.class('row'),
+ *       el.div(
+ *         attr.class('col'),
+ *         el.h3('Table'),
+ *         tableFrom([
+ *           ['A', 'B', 'C'],
+ *           ['Abe', 'Ben', 'Citron'],
+ *           ['Ananas', 'Bongo', 'Cirkus'],
+ *         ]),
+ *         el.div(attr.class('col'), el.h3('Text'), el.p('This is a paragraph.')),
+ *       ),
+ *     ),
+ *     comment('Second row'),
+ *     el.div(
+ *       attr.class('row'),
+ *       el.div(
+ *         attr.class('col'),
+ *         el.h3('List'),
+ *         el.ul(['one', 'two', 'three', 'four'].map((item) => el.li(attr.contenteditable(true), item))),
+ *       ),
+ *       el.div(attr.class('col'), el.h3('Button'), el.button([attr.class('btn btn-primary'), attr.onclick('doit()')], 'Click me!')),
+ *     ),
+ *   ],
+ *   scripts: [
+ *     el.script(`function doit() { console.log('did it'); }`),
+ *   ],
+ * })
+ *
+ * console.dir(doc, { depth: null })
+ * console.log(doc.toString())
+ * fs.writeFileSync(__filename + '.html', doc.toString())
+ * ```
+ */
+class _HtmlDocument extends _HtmlElement {
     /**
      * Generate simple HTML page with reasonable defaults.
      */
     static simple(options) {
-        return new Doc(attr.lang('en'), el.head(el.meta(attr.charset('utf-8')), el.meta(attr.name('viewport'), attr.content('width=device-width, initial-scale=1')), el.title(options.title || 'index'), comment('Bootstrap CSS'), el.link(attr.rel('stylesheet'), attr.href('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css'), attr.integrity('sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ'), attr.crossorigin('anonymous')), comment('Custom CSS'), el.style('body { margin: 50px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; }'), ...(options.head || [])), el.body(comment('Content'), el.div(attr.id('root'), attr.class('container'), ...(options.body || [])), comment('Bootstrap JS'), el.script(attr.src('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js'), attr.integrity('sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe'), attr.crossorigin('anonymous')), comment('Custom JS'), ...(options.scripts || [])));
+        return new _HtmlDocument(attr.lang('en'), el.head(el.meta(attr.charset('utf-8')), el.meta(attr.name('viewport'), attr.content('width=device-width, initial-scale=1')), el.title(options.title || 'index'), comment('Bootstrap CSS'), el.link(attr.rel('stylesheet'), attr.href('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css'), attr.integrity('sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ'), attr.crossorigin('anonymous')), comment('Custom CSS'), el.style('body { margin: 50px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; }'), ...(options.head || [])), el.body(comment('Content'), el.div(attr.id('root'), attr.class('container'), ...(options.body || [])), comment('Bootstrap JS'), el.script(attr.src('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js'), attr.integrity('sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe'), attr.crossorigin('anonymous')), comment('Custom JS'), ...(options.scripts || [])));
     }
+    /**
+     * Creates an _HtmlDocument instance.
+     * @param args Identical to the _HtmlElement constructors arguments to which they are passed directly.
+     */
     constructor(...args) {
         super('html', ...args);
     }
+    /**
+     * Render the HTML document as an html string.
+     */
     toString() {
         return '<!DOCTYPE html>' + super.toString();
     }
 }
-function comment(comment) {
-    return '<!-- ' + comment + ' -->';
+
+/**
+ * Element tag to _HtmlElement instance map.
+ * The common HTML tags are instantiated on module initialization.
+ */
+const el = (() => {
+    const elements = {};
+    for (const tag of _HTML_ELEMENTS) {
+        elements[tag] = (...args) => new _HtmlElement(tag, ...args);
+    }
+    elements['html'] = (...args) => new _HtmlDocument('html', ...args);
+    return elements;
+})();
+
+/**
+ * Returns a table element's cell's textContent as a 2-dimensional array.
+ * @remarks Requires a DOM to manipulate.
+ * @param table The table element
+ */
+function htmlTableToArray(table) {
+    var _a;
+    const result = [];
+    for (const tr of Array.from(table.querySelectorAll('tr'))) {
+        const row = [];
+        for (const td of Array.from(tr.querySelectorAll('th,td'))) {
+            row.push(((_a = td === null || td === void 0 ? void 0 : td.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || '');
+        }
+        result.push(row);
+    }
+    return result;
 }
-function tableFrom(rows, hasHeaderRow = true) {
+
+/**
+ * Render an HTML table element from a 2D array table.
+ * @param rows The table's rows
+ * @param hasHeaders Whether the first row is a header row
+ */
+const tableFrom = (rows, hasHeaders = true) => {
     const thead = el.thead();
-    if (hasHeaderRow) {
+    if (hasHeaders) {
         rows = rows.slice();
         thead.children.push(el.tr((rows.shift() || []).map((cell) => el.th(cell))));
     }
     return el.table(attr.class('table table-striped table-hover table-sm'), thead, el.tbody(rows.map((row) => el.tr(row.map((cell) => el.td(cell))))));
-}
-for (const tag of _HTML_ELEMENTS) {
-    el[tag] = (...args) => new Elem(tag, ...args);
-}
-el['html'] = (...args) => new Doc('html', ...args);
-for (const name of _HTML_ATTRIBUTES) {
-    attr[name] = (value) => new Attr(name, value);
-}
-const HtmlGenerator = {
-    Doc,
-    Elem,
-    Attr,
-    el,
-    attr,
-    comment,
-    tableFrom,
 };
 
 /**
@@ -5219,12 +5792,15 @@ class NumberFormatter {
      * Parse a formatted string to a number.
      */
     parse(string) {
-        return assertValidNumber(Number(strReplaceAll(string, this.thousandSeparator, '')
+        string = strReplaceAll(string, this.thousandSeparator, '')
             .replace(this.decimalSeparator, '.')
             .replace(/[^\d.-]/g, '')
             .split('.')
             .map((s) => parseInt(s))
-            .join('.')));
+            .join('.');
+        const n = Number(string);
+        assertValidNumber(n);
+        return n;
     }
 }
 
@@ -5435,6 +6011,23 @@ function iterableFirstElement(iterable) {
 }
 
 /**
+ * Checks if the given value is a constructor.
+ * @template T - The type of the value to check.
+ * @param value The value to check.
+ * @returns A boolean indicating whether the value is a constructor or not.
+ * @example ```ts
+ * class MyClass {}
+ * isConstructor(MyClass);;
+ * //=> true
+ * isConstructor('Not a class');;
+ * //=> false
+ * ```
+ */
+function isConstructor(value) {
+    return typeof value === 'function' && !!value.prototype && value.prototype.constructor === value;
+}
+
+/**
  * Checks if the given value is a prototype.
  * @template T - The type of the value to check.
  * @param value The value to check.
@@ -5452,23 +6045,6 @@ function isPrototype(value) {
     if (!('constructor' in value))
         return false;
     return value.constructor.prototype === value;
-}
-
-/**
- * Checks if the given value is a constructor.
- * @template T - The type of the value to check.
- * @param value The value to check.
- * @returns A boolean indicating whether the value is a constructor or not.
- * @example ```ts
- * class MyClass {}
- * isConstructor(MyClass);;
- * //=> true
- * isConstructor('Not a class');;
- * //=> false
- * ```
- */
-function isConstructor(value) {
-    return typeof value === 'function' && 'prototype' in value && isPrototype(value.prototype) && value === value.prototype.constructor;
 }
 
 /**
@@ -6046,13 +6622,14 @@ function objWalk(node, callback) {
  * //=> ['a', 'b']
  * ```
  * @remarks This function uses `Object.defineProperty` to set the enumerable property.
- * @throws This function will throw an error if the property does not exist on the object.
+ * @throws Will throw an error if any of the specified properties do not exist on the object.
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty | Object.defineProperty}
  */
-function setEnumerable(object, ...propertyNames) {
-    for (const propertyName of propertyNames) {
-        Object.defineProperty(object, propertyName, { enumerable: true });
-    }
+function setEnumerable(object, ...properties) {
+    objUpdatePropertyDescriptors(object, properties, (descriptor) => {
+        descriptor.enumerable = true;
+        return descriptor;
+    });
 }
 
 /**
@@ -6061,8 +6638,8 @@ function setEnumerable(object, ...propertyNames) {
  * Once a property is made non-configurable, it can neither be deleted from the object nor changed to configurable.
  * @typeparam T - The type of the object.
  * @param object The object whose properties are to be made non-configurable.
- * @param propertyNames The names of the properties to be made non-configurable.
- * @throws If `object` is not an object or `propertyNames` is not a string array.
+ * @param properties The names of the properties to be made non-configurable.
+ * @throws Will throw an error if any of the specified properties do not exist on the object.
  * @example ```ts
  * setNonConfigurable({ a: 1, b: 2, c: 3 }, 'a', 'b');
  * Object.getOwnPropertyDescriptor({ a: 1, b: 2, c: 3 }, 'a');;
@@ -6073,18 +6650,19 @@ function setEnumerable(object, ...propertyNames) {
  * //=> {value: 3, writable: true, enumerable: true, configurable: true}
  * ```
  */
-function setNonConfigurable(object, ...propertyNames) {
-    for (const propertyName of propertyNames) {
-        Object.defineProperty(object, propertyName, { configurable: false });
-    }
+function setNonConfigurable(object, ...properties) {
+    objUpdatePropertyDescriptors(object, properties, (descriptor) => {
+        descriptor.configurable = false;
+        return descriptor;
+    });
 }
 
 /**
  * Sets the specified properties of an object to be non-writable.
  * @template T - The type of the object.
  * @param object The object whose properties are to be made non-writable.
- * @param propertyNames The names of the properties to be made non-writable.
- * @returns void
+ * @param properties The names of the properties to be made non-writable.
+ * @throws Will throw an error if any of the specified properties do not exist on the object.
  * @example ```ts
  * const obj = { a: 1, b: 2, c: 3 };
  * setNonWritable(obj, 'a', 'b');
@@ -6098,10 +6676,11 @@ function setNonConfigurable(object, ...propertyNames) {
  * //=> Works fine
  * ```
  */
-function setNonWritable(object, ...propertyNames) {
-    for (const propertyName of propertyNames) {
-        Object.defineProperty(object, propertyName, { writable: false });
-    }
+function setNonWritable(object, ...properties) {
+    objUpdatePropertyDescriptors(object, properties, (descriptor) => {
+        descriptor.writable = false;
+        return descriptor;
+    });
 }
 
 /**
@@ -6109,7 +6688,7 @@ function setNonWritable(object, ...propertyNames) {
  * @template T - The type of the object.
  * @param object The object whose properties are to be made writable.
  * @param propertyNames The names of the properties to be made writable.
- * @remarks This function uses `Object.defineProperty` to set the `writable` attribute of the specified properties to `true`.
+ * @throws Will throw an error if any of the specified properties do not exist on the object.
  * @example ```ts
  * setWritable({ a: 1, b: 2 }, 'a', 'b').a = 3;;
  * //=> 3
@@ -6118,10 +6697,11 @@ function setNonWritable(object, ...propertyNames) {
  * ```
  * @returns void
  */
-function setWritable(object, ...propertyNames) {
-    for (const propertyName of propertyNames) {
-        Object.defineProperty(object, propertyName, { writable: true });
-    }
+function setWritable(object, ...properties) {
+    objUpdatePropertyDescriptors(object, properties, (descriptor) => {
+        descriptor.writable = true;
+        return descriptor;
+    });
 }
 
 /**
@@ -7550,6 +8130,24 @@ const regTsDocExampleLines = buildRegexBetween(/ +\* +(@example )?```(ts|typescr
  * Matches words in a text string.
  */
 const regWords = /\b[^\W]+/g;
+
+/**
+ * Adds multiple values to a given set.
+ * @template T - The type of elements in the set.
+ * @param set - The set to which values will be added.
+ * @param values - The values to be added to the set.
+ * @returns The updated set with the new values added.
+ * @example ```ts
+ * const mySet = new Set<number>();
+ * setAddMany(mySet, [1, 2, 3]);
+ * console.log(mySet); // Set { 1, 2, 3 }
+ * ```
+ */
+function setAddMany(set, values) {
+    for (const value of values)
+        set.add(value);
+    return set;
+}
 
 /**
  * Returns a new set that contains all elements of the first set that are not in the second set.
@@ -9705,5 +10303,5 @@ function isSocialSecurityNumberDK(ssn) {
     return !!parseSocialSecurityNumberDK(ssn);
 }
 
-export { A1ToColRow, ApiReponseCache, ExtensibleFunction, File, HtmlGenerator, MS_IN_DAY, MS_IN_HOUR, MS_IN_MINUTE, MS_IN_MONTH, MS_IN_SECOND, MS_IN_WEEK, MS_IN_YEAR, Matrix, MixinBase, MixinIndexed, MixinTimestamped, NumberFormatter, OpenaiApiClient, OpenaiApiClientBase, PQueue, PriorityQueue, Queue, SRTSubtitle, SRTSubtitles, SimpleTable, SortedArray, StringStream, Time, TimeInterval, TsDoc, TsDocTag, VTTSubtitle, VTTSubtitles, absoluteToRelativePath, arrAverage, arrEachToString, arrEvery, arrFindIndicesOf, arrFindLast, arrFindLastIndexOf, arrFlatten, arrIndicesOf, arrLast, arrMapMutable, arrObjectsToTable, arrObjectsUniqueKeys, arrRemoveDuplicates, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSortedInsertionIndex, arrSum, arrSwap, arrTableAssertRowsSameLength, arrTableEachToString, arrTableToCsv, arrTableToObjects, assertInteger, assertNegativeInteger, assertPositiveInteger, assertPowerOfTen, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, assertValidHours, assertValidMilliseconds, assertValidMinutes, assertValidNumber, assertValidSeconds, assertValidTime, assertValidTimeArray, assertValidTimeInt, assertValidTimeString, assertValidTimeStringFormatting, asyncTasksLimit, asyncTasksParallel, asyncTasksSerial, asyncWithTimeout, atob, btoa, buildRegexBetween, bytesToInt, colRowToA1, colToLetter, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createDirectory, createDirectorySync, createFileExtensionFilter, createObjectFactory, csvParseStream, dateDaysAgo, daysSinceDate, deleteDirectory, deleteDirectorySafe, deleteDirectorySafeSync, deleteDirectorySync, ensureValidWindowsPath, funAsyncRateLimit, funParseClass, funParseFunction, funSetName, getCentury, getConstructor, getCurrentYear, getPrototype, hoursSinceDate, inheritStaticMembers, intToArrayBytes, intToBuffer, intToBytes, isConstructor, isEven, isHex, isHexOrUnicode, isInRange, isInteger, isIterable, isLeapYear, isMultiTsDocTag, isNamedMultiTsDocTag, isNamedTsDocTag, isNegativeInteger, isNumericString, isObject, isOdd, isPositiveInteger, isPowerOfTen, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, isValidHours, isValidMilliseconds, isValidMinutes, isValidNumber, isValidSeconds, isValidTime, isValidTimeArray, isValidTimeInt, isValidTimeString, isValidTimeStringFormatting, isValidTsDocComment, isoDateTimestamp, isoDateTimestampForFilename, iterableFirstElement, iteratePrototypeChain, letterToCol, log, mapGetOrElse, mapReverse, mapUpdate, markdownWrapCodeBlock, memoryUsage, minutesSinceDate, monthsSinceDate, msSinceDate, normalizeFileExtension, normalizeLineLengths, numDaysInMonth, numRange, objAssignDeep, objDeepFreeze, objDelete, objDeleteKeys, objDeleteKeysMutable, objEntries, objEntriesArray, objFilter, objForEach, objGet, objGetOrElse, objHas, objIsEmpty, objKeys, objKeysArray, objMap, objMapKeys, objMapMutable, objPropertyValueToGetter, objReduce, objReverse, objSet, objSize, objSortKeys, objToMap, objUpdate, objValues, objValuesArray, objWalk, padArrayBytesLeft, padArrayBytesRight, parseMarkdownCodeBlock, parseMarkdownTable, parseSocialSecurityNumberDK, pdfGetPages, pdfIteratePages, pdfSplitPages, randomIntBetween, readExcelFile, readJsonFile, readJsonFileSync, regBlockCommentsWithIndent, regFunctionsExports, regHex, regHexPrefix, regInteger$1 as regInteger, regJestTests, regLocaleAlpha, regLocaleAlphaNumeric, regNumberCommaSepDotDecimal, regNumberDotSepCommaDecimal, regNumberNoThousandSepCommaDecimal, regNumberNoThousandSepDotDecimal, regPowerOfTen, regRepeatingWhiteSpace, regSocialSecurityNumbersDK, regTsDocExampleLines, regWords, regexClone, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexMatcherToValidater, regexScopeTree, regexValidFlags, rexec, rexecFirstMatch, round, roundDown, roundToNearest, roundToNearestPow10, roundUp, roundWith, secondsSinceDate, setDifference, setEnumerable, setIntersection, setIsSuperset, setNonConfigurable, setNonEnumerable, setNonWritable, setSymmetricDifference, setUnion, setWritable, shellCommand, strCountCharOccurances, strCountChars, strCountWords, strEnsureEndsWith, strFirstCharToUpperCase, strHashToBuffer, strHashToString, strHashToUint32Array, strIsLowerCase, strIsMultiLine, strIsUpperCase, strNoConsecutiveEmptyLines, strNoConsecutiveWhitespace, strParseBoolean, strPrependLines, strRemoveDuplicateChars, strRemoveEmptyLines, strRemoveFirstAndLastLine, strRemoveNewLines, strRepeat, strReplaceAll, strSortChars, strSplitAndTrim, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToSortedCharSet, strToWords, strTrimLines, strTrimLinesLeft, strTrimLinesRight, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, timeArrayToInt, timeArrayToIntUnsafe, timeArrayToString, timeArrayToStringUnsafe, timeIntToArray, timeIntToArrayUnsafe, timeIntToString, timeIntToStringUnsafe, timeStringToArray, timeStringToArrayUnsafe, timeStringToInt, timeStringToIntUnsafe, toJson, trimArrayBytesLeft, trimArrayBytesRight, tsCountExports, tsCountLinesOfCode, tsDocExtractAllComments, tsDocExtractFirstComment, tsDocFixSpacingBeforeAfter, tsDocNormalizeTagName, tsDocRemoveEmptyLines, tsDocStripAllTagsButThrowsParamDescription, tsDocStripExample, tsDocStripTypesAndDefaults, tsDocUnwrapComment, tsDocWrapAsComment, tsDocWrapExample, tsExtractImports, tsExtractJestTests, tsGetClassMemberAccessModifiers, tsHasDefaultExport, tsJestConvertExportNameString, tsJestEnsureLineSpacing, tsSimpleMinifyCode, tsStripBlockComments, tsStripComments, tsStripDeclSourceMapComments, tsStripExportKeyword, tsStripImports, tsStripInlineComments, waitSeconds, weeksSinceDate, writeExcelFile, writeJsonFile, writeJsonFileSync, yearsSinceDate };
+export { A1ToColRow, ApiReponseCache, ExtensibleFunction, File, MS_IN_DAY, MS_IN_HOUR, MS_IN_MINUTE, MS_IN_MONTH, MS_IN_SECOND, MS_IN_WEEK, MS_IN_YEAR, Matrix, MixinBase, MixinIndexed, MixinTimestamped, NumberFormatter, OpenaiApiClient, OpenaiApiClientBase, PQueue, PriorityQueue, Queue, SRTSubtitle, SRTSubtitles, SimpleTable, SortedArray, StringStream, Time, TimeInterval, TsDoc, TsDocTag, VTTSubtitle, VTTSubtitles, absoluteToRelativePath, arrAverage, arrEachToString, arrEvery, arrFindIndicesOf, arrFindLast, arrFindLastIndexOf, arrFlatten, arrIndicesOf, arrLast, arrMapMutable, arrObjectsToTable, arrObjectsUniqueKeys, arrRemoveDuplicates, arrShallowEquals, arrShuffle, arrSome, arrSortNumeric, arrSortedInsertionIndex, arrSum, arrSwap, arrTableAssertRowsSameLength, arrTableEachToString, arrTableToCsv, arrTableToObjects, assertInteger, assertNegativeInteger, assertPositiveInteger, assertPowerOfTen, assertValidDate, assertValidDateDay, assertValidDateMonth, assertValidDateYear, assertValidHours, assertValidMilliseconds, assertValidMinutes, assertValidNumber, assertValidSeconds, assertValidTime, assertValidTimeArray, assertValidTimeInt, assertValidTimeString, assertValidTimeStringFormatting, asyncTasksLimit, asyncTasksParallel, asyncTasksSerial, asyncWithTimeout, atob, attr, btoa, buildRegexBetween, bytesToInt, colRowToA1, colToLetter, comment, compareArray, compareNumber, compareNumberDescending, compareNumeric, compareNumericDescending, compareString, compareStringDescending, createDirectory, createDirectorySync, createFileExtensionFilter, createObjectFactory, csvParseStream, dateDaysAgo, daysSinceDate, deleteDirectory, deleteDirectorySafe, deleteDirectorySafeSync, deleteDirectorySync, el, ensureValidWindowsPath, funAsyncRateLimit, funParseClass, funParseFunction, funSetName, getCentury, getConstructor, getCurrentYear, getPrototype, hoursSinceDate, htmlTableToArray, inheritStaticMembers, intToArrayBytes, intToBuffer, intToBytes, isConstructor, isEven, isHex, isHexOrUnicode, isInRange, isInteger, isIterable, isLeapYear, isMultiTsDocTag, isNamedMultiTsDocTag, isNamedTsDocTag, isNegativeInteger, isNumericString, isObject, isOdd, isPositiveInteger, isPowerOfTen, isPrototype, isSocialSecurityNumberDK, isValidDate, isValidDateDay, isValidDateMonth, isValidDateYear, isValidHours, isValidMilliseconds, isValidMinutes, isValidNumber, isValidSeconds, isValidTime, isValidTimeArray, isValidTimeInt, isValidTimeString, isValidTimeStringFormatting, isValidTsDocComment, isoDateTimestamp, isoDateTimestampForFilename, iterableFirstElement, iteratePrototypeChain, letterToCol, log, mapGetOrElse, mapReverse, mapUpdate, markdownWrapCodeBlock, memoryUsage, minutesSinceDate, monthsSinceDate, msSinceDate, normalizeFileExtension, normalizeLineLengths, numDaysInMonth, numRange, objAssignDeep, objDeepFreeze, objDelete, objDeleteKeys, objDeleteKeysMutable, objEntries, objEntriesArray, objFilter, objForEach, objGet, objGetOrElse, objHas, objIsEmpty, objKeys, objKeysArray, objMap, objMapKeys, objMapMutable, objPropertyValueToGetter, objReduce, objReverse, objSet, objSize, objSortKeys, objToMap, objUpdate, objUpdatePropertyDescriptors, objValues, objValuesArray, objWalk, padArrayBytesLeft, padArrayBytesRight, parseMarkdownCodeBlock, parseMarkdownTable, parseSocialSecurityNumberDK, pdfGetPages, pdfIteratePages, pdfSplitPages, randomIntBetween, readExcelFile, readJsonFile, readJsonFileSync, regBlockCommentsWithIndent, regFunctionsExports, regHex, regHexPrefix, regInteger$1 as regInteger, regJestTests, regLocaleAlpha, regLocaleAlphaNumeric, regNumberCommaSepDotDecimal, regNumberDotSepCommaDecimal, regNumberNoThousandSepCommaDecimal, regNumberNoThousandSepDotDecimal, regPowerOfTen, regRepeatingWhiteSpace, regSocialSecurityNumbersDK, regTsDocExampleLines, regWords, regexClone, regexEscapeString, regexFixFlags, regexGetGroupNames, regexIsValidFlags, regexMatcherToValidater, regexScopeTree, regexValidFlags, rexec, rexecFirstMatch, round, roundDown, roundToNearest, roundToNearestPow10, roundUp, roundWith, secondsSinceDate, setAddMany, setDifference, setEnumerable, setIntersection, setIsSuperset, setNonConfigurable, setNonEnumerable, setNonWritable, setSymmetricDifference, setUnion, setWritable, shellCommand, strCountCharOccurances, strCountChars, strCountWords, strEnsureEndsWith, strFirstCharToUpperCase, strHashToBuffer, strHashToString, strHashToUint32Array, strIsLowerCase, strIsMultiLine, strIsUpperCase, strNoConsecutiveEmptyLines, strNoConsecutiveWhitespace, strParseBoolean, strPrependLines, strRemoveDuplicateChars, strRemoveEmptyLines, strRemoveFirstAndLastLine, strRemoveNewLines, strRepeat, strReplaceAll, strSortChars, strSplitAndTrim, strSplitCamelCase, strToCharCodes, strToCharSet, strToSentences, strToSortedCharSet, strToWords, strTrimLines, strTrimLinesLeft, strTrimLinesRight, strUnwrap, strWrapBetween, strWrapIn, strWrapInAngleBrackets, strWrapInBraces, strWrapInBrackets, strWrapInDoubleQuotes, strWrapInParenthesis, strWrapInSingleQuotes, streamToString, tableFrom, timeArrayToInt, timeArrayToIntUnsafe, timeArrayToString, timeArrayToStringUnsafe, timeIntToArray, timeIntToArrayUnsafe, timeIntToString, timeIntToStringUnsafe, timeStringToArray, timeStringToArrayUnsafe, timeStringToInt, timeStringToIntUnsafe, toJson, trimArrayBytesLeft, trimArrayBytesRight, tsCountExports, tsCountLinesOfCode, tsDocExtractAllComments, tsDocExtractFirstComment, tsDocFixSpacingBeforeAfter, tsDocNormalizeTagName, tsDocRemoveEmptyLines, tsDocStripAllTagsButThrowsParamDescription, tsDocStripExample, tsDocStripTypesAndDefaults, tsDocUnwrapComment, tsDocWrapAsComment, tsDocWrapExample, tsExtractImports, tsExtractJestTests, tsGetClassMemberAccessModifiers, tsHasDefaultExport, tsJestConvertExportNameString, tsJestEnsureLineSpacing, tsSimpleMinifyCode, tsStripBlockComments, tsStripComments, tsStripDeclSourceMapComments, tsStripExportKeyword, tsStripImports, tsStripInlineComments, waitSeconds, weeksSinceDate, writeExcelFile, writeJsonFile, writeJsonFileSync, yearsSinceDate };
 //# sourceMappingURL=index.esm.js.map

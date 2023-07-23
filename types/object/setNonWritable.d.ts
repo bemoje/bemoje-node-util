@@ -1,9 +1,10 @@
+import { ObjectKey } from '../types/ObjectKey';
 /**
  * Sets the specified properties of an object to be non-writable.
  * @template T - The type of the object.
  * @param object The object whose properties are to be made non-writable.
- * @param propertyNames The names of the properties to be made non-writable.
- * @returns void
+ * @param properties The names of the properties to be made non-writable.
+ * @throws Will throw an error if any of the specified properties do not exist on the object.
  * @example ```ts
  * const obj = { a: 1, b: 2, c: 3 };
  * setNonWritable(obj, 'a', 'b');
@@ -17,5 +18,5 @@
  * //=> Works fine
  * ```
  */
-export declare function setNonWritable<T>(object: T, ...propertyNames: string[]): void;
+export declare function setNonWritable(object: Record<ObjectKey, any>, ...properties: string[]): void;
 //# sourceMappingURL=setNonWritable.d.ts.map

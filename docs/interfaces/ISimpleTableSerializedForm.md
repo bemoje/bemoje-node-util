@@ -23,7 +23,7 @@
 
 #### Defined in
 
-[src/datastructures/types/ISimpleTableSerializedForm.ts:3](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/types/ISimpleTableSerializedForm.ts#L3)
+[src/datastructures/types/ISimpleTableSerializedForm.ts:3](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/types/ISimpleTableSerializedForm.ts#L3)
 
 ___
 
@@ -33,4 +33,4 @@ ___
 
 #### Defined in
 
-[src/datastructures/types/ISimpleTableSerializedForm.ts:2](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/types/ISimpleTableSerializedForm.ts#L2)
+[src/datastructures/types/ISimpleTableSerializedForm.ts:2](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/types/ISimpleTableSerializedForm.ts#L2)

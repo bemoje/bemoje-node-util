@@ -34,7 +34,7 @@ Create a new SRTSubtitles instance.
 
 #### Defined in
 
-src/parse/subtitles/SRTSubtitles.ts:18
+[src/parse/subtitles/SRTSubtitles.ts:18](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/SRTSubtitles.ts#L18)
 
 ## Properties
 
@@ -46,7 +46,7 @@ The SRTSubtitle instances.
 
 #### Defined in
 
-src/parse/subtitles/SRTSubtitles.ts:12
+[src/parse/subtitles/SRTSubtitles.ts:12](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/SRTSubtitles.ts#L12)
 
 ## Methods
 
@@ -62,4 +62,4 @@ Returns the subtitles as a string in the SRT format.
 
 #### Defined in
 
-src/parse/subtitles/SRTSubtitles.ts:32
+[src/parse/subtitles/SRTSubtitles.ts:32](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/SRTSubtitles.ts#L32)

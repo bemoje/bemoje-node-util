@@ -34,7 +34,7 @@ Create a new VTTSubtitles instance.
 
 #### Defined in
 
-src/parse/subtitles/VTTSubtitles.ts:18
+[src/parse/subtitles/VTTSubtitles.ts:18](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/VTTSubtitles.ts#L18)
 
 ## Properties
 
@@ -46,7 +46,7 @@ The SRTSubtitle instances.
 
 #### Defined in
 
-src/parse/subtitles/VTTSubtitles.ts:12
+[src/parse/subtitles/VTTSubtitles.ts:12](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/VTTSubtitles.ts#L12)
 
 ## Methods
 
@@ -62,4 +62,4 @@ Returns the subtitles to a VTT format string.
 
 #### Defined in
 
-src/parse/subtitles/VTTSubtitles.ts:33
+[src/parse/subtitles/VTTSubtitles.ts:33](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/VTTSubtitles.ts#L33)

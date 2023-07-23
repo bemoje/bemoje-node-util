@@ -46,7 +46,7 @@ Creates a new SRTSubtitle instance.
 
 #### Defined in
 
-src/parse/subtitles/SRTSubtitle.ts:13
+[src/parse/subtitles/SRTSubtitle.ts:13](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/SRTSubtitle.ts#L13)
 
 ## Properties
 
@@ -62,7 +62,7 @@ The time interval of the subtitle.
 
 #### Defined in
 
-src/parse/subtitles/_AbstractSubtitle.ts:10
+[src/parse/subtitles/_AbstractSubtitle.ts:10](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/_AbstractSubtitle.ts#L10)
 
 ___
 
@@ -78,7 +78,7 @@ The text of the subtitle.
 
 #### Defined in
 
-src/parse/subtitles/_AbstractSubtitle.ts:15
+[src/parse/subtitles/_AbstractSubtitle.ts:15](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/_AbstractSubtitle.ts#L15)
 
 ## Methods
 
@@ -94,4 +94,4 @@ Renders the subtitle as a string in the SRT format.
 
 #### Defined in
 
-src/parse/subtitles/SRTSubtitle.ts:20
+[src/parse/subtitles/SRTSubtitle.ts:20](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/SRTSubtitle.ts#L20)

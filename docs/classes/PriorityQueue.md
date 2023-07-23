@@ -44,7 +44,7 @@ Queue of functions to run
 
 #### Defined in
 
-[src/datastructures/PriorityQueue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/PriorityQueue.ts#L13)
+[src/datastructures/PriorityQueue.ts:13](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/PriorityQueue.ts#L13)
 
 ## Accessors
 
@@ -64,7 +64,7 @@ Get the number of functions in the queue
 
 #### Defined in
 
-[src/datastructures/PriorityQueue.ts:18](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/PriorityQueue.ts#L18)
+[src/datastructures/PriorityQueue.ts:18](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/PriorityQueue.ts#L18)
 
 ## Methods
 
@@ -84,7 +84,7 @@ Remove a function from the queue
 
 #### Defined in
 
-[src/datastructures/PriorityQueue.ts:51](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/PriorityQueue.ts#L51)
+[src/datastructures/PriorityQueue.ts:51](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/PriorityQueue.ts#L51)
 
 ___
 
@@ -111,7 +111,7 @@ Add a function to the queue
 
 #### Defined in
 
-[src/datastructures/PriorityQueue.ts:27](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/PriorityQueue.ts#L27)
+[src/datastructures/PriorityQueue.ts:27](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/PriorityQueue.ts#L27)
 
 ___
 
@@ -137,4 +137,4 @@ Get the functions with the given priority.
 
 #### Defined in
 
-[src/datastructures/PriorityQueue.ts:60](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/PriorityQueue.ts#L60)
+[src/datastructures/PriorityQueue.ts:60](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/PriorityQueue.ts#L60)

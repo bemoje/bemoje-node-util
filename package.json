@@ -1,6 +1,6 @@
 {
   "name": "@bemoje/node-util",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Various utilities for development in node-js",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
