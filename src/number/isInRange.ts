@@ -1,5 +1,3 @@
-import { isBetween } from './isBetween'
-
 /**
  * Checks if a number is within a specified range.
  * @param n The number to check.
@@ -24,5 +22,5 @@ import { isBetween } from './isBetween'
  * ```
  */
 export function isInRange(n: number, range: [number, number], exclusive: [boolean, boolean] = [false, false]): boolean {
-  return isBetween(n, ...range, ...exclusive)
+  return (exclusive[0] ? n > range[0] : n >= range[0]) && (exclusive[1] ? n < range[1] : n <= range[1])
 }

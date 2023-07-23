@@ -63,7 +63,7 @@ Cache options
 
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:29](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/ICompletionRequestOptions.ts#L29)
+[src/api/types/ICompletionRequestOptions.ts:29](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/ICompletionRequestOptions.ts#L29)
 
 ___
 
@@ -115,7 +115,7 @@ Instructions message prepended to the prompt
 
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/ICompletionRequestOptions.ts#L24)
+[src/api/types/ICompletionRequestOptions.ts:24](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/ICompletionRequestOptions.ts#L24)
 
 ___
 
@@ -187,7 +187,7 @@ The model to use if not the defeault one.
 
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/ICompletionRequestOptions.ts#L9)
+[src/api/types/ICompletionRequestOptions.ts:9](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/ICompletionRequestOptions.ts#L9)
 
 ___
 
@@ -257,7 +257,7 @@ Alternative to max_tokens. The maximum number of tokens to generate. Requests ca
 
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/ICompletionRequestOptions.ts#L14)
+[src/api/types/ICompletionRequestOptions.ts:14](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/ICompletionRequestOptions.ts#L14)
 
 ___
 
@@ -269,7 +269,7 @@ API request retry options
 
 #### Defined in
 
-[src/api/types/ICompletionRequestOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/ICompletionRequestOptions.ts#L19)
+[src/api/types/ICompletionRequestOptions.ts:19](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/ICompletionRequestOptions.ts#L19)
 
 ___
 

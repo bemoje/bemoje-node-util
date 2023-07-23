@@ -101,7 +101,7 @@ Readable.constructor
 
 #### Defined in
 
-[src/node/StringStream.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/StringStream.ts#L11)
+[src/node/StringStream.ts:11](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/node/StringStream.ts#L11)
 
 ## Properties
 
@@ -151,7 +151,7 @@ ___
 
 #### Defined in
 
-[src/node/StringStream.ts:9](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/StringStream.ts#L9)
+[src/node/StringStream.ts:9](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/node/StringStream.ts#L9)
 
 ___
 
@@ -365,7 +365,7 @@ ___
 
 #### Defined in
 
-[src/node/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/StringStream.ts#L8)
+[src/node/StringStream.ts:8](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/node/StringStream.ts#L8)
 
 ___
 
@@ -569,7 +569,7 @@ Readable.\_read
 
 #### Defined in
 
-[src/node/StringStream.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/node/StringStream.ts#L17)
+[src/node/StringStream.ts:17](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/node/StringStream.ts#L17)
 
 ___
 

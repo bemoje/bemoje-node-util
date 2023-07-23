@@ -21,7 +21,7 @@ Path to cache directory. Defaults to a directory named 'ApiReponseCache' in the 
 
 #### Defined in
 
-[src/api/types/IApiResponseCacheOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiResponseCacheOptions.ts#L10)
+[src/api/types/IApiResponseCacheOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiResponseCacheOptions.ts#L10)
 
 ___
 
@@ -33,7 +33,7 @@ Output all events to console
 
 #### Defined in
 
-[src/api/types/IApiResponseCacheOptions.ts:20](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiResponseCacheOptions.ts#L20)
+[src/api/types/IApiResponseCacheOptions.ts:20](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiResponseCacheOptions.ts#L20)
 
 ___
 
@@ -45,7 +45,7 @@ Max age of cached data in milliseconds. Defaults to 0 (no max age).
 
 #### Defined in
 
-[src/api/types/IApiResponseCacheOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiResponseCacheOptions.ts#L15)
+[src/api/types/IApiResponseCacheOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiResponseCacheOptions.ts#L15)
 
 ___
 
@@ -57,4 +57,4 @@ Unique name to be used as the cache directory name.
 
 #### Defined in
 
-[src/api/types/IApiResponseCacheOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiResponseCacheOptions.ts#L5)
+[src/api/types/IApiResponseCacheOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiResponseCacheOptions.ts#L5)

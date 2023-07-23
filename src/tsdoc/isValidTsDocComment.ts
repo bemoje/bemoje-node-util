@@ -20,10 +20,3 @@ export function isValidTsDocComment(code: string): boolean {
   }
   return true
 }
-
-// export function isValidTsDocComment(code: string): boolean {
-//   if (!code) return false
-//   const lines = code.split(/\r?\n/)
-//   const re = /^ *(\/\*\*|\*\/|\*)/
-//   return arrEvery(lines, (line) => re.test(line))
-// }

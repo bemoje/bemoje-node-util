@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[src/function/types/ITsParseFunctionResult.ts:2](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/function/types/ITsParseFunctionResult.ts#L2)
+[src/function/types/ITsParseFunctionResult.ts:2](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/function/types/ITsParseFunctionResult.ts#L2)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[src/function/types/ITsParseFunctionResult.ts:3](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/function/types/ITsParseFunctionResult.ts#L3)
+[src/function/types/ITsParseFunctionResult.ts:3](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/function/types/ITsParseFunctionResult.ts#L3)

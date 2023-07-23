@@ -1,8 +1,8 @@
 import { PQueue } from '../async/PQueue';
-import { IPQueueOptions } from '../async/types/IPQueueOptions';
-import { IQueueAddOptions } from '../async/types/IQueueAddOptions';
-import { IQueue } from '../datastructures/types/IQueue';
-import { RunFunction } from '../datastructures/types/RunFunction';
+import type { IPQueueOptions } from '../async/types/IPQueueOptions';
+import type { IQueueAddOptions } from '../async/types/IQueueAddOptions';
+import type { IQueue } from '../datastructures/types/IQueue';
+import type { RunFunction } from '../datastructures/types/RunFunction';
 /**
  * Function call rate limiter / concurrency control.
  * @param fun Function to be rate limited.

@@ -37,7 +37,6 @@ Abstract class that other classes can inherit from to gain various handy functio
 - [enqueue](/docs/classes/Queue.md#enqueue)
 - [getConstructor](/docs/classes/Queue.md#getconstructor)
 - [getPrototype](/docs/classes/Queue.md#getprototype)
-- [setNonEnumerablePrivateProperties](/docs/classes/Queue.md#setnonenumerableprivateproperties)
 - [setNonEnumerableProperties](/docs/classes/Queue.md#setnonenumerableproperties)
 - [toArray](/docs/classes/Queue.md#toarray)
 - [toJSON](/docs/classes/Queue.md#tojson)
@@ -68,7 +67,7 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 #### Defined in
 
-[src/datastructures/Queue.ts:4](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/datastructures/Queue.ts#L4)
+[src/datastructures/Queue.ts:4](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Queue.ts#L4)
 
 ## Accessors
 
@@ -82,7 +81,7 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 #### Defined in
 
-[src/datastructures/Queue.ts:27](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/datastructures/Queue.ts#L27)
+[src/datastructures/Queue.ts:27](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Queue.ts#L27)
 
 ## Methods
 
@@ -96,7 +95,7 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 #### Defined in
 
-[src/datastructures/Queue.ts:39](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/datastructures/Queue.ts#L39)
+[src/datastructures/Queue.ts:39](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Queue.ts#L39)
 
 ___
 
@@ -110,7 +109,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Queue.ts:21](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/datastructures/Queue.ts#L21)
+[src/datastructures/Queue.ts:21](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Queue.ts#L21)
 
 ___
 
@@ -130,7 +129,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Queue.ts:16](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/datastructures/Queue.ts#L16)
+[src/datastructures/Queue.ts:16](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Queue.ts#L16)
 
 ___
 
@@ -148,7 +147,7 @@ typeof [`MixinBase`](/docs/classes/MixinBase.md)
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:8](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinBase.ts#L8)
+[src/mixins/MixinBase.ts:7](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/mixins/MixinBase.ts#L7)
 
 ___
 
@@ -166,27 +165,7 @@ ___
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinBase.ts#L12)
-
-___
-
-### setNonEnumerablePrivateProperties
-
-▸ `Protected` **setNonEnumerablePrivateProperties**(): `void`
-
-Make the properties with property names that start with an underscore non-enumerable.
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[MixinBase](/docs/classes/MixinBase.md).[setNonEnumerablePrivateProperties](/docs/classes/MixinBase.md#setnonenumerableprivateproperties)
-
-#### Defined in
-
-[src/mixins/MixinBase.ts:19](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinBase.ts#L19)
+[src/mixins/MixinBase.ts:11](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/mixins/MixinBase.ts#L11)
 
 ___
 
@@ -212,7 +191,7 @@ Make the properties with the given property names non-enumerable.
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:26](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinBase.ts#L26)
+[src/mixins/MixinBase.ts:18](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/mixins/MixinBase.ts#L18)
 
 ___
 
@@ -226,7 +205,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Queue.ts:31](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/datastructures/Queue.ts#L31)
+[src/datastructures/Queue.ts:31](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Queue.ts#L31)
 
 ___
 
@@ -240,7 +219,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Queue.ts:35](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/datastructures/Queue.ts#L35)
+[src/datastructures/Queue.ts:35](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Queue.ts#L35)
 
 ___
 
@@ -266,7 +245,7 @@ ___
 
 #### Defined in
 
-[src/datastructures/Queue.ts:6](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/datastructures/Queue.ts#L6)
+[src/datastructures/Queue.ts:6](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Queue.ts#L6)
 
 ___
 
@@ -292,4 +271,4 @@ ___
 
 #### Defined in
 
-[src/datastructures/Queue.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/datastructures/Queue.ts#L12)
+[src/datastructures/Queue.ts:12](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/datastructures/Queue.ts#L12)

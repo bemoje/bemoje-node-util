@@ -6,6 +6,11 @@ import { encode } from 'gpt-3-encoder'
 import type * as openai from 'openai'
 import { Configuration, OpenAIApi } from 'openai'
 import path from 'path'
+import type { PQueue } from '../async/PQueue'
+import type { IQueueAddOptions } from '../async/types/IQueueAddOptions'
+import type { IQueue } from '../datastructures/types/IQueue'
+import type { RunFunction } from '../datastructures/types/RunFunction'
+import { funAsyncRateLimit } from '../function/funAsyncRateLimit'
 import { _printEmitterEvents } from '../node/_printEmitterEvents'
 import { log } from '../node/log'
 import { objAssignDeep } from '../object/objAssignDeep'
@@ -21,6 +26,9 @@ import type { ICompletionRequestOptions } from './types/ICompletionRequestOption
 import type { IEditRequestOptions } from './types/IEditRequestOptions'
 import type { IResponseCacheOptions } from './types/IResponseCacheOptions'
 
+/**
+ * A class representing an OpenAI API client.
+ */
 export class OpenaiApiClientBase {
   /**
    * API client instance
@@ -54,7 +62,7 @@ export class OpenaiApiClientBase {
    * Options for async-retry
    */
   readonly retryDefaults: AsyncRetryOptions = {
-    retries: 10,
+    retries: 15,
     factor: 1.5,
     onRetry: (error) => this.emit('retry', error),
   }
@@ -64,6 +72,67 @@ export class OpenaiApiClientBase {
    */
   readonly cacheDefaults: IResponseCacheOptions = {
     overwrite: false,
+  }
+
+  /**
+   * Generic function for sending requests to the openai api.
+   * This is used for all the API endpoints.
+   * It handles retrying, cache, hashing, and emitting events.
+   * This method is bound to the instance on initialization because it gets wrapped with a concurrency controller in the constructor.
+   * @param request - The request object to send to the openai api.
+   * @param retry - The retry options.
+   * @param cache - The cache options.
+   */
+  protected readonly _apiRequest: (
+    request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest | string,
+    retry: AsyncRetryOptions,
+    cache: IResponseCacheOptions,
+    apiRequest: () => Promise<string[]>,
+  ) => Promise<string>
+
+  /**
+   * Queue for sending requests to the openai api.
+   */
+  readonly queue: PQueue<IQueue<RunFunction, IQueueAddOptions>, IQueueAddOptions>
+
+  /**
+   * Create a new OpenaiApiClient instance.
+   * @param options - The constructor options to use.
+   */
+  constructor(options: IApiClientOptions = {}) {
+    options = this.handleOptions(options)
+    this.client = new OpenAIApi(new Configuration({ apiKey: options.apiKey }))
+    this.cache = new ApiReponseCache<string[]>(options.cacheInit as IApiResponseCacheOptions)
+    this.emit('ready', void 0)
+
+    const [queue, apiRequest] = funAsyncRateLimit(
+      (async (
+        request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest,
+        retry: AsyncRetryOptions,
+        cache: IResponseCacheOptions,
+        apiRequest: () => Promise<string[]>,
+      ): Promise<string> => {
+        const hash = this.cache.hashKey(request)
+        const results = await asyncRetry(async () => {
+          if (cache.overwrite) await this.cache.delete(hash)
+          return await this.cache.getOrElse(hash, apiRequest)
+        }, retry)
+        return this.emit('response', results.join(this.apiDefaults.choicesDelimiter))
+      }).bind(this),
+      {
+        intervalCap: 3450, // max 3450 requests
+        interval: 1000 * 60, // per minute
+        // Whether the task must finish in the given interval or will be carried over into the next interval count.
+        carryoverConcurrencyCount: false,
+        concurrency: 50,
+        autoStart: true,
+        //timeout: 0,
+        //throwOnTimeout: false,
+      },
+    )
+    this.queue = queue
+    this._apiRequest = apiRequest
+    setNonEnumerable(this, '_apiRequest')
   }
 
   /**
@@ -81,18 +150,6 @@ export class OpenaiApiClientBase {
     this.emit('options', options)
     objAssignDeep(this, objDeleteKeys<any>(options, 'cacheInit', 'logAllEvents', 'apiKey'))
     return options
-  }
-
-  /**
-   * Create a new OpenaiApiClient instance.
-   * @param options - The constructor options to use.
-   */
-  constructor(options: IApiClientOptions = {}) {
-    options = this.handleOptions(options)
-    this.client = new OpenAIApi(new Configuration({ apiKey: options.apiKey }))
-    this.cache = new ApiReponseCache<string[]>(options.cacheInit as IApiResponseCacheOptions)
-    setNonEnumerable(this, 'client')
-    this.emit('ready', void 0)
   }
 
   /**
@@ -288,6 +345,29 @@ export class OpenaiApiClientBase {
    * @param retry - The retry options.
    * @param cache - The cache options.
    */
+  protected async _transcribe(filepath: string, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string> {
+    // this.client.createTranscription(fs.createReadStream(filepath) as any, 'whisper-1', undefined, 'json', undefined, 'DA')
+
+    return await this._apiRequest(filepath, retry, cache, async () => {
+      const { data } = await this.client.createTranscription(
+        fs.createReadStream(filepath) as any,
+        'whisper-1',
+        undefined,
+        'srt',
+        undefined,
+        'DA',
+      )
+      return [JSON.stringify(data, null, 2)]
+    })
+  }
+
+  /**
+   * Send chat request to the openai API.
+   * This is used by all the preset methods, the public methods: chat3_8, chat3_16, and chat4_8.
+   * @param request - The request object to send to the openai api.
+   * @param retry - The retry options.
+   * @param cache - The cache options.
+   */
   protected async _chat(
     request: openai.CreateChatCompletionRequest,
     retry: AsyncRetryOptions,
@@ -322,19 +402,19 @@ export class OpenaiApiClientBase {
    * @param retry - The retry options.
    * @param cache - The cache options.
    */
-  protected async _apiRequest(
-    request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest,
-    retry: AsyncRetryOptions,
-    cache: IResponseCacheOptions,
-    apiRequest: () => Promise<string[]>,
-  ): Promise<string> {
-    const hash = this.cache.hashKey(request)
-    const results = await asyncRetry(async () => {
-      if (cache.overwrite) await this.cache.delete(hash)
-      return await this.cache.getOrElse(hash, apiRequest)
-    }, retry)
-    return this.emit('response', results.join(this.apiDefaults.choicesDelimiter))
-  }
+  // protected async _apiRequest(
+  //   request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest,
+  //   retry: AsyncRetryOptions,
+  //   cache: IResponseCacheOptions,
+  //   apiRequest: () => Promise<string[]>,
+  // ): Promise<string> {
+  //   const hash = this.cache.hashKey(request)
+  //   const results = await asyncRetry(async () => {
+  //     if (cache.overwrite) await this.cache.delete(hash)
+  //     return await this.cache.getOrElse(hash, apiRequest)
+  //   }, retry)
+  //   return this.emit('response', results.join(this.apiDefaults.choicesDelimiter))
+  // }
 
   /**
    * Extract the actual concent from the 'choices' object from the response data.

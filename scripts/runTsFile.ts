@@ -7,9 +7,9 @@ import { walkTsFiles } from './lib/walkTsFiles'
 // main program
 async function main() {
   const cmdLineArgs = process.argv.slice(2)
-  const search = cmdLineArgs[0].replace(/\\|\//g, path.sep)
+  const search = cmdLineArgs[0].replace(/\\|\//g, '/')
 
-  const filter = (filepath: string) => new RegExp(search, 'i').test(filepath)
+  const filter = (filepath: string) => new RegExp(search, 'i').test(filepath.replace(/\\|\//g, '/'))
   const filepaths = walkTsFiles(path.join(process.cwd(), 'src'), filter).concat(walkTsFiles(path.join(process.cwd(), 'scripts'), filter))
 
   if (filepaths.length) {

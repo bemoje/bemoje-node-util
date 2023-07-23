@@ -9,9 +9,9 @@ import { roundWith } from './roundWith'
  * @returns The rounded number.
  * @throws if the given number is not finite or NaN.
  * @example ```ts
- * round(1.2345, 2);;
+ * round(1.2345, 2);
  * //=> 1.23
- * round(1.2345);;
+ * round(1.2345);
  * //=> 1
  * ```
  */

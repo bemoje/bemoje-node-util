@@ -2,6 +2,8 @@
 
 # Class: OpenaiApiClientBase
 
+A class representing an OpenAI API client.
+
 ## Hierarchy
 
 - **`OpenaiApiClientBase`**
@@ -16,19 +18,21 @@
 
 ### Properties
 
+- [\_apiRequest](/docs/classes/OpenaiApiClientBase.md#_apirequest)
 - [apiDefaults](/docs/classes/OpenaiApiClientBase.md#apidefaults)
 - [cache](/docs/classes/OpenaiApiClientBase.md#cache)
 - [cacheDefaults](/docs/classes/OpenaiApiClientBase.md#cachedefaults)
 - [client](/docs/classes/OpenaiApiClientBase.md#client)
 - [events](/docs/classes/OpenaiApiClientBase.md#events)
+- [queue](/docs/classes/OpenaiApiClientBase.md#queue)
 - [retryDefaults](/docs/classes/OpenaiApiClientBase.md#retrydefaults)
 
 ### Methods
 
-- [\_apiRequest](/docs/classes/OpenaiApiClientBase.md#_apirequest)
 - [\_chat](/docs/classes/OpenaiApiClientBase.md#_chat)
 - [\_completion](/docs/classes/OpenaiApiClientBase.md#_completion)
 - [\_edit](/docs/classes/OpenaiApiClientBase.md#_edit)
+- [\_transcribe](/docs/classes/OpenaiApiClientBase.md#_transcribe)
 - [assertReponseDataComplete](/docs/classes/OpenaiApiClientBase.md#assertreponsedatacomplete)
 - [chat3\_16](/docs/classes/OpenaiApiClientBase.md#chat3_16)
 - [chat3\_8](/docs/classes/OpenaiApiClientBase.md#chat3_8)
@@ -66,9 +70,41 @@ Create a new OpenaiApiClient instance.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:90](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L90)
+[src/api/OpenaiApiClientBase.ts:102](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L102)
 
 ## Properties
+
+### \_apiRequest
+
+• `Protected` `Readonly` **\_apiRequest**: (`request`: `string` \| `CreateChatCompletionRequest` \| `CreateCompletionRequest` \| `CreateEditRequest`, `retry`: `Options`, `cache`: [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md), `apiRequest`: () => `Promise`<`string`[]\>) => `Promise`<`string`\>
+
+#### Type declaration
+
+▸ (`request`, `retry`, `cache`, `apiRequest`): `Promise`<`string`\>
+
+Generic function for sending requests to the openai api.
+This is used for all the API endpoints.
+It handles retrying, cache, hashing, and emitting events.
+This method is bound to the instance on initialization because it gets wrapped with a concurrency controller in the constructor.
+
+##### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `request` | `string` \| `CreateChatCompletionRequest` \| `CreateCompletionRequest` \| `CreateEditRequest` | The request object to send to the openai api. |
+| `retry` | `Options` | The retry options. |
+| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
+| `apiRequest` | () => `Promise`<`string`[]\> | - |
+
+##### Returns
+
+`Promise`<`string`\>
+
+#### Defined in
+
+[src/api/OpenaiApiClientBase.ts:86](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L86)
+
+___
 
 ### apiDefaults
 
@@ -78,7 +114,7 @@ Defaults for API requests. Can be overriden in individual method calls.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:43](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L43)
+[src/api/OpenaiApiClientBase.ts:51](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L51)
 
 ___
 
@@ -90,7 +126,7 @@ API response cache
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:38](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L38)
+[src/api/OpenaiApiClientBase.ts:46](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L46)
 
 ___
 
@@ -102,7 +138,7 @@ Options for whether to overwrite existing cached data by default for api request
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:65](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L65)
+[src/api/OpenaiApiClientBase.ts:73](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L73)
 
 ___
 
@@ -114,7 +150,7 @@ API client instance
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:28](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L28)
+[src/api/OpenaiApiClientBase.ts:36](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L36)
 
 ___
 
@@ -126,7 +162,19 @@ Event emitter for cache events
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:33](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L33)
+[src/api/OpenaiApiClientBase.ts:41](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L41)
+
+___
+
+### queue
+
+• `Readonly` **queue**: [`PQueue`](/docs/classes/PQueue.md)<[`IQueue`](/docs/interfaces/IQueue.md)<[`RunFunction`](/docs/index.md#runfunction), [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md)\>, [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md)\>
+
+Queue for sending requests to the openai api.
+
+#### Defined in
+
+[src/api/OpenaiApiClientBase.ts:96](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L96)
 
 ___
 
@@ -138,36 +186,9 @@ Options for async-retry
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:56](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L56)
+[src/api/OpenaiApiClientBase.ts:64](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L64)
 
 ## Methods
-
-### \_apiRequest
-
-▸ `Protected` **_apiRequest**(`request`, `retry`, `cache`, `apiRequest`): `Promise`<`string`\>
-
-Generic function for sending requests to the openai api.
-This is used for all the API endpoints.
-It handles retrying, cache, hashing, and emitting events.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `request` | `CreateChatCompletionRequest` \| `CreateCompletionRequest` \| `CreateEditRequest` | The request object to send to the openai api. |
-| `retry` | `Options` | The retry options. |
-| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
-| `apiRequest` | () => `Promise`<`string`[]\> | - |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:325](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L325)
-
-___
 
 ### \_chat
 
@@ -190,7 +211,7 @@ This is used by all the preset methods, the public methods: chat3_8, chat3_16, a
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:291](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L291)
+[src/api/OpenaiApiClientBase.ts:371](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L371)
 
 ___
 
@@ -215,7 +236,7 @@ This is used by all the preset methods, the public methods: completion.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:272](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L272)
+[src/api/OpenaiApiClientBase.ts:329](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L329)
 
 ___
 
@@ -240,7 +261,32 @@ This is used by all the preset methods, the public methods: editText, editCode
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:310](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L310)
+[src/api/OpenaiApiClientBase.ts:390](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L390)
+
+___
+
+### \_transcribe
+
+▸ `Protected` **_transcribe**(`filepath`, `retry`, `cache`): `Promise`<`string`\>
+
+Send chat request to the openai API.
+This is used by all the preset methods, the public methods: chat3_8, chat3_16, and chat4_8.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `filepath` | `string` | - |
+| `retry` | `Options` | The retry options. |
+| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
+
+#### Returns
+
+`Promise`<`string`\>
+
+#### Defined in
+
+[src/api/OpenaiApiClientBase.ts:348](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L348)
 
 ___
 
@@ -262,7 +308,7 @@ Assert that the response data is complete by verifying that all returned choices
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:383](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L383)
+[src/api/OpenaiApiClientBase.ts:463](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L463)
 
 ___
 
@@ -285,7 +331,7 @@ Uses model: 'gpt-3.5-turbo-16k'.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:120](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L120)
+[src/api/OpenaiApiClientBase.ts:177](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L177)
 
 ___
 
@@ -308,7 +354,7 @@ Uses model: 'gpt-3.5-turbo'.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:111](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L111)
+[src/api/OpenaiApiClientBase.ts:168](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L168)
 
 ___
 
@@ -331,7 +377,7 @@ Uses model: 'gpt-4'.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:130](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L130)
+[src/api/OpenaiApiClientBase.ts:187](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L187)
 
 ___
 
@@ -353,7 +399,7 @@ Send a completion request to the openai api.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:102](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L102)
+[src/api/OpenaiApiClientBase.ts:159](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L159)
 
 ___
 
@@ -375,7 +421,7 @@ Count the number of tokens in a string.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:164](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L164)
+[src/api/OpenaiApiClientBase.ts:221](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L221)
 
 ___
 
@@ -406,7 +452,7 @@ Removing default values and undefined values normalizes the options object so it
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:362](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L362)
+[src/api/OpenaiApiClientBase.ts:442](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L442)
 
 ___
 
@@ -428,7 +474,7 @@ Edit code.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:147](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L147)
+[src/api/OpenaiApiClientBase.ts:204](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L204)
 
 ___
 
@@ -450,7 +496,7 @@ Edit text.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:139](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L139)
+[src/api/OpenaiApiClientBase.ts:196](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L196)
 
 ___
 
@@ -479,7 +525,7 @@ Emit an event but adds 'this' as an extra trailing argument.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:408](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L408)
+[src/api/OpenaiApiClientBase.ts:488](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L488)
 
 ___
 
@@ -495,7 +541,7 @@ Get the default api key from 'process.env.USERPROFILE/repos/apikeys/openai.txt'
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:396](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L396)
+[src/api/OpenaiApiClientBase.ts:476](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L476)
 
 ___
 
@@ -517,7 +563,7 @@ Handle cache options.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:261](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L261)
+[src/api/OpenaiApiClientBase.ts:318](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L318)
 
 ___
 
@@ -539,7 +585,7 @@ Handle chat options.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:201](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L201)
+[src/api/OpenaiApiClientBase.ts:258](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L258)
 
 ___
 
@@ -561,7 +607,7 @@ Handle completion options.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:172](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L172)
+[src/api/OpenaiApiClientBase.ts:229](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L229)
 
 ___
 
@@ -583,7 +629,7 @@ Handle edit options.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:225](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L225)
+[src/api/OpenaiApiClientBase.ts:282](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L282)
 
 ___
 
@@ -605,7 +651,7 @@ Handle the options passed to the constructor.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:73](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L73)
+[src/api/OpenaiApiClientBase.ts:142](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L142)
 
 ___
 
@@ -627,7 +673,7 @@ Handle retry options.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:246](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L246)
+[src/api/OpenaiApiClientBase.ts:303](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L303)
 
 ___
 
@@ -643,7 +689,7 @@ console.log all emitted events
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:416](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L416)
+[src/api/OpenaiApiClientBase.ts:496](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L496)
 
 ___
 
@@ -665,7 +711,7 @@ Extract the actual concent from the 'choices' object from the response data.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:343](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L343)
+[src/api/OpenaiApiClientBase.ts:423](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L423)
 
 ___
 
@@ -687,4 +733,4 @@ Encode a string into tokens.
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:156](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/OpenaiApiClientBase.ts#L156)
+[src/api/OpenaiApiClientBase.ts:213](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/OpenaiApiClientBase.ts#L213)

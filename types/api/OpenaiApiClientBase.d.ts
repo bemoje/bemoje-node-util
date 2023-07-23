@@ -3,6 +3,10 @@ import type { Options as AsyncRetryOptions } from 'async-retry';
 import EventEmitter from 'events';
 import type * as openai from 'openai';
 import { OpenAIApi } from 'openai';
+import type { PQueue } from '../async/PQueue';
+import type { IQueueAddOptions } from '../async/types/IQueueAddOptions';
+import type { IQueue } from '../datastructures/types/IQueue';
+import type { RunFunction } from '../datastructures/types/RunFunction';
 import { ApiReponseCache } from './ApiReponseCache';
 import type { IApiClientApiDefaultsOptions } from './types/IApiClientApiDefaultsOptions';
 import type { IApiClientOptions } from './types/IApiClientOptions';
@@ -10,6 +14,9 @@ import type { IChatRequestOptions } from './types/IChatRequestOptions';
 import type { ICompletionRequestOptions } from './types/ICompletionRequestOptions';
 import type { IEditRequestOptions } from './types/IEditRequestOptions';
 import type { IResponseCacheOptions } from './types/IResponseCacheOptions';
+/**
+ * A class representing an OpenAI API client.
+ */
 export declare class OpenaiApiClientBase {
     /**
      * API client instance
@@ -36,15 +43,29 @@ export declare class OpenaiApiClientBase {
      */
     readonly cacheDefaults: IResponseCacheOptions;
     /**
-     * Handle the options passed to the constructor.
-     * @param options - The options to handle.
+     * Generic function for sending requests to the openai api.
+     * This is used for all the API endpoints.
+     * It handles retrying, cache, hashing, and emitting events.
+     * This method is bound to the instance on initialization because it gets wrapped with a concurrency controller in the constructor.
+     * @param request - The request object to send to the openai api.
+     * @param retry - The retry options.
+     * @param cache - The cache options.
      */
-    protected handleOptions(options: IApiClientOptions): IApiClientOptions;
+    protected readonly _apiRequest: (request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest | string, retry: AsyncRetryOptions, cache: IResponseCacheOptions, apiRequest: () => Promise<string[]>) => Promise<string>;
+    /**
+     * Queue for sending requests to the openai api.
+     */
+    readonly queue: PQueue<IQueue<RunFunction, IQueueAddOptions>, IQueueAddOptions>;
     /**
      * Create a new OpenaiApiClient instance.
      * @param options - The constructor options to use.
      */
     constructor(options?: IApiClientOptions);
+    /**
+     * Handle the options passed to the constructor.
+     * @param options - The options to handle.
+     */
+    protected handleOptions(options: IApiClientOptions): IApiClientOptions;
     /**
      * Send a completion request to the openai api.
      * @param options - The options to use.
@@ -128,6 +149,14 @@ export declare class OpenaiApiClientBase {
      * @param retry - The retry options.
      * @param cache - The cache options.
      */
+    protected _transcribe(filepath: string, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string>;
+    /**
+     * Send chat request to the openai API.
+     * This is used by all the preset methods, the public methods: chat3_8, chat3_16, and chat4_8.
+     * @param request - The request object to send to the openai api.
+     * @param retry - The retry options.
+     * @param cache - The cache options.
+     */
     protected _chat(request: openai.CreateChatCompletionRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions): Promise<string>;
     /**
      * Send edit request to the openai API.
@@ -145,7 +174,6 @@ export declare class OpenaiApiClientBase {
      * @param retry - The retry options.
      * @param cache - The cache options.
      */
-    protected _apiRequest(request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest, retry: AsyncRetryOptions, cache: IResponseCacheOptions, apiRequest: () => Promise<string[]>): Promise<string>;
     /**
      * Extract the actual concent from the 'choices' object from the response data.
      * @param choices - The choices object from the response data.

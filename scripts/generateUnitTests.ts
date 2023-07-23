@@ -50,21 +50,23 @@ async function writeTSFunctionUnitTests(openai: OpenaiApiClient, file: SourceFil
 async function writeTSClassUnitTests(openai: OpenaiApiClient, file: SourceFile, options: IChatRequestOptions = {}): Promise<string> {
   const levels = tsBundleImportsForUnitTestGeneration(file.filepath)
   const files = arrFlatten(levels, 1)
-  const code = tsStripImports(tsDocStripExample(files.join('\n')))
+  const main = tsStripImports(tsDocStripExample(files.pop() as string))
+  const code =
+    tsStripImports(tsDocStripExample(files.join('\n'))) + '\n\n\n---------------------------------------------------\n\n\n' + main
   // fs.writeFileSync(file.testFilepath + '.bundle.ts', code, 'utf8')
   const parsed = file.parseClass()
   options = {
     temperature: 0.3,
     ...options,
     instruction: [
-      'You are a helpful assistant who writes unit tests for TypeScript classes.',
+      'You are a helpful assistant who writes unit tests for a specific TypeScript class.',
 
       `For for each public method in the the exported class, '${file.exportName}', follow every possible code path step-by-step ` +
         'and then write tests for every code path, edge case or scenario that you find.',
 
       'The public class members that need to be tested are: ' + parsed.public.join(', ') + '. Create several tests for each of these.',
 
-      `Only write tests for '${file.exportName}'.`,
+      `I only want you to write tests for ONE class, and that is: '${file.exportName}'.`,
 
       'Use the Jest testing framework, ie. "describe" and "it".',
 
@@ -116,13 +118,13 @@ async function main() {
   // await openai.cache.deleteEverything()
 
   const cmdLineArgs = process.argv.slice(2)
-  const searchArgument = cmdLineArgs[0]
+  const searchArgument = cmdLineArgs[0].replace(/\\|\//g, '/')
   const overwriteMode = cmdLineArgs[1] === '--overwrite'
   const sourceRoot = path.join(process.cwd(), 'src')
   const concurrency = 12
   const filter = (filepath: string) => {
     if (!searchArgument || searchArgument === '*') return true
-    return absoluteToRelativePath(filepath).toLowerCase().includes(searchArgument.toLowerCase())
+    return absoluteToRelativePath(filepath.replace(/\\|\//g, '/')).toLowerCase().includes(searchArgument.toLowerCase())
   }
 
   await generateUnitTests(openai, sourceRoot, concurrency, overwriteMode, filter)

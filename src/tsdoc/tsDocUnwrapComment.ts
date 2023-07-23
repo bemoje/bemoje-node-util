@@ -30,7 +30,6 @@ import { isValidTsDocComment } from './isValidTsDocComment'
  */
 export function tsDocUnwrapComment(code: string): string {
   if (!isValidTsDocComment(code)) {
-    console.log(code)
     throw new Error('Invalid TSDoc comment')
   }
   code = code.trim()

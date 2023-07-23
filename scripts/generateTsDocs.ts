@@ -100,7 +100,7 @@ async function main() {
   // await openai.cache.deleteEverything()
 
   const cmdLineArgs = process.argv.slice(2)
-  const search = cmdLineArgs[0]
+  const search = cmdLineArgs[0].replace(/\\|\//g, '/')
   const overwriteMode = cmdLineArgs[1] === '--overwrite'
   // console.log({ searchArgument, overwriteMode })
   const sourceRoot = path.join(process.cwd(), 'src')
@@ -108,7 +108,7 @@ async function main() {
   const filter = (filepath: string) => {
     // if (!search || search === '*') return true
     // console.log(absoluteToRelativePath(filepath).toLowerCase())
-    return absoluteToRelativePath(filepath).toLowerCase().includes(search.toLowerCase())
+    return absoluteToRelativePath(filepath.replace(/\\|\//g, '/')).toLowerCase().includes(search.toLowerCase())
   }
 
   await generateTsDocs(openai, sourceRoot, concurrency, overwriteMode, filter)

@@ -1,11 +1,11 @@
 /// <reference types="node" />
 import EventEmitter from 'events';
 import { PriorityQueue } from '../datastructures/PriorityQueue';
-import { IQueue } from '../datastructures/types/IQueue';
-import { RunFunction } from '../datastructures/types/RunFunction';
-import { IPQueueOptions } from './types/IPQueueOptions';
-import { IQueueAddOptions } from './types/IQueueAddOptions';
-import { ITaskOptions } from './types/ITaskOptions';
+import type { IQueue } from '../datastructures/types/IQueue';
+import type { RunFunction } from '../datastructures/types/RunFunction';
+import type { IPQueueOptions } from './types/IPQueueOptions';
+import type { IQueueAddOptions } from './types/IQueueAddOptions';
+import type { ITaskOptions } from './types/ITaskOptions';
 type Task<TaskResultType> = ((options: ITaskOptions) => PromiseLike<TaskResultType>) | ((options: ITaskOptions) => TaskResultType);
 /**
  * Promise queue with concurrency control.

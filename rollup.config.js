@@ -39,6 +39,7 @@ export default {
     'esprima',
     'csv-parser',
     'strip-comments',
+    'blob',
   ],
   output: [
     {

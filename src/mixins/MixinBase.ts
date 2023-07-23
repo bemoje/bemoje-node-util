@@ -1,4 +1,3 @@
-import { setNonEnumerablePrivateProperties } from '../object/setNonEnumerablePrivateProperties'
 import { setNonEnumerable } from '../object/setNonEnumerable'
 
 /**
@@ -11,13 +10,6 @@ export class MixinBase {
 
   public getPrototype(): typeof MixinBase.prototype {
     return Object.getPrototypeOf(this)
-  }
-
-  /**
-   * Make the properties with property names that start with an underscore non-enumerable.
-   */
-  protected setNonEnumerablePrivateProperties(): void {
-    setNonEnumerablePrivateProperties(this)
   }
 
   /**

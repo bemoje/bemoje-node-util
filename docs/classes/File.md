@@ -38,7 +38,7 @@ Creates a new SourceFile instance.
 
 #### Defined in
 
-[src/filesystem/File.ts:17](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/File.ts#L17)
+[src/filesystem/File.ts:17](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/filesystem/File.ts#L17)
 
 ## Properties
 
@@ -50,7 +50,7 @@ The aboslute path to the source file.
 
 #### Defined in
 
-[src/filesystem/File.ts:11](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/File.ts#L11)
+[src/filesystem/File.ts:11](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/filesystem/File.ts#L11)
 
 ## Accessors
 
@@ -66,7 +66,7 @@ The name of the directory of the source file.
 
 #### Defined in
 
-[src/filesystem/File.ts:39](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/File.ts#L39)
+[src/filesystem/File.ts:39](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/filesystem/File.ts#L39)
 
 ___
 
@@ -82,7 +82,7 @@ The absolute path to the directory of the source file.
 
 #### Defined in
 
-[src/filesystem/File.ts:46](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/File.ts#L46)
+[src/filesystem/File.ts:46](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/filesystem/File.ts#L46)
 
 ___
 
@@ -100,7 +100,7 @@ The file extension, including the leading dot.
 
 #### Defined in
 
-[src/filesystem/File.ts:25](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/File.ts#L25)
+[src/filesystem/File.ts:25](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/filesystem/File.ts#L25)
 
 ___
 
@@ -116,7 +116,7 @@ The filename including the file extension.
 
 #### Defined in
 
-[src/filesystem/File.ts:32](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/File.ts#L32)
+[src/filesystem/File.ts:32](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/filesystem/File.ts#L32)
 
 ___
 
@@ -132,4 +132,4 @@ The relative path to the source file from the working directory.
 
 #### Defined in
 
-[src/filesystem/File.ts:53](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/filesystem/File.ts#L53)
+[src/filesystem/File.ts:53](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/filesystem/File.ts#L53)

@@ -15,9 +15,9 @@ describe('assertPositiveInteger', () => {
   })
 
   it('should throw an error with a message indicating the invalid input', () => {
-    expect(() => assertPositiveInteger(-1)).toThrow('Expected int to be an integer. Got: -1')
-    expect(() => assertPositiveInteger(0)).toThrow('Expected int to be an integer. Got: 0')
-    expect(() => assertPositiveInteger(1.5)).toThrow('Expected int to be an integer. Got: 1.5')
-    expect(() => assertPositiveInteger(-1.5)).toThrow('Expected int to be an integer. Got: -1.5')
+    expect(() => assertPositiveInteger(-1)).toThrow('Expected an integer. Got: -1')
+    expect(() => assertPositiveInteger(0)).toThrow('Expected an integer. Got: 0')
+    expect(() => assertPositiveInteger(1.5)).toThrow('Expected an integer. Got: 1.5')
+    expect(() => assertPositiveInteger(-1.5)).toThrow('Expected an integer. Got: -1.5')
   })
 })

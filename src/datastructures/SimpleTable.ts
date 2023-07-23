@@ -9,17 +9,17 @@ export class SimpleTable<T> extends MixinBase {
   /**
    * Map from column names to column indices.
    */
-  protected _colIndexMap: Record<string, number> = {}
+  #colIndexMap: Record<string, number> = {}
 
   /**
    * The headers of the table.
    */
-  protected _headers: string[]
+  #headers: string[]
 
   /**
    * The data of the table.
    */
-  protected _data: T[][] = []
+  #data: T[][] = []
 
   /**
    * Revive a stringified Table object.
@@ -38,24 +38,23 @@ export class SimpleTable<T> extends MixinBase {
   constructor(data: T[][], headers?: string[]) {
     super()
     if (headers) {
-      this._headers = headers.slice()
-      this._data = data.map((row) => {
+      this.#headers = headers.slice()
+      this.#data = data.map((row) => {
         this.assertRowValidLength(row)
         return row.slice()
       })
     } else {
-      this._headers = data[0].map((header) => '' + header)
-      this._data = data.slice(1).map((row) => {
+      this.#headers = data[0].map((header) => '' + header)
+      this.#data = data.slice(1).map((row) => {
         this.assertRowValidLength(row)
         return row.slice()
       })
     }
-    if (!this._headers.length) throw new Error('Table must have at least one column.')
-    if (!this._data.length) throw new Error('Table must have at least one row.')
-    this._headers.forEach((header, i) => {
-      this._colIndexMap[header] = i
+    if (!this.#headers.length) throw new Error('Table must have at least one column.')
+    if (!this.#data.length) throw new Error('Table must have at least one row.')
+    this.#headers.forEach((header, i) => {
+      this.#colIndexMap[header] = i
     })
-    this.setNonEnumerablePrivateProperties()
   }
 
   /**
@@ -63,35 +62,35 @@ export class SimpleTable<T> extends MixinBase {
    * @param row The row to check.
    */
   protected assertRowValidLength(row: T[]): void {
-    if (row.length !== this._headers.length) throw new Error('Row length does not match headers length.')
+    if (row.length !== this.#headers.length) throw new Error('Row length does not match headers length.')
   }
 
   /**
    * Gets the number of cols in the table, not including headers.
    */
   public get numColumns(): number {
-    return this._data[0].length
+    return this.#data[0].length
   }
 
   /**
    * Gets the number of rows in the table, not including headers.
    */
   public get numRows(): number {
-    return this._data.length
+    return this.#data.length
   }
 
   /**
    * Gets the column headers.
    */
   public get headers(): string[] {
-    return this._headers.slice()
+    return this.#headers.slice()
   }
 
   /**
    * Returns the table as a two-dimensional array, without column headers.
    */
   public get data(): T[][] {
-    return this._data.slice().map((row) => row.slice())
+    return this.#data.slice().map((row) => row.slice())
   }
 
   /**
@@ -101,9 +100,9 @@ export class SimpleTable<T> extends MixinBase {
    */
   public get(column: number | string, row: number): T {
     if (typeof column === 'string') {
-      column = this._colIndexMap[column]
+      column = this.#colIndexMap[column]
     }
-    return this._data[row][column]
+    return this.#data[row][column]
   }
 
   /**
@@ -114,9 +113,9 @@ export class SimpleTable<T> extends MixinBase {
    */
   public set(column: number | string, row: number, value: T): SimpleTable<T> {
     if (typeof column === 'string') {
-      column = this._colIndexMap[column]
+      column = this.#colIndexMap[column]
     }
-    this._data[row][column] = value
+    this.#data[row][column] = value
     return this
   }
 
@@ -133,8 +132,8 @@ export class SimpleTable<T> extends MixinBase {
    */
   public toJSON(): ISimpleTableSerializedForm<T> {
     return {
-      headers: this._headers,
-      data: this._data,
+      headers: this.#headers,
+      data: this.#data,
     }
   }
 }

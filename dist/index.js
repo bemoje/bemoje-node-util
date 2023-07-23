@@ -1,5 +1,5 @@
 /*!
- * @bemoje/node-util v0.4.3
+ * @bemoje/node-util v0.4.4
  * (c) Benjamin Møller Jensen
  * Homepage: https://github.com/bemoje/bemoje-node-util
  * Released under the MIT License.
@@ -433,19 +433,6 @@ class ApiReponseCache {
             }));
         });
     }
-    // /**
-    //  * Delete a given value for a given hash key.
-    //  * @param hash - The hash key.
-    //  */
-    // async deleteSafe(hash: string): Promise<boolean> {
-    //   try {
-    //     await this.db.del(hash)
-    //     this.emit('delete', hash)
-    //     return true
-    //   } catch (e) {
-    //     return false
-    //   }
-    // }
     /**
      * Delete all expired data.
      */
@@ -680,6 +667,554 @@ ApiReponseCache.optionsDefaults = {
 };
 
 /**
+ * Returns an index in the sorted array where the specified value could be inserted while maintaining the sorted order of the array.
+ * If the element is already in the array, returns the index after the last instance of the element.
+ * @param array - The sorted array to search.
+ * @param value - The value to locate in the array.
+ * @param comparator - A function that defines the sort order. If omitted, the array elements are converted to strings, then sorted according to each character's Unicode code point value.
+ * @returns The index at which the value could be inserted into array to maintain the array's sorted order.
+ * @example ```ts
+ * const array = [1, 2, 3, 5, 6];
+ * const value = 4;
+ * const comparator = (a, b) => a - b;
+ * const index = arrSortedLowerBound(array, value, comparator);
+ * console.log(index); // Output: 3
+ * ```
+ */
+function arrSortedInsertionIndex(array, value, comparator) {
+    let first = 0;
+    let count = array.length;
+    while (count > 0) {
+        const step = Math.trunc(count / 2);
+        let it = first + step;
+        if (comparator(array[it], value) <= 0) {
+            first = ++it;
+            count -= step + 1;
+        }
+        else {
+            count = step;
+        }
+    }
+    return first;
+}
+
+var _PriorityQueue_queue;
+/**
+ * A class representing a priority queue for async functions.
+ */
+class PriorityQueue {
+    constructor() {
+        /**
+         * Queue of functions to run
+         */
+        _PriorityQueue_queue.set(this, []
+        /**
+         * Get the number of functions in the queue
+         */
+        );
+    }
+    /**
+     * Get the number of functions in the queue
+     */
+    get size() {
+        return __classPrivateFieldGet(this, _PriorityQueue_queue, "f").length;
+    }
+    /**
+     * Add a function to the queue
+     * @param run Function to run
+     * @param options Options for the queue
+     */
+    enqueue(run, options) {
+        options = Object.assign({ priority: 0 }, options);
+        const element = {
+            priority: options.priority,
+            run,
+        };
+        if (this.size && __classPrivateFieldGet(this, _PriorityQueue_queue, "f")[this.size - 1].priority >= options.priority) {
+            __classPrivateFieldGet(this, _PriorityQueue_queue, "f").push(element);
+            return;
+        }
+        const index = arrSortedInsertionIndex(__classPrivateFieldGet(this, _PriorityQueue_queue, "f"), element, (a, b) => b.priority - a.priority);
+        __classPrivateFieldGet(this, _PriorityQueue_queue, "f").splice(index, 0, element);
+    }
+    /**
+     * Remove a function from the queue
+     */
+    dequeue() {
+        const item = __classPrivateFieldGet(this, _PriorityQueue_queue, "f").shift();
+        return item === null || item === void 0 ? void 0 : item.run;
+    }
+    /**
+     * Get the functions with the given priority.
+     * @param options Options for the queue
+     */
+    filter(options) {
+        return __classPrivateFieldGet(this, _PriorityQueue_queue, "f")
+            .filter((element) => element.priority === options.priority)
+            .map((element) => element.run);
+    }
+}
+_PriorityQueue_queue = new WeakMap();
+
+var _PQueue_instances, _PQueue_carryoverConcurrencyCount, _PQueue_isIntervalIgnored, _PQueue_intervalCount, _PQueue_intervalCap, _PQueue_interval, _PQueue_intervalEnd, _PQueue_intervalId, _PQueue_timeoutId, _PQueue_queue, _PQueue_queueClass, _PQueue_pending, _PQueue_concurrency, _PQueue_isPaused, _PQueue_throwOnTimeout, _PQueue_doesIntervalAllowAnother_get, _PQueue_doesConcurrentAllowAnother_get, _PQueue_next, _PQueue_onResumeInterval, _PQueue_isIntervalPaused_get, _PQueue_tryToStartAnother, _PQueue_initializeIntervalIfNeeded, _PQueue_onInterval, _PQueue_processQueue, _PQueue_throwOnAbort, _PQueue_onEvent;
+/**
+ * Promise queue with concurrency control.
+ * ESM compatible port from https://www.npmjs.com/package/p-queue
+ */
+class PQueue extends EventEmitter {
+    constructor(options) {
+        var _a, _b, _c, _d;
+        super();
+        _PQueue_instances.add(this);
+        _PQueue_carryoverConcurrencyCount.set(this, void 0);
+        _PQueue_isIntervalIgnored.set(this, void 0);
+        _PQueue_intervalCount.set(this, 0);
+        _PQueue_intervalCap.set(this, void 0);
+        _PQueue_interval.set(this, void 0);
+        _PQueue_intervalEnd.set(this, 0);
+        _PQueue_intervalId.set(this, void 0);
+        _PQueue_timeoutId.set(this, void 0);
+        _PQueue_queue.set(this, void 0);
+        _PQueue_queueClass.set(this, void 0);
+        _PQueue_pending.set(this, 0);
+        _PQueue_concurrency.set(this, void 0);
+        _PQueue_isPaused.set(this, void 0);
+        _PQueue_throwOnTimeout.set(this, void 0);
+        options = Object.assign({ carryoverConcurrencyCount: false, intervalCap: Number.POSITIVE_INFINITY, interval: 0, concurrency: Number.POSITIVE_INFINITY, autoStart: true, queueClass: PriorityQueue }, options);
+        if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
+            throw new TypeError(`Expected \`intervalCap\` to be a number from 1 and up, got \`${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\` (${typeof options.intervalCap})`);
+        }
+        if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
+            throw new TypeError(`Expected \`interval\` to be a finite number >= 0, got \`${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\` (${typeof options.interval})`);
+        }
+        __classPrivateFieldSet(this, _PQueue_carryoverConcurrencyCount, options.carryoverConcurrencyCount, "f");
+        __classPrivateFieldSet(this, _PQueue_isIntervalIgnored, options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0, "f");
+        __classPrivateFieldSet(this, _PQueue_intervalCap, options.intervalCap, "f");
+        __classPrivateFieldSet(this, _PQueue_interval, options.interval, "f");
+        __classPrivateFieldSet(this, _PQueue_queue, new options.queueClass(), "f");
+        __classPrivateFieldSet(this, _PQueue_queueClass, options.queueClass, "f");
+        this.concurrency = options.concurrency;
+        this.timeout = options.timeout;
+        __classPrivateFieldSet(this, _PQueue_throwOnTimeout, options.throwOnTimeout === true, "f");
+        __classPrivateFieldSet(this, _PQueue_isPaused, options.autoStart === false, "f");
+    }
+    get concurrency() {
+        return __classPrivateFieldGet(this, _PQueue_concurrency, "f");
+    }
+    set concurrency(newConcurrency) {
+        if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
+            throw new TypeError(`Expected \`concurrency\` to be a number from 1 and up, got \`${newConcurrency}\` (${typeof newConcurrency})`);
+        }
+        __classPrivateFieldSet(this, _PQueue_concurrency, newConcurrency, "f");
+        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
+    }
+    add(function_, options = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
+            options = Object.assign({ timeout: this.timeout, throwOnTimeout: __classPrivateFieldGet(this, _PQueue_throwOnTimeout, "f") }, options);
+            return new Promise((resolve, reject) => {
+                __classPrivateFieldGet(this, _PQueue_queue, "f").enqueue(() => __awaiter(this, void 0, void 0, function* () {
+                    var _a;
+                    var _b, _c;
+                    __classPrivateFieldSet(this, _PQueue_pending, (_b = __classPrivateFieldGet(this, _PQueue_pending, "f"), _b++, _b), "f");
+                    __classPrivateFieldSet(this, _PQueue_intervalCount, (_c = __classPrivateFieldGet(this, _PQueue_intervalCount, "f"), _c++, _c), "f");
+                    try {
+                        if ((_a = options.signal) === null || _a === void 0 ? void 0 : _a.aborted) {
+                            throw new PQueueAbortError('The task was aborted.');
+                        }
+                        let operation = function_({ signal: options.signal });
+                        if (options.timeout) {
+                            operation = pTimeout(Promise.resolve(operation), options.timeout);
+                        }
+                        if (options.signal) {
+                            operation = Promise.race([operation, __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_throwOnAbort).call(this, options.signal)]);
+                        }
+                        const result = yield operation;
+                        resolve(result);
+                        this.emit('completed', result);
+                    }
+                    catch (error) {
+                        if (error instanceof PQueueTimeoutError && !options.throwOnTimeout) {
+                            resolve();
+                            return;
+                        }
+                        reject(error);
+                        this.emit('error', error);
+                    }
+                    finally {
+                        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_next).call(this);
+                    }
+                }), options);
+                this.emit('add');
+                __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this);
+            });
+        });
+    }
+    addAll(functions, options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Promise.all(functions.map((function_) => __awaiter(this, void 0, void 0, function* () { return this.add(function_, options); })));
+        });
+    }
+    /**
+     * Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via `options.autoStart = false` or by `.pause()` method.)
+     */
+    start() {
+        if (!__classPrivateFieldGet(this, _PQueue_isPaused, "f")) {
+            return this;
+        }
+        __classPrivateFieldSet(this, _PQueue_isPaused, false, "f");
+        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
+        return this;
+    }
+    /**
+     * Put queue execution on hold.
+     */
+    pause() {
+        __classPrivateFieldSet(this, _PQueue_isPaused, true, "f");
+    }
+    /**
+     * Clear the queue.
+     */
+    clear() {
+        __classPrivateFieldSet(this, _PQueue_queue, new (__classPrivateFieldGet(this, _PQueue_queueClass, "f"))(), "f");
+    }
+    /**
+     * Can be called multiple times. Useful if you for example add additional items at a later time.
+     * @returns A promise that settles when the queue becomes empty.
+     */
+    onEmpty() {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Instantly resolve if the queue is empty
+            if (__classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
+                return;
+            }
+            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'empty');
+        });
+    }
+    /**
+     * @returns A promise that settles when the queue size is less than the given limit: `queue.size < limit`.
+     * If you want to avoid having the queue grow beyond a certain size you can `await queue.onSizeLessThan()` before adding a new item.
+     * Note that this only limits the number of items waiting to start. There could still be up to `concurrency` jobs already running that this call does not include in its calculation.
+     */
+    onSizeLessThan(limit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Instantly resolve if the queue is empty.
+            if (__classPrivateFieldGet(this, _PQueue_queue, "f").size < limit) {
+                return;
+            }
+            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'next', () => __classPrivateFieldGet(this, _PQueue_queue, "f").size < limit);
+        });
+    }
+    /**
+     * The difference with `.onEmpty` is that `.onIdle` guarantees that all work from the queue has finished. `.onEmpty` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
+     * @returns A promise that settles when the queue becomes empty, and all promises have completed; `queue.size === 0 && queue.pending === 0`.
+     */
+    onIdle() {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Instantly resolve if none pending and if nothing else is queued
+            if (__classPrivateFieldGet(this, _PQueue_pending, "f") === 0 && __classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
+                return;
+            }
+            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'idle');
+        });
+    }
+    /**
+     * Size of the queue, the number of queued items waiting to run.
+     */
+    get size() {
+        return __classPrivateFieldGet(this, _PQueue_queue, "f").size;
+    }
+    /**
+     * Size of the queue, filtered by the given options.
+     * For example, this can be used to find the number of items remaining in the queue with a specific priority level.
+     */
+    sizeBy(options) {
+        return __classPrivateFieldGet(this, _PQueue_queue, "f").filter(options).length;
+    }
+    /**
+     * Number of running items (no longer in the queue).
+     */
+    get pending() {
+        return __classPrivateFieldGet(this, _PQueue_pending, "f");
+    }
+    /**
+     * Whether the queue is currently paused.
+     */
+    get isPaused() {
+        return __classPrivateFieldGet(this, _PQueue_isPaused, "f");
+    }
+}
+_PQueue_carryoverConcurrencyCount = new WeakMap(), _PQueue_isIntervalIgnored = new WeakMap(), _PQueue_intervalCount = new WeakMap(), _PQueue_intervalCap = new WeakMap(), _PQueue_interval = new WeakMap(), _PQueue_intervalEnd = new WeakMap(), _PQueue_intervalId = new WeakMap(), _PQueue_timeoutId = new WeakMap(), _PQueue_queue = new WeakMap(), _PQueue_queueClass = new WeakMap(), _PQueue_pending = new WeakMap(), _PQueue_concurrency = new WeakMap(), _PQueue_isPaused = new WeakMap(), _PQueue_throwOnTimeout = new WeakMap(), _PQueue_instances = new WeakSet(), _PQueue_doesIntervalAllowAnother_get = function _PQueue_doesIntervalAllowAnother_get() {
+    return __classPrivateFieldGet(this, _PQueue_isIntervalIgnored, "f") || __classPrivateFieldGet(this, _PQueue_intervalCount, "f") < __classPrivateFieldGet(this, _PQueue_intervalCap, "f");
+}, _PQueue_doesConcurrentAllowAnother_get = function _PQueue_doesConcurrentAllowAnother_get() {
+    return __classPrivateFieldGet(this, _PQueue_pending, "f") < __classPrivateFieldGet(this, _PQueue_concurrency, "f");
+}, _PQueue_next = function _PQueue_next() {
+    var _a;
+    __classPrivateFieldSet(this, _PQueue_pending, (_a = __classPrivateFieldGet(this, _PQueue_pending, "f"), _a--, _a), "f");
+    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this);
+    this.emit('next');
+}, _PQueue_onResumeInterval = function _PQueue_onResumeInterval() {
+    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onInterval).call(this);
+    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_initializeIntervalIfNeeded).call(this);
+    __classPrivateFieldSet(this, _PQueue_timeoutId, undefined, "f");
+}, _PQueue_isIntervalPaused_get = function _PQueue_isIntervalPaused_get() {
+    const now = Date.now();
+    if (__classPrivateFieldGet(this, _PQueue_intervalId, "f") === undefined) {
+        const delay = __classPrivateFieldGet(this, _PQueue_intervalEnd, "f") - now;
+        if (delay < 0) {
+            // Act as the interval was done
+            // We don't need to resume it here because it will be resumed on line 160
+            __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, "f") ? __classPrivateFieldGet(this, _PQueue_pending, "f") : 0, "f");
+        }
+        else {
+            // Act as the interval is pending
+            if (__classPrivateFieldGet(this, _PQueue_timeoutId, "f") === undefined) {
+                __classPrivateFieldSet(this, _PQueue_timeoutId, setTimeout(() => {
+                    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onResumeInterval).call(this);
+                }, delay), "f");
+            }
+            return true;
+        }
+    }
+    return false;
+}, _PQueue_tryToStartAnother = function _PQueue_tryToStartAnother() {
+    if (__classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
+        // We can clear the interval ("pause")
+        // Because we can redo it later ("resume")
+        if (__classPrivateFieldGet(this, _PQueue_intervalId, "f")) {
+            clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, "f"));
+        }
+        __classPrivateFieldSet(this, _PQueue_intervalId, undefined, "f");
+        this.emit('empty');
+        if (__classPrivateFieldGet(this, _PQueue_pending, "f") === 0) {
+            this.emit('idle');
+        }
+        return false;
+    }
+    if (!__classPrivateFieldGet(this, _PQueue_isPaused, "f")) {
+        const canInitializeInterval = !__classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_isIntervalPaused_get);
+        if (__classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_doesIntervalAllowAnother_get) && __classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_doesConcurrentAllowAnother_get)) {
+            const job = __classPrivateFieldGet(this, _PQueue_queue, "f").dequeue();
+            if (!job) {
+                return false;
+            }
+            this.emit('active');
+            job();
+            if (canInitializeInterval) {
+                __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_initializeIntervalIfNeeded).call(this);
+            }
+            return true;
+        }
+    }
+    return false;
+}, _PQueue_initializeIntervalIfNeeded = function _PQueue_initializeIntervalIfNeeded() {
+    if (__classPrivateFieldGet(this, _PQueue_isIntervalIgnored, "f") || __classPrivateFieldGet(this, _PQueue_intervalId, "f") !== undefined) {
+        return;
+    }
+    __classPrivateFieldSet(this, _PQueue_intervalId, setInterval(() => {
+        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onInterval).call(this);
+    }, __classPrivateFieldGet(this, _PQueue_interval, "f")), "f");
+    __classPrivateFieldSet(this, _PQueue_intervalEnd, Date.now() + __classPrivateFieldGet(this, _PQueue_interval, "f"), "f");
+}, _PQueue_onInterval = function _PQueue_onInterval() {
+    if (__classPrivateFieldGet(this, _PQueue_intervalCount, "f") === 0 && __classPrivateFieldGet(this, _PQueue_pending, "f") === 0 && __classPrivateFieldGet(this, _PQueue_intervalId, "f")) {
+        clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, "f"));
+        __classPrivateFieldSet(this, _PQueue_intervalId, undefined, "f");
+    }
+    __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, "f") ? __classPrivateFieldGet(this, _PQueue_pending, "f") : 0, "f");
+    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
+}, _PQueue_processQueue = function _PQueue_processQueue() {
+    // eslint-disable-next-line no-empty
+    while (__classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this)) { }
+}, _PQueue_throwOnAbort = function _PQueue_throwOnAbort(signal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((_resolve, reject) => {
+            signal.addEventListener('abort', () => {
+                reject(new PQueueAbortError('The task was aborted.'));
+            }, { once: true });
+        });
+    });
+}, _PQueue_onEvent = function _PQueue_onEvent(event, filter) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve) => {
+            const listener = () => {
+                if (filter && !filter()) {
+                    return;
+                }
+                this.off(event, listener);
+                resolve();
+            };
+            this.on(event, listener);
+        });
+    });
+};
+/**
+ * ESM compatible port of https://www.npmjs.com/package/p-timeout
+ */
+function pTimeout(promise, options) {
+    const getDOMException = (errorMessage) => {
+        return globalThis.DOMException === undefined ? new PQueueAbortError(errorMessage) : new DOMException(errorMessage);
+    };
+    const getAbortedReason = (signal) => {
+        const reason = signal.reason === undefined ? getDOMException('This operation was aborted.') : signal.reason;
+        return reason instanceof Error ? reason : getDOMException(reason);
+    };
+    const { milliseconds, fallback, message, customTimers = { setTimeout, clearTimeout } } = options;
+    let timer;
+    const wrappedPromise = new Promise((resolve, reject) => {
+        if (typeof milliseconds !== 'number' || Math.sign(milliseconds) !== 1) {
+            throw new TypeError(`Expected \`milliseconds\` to be a positive number, got \`${milliseconds}\``);
+        }
+        if (options.signal) {
+            const { signal } = options;
+            if (signal.aborted) {
+                reject(getAbortedReason(signal));
+            }
+            signal.addEventListener('abort', () => {
+                reject(getAbortedReason(signal));
+            });
+        }
+        if (milliseconds === Number.POSITIVE_INFINITY) {
+            promise.then(resolve, reject);
+            return;
+        }
+        // We create the error outside of `setTimeout` to preserve the stack trace.
+        const timeoutError = new PQueueTimeoutError();
+        timer = customTimers.setTimeout.call(undefined, () => {
+            if (fallback) {
+                try {
+                    resolve(fallback());
+                }
+                catch (error) {
+                    reject(error);
+                }
+                return;
+            }
+            if (typeof promise.cancel === 'function') {
+                promise.cancel();
+            }
+            if (message === false) {
+                resolve(undefined);
+            }
+            else if (message instanceof Error) {
+                reject(message);
+            }
+            else {
+                timeoutError.message = message !== null && message !== void 0 ? message : `Promise timed out after ${milliseconds} milliseconds`;
+                reject(timeoutError);
+            }
+        }, milliseconds);
+        (() => __awaiter(this, void 0, void 0, function* () {
+            try {
+                resolve(yield promise);
+            }
+            catch (error) {
+                reject(error);
+            }
+        }))();
+    });
+    const cancelablePromise = wrappedPromise.finally(() => {
+        cancelablePromise.clear();
+    });
+    cancelablePromise.clear = () => {
+        customTimers.clearTimeout.call(undefined, timer);
+        timer = undefined;
+    };
+    return cancelablePromise;
+}
+/**
+ * The error thrown by `queue.add()` when a job is aborted before it is run. See `signal`.
+ */
+class PQueueAbortError extends Error {
+    constructor(message) {
+        super();
+        this.name = 'AbortError';
+        this.message = message;
+    }
+}
+class PQueueTimeoutError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'TimeoutError';
+    }
+}
+
+/**
+ * This function sets the name of a function and returns the function with the new name.
+ * @template T - The type of the function.
+ * @param name The new name to be set for the function.
+ * @param fun The function whose name is to be set.
+ * @returns The function with the new name.
+ * @example ```ts
+ * const myFun = () => 'Hello World';
+ * funSetName('newFun', myFun).name;;
+ * //=> 'newFun'
+ * ```
+ */
+function funSetName(name, fun) {
+    Object.defineProperty(fun, 'name', { value: name, configurable: true });
+    return fun;
+}
+
+/**
+ * Function call rate limiter / concurrency control.
+ * @param fun Function to be rate limited.
+ * @param options Options for the rate limiter.
+ * @example ```ts
+ * const [queue, waitSecondsLimited] = funAsyncRateLimit(waitSeconds, {
+ *   // Whether the task must finish in the given interval or will be carried over into the next interval count.
+ *   carryoverConcurrencyCount: false,
+ *   // max 50
+ *   intervalCap: 50,
+ *   // per minute
+ *   interval: 1000 * 60,
+ *   // max 3 concurrent
+ *   concurrency: 3,
+ *   // whether to start immediately when pushed to queue
+ *   autoStart: true,
+ *   priority: 0,
+ *   timeout: 0,
+ *   throwOnTimeout: false,
+ * })
+ *
+ * queue.onEmpty().then(() => {
+ *   console.log('Queue empty')
+ * })
+ *
+ * for (let i = 0; i < 7; i++) {
+ *   console.log({ i, inQueueBefore: queue.size })
+ *   waitSecondsLimited(2).then((returnValue) => {
+ *     console.log({ i, inQueueAfter: queue.size, returnValue })
+ *   })
+ * }
+ * //=> { i: 0, inQueueBefore: 0 }
+ * //=> { i: 1, inQueueBefore: 0 }
+ * //=> { i: 2, inQueueBefore: 0 }
+ * //=> { i: 3, inQueueBefore: 0 }
+ * //=> { i: 4, inQueueBefore: 1 }
+ * //=> { i: 5, inQueueBefore: 2 }
+ * //=> { i: 6, inQueueBefore: 3 }
+ * //=> Queue empty
+ * //=> { i: 0, inQueueAfter: 3, returnValue: undefined }
+ * //=> { i: 1, inQueueAfter: 2, returnValue: undefined }
+ * //=> { i: 2, inQueueAfter: 1, returnValue: undefined }
+ * //=> { i: 3, inQueueAfter: 0, returnValue: undefined }
+ * //=> { i: 4, inQueueAfter: 0, returnValue: undefined }
+ * //=> { i: 5, inQueueAfter: 0, returnValue: undefined }
+ * //=> { i: 6, inQueueAfter: 0, returnValue: undefined }
+ * ```
+ */
+function funAsyncRateLimit(fun, options = {}) {
+    const queue = new PQueue(options);
+    const wrapped = funSetName(fun.name, function (...args) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield queue.add(() => __awaiter(this, void 0, void 0, function* () {
+                return yield fun.call(queue, ...args);
+            }));
+        });
+    });
+    return [queue, wrapped];
+}
+
+/**
  * Merges two objects deeply, returning a new object that has the combined properties of both.
  * If a property exists in both objects, the value from the source object will be used.
  * @template T - The type of the target object.
@@ -783,27 +1318,10 @@ function setNonEnumerable(object, ...propertyNames) {
     }
 }
 
+/**
+ * A class representing an OpenAI API client.
+ */
 class OpenaiApiClientBase {
-    /**
-     * Handle the options passed to the constructor.
-     * @param options - The options to handle.
-     */
-    handleOptions(options) {
-        if (!options.cacheInit)
-            options.cacheInit = {};
-        if (!options.cacheInit.name)
-            options.cacheInit.name = 'OpenaiApiClient';
-        if (options.logAllEvents && options.cacheInit.logAllEvents === undefined) {
-            options.cacheInit.logAllEvents = true;
-        }
-        if (!options.apiKey)
-            options.apiKey = this.getDefaultApiKey();
-        if (options.logAllEvents)
-            this.logAllEvents();
-        this.emit('options', options);
-        objAssignDeep(this, objDeleteKeys(options, 'cacheInit', 'logAllEvents', 'apiKey'));
-        return options;
-    }
     /**
      * Create a new OpenaiApiClient instance.
      * @param options - The constructor options to use.
@@ -829,7 +1347,7 @@ class OpenaiApiClientBase {
          * Options for async-retry
          */
         this.retryDefaults = {
-            retries: 10,
+            retries: 15,
             factor: 1.5,
             onRetry: (error) => this.emit('retry', error),
         };
@@ -842,8 +1360,48 @@ class OpenaiApiClientBase {
         options = this.handleOptions(options);
         this.client = new openai.OpenAIApi(new openai.Configuration({ apiKey: options.apiKey }));
         this.cache = new ApiReponseCache(options.cacheInit);
-        setNonEnumerable(this, 'client');
         this.emit('ready', void 0);
+        const [queue, apiRequest] = funAsyncRateLimit(((request, retry, cache, apiRequest) => __awaiter(this, void 0, void 0, function* () {
+            const hash = this.cache.hashKey(request);
+            const results = yield asyncRetry(() => __awaiter(this, void 0, void 0, function* () {
+                if (cache.overwrite)
+                    yield this.cache.delete(hash);
+                return yield this.cache.getOrElse(hash, apiRequest);
+            }), retry);
+            return this.emit('response', results.join(this.apiDefaults.choicesDelimiter));
+        })).bind(this), {
+            intervalCap: 3450,
+            interval: 1000 * 60,
+            // Whether the task must finish in the given interval or will be carried over into the next interval count.
+            carryoverConcurrencyCount: false,
+            concurrency: 50,
+            autoStart: true,
+            //timeout: 0,
+            //throwOnTimeout: false,
+        });
+        this.queue = queue;
+        this._apiRequest = apiRequest;
+        setNonEnumerable(this, '_apiRequest');
+    }
+    /**
+     * Handle the options passed to the constructor.
+     * @param options - The options to handle.
+     */
+    handleOptions(options) {
+        if (!options.cacheInit)
+            options.cacheInit = {};
+        if (!options.cacheInit.name)
+            options.cacheInit.name = 'OpenaiApiClient';
+        if (options.logAllEvents && options.cacheInit.logAllEvents === undefined) {
+            options.cacheInit.logAllEvents = true;
+        }
+        if (!options.apiKey)
+            options.apiKey = this.getDefaultApiKey();
+        if (options.logAllEvents)
+            this.logAllEvents();
+        this.emit('options', options);
+        objAssignDeep(this, objDeleteKeys(options, 'cacheInit', 'logAllEvents', 'apiKey'));
+        return options;
     }
     /**
      * Send a completion request to the openai api.
@@ -1034,6 +1592,22 @@ class OpenaiApiClientBase {
      * @param retry - The retry options.
      * @param cache - The cache options.
      */
+    _transcribe(filepath, retry, cache) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // this.client.createTranscription(fs.createReadStream(filepath) as any, 'whisper-1', undefined, 'json', undefined, 'DA')
+            return yield this._apiRequest(filepath, retry, cache, () => __awaiter(this, void 0, void 0, function* () {
+                const { data } = yield this.client.createTranscription(fs.createReadStream(filepath), 'whisper-1', undefined, 'srt', undefined, 'DA');
+                return [JSON.stringify(data, null, 2)];
+            }));
+        });
+    }
+    /**
+     * Send chat request to the openai API.
+     * This is used by all the preset methods, the public methods: chat3_8, chat3_16, and chat4_8.
+     * @param request - The request object to send to the openai api.
+     * @param retry - The retry options.
+     * @param cache - The cache options.
+     */
     _chat(request, retry, cache) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this._apiRequest(request, retry, cache, () => __awaiter(this, void 0, void 0, function* () {
@@ -1066,17 +1640,19 @@ class OpenaiApiClientBase {
      * @param retry - The retry options.
      * @param cache - The cache options.
      */
-    _apiRequest(request, retry, cache, apiRequest) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const hash = this.cache.hashKey(request);
-            const results = yield asyncRetry(() => __awaiter(this, void 0, void 0, function* () {
-                if (cache.overwrite)
-                    yield this.cache.delete(hash);
-                return yield this.cache.getOrElse(hash, apiRequest);
-            }), retry);
-            return this.emit('response', results.join(this.apiDefaults.choicesDelimiter));
-        });
-    }
+    // protected async _apiRequest(
+    //   request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest,
+    //   retry: AsyncRetryOptions,
+    //   cache: IResponseCacheOptions,
+    //   apiRequest: () => Promise<string[]>,
+    // ): Promise<string> {
+    //   const hash = this.cache.hashKey(request)
+    //   const results = await asyncRetry(async () => {
+    //     if (cache.overwrite) await this.cache.delete(hash)
+    //     return await this.cache.getOrElse(hash, apiRequest)
+    //   }, retry)
+    //   return this.emit('response', results.join(this.apiDefaults.choicesDelimiter))
+    // }
     /**
      * Extract the actual concent from the 'choices' object from the response data.
      * @param choices - The choices object from the response data.
@@ -1639,38 +2215,6 @@ function arrSome(input, predicate) {
 }
 
 /**
- * Returns an index in the sorted array where the specified value could be inserted while maintaining the sorted order of the array.
- * If the element is already in the array, returns the index after the last instance of the element.
- * @param array - The sorted array to search.
- * @param value - The value to locate in the array.
- * @param comparator - A function that defines the sort order. If omitted, the array elements are converted to strings, then sorted according to each character's Unicode code point value.
- * @returns The index at which the value could be inserted into array to maintain the array's sorted order.
- * @example ```ts
- * const array = [1, 2, 3, 5, 6];
- * const value = 4;
- * const comparator = (a, b) => a - b;
- * const index = arrSortedLowerBound(array, value, comparator);
- * console.log(index); // Output: 3
- * ```
- */
-function arrSortedInsertionIndex(array, value, comparator) {
-    let first = 0;
-    let count = array.length;
-    while (count > 0) {
-        const step = Math.trunc(count / 2);
-        let it = first + step;
-        if (comparator(array[it], value) <= 0) {
-            first = ++it;
-            count -= step + 1;
-        }
-        else {
-            count = step;
-        }
-    }
-    return first;
-}
-
-/**
  * number, bigint, boolean comparator function (ascending)
  * @param a first value to compare
  * @param b second value to compare
@@ -2041,445 +2585,6 @@ function asyncWithTimeout(timeout, task) {
             reject(error);
         });
     });
-}
-
-var _PriorityQueue_queue;
-/**
- * A class representing a priority queue for async functions.
- */
-class PriorityQueue {
-    constructor() {
-        /**
-         * Queue of functions to run
-         */
-        _PriorityQueue_queue.set(this, []
-        /**
-         * Get the number of functions in the queue
-         */
-        );
-    }
-    /**
-     * Get the number of functions in the queue
-     */
-    get size() {
-        return __classPrivateFieldGet(this, _PriorityQueue_queue, "f").length;
-    }
-    /**
-     * Add a function to the queue
-     * @param run Function to run
-     * @param options Options for the queue
-     */
-    enqueue(run, options) {
-        options = Object.assign({ priority: 0 }, options);
-        const element = {
-            priority: options.priority,
-            run,
-        };
-        if (this.size && __classPrivateFieldGet(this, _PriorityQueue_queue, "f")[this.size - 1].priority >= options.priority) {
-            __classPrivateFieldGet(this, _PriorityQueue_queue, "f").push(element);
-            return;
-        }
-        const index = arrSortedInsertionIndex(__classPrivateFieldGet(this, _PriorityQueue_queue, "f"), element, (a, b) => b.priority - a.priority);
-        __classPrivateFieldGet(this, _PriorityQueue_queue, "f").splice(index, 0, element);
-    }
-    /**
-     * Remove a function from the queue
-     */
-    dequeue() {
-        const item = __classPrivateFieldGet(this, _PriorityQueue_queue, "f").shift();
-        return item === null || item === void 0 ? void 0 : item.run;
-    }
-    /**
-     * Get the functions with the given priority.
-     * @param options Options for the queue
-     */
-    filter(options) {
-        return __classPrivateFieldGet(this, _PriorityQueue_queue, "f")
-            .filter((element) => element.priority === options.priority)
-            .map((element) => element.run);
-    }
-}
-_PriorityQueue_queue = new WeakMap();
-
-var _PQueue_instances, _PQueue_carryoverConcurrencyCount, _PQueue_isIntervalIgnored, _PQueue_intervalCount, _PQueue_intervalCap, _PQueue_interval, _PQueue_intervalEnd, _PQueue_intervalId, _PQueue_timeoutId, _PQueue_queue, _PQueue_queueClass, _PQueue_pending, _PQueue_concurrency, _PQueue_isPaused, _PQueue_throwOnTimeout, _PQueue_doesIntervalAllowAnother_get, _PQueue_doesConcurrentAllowAnother_get, _PQueue_next, _PQueue_onResumeInterval, _PQueue_isIntervalPaused_get, _PQueue_tryToStartAnother, _PQueue_initializeIntervalIfNeeded, _PQueue_onInterval, _PQueue_processQueue, _PQueue_throwOnAbort, _PQueue_onEvent;
-/**
- * Promise queue with concurrency control.
- * ESM compatible port from https://www.npmjs.com/package/p-queue
- */
-class PQueue extends EventEmitter {
-    constructor(options) {
-        var _a, _b, _c, _d;
-        super();
-        _PQueue_instances.add(this);
-        _PQueue_carryoverConcurrencyCount.set(this, void 0);
-        _PQueue_isIntervalIgnored.set(this, void 0);
-        _PQueue_intervalCount.set(this, 0);
-        _PQueue_intervalCap.set(this, void 0);
-        _PQueue_interval.set(this, void 0);
-        _PQueue_intervalEnd.set(this, 0);
-        _PQueue_intervalId.set(this, void 0);
-        _PQueue_timeoutId.set(this, void 0);
-        _PQueue_queue.set(this, void 0);
-        _PQueue_queueClass.set(this, void 0);
-        _PQueue_pending.set(this, 0);
-        _PQueue_concurrency.set(this, void 0);
-        _PQueue_isPaused.set(this, void 0);
-        _PQueue_throwOnTimeout.set(this, void 0);
-        options = Object.assign({ carryoverConcurrencyCount: false, intervalCap: Number.POSITIVE_INFINITY, interval: 0, concurrency: Number.POSITIVE_INFINITY, autoStart: true, queueClass: PriorityQueue }, options);
-        if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
-            throw new TypeError(`Expected \`intervalCap\` to be a number from 1 and up, got \`${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\` (${typeof options.intervalCap})`);
-        }
-        if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
-            throw new TypeError(`Expected \`interval\` to be a finite number >= 0, got \`${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\` (${typeof options.interval})`);
-        }
-        __classPrivateFieldSet(this, _PQueue_carryoverConcurrencyCount, options.carryoverConcurrencyCount, "f");
-        __classPrivateFieldSet(this, _PQueue_isIntervalIgnored, options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0, "f");
-        __classPrivateFieldSet(this, _PQueue_intervalCap, options.intervalCap, "f");
-        __classPrivateFieldSet(this, _PQueue_interval, options.interval, "f");
-        __classPrivateFieldSet(this, _PQueue_queue, new options.queueClass(), "f");
-        __classPrivateFieldSet(this, _PQueue_queueClass, options.queueClass, "f");
-        this.concurrency = options.concurrency;
-        this.timeout = options.timeout;
-        __classPrivateFieldSet(this, _PQueue_throwOnTimeout, options.throwOnTimeout === true, "f");
-        __classPrivateFieldSet(this, _PQueue_isPaused, options.autoStart === false, "f");
-    }
-    get concurrency() {
-        return __classPrivateFieldGet(this, _PQueue_concurrency, "f");
-    }
-    set concurrency(newConcurrency) {
-        if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
-            throw new TypeError(`Expected \`concurrency\` to be a number from 1 and up, got \`${newConcurrency}\` (${typeof newConcurrency})`);
-        }
-        __classPrivateFieldSet(this, _PQueue_concurrency, newConcurrency, "f");
-        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
-    }
-    add(function_, options = {}) {
-        return __awaiter(this, void 0, void 0, function* () {
-            options = Object.assign({ timeout: this.timeout, throwOnTimeout: __classPrivateFieldGet(this, _PQueue_throwOnTimeout, "f") }, options);
-            return new Promise((resolve, reject) => {
-                __classPrivateFieldGet(this, _PQueue_queue, "f").enqueue(() => __awaiter(this, void 0, void 0, function* () {
-                    var _a;
-                    var _b, _c;
-                    __classPrivateFieldSet(this, _PQueue_pending, (_b = __classPrivateFieldGet(this, _PQueue_pending, "f"), _b++, _b), "f");
-                    __classPrivateFieldSet(this, _PQueue_intervalCount, (_c = __classPrivateFieldGet(this, _PQueue_intervalCount, "f"), _c++, _c), "f");
-                    try {
-                        if ((_a = options.signal) === null || _a === void 0 ? void 0 : _a.aborted) {
-                            throw new PQueueAbortError('The task was aborted.');
-                        }
-                        let operation = function_({ signal: options.signal });
-                        if (options.timeout) {
-                            operation = pTimeout(Promise.resolve(operation), options.timeout);
-                        }
-                        if (options.signal) {
-                            operation = Promise.race([operation, __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_throwOnAbort).call(this, options.signal)]);
-                        }
-                        const result = yield operation;
-                        resolve(result);
-                        this.emit('completed', result);
-                    }
-                    catch (error) {
-                        if (error instanceof PQueueTimeoutError && !options.throwOnTimeout) {
-                            resolve();
-                            return;
-                        }
-                        reject(error);
-                        this.emit('error', error);
-                    }
-                    finally {
-                        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_next).call(this);
-                    }
-                }), options);
-                this.emit('add');
-                __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this);
-            });
-        });
-    }
-    addAll(functions, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return Promise.all(functions.map((function_) => __awaiter(this, void 0, void 0, function* () { return this.add(function_, options); })));
-        });
-    }
-    /**
-     * Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via `options.autoStart = false` or by `.pause()` method.)
-     */
-    start() {
-        if (!__classPrivateFieldGet(this, _PQueue_isPaused, "f")) {
-            return this;
-        }
-        __classPrivateFieldSet(this, _PQueue_isPaused, false, "f");
-        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
-        return this;
-    }
-    /**
-     * Put queue execution on hold.
-     */
-    pause() {
-        __classPrivateFieldSet(this, _PQueue_isPaused, true, "f");
-    }
-    /**
-     * Clear the queue.
-     */
-    clear() {
-        __classPrivateFieldSet(this, _PQueue_queue, new (__classPrivateFieldGet(this, _PQueue_queueClass, "f"))(), "f");
-    }
-    /**
-     * Can be called multiple times. Useful if you for example add additional items at a later time.
-     * @returns A promise that settles when the queue becomes empty.
-     */
-    onEmpty() {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Instantly resolve if the queue is empty
-            if (__classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
-                return;
-            }
-            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'empty');
-        });
-    }
-    /**
-     * @returns A promise that settles when the queue size is less than the given limit: `queue.size < limit`.
-     * If you want to avoid having the queue grow beyond a certain size you can `await queue.onSizeLessThan()` before adding a new item.
-     * Note that this only limits the number of items waiting to start. There could still be up to `concurrency` jobs already running that this call does not include in its calculation.
-     */
-    onSizeLessThan(limit) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Instantly resolve if the queue is empty.
-            if (__classPrivateFieldGet(this, _PQueue_queue, "f").size < limit) {
-                return;
-            }
-            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'next', () => __classPrivateFieldGet(this, _PQueue_queue, "f").size < limit);
-        });
-    }
-    /**
-     * The difference with `.onEmpty` is that `.onIdle` guarantees that all work from the queue has finished. `.onEmpty` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
-     * @returns A promise that settles when the queue becomes empty, and all promises have completed; `queue.size === 0 && queue.pending === 0`.
-     */
-    onIdle() {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Instantly resolve if none pending and if nothing else is queued
-            if (__classPrivateFieldGet(this, _PQueue_pending, "f") === 0 && __classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
-                return;
-            }
-            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'idle');
-        });
-    }
-    /**
-     * Size of the queue, the number of queued items waiting to run.
-     */
-    get size() {
-        return __classPrivateFieldGet(this, _PQueue_queue, "f").size;
-    }
-    /**
-     * Size of the queue, filtered by the given options.
-     * For example, this can be used to find the number of items remaining in the queue with a specific priority level.
-     */
-    sizeBy(options) {
-        return __classPrivateFieldGet(this, _PQueue_queue, "f").filter(options).length;
-    }
-    /**
-     * Number of running items (no longer in the queue).
-     */
-    get pending() {
-        return __classPrivateFieldGet(this, _PQueue_pending, "f");
-    }
-    /**
-     * Whether the queue is currently paused.
-     */
-    get isPaused() {
-        return __classPrivateFieldGet(this, _PQueue_isPaused, "f");
-    }
-}
-_PQueue_carryoverConcurrencyCount = new WeakMap(), _PQueue_isIntervalIgnored = new WeakMap(), _PQueue_intervalCount = new WeakMap(), _PQueue_intervalCap = new WeakMap(), _PQueue_interval = new WeakMap(), _PQueue_intervalEnd = new WeakMap(), _PQueue_intervalId = new WeakMap(), _PQueue_timeoutId = new WeakMap(), _PQueue_queue = new WeakMap(), _PQueue_queueClass = new WeakMap(), _PQueue_pending = new WeakMap(), _PQueue_concurrency = new WeakMap(), _PQueue_isPaused = new WeakMap(), _PQueue_throwOnTimeout = new WeakMap(), _PQueue_instances = new WeakSet(), _PQueue_doesIntervalAllowAnother_get = function _PQueue_doesIntervalAllowAnother_get() {
-    return __classPrivateFieldGet(this, _PQueue_isIntervalIgnored, "f") || __classPrivateFieldGet(this, _PQueue_intervalCount, "f") < __classPrivateFieldGet(this, _PQueue_intervalCap, "f");
-}, _PQueue_doesConcurrentAllowAnother_get = function _PQueue_doesConcurrentAllowAnother_get() {
-    return __classPrivateFieldGet(this, _PQueue_pending, "f") < __classPrivateFieldGet(this, _PQueue_concurrency, "f");
-}, _PQueue_next = function _PQueue_next() {
-    var _a;
-    __classPrivateFieldSet(this, _PQueue_pending, (_a = __classPrivateFieldGet(this, _PQueue_pending, "f"), _a--, _a), "f");
-    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this);
-    this.emit('next');
-}, _PQueue_onResumeInterval = function _PQueue_onResumeInterval() {
-    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onInterval).call(this);
-    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_initializeIntervalIfNeeded).call(this);
-    __classPrivateFieldSet(this, _PQueue_timeoutId, undefined, "f");
-}, _PQueue_isIntervalPaused_get = function _PQueue_isIntervalPaused_get() {
-    const now = Date.now();
-    if (__classPrivateFieldGet(this, _PQueue_intervalId, "f") === undefined) {
-        const delay = __classPrivateFieldGet(this, _PQueue_intervalEnd, "f") - now;
-        if (delay < 0) {
-            // Act as the interval was done
-            // We don't need to resume it here because it will be resumed on line 160
-            __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, "f") ? __classPrivateFieldGet(this, _PQueue_pending, "f") : 0, "f");
-        }
-        else {
-            // Act as the interval is pending
-            if (__classPrivateFieldGet(this, _PQueue_timeoutId, "f") === undefined) {
-                __classPrivateFieldSet(this, _PQueue_timeoutId, setTimeout(() => {
-                    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onResumeInterval).call(this);
-                }, delay), "f");
-            }
-            return true;
-        }
-    }
-    return false;
-}, _PQueue_tryToStartAnother = function _PQueue_tryToStartAnother() {
-    if (__classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
-        // We can clear the interval ("pause")
-        // Because we can redo it later ("resume")
-        if (__classPrivateFieldGet(this, _PQueue_intervalId, "f")) {
-            clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, "f"));
-        }
-        __classPrivateFieldSet(this, _PQueue_intervalId, undefined, "f");
-        this.emit('empty');
-        if (__classPrivateFieldGet(this, _PQueue_pending, "f") === 0) {
-            this.emit('idle');
-        }
-        return false;
-    }
-    if (!__classPrivateFieldGet(this, _PQueue_isPaused, "f")) {
-        const canInitializeInterval = !__classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_isIntervalPaused_get);
-        if (__classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_doesIntervalAllowAnother_get) && __classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_doesConcurrentAllowAnother_get)) {
-            const job = __classPrivateFieldGet(this, _PQueue_queue, "f").dequeue();
-            if (!job) {
-                return false;
-            }
-            this.emit('active');
-            job();
-            if (canInitializeInterval) {
-                __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_initializeIntervalIfNeeded).call(this);
-            }
-            return true;
-        }
-    }
-    return false;
-}, _PQueue_initializeIntervalIfNeeded = function _PQueue_initializeIntervalIfNeeded() {
-    if (__classPrivateFieldGet(this, _PQueue_isIntervalIgnored, "f") || __classPrivateFieldGet(this, _PQueue_intervalId, "f") !== undefined) {
-        return;
-    }
-    __classPrivateFieldSet(this, _PQueue_intervalId, setInterval(() => {
-        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onInterval).call(this);
-    }, __classPrivateFieldGet(this, _PQueue_interval, "f")), "f");
-    __classPrivateFieldSet(this, _PQueue_intervalEnd, Date.now() + __classPrivateFieldGet(this, _PQueue_interval, "f"), "f");
-}, _PQueue_onInterval = function _PQueue_onInterval() {
-    if (__classPrivateFieldGet(this, _PQueue_intervalCount, "f") === 0 && __classPrivateFieldGet(this, _PQueue_pending, "f") === 0 && __classPrivateFieldGet(this, _PQueue_intervalId, "f")) {
-        clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, "f"));
-        __classPrivateFieldSet(this, _PQueue_intervalId, undefined, "f");
-    }
-    __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, "f") ? __classPrivateFieldGet(this, _PQueue_pending, "f") : 0, "f");
-    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
-}, _PQueue_processQueue = function _PQueue_processQueue() {
-    // eslint-disable-next-line no-empty
-    while (__classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this)) { }
-}, _PQueue_throwOnAbort = function _PQueue_throwOnAbort(signal) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((_resolve, reject) => {
-            signal.addEventListener('abort', () => {
-                reject(new PQueueAbortError('The task was aborted.'));
-            }, { once: true });
-        });
-    });
-}, _PQueue_onEvent = function _PQueue_onEvent(event, filter) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve) => {
-            const listener = () => {
-                if (filter && !filter()) {
-                    return;
-                }
-                this.off(event, listener);
-                resolve();
-            };
-            this.on(event, listener);
-        });
-    });
-};
-/**
- * ESM compatible port of https://www.npmjs.com/package/p-timeout
- */
-function pTimeout(promise, options) {
-    const getDOMException = (errorMessage) => {
-        return globalThis.DOMException === undefined ? new PQueueAbortError(errorMessage) : new DOMException(errorMessage);
-    };
-    const getAbortedReason = (signal) => {
-        const reason = signal.reason === undefined ? getDOMException('This operation was aborted.') : signal.reason;
-        return reason instanceof Error ? reason : getDOMException(reason);
-    };
-    const { milliseconds, fallback, message, customTimers = { setTimeout, clearTimeout } } = options;
-    let timer;
-    const wrappedPromise = new Promise((resolve, reject) => {
-        if (typeof milliseconds !== 'number' || Math.sign(milliseconds) !== 1) {
-            throw new TypeError(`Expected \`milliseconds\` to be a positive number, got \`${milliseconds}\``);
-        }
-        if (options.signal) {
-            const { signal } = options;
-            if (signal.aborted) {
-                reject(getAbortedReason(signal));
-            }
-            signal.addEventListener('abort', () => {
-                reject(getAbortedReason(signal));
-            });
-        }
-        if (milliseconds === Number.POSITIVE_INFINITY) {
-            promise.then(resolve, reject);
-            return;
-        }
-        // We create the error outside of `setTimeout` to preserve the stack trace.
-        const timeoutError = new PQueueTimeoutError();
-        timer = customTimers.setTimeout.call(undefined, () => {
-            if (fallback) {
-                try {
-                    resolve(fallback());
-                }
-                catch (error) {
-                    reject(error);
-                }
-                return;
-            }
-            if (typeof promise.cancel === 'function') {
-                promise.cancel();
-            }
-            if (message === false) {
-                resolve(undefined);
-            }
-            else if (message instanceof Error) {
-                reject(message);
-            }
-            else {
-                timeoutError.message = message !== null && message !== void 0 ? message : `Promise timed out after ${milliseconds} milliseconds`;
-                reject(timeoutError);
-            }
-        }, milliseconds);
-        (() => __awaiter(this, void 0, void 0, function* () {
-            try {
-                resolve(yield promise);
-            }
-            catch (error) {
-                reject(error);
-            }
-        }))();
-    });
-    const cancelablePromise = wrappedPromise.finally(() => {
-        cancelablePromise.clear();
-    });
-    cancelablePromise.clear = () => {
-        customTimers.clearTimeout.call(undefined, timer);
-        timer = undefined;
-    };
-    return cancelablePromise;
-}
-/**
- * The error thrown by `queue.add()` when a job is aborted before it is run. See `signal`.
- */
-class PQueueAbortError extends Error {
-    constructor(message) {
-        super();
-        this.name = 'AbortError';
-        this.message = message;
-    }
-}
-class PQueueTimeoutError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'TimeoutError';
-    }
 }
 
 /**
@@ -3037,25 +3142,6 @@ class Matrix {
 }
 
 /**
- * Sets non-enumerable private properties of an object.
- * Private properties are determined by the convention of prefixing the property name with an underscore.
- * @remarks This function modifies the original object by setting its private properties as non-enumerable.
- * @param object The object whose private properties are to be set as non-enumerable.
- * @example ```ts
- * const obj = { _private: 'secret', public: 'hello world' };
- * setNonEnumerablePrivateProperties(obj);
- * for (let key in obj) {
- *   key;;
- * //=> 'public'
- * }
- * ```
- * @returns void
- */
-function setNonEnumerablePrivateProperties(object) {
-    setNonEnumerable(object, ...Object.keys(object).filter((key) => key.charAt(0) === '_'));
-}
-
-/**
  * Abstract class that other classes can inherit from to gain various handy functionality.
  */
 class MixinBase {
@@ -3064,12 +3150,6 @@ class MixinBase {
     }
     getPrototype() {
         return Object.getPrototypeOf(this);
-    }
-    /**
-     * Make the properties with property names that start with an underscore non-enumerable.
-     */
-    setNonEnumerablePrivateProperties() {
-        setNonEnumerablePrivateProperties(this);
     }
     /**
      * Make the properties with the given property names non-enumerable.
@@ -3116,6 +3196,7 @@ class Queue extends MixinBase {
     }
 }
 
+var _SimpleTable_colIndexMap, _SimpleTable_headers, _SimpleTable_data;
 /**
  * Two-dimensional table class supporting column and row headers.
  * @template T The type of the data in the table.
@@ -3139,65 +3220,77 @@ class SimpleTable extends MixinBase {
         /**
          * Map from column names to column indices.
          */
-        this._colIndexMap = {};
+        _SimpleTable_colIndexMap.set(this, {}
+        /**
+         * The headers of the table.
+         */
+        );
+        /**
+         * The headers of the table.
+         */
+        _SimpleTable_headers.set(this, void 0);
         /**
          * The data of the table.
          */
-        this._data = [];
+        _SimpleTable_data.set(this, []
+        /**
+         * Revive a stringified Table object.
+         * @param json a stringified Table object.
+         */
+        );
         if (headers) {
-            this._headers = headers.slice();
-            this._data = data.map((row) => {
+            __classPrivateFieldSet(this, _SimpleTable_headers, headers.slice(), "f");
+            __classPrivateFieldSet(this, _SimpleTable_data, data.map((row) => {
                 this.assertRowValidLength(row);
                 return row.slice();
-            });
+            }), "f");
         }
         else {
-            this._headers = data[0].map((header) => '' + header);
-            this._data = data.slice(1).map((row) => {
+            __classPrivateFieldSet(this, _SimpleTable_headers, data[0].map((header) => '' + header), "f");
+            __classPrivateFieldSet(this, _SimpleTable_data, data.slice(1).map((row) => {
                 this.assertRowValidLength(row);
                 return row.slice();
-            });
+            }), "f");
         }
-        if (!this._headers.length)
+        if (!__classPrivateFieldGet(this, _SimpleTable_headers, "f").length)
             throw new Error('Table must have at least one column.');
-        if (!this._data.length)
+        if (!__classPrivateFieldGet(this, _SimpleTable_data, "f").length)
             throw new Error('Table must have at least one row.');
-        this._headers.forEach((header, i) => {
-            this._colIndexMap[header] = i;
+        __classPrivateFieldGet(this, _SimpleTable_headers, "f").forEach((header, i) => {
+            __classPrivateFieldGet(this, _SimpleTable_colIndexMap, "f")[header] = i;
         });
-        this.setNonEnumerablePrivateProperties();
     }
     /**
      * Checks if a row has the correct length.
      * @param row The row to check.
      */
     assertRowValidLength(row) {
-        if (row.length !== this._headers.length)
+        if (row.length !== __classPrivateFieldGet(this, _SimpleTable_headers, "f").length)
             throw new Error('Row length does not match headers length.');
     }
     /**
      * Gets the number of cols in the table, not including headers.
      */
     get numColumns() {
-        return this._data[0].length;
+        return __classPrivateFieldGet(this, _SimpleTable_data, "f")[0].length;
     }
     /**
      * Gets the number of rows in the table, not including headers.
      */
     get numRows() {
-        return this._data.length;
+        return __classPrivateFieldGet(this, _SimpleTable_data, "f").length;
     }
     /**
      * Gets the column headers.
      */
     get headers() {
-        return this._headers.slice();
+        return __classPrivateFieldGet(this, _SimpleTable_headers, "f").slice();
     }
     /**
      * Returns the table as a two-dimensional array, without column headers.
      */
     get data() {
-        return this._data.slice().map((row) => row.slice());
+        return __classPrivateFieldGet(this, _SimpleTable_data, "f").slice().map((row) => row.slice());
     }
     /**
      * Returns a value at a given (row, col) position.
@@ -3206,9 +3299,9 @@ class SimpleTable extends MixinBase {
      */
     get(column, row) {
         if (typeof column === 'string') {
-            column = this._colIndexMap[column];
+            column = __classPrivateFieldGet(this, _SimpleTable_colIndexMap, "f")[column];
         }
-        return this._data[row][column];
+        return __classPrivateFieldGet(this, _SimpleTable_data, "f")[row][column];
     }
     /**
      * Inserts a given value at a given (row, col) position.
@@ -3218,9 +3311,9 @@ class SimpleTable extends MixinBase {
      */
     set(column, row, value) {
         if (typeof column === 'string') {
-            column = this._colIndexMap[column];
+            column = __classPrivateFieldGet(this, _SimpleTable_colIndexMap, "f")[column];
         }
-        this._data[row][column] = value;
+        __classPrivateFieldGet(this, _SimpleTable_data, "f")[row][column] = value;
         return this;
     }
     /**
@@ -3235,11 +3328,12 @@ class SimpleTable extends MixinBase {
      */
     toJSON() {
         return {
-            headers: this._headers,
-            data: this._data,
+            headers: __classPrivateFieldGet(this, _SimpleTable_headers, "f"),
+            data: __classPrivateFieldGet(this, _SimpleTable_data, "f"),
         };
     }
 }
+_SimpleTable_colIndexMap = new WeakMap(), _SimpleTable_headers = new WeakMap(), _SimpleTable_data = new WeakMap();
 
 /**
  * Number comparator function (ascending)
@@ -4420,83 +4514,6 @@ class ExtensibleFunction extends Function {
     }
 }
 
-/**
- * This function sets the name of a function and returns the function with the new name.
- * @template T - The type of the function.
- * @param name The new name to be set for the function.
- * @param fun The function whose name is to be set.
- * @returns The function with the new name.
- * @example ```ts
- * const myFun = () => 'Hello World';
- * funSetName('newFun', myFun).name;;
- * //=> 'newFun'
- * ```
- */
-function funSetName(name, fun) {
-    Object.defineProperty(fun, 'name', { value: name, configurable: true });
-    return fun;
-}
-
-/**
- * Function call rate limiter / concurrency control.
- * @param fun Function to be rate limited.
- * @param options Options for the rate limiter.
- * @example ```ts
- * const [queue, waitSecondsLimited] = funAsyncRateLimit(waitSeconds, {
- *   // Whether the task must finish in the given interval or will be carried over into the next interval count.
- *   carryoverConcurrencyCount: false,
- *   // max 50
- *   intervalCap: 50,
- *   // per minute
- *   interval: 1000 * 60,
- *   // max 3 concurrent
- *   concurrency: 3,
- *   // whether to start immediately when pushed to queue
- *   autoStart: true,
- *   priority: 0,
- *   timeout: 0,
- *   throwOnTimeout: false,
- * })
- *
- * queue.onEmpty().then(() => {
- *   console.log('Queue empty')
- * })
- *
- * for (let i = 0; i < 7; i++) {
- *   console.log({ i, inQueueBefore: queue.size })
- *   waitSecondsLimited(2).then((returnValue) => {
- *     console.log({ i, inQueueAfter: queue.size, returnValue })
- *   })
- * }
- * //=> { i: 0, inQueueBefore: 0 }
- * //=> { i: 1, inQueueBefore: 0 }
- * //=> { i: 2, inQueueBefore: 0 }
- * //=> { i: 3, inQueueBefore: 0 }
- * //=> { i: 4, inQueueBefore: 1 }
- * //=> { i: 5, inQueueBefore: 2 }
- * //=> { i: 6, inQueueBefore: 3 }
- * //=> Queue empty
- * //=> { i: 0, inQueueAfter: 3, returnValue: undefined }
- * //=> { i: 1, inQueueAfter: 2, returnValue: undefined }
- * //=> { i: 2, inQueueAfter: 1, returnValue: undefined }
- * //=> { i: 3, inQueueAfter: 0, returnValue: undefined }
- * //=> { i: 4, inQueueAfter: 0, returnValue: undefined }
- * //=> { i: 5, inQueueAfter: 0, returnValue: undefined }
- * //=> { i: 6, inQueueAfter: 0, returnValue: undefined }
- * ```
- */
-function funAsyncRateLimit(fun, options = {}) {
-    const queue = new PQueue(options);
-    const result = funSetName(fun.name, function (...args) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield queue.add(() => __awaiter(this, void 0, void 0, function* () {
-                return yield fun.call(queue, ...args);
-            }));
-        });
-    });
-    return [queue, result];
-}
-
 function funParseClass(ctor) {
     var _a, _b, _c;
     const node = (_a = esprima.parseScript(ctor.toString(), {
@@ -4999,93 +5016,6 @@ class StringStream extends stream.Readable {
 }
 
 /**
- * Checks if a number is greater than a given lower bound.
- * @param number The number to check.
- * @param lowerBound The lower bound to compare against.
- * @returns A boolean indicating whether the number is greater than the lower bound.
- * @example ```ts
- * isGT(5, 3);;
- * //=> true
- * isGT(2, 3);;
- * //=> false
- * ```
- */
-function isGT(number, lowerBound) {
-    return number > lowerBound;
-}
-
-/**
- * Checks if a number is greater than or equal to a lower bound.
- * @param number The number to check.
- * @param lowerBound The lower bound to compare against.
- * @returns A boolean indicating whether the number is greater than or equal to the lower bound.
- * @example ```ts
- * isGTE(5, 3); ;
- * //=> true
- * isGTE(2, 3); ;
- * //=> false
- * ```
- */
-function isGTE(number, lowerBound) {
-    return number >= lowerBound;
-}
-
-/**
- * Checks if a number is less than or equal to an upper bound.
- * @param number The number to check.
- * @param upperBound The upper bound to compare against.
- * @returns A boolean indicating whether the number is less than or equal to the upper bound.
- * @example ```ts
- * isLTE(5, 10); ;
- * //=> true
- * isLTE(15, 10);;
- * //=> false
- * ```
- */
-function isLTE(number, upperBound) {
-    return number <= upperBound;
-}
-
-/**
- * Checks if a number is less than an upper bound.
- * @remarks This function is part of the `NumberUtils` library.
- * @param number The number to check.
- * @param upperBound The upper bound to compare against.
- * @returns A boolean indicating whether the number is less than the upper bound.
- * @example ```ts
- * import { isLT } from './NumberUtils';
- * isLT(5, 10); ;
- * //=> true
- * isLT(10, 5); ;
- * //=> false
- * ```
- */
-function isLT(number, upperBound) {
-    return number < upperBound;
-}
-
-/**
- * Checks if a number is between two other numbers.
- * @param n The number to check.
- * @param min The minimum boundary.
- * @param max The maximum boundary.
- * @param minExcl If true, the minimum boundary is exclusive. Default is false.
- * @param maxExcl If true, the maximum boundary is exclusive. Default is false.
- * @returns A boolean indicating whether the number is between the two boundaries.
- * @example ```ts
- * isBetween(5, 1, 10);
- * //=> true
- * isBetween(1, 1, 10);
- * //=> true
- * isBetween(1, 1, 10, true);
- * //=> false
- * ```
- */
-function isBetween(n, min, max, minExcl = false, maxExcl = false) {
-    return (minExcl ? isGT : isGTE)(n, min) && (maxExcl ? isLT : isLTE)(n, max);
-}
-
-/**
  * Checks if a number is even.
  * @remarks This function will throw an error if the provided value is not an integer.
  * @param n The number to check.
@@ -5128,7 +5058,7 @@ function isEven(n) {
  * ```
  */
 function isInRange(n, range, exclusive = [false, false]) {
-    return isBetween(n, ...range, ...exclusive);
+    return (exclusive[0] ? n > range[0] : n >= range[0]) && (exclusive[1] ? n < range[1] : n <= range[1]);
 }
 
 /**
@@ -5217,9 +5147,9 @@ function roundWith(number, precision, func = Math.round) {
  * @returns The rounded number.
  * @throws if the given number is not finite or NaN.
  * @example ```ts
- * round(1.2345, 2);;
+ * round(1.2345, 2);
  * //=> 1.23
- * round(1.2345);;
+ * round(1.2345);
  * //=> 1
  * ```
  */
@@ -6481,6 +6411,752 @@ function pdfSplitPages(filepath, outputDirpath) {
 }
 
 /**
+ * Abstract class represents a subtitle of no specific format.
+ */
+class _AbstractSubtitle {
+    /**
+     * Creates a new Subtitle instance.
+     * @param interval The time interval of the subtitle.
+     * @param text The text of the subtitle.
+     */
+    constructor(interval, text) {
+        this.interval = interval;
+        this.text = text;
+    }
+}
+
+/**
+ * Represents a single subtitle in the SRT format.
+ */
+class SRTSubtitle extends _AbstractSubtitle {
+    /**
+     * Creates a new SRTSubtitle instance.
+     * @param interval The time interval of the subtitle.
+     * @param text The text of the subtitle.
+     */
+    constructor(interval, text) {
+        super(interval, text);
+    }
+    /**
+     * Renders the subtitle as a string in the SRT format.
+     */
+    toString() {
+        return `${this.interval.toString(' --> ', ',')}\n${this.text}`;
+    }
+}
+
+/**
+ * Checks if the given number is a valid hour in the 24-hour format.
+ * @remarks
+ * This function checks if the given number is an integer and falls within the range of 0 to 23 (inclusive).
+ * @param n - The number to be checked.
+ * @returns A boolean indicating whether the number is a valid hour or not.
+ * @example ```ts
+ * isValidHours(12);  // returns true
+ * isValidHours(24);  // returns false
+ * isValidHours(15.5);  // returns false
+ * ```
+ */
+function isValidHours(n) {
+    return n >= 0 && n <= 23 && Number.isInteger(n);
+}
+
+/**
+ * Asserts that the given number is a valid hour (between 0 and 23).
+ * If the number is not a valid hour, it throws an error.
+ * @param n - The number to be validated.
+ * @throws Will throw an error if the number is not a valid hour.
+ * @example ```ts
+ * assertValidHours(12); // No error
+ * assertValidHours(24); // Throws Error: 'Expected hours to be between 0 and 23. Got: 24'
+ * ```
+ */
+function assertValidHours(n) {
+    if (!isValidHours(n))
+        throw new Error('Expected hours to be between 0 and 23. Got: ' + n);
+}
+
+/**
+ * Checks if the given number is a valid millisecond value.
+ * A valid millisecond value is an integer between 0 and 999 inclusive.
+ * @param n - The number to check.
+ * @returns A boolean indicating whether the number is a valid millisecond value.
+ * @example ```ts
+ * isValidMilliseconds(500); // returns true
+ * isValidMilliseconds(1000); // returns false
+ * isValidMilliseconds(-1); // returns false
+ * ```
+ */
+function isValidMilliseconds(n) {
+    return n >= 0 && n <= 999 && Number.isInteger(n);
+}
+
+/**
+ * Asserts that the provided number is a valid millisecond value.
+ * @remarks
+ * This function throws an error if the provided number is not a valid millisecond value (i.e., between 0 and 999).
+ * @param n - The number to be validated.
+ * @throws Will throw an error if the provided number is not a valid millisecond value.
+ * @example ```ts
+ * assertValidMilliseconds(500); // No error
+ * assertValidMilliseconds(1000); // Throws error
+ * ```
+ */
+function assertValidMilliseconds(n) {
+    if (!isValidMilliseconds(n))
+        throw new Error('Expected milliseconds to be between 0 and 999. Got: ' + n);
+}
+
+/**
+ * Checks if the given number is a valid minute value.
+ * @remarks
+ * This function checks if the given number is an integer between 0 and 59, inclusive.
+ * @param n - The number to check.
+ * @returns A boolean indicating whether the number is a valid minute value.
+ * @example ```ts
+ * isValidMinutes(30); // returns true
+ * isValidMinutes(60); // returns false
+ * ```
+ */
+function isValidMinutes(n) {
+    return n >= 0 && n <= 59 && Number.isInteger(n);
+}
+
+/**
+ * Asserts that the provided number is a valid minute value (between 0 and 59).
+ * If the number is not valid, it throws an error.
+ * @param n - The number to be validated.
+ * @throws Will throw an error if the number is not a valid minute value.
+ * @example ```ts
+ * assertValidMinutes(30); // No error
+ * assertValidMinutes(60); // Throws Error: 'Expected minutes to be between 0 and 59. Got: 60'
+ * ```
+ */
+function assertValidMinutes(n) {
+    if (!isValidMinutes(n))
+        throw new Error('Expected minutes to be between 0 and 59. Got: ' + n);
+}
+
+/**
+ * Checks if the given number is a valid second value.
+ * @remarks
+ * This function checks if the given number is an integer between 0 and 59 (inclusive).
+ * @param n - The number to check.
+ * @returns A boolean indicating whether the number is a valid second value.
+ * @example ```ts
+ * isValidSeconds(30);  // returns true
+ * isValidSeconds(60);  // returns false
+ * isValidSeconds(30.5);  // returns false
+ * ```
+ */
+function isValidSeconds(n) {
+    return n >= 0 && n <= 59 && Number.isInteger(n);
+}
+
+/**
+ * Asserts whether the provided number is a valid second value.
+ * @remarks
+ * This function throws an error if the provided number is not a valid second value (i.e., between 0 and 59).
+ * @param n - The number to be validated.
+ * @throws Will throw an error if the provided number is not a valid second value.
+ * @example ```ts
+ * assertValidSeconds(30); // No error
+ * assertValidSeconds(60); // Throws error
+ * ```
+ */
+function assertValidSeconds(n) {
+    if (!isValidSeconds(n))
+        throw new Error('Expected seconds to be between 0 and 59. Got: ' + n);
+}
+
+/**
+ * Checks if a given number is a valid time integer.
+ * A valid time integer is between 0 and 86399999 (inclusive) and is an integer.
+ * @param n - The number to be checked.
+ * @returns A boolean indicating whether the number is a valid time integer.
+ * @example ```ts
+ * isValidTimeInt(50000); // returns true
+ * isValidTimeInt(90000000); // returns false
+ * ```
+ */
+function isValidTimeInt(n) {
+    return n >= 0 && n < 86400000 && Number.isInteger(n);
+}
+
+/**
+ * Asserts that the provided number is a valid time integer.
+ * A valid time integer is between 0 and 86399999, inclusive.
+ * If the number is not valid, an error is thrown.
+ * @param n - The number to be validated.
+ * @throws Will throw an error if the number is not a valid time integer.
+ * @example ```ts
+ * assertValidTimeInt(50000); // No error
+ * assertValidTimeInt(90000000); // Throws Error: 'Expected time int to be between 0 and 86399999. Got: 90000000'
+ * ```
+ */
+function assertValidTimeInt(n) {
+    if (!isValidTimeInt(n))
+        throw new Error('Expected time int to be between 0 and 86399999. Got: ' + n);
+}
+
+/**
+ * Asserts that the provided hours, minutes, seconds, and milliseconds are valid.
+ * Throws an error if any of the provided values are not valid.
+ * @param hours - The hours to validate. Must be a number between 0 and 23.
+ * @param minutes - The minutes to validate. Must be a number between 0 and 59.
+ * @param seconds - The seconds to validate. Must be a number between 0 and 59.
+ * @param milliseconds - The milliseconds to validate. Must be a number between 0 and 999.
+ * @throws If any of the provided values are not valid.
+ * @example ```ts
+ * assertValidTime(12, 30, 45, 500); // No error thrown
+ * assertValidTime(24, 60, 60, 1000); // Error thrown
+ * ```
+ */
+function assertValidTime(hours, minutes, seconds, milliseconds) {
+    assertValidHours(hours);
+    assertValidMinutes(minutes);
+    assertValidSeconds(seconds);
+    assertValidMilliseconds(milliseconds);
+}
+
+/**
+ * Asserts whether the provided array is a valid time array.
+ * A valid time array is an array of four numbers, where the first two numbers represent hours and minutes, and the last two numbers represent seconds and milliseconds.
+ * Throws an error if the array is not valid.
+ * @param array - The array to be validated.
+ * @throws Will throw an error if the array length is not 4.
+ * @example ```ts
+ * assertValidTimeArray([12, 30, 45, 500]); // No error
+ * assertValidTimeArray([12, 30, 45]); // Throws Error: 'Expected array of length 4.'
+ * ```
+ */
+function assertValidTimeArray(array) {
+    if (array.length !== 4)
+        throw new Error('Expected array of length 4.');
+    assertValidTime(array[0], array[1], array[2], array[3]);
+}
+
+/**
+ * Converts an array of time values into an integer.
+ * The array should contain four elements representing hours, minutes, seconds, and milliseconds respectively.
+ * This function does not perform any safety checks, so it's up to the caller to ensure the input is valid.
+ * @remarks This function does not perform any safety checks, so it's up to the caller to ensure the input is valid.
+ * @param array - An array of four numbers representing hours, minutes, seconds, and milliseconds.
+ * @returns The time represented as an integer in milliseconds.
+ * @throws This function does not throw any exceptions.
+ * @example ```ts
+ * const time = [1, 30, 45, 500]; // 1 hour, 30 minutes, 45 seconds, and 500 milliseconds
+ * const result = timeArrayToIntUnsafe(time);
+ * console.log(result); // Outputs: 5445500
+ * ```
+ */
+function timeArrayToIntUnsafe(array) {
+    const [hr, min, sec, ms] = array;
+    const int = hr * 3600000 + min * 60000 + sec * 1000 + ms;
+    return int;
+}
+
+/**
+ * Converts an array of time values into an integer.
+ * @remarks
+ * This function asserts that the provided array is a valid time array before performing the conversion.
+ * @param array - The array of time values to convert.
+ * @returns The converted integer value.
+ * @throws Will throw an error if the provided array is not a valid time array.
+ * @example ```ts
+ * const timeArray = [12, 30, 15];
+ * const result = timeArrayToInt(timeArray);
+ * console.log(result); // Expected output: 123015
+ * ```
+ */
+function timeArrayToInt(array) {
+    assertValidTimeArray(array);
+    return timeArrayToIntUnsafe(array);
+}
+
+/**
+ * Converts a given time in milliseconds to an array of hours, minutes, seconds, and remaining milliseconds.
+ * This function does not perform any safety checks and assumes the input is a valid number.
+ * @remarks
+ * This function is unsafe because it does not perform any checks to ensure the input is a valid number. If the input is not a valid number, the function will return incorrect results or throw an error.
+ * @param ms - The time in milliseconds to convert.
+ * @returns An array where the first element is hours, the second is minutes, the third is seconds, and the fourth is remaining milliseconds.
+ * @example ```ts
+ * const timeArray = timeIntToArrayUnsafe(3601000);
+ * console.log(timeArray); // [1, 0, 1, 0]
+ * ```
+ */
+function timeIntToArrayUnsafe(ms) {
+    const hr = Math.floor(ms / 3600000);
+    ms %= 3600000;
+    const min = Math.floor(ms / 60000);
+    ms %= 60000;
+    const sec = Math.floor(ms / 1000);
+    ms %= 1000;
+    return [hr, min, sec, ms];
+}
+
+/**
+ * Converts an array of time values into a string representation.
+ * The array should contain four numbers representing hours, minutes, seconds, and milliseconds respectively.
+ * The function does not perform any safety checks on the input array.
+ * @param array - An array of four numbers representing hours, minutes, seconds, and milliseconds.
+ * @param msDelimiter - A string to be used as the delimiter between seconds and milliseconds. Defaults to '.'.
+ * @returns A string representation of the time.
+ * @example ```ts
+ * const timeArray = [13, 15, 45, 123];
+ * const result = timeArrayToStringUnsafe(timeArray, ':');
+ * console.log(result); // Outputs: "13:15:45:123"
+ * ```
+ */
+function timeArrayToStringUnsafe(array, msDelimiter = '.') {
+    const hr = array[0].toString().padStart(2, '0');
+    const min = array[1].toString().padStart(2, '0');
+    const sec = array[2].toString().padStart(2, '0');
+    const ms = array[3].toString().padStart(3, '0');
+    return `${hr}:${min}:${sec}${msDelimiter}${ms}`;
+}
+
+/**
+ * Converts a time integer to a string in an unsafe manner.
+ * @remarks
+ * This function does not perform any safety checks and may throw an error if the input is not as expected.
+ * @param ms - The time in milliseconds to be converted to a string.
+ * @param msDelimiter - The delimiter to be used in the resulting string. Defaults to '.'.
+ * @returns The time as a string.
+ * @example ```ts
+ * const timeString = timeIntToStringUnsafe(1500, ':');
+ * console.log(timeString); // Outputs "1:500"
+ * ```
+ */
+function timeIntToStringUnsafe(ms, msDelimiter = '.') {
+    return timeArrayToStringUnsafe(timeIntToArrayUnsafe(ms), msDelimiter);
+}
+
+/**
+ * Checks if a given string is in a valid time string format.
+ * The valid format is 'HH:MM:SS,SSS' or 'HH:MM:SS.SSS'.
+ * @param string - The string to be checked.
+ * @returns A boolean indicating whether the string is in a valid time string format.
+ * @example ```ts
+ * isValidTimeStringFormatting('12:34:56,789'); // returns true
+ * isValidTimeStringFormatting('12:34:56.789'); // returns true
+ * isValidTimeStringFormatting('12:34:56'); // returns false
+ * ```
+ */
+function isValidTimeStringFormatting(string) {
+    return /^\s*([0-1][0-9]|2[0-3])[^0-9-]+[0-5][0-9][^0-9-]+[0-5][0-9][^0-9-]+[0-9][0-9][0-9]\s*$/.test(string);
+}
+
+/**
+ * Asserts that the provided string is a valid time string format.
+ * Throws an error if the string is not in the format hh:mm:ss[,|.]mmm.
+ * @param string - The string to be validated.
+ * @throws Will throw an error if the string is not in the correct format.
+ * @example ```ts
+ * assertValidTimeStringFormatting('12:34:56.789'); // No error thrown
+ * assertValidTimeStringFormatting('12:34:56,789'); // No error thrown
+ * assertValidTimeStringFormatting('12:34:56'); // Throws Error
+ * ```
+ */
+function assertValidTimeStringFormatting(string) {
+    if (!isValidTimeStringFormatting(string))
+        throw new Error('Expected timestring to be of format hh:mm:ss:mmm with any desired delimiters. Got: ' + string);
+}
+
+/**
+ * Converts a time string into an array of numbers.
+ * This function is unsafe because it does not handle invalid input.
+ * @param string - The time string to convert. This should be in the format "HH:MM:SS".
+ * @returns An array of numbers representing the time. The first element is the hour, the second is the minute, and the third is the second.
+ * @throws This function may throw an error if the input string is not in the expected format.
+ * @example ```ts
+ * const timeArray = timeStringToArrayUnsafe("12:34:56");
+ * console.log(timeArray); // [12, 34, 56]
+ * ```
+ */
+function timeStringToArrayUnsafe(string) {
+    const array = string
+        .trim()
+        .split(/[^0-9]+/)
+        .map((n) => parseInt(n));
+    return array;
+}
+
+/**
+ * Converts a time string into an array of numbers.
+ * @remarks
+ * This function is part of the Time Utilities library.
+ * @param string - The time string to be converted. The string should be in the format "HH:MM:SS".
+ * @returns An array of numbers representing the hours, minutes, and seconds.
+ * @throws Will throw an error if the input string is not in the correct format.
+ * @example ```ts
+ * const timeArray = timeStringToArray("12:34:56");
+ * console.log(timeArray); // Output: [12, 34, 56]
+ * ```
+ */
+function timeStringToArray(string) {
+    assertValidTimeStringFormatting(string);
+    const array = timeStringToArrayUnsafe(string);
+    assertValidTimeArray(array);
+    return array;
+}
+
+/**
+ * Converts a time string to an integer.
+ * @remarks
+ * This function takes a string representation of time and converts it into an integer.
+ * The string should be in the format "HH:MM:SS".
+ * @param string - The time string to be converted.
+ * @returns The integer representation of the provided time string.
+ * @throws Will throw an error if the input string is not in the correct format.
+ * @example ```ts
+ * timeStringToInt("12:34:56"); // returns 45296
+ * ```
+ */
+function timeStringToInt(string) {
+    assertValidTimeStringFormatting(string);
+    return timeArrayToIntUnsafe(timeStringToArray(string));
+}
+
+var _Time_ms;
+/**
+ * Represents a time of day or a duration.
+ * Precision is from hours to miliseconds.
+ */
+class Time {
+    /**
+     * Creates a new Time instance.
+     * @param input The time in millisecond representation, or a string in the format "HH:MM:SS.mmm", or an array in the format [HH, MM, SS, mmm].
+     * @throws if the time is invalid.
+     */
+    constructor(input) {
+        /**
+         * The time in millisecond representation.
+         * This is the only value stored internally.
+         */
+        _Time_ms.set(this, void 0);
+        if (typeof input === 'number') {
+            assertValidTimeInt(input);
+            __classPrivateFieldSet(this, _Time_ms, input, "f");
+        }
+        else if (typeof input === 'string') {
+            __classPrivateFieldSet(this, _Time_ms, timeStringToInt(input), "f");
+        }
+        else {
+            __classPrivateFieldSet(this, _Time_ms, timeArrayToInt(input), "f");
+        }
+    }
+    /**
+     * Adds the specified amount of hours to the current time.
+     * Floating point numbers, neative values and otherwise out of bounds values are allowed unless they would cause the time to become invalid.
+     * @param hours The amount of hours to add.
+     * @throws if the time becomes invalid after the operation.
+     */
+    addHours(hours) {
+        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") + hours * 3600000, "f");
+        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return this;
+    }
+    /**
+     * Adds the specified amount of minutes to the current time.
+     * Floating point numbers, neative values and otherwise out of bounds values are allowed unless they would cause the time to become invalid.
+     * @param minutes The amount of minutes to add.
+     * @throws if the time becomes invalid after the operation.
+     */
+    addMinutes(minutes) {
+        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") + minutes * 60000, "f");
+        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return this;
+    }
+    /**
+     * Adds the specified amount of seconds to the current time.
+     * Floating point numbers, neative values and otherwise out of bounds values are allowed unless they would cause the time to become invalid.
+     * @param seconds The amount of seconds to add.
+     * @throws if the time becomes invalid after the operation.
+     */
+    addSeconds(seconds) {
+        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") + seconds * 1000, "f");
+        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return this;
+    }
+    /**
+     * Adds the specified amount of milliseconds to the current time.
+     * Floating point numbers, neative values and otherwise out of bounds values are allowed unless they would cause the time to become invalid.
+     * @param milliseconds The amount of milliseconds to add.
+     * @throws if the time becomes invalid after the operation.
+     */
+    addMilliseconds(milliseconds) {
+        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") + milliseconds, "f");
+        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return this;
+    }
+    /**
+     * Subtracts the specified amount of hours from the current time.
+     * Floating point numbers, neative values and otherwise out of bounds values are allowed unless they would cause the time to become invalid.
+     * @param hours The amount of hours to subtract.
+     * @throws if the time becomes invalid after the operation.
+     */
+    subtractHours(hours) {
+        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") - hours * 3600000, "f");
+        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return this;
+    }
+    /**
+     * Subtracts the specified amount of minutes from the current time.
+     * Floating point numbers, neative values and otherwise out of bounds values are allowed unless they would cause the time to become invalid.
+     * @param minutes The amount of minutes to subtract.
+     * @throws if the time becomes invalid after the operation.
+     */
+    subtractMinutes(minutes) {
+        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") - minutes * 60000, "f");
+        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return this;
+    }
+    /**
+     * Subtracts the specified amount of seconds from the current time.
+     * Floating point numbers, neative values and otherwise out of bounds values are allowed unless they would cause the time to become invalid.
+     * @param seconds The amount of seconds to subtract.
+     * @throws if the time becomes invalid after the operation.
+     */
+    subtractSeconds(seconds) {
+        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") - seconds * 1000, "f");
+        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return this;
+    }
+    /**
+     * Subtracts the specified amount of milliseconds from the current time.
+     * Floating point numbers, neative values and otherwise out of bounds values are allowed unless they would cause the time to become invalid.
+     * @param milliseconds The amount of milliseconds to subtract.
+     * @throws if the time becomes invalid after the operation.
+     */
+    subtractMilliseconds(milliseconds) {
+        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") - milliseconds, "f");
+        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return this;
+    }
+    /**
+     * Returns the hours.
+     */
+    get hours() {
+        return Math.floor(__classPrivateFieldGet(this, _Time_ms, "f") / 3600000);
+    }
+    /**
+     * Set the hours to a specified value.
+     * @param value The value to set the hours to.
+     * @throws if the value is invalid.
+     */
+    set hours(value) {
+        assertValidHours(value);
+        this.addHours(value - this.hours);
+    }
+    /**
+     * Returns the minutes.
+     */
+    get minutes() {
+        return Math.floor(__classPrivateFieldGet(this, _Time_ms, "f") / 60000) % 60;
+    }
+    /**
+     * Set the minutes to a specified value.
+     * @param value The value to set the minutes to.
+     * @throws if the value is invalid.
+     */
+    set minutes(value) {
+        assertValidMinutes(value);
+        this.addMinutes(value - this.minutes);
+    }
+    /**
+     * Returns the seconds.
+     */
+    get seconds() {
+        return Math.floor(__classPrivateFieldGet(this, _Time_ms, "f") / 1000) % 60;
+    }
+    /**
+     * Set the seconds to a specified value.
+     * @param value The value to set the seconds to.
+     * @throws if the value is invalid.
+     */
+    set seconds(value) {
+        assertValidSeconds(value);
+        this.addSeconds(value - this.seconds);
+    }
+    /**
+     * Returns the milliseconds.
+     */
+    get milliseconds() {
+        return __classPrivateFieldGet(this, _Time_ms, "f") % 1000;
+    }
+    /**
+     * Set the milliseconds to a specified value.
+     * @param value The value to set the milliseconds to.
+     * @throws if the value is invalid.
+     */
+    set milliseconds(value) {
+        assertValidMilliseconds(value);
+        this.addMilliseconds(value - __classPrivateFieldGet(this, _Time_ms, "f"));
+    }
+    /**
+     * Returns the time as an array in the format [HH, MM, SS, mmm].
+     */
+    toArray() {
+        return timeIntToArrayUnsafe(__classPrivateFieldGet(this, _Time_ms, "f"));
+    }
+    /**
+     * Returns the time as a string in the format "HH:MM:SS.mmm".
+     * @param msDelimiter The delimiter between seconds and milliseconds.
+     */
+    toString(msDelimiter = '.') {
+        return timeIntToStringUnsafe(__classPrivateFieldGet(this, _Time_ms, "f"), msDelimiter);
+    }
+    /**
+     * Returns the time in millisecond representation.
+     */
+    toNumber() {
+        return __classPrivateFieldGet(this, _Time_ms, "f");
+    }
+    /**
+     * Returns the time in millisecond representation.
+     */
+    valueOf() {
+        return __classPrivateFieldGet(this, _Time_ms, "f");
+    }
+    /**
+     * Compares this instance to another by comparing millisecond representations.
+     * @see difference for getting the difference as a new Time instance.
+     * @param other The other Time instance to compare to.
+     */
+    compareTo(other) {
+        return __classPrivateFieldGet(this, _Time_ms, "f") - __classPrivateFieldGet(other, _Time_ms, "f");
+    }
+    /**
+     * Returns a new Time instance that represents the time difference between this instance and another.
+     * @see compareTo for getting the difference in milliseconds.
+     * @param other The other Time instance to compare to.
+     */
+    difference(other) {
+        return new Time(Math.abs(this.compareTo(other)));
+    }
+    /**
+     * Returns a new Time instance.
+     */
+    clone() {
+        return new Time(__classPrivateFieldGet(this, _Time_ms, "f"));
+    }
+}
+_Time_ms = new WeakMap();
+
+/**
+ * Represents a time interval.
+ */
+class TimeInterval {
+    /**
+     * Creates a new TimeInterval instance.
+     * @param start The start of the interval.
+     * @param end The end of the interval.
+     * @throws if the start time is after the end time.
+     */
+    constructor(start, end) {
+        if (start > end)
+            throw new Error('Start time must be before end time');
+        this.start = start;
+        this.end = end;
+    }
+    /**
+     * Returns the duration of the interval as a new Time instance.
+     */
+    getDuration() {
+        return this.end.difference(this.start);
+    }
+    /**
+     * Returns the interval as a string, rendering both the start and end times.
+     * Renders in the format "HH:MM:SS.mmm --> HH:MM:SS.mmm", with the default delimiter being " --> ".
+     * @param delimiter The delimiter between the start and end times.
+     * @param msDelimiter The delimiter between seconds and milliseconds.
+     */
+    toString(delimiter = ' --> ', msDelimiter = '.') {
+        return `${this.start.toString(msDelimiter)}${delimiter}${this.end.toString(msDelimiter)}`;
+    }
+}
+
+/**
+ * A collection of SRTSubtitles.
+ */
+class SRTSubtitles {
+    /**
+     * Create a new SRTSubtitles instance.
+     * @param string A correctly formatted SRT subtitles string.
+     */
+    constructor(string) {
+        this.subtitles = string
+            .trim()
+            .split(/\r?\n\r?\n/)
+            .map((block) => {
+            const [id, interval, text] = block.trim().split(/\r?\n/);
+            const [start, end] = interval.split(' --> ').map((s) => new Time(s));
+            return new SRTSubtitle(new TimeInterval(start, end), text);
+        });
+    }
+    /**
+     * Returns the subtitles as a string in the SRT format.
+     */
+    toString() {
+        let res = '';
+        for (let i = 0; i < this.subtitles.length; i++) {
+            const sub = this.subtitles[i];
+            res += Number(i + 1) + '\n' + sub.toString() + '\n\n';
+        }
+        return res.trimEnd();
+    }
+}
+
+/**
+ * Represents a single subtitle in the VTT format.
+ */
+class VTTSubtitle extends _AbstractSubtitle {
+    /**
+     * Creates a new VTTSubtitle instance.
+     * @param interval The time interval of the subtitle.
+     * @param text The text of the subtitle.
+     */
+    constructor(interval, text) {
+        super(interval, text);
+    }
+    /**
+     * Renders the subtitle as a string in the VTT format.
+     */
+    toString() {
+        return `${this.interval.toString(' --> ', '.')}\n${this.text}`;
+    }
+}
+
+/**
+ * A collection of VTTSubtitles.
+ */
+class VTTSubtitles {
+    /**
+     * Create a new VTTSubtitles instance.
+     * @param vtt A correctly formatted VTT subtitles string.
+     */
+    constructor(vtt) {
+        this.subtitles = vtt
+            .replace('WEBVTT', '')
+            .trim()
+            .split(/\r?\n\r?\n/)
+            .map((block) => {
+            const [interval, text] = block.trim().split(/\r?\n/);
+            const [start, end] = interval.split(' --> ').map((s) => new Time(s));
+            return new VTTSubtitle(new TimeInterval(start, end), text);
+        });
+    }
+    /**
+     * Returns the subtitles to a VTT format string.
+     */
+    toString() {
+        return `WEBVTT\n\n${this.subtitles.join('\n\n')}`;
+    }
+}
+
+/**
  * Removes duplicate characters from a string.
  * @throws Will throw an error if the provided argument is not a string.
  * @param string The string from which to remove duplicate characters.
@@ -7682,6 +8358,137 @@ function strWrapInSingleQuotes(input) {
 }
 
 /**
+ * Asserts whether the provided string is a valid time string.
+ * @remarks
+ * This function throws an error if the provided string is not a valid time string.
+ * @param string - The string to be validated.
+ * @throws Will throw an error if the string is not a valid time string.
+ * @example ```ts
+ * assertValidTimeString('12:34:56'); // No error
+ * assertValidTimeString('25:00:00'); // Throws Error
+ * ```
+ */
+function assertValidTimeString(string) {
+    assertValidTimeStringFormatting(string);
+    assertValidTimeArray(timeStringToArrayUnsafe(string));
+}
+
+/**
+ * Checks if the provided hours, minutes, seconds, and milliseconds represent a valid time.
+ * @remarks
+ * This function will return false if any of the provided values are out of range for their respective units of time.
+ * @param hours - The hours component of the time. Must be an integer between 0 and 23.
+ * @param minutes - The minutes component of the time. Must be an integer between 0 and 59.
+ * @param seconds - The seconds component of the time. Must be an integer between 0 and 59.
+ * @param milliseconds - The milliseconds component of the time. Must be an integer between 0 and 999.
+ * @returns A boolean indicating whether the provided values represent a valid time.
+ * @example ```ts
+ * isValidTime(12, 30, 15, 500);  // returns true
+ * isValidTime(24, 0, 0, 0);  // returns false
+ * ```
+ */
+function isValidTime(hours, minutes, seconds, milliseconds) {
+    return isValidHours(hours) && isValidMinutes(minutes) && isValidSeconds(seconds) && isValidMilliseconds(milliseconds);
+}
+
+/**
+ * Checks if the given array is a valid time array.
+ * A valid time array should have exactly 4 elements, each representing hours, minutes, seconds, and milliseconds respectively.
+ * @param array - The array to be checked.
+ * @returns A boolean indicating whether the array is a valid time array.
+ * @example ```ts
+ * isValidTimeArray([12, 30, 45, 500]); // returns true
+ * isValidTimeArray([12, 60, 45, 500]); // returns false
+ * ```
+ */
+function isValidTimeArray(array) {
+    return array.length === 4 && isValidTime(array[0], array[1], array[2], array[3]);
+}
+
+/**
+ * Checks if a given string is a valid time string.
+ * @remarks
+ * This function is part of the TimeUtils library.
+ * @param string - The string to be checked.
+ * @returns A boolean indicating whether the string is a valid time string.
+ * @throws Will throw an error if the input string is not a string.
+ * @example ```ts
+ * isValidTimeString("12:34:56") // returns true
+ * isValidTimeString("25:00:00") // returns false
+ * ```
+ */
+function isValidTimeString(string) {
+    return !!string && isValidTimeStringFormatting(string);
+}
+
+/**
+ * Converts an array of time values into a string representation.
+ * @param array - The array of time values to convert. Each value should represent a unit of time in the order of hours, minutes, seconds, and milliseconds.
+ * @param msDelimiter - The delimiter to use between the seconds and milliseconds. Defaults to '.'.
+ * @returns A string representation of the time values in the format 'HH:MM:SS.MS'.
+ * @throws Will throw an error if the array is not a valid time array.
+ * @example ```ts
+ * const timeArray = [12, 30, 15, 500];
+ * const result = timeArrayToString(timeArray);
+ * console.log(result); // Outputs: '12:30:15.500'
+ * ```
+ */
+function timeArrayToString(array, msDelimiter = '.') {
+    assertValidTimeArray(array);
+    return timeArrayToStringUnsafe(array, msDelimiter);
+}
+
+/**
+ * Converts a time integer into an array of hours, minutes, and seconds.
+ * @remarks
+ * This function will throw an error if the provided time integer is not valid.
+ * @param ms - The time integer to convert, represented in milliseconds.
+ * @returns An array of three numbers representing hours, minutes, and seconds respectively.
+ * @throws Will throw an error if the provided time integer is not valid.
+ * @example ```ts
+ * const timeArray = timeIntToArray(3600000); // returns [1, 0, 0]
+ * ```
+ */
+function timeIntToArray(ms) {
+    assertValidTimeInt(ms);
+    return timeIntToArrayUnsafe(ms);
+}
+
+/**
+ * Converts a time integer to a string.
+ * @param ms - The time in milliseconds to be converted.
+ * @param msDelimiter - The delimiter to be used in the resulting string. Defaults to '.'.
+ * @returns The time as a string, formatted with the specified delimiter.
+ * @throws Will throw an error if the provided time integer is not valid.
+ * @example ```ts
+ * timeIntToString(1500, ':'); // Returns '1:500'
+ * ```
+ */
+function timeIntToString(ms, msDelimiter = '.') {
+    assertValidTimeInt(ms);
+    return timeIntToStringUnsafe(ms, msDelimiter);
+}
+
+/**
+ * Converts a time string to an integer representation.
+ * This function is unsafe because it does not perform any validation on the input string.
+ * It assumes that the input string is a valid time string.
+ * @remarks
+ * This function is part of the Time Utilities library.
+ * @param string - The time string to convert. The string should be in the format "HH:MM:SS".
+ * @returns The integer representation of the time string.
+ * @throws Will throw an error if the input string is not a valid time string.
+ * @example ```ts
+ * const timeString = "12:34:56";
+ * const timeInt = timeStringToIntUnsafe(timeString);
+ * console.log(timeInt); // Expected output: 45296
+ * ```
+ */
+function timeStringToIntUnsafe(string) {
+    return timeArrayToIntUnsafe(timeStringToArrayUnsafe(string));
+}
+
+/**
  * Counts the number of export statements in a given code string.
  * @param code - The code string to analyze.
  * @returns The number of export statements found in the code.
@@ -8073,12 +8880,6 @@ function isValidTsDocComment(code) {
     }
     return true;
 }
-// export function isValidTsDocComment(code: string): boolean {
-//   if (!code) return false
-//   const lines = code.split(/\r?\n/)
-//   const re = /^ *(\/\*\*|\*\/|\*)/
-//   return arrEvery(lines, (line) => re.test(line))
-// }
 
 /**
  * Normalizes known tag names to their TypeScript equivalents.
@@ -8276,7 +9077,6 @@ function tsDocStripTypesAndDefaults(code) {
  */
 function tsDocUnwrapComment(code) {
     if (!isValidTsDocComment(code)) {
-        console.log(code);
         throw new Error('Invalid TSDoc comment');
     }
     code = code.trim();
@@ -8708,7 +9508,7 @@ function assertNegativeInteger(int) {
 function assertPositiveInteger(int) {
     if (Number.isInteger(int) && int > 0)
         return int;
-    throw new TypeError('Expected int to be an integer. Got: ' + int);
+    throw new TypeError('Expected an integer. Got: ' + int);
 }
 
 /**
@@ -8929,11 +9729,17 @@ exports.OpenaiApiClientBase = OpenaiApiClientBase;
 exports.PQueue = PQueue;
 exports.PriorityQueue = PriorityQueue;
 exports.Queue = Queue;
+exports.SRTSubtitle = SRTSubtitle;
+exports.SRTSubtitles = SRTSubtitles;
 exports.SimpleTable = SimpleTable;
 exports.SortedArray = SortedArray;
 exports.StringStream = StringStream;
+exports.Time = Time;
+exports.TimeInterval = TimeInterval;
 exports.TsDoc = TsDoc;
 exports.TsDocTag = TsDocTag;
+exports.VTTSubtitle = VTTSubtitle;
+exports.VTTSubtitles = VTTSubtitles;
 exports.absoluteToRelativePath = absoluteToRelativePath;
 exports.arrAverage = arrAverage;
 exports.arrEachToString = arrEachToString;
@@ -8967,7 +9773,16 @@ exports.assertValidDate = assertValidDate;
 exports.assertValidDateDay = assertValidDateDay;
 exports.assertValidDateMonth = assertValidDateMonth;
 exports.assertValidDateYear = assertValidDateYear;
+exports.assertValidHours = assertValidHours;
+exports.assertValidMilliseconds = assertValidMilliseconds;
+exports.assertValidMinutes = assertValidMinutes;
 exports.assertValidNumber = assertValidNumber;
+exports.assertValidSeconds = assertValidSeconds;
+exports.assertValidTime = assertValidTime;
+exports.assertValidTimeArray = assertValidTimeArray;
+exports.assertValidTimeInt = assertValidTimeInt;
+exports.assertValidTimeString = assertValidTimeString;
+exports.assertValidTimeStringFormatting = assertValidTimeStringFormatting;
 exports.asyncTasksLimit = asyncTasksLimit;
 exports.asyncTasksParallel = asyncTasksParallel;
 exports.asyncTasksSerial = asyncTasksSerial;
@@ -9010,18 +9825,13 @@ exports.inheritStaticMembers = inheritStaticMembers;
 exports.intToArrayBytes = intToArrayBytes;
 exports.intToBuffer = intToBuffer;
 exports.intToBytes = intToBytes;
-exports.isBetween = isBetween;
 exports.isConstructor = isConstructor;
 exports.isEven = isEven;
-exports.isGT = isGT;
-exports.isGTE = isGTE;
 exports.isHex = isHex;
 exports.isHexOrUnicode = isHexOrUnicode;
 exports.isInRange = isInRange;
 exports.isInteger = isInteger;
 exports.isIterable = isIterable;
-exports.isLT = isLT;
-exports.isLTE = isLTE;
 exports.isLeapYear = isLeapYear;
 exports.isMultiTsDocTag = isMultiTsDocTag;
 exports.isNamedMultiTsDocTag = isNamedMultiTsDocTag;
@@ -9038,7 +9848,16 @@ exports.isValidDate = isValidDate;
 exports.isValidDateDay = isValidDateDay;
 exports.isValidDateMonth = isValidDateMonth;
 exports.isValidDateYear = isValidDateYear;
+exports.isValidHours = isValidHours;
+exports.isValidMilliseconds = isValidMilliseconds;
+exports.isValidMinutes = isValidMinutes;
 exports.isValidNumber = isValidNumber;
+exports.isValidSeconds = isValidSeconds;
+exports.isValidTime = isValidTime;
+exports.isValidTimeArray = isValidTimeArray;
+exports.isValidTimeInt = isValidTimeInt;
+exports.isValidTimeString = isValidTimeString;
+exports.isValidTimeStringFormatting = isValidTimeStringFormatting;
 exports.isValidTsDocComment = isValidTsDocComment;
 exports.isoDateTimestamp = isoDateTimestamp;
 exports.isoDateTimestampForFilename = isoDateTimestampForFilename;
@@ -9139,7 +9958,6 @@ exports.setIntersection = setIntersection;
 exports.setIsSuperset = setIsSuperset;
 exports.setNonConfigurable = setNonConfigurable;
 exports.setNonEnumerable = setNonEnumerable;
-exports.setNonEnumerablePrivateProperties = setNonEnumerablePrivateProperties;
 exports.setNonWritable = setNonWritable;
 exports.setSymmetricDifference = setSymmetricDifference;
 exports.setUnion = setUnion;
@@ -9187,6 +10005,18 @@ exports.strWrapInDoubleQuotes = strWrapInDoubleQuotes;
 exports.strWrapInParenthesis = strWrapInParenthesis;
 exports.strWrapInSingleQuotes = strWrapInSingleQuotes;
 exports.streamToString = streamToString;
+exports.timeArrayToInt = timeArrayToInt;
+exports.timeArrayToIntUnsafe = timeArrayToIntUnsafe;
+exports.timeArrayToString = timeArrayToString;
+exports.timeArrayToStringUnsafe = timeArrayToStringUnsafe;
+exports.timeIntToArray = timeIntToArray;
+exports.timeIntToArrayUnsafe = timeIntToArrayUnsafe;
+exports.timeIntToString = timeIntToString;
+exports.timeIntToStringUnsafe = timeIntToStringUnsafe;
+exports.timeStringToArray = timeStringToArray;
+exports.timeStringToArrayUnsafe = timeStringToArrayUnsafe;
+exports.timeStringToInt = timeStringToInt;
+exports.timeStringToIntUnsafe = timeStringToIntUnsafe;
 exports.toJson = toJson;
 exports.trimArrayBytesLeft = trimArrayBytesLeft;
 exports.trimArrayBytesRight = trimArrayBytesRight;

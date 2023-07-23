@@ -143,20 +143,6 @@ export class ApiReponseCache<V> {
     })
   }
 
-  // /**
-  //  * Delete a given value for a given hash key.
-  //  * @param hash - The hash key.
-  //  */
-  // async deleteSafe(hash: string): Promise<boolean> {
-  //   try {
-  //     await this.db.del(hash)
-  //     this.emit('delete', hash)
-  //     return true
-  //   } catch (e) {
-  //     return false
-  //   }
-  // }
-
   /**
    * Delete all expired data.
    */

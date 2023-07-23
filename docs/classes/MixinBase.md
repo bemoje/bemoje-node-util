@@ -22,7 +22,6 @@ Abstract class that other classes can inherit from to gain various handy functio
 
 - [getConstructor](/docs/classes/MixinBase.md#getconstructor)
 - [getPrototype](/docs/classes/MixinBase.md#getprototype)
-- [setNonEnumerablePrivateProperties](/docs/classes/MixinBase.md#setnonenumerableprivateproperties)
 - [setNonEnumerableProperties](/docs/classes/MixinBase.md#setnonenumerableproperties)
 
 ## Constructors
@@ -43,7 +42,7 @@ typeof [`MixinBase`](/docs/classes/MixinBase.md)
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:8](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinBase.ts#L8)
+[src/mixins/MixinBase.ts:7](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/mixins/MixinBase.ts#L7)
 
 ___
 
@@ -57,23 +56,7 @@ ___
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:12](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinBase.ts#L12)
-
-___
-
-### setNonEnumerablePrivateProperties
-
-▸ `Protected` **setNonEnumerablePrivateProperties**(): `void`
-
-Make the properties with property names that start with an underscore non-enumerable.
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[src/mixins/MixinBase.ts:19](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinBase.ts#L19)
+[src/mixins/MixinBase.ts:11](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/mixins/MixinBase.ts#L11)
 
 ___
 
@@ -95,4 +78,4 @@ Make the properties with the given property names non-enumerable.
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:26](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/mixins/MixinBase.ts#L26)
+[src/mixins/MixinBase.ts:18](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/mixins/MixinBase.ts#L18)

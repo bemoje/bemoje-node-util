@@ -30,18 +30,4 @@ describe('MixinBase', () => {
     const properties = Object.keys(instance)
     expect(properties).toEqual(['prop2'])
   })
-
-  it('should set non-enumerable private properties', () => {
-    class TestClass extends MixinBase {
-      public _prop1 = 'value1'
-      public prop2 = 'value2'
-      constructor() {
-        super()
-        this.setNonEnumerablePrivateProperties()
-      }
-    }
-    const instance = new TestClass()
-    const properties = Object.keys(instance)
-    expect(properties).toEqual(['prop2'])
-  })
 })

@@ -24,7 +24,7 @@ Default model to use for chat gpt3 16k tokens completion requests
 
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiClientApiDefaultsOptions.ts#L15)
+[src/api/types/IApiClientApiDefaultsOptions.ts:15](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientApiDefaultsOptions.ts#L15)
 
 ___
 
@@ -36,7 +36,7 @@ Default model to use for chat gpt3 8k tokens completion requests
 
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiClientApiDefaultsOptions.ts#L10)
+[src/api/types/IApiClientApiDefaultsOptions.ts:10](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientApiDefaultsOptions.ts#L10)
 
 ___
 
@@ -48,7 +48,7 @@ Default model to use for chat gpt4 8k tokens completion requests
 
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:20](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiClientApiDefaultsOptions.ts#L20)
+[src/api/types/IApiClientApiDefaultsOptions.ts:20](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientApiDefaultsOptions.ts#L20)
 
 ___
 
@@ -60,7 +60,7 @@ If openai api returns more than one choice, this string will be used to delimit 
 
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:35](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiClientApiDefaultsOptions.ts#L35)
+[src/api/types/IApiClientApiDefaultsOptions.ts:35](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientApiDefaultsOptions.ts#L35)
 
 ___
 
@@ -72,7 +72,7 @@ Default model to use for completion requests
 
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiClientApiDefaultsOptions.ts#L5)
+[src/api/types/IApiClientApiDefaultsOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientApiDefaultsOptions.ts#L5)
 
 ___
 
@@ -84,7 +84,7 @@ Default model to use for code edit requests
 
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:30](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiClientApiDefaultsOptions.ts#L30)
+[src/api/types/IApiClientApiDefaultsOptions.ts:30](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientApiDefaultsOptions.ts#L30)
 
 ___
 
@@ -96,4 +96,4 @@ Default model to use for text edit requests
 
 #### Defined in
 
-[src/api/types/IApiClientApiDefaultsOptions.ts:25](https://github.com/bemoje/bemoje-node-util/blob/b4dce81/src/api/types/IApiClientApiDefaultsOptions.ts#L25)
+[src/api/types/IApiClientApiDefaultsOptions.ts:25](https://github.com/bemoje/bemoje-node-util/blob/f65e483/src/api/types/IApiClientApiDefaultsOptions.ts#L25)
