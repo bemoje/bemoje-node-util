@@ -29,7 +29,11 @@ describe(TsDocTag.name, () => {
         '```',
       ])
 
-      expect(new TsDocTag('example', '', ['example description']).description).toEqual(['```ts', 'example description', '```'])
+      expect(new TsDocTag('example', '', ['example description']).description).toEqual([
+        '```ts',
+        'example description',
+        '```',
+      ])
     })
 
     it('should normalize leading and trailing blank lines from description if tag is "example"', () => {
@@ -97,9 +101,9 @@ describe(TsDocTag.name, () => {
     })
 
     it('should throw an error for invalid example tags', () => {
-      expect(() => new TsDocTag('example', '', ['This is an invalid example:', '```', 'console.log("Hello, world!");'])).toThrowError(
-        'Invalid example tag: markdown code block not closed.',
-      )
+      expect(
+        () => new TsDocTag('example', '', ['This is an invalid example:', '```', 'console.log("Hello, world!");']),
+      ).toThrowError('Invalid example tag: markdown code block not closed.')
     })
 
     it('should throw an error for named multi tags without a description', () => {

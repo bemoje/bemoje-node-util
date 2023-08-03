@@ -1,6 +1,11 @@
 import { ApiReponseCache } from './ApiReponseCache'
 
 describe(ApiReponseCache.name, () => {
+  console.log = jest.fn()
+  console.error = jest.fn()
+  console.warn = jest.fn()
+  console.dir = jest.fn()
+
   const cache = new ApiReponseCache<any>({ name: 'testing', maxAgeMs: 1000 })
 
   describe('constructor', () => {

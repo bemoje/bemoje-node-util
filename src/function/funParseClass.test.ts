@@ -64,7 +64,9 @@ describe(funParseClass.name, () => {
     })
 
     it('should parse property setters', () => {
-      expect(parsed.methods.filter((o: any) => o.kind === 'set')).toEqual([{ kind: 'set', name: 'prop1', params: ['value'] }])
+      expect(parsed.methods.filter((o: any) => o.kind === 'set')).toEqual([
+        { kind: 'set', name: 'prop1', params: ['value'] },
+      ])
     })
 
     it('should parse methodss', () => {

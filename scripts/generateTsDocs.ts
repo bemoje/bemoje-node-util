@@ -1,7 +1,7 @@
 import { Stats } from 'fs'
 import path from 'path'
-import { OpenaiApiClient } from '../src/api/OpenaiApiClient'
-import { IChatRequestOptions } from '../src/api/types/IChatRequestOptions'
+import { OpenaiApiClient } from '../src/api/openai/OpenaiApiClient'
+import { IOpenaiChatRequestOptions } from '../src/api/openai/types/IOpenaiChatRequestOptions'
 import { asyncTasksLimit } from '../src/async/asyncTasksLimit'
 import { absoluteToRelativePath } from '../src/filesystem/absoluteToRelativePath'
 import { tsStripBlockComments } from '../src/tscode/tsStripBlockComments'
@@ -11,8 +11,12 @@ import { tsDocExtractFirstComment } from '../src/tsdoc/tsDocExtractFirstComment'
 import { SourceFile } from './lib/SourceFile'
 import { walkTsSourceFiles } from './lib/walkTsSourceFiles'
 
-async function writeFunctionTsDoc(openai: OpenaiApiClient, file: SourceFile, options: IChatRequestOptions = {}): Promise<TsDoc> {
-  const response = await openai.chat4_8({
+async function writeFunctionTsDoc(
+  openai: OpenaiApiClient,
+  file: SourceFile,
+  options: IOpenaiChatRequestOptions = {},
+): Promise<TsDoc> {
+  const response = await openai.gpt4_8k({
     temperature: 1,
     top_p: 0,
     ...options,
@@ -32,7 +36,7 @@ async function writeFunctionTsDoc(openai: OpenaiApiClient, file: SourceFile, opt
   // const curExample = newTsdoc.single.get('example')
   // if (!curExample) return newTsdoc
   // const description = strTrimLinesRight(
-  //   await openai.chat4_8({
+  //   await openai.gpt4_8({
   //     temperature: 0,
   //     ...options,
   //     instruction: [
@@ -100,15 +104,14 @@ async function main() {
   // await openai.cache.deleteEverything()
 
   const cmdLineArgs = process.argv.slice(2)
-  const search = cmdLineArgs[0].replace(/\\|\//g, '/')
+  const search = cmdLineArgs[0].replace(/\\/g, '/')
   const overwriteMode = cmdLineArgs[1] === '--overwrite'
   // console.log({ searchArgument, overwriteMode })
   const sourceRoot = path.join(process.cwd(), 'src')
   const concurrency = 12
   const filter = (filepath: string) => {
     // if (!search || search === '*') return true
-    // console.log(absoluteToRelativePath(filepath).toLowerCase())
-    return absoluteToRelativePath(filepath.replace(/\\|\//g, '/')).toLowerCase().includes(search.toLowerCase())
+    return absoluteToRelativePath(filepath).toLowerCase().replace(/\\/g, '/').includes(search.toLowerCase())
   }
 
   await generateTsDocs(openai, sourceRoot, concurrency, overwriteMode, filter)

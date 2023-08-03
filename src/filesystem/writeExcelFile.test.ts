@@ -22,7 +22,13 @@ describe(writeExcelFile.name, () => {
     }
     await writeExcelFile(excelFilePath, data)
     const result = await readExcelFile(excelFilePath)
-    await fs.promises.unlink(excelFilePath)
+    try {
+      setTimeout(async () => {
+        await fs.promises.unlink(excelFilePath)
+      }, 500)
+    } catch (error) {
+      //
+    }
     expect(data).toEqual(result)
   })
 })

@@ -41,7 +41,7 @@ if the start time is after the end time.
 
 #### Defined in
 
-[src/time/TimeInterval.ts:23](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/TimeInterval.ts#L23)
+[src/time/TimeInterval.ts:23](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/time/TimeInterval.ts#L23)
 
 ## Properties
 
@@ -53,7 +53,7 @@ The end of the interval.
 
 #### Defined in
 
-[src/time/TimeInterval.ts:15](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/TimeInterval.ts#L15)
+[src/time/TimeInterval.ts:15](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/time/TimeInterval.ts#L15)
 
 ___
 
@@ -65,7 +65,7 @@ The start of the interval.
 
 #### Defined in
 
-[src/time/TimeInterval.ts:10](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/TimeInterval.ts#L10)
+[src/time/TimeInterval.ts:10](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/time/TimeInterval.ts#L10)
 
 ## Methods
 
@@ -81,7 +81,7 @@ Returns the duration of the interval as a new Time instance.
 
 #### Defined in
 
-[src/time/TimeInterval.ts:32](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/TimeInterval.ts#L32)
+[src/time/TimeInterval.ts:32](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/time/TimeInterval.ts#L32)
 
 ___
 
@@ -105,4 +105,4 @@ Renders in the format "HH:MM:SS.mmm --> HH:MM:SS.mmm", with the default delimite
 
 #### Defined in
 
-[src/time/TimeInterval.ts:42](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/time/TimeInterval.ts#L42)
+[src/time/TimeInterval.ts:42](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/time/TimeInterval.ts#L42)

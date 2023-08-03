@@ -43,7 +43,9 @@ function generateTestStats(): void {
     console.log(
       `${bold(dir)} / ${bold(color(exports))}: ${blackBright('ratio')}:  ${bold(
         color(formatter.format(testLineRatio)),
-      )}  ( ${tests}${blackBright('/')}${blue(lines)} ${'tests' + blackBright('/') + blue('line') + blackBright(' of code.') + ' )'}`,
+      )}  ( ${tests}${blackBright('/')}${blue(lines)} ${
+        'tests' + blackBright('/') + blue('line') + blackBright(' of code.') + ' )'
+      }`,
     )
     console.log(blackBright(filepath) + '\n')
   })

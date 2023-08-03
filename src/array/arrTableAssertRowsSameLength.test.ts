@@ -42,7 +42,9 @@ describe('arrTableAssertRowsSameLength', () => {
       [7, 8, 9],
     ]
     const headers = ['A', 'B', 'C']
-    expect(() => arrTableAssertRowsSameLength(rowsWithDifferentLength, headers)).toThrowError('Expected 3 columns, got 2')
+    expect(() => arrTableAssertRowsSameLength(rowsWithDifferentLength, headers)).toThrowError(
+      'Expected 3 columns, got 2',
+    )
   })
 
   it('should not throw an error if all rows have the same length as the custom headers', () => {

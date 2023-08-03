@@ -1,7 +1,4 @@
-import { attr } from './attr'
-import { comment } from './comment'
-import { el } from './el'
-import { tableFrom } from './tableFrom'
+import { attr, comment, el, tableFrom } from './html'
 
 describe('html', () => {
   describe('comment', () => {

@@ -1,0 +1,514 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>deleteDirectorySafeSync | @bemoje/node-util</title><meta name="description" content="Documentation for @bemoje/node-util"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base="..">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">@bemoje/node-util</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb">
+<li><a href="../modules.html">@bemoje/node-util</a></li>
+<li><a href="deleteDirectorySafeSync.html">deleteDirectorySafeSync</a></li></ul>
+<h1>Function deleteDirectorySafeSync</h1></div>
+<section class="tsd-panel">
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="deleteDirectorySafeSync"><span class="tsd-kind-call-signature">delete<wbr/>Directory<wbr/>Safe<wbr/>Sync</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">dirpath</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#deleteDirectorySafeSync" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icon-anchor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path></g></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Deletes a directory synchronously in a safe manner. If the directory does not exist, it will simply return the directory path without throwing an error.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">dirpath</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>The path of the directory to be deleted.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><p>The path of the directory that was intended to be deleted.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>Throws</h4><p>Will throw an error if the operation fails for reasons other than the directory not existing.</p>
+
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-0">deleteDirectorySafeSync</span><span class="hl-1">(</span><span class="hl-2">&#39;/path/to/directory&#39;</span><span class="hl-1">);;</span><br/><span class="hl-7">//=&gt; undefined</span>
+</code><button>Copy</button></pre>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/bemoje/bemoje-node-util/blob/957547c/src/filesystem/deleteDirectorySafeSync.ts#L13">src/filesystem/deleteDirectorySafeSync.ts:13</a></li></ul></aside></li></ul></section></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)" id="icon-chevronDown"></path></svg>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>@bemoje/node-<wbr/>util</span></a>
+<ul class="tsd-small-nested-navigation">
+<li><a href="../enums/LogLevel.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-8"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-enum)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.45 16V7.24H14.49V8.224H10.518V10.936H14.07V11.908H10.518V15.016H14.49V16H9.45Z" fill="var(--color-text)"></path></g></svg><span>Log<wbr/>Level</span></a></li>
+<li><a href="../classes/AbstractApiClient.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-128"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)"></path></g></svg><span>Abstract<wbr/>Api<wbr/>Client</span></a></li>
+<li><a href="../classes/AbstractFsPath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Abstract<wbr/>Fs<wbr/>Path</span></a></li>
+<li><a href="../classes/ApiReponseCache.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Api<wbr/>Reponse<wbr/>Cache</span></a></li>
+<li><a href="../classes/BlockDevicePath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Block<wbr/>Device<wbr/>Path</span></a></li>
+<li><a href="../classes/CharacterDevicePath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Character<wbr/>Device<wbr/>Path</span></a></li>
+<li><a href="../classes/DirectoryPath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Directory<wbr/>Path</span></a></li>
+<li><a href="../classes/ExtensibleFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Extensible<wbr/>Function</span></a></li>
+<li><a href="../classes/FIFOPath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>FIFOPath</span></a></li>
+<li><a href="../classes/FilePath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>File<wbr/>Path</span></a></li>
+<li><a href="../classes/Logger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Logger</span></a></li>
+<li><a href="../classes/Matrix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Matrix</span></a></li>
+<li><a href="../classes/MixinBase.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Mixin<wbr/>Base</span></a></li>
+<li><a href="../classes/NumberFormatter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Number<wbr/>Formatter</span></a></li>
+<li><a href="../classes/OpenaiApiClient.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Openai<wbr/>Api<wbr/>Client</span></a></li>
+<li><a href="../classes/OpenaiApiClientExtended.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Openai<wbr/>Api<wbr/>Client<wbr/>Extended</span></a></li>
+<li><a href="../classes/PriorityQueue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Priority<wbr/>Queue</span></a></li>
+<li><a href="../classes/PromiseQueue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Promise<wbr/>Queue</span></a></li>
+<li><a href="../classes/Queue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Queue</span></a></li>
+<li><a href="../classes/SRTSubtitle.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>SRTSubtitle</span></a></li>
+<li><a href="../classes/SRTSubtitles.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>SRTSubtitles</span></a></li>
+<li><a href="../classes/SimpleTable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Simple<wbr/>Table</span></a></li>
+<li><a href="../classes/SocketPath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Socket<wbr/>Path</span></a></li>
+<li><a href="../classes/SortedArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Sorted<wbr/>Array</span></a></li>
+<li><a href="../classes/StringStream.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>String<wbr/>Stream</span></a></li>
+<li><a href="../classes/SymbolicLinkPath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Symbolic<wbr/>Link<wbr/>Path</span></a></li>
+<li><a href="../classes/Time.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Time</span></a></li>
+<li><a href="../classes/TimeInterval.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Time<wbr/>Interval</span></a></li>
+<li><a href="../classes/TsDoc.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Ts<wbr/>Doc</span></a></li>
+<li><a href="../classes/TsDocTag.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Ts<wbr/>Doc<wbr/>Tag</span></a></li>
+<li><a href="../classes/VTTSubtitle.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>VTTSubtitle</span></a></li>
+<li><a href="../classes/VTTSubtitles.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>VTTSubtitles</span></a></li>
+<li><a href="../classes/_AbstractSubtitle.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>_<wbr/>Abstract<wbr/>Subtitle</span></a></li>
+<li><a href="../classes/_HtmlAttribute.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>_<wbr/>Html<wbr/>Attribute</span></a></li>
+<li><a href="../classes/_HtmlDocument.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>_<wbr/>Html<wbr/>Document</span></a></li>
+<li><a href="../classes/_HtmlElement.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>_<wbr/>Html<wbr/>Element</span></a></li>
+<li><a href="../interfaces/IAbstractApiClientOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-256"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-interface)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.51 16V15.016H11.298V8.224H9.51V7.24H14.19V8.224H12.402V15.016H14.19V16H9.51Z" fill="var(--color-text)"></path></g></svg><span>IAbstract<wbr/>Api<wbr/>Client<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IApiResponseCacheOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IApi<wbr/>Response<wbr/>Cache<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IAsyncRetryOptions.html" class="tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IAsync<wbr/>Retry<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IEnsureValidWindowsPathOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IEnsure<wbr/>Valid<wbr/>Windows<wbr/>Path<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IExtractedTsDocComment.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IExtracted<wbr/>Ts<wbr/>Doc<wbr/>Comment</span></a></li>
+<li><a href="../interfaces/ILogEmitterEventsOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>ILog<wbr/>Emitter<wbr/>Events<wbr/>Options</span></a></li>
+<li><a href="../interfaces/ILoggerOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>ILogger<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IOpenaiApiClientApiDefaultsOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IOpenai<wbr/>Api<wbr/>Client<wbr/>Api<wbr/>Defaults<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IOpenaiApiClientOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IOpenai<wbr/>Api<wbr/>Client<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IOpenaiChatRequestOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IOpenai<wbr/>Chat<wbr/>Request<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IOpenaiCompletionRequestOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IOpenai<wbr/>Completion<wbr/>Request<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IOpenaiTranscribeOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IOpenai<wbr/>Transcribe<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IOpenaiTranscribeRequest.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IOpenai<wbr/>Transcribe<wbr/>Request</span></a></li>
+<li><a href="../interfaces/IPriorityQueueOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IPriority<wbr/>Queue<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IPromiseQueueOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IPromise<wbr/>Queue<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IQueue.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IQueue</span></a></li>
+<li><a href="../interfaces/IQueueAddOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IQueue<wbr/>Add<wbr/>Options</span></a></li>
+<li><a href="../interfaces/IResponseCacheOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IResponse<wbr/>Cache<wbr/>Options</span></a></li>
+<li><a href="../interfaces/ISimpleTableSerializedForm.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>ISimple<wbr/>Table<wbr/>Serialized<wbr/>Form</span></a></li>
+<li><a href="../interfaces/ISortedArrayOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>ISorted<wbr/>Array<wbr/>Options</span></a></li>
+<li><a href="../interfaces/ITaskOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>ITask<wbr/>Options</span></a></li>
+<li><a href="../interfaces/ITimeoutOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>ITimeout<wbr/>Options</span></a></li>
+<li><a href="../interfaces/ITsExtractImportsResult.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>ITs<wbr/>Extract<wbr/>Imports<wbr/>Result</span></a></li>
+<li><a href="../interfaces/ITsParseClassResult.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>ITs<wbr/>Parse<wbr/>Class<wbr/>Result</span></a></li>
+<li><a href="../interfaces/ITsParseFunctionResult.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>ITs<wbr/>Parse<wbr/>Function<wbr/>Result</span></a></li>
+<li><a href="../interfaces/IWalkDirectoryOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>IWalk<wbr/>Directory<wbr/>Options</span></a></li>
+<li><a href="../interfaces/TsDocOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>Ts<wbr/>Doc<wbr/>Options</span></a></li>
+<li><a href="../types/ArrayPredicate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4194304"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-type-alias)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M11.31 16V8.224H8.91V7.24H14.79V8.224H12.39V16H11.31Z" fill="var(--color-text)"></path></g></svg><span>Array<wbr/>Predicate</span></a></li>
+<li><a href="../types/ArrayValueCallback.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Array<wbr/>Value<wbr/>Callback</span></a></li>
+<li><a href="../types/ArrayVoidCallback.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Array<wbr/>Void<wbr/>Callback</span></a></li>
+<li><a href="../types/AttributesMap.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Attributes<wbr/>Map</span></a></li>
+<li><a href="../types/Bit.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Bit</span></a></li>
+<li><a href="../types/BitArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Bit<wbr/>Array</span></a></li>
+<li><a href="../types/ByteArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Byte<wbr/>Array</span></a></li>
+<li><a href="../types/ByteInt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Byte<wbr/>Int</span></a></li>
+<li><a href="../types/Comparator.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Comparator</span></a></li>
+<li><a href="../types/Constructor.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Constructor</span></a></li>
+<li><a href="../types/ConstructorOf.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Constructor<wbr/>Of</span></a></li>
+<li><a href="../types/DefinedPrimitive.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Defined<wbr/>Primitive</span></a></li>
+<li><a href="../types/ElementsMap.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Elements<wbr/>Map</span></a></li>
+<li><a href="../types/GenericFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Generic<wbr/>Function</span></a></li>
+<li><a href="../types/LanguageCode.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Language<wbr/>Code</span></a></li>
+<li><a href="../types/MemoryUsageResult.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Memory<wbr/>Usage<wbr/>Result</span></a></li>
+<li><a href="../types/NestedArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Nested<wbr/>Array</span></a></li>
+<li><a href="../types/NodeJsBufferEncoding.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Node<wbr/>Js<wbr/>Buffer<wbr/>Encoding</span></a></li>
+<li><a href="../types/ObjectKey.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Object<wbr/>Key</span></a></li>
+<li><a href="../types/ParsedSocialSecurityNumberDK.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Parsed<wbr/>Social<wbr/>Security<wbr/>NumberDK</span></a></li>
+<li><a href="../types/PositiveIntegerLessThan.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Positive<wbr/>Integer<wbr/>Less<wbr/>Than</span></a></li>
+<li><a href="../types/Primitive.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Primitive</span></a></li>
+<li><a href="../types/RGB.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>RGB</span></a></li>
+<li><a href="../types/RegexScopeTreeNode.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Regex<wbr/>Scope<wbr/>Tree<wbr/>Node</span></a></li>
+<li><a href="../types/RexecYield.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Rexec<wbr/>Yield</span></a></li>
+<li><a href="../types/RunFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Run<wbr/>Function</span></a></li>
+<li><a href="../types/WalkImportsResult.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Walk<wbr/>Imports<wbr/>Result</span></a></li>
+<li><a href="../types/_HtmlElementConstructorArgs.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>_<wbr/>Html<wbr/>Element<wbr/>Constructor<wbr/>Args</span></a></li>
+<li><a href="../variables/MS_IN_DAY.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-32"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-variable)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M11.106 16L8.85 7.24H9.966L11.454 13.192C11.558 13.608 11.646 13.996 11.718 14.356C11.79 14.708 11.842 14.976 11.874 15.16C11.906 14.976 11.954 14.708 12.018 14.356C12.09 13.996 12.178 13.608 12.282 13.192L13.758 7.24H14.85L12.582 16H11.106Z" fill="var(--color-text)"></path></g></svg><span>MS_<wbr/>IN_<wbr/>DAY</span></a></li>
+<li><a href="../variables/MS_IN_HOUR.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>MS_<wbr/>IN_<wbr/>HOUR</span></a></li>
+<li><a href="../variables/MS_IN_MINUTE.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>MS_<wbr/>IN_<wbr/>MINUTE</span></a></li>
+<li><a href="../variables/MS_IN_MONTH.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>MS_<wbr/>IN_<wbr/>MONTH</span></a></li>
+<li><a href="../variables/MS_IN_SECOND.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>MS_<wbr/>IN_<wbr/>SECOND</span></a></li>
+<li><a href="../variables/MS_IN_WEEK.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>MS_<wbr/>IN_<wbr/>WEEK</span></a></li>
+<li><a href="../variables/MS_IN_YEAR.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>MS_<wbr/>IN_<wbr/>YEAR</span></a></li>
+<li><a href="../variables/_HTML_ATTRIBUTES.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>_HTML_<wbr/>ATTRIBUTES</span></a></li>
+<li><a href="../variables/_HTML_BOOLEAN_ATTRIBUTES.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>_HTML_<wbr/>BOOLEAN_<wbr/>ATTRIBUTES</span></a></li>
+<li><a href="../variables/_HTML_ELEMENTS.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>_HTML_<wbr/>ELEMENTS</span></a></li>
+<li><a href="../variables/_HTML_EVENT_ATTRIBUTES.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>_HTML_<wbr/>EVENT_<wbr/>ATTRIBUTES</span></a></li>
+<li><a href="../variables/_HTML_GLOBAL_ATTRIBUTES.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>_HTML_<wbr/>GLOBAL_<wbr/>ATTRIBUTES</span></a></li>
+<li><a href="../variables/_HTML_VOID_ELEMENTS.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>_HTML_<wbr/>VOID_<wbr/>ELEMENTS</span></a></li>
+<li><a href="../variables/attr.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>attr</span></a></li>
+<li><a href="../variables/el.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>el</span></a></li>
+<li><a href="../variables/log.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>log</span></a></li>
+<li><a href="../variables/openaiApiErrorCodes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>openai<wbr/>Api<wbr/>Error<wbr/>Codes</span></a></li>
+<li><a href="../variables/regBlockCommentsWithIndent.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Block<wbr/>Comments<wbr/>With<wbr/>Indent</span></a></li>
+<li><a href="../variables/regFunctionsExports.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Functions<wbr/>Exports</span></a></li>
+<li><a href="../variables/regHex.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Hex</span></a></li>
+<li><a href="../variables/regHexPrefix.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Hex<wbr/>Prefix</span></a></li>
+<li><a href="../variables/regInteger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Integer</span></a></li>
+<li><a href="../variables/regJestTests.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Jest<wbr/>Tests</span></a></li>
+<li><a href="../variables/regLocaleAlpha.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Locale<wbr/>Alpha</span></a></li>
+<li><a href="../variables/regLocaleAlphaNumeric.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Locale<wbr/>Alpha<wbr/>Numeric</span></a></li>
+<li><a href="../variables/regNumberCommaSepDotDecimal.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Number<wbr/>Comma<wbr/>Sep<wbr/>Dot<wbr/>Decimal</span></a></li>
+<li><a href="../variables/regNumberDotSepCommaDecimal.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Number<wbr/>Dot<wbr/>Sep<wbr/>Comma<wbr/>Decimal</span></a></li>
+<li><a href="../variables/regNumberNoThousandSepCommaDecimal.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Number<wbr/>No<wbr/>Thousand<wbr/>Sep<wbr/>Comma<wbr/>Decimal</span></a></li>
+<li><a href="../variables/regNumberNoThousandSepDotDecimal.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Number<wbr/>No<wbr/>Thousand<wbr/>Sep<wbr/>Dot<wbr/>Decimal</span></a></li>
+<li><a href="../variables/regPowerOfTen.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Power<wbr/>Of<wbr/>Ten</span></a></li>
+<li><a href="../variables/regRepeatingWhiteSpace.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Repeating<wbr/>White<wbr/>Space</span></a></li>
+<li><a href="../variables/regSocialSecurityNumbersDK.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Social<wbr/>Security<wbr/>NumbersDK</span></a></li>
+<li><a href="../variables/regTsDocExampleLines.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Ts<wbr/>Doc<wbr/>Example<wbr/>Lines</span></a></li>
+<li><a href="../variables/regWords.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-32"></use></svg><span>reg<wbr/>Words</span></a></li>
+<li><a href="A1ToColRow.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-64"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)"></path></g></svg><span>A1<wbr/>To<wbr/>Col<wbr/>Row</span></a></li>
+<li><a href="MixinEventEmitter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>Mixin<wbr/>Event<wbr/>Emitter</span></a></li>
+<li><a href="MixinIndexed.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>Mixin<wbr/>Indexed</span></a></li>
+<li><a href="MixinTimestamped.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>Mixin<wbr/>Timestamped</span></a></li>
+<li><a href="absoluteToRelativePath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>absolute<wbr/>To<wbr/>Relative<wbr/>Path</span></a></li>
+<li><a href="appendLineToFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>append<wbr/>Line<wbr/>To<wbr/>File</span></a></li>
+<li><a href="arrAverage.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Average</span></a></li>
+<li><a href="arrEachToString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Each<wbr/>To<wbr/>String</span></a></li>
+<li><a href="arrEvery.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Every</span></a></li>
+<li><a href="arrFindIndicesOf.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Find<wbr/>Indices<wbr/>Of</span></a></li>
+<li><a href="arrFindLast.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Find<wbr/>Last</span></a></li>
+<li><a href="arrFindLastIndexOf.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Find<wbr/>Last<wbr/>Index<wbr/>Of</span></a></li>
+<li><a href="arrFlatten.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Flatten</span></a></li>
+<li><a href="arrIndicesOf.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Indices<wbr/>Of</span></a></li>
+<li><a href="arrLast.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Last</span></a></li>
+<li><a href="arrMapMutable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Map<wbr/>Mutable</span></a></li>
+<li><a href="arrObjectsToTable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Objects<wbr/>To<wbr/>Table</span></a></li>
+<li><a href="arrObjectsUniqueKeys.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Objects<wbr/>Unique<wbr/>Keys</span></a></li>
+<li><a href="arrRemoveDuplicates.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Remove<wbr/>Duplicates</span></a></li>
+<li><a href="arrShallowEquals.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Shallow<wbr/>Equals</span></a></li>
+<li><a href="arrShuffle.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Shuffle</span></a></li>
+<li><a href="arrSome.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Some</span></a></li>
+<li><a href="arrSortNumeric.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Sort<wbr/>Numeric</span></a></li>
+<li><a href="arrSortedInsertionIndex.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Sorted<wbr/>Insertion<wbr/>Index</span></a></li>
+<li><a href="arrSum.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Sum</span></a></li>
+<li><a href="arrSwap.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Swap</span></a></li>
+<li><a href="arrTableAssertRowsSameLength.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Table<wbr/>Assert<wbr/>Rows<wbr/>Same<wbr/>Length</span></a></li>
+<li><a href="arrTableEachToString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Table<wbr/>Each<wbr/>To<wbr/>String</span></a></li>
+<li><a href="arrTableToCsv.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Table<wbr/>To<wbr/>Csv</span></a></li>
+<li><a href="arrTableToObjects.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>arr<wbr/>Table<wbr/>To<wbr/>Objects</span></a></li>
+<li><a href="assertInteger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Integer</span></a></li>
+<li><a href="assertNegativeInteger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Negative<wbr/>Integer</span></a></li>
+<li><a href="assertNonZeroNegativeInteger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Non<wbr/>Zero<wbr/>Negative<wbr/>Integer</span></a></li>
+<li><a href="assertNonZeroPositiveInteger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Non<wbr/>Zero<wbr/>Positive<wbr/>Integer</span></a></li>
+<li><a href="assertPositiveInteger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Positive<wbr/>Integer</span></a></li>
+<li><a href="assertPowerOfTen.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Power<wbr/>Of<wbr/>Ten</span></a></li>
+<li><a href="assertValidDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Date</span></a></li>
+<li><a href="assertValidDateDay.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Date<wbr/>Day</span></a></li>
+<li><a href="assertValidDateMonth.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Date<wbr/>Month</span></a></li>
+<li><a href="assertValidDateYear.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Date<wbr/>Year</span></a></li>
+<li><a href="assertValidHours.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Hours</span></a></li>
+<li><a href="assertValidMilliseconds.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Milliseconds</span></a></li>
+<li><a href="assertValidMinutes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Minutes</span></a></li>
+<li><a href="assertValidNumber.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Number</span></a></li>
+<li><a href="assertValidSeconds.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Seconds</span></a></li>
+<li><a href="assertValidTime.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Time</span></a></li>
+<li><a href="assertValidTimeArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Time<wbr/>Array</span></a></li>
+<li><a href="assertValidTimeInt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Time<wbr/>Int</span></a></li>
+<li><a href="assertValidTimeString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Time<wbr/>String</span></a></li>
+<li><a href="assertValidTimeStringFormatting.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>assert<wbr/>Valid<wbr/>Time<wbr/>String<wbr/>Formatting</span></a></li>
+<li><a href="asyncTasksLimit.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>async<wbr/>Tasks<wbr/>Limit</span></a></li>
+<li><a href="asyncTasksParallel.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>async<wbr/>Tasks<wbr/>Parallel</span></a></li>
+<li><a href="asyncTasksSerial.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>async<wbr/>Tasks<wbr/>Serial</span></a></li>
+<li><a href="asyncWithTimeout.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>async<wbr/>With<wbr/>Timeout</span></a></li>
+<li><a href="atob.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>atob</span></a></li>
+<li><a href="btoa.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>btoa</span></a></li>
+<li><a href="buildRegexBetween.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>build<wbr/>Regex<wbr/>Between</span></a></li>
+<li><a href="bytesToInt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>bytes<wbr/>To<wbr/>Int</span></a></li>
+<li><a href="cleanDirectorySync.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>clean<wbr/>Directory<wbr/>Sync</span></a></li>
+<li><a href="colRowToA1.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>col<wbr/>Row<wbr/>To<wbr/>A1</span></a></li>
+<li><a href="colToLetter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>col<wbr/>To<wbr/>Letter</span></a></li>
+<li><a href="comment.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>comment</span></a></li>
+<li><a href="compareArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>compare<wbr/>Array</span></a></li>
+<li><a href="compareNumber.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>compare<wbr/>Number</span></a></li>
+<li><a href="compareNumberDescending.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>compare<wbr/>Number<wbr/>Descending</span></a></li>
+<li><a href="compareNumeric.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>compare<wbr/>Numeric</span></a></li>
+<li><a href="compareNumericDescending.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>compare<wbr/>Numeric<wbr/>Descending</span></a></li>
+<li><a href="compareString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>compare<wbr/>String</span></a></li>
+<li><a href="compareStringDescending.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>compare<wbr/>String<wbr/>Descending</span></a></li>
+<li><a href="convertFilter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>convert<wbr/>Filter</span></a></li>
+<li><a href="createDirectory.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>create<wbr/>Directory</span></a></li>
+<li><a href="createDirectorySync.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>create<wbr/>Directory<wbr/>Sync</span></a></li>
+<li><a href="createFileExtensionFilter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>create<wbr/>File<wbr/>Extension<wbr/>Filter</span></a></li>
+<li><a href="createObjectFactory.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>create<wbr/>Object<wbr/>Factory</span></a></li>
+<li><a href="csvParseStream.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>csv<wbr/>Parse<wbr/>Stream</span></a></li>
+<li><a href="cwdpath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>cwdpath</span></a></li>
+<li><a href="dateDaysAgo.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>date<wbr/>Days<wbr/>Ago</span></a></li>
+<li><a href="dateWeekDayName.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>date<wbr/>Week<wbr/>Day<wbr/>Name</span></a></li>
+<li><a href="daysSinceDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>days<wbr/>Since<wbr/>Date</span></a></li>
+<li><a href="deleteDirectory.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>delete<wbr/>Directory</span></a></li>
+<li><a href="deleteDirectorySafe.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>delete<wbr/>Directory<wbr/>Safe</span></a></li>
+<li><a href="deleteDirectorySafeSync.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>delete<wbr/>Directory<wbr/>Safe<wbr/>Sync</span></a></li>
+<li><a href="deleteDirectorySync.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>delete<wbr/>Directory<wbr/>Sync</span></a></li>
+<li><a href="ensureValidWindowsPath.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ensure<wbr/>Valid<wbr/>Windows<wbr/>Path</span></a></li>
+<li><a href="findFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>find<wbr/>File</span></a></li>
+<li><a href="funAsyncAutoRateLimit.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>fun<wbr/>Async<wbr/>Auto<wbr/>Rate<wbr/>Limit</span></a></li>
+<li><a href="funAsyncRateLimit.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>fun<wbr/>Async<wbr/>Rate<wbr/>Limit</span></a></li>
+<li><a href="funParseClass.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>fun<wbr/>Parse<wbr/>Class</span></a></li>
+<li><a href="funParseFunction.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>fun<wbr/>Parse<wbr/>Function</span></a></li>
+<li><a href="funSetName.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>fun<wbr/>Set<wbr/>Name</span></a></li>
+<li><a href="getCentury.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Century</span></a></li>
+<li><a href="getConstructor.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Constructor</span></a></li>
+<li><a href="getCurrentYear.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Current<wbr/>Year</span></a></li>
+<li><a href="getDownloadsDirectory.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Downloads<wbr/>Directory</span></a></li>
+<li><a href="getHomeDirectory.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Home<wbr/>Directory</span></a></li>
+<li><a href="getLastMofifiedFileIn.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Last<wbr/>Mofified<wbr/>File<wbr/>In</span></a></li>
+<li><a href="getOrElse.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Or<wbr/>Else</span></a></li>
+<li><a href="getOrThrow.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Or<wbr/>Throw</span></a></li>
+<li><a href="getPrototype.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>get<wbr/>Prototype</span></a></li>
+<li><a href="hoursSinceDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>hours<wbr/>Since<wbr/>Date</span></a></li>
+<li><a href="inheritStaticMembers.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>inherit<wbr/>Static<wbr/>Members</span></a></li>
+<li><a href="instantiateCorrectFsPathSubclass.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>instantiate<wbr/>Correct<wbr/>Fs<wbr/>Path<wbr/>Subclass</span></a></li>
+<li><a href="intToArrayBytes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>int<wbr/>To<wbr/>Array<wbr/>Bytes</span></a></li>
+<li><a href="intToBuffer.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>int<wbr/>To<wbr/>Buffer</span></a></li>
+<li><a href="intToBytes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>int<wbr/>To<wbr/>Bytes</span></a></li>
+<li><a href="isConstructor.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Constructor</span></a></li>
+<li><a href="isEven.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Even</span></a></li>
+<li><a href="isHex.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Hex</span></a></li>
+<li><a href="isHexOrUnicode.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Hex<wbr/>Or<wbr/>Unicode</span></a></li>
+<li><a href="isInRange.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>In<wbr/>Range</span></a></li>
+<li><a href="isInteger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Integer</span></a></li>
+<li><a href="isIterable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Iterable</span></a></li>
+<li><a href="isLeapYear.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Leap<wbr/>Year</span></a></li>
+<li><a href="isMultiTsDocTag.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Multi<wbr/>Ts<wbr/>Doc<wbr/>Tag</span></a></li>
+<li><a href="isNamedMultiTsDocTag.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Named<wbr/>Multi<wbr/>Ts<wbr/>Doc<wbr/>Tag</span></a></li>
+<li><a href="isNamedTsDocTag.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Named<wbr/>Ts<wbr/>Doc<wbr/>Tag</span></a></li>
+<li><a href="isNegativeInteger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Negative<wbr/>Integer</span></a></li>
+<li><a href="isNumericString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Numeric<wbr/>String</span></a></li>
+<li><a href="isObject.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Object</span></a></li>
+<li><a href="isOdd.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Odd</span></a></li>
+<li><a href="isPositiveInteger.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Positive<wbr/>Integer</span></a></li>
+<li><a href="isPowerOfTen.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Power<wbr/>Of<wbr/>Ten</span></a></li>
+<li><a href="isPrototype.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Prototype</span></a></li>
+<li><a href="isSocialSecurityNumberDK.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Social<wbr/>Security<wbr/>NumberDK</span></a></li>
+<li><a href="isValidDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Date</span></a></li>
+<li><a href="isValidDateDay.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Date<wbr/>Day</span></a></li>
+<li><a href="isValidDateMonth.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Date<wbr/>Month</span></a></li>
+<li><a href="isValidDateYear.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Date<wbr/>Year</span></a></li>
+<li><a href="isValidHours.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Hours</span></a></li>
+<li><a href="isValidMilliseconds.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Milliseconds</span></a></li>
+<li><a href="isValidMinutes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Minutes</span></a></li>
+<li><a href="isValidNumber.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Number</span></a></li>
+<li><a href="isValidSeconds.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Seconds</span></a></li>
+<li><a href="isValidTime.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Time</span></a></li>
+<li><a href="isValidTimeArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Time<wbr/>Array</span></a></li>
+<li><a href="isValidTimeInt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Time<wbr/>Int</span></a></li>
+<li><a href="isValidTimeString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Time<wbr/>String</span></a></li>
+<li><a href="isValidTimeStringFormatting.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Time<wbr/>String<wbr/>Formatting</span></a></li>
+<li><a href="isValidTsDocComment.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Valid<wbr/>Ts<wbr/>Doc<wbr/>Comment</span></a></li>
+<li><a href="isoDateTimestamp.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>iso<wbr/>Date<wbr/>Timestamp</span></a></li>
+<li><a href="isoDateTimestampForFilename.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>iso<wbr/>Date<wbr/>Timestamp<wbr/>For<wbr/>Filename</span></a></li>
+<li><a href="iterableFirstElement.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>iterable<wbr/>First<wbr/>Element</span></a></li>
+<li><a href="iteratePrototypeChain.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>iterate<wbr/>Prototype<wbr/>Chain</span></a></li>
+<li><a href="letterToCol.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>letter<wbr/>To<wbr/>Col</span></a></li>
+<li><a href="mapGetOrElse.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>map<wbr/>Get<wbr/>Or<wbr/>Else</span></a></li>
+<li><a href="mapReverse.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>map<wbr/>Reverse</span></a></li>
+<li><a href="mapUpdate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>map<wbr/>Update</span></a></li>
+<li><a href="markdownWrapCodeBlock.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>markdown<wbr/>Wrap<wbr/>Code<wbr/>Block</span></a></li>
+<li><a href="memoryUsage.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>memory<wbr/>Usage</span></a></li>
+<li><a href="minutesSinceDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>minutes<wbr/>Since<wbr/>Date</span></a></li>
+<li><a href="monthsSinceDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>months<wbr/>Since<wbr/>Date</span></a></li>
+<li><a href="msSinceDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ms<wbr/>Since<wbr/>Date</span></a></li>
+<li><a href="normalizeFileExtension.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>normalize<wbr/>File<wbr/>Extension</span></a></li>
+<li><a href="normalizeLineLengths.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>normalize<wbr/>Line<wbr/>Lengths</span></a></li>
+<li><a href="numDaysInMonth.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>num<wbr/>Days<wbr/>In<wbr/>Month</span></a></li>
+<li><a href="numRange.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>num<wbr/>Range</span></a></li>
+<li><a href="objAssignDeep.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Assign<wbr/>Deep</span></a></li>
+<li><a href="objDeepFreeze.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Deep<wbr/>Freeze</span></a></li>
+<li><a href="objDelete.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Delete</span></a></li>
+<li><a href="objEntries.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Entries</span></a></li>
+<li><a href="objEntriesArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Entries<wbr/>Array</span></a></li>
+<li><a href="objFilter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Filter</span></a></li>
+<li><a href="objForEach.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>For<wbr/>Each</span></a></li>
+<li><a href="objGet.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Get</span></a></li>
+<li><a href="objGetOrElse.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Get<wbr/>Or<wbr/>Else</span></a></li>
+<li><a href="objHas.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Has</span></a></li>
+<li><a href="objIsEmpty.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Is<wbr/>Empty</span></a></li>
+<li><a href="objKeys.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Keys</span></a></li>
+<li><a href="objKeysArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Keys<wbr/>Array</span></a></li>
+<li><a href="objMap.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Map</span></a></li>
+<li><a href="objMapKeys.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Map<wbr/>Keys</span></a></li>
+<li><a href="objMapMutable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Map<wbr/>Mutable</span></a></li>
+<li><a href="objOmitKeys.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Omit<wbr/>Keys</span></a></li>
+<li><a href="objOmitKeysMutable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Omit<wbr/>Keys<wbr/>Mutable</span></a></li>
+<li><a href="objPropertyValueToGetter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Property<wbr/>Value<wbr/>To<wbr/>Getter</span></a></li>
+<li><a href="objReduce.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Reduce</span></a></li>
+<li><a href="objReverse.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Reverse</span></a></li>
+<li><a href="objSet.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Set</span></a></li>
+<li><a href="objSize.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Size</span></a></li>
+<li><a href="objSortKeys.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Sort<wbr/>Keys</span></a></li>
+<li><a href="objToMap.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>To<wbr/>Map</span></a></li>
+<li><a href="objUpdate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Update</span></a></li>
+<li><a href="objUpdatePropertyDescriptors.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Update<wbr/>Property<wbr/>Descriptors</span></a></li>
+<li><a href="objValues.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Values</span></a></li>
+<li><a href="objValuesArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Values<wbr/>Array</span></a></li>
+<li><a href="objWalk.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>obj<wbr/>Walk</span></a></li>
+<li><a href="padArrayBytesLeft.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>pad<wbr/>Array<wbr/>Bytes<wbr/>Left</span></a></li>
+<li><a href="padArrayBytesRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>pad<wbr/>Array<wbr/>Bytes<wbr/>Right</span></a></li>
+<li><a href="parseMarkdownCodeBlock.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>parse<wbr/>Markdown<wbr/>Code<wbr/>Block</span></a></li>
+<li><a href="parseMarkdownTable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>parse<wbr/>Markdown<wbr/>Table</span></a></li>
+<li><a href="parseSocialSecurityNumberDK.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>parse<wbr/>Social<wbr/>Security<wbr/>NumberDK</span></a></li>
+<li><a href="pdfGetPages.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>pdf<wbr/>Get<wbr/>Pages</span></a></li>
+<li><a href="pdfIteratePages.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>pdf<wbr/>Iterate<wbr/>Pages</span></a></li>
+<li><a href="pdfSplitPages.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>pdf<wbr/>Split<wbr/>Pages</span></a></li>
+<li><a href="prettyIsoDateString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>pretty<wbr/>Iso<wbr/>Date<wbr/>String</span></a></li>
+<li><a href="randomIntBetween.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>random<wbr/>Int<wbr/>Between</span></a></li>
+<li><a href="readExcelFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>read<wbr/>Excel<wbr/>File</span></a></li>
+<li><a href="readJsonFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>read<wbr/>Json<wbr/>File</span></a></li>
+<li><a href="readJsonFileSync.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>read<wbr/>Json<wbr/>File<wbr/>Sync</span></a></li>
+<li><a href="regexClone.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>regex<wbr/>Clone</span></a></li>
+<li><a href="regexEscapeString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>regex<wbr/>Escape<wbr/>String</span></a></li>
+<li><a href="regexFixFlags.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>regex<wbr/>Fix<wbr/>Flags</span></a></li>
+<li><a href="regexGetGroupNames.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>regex<wbr/>Get<wbr/>Group<wbr/>Names</span></a></li>
+<li><a href="regexIsValidFlags.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>regex<wbr/>Is<wbr/>Valid<wbr/>Flags</span></a></li>
+<li><a href="regexMatcherToValidater.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>regex<wbr/>Matcher<wbr/>To<wbr/>Validater</span></a></li>
+<li><a href="regexScopeTree.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>regex<wbr/>Scope<wbr/>Tree</span></a></li>
+<li><a href="regexValidFlags.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>regex<wbr/>Valid<wbr/>Flags</span></a></li>
+<li><a href="removeIllegalFilenameCharacters.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>remove<wbr/>Illegal<wbr/>Filename<wbr/>Characters</span></a></li>
+<li><a href="rexec.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>rexec</span></a></li>
+<li><a href="rexecFirstMatch.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>rexec<wbr/>First<wbr/>Match</span></a></li>
+<li><a href="round.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>round</span></a></li>
+<li><a href="roundDown.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>round<wbr/>Down</span></a></li>
+<li><a href="roundToNearest.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>round<wbr/>To<wbr/>Nearest</span></a></li>
+<li><a href="roundToNearestPow10.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>round<wbr/>To<wbr/>Nearest<wbr/>Pow10</span></a></li>
+<li><a href="roundUp.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>round<wbr/>Up</span></a></li>
+<li><a href="roundWith.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>round<wbr/>With</span></a></li>
+<li><a href="secondsSinceDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>seconds<wbr/>Since<wbr/>Date</span></a></li>
+<li><a href="setAddMany.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Add<wbr/>Many</span></a></li>
+<li><a href="setDifference.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Difference</span></a></li>
+<li><a href="setEnumerable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Enumerable</span></a></li>
+<li><a href="setIntersection.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Intersection</span></a></li>
+<li><a href="setIsSuperset.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Is<wbr/>Superset</span></a></li>
+<li><a href="setNonConfigurable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Non<wbr/>Configurable</span></a></li>
+<li><a href="setNonEnumerable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Non<wbr/>Enumerable</span></a></li>
+<li><a href="setNonWritable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Non<wbr/>Writable</span></a></li>
+<li><a href="setSymmetricDifference.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Symmetric<wbr/>Difference</span></a></li>
+<li><a href="setUnion.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Union</span></a></li>
+<li><a href="setWritable.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>set<wbr/>Writable</span></a></li>
+<li><a href="shellSpawnProgram.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>shell<wbr/>Spawn<wbr/>Program</span></a></li>
+<li><a href="strCountCharOccurances.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Count<wbr/>Char<wbr/>Occurances</span></a></li>
+<li><a href="strCountChars.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Count<wbr/>Chars</span></a></li>
+<li><a href="strCountWords.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Count<wbr/>Words</span></a></li>
+<li><a href="strEnsureEndsWith.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Ensure<wbr/>Ends<wbr/>With</span></a></li>
+<li><a href="strFirstCharToUpperCase.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>First<wbr/>Char<wbr/>To<wbr/>Upper<wbr/>Case</span></a></li>
+<li><a href="strHashToBuffer.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Hash<wbr/>To<wbr/>Buffer</span></a></li>
+<li><a href="strHashToString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Hash<wbr/>To<wbr/>String</span></a></li>
+<li><a href="strHashToStringDJB2.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Hash<wbr/>To<wbr/>StringDJB2</span></a></li>
+<li><a href="strHashToUint32Array.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Hash<wbr/>To<wbr/>Uint32<wbr/>Array</span></a></li>
+<li><a href="strIsLowerCase.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Is<wbr/>Lower<wbr/>Case</span></a></li>
+<li><a href="strIsMultiLine.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Is<wbr/>Multi<wbr/>Line</span></a></li>
+<li><a href="strIsUpperCase.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Is<wbr/>Upper<wbr/>Case</span></a></li>
+<li><a href="strNoConsecutiveEmptyLines.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>No<wbr/>Consecutive<wbr/>Empty<wbr/>Lines</span></a></li>
+<li><a href="strNoConsecutiveWhitespace.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>No<wbr/>Consecutive<wbr/>Whitespace</span></a></li>
+<li><a href="strParseBoolean.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Parse<wbr/>Boolean</span></a></li>
+<li><a href="strPrependLines.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Prepend<wbr/>Lines</span></a></li>
+<li><a href="strRemoveDuplicateChars.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Remove<wbr/>Duplicate<wbr/>Chars</span></a></li>
+<li><a href="strRemoveEmptyLines.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Remove<wbr/>Empty<wbr/>Lines</span></a></li>
+<li><a href="strRemoveFirstAndLastLine.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Remove<wbr/>First<wbr/>And<wbr/>Last<wbr/>Line</span></a></li>
+<li><a href="strRemoveNewLines.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Remove<wbr/>New<wbr/>Lines</span></a></li>
+<li><a href="strRepeat.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Repeat</span></a></li>
+<li><a href="strReplaceAll.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Replace<wbr/>All</span></a></li>
+<li><a href="strSortChars.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Sort<wbr/>Chars</span></a></li>
+<li><a href="strSplitAndTrim.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Split<wbr/>And<wbr/>Trim</span></a></li>
+<li><a href="strSplitCamelCase.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Split<wbr/>Camel<wbr/>Case</span></a></li>
+<li><a href="strToCharCodes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>To<wbr/>Char<wbr/>Codes</span></a></li>
+<li><a href="strToCharSet.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>To<wbr/>Char<wbr/>Set</span></a></li>
+<li><a href="strToSentences.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>To<wbr/>Sentences</span></a></li>
+<li><a href="strToSortedCharSet.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>To<wbr/>Sorted<wbr/>Char<wbr/>Set</span></a></li>
+<li><a href="strToWords.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>To<wbr/>Words</span></a></li>
+<li><a href="strTrimLines.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Trim<wbr/>Lines</span></a></li>
+<li><a href="strTrimLinesLeft.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Trim<wbr/>Lines<wbr/>Left</span></a></li>
+<li><a href="strTrimLinesRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Trim<wbr/>Lines<wbr/>Right</span></a></li>
+<li><a href="strUnwrap.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Unwrap</span></a></li>
+<li><a href="strWrapBetween.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Wrap<wbr/>Between</span></a></li>
+<li><a href="strWrapIn.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Wrap<wbr/>In</span></a></li>
+<li><a href="strWrapInAngleBrackets.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Wrap<wbr/>In<wbr/>Angle<wbr/>Brackets</span></a></li>
+<li><a href="strWrapInBraces.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Wrap<wbr/>In<wbr/>Braces</span></a></li>
+<li><a href="strWrapInBrackets.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Wrap<wbr/>In<wbr/>Brackets</span></a></li>
+<li><a href="strWrapInDoubleQuotes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Wrap<wbr/>In<wbr/>Double<wbr/>Quotes</span></a></li>
+<li><a href="strWrapInParenthesis.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Wrap<wbr/>In<wbr/>Parenthesis</span></a></li>
+<li><a href="strWrapInSingleQuotes.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>str<wbr/>Wrap<wbr/>In<wbr/>Single<wbr/>Quotes</span></a></li>
+<li><a href="streamToString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>stream<wbr/>To<wbr/>String</span></a></li>
+<li><a href="tableFrom.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>table<wbr/>From</span></a></li>
+<li><a href="timeArrayToInt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>Array<wbr/>To<wbr/>Int</span></a></li>
+<li><a href="timeArrayToIntUnsafe.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>Array<wbr/>To<wbr/>Int<wbr/>Unsafe</span></a></li>
+<li><a href="timeArrayToString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>Array<wbr/>To<wbr/>String</span></a></li>
+<li><a href="timeArrayToStringUnsafe.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>Array<wbr/>To<wbr/>String<wbr/>Unsafe</span></a></li>
+<li><a href="timeIntToArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>Int<wbr/>To<wbr/>Array</span></a></li>
+<li><a href="timeIntToArrayUnsafe.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>Int<wbr/>To<wbr/>Array<wbr/>Unsafe</span></a></li>
+<li><a href="timeIntToString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>Int<wbr/>To<wbr/>String</span></a></li>
+<li><a href="timeIntToStringUnsafe.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>Int<wbr/>To<wbr/>String<wbr/>Unsafe</span></a></li>
+<li><a href="timeStringToArray.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>String<wbr/>To<wbr/>Array</span></a></li>
+<li><a href="timeStringToArrayUnsafe.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>String<wbr/>To<wbr/>Array<wbr/>Unsafe</span></a></li>
+<li><a href="timeStringToInt.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>String<wbr/>To<wbr/>Int</span></a></li>
+<li><a href="timeStringToIntUnsafe.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>time<wbr/>String<wbr/>To<wbr/>Int<wbr/>Unsafe</span></a></li>
+<li><a href="toJson.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>to<wbr/>Json</span></a></li>
+<li><a href="trimArrayBytesLeft.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>trim<wbr/>Array<wbr/>Bytes<wbr/>Left</span></a></li>
+<li><a href="trimArrayBytesRight.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>trim<wbr/>Array<wbr/>Bytes<wbr/>Right</span></a></li>
+<li><a href="tsCountExports.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Count<wbr/>Exports</span></a></li>
+<li><a href="tsCountLinesOfCode.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Count<wbr/>Lines<wbr/>Of<wbr/>Code</span></a></li>
+<li><a href="tsDocExtractAllComments.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Extract<wbr/>All<wbr/>Comments</span></a></li>
+<li><a href="tsDocExtractFirstComment.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Extract<wbr/>First<wbr/>Comment</span></a></li>
+<li><a href="tsDocFixSpacingBeforeAfter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Fix<wbr/>Spacing<wbr/>Before<wbr/>After</span></a></li>
+<li><a href="tsDocNormalizeTagName.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Normalize<wbr/>Tag<wbr/>Name</span></a></li>
+<li><a href="tsDocRemoveEmptyLines.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Remove<wbr/>Empty<wbr/>Lines</span></a></li>
+<li><a href="tsDocStripAllTagsButThrowsParamDescription.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Strip<wbr/>All<wbr/>Tags<wbr/>But<wbr/>Throws<wbr/>Param<wbr/>Description</span></a></li>
+<li><a href="tsDocStripExample.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Strip<wbr/>Example</span></a></li>
+<li><a href="tsDocStripTypesAndDefaults.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Strip<wbr/>Types<wbr/>And<wbr/>Defaults</span></a></li>
+<li><a href="tsDocUnwrapComment.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Unwrap<wbr/>Comment</span></a></li>
+<li><a href="tsDocWrapAsComment.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Wrap<wbr/>As<wbr/>Comment</span></a></li>
+<li><a href="tsDocWrapExample.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Doc<wbr/>Wrap<wbr/>Example</span></a></li>
+<li><a href="tsExtractImports.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Extract<wbr/>Imports</span></a></li>
+<li><a href="tsExtractJestTests.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Extract<wbr/>Jest<wbr/>Tests</span></a></li>
+<li><a href="tsGetClassMemberAccessModifiers.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Get<wbr/>Class<wbr/>Member<wbr/>Access<wbr/>Modifiers</span></a></li>
+<li><a href="tsHasDefaultExport.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Has<wbr/>Default<wbr/>Export</span></a></li>
+<li><a href="tsJestConvertExportNameString.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Jest<wbr/>Convert<wbr/>Export<wbr/>Name<wbr/>String</span></a></li>
+<li><a href="tsJestEnsureLineSpacing.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Jest<wbr/>Ensure<wbr/>Line<wbr/>Spacing</span></a></li>
+<li><a href="tsSimpleMinifyCode.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Simple<wbr/>Minify<wbr/>Code</span></a></li>
+<li><a href="tsStripBlockComments.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Strip<wbr/>Block<wbr/>Comments</span></a></li>
+<li><a href="tsStripComments.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Strip<wbr/>Comments</span></a></li>
+<li><a href="tsStripDeclSourceMapComments.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Strip<wbr/>Decl<wbr/>Source<wbr/>Map<wbr/>Comments</span></a></li>
+<li><a href="tsStripExportKeyword.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Strip<wbr/>Export<wbr/>Keyword</span></a></li>
+<li><a href="tsStripImports.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Strip<wbr/>Imports</span></a></li>
+<li><a href="tsStripInlineComments.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>ts<wbr/>Strip<wbr/>Inline<wbr/>Comments</span></a></li>
+<li><a href="unzipFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>unzip<wbr/>File</span></a></li>
+<li><a href="unzipMergeFiles.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>unzip<wbr/>Merge<wbr/>Files</span></a></li>
+<li><a href="wait.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>wait</span></a></li>
+<li><a href="waitSeconds.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>wait<wbr/>Seconds</span></a></li>
+<li><a href="walkDirectory.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>walk<wbr/>Directory</span></a></li>
+<li><a href="walkDirectoryEmitter.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>walk<wbr/>Directory<wbr/>Emitter</span></a></li>
+<li><a href="walkDirectorySync.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>walk<wbr/>Directory<wbr/>Sync</span></a></li>
+<li><a href="weeksSinceDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>weeks<wbr/>Since<wbr/>Date</span></a></li>
+<li><a href="wipeDirectorySafe.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>wipe<wbr/>Directory<wbr/>Safe</span></a></li>
+<li><a href="writeExcelFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>write<wbr/>Excel<wbr/>File</span></a></li>
+<li><a href="writeJsonFile.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>write<wbr/>Json<wbr/>File</span></a></li>
+<li><a href="writeJsonFileSync.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>write<wbr/>Json<wbr/>File<wbr/>Sync</span></a></li>
+<li><a href="yearsSinceDate.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>years<wbr/>Since<wbr/>Date</span></a></li></ul></nav></div></div></div>
+<div class="tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div></body></html>

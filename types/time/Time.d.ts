@@ -3,7 +3,11 @@
  * Precision is from hours to miliseconds.
  */
 export declare class Time {
-    #private;
+    /**
+     * The time in millisecond representation.
+     * This is the only value stored internally.
+     */
+    protected ms: number;
     /**
      * Creates a new Time instance.
      * @param input The time in millisecond representation, or a string in the format "HH:MM:SS.mmm", or an array in the format [HH, MM, SS, mmm].

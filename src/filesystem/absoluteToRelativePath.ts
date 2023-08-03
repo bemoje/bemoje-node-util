@@ -14,5 +14,7 @@ import { regexEscapeString } from '../regex/regexEscapeString'
  * ```
  */
 export function absoluteToRelativePath(absolute: string, workingDirectory = process.cwd()): string {
-  return path.normalize(absolute).replace(new RegExp(regexEscapeString(path.normalize(workingDirectory) + path.sep), 'i'), '')
+  return path
+    .normalize(absolute)
+    .replace(new RegExp(regexEscapeString(path.normalize(workingDirectory) + path.sep), 'i'), '')
 }

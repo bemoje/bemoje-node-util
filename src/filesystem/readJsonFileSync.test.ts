@@ -13,7 +13,7 @@ describe(readJsonFileSync.name, () => {
     readFileSyncMock.mockReturnValue(Buffer.from(jsonString))
     const result = readJsonFileSync('test.json')
     expect(result).toEqual(jsonData)
-    expect(readFileSyncMock).toHaveBeenCalledWith('test.json')
+    expect(readFileSyncMock).toHaveBeenCalledWith('test.json', 'utf8')
   })
 
   it('should throw an error if the file cannot be read', () => {
@@ -23,7 +23,7 @@ describe(readJsonFileSync.name, () => {
       throw error
     })
     expect(() => readJsonFileSync('test.json')).toThrow(error)
-    expect(readFileSyncMock).toHaveBeenCalledWith('test.json')
+    expect(readFileSyncMock).toHaveBeenCalledWith('test.json', 'utf8')
   })
 
   it('should throw an error if the file has invalid JSON', () => {
@@ -31,6 +31,6 @@ describe(readJsonFileSync.name, () => {
     const invalidJsonString = 'invalid json'
     readFileSyncMock.mockReturnValue(Buffer.from(invalidJsonString))
     expect(() => readJsonFileSync('test.json')).toThrow(SyntaxError)
-    expect(readFileSyncMock).toHaveBeenCalledWith('test.json')
+    expect(readFileSyncMock).toHaveBeenCalledWith('test.json', 'utf8')
   })
 })

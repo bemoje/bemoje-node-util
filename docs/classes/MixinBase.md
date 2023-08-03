@@ -42,7 +42,7 @@ typeof [`MixinBase`](/docs/classes/MixinBase.md)
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:7](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/mixins/MixinBase.ts#L7)
+[src/mixins/MixinBase.ts:7](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/mixins/MixinBase.ts#L7)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:11](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/mixins/MixinBase.ts#L11)
+[src/mixins/MixinBase.ts:11](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/mixins/MixinBase.ts#L11)
 
 ___
 
@@ -78,4 +78,4 @@ Make the properties with the given property names non-enumerable.
 
 #### Defined in
 
-[src/mixins/MixinBase.ts:18](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/mixins/MixinBase.ts#L18)
+[src/mixins/MixinBase.ts:18](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/mixins/MixinBase.ts#L18)

@@ -40,6 +40,10 @@ export default {
     'csv-parser',
     'strip-comments',
     'blob',
+    'pretty-error',
+    'dotenv/config',
+    'extract-zip',
+    'walkdir',
   ],
   output: [
     {

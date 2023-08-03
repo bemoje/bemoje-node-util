@@ -5,7 +5,18 @@ import { ISimpleTableSerializedForm } from './types/ISimpleTableSerializedForm';
  * @template T The type of the data in the table.
  */
 export declare class SimpleTable<T> extends MixinBase {
-    #private;
+    /**
+     * Map from column names to column indices.
+     */
+    protected _colIndexMap: Record<string, number>;
+    /**
+     * The headers of the table.
+     */
+    protected _headers: string[];
+    /**
+     * The data of the table.
+     */
+    protected _data: T[][];
     /**
      * Revive a stringified Table object.
      * @param json a stringified Table object.

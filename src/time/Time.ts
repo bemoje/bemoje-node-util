@@ -17,7 +17,7 @@ export class Time {
    * The time in millisecond representation.
    * This is the only value stored internally.
    */
-  #ms: number
+  protected ms: number
 
   /**
    * Creates a new Time instance.
@@ -27,11 +27,11 @@ export class Time {
   constructor(input: number | string | number[]) {
     if (typeof input === 'number') {
       assertValidTimeInt(input as number)
-      this.#ms = input as number
+      this.ms = input as number
     } else if (typeof input === 'string') {
-      this.#ms = timeStringToInt(input as string)
+      this.ms = timeStringToInt(input as string)
     } else {
-      this.#ms = timeArrayToInt(input as number[])
+      this.ms = timeArrayToInt(input as number[])
     }
   }
 
@@ -42,8 +42,8 @@ export class Time {
    * @throws if the time becomes invalid after the operation.
    */
   addHours(hours: number): this {
-    this.#ms += hours * 3600000
-    assertValidTimeInt(this.#ms)
+    this.ms += hours * 3600000
+    assertValidTimeInt(this.ms)
     return this
   }
 
@@ -54,8 +54,8 @@ export class Time {
    * @throws if the time becomes invalid after the operation.
    */
   addMinutes(minutes: number): this {
-    this.#ms += minutes * 60000
-    assertValidTimeInt(this.#ms)
+    this.ms += minutes * 60000
+    assertValidTimeInt(this.ms)
     return this
   }
 
@@ -66,8 +66,8 @@ export class Time {
    * @throws if the time becomes invalid after the operation.
    */
   addSeconds(seconds: number): this {
-    this.#ms += seconds * 1000
-    assertValidTimeInt(this.#ms)
+    this.ms += seconds * 1000
+    assertValidTimeInt(this.ms)
     return this
   }
 
@@ -78,8 +78,8 @@ export class Time {
    * @throws if the time becomes invalid after the operation.
    */
   addMilliseconds(milliseconds: number): this {
-    this.#ms += milliseconds
-    assertValidTimeInt(this.#ms)
+    this.ms += milliseconds
+    assertValidTimeInt(this.ms)
     return this
   }
 
@@ -90,8 +90,8 @@ export class Time {
    * @throws if the time becomes invalid after the operation.
    */
   subtractHours(hours: number): this {
-    this.#ms -= hours * 3600000
-    assertValidTimeInt(this.#ms)
+    this.ms -= hours * 3600000
+    assertValidTimeInt(this.ms)
     return this
   }
 
@@ -102,8 +102,8 @@ export class Time {
    * @throws if the time becomes invalid after the operation.
    */
   subtractMinutes(minutes: number): this {
-    this.#ms -= minutes * 60000
-    assertValidTimeInt(this.#ms)
+    this.ms -= minutes * 60000
+    assertValidTimeInt(this.ms)
     return this
   }
 
@@ -114,8 +114,8 @@ export class Time {
    * @throws if the time becomes invalid after the operation.
    */
   subtractSeconds(seconds: number): this {
-    this.#ms -= seconds * 1000
-    assertValidTimeInt(this.#ms)
+    this.ms -= seconds * 1000
+    assertValidTimeInt(this.ms)
     return this
   }
 
@@ -126,8 +126,8 @@ export class Time {
    * @throws if the time becomes invalid after the operation.
    */
   subtractMilliseconds(milliseconds: number): this {
-    this.#ms -= milliseconds
-    assertValidTimeInt(this.#ms)
+    this.ms -= milliseconds
+    assertValidTimeInt(this.ms)
     return this
   }
 
@@ -135,7 +135,7 @@ export class Time {
    * Returns the hours.
    */
   get hours(): number {
-    return Math.floor(this.#ms / 3600000)
+    return Math.floor(this.ms / 3600000)
   }
 
   /**
@@ -152,7 +152,7 @@ export class Time {
    * Returns the minutes.
    */
   get minutes(): number {
-    return Math.floor(this.#ms / 60000) % 60
+    return Math.floor(this.ms / 60000) % 60
   }
 
   /**
@@ -169,7 +169,7 @@ export class Time {
    * Returns the seconds.
    */
   get seconds(): number {
-    return Math.floor(this.#ms / 1000) % 60
+    return Math.floor(this.ms / 1000) % 60
   }
 
   /**
@@ -186,7 +186,7 @@ export class Time {
    * Returns the milliseconds.
    */
   get milliseconds(): number {
-    return this.#ms % 1000
+    return this.ms % 1000
   }
 
   /**
@@ -196,14 +196,14 @@ export class Time {
    */
   set milliseconds(value: number) {
     assertValidMilliseconds(value)
-    this.addMilliseconds(value - this.#ms)
+    this.addMilliseconds(value - this.ms)
   }
 
   /**
    * Returns the time as an array in the format [HH, MM, SS, mmm].
    */
   toArray(): number[] {
-    return timeIntToArrayUnsafe(this.#ms)
+    return timeIntToArrayUnsafe(this.ms)
   }
 
   /**
@@ -211,21 +211,21 @@ export class Time {
    * @param msDelimiter The delimiter between seconds and milliseconds.
    */
   toString(msDelimiter = '.'): string {
-    return timeIntToStringUnsafe(this.#ms, msDelimiter)
+    return timeIntToStringUnsafe(this.ms, msDelimiter)
   }
 
   /**
    * Returns the time in millisecond representation.
    */
   toNumber(): number {
-    return this.#ms
+    return this.ms
   }
 
   /**
    * Returns the time in millisecond representation.
    */
   valueOf(): number {
-    return this.#ms
+    return this.ms
   }
 
   /**
@@ -234,7 +234,7 @@ export class Time {
    * @param other The other Time instance to compare to.
    */
   compareTo(other: Time): number {
-    return this.#ms - other.#ms
+    return this.ms - other.ms
   }
 
   /**
@@ -250,6 +250,6 @@ export class Time {
    * Returns a new Time instance.
    */
   clone(): Time {
-    return new Time(this.#ms)
+    return new Time(this.ms)
   }
 }

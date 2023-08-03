@@ -13,7 +13,9 @@ function main() {
   console.log({ search })
 
   const filter = (filepath: string) => new RegExp(regexEscapeString(search), 'i').test(filepath.replace(/\\|\//g, '/'))
-  const filepaths = walkTsFiles(path.join(process.cwd(), 'src'), filter).concat(walkTsFiles(path.join(process.cwd(), 'scripts'), filter))
+  const filepaths = walkTsFiles(path.join(process.cwd(), 'src'), filter).concat(
+    walkTsFiles(path.join(process.cwd(), 'scripts'), filter),
+  )
 
   if (filepaths.length) {
     const filepath = filepaths[0]

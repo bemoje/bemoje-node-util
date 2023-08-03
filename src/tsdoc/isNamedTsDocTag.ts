@@ -10,5 +10,7 @@
  * ```
  */
 export function isNamedTsDocTag(tag: string): boolean {
-  return /^(param|property|typedef|alias|event|function|method|namespace|enum|interface|class|type|var|module)$/i.test(tag)
+  return /^(param|property|typedef|alias|event|function|method|namespace|enum|interface|class|type|var|module)$/i.test(
+    tag,
+  )
 }

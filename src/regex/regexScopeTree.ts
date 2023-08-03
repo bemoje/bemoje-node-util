@@ -25,7 +25,9 @@ export function regexScopeTree(
 ): (string: string, yieldOnlyRootNodes?: boolean) => Generator<RegexScopeTreeNode> {
   function parseParam(param: string | RegExp): [RegExp, RegExp] {
     const isString = typeof param === 'string'
-    const reg = isString ? new RegExp(regexEscapeString(param), 'g') : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'))
+    const reg = isString
+      ? new RegExp(regexEscapeString(param), 'g')
+      : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'))
     const regValidate = new RegExp('^' + reg.source + '$', '')
     return [reg, regValidate]
   }

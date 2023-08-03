@@ -6,7 +6,7 @@ Represents a single subtitle in the SRT format.
 
 ## Hierarchy
 
-- `_AbstractSubtitle`
+- [`_AbstractSubtitle`](/docs/classes/AbstractSubtitle.md)
 
   ↳ **`SRTSubtitle`**
 
@@ -42,11 +42,11 @@ Creates a new SRTSubtitle instance.
 
 #### Overrides
 
-\_AbstractSubtitle.constructor
+[_AbstractSubtitle](/docs/classes/AbstractSubtitle.md).[constructor](/docs/classes/AbstractSubtitle.md#constructor)
 
 #### Defined in
 
-[src/parse/subtitles/SRTSubtitle.ts:13](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/SRTSubtitle.ts#L13)
+[src/parse/subtitles/SRTSubtitle.ts:13](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/parse/subtitles/SRTSubtitle.ts#L13)
 
 ## Properties
 
@@ -58,11 +58,11 @@ The time interval of the subtitle.
 
 #### Inherited from
 
-\_AbstractSubtitle.interval
+[_AbstractSubtitle](/docs/classes/AbstractSubtitle.md).[interval](/docs/classes/AbstractSubtitle.md#interval)
 
 #### Defined in
 
-[src/parse/subtitles/_AbstractSubtitle.ts:10](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/_AbstractSubtitle.ts#L10)
+[src/parse/subtitles/_AbstractSubtitle.ts:10](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/parse/subtitles/_AbstractSubtitle.ts#L10)
 
 ___
 
@@ -74,11 +74,11 @@ The text of the subtitle.
 
 #### Inherited from
 
-\_AbstractSubtitle.text
+[_AbstractSubtitle](/docs/classes/AbstractSubtitle.md).[text](/docs/classes/AbstractSubtitle.md#text)
 
 #### Defined in
 
-[src/parse/subtitles/_AbstractSubtitle.ts:15](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/_AbstractSubtitle.ts#L15)
+[src/parse/subtitles/_AbstractSubtitle.ts:15](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/parse/subtitles/_AbstractSubtitle.ts#L15)
 
 ## Methods
 
@@ -94,4 +94,4 @@ Renders the subtitle as a string in the SRT format.
 
 #### Defined in
 
-[src/parse/subtitles/SRTSubtitle.ts:20](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/parse/subtitles/SRTSubtitle.ts#L20)
+[src/parse/subtitles/SRTSubtitle.ts:20](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/parse/subtitles/SRTSubtitle.ts#L20)

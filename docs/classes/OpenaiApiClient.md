@@ -6,9 +6,11 @@ A class representing an OpenAI API client.
 
 ## Hierarchy
 
-- [`OpenaiApiClientBase`](/docs/classes/OpenaiApiClientBase.md)
+- [`AbstractApiClient`](/docs/classes/AbstractApiClient.md)
 
   ↳ **`OpenaiApiClient`**
+
+  ↳↳ [`OpenaiApiClientExtended`](/docs/classes/OpenaiApiClientExtended.md)
 
 ## Table of contents
 
@@ -18,45 +20,43 @@ A class representing an OpenAI API client.
 
 ### Properties
 
-- [\_apiRequest](/docs/classes/OpenaiApiClient.md#_apirequest)
 - [apiDefaults](/docs/classes/OpenaiApiClient.md#apidefaults)
 - [cache](/docs/classes/OpenaiApiClient.md#cache)
 - [cacheDefaults](/docs/classes/OpenaiApiClient.md#cachedefaults)
 - [client](/docs/classes/OpenaiApiClient.md#client)
+- [concurrencyJustReduced](/docs/classes/OpenaiApiClient.md#concurrencyjustreduced)
 - [events](/docs/classes/OpenaiApiClient.md#events)
 - [queue](/docs/classes/OpenaiApiClient.md#queue)
 - [retryDefaults](/docs/classes/OpenaiApiClient.md#retrydefaults)
+- [sendRequest](/docs/classes/OpenaiApiClient.md#sendrequest)
+- [concurrencyDefaults](/docs/classes/OpenaiApiClient.md#concurrencydefaults)
 
 ### Methods
 
 - [\_chat](/docs/classes/OpenaiApiClient.md#_chat)
 - [\_completion](/docs/classes/OpenaiApiClient.md#_completion)
-- [\_edit](/docs/classes/OpenaiApiClient.md#_edit)
 - [\_transcribe](/docs/classes/OpenaiApiClient.md#_transcribe)
 - [assertReponseDataComplete](/docs/classes/OpenaiApiClient.md#assertreponsedatacomplete)
-- [chat3\_16](/docs/classes/OpenaiApiClient.md#chat3_16)
-- [chat3\_8](/docs/classes/OpenaiApiClient.md#chat3_8)
-- [chat4\_8](/docs/classes/OpenaiApiClient.md#chat4_8)
 - [completion](/docs/classes/OpenaiApiClient.md#completion)
 - [countTokens](/docs/classes/OpenaiApiClient.md#counttokens)
 - [deleteDefaultOrUndefinedOptions](/docs/classes/OpenaiApiClient.md#deletedefaultorundefinedoptions)
-- [editCode](/docs/classes/OpenaiApiClient.md#editcode)
-- [editText](/docs/classes/OpenaiApiClient.md#edittext)
 - [emit](/docs/classes/OpenaiApiClient.md#emit)
-- [getDefaultApiKey](/docs/classes/OpenaiApiClient.md#getdefaultapikey)
+- [gpt3\_16k](/docs/classes/OpenaiApiClient.md#gpt3_16k)
+- [gpt3\_8k](/docs/classes/OpenaiApiClient.md#gpt3_8k)
+- [gpt4\_8k](/docs/classes/OpenaiApiClient.md#gpt4_8k)
+- [handleApiError](/docs/classes/OpenaiApiClient.md#handleapierror)
 - [handleCacheOptions](/docs/classes/OpenaiApiClient.md#handlecacheoptions)
 - [handleChatOptions](/docs/classes/OpenaiApiClient.md#handlechatoptions)
 - [handleCompletionOptions](/docs/classes/OpenaiApiClient.md#handlecompletionoptions)
-- [handleEditOptions](/docs/classes/OpenaiApiClient.md#handleeditoptions)
 - [handleOptions](/docs/classes/OpenaiApiClient.md#handleoptions)
 - [handleRetryOptions](/docs/classes/OpenaiApiClient.md#handleretryoptions)
+- [handleTranscribeOptions](/docs/classes/OpenaiApiClient.md#handletranscribeoptions)
 - [logAllEvents](/docs/classes/OpenaiApiClient.md#logallevents)
+- [logWarnErrorEvents](/docs/classes/OpenaiApiClient.md#logwarnerrorevents)
+- [lowerConcurrency](/docs/classes/OpenaiApiClient.md#lowerconcurrency)
 - [parseChoices](/docs/classes/OpenaiApiClient.md#parsechoices)
-- [proofread](/docs/classes/OpenaiApiClient.md#proofread)
-- [proofreadEnglish](/docs/classes/OpenaiApiClient.md#proofreadenglish)
 - [stringTokens](/docs/classes/OpenaiApiClient.md#stringtokens)
-- [translateEnglishTo](/docs/classes/OpenaiApiClient.md#translateenglishto)
-- [translateFromTo](/docs/classes/OpenaiApiClient.md#translatefromto)
+- [transcribe](/docs/classes/OpenaiApiClient.md#transcribe)
 
 ## Constructors
 
@@ -64,95 +64,49 @@ A class representing an OpenAI API client.
 
 • **new OpenaiApiClient**(`options?`)
 
-Create a new OpenAiApiClient instance.
-
-**`Example`**
-
-```ts
-const openai = new OpenaiAPIClient({ apiKey: "API_KEY" })
-```
+Create a new OpenaiApiClient instance.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`IApiClientOptions`](/docs/interfaces/IApiClientOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IOpenaiApiClientOptions`](/docs/interfaces/IOpenaiApiClientOptions.md) | The constructor options to use. |
 
 #### Overrides
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[constructor](/docs/classes/OpenaiApiClientBase.md#constructor)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[constructor](/docs/classes/AbstractApiClient.md#constructor)
 
 #### Defined in
 
-[src/api/OpenaiApiClient.ts:14](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClient.ts#L14)
+src/api/openai/OpenaiApiClient.ts:45
 
 ## Properties
 
-### \_apiRequest
-
-• `Protected` `Readonly` **\_apiRequest**: (`request`: `string` \| `CreateChatCompletionRequest` \| `CreateCompletionRequest` \| `CreateEditRequest`, `retry`: `Options`, `cache`: [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md), `apiRequest`: () => `Promise`<`string`[]\>) => `Promise`<`string`\>
-
-#### Type declaration
-
-▸ (`request`, `retry`, `cache`, `apiRequest`): `Promise`<`string`\>
-
-Generic function for sending requests to the openai api.
-This is used for all the API endpoints.
-It handles retrying, cache, hashing, and emitting events.
-This method is bound to the instance on initialization because it gets wrapped with a concurrency controller in the constructor.
-
-##### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `request` | `string` \| `CreateChatCompletionRequest` \| `CreateCompletionRequest` \| `CreateEditRequest` | The request object to send to the openai api. |
-| `retry` | `Options` | The retry options. |
-| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
-| `apiRequest` | () => `Promise`<`string`[]\> | - |
-
-##### Returns
-
-`Promise`<`string`\>
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[_apiRequest](/docs/classes/OpenaiApiClientBase.md#_apirequest)
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:86](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L86)
-
-___
-
 ### apiDefaults
 
-• `Readonly` **apiDefaults**: [`IApiClientApiDefaultsOptions`](/docs/interfaces/IApiClientApiDefaultsOptions.md)
+• `Readonly` **apiDefaults**: [`IOpenaiApiClientApiDefaultsOptions`](/docs/interfaces/IOpenaiApiClientApiDefaultsOptions.md)
 
 Defaults for API requests. Can be overriden in individual method calls.
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[apiDefaults](/docs/classes/OpenaiApiClientBase.md#apidefaults)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:51](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L51)
+src/api/openai/OpenaiApiClient.ts:31
 
 ___
 
 ### cache
 
-• `Readonly` **cache**: [`ApiReponseCache`](/docs/classes/ApiReponseCache.md)<`string`[]\>
+• `Optional` `Readonly` **cache**: [`ApiReponseCache`](/docs/classes/ApiReponseCache.md)<`any`\>
 
 API response cache
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[cache](/docs/classes/OpenaiApiClientBase.md#cache)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[cache](/docs/classes/AbstractApiClient.md#cache)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:46](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L46)
+src/api/AbstractApiClient.ts:31
 
 ___
 
@@ -160,15 +114,16 @@ ___
 
 • `Readonly` **cacheDefaults**: [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)
 
-Options for whether to overwrite existing cached data by default for api requests
+Default options for caching for api requests.
+Can be overriden in individual method calls.
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[cacheDefaults](/docs/classes/OpenaiApiClientBase.md#cachedefaults)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[cacheDefaults](/docs/classes/AbstractApiClient.md#cachedefaults)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:73](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L73)
+src/api/AbstractApiClient.ts:53
 
 ___
 
@@ -178,13 +133,19 @@ ___
 
 API client instance
 
-#### Inherited from
+#### Defined in
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[client](/docs/classes/OpenaiApiClientBase.md#client)
+src/api/openai/OpenaiApiClient.ts:26
+
+___
+
+### concurrencyJustReduced
+
+• `Protected` **concurrencyJustReduced**: `boolean` = `false`
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:36](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L36)
+src/api/openai/OpenaiApiClient.ts:39
 
 ___
 
@@ -196,43 +157,103 @@ Event emitter for cache events
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[events](/docs/classes/OpenaiApiClientBase.md#events)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[events](/docs/classes/AbstractApiClient.md#events)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:41](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L41)
+src/api/AbstractApiClient.ts:26
 
 ___
 
 ### queue
 
-• `Readonly` **queue**: [`PQueue`](/docs/classes/PQueue.md)<[`IQueue`](/docs/interfaces/IQueue.md)<[`RunFunction`](/docs/index.md#runfunction), [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md)\>, [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md)\>
+• `Readonly` **queue**: [`PromiseQueue`](/docs/classes/PromiseQueue.md)<[`IQueue`](/docs/interfaces/IQueue.md)<[`RunFunction`](/docs/index.md#runfunction), [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md)\>, [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md)\>
 
-Queue for sending requests to the openai api.
+Global queue for sending requests to the openai api.
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[queue](/docs/classes/OpenaiApiClientBase.md#queue)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[queue](/docs/classes/AbstractApiClient.md#queue)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:96](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L96)
+src/api/AbstractApiClient.ts:36
 
 ___
 
 ### retryDefaults
 
-• `Readonly` **retryDefaults**: `Options`
+• `Readonly` **retryDefaults**: [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md)
 
-Options for async-retry
+Default options for async retry for api requests.
+Can be overriden in individual method calls.
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[retryDefaults](/docs/classes/OpenaiApiClientBase.md#retrydefaults)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[retryDefaults](/docs/classes/AbstractApiClient.md#retrydefaults)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:64](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L64)
+src/api/AbstractApiClient.ts:42
+
+___
+
+### sendRequest
+
+• `Protected` `Readonly` **sendRequest**: <T\>(`options`: { `apiRequest`: () => `Promise`<`T`\> ; `args`: `any`[] ; `cache?`: [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) ; `retry?`: [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md)  }) => `Promise`<`T`\>
+
+#### Type declaration
+
+▸ <`T`\>(`options`): `Promise`<`T`\>
+
+Generic function for sending requests to the openai api.
+This is used for all the API endpoints.
+It handles retrying, cache, hashing, and emitting events.
+This method is bound to the instance on initialization because it gets wrapped with a concurrency controller in the constructor.
+
+##### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.apiRequest` | () => `Promise`<`T`\> |
+| `options.args` | `any`[] |
+| `options.cache?` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) |
+| `options.retry?` | [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md) |
+
+##### Returns
+
+`Promise`<`T`\>
+
+#### Inherited from
+
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[sendRequest](/docs/classes/AbstractApiClient.md#sendrequest)
+
+#### Defined in
+
+src/api/AbstractApiClient.ts:83
+
+___
+
+### concurrencyDefaults
+
+▪ `Static` `Readonly` **concurrencyDefaults**: [`IPromiseQueueOptions`](/docs/interfaces/IPromiseQueueOptions.md)<[`IQueue`](/docs/interfaces/IQueue.md)<[`RunFunction`](/docs/index.md#runfunction), [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md)\>, [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md)\>
+
+Options for concurrency control. These affect all API requests.
+
+#### Inherited from
+
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[concurrencyDefaults](/docs/classes/AbstractApiClient.md#concurrencydefaults)
+
+#### Defined in
+
+src/api/AbstractApiClient.ts:60
 
 ## Methods
 
@@ -248,20 +269,16 @@ This is used by all the preset methods, the public methods: chat3_8, chat3_16, a
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `request` | `CreateChatCompletionRequest` | The request object to send to the openai api. |
-| `retry` | `Options` | The retry options. |
+| `retry` | [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md) | The retry options. |
 | `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
 
 #### Returns
 
 `Promise`<`string`\>
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[_chat](/docs/classes/OpenaiApiClientBase.md#_chat)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:371](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L371)
+src/api/openai/OpenaiApiClient.ts:190
 
 ___
 
@@ -277,78 +294,40 @@ This is used by all the preset methods, the public methods: completion.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `request` | `CreateCompletionRequest` | The request object to send to the openai api. |
-| `retry` | `Options` | The retry options. |
+| `retry` | [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md) | The retry options. |
 | `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
 
 #### Returns
 
 `Promise`<`string`\>
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[_completion](/docs/classes/OpenaiApiClientBase.md#_completion)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:329](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L329)
-
-___
-
-### \_edit
-
-▸ `Protected` **_edit**(`request`, `retry`, `cache`): `Promise`<`string`\>
-
-Send edit request to the openai API.
-This is used by all the preset methods, the public methods: editText, editCode
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `request` | `CreateEditRequest` | The request object to send to the openai api. |
-| `retry` | `Options` | The retry options. |
-| `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[_edit](/docs/classes/OpenaiApiClientBase.md#_edit)
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:390](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L390)
+src/api/openai/OpenaiApiClient.ts:166
 
 ___
 
 ### \_transcribe
 
-▸ `Protected` **_transcribe**(`filepath`, `retry`, `cache`): `Promise`<`string`\>
+▸ `Protected` **_transcribe**(`request`, `retry`, `cache`): `Promise`<`string`\>
 
-Send chat request to the openai API.
-This is used by all the preset methods, the public methods: chat3_8, chat3_16, and chat4_8.
+Send transcribe (speech to text) request to the openai API.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `filepath` | `string` | - |
-| `retry` | `Options` | The retry options. |
+| `request` | [`IOpenaiTranscribeRequest`](/docs/interfaces/IOpenaiTranscribeRequest.md) | The request object to send to the openai api. |
+| `retry` | [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md) | The retry options. |
 | `cache` | [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md) | The cache options. |
 
 #### Returns
 
 `Promise`<`string`\>
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[_transcribe](/docs/classes/OpenaiApiClientBase.md#_transcribe)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:348](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L348)
+src/api/openai/OpenaiApiClient.ts:219
 
 ___
 
@@ -362,100 +341,15 @@ Assert that the response data is complete by verifying that all returned choices
 
 | Name | Type |
 | :------ | :------ |
-| `data` | `CreateChatCompletionResponse` \| `CreateCompletionResponse` \| `CreateEditResponse` |
+| `data` | `CreateChatCompletionResponse` \| `CreateCompletionResponse` |
 
 #### Returns
 
 `void`
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[assertReponseDataComplete](/docs/classes/OpenaiApiClientBase.md#assertreponsedatacomplete)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:463](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L463)
-
-___
-
-### chat3\_16
-
-▸ **chat3_16**(`options`): `Promise`<`string`\>
-
-Send a chat completion request to the openai api with a max_tokens cap of 16384.
-Uses model: 'gpt-3.5-turbo-16k'.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | The options to use. |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[chat3_16](/docs/classes/OpenaiApiClientBase.md#chat3_16)
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:177](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L177)
-
-___
-
-### chat3\_8
-
-▸ **chat3_8**(`options`): `Promise`<`string`\>
-
-Send a chat completion request to the openai api with a max_tokens cap of 4096.
-Uses model: 'gpt-3.5-turbo'.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | The options to use. |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[chat3_8](/docs/classes/OpenaiApiClientBase.md#chat3_8)
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:168](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L168)
-
-___
-
-### chat4\_8
-
-▸ **chat4_8**(`options`): `Promise`<`string`\>
-
-Send a gpt4 chat completion request to the openai api with a max_tokens cap of 8k.
-Uses model: 'gpt-4'.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | The options to use. |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[chat4_8](/docs/classes/OpenaiApiClientBase.md#chat4_8)
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:187](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L187)
+src/api/openai/OpenaiApiClient.ts:331
 
 ___
 
@@ -469,19 +363,15 @@ Send a completion request to the openai api.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | [`ICompletionRequestOptions`](/docs/interfaces/ICompletionRequestOptions.md) | The options to use. |
+| `options` | [`IOpenaiCompletionRequestOptions`](/docs/interfaces/IOpenaiCompletionRequestOptions.md) | The options to use. |
 
 #### Returns
 
 `Promise`<`string`\>
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[completion](/docs/classes/OpenaiApiClientBase.md#completion)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:159](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L159)
+src/api/openai/OpenaiApiClient.ts:55
 
 ___
 
@@ -501,13 +391,9 @@ Count the number of tokens in a string.
 
 `number`
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[countTokens](/docs/classes/OpenaiApiClientBase.md#counttokens)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:221](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L221)
+src/api/openai/OpenaiApiClient.ts:353
 
 ___
 
@@ -536,65 +422,9 @@ Removing default values and undefined values normalizes the options object so it
 
 `T`
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[deleteDefaultOrUndefinedOptions](/docs/classes/OpenaiApiClientBase.md#deletedefaultorundefinedoptions)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:442](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L442)
-
-___
-
-### editCode
-
-▸ **editCode**(`options`): `Promise`<`string`\>
-
-Edit code.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | [`IEditRequestOptions`](/docs/interfaces/IEditRequestOptions.md) | The options to use. |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[editCode](/docs/classes/OpenaiApiClientBase.md#editcode)
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:204](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L204)
-
-___
-
-### editText
-
-▸ **editText**(`options`): `Promise`<`string`\>
-
-Edit text.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | [`IEditRequestOptions`](/docs/interfaces/IEditRequestOptions.md) | The options to use. |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[editText](/docs/classes/OpenaiApiClientBase.md#edittext)
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:196](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L196)
+src/api/openai/OpenaiApiClient.ts:307
 
 ___
 
@@ -612,10 +442,10 @@ Emit an event but adds 'this' as an extra trailing argument.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | `string` |
-| `arg` | `T` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `event` | `string` | The event name. |
+| `arg` | `T` | The argument to emit. |
 
 #### Returns
 
@@ -623,31 +453,100 @@ Emit an event but adds 'this' as an extra trailing argument.
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[emit](/docs/classes/OpenaiApiClientBase.md#emit)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[emit](/docs/classes/AbstractApiClient.md#emit)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:488](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L488)
+src/api/AbstractApiClient.ts:183
 
 ___
 
-### getDefaultApiKey
+### gpt3\_16k
 
-▸ `Protected` **getDefaultApiKey**(): `string`
+▸ **gpt3_16k**(`options`): `Promise`<`string`\>
 
-Get the default api key from 'process.env.USERPROFILE/repos/apikeys/openai.txt'
+Send a chat completion request to the openai api with a max_tokens cap of 16384.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IOpenaiChatRequestOptions`](/docs/interfaces/IOpenaiChatRequestOptions.md) | The options to use. |
 
 #### Returns
 
-`string`
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[getDefaultApiKey](/docs/classes/OpenaiApiClientBase.md#getdefaultapikey)
+`Promise`<`string`\>
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:476](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L476)
+src/api/openai/OpenaiApiClient.ts:71
+
+___
+
+### gpt3\_8k
+
+▸ **gpt3_8k**(`options`): `Promise`<`string`\>
+
+Send a chat completion request to the openai api with a max_tokens cap of 4096.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IOpenaiChatRequestOptions`](/docs/interfaces/IOpenaiChatRequestOptions.md) | The options to use. |
+
+#### Returns
+
+`Promise`<`string`\>
+
+#### Defined in
+
+src/api/openai/OpenaiApiClient.ts:63
+
+___
+
+### gpt4\_8k
+
+▸ **gpt4_8k**(`options`): `Promise`<`string`\>
+
+Send a gpt4 chat completion request to the openai api with a max_tokens cap of 8k.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IOpenaiChatRequestOptions`](/docs/interfaces/IOpenaiChatRequestOptions.md) | The options to use. |
+
+#### Returns
+
+`Promise`<`string`\>
+
+#### Defined in
+
+src/api/openai/OpenaiApiClient.ts:80
+
+___
+
+### handleApiError
+
+▸ `Protected` **handleApiError**(`error`): `void`
+
+Parses API error codes.
+When the error is a rate limit error, lowers the concurrency.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `error` | `any` | The error to parse. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+src/api/openai/OpenaiApiClient.ts:252
 
 ___
 
@@ -669,17 +568,17 @@ Handle cache options.
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[handleCacheOptions](/docs/classes/OpenaiApiClientBase.md#handlecacheoptions)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[handleCacheOptions](/docs/classes/AbstractApiClient.md#handlecacheoptions)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:318](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L318)
+src/api/AbstractApiClient.ts:174
 
 ___
 
 ### handleChatOptions
 
-▸ `Protected` **handleChatOptions**(`options`): [`CreateChatCompletionRequest`, `Options`, [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
+▸ `Protected` **handleChatOptions**(`options`): [`CreateChatCompletionRequest`, [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md), [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
 
 Handle chat options.
 
@@ -687,25 +586,21 @@ Handle chat options.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | The options to handle. |
+| `options` | [`IOpenaiChatRequestOptions`](/docs/interfaces/IOpenaiChatRequestOptions.md) | The options to handle. |
 
 #### Returns
 
-[`CreateChatCompletionRequest`, `Options`, [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[handleChatOptions](/docs/classes/OpenaiApiClientBase.md#handlechatoptions)
+[`CreateChatCompletionRequest`, [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md), [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:258](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L258)
+src/api/openai/OpenaiApiClient.ts:126
 
 ___
 
 ### handleCompletionOptions
 
-▸ `Protected` **handleCompletionOptions**(`options`): [`CreateCompletionRequest`, `Options`, [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
+▸ `Protected` **handleCompletionOptions**(`options`): [`CreateCompletionRequest`, [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md), [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
 
 Handle completion options.
 
@@ -713,51 +608,21 @@ Handle completion options.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | [`ICompletionRequestOptions`](/docs/interfaces/ICompletionRequestOptions.md) | The options to handle. |
+| `options` | [`IOpenaiCompletionRequestOptions`](/docs/interfaces/IOpenaiCompletionRequestOptions.md) | The options to handle. |
 
 #### Returns
 
-[`CreateCompletionRequest`, `Options`, [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[handleCompletionOptions](/docs/classes/OpenaiApiClientBase.md#handlecompletionoptions)
+[`CreateCompletionRequest`, [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md), [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:229](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L229)
-
-___
-
-### handleEditOptions
-
-▸ `Protected` **handleEditOptions**(`options`): [`CreateEditRequest`, `Options`, [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
-
-Handle edit options.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | [`IEditRequestOptions`](/docs/interfaces/IEditRequestOptions.md) | The options to handle. |
-
-#### Returns
-
-[`CreateEditRequest`, `Options`, [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
-
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[handleEditOptions](/docs/classes/OpenaiApiClientBase.md#handleeditoptions)
-
-#### Defined in
-
-[src/api/OpenaiApiClientBase.ts:282](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L282)
+src/api/openai/OpenaiApiClient.ts:97
 
 ___
 
 ### handleOptions
 
-▸ `Protected` **handleOptions**(`options`): [`IApiClientOptions`](/docs/interfaces/IApiClientOptions.md)
+▸ `Protected` **handleOptions**(`options`): [`IAbstractApiClientOptions`](/docs/interfaces/IAbstractApiClientOptions.md)
 
 Handle the options passed to the constructor.
 
@@ -765,25 +630,25 @@ Handle the options passed to the constructor.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | [`IApiClientOptions`](/docs/interfaces/IApiClientOptions.md) | The options to handle. |
+| `options` | [`IAbstractApiClientOptions`](/docs/interfaces/IAbstractApiClientOptions.md) | The options to handle. |
 
 #### Returns
 
-[`IApiClientOptions`](/docs/interfaces/IApiClientOptions.md)
+[`IAbstractApiClientOptions`](/docs/interfaces/IAbstractApiClientOptions.md)
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[handleOptions](/docs/classes/OpenaiApiClientBase.md#handleoptions)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[handleOptions](/docs/classes/AbstractApiClient.md#handleoptions)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:142](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L142)
+src/api/AbstractApiClient.ts:145
 
 ___
 
 ### handleRetryOptions
 
-▸ `Protected` **handleRetryOptions**(`retryOptions?`): `Options`
+▸ `Protected` **handleRetryOptions**(`retryOptions?`): [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md)
 
 Handle retry options.
 
@@ -791,19 +656,41 @@ Handle retry options.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `retryOptions?` | `Options` | The retry options to handle. |
+| `retryOptions?` | [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md) | The retry options to handle. |
 
 #### Returns
 
-`Options`
+[`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md)
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[handleRetryOptions](/docs/classes/OpenaiApiClientBase.md#handleretryoptions)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[handleRetryOptions](/docs/classes/AbstractApiClient.md#handleretryoptions)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:303](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L303)
+src/api/AbstractApiClient.ts:166
+
+___
+
+### handleTranscribeOptions
+
+▸ `Protected` **handleTranscribeOptions**(`options`): [[`IOpenaiTranscribeRequest`](/docs/interfaces/IOpenaiTranscribeRequest.md), [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md), [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
+
+Handle transcribe options.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`IOpenaiTranscribeOptions`](/docs/interfaces/IOpenaiTranscribeOptions.md) | The options to handle. |
+
+#### Returns
+
+[[`IOpenaiTranscribeRequest`](/docs/interfaces/IOpenaiTranscribeRequest.md), [`IAsyncRetryOptions`](/docs/interfaces/IAsyncRetryOptions.md), [`IResponseCacheOptions`](/docs/interfaces/IResponseCacheOptions.md)]
+
+#### Defined in
+
+src/api/openai/OpenaiApiClient.ts:150
 
 ___
 
@@ -811,7 +698,7 @@ ___
 
 ▸ `Protected` **logAllEvents**(): [`OpenaiApiClient`](/docs/classes/OpenaiApiClient.md)
 
-console.log all emitted events
+Output all events to the console.
 
 #### Returns
 
@@ -819,11 +706,56 @@ console.log all emitted events
 
 #### Inherited from
 
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[logAllEvents](/docs/classes/OpenaiApiClientBase.md#logallevents)
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[logAllEvents](/docs/classes/AbstractApiClient.md#logallevents)
 
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:496](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L496)
+src/api/AbstractApiClient.ts:191
+
+___
+
+### logWarnErrorEvents
+
+▸ `Protected` **logWarnErrorEvents**(): `void`
+
+Output all 'warn' and 'error' events to the console.
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[AbstractApiClient](/docs/classes/AbstractApiClient.md).[logWarnErrorEvents](/docs/classes/AbstractApiClient.md#logwarnerrorevents)
+
+#### Defined in
+
+src/api/AbstractApiClient.ts:205
+
+___
+
+### lowerConcurrency
+
+▸ `Protected` **lowerConcurrency**(`lowerBy?`, `raiseAgainBy?`, `delay?`): `void`
+
+Lower the concurrency to prevent rate limiting.
+Automatically raises the concurrency again after a delay.
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `lowerBy` | `number` | `7` | The amount to lower the concurrency by. |
+| `raiseAgainBy` | `number` | `6` | The amount to raise the concurrency by after a delay. |
+| `delay` | `number` | `undefined` | The delay to wait before raising the concurrency again. This is randomized by +/- 5 seconds to prevent multiple requests from affecting the concurrency at the same time. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+src/api/openai/OpenaiApiClient.ts:269
 
 ___
 
@@ -843,74 +775,9 @@ Extract the actual concent from the 'choices' object from the response data.
 
 `string`[]
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[parseChoices](/docs/classes/OpenaiApiClientBase.md#parsechoices)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:423](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L423)
-
-___
-
-### proofread
-
-▸ **proofread**(`language`, `prompt`, `options?`): `Promise`<`string`\>
-
-Proofread in a given language.
-
-**`Example`**
-
-```ts
-await openai.proofread('english', 'I no have more money.')
-await openai.proofread('java', `System.out.println("Hello")`)
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `language` | `string` | The language of the input. |
-| `prompt` | `string` | The input string. |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | - |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Defined in
-
-[src/api/OpenaiApiClient.ts:27](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClient.ts#L27)
-
-___
-
-### proofreadEnglish
-
-▸ **proofreadEnglish**(`prompt`, `options?`): `Promise`<`string`\>
-
-Proofread in English.
-
-**`Example`**
-
-```ts
-await openai.proofread('english', 'I no have more money.')
-await openai.proofread('java', `System.out.println("Hello")`)
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `prompt` | `string` | The input string. |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | - |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Defined in
-
-[src/api/OpenaiApiClient.ts:46](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClient.ts#L46)
+src/api/openai/OpenaiApiClient.ts:288
 
 ___
 
@@ -930,68 +797,23 @@ Encode a string into tokens.
 
 `number`[]
 
-#### Inherited from
-
-[OpenaiApiClientBase](/docs/classes/OpenaiApiClientBase.md).[stringTokens](/docs/classes/OpenaiApiClientBase.md#stringtokens)
-
 #### Defined in
 
-[src/api/OpenaiApiClientBase.ts:213](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClientBase.ts#L213)
+src/api/openai/OpenaiApiClient.ts:345
 
 ___
 
-### translateEnglishTo
+### transcribe
 
-▸ **translateEnglishTo**(`language`, `prompt`, `options?`): `Promise`<`string`\>
+▸ **transcribe**(`options`): `Promise`<`string`\>
 
-Translate text from English to a given language.
-For short input text, use options.instruction to provide context.
-
-**`Example`**
-
-```ts
-await openai.translateEnglishTo('Spanish', 'Clear', { instruction: 'This is a color.' })
-```
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `language` | `string` |
-| `prompt` | `string` |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) |
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Defined in
-
-[src/api/OpenaiApiClient.ts:81](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClient.ts#L81)
-
-___
-
-### translateFromTo
-
-▸ **translateFromTo**(`fromLanguage`, `toLanguage`, `prompt`, `options?`): `Promise`<`string`\>
-
-Translate text from one language to another.
-For short input text, use options.instruction to provide context.
-
-**`Example`**
-
-```ts
-await openai.translateFrom('English', 'Spanish', 'Clear', { instruction: 'This is a color.' })
-```
+Send a transcribe completion request to the openai api.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `fromLanguage` | `string` | - |
-| `toLanguage` | `string` | - |
-| `prompt` | `string` | The text to translate. |
-| `options` | [`IChatRequestOptions`](/docs/interfaces/IChatRequestOptions.md) | - |
+| `options` | [`IOpenaiTranscribeOptions`](/docs/interfaces/IOpenaiTranscribeOptions.md) | The options to use. |
 
 #### Returns
 
@@ -999,4 +821,4 @@ await openai.translateFrom('English', 'Spanish', 'Clear', { instruction: 'This i
 
 #### Defined in
 
-[src/api/OpenaiApiClient.ts:64](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/api/OpenaiApiClient.ts#L64)
+src/api/openai/OpenaiApiClient.ts:89
