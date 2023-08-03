@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[src/function/types/ITsParseClassResult.ts:4](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/function/types/ITsParseClassResult.ts#L4)
+[src/function/types/ITsParseClassResult.ts:4](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/function/types/ITsParseClassResult.ts#L4)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[src/function/types/ITsParseClassResult.ts:2](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/function/types/ITsParseClassResult.ts#L2)
+[src/function/types/ITsParseClassResult.ts:2](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/function/types/ITsParseClassResult.ts#L2)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[src/function/types/ITsParseClassResult.ts:3](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/function/types/ITsParseClassResult.ts#L3)
+[src/function/types/ITsParseClassResult.ts:3](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/function/types/ITsParseClassResult.ts#L3)

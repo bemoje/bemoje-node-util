@@ -1,7 +1,7 @@
-import type { Constructor } from '../types/Constructor'
 import { strHashToString } from '../string/strHashToString'
+import type { Constructor } from '../types/Constructor'
 
-const nextClassIndex = new Map<Constructor, number>()
+const nextIndex = new Map<Constructor, number>()
 
 /**
  * This function is a mixin that adds an index to a class and provides several methods to get unique identifiers based on the class name and index.
@@ -19,11 +19,11 @@ export function MixinIndexed<TBase extends Constructor>(BaseConstructor: TBase):
     constructor(...args: any[]) {
       super(...args)
       const Class = this.getConstructor()
-      const i = nextClassIndex.get(Class)
+      const i = nextIndex.get(Class)
       if (i === undefined) {
-        nextClassIndex.set(Class, (this.i = 0))
+        nextIndex.set(Class, (this.i = 0))
       } else {
-        nextClassIndex.set(Class, (this.i = i + 1))
+        nextIndex.set(Class, (this.i = i + 1))
       }
     }
     public get uid(): [string, number] {

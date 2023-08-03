@@ -13,7 +13,7 @@ describe(readJsonFile.name, () => {
     readFileMock.mockResolvedValue(Buffer.from(jsonString))
     const result = await readJsonFile('test.json')
     expect(result).toEqual(jsonData)
-    expect(readFileMock).toHaveBeenCalledWith('test.json')
+    expect(readFileMock).toHaveBeenCalledWith('test.json', 'utf8')
   })
 
   it('should throw an error if the file cannot be read', async () => {
@@ -21,7 +21,7 @@ describe(readJsonFile.name, () => {
     const error = new Error('Failed to read file')
     readFileMock.mockRejectedValue(error)
     await expect(readJsonFile('test.json')).rejects.toThrow(error)
-    expect(readFileMock).toHaveBeenCalledWith('test.json')
+    expect(readFileMock).toHaveBeenCalledWith('test.json', 'utf8')
   })
 
   it('should throw an error if the file has invalid JSON', async () => {
@@ -29,6 +29,6 @@ describe(readJsonFile.name, () => {
     const invalidJsonString = 'invalid json'
     readFileMock.mockResolvedValue(Buffer.from(invalidJsonString))
     await expect(readJsonFile('test.json')).rejects.toThrow(SyntaxError)
-    expect(readFileMock).toHaveBeenCalledWith('test.json')
+    expect(readFileMock).toHaveBeenCalledWith('test.json', 'utf8')
   })
 })

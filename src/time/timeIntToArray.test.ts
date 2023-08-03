@@ -25,7 +25,9 @@ describe(timeIntToArray.name, () => {
     })
 
     it('should throw an error when input is greater than 86,399,999', () => {
-      expect(() => timeIntToArray(90000000)).toThrowError('Expected time int to be between 0 and 86399999. Got: 90000000')
+      expect(() => timeIntToArray(90000000)).toThrowError(
+        'Expected time int to be between 0 and 86399999. Got: 90000000',
+      )
     })
 
     it('should throw an error when input is not an integer', () => {

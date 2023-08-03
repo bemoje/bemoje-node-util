@@ -1,9 +1,6 @@
 import fs from 'fs'
-import { attr } from './attr'
-import { comment } from './comment'
-import { el } from './el'
 import { _HtmlDocument } from './helpers/_HtmlDocument'
-import { tableFrom } from './tableFrom'
+import { attr, comment, el, tableFrom } from './html'
 
 const doc = _HtmlDocument.simple({
   title: 'index',
@@ -31,7 +28,11 @@ const doc = _HtmlDocument.simple({
         el.h3('List'),
         el.ul(['one', 'two', 'three', 'four'].map((item) => el.li(attr.contenteditable(true), item))),
       ),
-      el.div(attr.class('col'), el.h3('Button'), el.button([attr.class('btn btn-primary'), attr.onclick('doit()')], 'Click me!')),
+      el.div(
+        attr.class('col'),
+        el.h3('Button'),
+        el.button([attr.class('btn btn-primary'), attr.onclick('doit()')], 'Click me!'),
+      ),
     ),
   ],
   scripts: [

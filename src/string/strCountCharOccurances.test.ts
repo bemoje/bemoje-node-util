@@ -24,8 +24,12 @@ describe('strCountCharOccurances', () => {
   })
 
   it('should throw an error if the char parameter is not a single character string of length 1', () => {
-    expect(() => strCountCharOccurances('hello world', 'hello')).toThrow('Expected char to be a single character string of length 1.')
-    expect(() => strCountCharOccurances('hello world', '')).toThrow('Expected char to be a single character string of length 1.')
+    expect(() => strCountCharOccurances('hello world', 'hello')).toThrow(
+      'Expected char to be a single character string of length 1.',
+    )
+    expect(() => strCountCharOccurances('hello world', '')).toThrow(
+      'Expected char to be a single character string of length 1.',
+    )
   })
 
   it('should handle empty string input', () => {

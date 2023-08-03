@@ -11,6 +11,6 @@ import fs from 'fs'
  * console.log(data);
  * ```
  */
-export function readJsonFileSync<T>(filepath: string): Promise<T> {
-  return JSON.parse(fs.readFileSync(filepath).toString())
+export function readJsonFileSync<T>(filepath: string): T {
+  return JSON.parse(fs.readFileSync(filepath, 'utf8'))
 }

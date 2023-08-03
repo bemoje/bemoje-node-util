@@ -31,6 +31,6 @@ describe('secondsSinceDate', () => {
 
     const result = secondsSinceDate(date)
 
-    expect(result).toBe(-10)
+    expect(result).toBe(Math.round(-10))
   })
 })

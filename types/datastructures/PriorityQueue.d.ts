@@ -5,7 +5,12 @@ import { RunFunction } from './types/RunFunction';
  * A class representing a priority queue for async functions.
  */
 export declare class PriorityQueue implements IQueue<RunFunction, IPriorityQueueOptions> {
-    #private;
+    /**
+     * Queue of functions to run
+     */
+    protected readonly queue: Array<IPriorityQueueOptions & {
+        run: RunFunction;
+    }>;
     /**
      * Get the number of functions in the queue
      */

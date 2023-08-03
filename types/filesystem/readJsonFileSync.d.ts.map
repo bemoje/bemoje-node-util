@@ -1,1 +1,1 @@
-{"version":3,"file":"readJsonFileSync.d.ts","sourceRoot":"","sources":["../../src/filesystem/readJsonFileSync.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;GAUG;AACH,wBAAgB,gBAAgB,CAAC,CAAC,EAAE,QAAQ,EAAE,MAAM,GAAG,OAAO,CAAC,CAAC,CAAC,CAEhE"}
+{"version":3,"file":"readJsonFileSync.d.ts","sourceRoot":"","sources":["../../src/filesystem/readJsonFileSync.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;GAUG;AACH,wBAAgB,gBAAgB,CAAC,CAAC,EAAE,QAAQ,EAAE,MAAM,GAAG,CAAC,CAEvD"}

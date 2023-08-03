@@ -12,5 +12,5 @@ import fs from 'fs'
  * ```
  */
 export async function readJsonFile<T>(filepath: string): Promise<T> {
-  return JSON.parse((await fs.promises.readFile(filepath)).toString())
+  return JSON.parse(await fs.promises.readFile(filepath, 'utf8'))
 }

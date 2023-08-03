@@ -1,5 +1,3 @@
-import { strCountCharOccurances } from '../string/strCountCharOccurances'
-
 /**
  * Normalize a file extension to the form: .[ext]
  * Anything before the last "." is not returned.
@@ -26,6 +24,6 @@ export function normalizeFileExtension(ext: string): string {
   if (/[<>"|?*:]/g.test(ext)) {
     throw new Error(`Illegal characters in file extension: ${ext}  |  Illegal characters are: <>"|?:*`)
   }
-  if (strCountCharOccurances(ext, '.') === 0) return '.' + ext
+  if (!ext.includes('.')) return '.' + ext
   return ext.substring(ext.lastIndexOf('.'))
 }

@@ -38,7 +38,7 @@ Create a new number formatter.
 
 #### Defined in
 
-[src/number/NumberFormatter.ts:24](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/number/NumberFormatter.ts#L24)
+[src/number/NumberFormatter.ts:24](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/number/NumberFormatter.ts#L24)
 
 ## Properties
 
@@ -48,7 +48,7 @@ Create a new number formatter.
 
 #### Defined in
 
-[src/number/NumberFormatter.ts:18](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/number/NumberFormatter.ts#L18)
+[src/number/NumberFormatter.ts:18](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/number/NumberFormatter.ts#L18)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[src/number/NumberFormatter.ts:12](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/number/NumberFormatter.ts#L12)
+[src/number/NumberFormatter.ts:12](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/number/NumberFormatter.ts#L12)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[src/number/NumberFormatter.ts:15](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/number/NumberFormatter.ts#L15)
+[src/number/NumberFormatter.ts:15](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/number/NumberFormatter.ts#L15)
 
 ## Methods
 
@@ -90,7 +90,7 @@ Format a number to a string.
 
 #### Defined in
 
-[src/number/NumberFormatter.ts:60](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/number/NumberFormatter.ts#L60)
+[src/number/NumberFormatter.ts:60](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/number/NumberFormatter.ts#L60)
 
 ___
 
@@ -112,7 +112,7 @@ Set the locale for the number formatter.
 
 #### Defined in
 
-[src/number/NumberFormatter.ts:49](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/number/NumberFormatter.ts#L49)
+[src/number/NumberFormatter.ts:49](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/number/NumberFormatter.ts#L49)
 
 ___
 
@@ -134,7 +134,7 @@ Parse a formatted string to a number.
 
 #### Defined in
 
-[src/number/NumberFormatter.ts:78](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/number/NumberFormatter.ts#L78)
+[src/number/NumberFormatter.ts:78](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/number/NumberFormatter.ts#L78)
 
 ___
 
@@ -158,7 +158,7 @@ Set separator strings for a given locale.
 
 #### Defined in
 
-[src/number/NumberFormatter.ts:31](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/number/NumberFormatter.ts#L31)
+[src/number/NumberFormatter.ts:31](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/number/NumberFormatter.ts#L31)
 
 ___
 
@@ -174,4 +174,4 @@ Returns a copy of the locales map.
 
 #### Defined in
 
-[src/number/NumberFormatter.ts:38](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/number/NumberFormatter.ts#L38)
+[src/number/NumberFormatter.ts:38](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/number/NumberFormatter.ts#L38)

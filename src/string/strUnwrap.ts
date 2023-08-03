@@ -15,5 +15,7 @@ import { regexEscapeString } from '../regex/regexEscapeString'
  * ```
  */
 export function strUnwrap(input: string, left: string, right: string, flags = ''): string {
-  return input.replace(new RegExp('^' + regexEscapeString(left), flags), '').replace(new RegExp(regexEscapeString(right) + '$', flags), '')
+  return input
+    .replace(new RegExp('^' + regexEscapeString(left), flags), '')
+    .replace(new RegExp(regexEscapeString(right) + '$', flags), '')
 }

@@ -1,5 +1,5 @@
-import { PQueue } from '../async/PQueue';
-import type { IPQueueOptions } from '../async/types/IPQueueOptions';
+import { PromiseQueue } from '../async/PromiseQueue';
+import type { IPromiseQueueOptions } from '../async/types/IPromiseQueueOptions';
 import type { IQueueAddOptions } from '../async/types/IQueueAddOptions';
 import type { IQueue } from '../datastructures/types/IQueue';
 import type { RunFunction } from '../datastructures/types/RunFunction';
@@ -51,5 +51,5 @@ import type { RunFunction } from '../datastructures/types/RunFunction';
  * //=> { i: 6, inQueueAfter: 0, returnValue: undefined }
  * ```
  */
-export declare function funAsyncRateLimit<QueueType extends IQueue<RunFunction, EnqueueOptionsType>, EnqueueOptionsType extends IQueueAddOptions>(fun: (...args: any[]) => any, options?: IPQueueOptions<QueueType, EnqueueOptionsType>): [PQueue<QueueType, EnqueueOptionsType>, (...args: any[]) => Promise<any>];
+export declare function funAsyncRateLimit<QueueType extends IQueue<RunFunction, EnqueueOptionsType>, EnqueueOptionsType extends IQueueAddOptions>(fun: (...args: any[]) => any, options?: IPromiseQueueOptions<QueueType, EnqueueOptionsType>): [PromiseQueue<QueueType, EnqueueOptionsType>, (...args: any[]) => Promise<any>];
 //# sourceMappingURL=funAsyncRateLimit.d.ts.map

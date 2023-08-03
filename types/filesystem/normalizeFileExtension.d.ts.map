@@ -1,1 +1,1 @@
-{"version":3,"file":"normalizeFileExtension.d.ts","sourceRoot":"","sources":["../../src/filesystem/normalizeFileExtension.ts"],"names":[],"mappings":"AAEA;;;;;;;;;;;;;;;;;;;;GAoBG;AACH,wBAAgB,sBAAsB,CAAC,GAAG,EAAE,MAAM,GAAG,MAAM,CAO1D"}
+{"version":3,"file":"normalizeFileExtension.d.ts","sourceRoot":"","sources":["../../src/filesystem/normalizeFileExtension.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;;;;;;;;GAoBG;AACH,wBAAgB,sBAAsB,CAAC,GAAG,EAAE,MAAM,GAAG,MAAM,CAO1D"}

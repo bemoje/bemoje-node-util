@@ -3,15 +3,16 @@ import { tsBundleImports } from './tsBundleImports'
 export function tsBundleImportsForUnitTestGeneration(filepath: string): string[][] {
   const bundle1 = tsBundleImports(filepath, {
     maxDepth: 1,
-    stripInlineComments: true,
+    stripInlineComments: false,
     stripEmptyLines: true,
   })
   const code1 = bundle1.pop() || []
 
   const bundle2 = tsBundleImports(filepath, {
     maxDepth: 2,
+    declarations: false,
     stripExportKeywords: true,
-    stripInlineComments: true,
+    stripInlineComments: false,
     stripEmptyLines: true,
     stripTsDocSoOnlyDescription: true,
   })
@@ -19,8 +20,9 @@ export function tsBundleImportsForUnitTestGeneration(filepath: string): string[]
   const code2 = bundle2.pop() || []
 
   const bundle3 = tsBundleImports(filepath, {
-    declarations: false,
+    declarations: true,
     stripExportKeywords: true,
+    // stripBlockComments: true,
     stripInlineComments: true,
     stripEmptyLines: true,
     stripTsDocSoOnlyDescription: true,

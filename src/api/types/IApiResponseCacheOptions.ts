@@ -1,5 +1,10 @@
 export interface IApiResponseCacheOptions {
   /**
+   * Whether to enable the cache. Defaults to false.
+   */
+  enable?: boolean
+
+  /**
    * Unique name to be used as the cache directory name.
    */
   name?: string
@@ -15,7 +20,9 @@ export interface IApiResponseCacheOptions {
   maxAgeMs?: number
 
   /**
-   * Output all events to console
+   * Whether to output all events to console.
+   * If undefined, only warn and error events will be output to console.
+   * If false, no events will be output to console.
    */
   logAllEvents?: boolean
 }

@@ -25,33 +25,39 @@ export declare class ApiReponseCache<V> {
         name: string;
         dirpath: string;
         maxAgeMs: number;
-        logAllEvents: boolean;
+        logAllEvents: undefined;
     };
     /**
      * Create a new instance.
      * @param options - Options for creating a new instance.
+     * @emits options - the options used to create the instance.
      */
     constructor(options: IApiResponseCacheOptions);
     /**
-     * Hash any type of key.
+     * Hash any type of key to a base64 string, using the SHA1 algorithm.
      * @param key - The key to hash.
      */
-    hashKey(key: unknown): string;
+    hashKey(key: any): string;
     /**
-     * Get a value for a given hash key if it exists. Otherwise, get retrive a value with a given function and then store that value in the cache.
+     * Get a value for a given hash key if it exists.
+     * If the does not exist, returns a value from the api by invoking the provided function and then stores that value in the cache.
      * @param hash - The hash key.
      * @param apiRequest - function that returns a new value for a given key if it doesn't exist in the cache.
+     * @emits hit - if the value exists in the cache.
+     * @emits miss - if the value does not exist in the cache.
      */
     getOrElse(hash: string, apiRequest: () => V | Promise<V>): Promise<V>;
     /**
      * Get a value for a given hash key.
      * @param hash - The hash key.
-     * @throws if the value does not exist for the give hash.
+     * @emits error - if the value does not exist for the give hash.
+     * @emits get - if the value exists for the given hash.
      */
     get(hash: string): Promise<V>;
     /**
-     * Get a value for a given hash key.
+     * Get a value for a given hash key or undefined if it does not exist or an error occurs.
      * @param hash - The hash key.
+     * @emits get - if the value exists for the given hash.
      */
     getSafe(hash: string): Promise<V | undefined>;
     /**
@@ -63,12 +69,16 @@ export declare class ApiReponseCache<V> {
      * Set a given value for a given hash key.
      * @param hash - The hash key.
      * @param value - The value to store.
-     * @throws if the value does not exist for the give hash.
+     * @emits put - if insertion succeeds.
+     * @emits error - if insertion fails.
      */
     put(hash: string, value: V): Promise<V>;
     /**
      * Delete a given value for a given hash key if it exists.
+     * @remarks No error is thrown if no value exists for the given hash.
      * @param hash - The hash key.
+     * @emits error - if deletion fails.
+     * @emits delete - if deletion succeeds.
      */
     delete(hash: string): Promise<void>;
     /**
@@ -77,18 +87,23 @@ export declare class ApiReponseCache<V> {
     deleteExpired(): Promise<this>;
     /**
      * Delete all cached API responses.
+     * @emits delete - if deletion succeeds.
      */
     deleteEverything(): Promise<void>;
     /**
      * Iterate over all [key, value] pairs in the cache.
+     * @remarks This data entries are expired, they are deleted and not yielded.
+     * @emits error - if iteration encounters an error.
      */
     entries(): AsyncIterableIterator<[string, V]>;
     /**
      * Iterate over all keys in the cache.
+     * @emits error - if iteration encounters an error.
      */
     keys(): AsyncIterableIterator<string>;
     /**
      * Iterate over all values in the cache.
+     * @emits error - if iteration encounters an error.
      */
     values(): AsyncIterableIterator<V>;
     /**
@@ -96,14 +111,10 @@ export declare class ApiReponseCache<V> {
      */
     size(): Promise<number>;
     /**
-     * Output all events to the console.
-     */
-    protected logAllEvents(): void;
-    /**
      * Deletes a value from the cache if it is expired.
      * @param hash - The hash key.
      * @param serialized - The serialized value.
-     * @throws if the value is expired.
+     * @emits expired - if the value is expired.
      */
     protected ensureNotExpired(hash: string, serialized: string): Promise<void>;
     /**
@@ -127,9 +138,11 @@ export declare class ApiReponseCache<V> {
      */
     protected parseSerializedValue(serialized: string): V;
     /**
-     * Shorthand for try/catch block with error-handling
-     * Wrap a function in a try catch block and emit an error event if an error occurs.
+     * Shorthand for try/catch block with error-handling.
+     * Wrap a function call in a try catch block and emit an error event if an error occurs.
      * @param fn - The function to wrap.
+     * @emits error - if the provided function throws an error.
+     * @returns The return value of the provided function.
      */
     protected orThrow<T>(fn: () => T | Promise<T>): T | Promise<T>;
     /**
@@ -137,5 +150,13 @@ export declare class ApiReponseCache<V> {
      * @param eventName - The event name.
      */
     protected emit<T>(eventName: string, arg: T): T;
+    /**
+     * Output all events to the console.
+     */
+    protected logAllEvents(): void;
+    /**
+     * Output all 'warn' and 'error' events to the console.
+     */
+    protected logWarnErrorEvents(): void;
 }
 //# sourceMappingURL=ApiReponseCache.d.ts.map

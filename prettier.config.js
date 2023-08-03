@@ -3,11 +3,13 @@
 
 const options = {
   jsxBracketSameLine: true,
-  quoteProps: 'consistent',
+  quoteProps: 'preserve',
   singleQuote: true,
   trailingComma: 'all',
-  printWidth: 140,
+  printWidth: 120,
   semi: false,
+  arrowParens: 'always',
+  proseWrap: 'preserve',
 }
 
 module.exports = options

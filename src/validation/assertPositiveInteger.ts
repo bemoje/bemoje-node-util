@@ -14,6 +14,6 @@
  * ```
  */
 export function assertPositiveInteger(int: number): number {
-  if (Number.isInteger(int) && int > 0) return int
-  throw new TypeError('Expected an integer. Got: ' + int)
+  if (Number.isInteger(int) && int >= 0) return int
+  throw new TypeError('Expected a positive integer. Got: ' + int)
 }
