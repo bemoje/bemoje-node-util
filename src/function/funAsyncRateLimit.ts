@@ -1,5 +1,5 @@
-import { PQueue } from '../async/PQueue'
-import type { IPQueueOptions } from '../async/types/IPQueueOptions'
+import { PromiseQueue } from '../async/PromiseQueue'
+import type { IPromiseQueueOptions } from '../async/types/IPromiseQueueOptions'
 import type { IQueueAddOptions } from '../async/types/IQueueAddOptions'
 import type { IQueue } from '../datastructures/types/IQueue'
 import type { RunFunction } from '../datastructures/types/RunFunction'
@@ -53,11 +53,14 @@ import { funSetName } from './funSetName'
  * //=> { i: 6, inQueueAfter: 0, returnValue: undefined }
  * ```
  */
-export function funAsyncRateLimit<QueueType extends IQueue<RunFunction, EnqueueOptionsType>, EnqueueOptionsType extends IQueueAddOptions>(
+export function funAsyncRateLimit<
+  QueueType extends IQueue<RunFunction, EnqueueOptionsType>,
+  EnqueueOptionsType extends IQueueAddOptions,
+>(
   fun: (...args: any[]) => any,
-  options: IPQueueOptions<QueueType, EnqueueOptionsType> = {},
-): [PQueue<QueueType, EnqueueOptionsType>, (...args: any[]) => Promise<any>] {
-  const queue = new PQueue(options)
+  options: IPromiseQueueOptions<QueueType, EnqueueOptionsType> = {},
+): [PromiseQueue<QueueType, EnqueueOptionsType>, (...args: any[]) => Promise<any>] {
+  const queue = new PromiseQueue(options)
   const wrapped = funSetName(fun.name, async function (...args: any[]) {
     return await queue.add(async () => {
       return await fun.call(queue, ...args)

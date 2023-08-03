@@ -1,9 +1,11 @@
+import TrieMap from '@bemoje/trie-map'
 import getAppDataPath from 'appdata-path'
 import ExpiryMap from 'expiry-map'
 import fs from 'fs'
 import path from 'path'
-import { File } from '../../src/filesystem/File'
 import { createDirectorySync } from '../../src/filesystem/createDirectorySync'
+import { FilePath } from '../../src/filesystem/path/FilePath'
+import { readJsonFileSync } from '../../src/filesystem/readJsonFileSync'
 import { funParseClass } from '../../src/function/funParseClass'
 import { funParseFunction } from '../../src/function/funParseFunction'
 import { strCountCharOccurances } from '../../src/string/strCountCharOccurances'
@@ -18,14 +20,26 @@ import { TsDoc } from '../../src/tsdoc/TsDoc'
 import { tsDocExtractFirstComment } from '../../src/tsdoc/tsDocExtractFirstComment'
 import { ISourceFileParseClassResult } from '../types/ISourceFileParseClassResult'
 
+export function readPackageJson(projectRoot = process.cwd()): Record<string, any> | undefined {
+  const filepath = path.join(projectRoot, 'package.json')
+  if (!fs.existsSync(filepath)) return
+  return readJsonFileSync(filepath)
+}
+
+export function getDeclarationsDirpath(projectRoot = process.cwd()): string | undefined {
+  const pkg = readPackageJson(projectRoot)
+  if (!pkg) return
+  return path.dirname(Reflect.get(pkg, 'types'))
+}
+
 /**
  * Represents a TypeScript source file.
  */
-export class SourceFile extends File {
+export class SourceFile extends FilePath {
   /**
    * A map of all source file paths to SourceFile instance.
    */
-  protected static instances = new Map<string, SourceFile>()
+  protected static instances = new TrieMap<SourceFile>()
 
   /**
    * An in-memory cache of source file source code.
@@ -36,7 +50,7 @@ export class SourceFile extends File {
    * An in-memory cache for source file requires/evals.
    * This is used when the desired module is not found in ´allExports´.
    */
-  protected static moduleImportCache: WeakMap<SourceFile, any> = new WeakMap()
+  protected static moduleCache: WeakMap<SourceFile, any> = new WeakMap()
 
   /**
    * The working directory of the process.
@@ -51,7 +65,7 @@ export class SourceFile extends File {
   /**
    * The root directory of the declaration files.
    */
-  static declarationDir = path.join(this.workdir, 'types')
+  static declaratiosnDirpath = getDeclarationsDirpath()
 
   /**
    * The directory where source files are backed up to.
@@ -63,10 +77,10 @@ export class SourceFile extends File {
    * @param filepath The absolute path to the source file.
    */
   constructor(filepath: string) {
-    const instance = SourceFile.instances.get(filepath)
+    const instance = SourceFile.instances.get(filepath.split(path.sep))
     if (instance) return instance
     super(filepath)
-    SourceFile.instances.set(filepath, this)
+    SourceFile.instances.set(filepath.split(path.sep), this)
   }
 
   /**
@@ -74,28 +88,29 @@ export class SourceFile extends File {
    * Private source files are not exported from the entry point.
    */
   get isPrivate(): boolean {
-    return this.filename.startsWith('_')
+    return this.base.startsWith('_')
   }
 
   /**
    * The name of the source file's exported member.
    */
   get exportName(): string {
-    return this.filename.substring(0, this.filename.indexOf('.'))
+    return this.base.substring(0, this.base.indexOf('.'))
   }
 
   /**
    * The absolute path to the test file that tests this source file.
    */
   get testFilepath(): string {
-    return path.join(this.dirpath, this.exportName + '.test.ts')
+    return path.join(this.parent.toString(), this.exportName + '.test.ts')
   }
 
   /**
    * The absolute path to the type declaration file emitted for this source file.
    */
-  get declarationFilepath(): string {
-    return path.join(SourceFile.declarationDir, this.relative.replace(/\.ts$/i, '.d.ts'))
+  get declarationFilepath(): string | undefined {
+    if (!SourceFile.declaratiosnDirpath) return
+    return path.join(SourceFile.declaratiosnDirpath, this.relative.replace(/\.ts$/i, '.d.ts'))
   }
 
   /**
@@ -140,7 +155,8 @@ export class SourceFile extends File {
    * Returns whether the declaration file emitted for this source file exists.
    */
   declarationFileExists(): boolean {
-    return fs.existsSync(this.declarationFilepath)
+    if (!SourceFile.declaratiosnDirpath) return false
+    return fs.existsSync(this.declarationFilepath as string)
   }
 
   /**
@@ -153,7 +169,7 @@ export class SourceFile extends File {
   /**
    * Returns the source code of the source file.
    */
-  readFileSync(): string {
+  override readFileSync(): string {
     let source = SourceFile.sourceCache.get(this)
     if (!source) {
       source = fs.readFileSync(this.filepath).toString()
@@ -165,12 +181,13 @@ export class SourceFile extends File {
   /**
    * Overwrite the source file with the new source code.
    */
-  writeFileSync(string: string): void {
-    if (this.readFileSync() === string) return
+  override writeFileSync(string: string): this {
+    if (this.readFileSync() === string) return this
     this.writeBackupFile()
     fs.writeFileSync(this.filepath, string, 'utf8')
     SourceFile.sourceCache.set(this, string)
-    SourceFile.moduleImportCache.delete(this)
+    SourceFile.moduleCache.delete(this)
+    return this
   }
 
   /**
@@ -193,8 +210,9 @@ export class SourceFile extends File {
    * @param stripSourceMapComments Whether or not to strip source map comments from the declaration file.
    * Example of such a line: "//# sourceMappingURL=filename.d.ts.map"
    */
-  declarationFileSource(stripSourceMapComments = false): string {
-    const source = fs.readFileSync(this.declarationFilepath).toString()
+  declarationFileSource(stripSourceMapComments = false): string | undefined {
+    if (!SourceFile.declaratiosnDirpath) return
+    const source = fs.readFileSync(this.declarationFilepath as string).toString()
     return stripSourceMapComments ? tsStripDeclSourceMapComments(source) : source
   }
 
@@ -280,7 +298,7 @@ export class SourceFile extends File {
       throw new Error('Expected this.exportType to be ´class´. Got: ' + this.exportType)
     }
     const parsed = funParseClass(this.evaluateSourceFileExport())
-    const members = parsed.properties.concat(parsed.methods.map((m) => m.name))
+    const members = parsed.methods.map((m) => m.name)
     const accMod = tsGetClassMemberAccessModifiers(this.readFileSync())
     const result: Record<string, string[]> = { public: [], protected: [], private: [] }
     for (const name of members) {
@@ -294,12 +312,12 @@ export class SourceFile extends File {
    * Evaluates the source file and returns the export.
    */
   evaluateSourceFileExport<T>(): T {
-    let exp = SourceFile.moduleImportCache.get(this)
+    let exp = SourceFile.moduleCache.get(this)
     if (!exp) {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const module = require(this.filepath)
       exp = module[this.exportName]
-      SourceFile.moduleImportCache.set(this, exp)
+      SourceFile.moduleCache.set(this, exp)
     }
     return exp
   }
@@ -308,7 +326,7 @@ export class SourceFile extends File {
    * Asserts that the source file is a TypeScript file.
    */
   assertTsFile(): this {
-    if (path.extname(this.filename) !== '.ts') {
+    if (path.extname(this.base) !== '.ts') {
       throw new Error(`Expected file to be a TypeScript file: ${this.filepath}`)
     }
     return this
@@ -321,8 +339,9 @@ export class SourceFile extends File {
     const exportLine = this.readFileSync()
       .split(/\r?\n/)
       .find((line) => line.startsWith('export '))
-    if (!exportLine?.includes(this.exportName)) {
-      throw new Error(`Export name does not match filename: ${this.filename}`)
+    if (this.exportType !== 'undefined' && !exportLine?.includes(this.exportName)) {
+      const filename = this.base
+      throw new Error(`Export name does not match filename: ` + filename)
     }
     return this
   }
@@ -331,8 +350,8 @@ export class SourceFile extends File {
    * Asserts that the source file has a valid filename. A valid filename is one that has only one period.
    */
   assertValidFilename(): this {
-    if (strCountCharOccurances(this.filename, '.') !== 1) {
-      throw new Error(`Expected source file to only have one period. Got: ${this.filename}`)
+    if (strCountCharOccurances(this.base, '.') !== 1) {
+      throw new Error(`Expected source file to only have one period. Got: ${this.base}`)
     }
     return this
   }

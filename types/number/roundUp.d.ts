@@ -7,7 +7,7 @@
  * @throws if the given number is not finite or NaN.
  * @example ```ts
  * roundUp(1.2345, 2);;
- * //=> 1.24
+ * //=> 1.23
  * roundUp(1.2345);;
  * //=> 2
  * ```

@@ -60,7 +60,9 @@ describe(assertValidTimeString.name, () => {
   })
 
   it('should throw an error for invalid time strings', () => {
-    expect(() => assertValidTimeString('')).toThrow('Expected timestring to be of format hh:mm:ss:mmm with any desired delimiters. Got: ')
+    expect(() => assertValidTimeString('')).toThrow(
+      'Expected timestring to be of format hh:mm:ss:mmm with any desired delimiters. Got: ',
+    )
     expect(() => assertValidTimeString('00:01:02:03:04')).toThrow(
       'Expected timestring to be of format hh:mm:ss:mmm with any desired delimiters. Got: 00:01:02:03:04',
     )

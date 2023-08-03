@@ -2,8 +2,21 @@ import { strRemoveEmptyLines } from './strRemoveEmptyLines'
 
 describe('strRemoveEmptyLines', () => {
   it('removes all lines that are empty or only contain whitespace', () => {
-    const str = ['', 'list:', ' 1. some text', ' 2. some text', '', '\t\t ', '   a. some text', '   b. some text', '', ' '].join('\n')
-    expect(strRemoveEmptyLines(str)).toBe(['list:', ' 1. some text', ' 2. some text', '   a. some text', '   b. some text'].join('\n'))
+    const str = [
+      '',
+      'list:',
+      ' 1. some text',
+      ' 2. some text',
+      '',
+      '\t\t ',
+      '   a. some text',
+      '   b. some text',
+      '',
+      ' ',
+    ].join('\n')
+    expect(strRemoveEmptyLines(str)).toBe(
+      ['list:', ' 1. some text', ' 2. some text', '   a. some text', '   b. some text'].join('\n'),
+    )
   })
 
   it('should remove all empty lines from a given string', () => {

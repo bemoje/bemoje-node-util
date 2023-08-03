@@ -21,7 +21,9 @@ describe(timeIntToString.name, () => {
 
   it('should throw an error for invalid time integers', () => {
     expect(() => timeIntToString(-1)).toThrowError('Expected time int to be between 0 and 86399999. Got: -1')
-    expect(() => timeIntToString(86400000)).toThrowError('Expected time int to be between 0 and 86399999. Got: 86400000')
+    expect(() => timeIntToString(86400000)).toThrowError(
+      'Expected time int to be between 0 and 86399999. Got: 86400000',
+    )
     expect(() => timeIntToString(100.5)).toThrowError('Expected time int to be between 0 and 86399999. Got: 100.5')
   })
 })

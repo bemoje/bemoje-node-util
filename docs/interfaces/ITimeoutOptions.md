@@ -6,7 +6,7 @@
 
 - **`ITimeoutOptions`**
 
-  ↳ [`IPQueueOptions`](/docs/interfaces/IPQueueOptions.md)
+  ↳ [`IPromiseQueueOptions`](/docs/interfaces/IPromiseQueueOptions.md)
 
   ↳ [`IQueueAddOptions`](/docs/interfaces/IQueueAddOptions.md)
 
@@ -33,7 +33,7 @@ false
 
 #### Defined in
 
-[src/async/types/ITimeoutOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/ITimeoutOptions.ts#L11)
+[src/async/types/ITimeoutOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/async/types/ITimeoutOptions.ts#L11)
 
 ___
 
@@ -45,4 +45,4 @@ Per-operation timeout in milliseconds. Operations fulfill once `timeout` elapses
 
 #### Defined in
 
-[src/async/types/ITimeoutOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/ITimeoutOptions.ts#L5)
+[src/async/types/ITimeoutOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/async/types/ITimeoutOptions.ts#L5)

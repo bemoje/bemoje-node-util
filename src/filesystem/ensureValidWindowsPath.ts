@@ -1,4 +1,3 @@
-import { strCountCharOccurances } from '../string/strCountCharOccurances'
 import { IEnsureValidWindowsPathOptions } from './types/IEnsureValidWindowsPathOptions'
 
 /**
@@ -33,7 +32,7 @@ export function ensureValidWindowsPath(path: string, options?: IEnsureValidWindo
     return throwOrFalse('Path string is length 0.')
   }
 
-  if (strCountCharOccurances(path, '/') > 0 && strCountCharOccurances(path, '\\') > 0) {
+  if (path.indexOf('/') !== -1 && path.indexOf('\\') !== -1) {
     return throwOrFalse('Path contains both backslash and forward slash.')
   }
 

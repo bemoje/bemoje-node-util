@@ -27,7 +27,7 @@
     //////////////////////////////////////////////////////////////////
 
     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "target": "ES6",
+    "target": "ES2015",
 
     /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     "lib": ["ESNext", "DOM"],
@@ -67,7 +67,7 @@
     //////////////////////////////////////////////////////////////////
 
     /* Specify what module code is generated. */
-    // "module": "ESNext",
+    // "module": "CommonJS",
 
     /* Specify the root folder within your source files. */
     // "rootDir": "./",
@@ -207,7 +207,7 @@
     //////////////////////////////////////////////////////////////////
 
     /* Ensure that each file can be safely transpiled without relying on other imports. */
-    "isolatedModules": false,
+    // "isolatedModules": true,
 
     /* Do not transform or elide any imports or exports not marked as type-only, ensuring they are written in the output file's format based on the 'module' 
     // "verbatimModuleSyntax": true,                     setting. */
@@ -294,5 +294,5 @@
     /* Skip type checking all .d.ts files. */
     "skipLibCheck": false
   },
-  "include": ["./src/**/*.ts", "src/time/assertValidTimeStringFormatting.ts"]
+  "include": ["./src/**/*.ts"]
 }

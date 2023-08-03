@@ -61,7 +61,7 @@ on invalid markdown code block for example tag.
 
 #### Defined in
 
-[src/tsdoc/TsDocTag.ts:46](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/tsdoc/TsDocTag.ts#L46)
+[src/tsdoc/TsDocTag.ts:46](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/tsdoc/TsDocTag.ts#L46)
 
 ## Properties
 
@@ -73,7 +73,7 @@ The tag's description.
 
 #### Defined in
 
-[src/tsdoc/TsDocTag.ts:24](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/tsdoc/TsDocTag.ts#L24)
+[src/tsdoc/TsDocTag.ts:24](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/tsdoc/TsDocTag.ts#L24)
 
 ___
 
@@ -85,7 +85,7 @@ The tag's name parameter.
 
 #### Defined in
 
-[src/tsdoc/TsDocTag.ts:19](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/tsdoc/TsDocTag.ts#L19)
+[src/tsdoc/TsDocTag.ts:19](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/tsdoc/TsDocTag.ts#L19)
 
 ___
 
@@ -97,7 +97,7 @@ The kind of tag.
 
 #### Defined in
 
-[src/tsdoc/TsDocTag.ts:14](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/tsdoc/TsDocTag.ts#L14)
+[src/tsdoc/TsDocTag.ts:14](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/tsdoc/TsDocTag.ts#L14)
 
 ## Methods
 
@@ -117,4 +117,4 @@ Ensures that example tags are formatted as markdown ts-code blocks.
 
 #### Defined in
 
-[src/tsdoc/TsDocTag.ts:90](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/tsdoc/TsDocTag.ts#L90)
+[src/tsdoc/TsDocTag.ts:90](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/tsdoc/TsDocTag.ts#L90)

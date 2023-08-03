@@ -37,7 +37,9 @@ describe('createObjectFactory', () => {
   })
 
   it('should throw an error if defaultValues length is larger than keys length', () => {
-    expect(() => createObjectFactory(['key1'], ['value1', 'value2'])).toThrow('defaultValues length larger than keys length.')
+    expect(() => createObjectFactory(['key1'], ['value1', 'value2'])).toThrow(
+      'defaultValues length larger than keys length.',
+    )
   })
 
   it('should create an object with specified keys and default values', () => {

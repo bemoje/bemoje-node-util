@@ -37,7 +37,7 @@ Priority of operation. Operations with greater priority will be scheduled first.
 
 #### Defined in
 
-[src/datastructures/types/IPriorityQueueOptions.ts:4](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/datastructures/types/IPriorityQueueOptions.ts#L4)
+[src/datastructures/types/IPriorityQueueOptions.ts:4](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/datastructures/types/IPriorityQueueOptions.ts#L4)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Defined in
 
-[src/async/types/ITaskOptions.ts:2](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/ITaskOptions.ts#L2)
+[src/async/types/ITaskOptions.ts:2](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/async/types/ITaskOptions.ts#L2)
 
 ___
 
@@ -73,7 +73,7 @@ false
 
 #### Defined in
 
-[src/async/types/ITimeoutOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/ITimeoutOptions.ts#L11)
+[src/async/types/ITimeoutOptions.ts:11](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/async/types/ITimeoutOptions.ts#L11)
 
 ___
 
@@ -89,4 +89,4 @@ Per-operation timeout in milliseconds. Operations fulfill once `timeout` elapses
 
 #### Defined in
 
-[src/async/types/ITimeoutOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/3683199/src/async/types/ITimeoutOptions.ts#L5)
+[src/async/types/ITimeoutOptions.ts:5](https://github.com/bemoje/bemoje-node-util/blob/957547c/src/async/types/ITimeoutOptions.ts#L5)

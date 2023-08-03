@@ -19,6 +19,8 @@ describe(assertValidMilliseconds.name, () => {
 
   it('should throw an error if the provided number is not an integer', () => {
     expect(() => assertValidMilliseconds(0.5)).toThrowError('Expected milliseconds to be between 0 and 999. Got: 0.5')
-    expect(() => assertValidMilliseconds(10.99)).toThrowError('Expected milliseconds to be between 0 and 999. Got: 10.99')
+    expect(() => assertValidMilliseconds(10.99)).toThrowError(
+      'Expected milliseconds to be between 0 and 999. Got: 10.99',
+    )
   })
 })

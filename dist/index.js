@@ -7,28 +7,32 @@
 
 'use strict';
 
-var getAppDataPath = require('appdata-path');
+var asyncRetry = require('async-retry');
 var EventEmitter = require('events');
-var level = require('level');
-var hash = require('object-hash');
+var lodash = require('lodash');
+require('dotenv/config');
+var cliColor = require('cli-color');
+var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
-var cliColor = require('cli-color');
-var titleCase = require('title-case');
-var asyncRetry = require('async-retry');
-var fs = require('fs');
+var getAppDataPath = require('appdata-path');
+var level = require('level');
+var hash = require('object-hash');
 var gpt3Encoder = require('gpt-3-encoder');
 var openai = require('openai');
-var deepAssign = require('deep-assign');
+var titleCase = require('title-case');
 var excelJs = require('exceljs');
+var extract = require('extract-zip');
+var walkdir = require('walkdir');
 var esprima = require('esprima');
+var PrettyError = require('pretty-error');
 var crypto = require('crypto');
 var childProcess = require('child_process');
 var stream = require('stream');
+var deepAssign = require('deep-assign');
 var parseCSV = require('csv-parser');
 var pdf = require('pdf-parse');
 var pdfLib = require('pdf-lib');
-var lodash = require('lodash');
 var sentenceSplitter = require('sentence-splitter');
 var strip = require('strip-comments');
 
@@ -95,575 +99,9 @@ function __asyncValues(o) {
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 }
 
-function __classPrivateFieldGet(receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-}
-
-function __classPrivateFieldSet(receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-}
-
 typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
-
-/**
- * Create a directory at a given path if it does not exist.
- * Automatically creates parent directories if they do not exist.
- * @param dirpath The path where the directory should be created.
- * @remarks This function uses the `mkdirpSync` function from the `mkdirp` library to create a directory at the specified path.
- * @returns The path of the directory.
- * @example ```ts
- * createDirectorySync('/path/to/directory')
- * ```
- */
-function createDirectorySync(dirpath) {
-    mkdirp.mkdirpSync(dirpath);
-    return dirpath;
-}
-
-/**
- * Returns the constructor of the given object.
- * @template T - The type of the object.
- * @param o The object whose constructor is to be returned.
- * @returns The constructor of the object.
- * @example ```ts
- * class MyClass {}
- * getConstructor(new MyClass()) === MyClass;;
- * //=> true
- * ```
- */
-function getConstructor(o) {
-    return Object.getPrototypeOf(o).constructor;
-}
-
-/**
- * Repeats the given string `n` times.
- * @param input The string to repeat.
- * @param n The number of times to repeat the string.
- * @example ```ts
- * strRepeat('abc', 3);;
- * //=> 'abcabcabc'
- * ```
- */
-function strRepeat(input, n) {
-    return new Array(n).fill(input).join('');
-}
-
-/**
- * A simple logging utility.
- */
-class log {
-    /**
-     * Logs a (cyan) message the console.
-     * @param message The message to print to console.
-     * @param depth The depth to which to print object properties.
-     */
-    static info(message, depth) {
-        this.logToConsole('INFO', message, cliColor.magenta, cliColor.green, cliColor.cyan, depth);
-        return message;
-    }
-    /**
-     * Logs a (yellow) warning message to the console.
-     * @param message The message to print to console.
-     */
-    static warn(message) {
-        this.logToConsole('WARN', message, cliColor.magenta, cliColor.yellow, cliColor.yellow);
-        return message;
-    }
-    /**
-     * Logs a (red) error message to the console.
-     * @param error The Error object or message to print to console.
-     */
-    static error(error) {
-        const strError = JSON.stringify(error, null, 2);
-        this.logToConsole('ERROR', cliColor.bold(error), cliColor.magenta, cliColor.red, cliColor.red);
-        console.error(cliColor.red(strError));
-        return JSON.parse(strError);
-    }
-    /**
-     * Wrap an async function as a task, logging the start and end of the task.
-     * @param description The description of the task.
-     */
-    static task(description, task) {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.info(`Began: ${description}.`);
-            const t0 = Date.now();
-            const returnValue = yield task();
-            this.info(`Ended: ${description}. (${((Date.now() - t0) / 1000).toString()} seconds)`);
-            return returnValue;
-        });
-    }
-    /**
-     * Wrap a synchronous function as a task, logging the start and end of the task.
-     * @param description The description of the task.
-     */
-    static taskSync(description, task) {
-        this.info(`Began: ${description}.`);
-        const t0 = Date.now();
-        const returnValue = task();
-        this.info(`Ended: ${description}. (${((Date.now() - t0) / 1000).toString()} seconds)`);
-        return returnValue;
-    }
-    /**
-     * Clears the console by printing a number of blank lines.
-     * @param numLines The number of blank lines to print.
-     */
-    static clear(numLines = 10) {
-        console.log(strRepeat('\n', numLines));
-    }
-    /**
-     * Prints a light dotted line to the console.
-     * @param numLines The number of blank lines to print.
-     */
-    static line(numLines = 1) {
-        const string = cliColor.blackBright(strRepeat('-', 80));
-        for (let i = 0; i < numLines; i++) {
-            console.log(string);
-        }
-        console.log('\n\n');
-    }
-    /**
-     * Generic function for logging to console, used by the log-level specific functions.
-     * @param level The log level.
-     * @param message The message to print to console.
-     * @param timestampColor A 'cli-color' module function to wrap the timestamp-part of the string in color formatting.
-     * @param timestampColor A 'cli-color' module function to wrap the level-part of the string in color formatting.
-     * @param timestampColor A 'cli-color' module function to wrap the output-part of the string in color formatting.
-     * @param depth The depth to which to print object properties.
-     */
-    static logToConsole(level, message, timestampColor, levelColor, outputColor, depth) {
-        timestampColor(new Date().toISOString());
-        const lvl = levelColor(level);
-        const clog = lvl === 'ERROR' ? console.error : console.log;
-        if (typeof message === 'object') {
-            // clog(`${ts} [${lvl}]:`)
-            clog(`[${lvl}]:`);
-            console.dir(message, { depth });
-        }
-        else {
-            let _message = message + '';
-            if (/^.+:/.test(_message) && _message.includes('\n')) {
-                const arr = _message.split('\n');
-                _message = outputColor(arr[0]) + '\n' + cliColor.bold(cliColor.blue(arr.slice(1).join('\n')));
-            }
-            else {
-                _message = outputColor(_message);
-            }
-            // clog(`${ts} [${lvl}]: ${_message + ''}`)
-            clog(`[${lvl}]: ${_message + ''}`);
-        }
-    }
-}
-
-/**
- * This function is used to print the events emitted by an EventEmitter. It takes three parameters: the instance of the class, the EventEmitter, and an object containing arrays of event names categorized by log levels (info, warn, error).
- * @remarks This function is useful for debugging purposes, as it allows you to see what events are being emitted by an EventEmitter at runtime.
- * @param self The instance of the class that the EventEmitter belongs to.
- * @param emitter The EventEmitter that is emitting the events.
- * @param eventLogLevels An object containing arrays of event names categorized by log levels (info, warn, error).
- * @typeparam T - The type of the instance of the class that the EventEmitter belongs to.
- * @returns void
- * @example ```ts
- * new EventEmitter();
- * new MyClass();
- * printEmitterEvents(new MyClass(), new EventEmitter(), {
- *   info: ['event1', 'event2'],
- *   warn: ['event3', 'event4'],
- *   error: ['event5', 'event6']
- * });;
- * //=> result
- * ```
- */
-function _printEmitterEvents(self, emitter, eventLogLevels) {
-    const className = getConstructor(self).name;
-    for (const event of eventLogLevels.info || []) {
-        emitter.on(event, (arg) => {
-            const _event = className + '.' + event.toString() + ': ';
-            if (typeof arg === 'object') {
-                log.info(_event);
-                console.dir(arg, { depth: null });
-            }
-            log.info(_event + arg);
-        });
-    }
-    for (const event of eventLogLevels.warn || []) {
-        emitter.on(event, (arg) => {
-            const _event = className + '.' + event.toString() + ': ';
-            if (typeof arg === 'object') {
-                log.warn(_event);
-                console.dir(arg, { depth: null });
-            }
-            log.warn(_event + arg);
-        });
-    }
-    for (const event of eventLogLevels.error || ['error']) {
-        emitter.on(event, (arg) => {
-            log.error(arg);
-        });
-    }
-}
-
-/**
- * Persistent API response cache based on level-db.
- */
-class ApiReponseCache {
-    /**
-     * Create a new instance.
-     * @param options - Options for creating a new instance.
-     */
-    constructor(options) {
-        /**
-         * Event emitter for cache events
-         */
-        this.events = new EventEmitter();
-        const _options = Object.assign({}, ApiReponseCache.optionsDefaults, options);
-        const { name, dirpath, maxAgeMs, logAllEvents } = _options;
-        if (logAllEvents)
-            this.logAllEvents();
-        this.emit('options', _options);
-        this.maxAgeMs = maxAgeMs;
-        const dbpath = createDirectorySync(path.join(dirpath, name));
-        this.db = new level.Level(dbpath);
-    }
-    /**
-     * Hash any type of key.
-     * @param key - The key to hash.
-     */
-    hashKey(key) {
-        return hash(key === undefined ? 'undefined' : key, { algorithm: 'sha1', encoding: 'base64' });
-    }
-    /**
-     * Get a value for a given hash key if it exists. Otherwise, get retrive a value with a given function and then store that value in the cache.
-     * @param hash - The hash key.
-     * @param apiRequest - function that returns a new value for a given key if it doesn't exist in the cache.
-     */
-    getOrElse(hash, apiRequest) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const value = yield this.get(hash);
-                this.emit('hit', hash);
-                return value;
-            }
-            catch (e) {
-                this.emit('miss', hash);
-                const value = yield apiRequest();
-                return yield this.put(hash, value);
-            }
-        });
-    }
-    /**
-     * Get a value for a given hash key.
-     * @param hash - The hash key.
-     * @throws if the value does not exist for the give hash.
-     */
-    get(hash) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
-                const serialized = yield this.db.get(hash);
-                yield this.ensureNotExpired(hash, serialized);
-                this.emit('get', hash);
-                return this.parseSerializedValue(serialized);
-            }));
-        });
-    }
-    /**
-     * Get a value for a given hash key.
-     * @param hash - The hash key.
-     */
-    getSafe(hash) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const serialized = yield this.db.get(hash);
-                yield this.ensureNotExpired(hash, serialized);
-                this.emit('get', hash);
-                return this.parseSerializedValue(serialized);
-            }
-            catch (error) {
-                return undefined;
-            }
-        });
-    }
-    /**
-     * Returns whether a value exists for a given key.
-     * @param hash - The hash key.
-     */
-    has(hash) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.db.get(hash);
-                return true;
-            }
-            catch (e) {
-                return false;
-            }
-        });
-    }
-    /**
-     * Set a given value for a given hash key.
-     * @param hash - The hash key.
-     * @param value - The value to store.
-     * @throws if the value does not exist for the give hash.
-     */
-    put(hash, value) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
-                const serialized = this.serializeValue(value);
-                yield this.db.put(hash, serialized);
-                this.emit('put', hash);
-                return value;
-            }));
-        });
-    }
-    /**
-     * Delete a given value for a given hash key if it exists.
-     * @param hash - The hash key.
-     */
-    delete(hash) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
-                yield this.db.del(hash);
-                this.emit('delete', hash);
-            }));
-        });
-    }
-    /**
-     * Delete all expired data.
-     */
-    deleteExpired() {
-        var _a, e_1, _b, _c;
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
-                    _c = _f.value;
-                    _d = false;
-                    const _ = _c;
-                }
-            }
-            catch (e_1_1) { e_1 = { error: e_1_1 }; }
-            finally {
-                try {
-                    if (!_d && !_a && (_b = _e.return)) yield _b.call(_e);
-                }
-                finally { if (e_1) throw e_1.error; }
-            }
-            return this;
-        });
-    }
-    /**
-     * Delete all cached API responses.
-     */
-    deleteEverything() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
-                yield this.db.clear();
-                this.emit('delete', 'All cache data was deleted.');
-            }));
-        });
-    }
-    /**
-     * Iterate over all [key, value] pairs in the cache.
-     */
-    entries() {
-        return __asyncGenerator(this, arguments, function* entries_1() {
-            var _a, e_2, _b, _c;
-            try {
-                try {
-                    for (var _d = true, _e = __asyncValues(this.db.iterator()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a; _d = true) {
-                        _c = _f.value;
-                        _d = false;
-                        const [hash, serialized] = _c;
-                        if (this.isExpired(serialized)) {
-                            this.db.del(hash).then(() => this.emit('expired', hash));
-                        }
-                        yield yield __await([hash, this.parseSerializedValue(serialized)]);
-                    }
-                }
-                catch (e_2_1) { e_2 = { error: e_2_1 }; }
-                finally {
-                    try {
-                        if (!_d && !_a && (_b = _e.return)) yield __await(_b.call(_e));
-                    }
-                    finally { if (e_2) throw e_2.error; }
-                }
-            }
-            catch (error) {
-                throw this.emit('error', error);
-            }
-        });
-    }
-    /**
-     * Iterate over all keys in the cache.
-     */
-    keys() {
-        return __asyncGenerator(this, arguments, function* keys_1() {
-            var _a, e_3, _b, _c;
-            try {
-                try {
-                    for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a; _d = true) {
-                        _c = _f.value;
-                        _d = false;
-                        const [hash] = _c;
-                        yield yield __await(hash);
-                    }
-                }
-                catch (e_3_1) { e_3 = { error: e_3_1 }; }
-                finally {
-                    try {
-                        if (!_d && !_a && (_b = _e.return)) yield __await(_b.call(_e));
-                    }
-                    finally { if (e_3) throw e_3.error; }
-                }
-            }
-            catch (error) {
-                throw this.emit('error', error);
-            }
-        });
-    }
-    /**
-     * Iterate over all values in the cache.
-     */
-    values() {
-        return __asyncGenerator(this, arguments, function* values_1() {
-            var _a, e_4, _b, _c;
-            try {
-                try {
-                    for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a; _d = true) {
-                        _c = _f.value;
-                        _d = false;
-                        const [_, value] = _c;
-                        yield yield __await(value);
-                    }
-                }
-                catch (e_4_1) { e_4 = { error: e_4_1 }; }
-                finally {
-                    try {
-                        if (!_d && !_a && (_b = _e.return)) yield __await(_b.call(_e));
-                    }
-                    finally { if (e_4) throw e_4.error; }
-                }
-            }
-            catch (error) {
-                throw this.emit('error', error);
-            }
-        });
-    }
-    /**
-     * Get the number of entries in the cache.
-     */
-    size() {
-        var _a, e_5, _b, _c;
-        return __awaiter(this, void 0, void 0, function* () {
-            let size = 0;
-            try {
-                for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
-                    _c = _f.value;
-                    _d = false;
-                    const _ = _c;
-                    size++;
-                }
-            }
-            catch (e_5_1) { e_5 = { error: e_5_1 }; }
-            finally {
-                try {
-                    if (!_d && !_a && (_b = _e.return)) yield _b.call(_e);
-                }
-                finally { if (e_5) throw e_5.error; }
-            }
-            return size;
-        });
-    }
-    /**
-     * Output all events to the console.
-     */
-    logAllEvents() {
-        _printEmitterEvents(this, this.events, {
-            info: ['options', 'hit', 'miss', 'put', 'get'],
-            warn: ['expired', 'delete'],
-            error: ['error'],
-        });
-    }
-    /**
-     * Deletes a value from the cache if it is expired.
-     * @param hash - The hash key.
-     * @param serialized - The serialized value.
-     * @throws if the value is expired.
-     */
-    ensureNotExpired(hash, serialized) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.isExpired(serialized)) {
-                yield this.db.del(hash);
-                this.emit('expired', hash);
-                throw new Error('Expired');
-            }
-        });
-    }
-    /**
-     * Check if a still raw serialized value string is expired.
-     * @param serialized - The serialized value.
-     */
-    isExpired(serialized) {
-        if (!this.maxAgeMs)
-            return false;
-        return Date.now() - this.parseSerializedTimestamp(serialized) > this.maxAgeMs;
-    }
-    /**
-     * Custom JSON stringify function that prepends a timestamp to the stringified object.
-     * @param value - The value to serialize.
-     */
-    serializeValue(value) {
-        return Date.now() + JSON.stringify(value);
-    }
-    /**
-     * Parse the timestamp part of a raw serialized value string from the database.
-     * @param serialized - The serialized value.
-     */
-    parseSerializedTimestamp(serialized) {
-        return parseInt(serialized.substring(0, 13));
-    }
-    /**
-     * Parse the json part of a raw serialized value string from the database.
-     * @param serialized - The serialized value.
-     */
-    parseSerializedValue(serialized) {
-        return JSON.parse(serialized.substring(13));
-    }
-    /**
-     * Shorthand for try/catch block with error-handling
-     * Wrap a function in a try catch block and emit an error event if an error occurs.
-     * @param fn - The function to wrap.
-     */
-    orThrow(fn) {
-        try {
-            return fn();
-        }
-        catch (error) {
-            throw this.emit('error', error);
-        }
-    }
-    /**
-     * Emit an event but this automatically adds 'this' as an extra argument.
-     * @param eventName - The event name.
-     */
-    emit(eventName, arg) {
-        this.events.emit(eventName, arg, this);
-        return arg;
-    }
-}
-/**
- * Default options for creating new instances
- */
-ApiReponseCache.optionsDefaults = {
-    name: 'default',
-    dirpath: getAppDataPath('ApiReponseCache'),
-    maxAgeMs: 0,
-    logAllEvents: false,
 };
 
 /**
@@ -698,7 +136,6 @@ function arrSortedInsertionIndex(array, value, comparator) {
     return first;
 }
 
-var _PriorityQueue_queue;
 /**
  * A class representing a priority queue for async functions.
  */
@@ -707,17 +144,13 @@ class PriorityQueue {
         /**
          * Queue of functions to run
          */
-        _PriorityQueue_queue.set(this, []
-        /**
-         * Get the number of functions in the queue
-         */
-        );
+        this.queue = [];
     }
     /**
      * Get the number of functions in the queue
      */
     get size() {
-        return __classPrivateFieldGet(this, _PriorityQueue_queue, "f").length;
+        return this.queue.length;
     }
     /**
      * Add a function to the queue
@@ -730,18 +163,18 @@ class PriorityQueue {
             priority: options.priority,
             run,
         };
-        if (this.size && __classPrivateFieldGet(this, _PriorityQueue_queue, "f")[this.size - 1].priority >= options.priority) {
-            __classPrivateFieldGet(this, _PriorityQueue_queue, "f").push(element);
+        if (this.size && this.queue[this.size - 1].priority >= options.priority) {
+            this.queue.push(element);
             return;
         }
-        const index = arrSortedInsertionIndex(__classPrivateFieldGet(this, _PriorityQueue_queue, "f"), element, (a, b) => b.priority - a.priority);
-        __classPrivateFieldGet(this, _PriorityQueue_queue, "f").splice(index, 0, element);
+        const index = arrSortedInsertionIndex(this.queue, element, (a, b) => b.priority - a.priority);
+        this.queue.splice(index, 0, element);
     }
     /**
      * Remove a function from the queue
      */
     dequeue() {
-        const item = __classPrivateFieldGet(this, _PriorityQueue_queue, "f").shift();
+        const item = this.queue.shift();
         return item === null || item === void 0 ? void 0 : item.run;
     }
     /**
@@ -749,103 +182,183 @@ class PriorityQueue {
      * @param options Options for the queue
      */
     filter(options) {
-        return __classPrivateFieldGet(this, _PriorityQueue_queue, "f")
+        return this.queue
             .filter((element) => element.priority === options.priority)
             .map((element) => element.run);
     }
 }
-_PriorityQueue_queue = new WeakMap();
 
-var _PQueue_instances, _PQueue_carryoverConcurrencyCount, _PQueue_isIntervalIgnored, _PQueue_intervalCount, _PQueue_intervalCap, _PQueue_interval, _PQueue_intervalEnd, _PQueue_intervalId, _PQueue_timeoutId, _PQueue_queue, _PQueue_queueClass, _PQueue_pending, _PQueue_concurrency, _PQueue_isPaused, _PQueue_throwOnTimeout, _PQueue_doesIntervalAllowAnother_get, _PQueue_doesConcurrentAllowAnother_get, _PQueue_next, _PQueue_onResumeInterval, _PQueue_isIntervalPaused_get, _PQueue_tryToStartAnother, _PQueue_initializeIntervalIfNeeded, _PQueue_onInterval, _PQueue_processQueue, _PQueue_throwOnAbort, _PQueue_onEvent;
 /**
  * Promise queue with concurrency control.
  * ESM compatible port from https://www.npmjs.com/package/p-queue
  */
-class PQueue extends EventEmitter {
+class PromiseQueue extends EventEmitter {
+    /**
+     * Creates a new `PromiseQueue` instance.
+     */
     constructor(options) {
         var _a, _b, _c, _d;
         super();
-        _PQueue_instances.add(this);
-        _PQueue_carryoverConcurrencyCount.set(this, void 0);
-        _PQueue_isIntervalIgnored.set(this, void 0);
-        _PQueue_intervalCount.set(this, 0);
-        _PQueue_intervalCap.set(this, void 0);
-        _PQueue_interval.set(this, void 0);
-        _PQueue_intervalEnd.set(this, 0);
-        _PQueue_intervalId.set(this, void 0);
-        _PQueue_timeoutId.set(this, void 0);
-        _PQueue_queue.set(this, void 0);
-        _PQueue_queueClass.set(this, void 0);
-        _PQueue_pending.set(this, 0);
-        _PQueue_concurrency.set(this, void 0);
-        _PQueue_isPaused.set(this, void 0);
-        _PQueue_throwOnTimeout.set(this, void 0);
+        this._intervalCount = 0;
+        this._intervalEnd = 0;
+        this._pending = 0;
         options = Object.assign({ carryoverConcurrencyCount: false, intervalCap: Number.POSITIVE_INFINITY, interval: 0, concurrency: Number.POSITIVE_INFINITY, autoStart: true, queueClass: PriorityQueue }, options);
         if (!(typeof options.intervalCap === 'number' && options.intervalCap >= 1)) {
-            throw new TypeError(`Expected \`intervalCap\` to be a number from 1 and up, got \`${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}\` (${typeof options.intervalCap})`);
+            throw new TypeError(`Expected 'intervalCap' to be a number from 1 and up, got '${(_b = (_a = options.intervalCap) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : ''}' (${typeof options.intervalCap})`);
         }
         if (options.interval === undefined || !(Number.isFinite(options.interval) && options.interval >= 0)) {
-            throw new TypeError(`Expected \`interval\` to be a finite number >= 0, got \`${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}\` (${typeof options.interval})`);
+            throw new TypeError(`Expected 'interval' to be a finite number >= 0, got '${(_d = (_c = options.interval) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : ''}' (${typeof options.interval})`);
         }
-        __classPrivateFieldSet(this, _PQueue_carryoverConcurrencyCount, options.carryoverConcurrencyCount, "f");
-        __classPrivateFieldSet(this, _PQueue_isIntervalIgnored, options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0, "f");
-        __classPrivateFieldSet(this, _PQueue_intervalCap, options.intervalCap, "f");
-        __classPrivateFieldSet(this, _PQueue_interval, options.interval, "f");
-        __classPrivateFieldSet(this, _PQueue_queue, new options.queueClass(), "f");
-        __classPrivateFieldSet(this, _PQueue_queueClass, options.queueClass, "f");
+        this._carryoverConcurrencyCount = options.carryoverConcurrencyCount;
+        this._isIntervalIgnored = options.intervalCap === Number.POSITIVE_INFINITY || options.interval === 0;
+        this._intervalCap = options.intervalCap;
+        this._interval = options.interval;
+        this._queue = new options.queueClass();
+        this._queueClass = options.queueClass;
         this.concurrency = options.concurrency;
-        this.timeout = options.timeout;
-        __classPrivateFieldSet(this, _PQueue_throwOnTimeout, options.throwOnTimeout === true, "f");
-        __classPrivateFieldSet(this, _PQueue_isPaused, options.autoStart === false, "f");
+        this._isPaused = options.autoStart === false;
+    }
+    get _doesIntervalAllowAnother() {
+        return this._isIntervalIgnored || this._intervalCount < this._intervalCap;
+    }
+    get _doesConcurrentAllowAnother() {
+        return this._pending < this._concurrency;
+    }
+    _next() {
+        this._pending--;
+        this._tryToStartAnother();
+        this.emit('next');
+    }
+    _onResumeInterval() {
+        this._onInterval();
+        this._initializeIntervalIfNeeded();
+        this._timeoutId = undefined;
+    }
+    get _isIntervalPaused() {
+        const now = Date.now();
+        if (this._intervalId === undefined) {
+            const delay = this._intervalEnd - now;
+            if (delay < 0) {
+                // Act as the interval was done
+                // We don't need to resume it here because it will be resumed on line 160
+                this._intervalCount = this._carryoverConcurrencyCount ? this._pending : 0;
+            }
+            else {
+                // Act as the interval is pending
+                if (this._timeoutId === undefined) {
+                    this._timeoutId = setTimeout(() => {
+                        this._onResumeInterval();
+                    }, delay);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    _tryToStartAnother() {
+        if (this._queue.size === 0) {
+            // We can clear the interval ("pause")
+            // Because we can redo it later ("resume")
+            if (this._intervalId) {
+                clearInterval(this._intervalId);
+            }
+            this._intervalId = undefined;
+            this.emit('empty');
+            if (this._pending === 0) {
+                this.emit('idle');
+            }
+            return false;
+        }
+        if (!this._isPaused) {
+            const canInitializeInterval = !this._isIntervalPaused;
+            if (this._doesIntervalAllowAnother && this._doesConcurrentAllowAnother) {
+                const job = this._queue.dequeue();
+                if (!job) {
+                    return false;
+                }
+                this.emit('active');
+                job();
+                if (canInitializeInterval) {
+                    this._initializeIntervalIfNeeded();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+    _initializeIntervalIfNeeded() {
+        if (this._isIntervalIgnored || this._intervalId !== undefined) {
+            return;
+        }
+        this._intervalId = setInterval(() => {
+            this._onInterval();
+        }, this._interval);
+        this._intervalEnd = Date.now() + this._interval;
+    }
+    _onInterval() {
+        if (this._intervalCount === 0 && this._pending === 0 && this._intervalId) {
+            clearInterval(this._intervalId);
+            this._intervalId = undefined;
+        }
+        this._intervalCount = this._carryoverConcurrencyCount ? this._pending : 0;
+        this._processQueue();
+    }
+    /**
+     * Executes all queued functions until it reaches the limit.
+     */
+    _processQueue() {
+        // eslint-disable-next-line no-empty
+        while (this._tryToStartAnother()) { }
     }
     get concurrency() {
-        return __classPrivateFieldGet(this, _PQueue_concurrency, "f");
+        return this._concurrency;
     }
     set concurrency(newConcurrency) {
         if (!(typeof newConcurrency === 'number' && newConcurrency >= 1)) {
-            throw new TypeError(`Expected \`concurrency\` to be a number from 1 and up, got \`${newConcurrency}\` (${typeof newConcurrency})`);
+            throw new TypeError(`Expected 'concurrency' to be a number from 1 and up, got '${newConcurrency}' (${typeof newConcurrency})`);
         }
-        __classPrivateFieldSet(this, _PQueue_concurrency, newConcurrency, "f");
-        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
+        this._concurrency = newConcurrency;
+        this._processQueue();
+    }
+    _throwOnAbort(signal) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((_resolve, reject) => {
+                signal.addEventListener('abort', () => {
+                    reject(new Error('The task was aborted.'));
+                }, { once: true });
+            });
+        });
     }
     add(function_, options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
-            options = Object.assign({ timeout: this.timeout, throwOnTimeout: __classPrivateFieldGet(this, _PQueue_throwOnTimeout, "f") }, options);
+            options = Object.assign({}, options);
             return new Promise((resolve, reject) => {
-                __classPrivateFieldGet(this, _PQueue_queue, "f").enqueue(() => __awaiter(this, void 0, void 0, function* () {
+                this._queue.enqueue(() => __awaiter(this, void 0, void 0, function* () {
                     var _a;
-                    var _b, _c;
-                    __classPrivateFieldSet(this, _PQueue_pending, (_b = __classPrivateFieldGet(this, _PQueue_pending, "f"), _b++, _b), "f");
-                    __classPrivateFieldSet(this, _PQueue_intervalCount, (_c = __classPrivateFieldGet(this, _PQueue_intervalCount, "f"), _c++, _c), "f");
+                    this._pending++;
+                    this._intervalCount++;
                     try {
                         if ((_a = options.signal) === null || _a === void 0 ? void 0 : _a.aborted) {
-                            throw new PQueueAbortError('The task was aborted.');
+                            throw new Error('The task was aborted.');
                         }
                         let operation = function_({ signal: options.signal });
-                        if (options.timeout) {
-                            operation = pTimeout(Promise.resolve(operation), options.timeout);
-                        }
                         if (options.signal) {
-                            operation = Promise.race([operation, __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_throwOnAbort).call(this, options.signal)]);
+                            operation = Promise.race([operation, this._throwOnAbort(options.signal)]);
                         }
                         const result = yield operation;
                         resolve(result);
                         this.emit('completed', result);
                     }
                     catch (error) {
-                        if (error instanceof PQueueTimeoutError && !options.throwOnTimeout) {
-                            resolve();
-                            return;
-                        }
                         reject(error);
                         this.emit('error', error);
                     }
                     finally {
-                        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_next).call(this);
+                        this._next();
                     }
                 }), options);
                 this.emit('add');
-                __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this);
+                this._tryToStartAnother();
             });
         });
     }
@@ -858,24 +371,24 @@ class PQueue extends EventEmitter {
      * Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via `options.autoStart = false` or by `.pause()` method.)
      */
     start() {
-        if (!__classPrivateFieldGet(this, _PQueue_isPaused, "f")) {
+        if (!this._isPaused) {
             return this;
         }
-        __classPrivateFieldSet(this, _PQueue_isPaused, false, "f");
-        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
+        this._isPaused = false;
+        this._processQueue();
         return this;
     }
     /**
      * Put queue execution on hold.
      */
     pause() {
-        __classPrivateFieldSet(this, _PQueue_isPaused, true, "f");
+        this._isPaused = true;
     }
     /**
      * Clear the queue.
      */
     clear() {
-        __classPrivateFieldSet(this, _PQueue_queue, new (__classPrivateFieldGet(this, _PQueue_queueClass, "f"))(), "f");
+        this._queue = new this._queueClass();
     }
     /**
      * Can be called multiple times. Useful if you for example add additional items at a later time.
@@ -884,10 +397,10 @@ class PQueue extends EventEmitter {
     onEmpty() {
         return __awaiter(this, void 0, void 0, function* () {
             // Instantly resolve if the queue is empty
-            if (__classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
+            if (this._queue.size === 0) {
                 return;
             }
-            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'empty');
+            yield this._onEvent('empty');
         });
     }
     /**
@@ -898,10 +411,10 @@ class PQueue extends EventEmitter {
     onSizeLessThan(limit) {
         return __awaiter(this, void 0, void 0, function* () {
             // Instantly resolve if the queue is empty.
-            if (__classPrivateFieldGet(this, _PQueue_queue, "f").size < limit) {
+            if (this._queue.size < limit) {
                 return;
             }
-            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'next', () => __classPrivateFieldGet(this, _PQueue_queue, "f").size < limit);
+            yield this._onEvent('next', () => this._queue.size < limit);
         });
     }
     /**
@@ -911,229 +424,50 @@ class PQueue extends EventEmitter {
     onIdle() {
         return __awaiter(this, void 0, void 0, function* () {
             // Instantly resolve if none pending and if nothing else is queued
-            if (__classPrivateFieldGet(this, _PQueue_pending, "f") === 0 && __classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
+            if (this._pending === 0 && this._queue.size === 0) {
                 return;
             }
-            yield __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onEvent).call(this, 'idle');
+            yield this._onEvent('idle');
+        });
+    }
+    _onEvent(event, filter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve) => {
+                const listener = () => {
+                    if (filter && !filter()) {
+                        return;
+                    }
+                    this.off(event, listener);
+                    resolve();
+                };
+                this.on(event, listener);
+            });
         });
     }
     /**
      * Size of the queue, the number of queued items waiting to run.
      */
     get size() {
-        return __classPrivateFieldGet(this, _PQueue_queue, "f").size;
+        return this._queue.size;
     }
     /**
      * Size of the queue, filtered by the given options.
      * For example, this can be used to find the number of items remaining in the queue with a specific priority level.
      */
     sizeBy(options) {
-        return __classPrivateFieldGet(this, _PQueue_queue, "f").filter(options).length;
+        return this._queue.filter(options).length;
     }
     /**
      * Number of running items (no longer in the queue).
      */
     get pending() {
-        return __classPrivateFieldGet(this, _PQueue_pending, "f");
+        return this._pending;
     }
     /**
      * Whether the queue is currently paused.
      */
     get isPaused() {
-        return __classPrivateFieldGet(this, _PQueue_isPaused, "f");
-    }
-}
-_PQueue_carryoverConcurrencyCount = new WeakMap(), _PQueue_isIntervalIgnored = new WeakMap(), _PQueue_intervalCount = new WeakMap(), _PQueue_intervalCap = new WeakMap(), _PQueue_interval = new WeakMap(), _PQueue_intervalEnd = new WeakMap(), _PQueue_intervalId = new WeakMap(), _PQueue_timeoutId = new WeakMap(), _PQueue_queue = new WeakMap(), _PQueue_queueClass = new WeakMap(), _PQueue_pending = new WeakMap(), _PQueue_concurrency = new WeakMap(), _PQueue_isPaused = new WeakMap(), _PQueue_throwOnTimeout = new WeakMap(), _PQueue_instances = new WeakSet(), _PQueue_doesIntervalAllowAnother_get = function _PQueue_doesIntervalAllowAnother_get() {
-    return __classPrivateFieldGet(this, _PQueue_isIntervalIgnored, "f") || __classPrivateFieldGet(this, _PQueue_intervalCount, "f") < __classPrivateFieldGet(this, _PQueue_intervalCap, "f");
-}, _PQueue_doesConcurrentAllowAnother_get = function _PQueue_doesConcurrentAllowAnother_get() {
-    return __classPrivateFieldGet(this, _PQueue_pending, "f") < __classPrivateFieldGet(this, _PQueue_concurrency, "f");
-}, _PQueue_next = function _PQueue_next() {
-    var _a;
-    __classPrivateFieldSet(this, _PQueue_pending, (_a = __classPrivateFieldGet(this, _PQueue_pending, "f"), _a--, _a), "f");
-    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this);
-    this.emit('next');
-}, _PQueue_onResumeInterval = function _PQueue_onResumeInterval() {
-    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onInterval).call(this);
-    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_initializeIntervalIfNeeded).call(this);
-    __classPrivateFieldSet(this, _PQueue_timeoutId, undefined, "f");
-}, _PQueue_isIntervalPaused_get = function _PQueue_isIntervalPaused_get() {
-    const now = Date.now();
-    if (__classPrivateFieldGet(this, _PQueue_intervalId, "f") === undefined) {
-        const delay = __classPrivateFieldGet(this, _PQueue_intervalEnd, "f") - now;
-        if (delay < 0) {
-            // Act as the interval was done
-            // We don't need to resume it here because it will be resumed on line 160
-            __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, "f") ? __classPrivateFieldGet(this, _PQueue_pending, "f") : 0, "f");
-        }
-        else {
-            // Act as the interval is pending
-            if (__classPrivateFieldGet(this, _PQueue_timeoutId, "f") === undefined) {
-                __classPrivateFieldSet(this, _PQueue_timeoutId, setTimeout(() => {
-                    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onResumeInterval).call(this);
-                }, delay), "f");
-            }
-            return true;
-        }
-    }
-    return false;
-}, _PQueue_tryToStartAnother = function _PQueue_tryToStartAnother() {
-    if (__classPrivateFieldGet(this, _PQueue_queue, "f").size === 0) {
-        // We can clear the interval ("pause")
-        // Because we can redo it later ("resume")
-        if (__classPrivateFieldGet(this, _PQueue_intervalId, "f")) {
-            clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, "f"));
-        }
-        __classPrivateFieldSet(this, _PQueue_intervalId, undefined, "f");
-        this.emit('empty');
-        if (__classPrivateFieldGet(this, _PQueue_pending, "f") === 0) {
-            this.emit('idle');
-        }
-        return false;
-    }
-    if (!__classPrivateFieldGet(this, _PQueue_isPaused, "f")) {
-        const canInitializeInterval = !__classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_isIntervalPaused_get);
-        if (__classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_doesIntervalAllowAnother_get) && __classPrivateFieldGet(this, _PQueue_instances, "a", _PQueue_doesConcurrentAllowAnother_get)) {
-            const job = __classPrivateFieldGet(this, _PQueue_queue, "f").dequeue();
-            if (!job) {
-                return false;
-            }
-            this.emit('active');
-            job();
-            if (canInitializeInterval) {
-                __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_initializeIntervalIfNeeded).call(this);
-            }
-            return true;
-        }
-    }
-    return false;
-}, _PQueue_initializeIntervalIfNeeded = function _PQueue_initializeIntervalIfNeeded() {
-    if (__classPrivateFieldGet(this, _PQueue_isIntervalIgnored, "f") || __classPrivateFieldGet(this, _PQueue_intervalId, "f") !== undefined) {
-        return;
-    }
-    __classPrivateFieldSet(this, _PQueue_intervalId, setInterval(() => {
-        __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_onInterval).call(this);
-    }, __classPrivateFieldGet(this, _PQueue_interval, "f")), "f");
-    __classPrivateFieldSet(this, _PQueue_intervalEnd, Date.now() + __classPrivateFieldGet(this, _PQueue_interval, "f"), "f");
-}, _PQueue_onInterval = function _PQueue_onInterval() {
-    if (__classPrivateFieldGet(this, _PQueue_intervalCount, "f") === 0 && __classPrivateFieldGet(this, _PQueue_pending, "f") === 0 && __classPrivateFieldGet(this, _PQueue_intervalId, "f")) {
-        clearInterval(__classPrivateFieldGet(this, _PQueue_intervalId, "f"));
-        __classPrivateFieldSet(this, _PQueue_intervalId, undefined, "f");
-    }
-    __classPrivateFieldSet(this, _PQueue_intervalCount, __classPrivateFieldGet(this, _PQueue_carryoverConcurrencyCount, "f") ? __classPrivateFieldGet(this, _PQueue_pending, "f") : 0, "f");
-    __classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_processQueue).call(this);
-}, _PQueue_processQueue = function _PQueue_processQueue() {
-    // eslint-disable-next-line no-empty
-    while (__classPrivateFieldGet(this, _PQueue_instances, "m", _PQueue_tryToStartAnother).call(this)) { }
-}, _PQueue_throwOnAbort = function _PQueue_throwOnAbort(signal) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((_resolve, reject) => {
-            signal.addEventListener('abort', () => {
-                reject(new PQueueAbortError('The task was aborted.'));
-            }, { once: true });
-        });
-    });
-}, _PQueue_onEvent = function _PQueue_onEvent(event, filter) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve) => {
-            const listener = () => {
-                if (filter && !filter()) {
-                    return;
-                }
-                this.off(event, listener);
-                resolve();
-            };
-            this.on(event, listener);
-        });
-    });
-};
-/**
- * ESM compatible port of https://www.npmjs.com/package/p-timeout
- */
-function pTimeout(promise, options) {
-    const getDOMException = (errorMessage) => {
-        return globalThis.DOMException === undefined ? new PQueueAbortError(errorMessage) : new DOMException(errorMessage);
-    };
-    const getAbortedReason = (signal) => {
-        const reason = signal.reason === undefined ? getDOMException('This operation was aborted.') : signal.reason;
-        return reason instanceof Error ? reason : getDOMException(reason);
-    };
-    const { milliseconds, fallback, message, customTimers = { setTimeout, clearTimeout } } = options;
-    let timer;
-    const wrappedPromise = new Promise((resolve, reject) => {
-        if (typeof milliseconds !== 'number' || Math.sign(milliseconds) !== 1) {
-            throw new TypeError(`Expected \`milliseconds\` to be a positive number, got \`${milliseconds}\``);
-        }
-        if (options.signal) {
-            const { signal } = options;
-            if (signal.aborted) {
-                reject(getAbortedReason(signal));
-            }
-            signal.addEventListener('abort', () => {
-                reject(getAbortedReason(signal));
-            });
-        }
-        if (milliseconds === Number.POSITIVE_INFINITY) {
-            promise.then(resolve, reject);
-            return;
-        }
-        // We create the error outside of `setTimeout` to preserve the stack trace.
-        const timeoutError = new PQueueTimeoutError();
-        timer = customTimers.setTimeout.call(undefined, () => {
-            if (fallback) {
-                try {
-                    resolve(fallback());
-                }
-                catch (error) {
-                    reject(error);
-                }
-                return;
-            }
-            if (typeof promise.cancel === 'function') {
-                promise.cancel();
-            }
-            if (message === false) {
-                resolve(undefined);
-            }
-            else if (message instanceof Error) {
-                reject(message);
-            }
-            else {
-                timeoutError.message = message !== null && message !== void 0 ? message : `Promise timed out after ${milliseconds} milliseconds`;
-                reject(timeoutError);
-            }
-        }, milliseconds);
-        (() => __awaiter(this, void 0, void 0, function* () {
-            try {
-                resolve(yield promise);
-            }
-            catch (error) {
-                reject(error);
-            }
-        }))();
-    });
-    const cancelablePromise = wrappedPromise.finally(() => {
-        cancelablePromise.clear();
-    });
-    cancelablePromise.clear = () => {
-        customTimers.clearTimeout.call(undefined, timer);
-        timer = undefined;
-    };
-    return cancelablePromise;
-}
-/**
- * The error thrown by `queue.add()` when a job is aborted before it is run. See `signal`.
- */
-class PQueueAbortError extends Error {
-    constructor(message) {
-        super();
-        this.name = 'AbortError';
-        this.message = message;
-    }
-}
-class PQueueTimeoutError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'TimeoutError';
+        return this._isPaused;
     }
 }
 
@@ -1203,7 +537,7 @@ function funSetName(name, fun) {
  * ```
  */
 function funAsyncRateLimit(fun, options = {}) {
-    const queue = new PQueue(options);
+    const queue = new PromiseQueue(options);
     const wrapped = funSetName(fun.name, function (...args) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield queue.add(() => __awaiter(this, void 0, void 0, function* () {
@@ -1215,80 +549,395 @@ function funAsyncRateLimit(fun, options = {}) {
 }
 
 /**
- * Merges two objects deeply, returning a new object that has the combined properties of both.
- * If a property exists in both objects, the value from the source object will be used.
- * @template T - The type of the target object.
- * @template U - The type of the source object.
- * @param target The target object to which properties will be added.
- * @param source The source object from which properties will be copied.
- * @returns A new object that has the combined properties of both the target and source objects.
+ * The number of milliseconds in a day.
+ */
+const MS_IN_DAY = 1000 * 60 * 60 * 24;
+
+/**
+ * This function takes a date object and returns a string in ISO format suitable for filenames.
+ * If no date is provided, it uses the current date and time.
+ * @param date The date object to be converted. Defaults to the current date and time.
+ * @returns A string in the format "YYYY-MM-DD-HH-MM-SS-SSS".
  * @example ```ts
- * objAssignDeep({ a: 1, b: 2 }, { b: 3, c: 4 });;
- * //=> { a: 1, b: 3, c: 4 }
+ * isoDateTimestampForFilename(new Date('2022-01-01T00:00:00Z'));;
+ * //=> "2022-01-01-00-00-00-000"
  * ```
  */
-function objAssignDeep(target, source) {
-    return deepAssign(target, source);
+function isoDateTimestampForFilename(date = new Date()) {
+    return date
+        .toISOString()
+        .replace(/[-:T.]/g, '-')
+        .replace('Z', '');
 }
 
 /**
- * Filters the properties of an object based on a callback function.
- * @param object The object to filter.
- * @param callback The callback function used to filter the object properties.
- * @template T - The type of the values in the object.
- * @param - The function to get the keys of the object. Defaults to `Object.keys`.
- * @returns A new object with the properties that passed the test. If no properties passed the test, an empty object will be returned.
- * @param getKeys The function used to get the keys of the object.
+ * Create a directory at a given path if it does not exist.
+ * Automatically creates parent directories if they do not exist.
+ * @remarks This function uses the `mkdirp` package to create directories.
+ * @param dirpath The path where the directory should be created.
+ * @returns The path of the directory.
+ * @throws Will throw an error if the directory cannot be created.
  * @example ```ts
- * const obj = { a: 1, b: 2, c: 3 };
- * objFilter(obj, (value, key) => value > 1);
- * //=> { b: 2, c: 3 }
+ * createDirectory('/path/to/directory').then((dirpath) => {
+ *   //=> `Directory created at ${dirpath}`
+ * });
  * ```
  */
-function objFilter(object, callback, getKeys = Object.keys) {
-    const result = {};
-    for (const key of getKeys(object)) {
-        if (callback(object[key], key)) {
-            result[key] = object[key];
+function createDirectory(dirpath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield mkdirp.mkdirp(dirpath);
+        return dirpath;
+    });
+}
+
+/**
+ * Append a line to a file. Creates the file if it does not exist.
+ * @param filepath The path of the file.
+ * @param line The string data to append.
+ * @returns A Promise that resolves when the line has been appended to the file.
+ * @throws Will throw an error if the operation fails.
+ * @example ```ts
+ * await appendLineToFile('/path/to/file', 'This is a new line')
+ * ```
+ */
+function appendLineToFile(filepath, line, linebreakBefore = false) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!fs.existsSync(filepath)) {
+            yield createDirectory(path.dirname(filepath));
+            yield fs.promises.writeFile(filepath, '');
+        }
+        yield fs.promises.appendFile(filepath, linebreakBefore ? '\n' + line : line + '\n');
+    });
+}
+
+/**
+ * Synchronously cleans a directory by removing files that satisfy a given predicate.
+ * @remarks This function is a part of the File System module.
+ * @param dirpath - The path to the directory that needs to be cleaned.
+ * @param predicate - A function that takes a filepath and its stats as arguments and returns a boolean. If the function returns true for a file, that file is removed from the directory.
+ * @throws If the directory at the provided path does not exist or cannot be read.
+ * @example ```ts
+ * import { Stats } from 'fs';
+ * const dirpath = './my-directory';
+ * const predicate = (filepath: string, stat: Stats) => stat.size > 1024;
+ * cleanDirectorySync(dirpath, predicate);
+ * ```
+ */
+function cleanDirectorySync(dirpath, predicate) {
+    for (const filename of fs.readdirSync(dirpath)) {
+        const filepath = path.join(dirpath, filename);
+        const stat = fs.statSync(filepath);
+        if (predicate(filepath, stat))
+            fs.unlinkSync(filepath);
+    }
+}
+
+/**
+ * Create a directory at a given path if it does not exist.
+ * Automatically creates parent directories if they do not exist.
+ * @param dirpath The path where the directory should be created.
+ * @remarks This function uses the `mkdirpSync` function from the `mkdirp` library to create a directory at the specified path.
+ * @returns The path of the directory.
+ * @example ```ts
+ * createDirectorySync('/path/to/directory')
+ * ```
+ */
+function createDirectorySync(dirpath) {
+    mkdirp.mkdirpSync(dirpath);
+    return dirpath;
+}
+
+/**
+ * Repeats the given string `n` times.
+ * @param input The string to repeat.
+ * @param n The number of times to repeat the string.
+ * @example ```ts
+ * strRepeat('abc', 3);;
+ * //=> 'abcabcabc'
+ * ```
+ */
+function strRepeat(input, n) {
+    return new Array(n).fill(input).join('');
+}
+
+/**
+ * Checks if the provided value is an object.
+ * @template T - The type of the value to check.
+ * @param value The value to check.
+ * @returns A boolean indicating whether the provided value is an object.
+ * @example ```ts
+ * isObject({});;
+ * //=> true
+ * isObject(123);;
+ * //=> false
+ * ```
+ */
+function isObject(value) {
+    return value !== null && typeof value === 'object';
+}
+
+exports.LogLevel = void 0;
+(function (LogLevel) {
+    LogLevel["NONE"] = "none";
+    LogLevel["DEBUG"] = "debug";
+    LogLevel["INFO"] = "info";
+    LogLevel["WARN"] = "warn";
+    LogLevel["ERROR"] = "error";
+})(exports.LogLevel || (exports.LogLevel = {}));
+
+// import PrettyError from 'pretty-error'
+// new PrettyError().start()
+/**
+ * This class is a utility for logging messages to the console and/or a log file.
+ * It supports different log levels ('NONE', 'DEBUG', 'INFO', 'WARN', 'ERROR') for both console and file logging.
+ * It also supports color formatting for console messages. Different colors can be specified for each log level.
+ */
+class Logger {
+    /**
+     * Create a new instance.
+     * @param options - Options for creating a new instance.
+     */
+    constructor(options = {}) {
+        // options
+        // const defaults = Object.getPrototypeOf(this).constructor.optionDefaults
+        const defaults = Logger.optionDefaults;
+        const _options = Object.assign(Object.assign({}, defaults), options);
+        this.debugColor = _options.debugColor;
+        this.infoColor = _options.infoColor;
+        this.warnColor = _options.warnColor;
+        this.errorColor = _options.errorColor;
+        this.consoleLogLevel = _options.consoleLogLevel;
+        this.debugToConsole = this.consoleLogLevel === exports.LogLevel.DEBUG;
+        this.infoToConsole = this.debugToConsole || this.consoleLogLevel === exports.LogLevel.INFO;
+        this.warnToConsole = this.infoToConsole || this.consoleLogLevel === exports.LogLevel.WARN;
+        this.errorToConsole = this.warnToConsole || this.consoleLogLevel === exports.LogLevel.ERROR;
+        this.fileLogLevel = _options.fileLogLevel;
+        this.debugToFile = this.fileLogLevel === exports.LogLevel.DEBUG;
+        this.infoToFile = this.debugToFile || this.fileLogLevel === exports.LogLevel.INFO;
+        this.warnToFile = this.infoToFile || this.fileLogLevel === exports.LogLevel.WARN;
+        this.errorToFile = this.warnToFile || this.fileLogLevel === exports.LogLevel.ERROR;
+        this.logDirpath = path.resolve(_options.logDirpath);
+        if (this.fileLogLevel !== exports.LogLevel.NONE) {
+            createDirectorySync(this.logDirpath);
+        }
+        this.logFilepath = path.join(this.logDirpath, isoDateTimestampForFilename() + '.txt');
+        // initialize log file
+        this.deleteLogFiles(_options.deleteFilesOlderThan);
+        if (this.fileLogLevel !== exports.LogLevel.NONE)
+            this.info('Log file created.');
+    }
+    /**
+     * Re-initialize the current instance with the specified options.
+     */
+    initialize(options = {}) {
+        Object.assign(this, new Logger(options));
+    }
+    /**
+     * Logs a debug message the console.
+     * @param message The message to print to console.
+     * @param depth The depth to which to print object properties.
+     */
+    debug(message, depth) {
+        if (this.debugToFile)
+            this._logToFile(exports.LogLevel.DEBUG, message);
+        if (this.debugToConsole)
+            this._logToConsole(exports.LogLevel.DEBUG, message, this.debugColor, depth);
+        return message;
+    }
+    /**
+     * Logs an info message the console.
+     * @param message The message to print to console.
+     * @param depth The depth to which to print object properties.
+     */
+    info(message, depth) {
+        if (this.infoToFile)
+            this._logToFile(exports.LogLevel.INFO, message);
+        if (this.infoToConsole)
+            this._logToConsole(exports.LogLevel.INFO, message, this.infoColor, depth);
+        return message;
+    }
+    /**
+     * Logs a warning message to the console.
+     * @param message The message to print to console.
+     */
+    warn(message, depth) {
+        if (this.warnToFile)
+            this._logToFile(exports.LogLevel.WARN, message);
+        if (this.warnToConsole)
+            this._logToConsole(exports.LogLevel.WARN, message, this.warnColor, depth);
+        return message;
+    }
+    /**
+     * Logs a error message to the console.
+     * @param message The Error object or message to print to console.
+     */
+    error(message, depth) {
+        if (this.errorToFile)
+            this._logToFile(exports.LogLevel.ERROR, message);
+        if (this.errorToConsole)
+            this._logToConsole(exports.LogLevel.ERROR, message, this.errorColor, depth);
+        return message;
+    }
+    /**
+     * Wrap an async function as a task, logging the start and end of the task.
+     * @param description The description of the task.
+     */
+    task(description, task) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.info(`Began: ${description}.`);
+            const t0 = Date.now();
+            const returnValue = yield task();
+            this.debug(`Ended: ${description}. (${((Date.now() - t0) / 1000).toString()} seconds)`);
+            return returnValue;
+        });
+    }
+    /**
+     * Wrap a synchronous function as a task, logging the start and end of the task.
+     * @param description The description of the task.
+     */
+    taskSync(description, task) {
+        this.info(`Began: ${description}.`);
+        const t0 = Date.now();
+        const returnValue = task();
+        this.debug(`Ended: ${description}. (${((Date.now() - t0) / 1000).toString()} seconds)`);
+        return returnValue;
+    }
+    /**
+     * Delete log files older than the specified number of days.
+     * @param deleteFilesOlderThan The maximum age of log files in days. If not specified, no files will be deleted.
+     */
+    deleteLogFiles(deleteFilesOlderThan = 0) {
+        if (deleteFilesOlderThan === 0)
+            return;
+        if (!fs.existsSync(this.logDirpath))
+            return;
+        cleanDirectorySync(this.logDirpath, (_, stat) => {
+            const ageMs = Date.now() - stat.ctimeMs;
+            const ageDays = ageMs / MS_IN_DAY;
+            return ageDays > deleteFilesOlderThan;
+        });
+    }
+    /**
+     * Prints a given number of blank lines to the console.
+     * @remarks This is not logged to the log file.
+     * @param numLines The number of blank lines to print.
+     */
+    newline(numLines = 10) {
+        console.log(strRepeat('\n', numLines));
+    }
+    /**
+     * Prints a given number of lines with dashes to the console.
+     * @remarks This is not logged to the log file.
+     * @param numLines The number of dash lines to print.
+     * @param width The number of dashes per line.
+     */
+    dashline(numLines = 1, width = 80) {
+        const string = cliColor.blackBright(strRepeat('-', width));
+        for (let i = 0; i < numLines; i++) {
+            console.log(string);
         }
     }
-    return result;
-}
-
-/**
- * Deletes specified keys from an object. This function takes an object and an array of keys to be deleted from the object. It returns a new object with the specified keys removed.
- * @param obj The object from which keys are to be deleted.
- * @template V - The type of the values in the object.
- * @returns A new object with the specified keys deleted.
- * @param keys The keys to be deleted from the object.
- * @example ```ts
- * const obj = { a: 1, b: 2, c: 3 };
- * objDeleteKeys(obj, 'a', 'c');
- * //=> { b: 2 }
- * ```
- */
-function objDeleteKeys(obj, ...keys) {
-    return objFilter(obj, (_, key) => !keys.includes(key));
-}
-
-/**
- * Deletes the specified keys from an object in a mutable way.
- * @param obj The object from which to delete the keys.
- * @returns The modified object with the specified keys deleted.
- * @typeparam V - The type of the values in the object.
- * @param keys The keys to delete from the object.
- * @example ```ts
- * const obj = { a: 1, b: 2, c: 3 };
- * objDeleteKeysMutable(obj, 'a', 'c');
- * //=> { b: 2 }
- * ```
- */
-function objDeleteKeysMutable(obj, ...keys) {
-    for (const key of keys) {
-        Reflect.deleteProperty(obj, key);
+    /**
+     * This function is used to print the events emitted by an EventEmitter.
+     * @remarks This function allows you to see what events are being emitted by an EventEmitter at runtime.
+     * @param emitter The EventEmitter that is emitting the events.
+     * @param options Options for logging the events.
+     */
+    logEmitterEvents(emitter, options = {}) {
+        const { eventNamePrefix, debug, info, warn, error } = options;
+        const events = { debug, info, warn, error };
+        for (const [level, names] of Object.entries(events)) {
+            if (!names)
+                continue;
+            for (const event of names) {
+                emitter.on(event, (info, data, origin) => {
+                    const _level = level;
+                    this[_level](Object.assign({ type: eventNamePrefix, info }, (isObject(data) ? data : data === undefined ? {} : { data })));
+                });
+            }
+        }
     }
-    return obj;
+    /**
+     * Write log entry to logfile
+     * @param loglevel The log level.
+     * @param message The message to print to console.
+     */
+    _logToFile(loglevel, message) {
+        const timestamp = new Date().toISOString();
+        const data = JSON.stringify({ message });
+        const entry = `${loglevel.padEnd(5, ' ')}|${timestamp}|${data}`;
+        appendLineToFile(this.logFilepath, entry, false).catch((error) => {
+            console.error(error);
+        });
+    }
+    /**
+     * Generic function for logging to console, used by the log-level specific functions.
+     * @param loglevel The log level.
+     * @param message The message to print to console.
+     * @param levelColor A 'cli-color' module function to wrap the level-part of the string in color formatting.
+     * @param color A 'cli-color' module function to wrap the output-part of the string in color formatting.
+     * @param depth The depth to which to print object properties.
+     */
+    _logToConsole(loglevel, message, color, depth) {
+        const toConsole = loglevel === exports.LogLevel.WARN ? console.warn : loglevel === exports.LogLevel.ERROR ? console.error : console.log;
+        if (isObject(message)) {
+            toConsole(`[${color(loglevel)}]:`);
+            if (depth !== undefined)
+                console.dir(message, { depth });
+            else
+                toConsole(message);
+        }
+        else {
+            let msg = message + '';
+            if (msg.includes('\n'))
+                msg = '\n' + msg;
+            toConsole(`[${color(loglevel)}]: ${color(msg) + ''}`);
+        }
+    }
+    /**
+     * Get the current instance's properties.
+     */
+    getProperties() {
+        return {
+            consoleLogLevel: this.consoleLogLevel,
+            debugToConsole: this.debugToConsole,
+            infoToConsole: this.infoToConsole,
+            warnToConsole: this.warnToConsole,
+            errorToConsole: this.errorToConsole,
+            fileLogLevel: this.fileLogLevel,
+            debugToFile: this.debugToFile,
+            infoToFile: this.infoToFile,
+            warnToFile: this.warnToFile,
+            errorToFile: this.errorToFile,
+            logDirpath: this.logDirpath,
+            logFilepath: this.logFilepath,
+            debugColor: this.debugColor,
+            infoColor: this.infoColor,
+            warnColor: this.warnColor,
+            errorColor: this.errorColor,
+        };
+    }
 }
+/**
+ * Default options for creating new instances.
+ */
+Logger.optionDefaults = {
+    consoleLogLevel: exports.LogLevel.DEBUG,
+    fileLogLevel: exports.LogLevel.NONE,
+    logDirpath: path.join(process.cwd(), 'logs'),
+    deleteFilesOlderThan: 0,
+    debugColor: cliColor.blackBright,
+    infoColor: cliColor.green,
+    warnColor: cliColor.yellow,
+    errorColor: cliColor.red,
+};
+
+const log = new Logger({
+// consoleLogLevel: (process.env.LOG_LEVEL_CONSOLE?.toUpperCase() as LogLevel) || void 0,
+// fileLogLevel: (process.env.LOG_LEVEL_FILE?.toUpperCase() as LogLevel) || void 0,
+// logDirpath: process.env.LOG_DIRPATH || void 0,
+// deleteFilesOlderThan: Number(process.env.DELETE_FILES_OLDER_THAN || void 0),
+});
 
 /**
  * Updates the property descriptors of the specified properties on the given object.
@@ -1335,18 +984,629 @@ function setNonEnumerable(object, ...properties) {
 }
 
 /**
- * A class representing an OpenAI API client.
+ * Persistent API response cache based on level-db.
  */
-class OpenaiApiClientBase {
+class ApiReponseCache {
+    /**
+     * Create a new instance.
+     * @param options - Options for creating a new instance.
+     * @emits options - the options used to create the instance.
+     */
+    constructor(options) {
+        /**
+         * Event emitter for cache events
+         */
+        this.events = new EventEmitter();
+        const _options = Object.assign({}, ApiReponseCache.optionsDefaults, options);
+        const { name, dirpath, maxAgeMs, logAllEvents } = _options;
+        if (logAllEvents === true)
+            this.logAllEvents();
+        else if (logAllEvents === undefined)
+            this.logWarnErrorEvents();
+        this.emit('options', _options);
+        this.maxAgeMs = maxAgeMs;
+        const dbpath = createDirectorySync(path.join(dirpath, name));
+        this.db = new level.Level(dbpath);
+        setNonEnumerable(this, 'db');
+    }
+    /**
+     * Hash any type of key to a base64 string, using the SHA1 algorithm.
+     * @param key - The key to hash.
+     */
+    hashKey(key) {
+        return hash(key === undefined ? 'undefined' : key, { algorithm: 'sha1', encoding: 'base64' });
+    }
+    /**
+     * Get a value for a given hash key if it exists.
+     * If the does not exist, returns a value from the api by invoking the provided function and then stores that value in the cache.
+     * @param hash - The hash key.
+     * @param apiRequest - function that returns a new value for a given key if it doesn't exist in the cache.
+     * @emits hit - if the value exists in the cache.
+     * @emits miss - if the value does not exist in the cache.
+     */
+    getOrElse(hash, apiRequest) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const value = yield this.get(hash);
+                this.emit('hit', hash);
+                return value;
+            }
+            catch (e) {
+                this.emit('miss', hash);
+                const value = yield apiRequest();
+                return yield this.put(hash, value);
+            }
+        });
+    }
+    /**
+     * Get a value for a given hash key.
+     * @param hash - The hash key.
+     * @emits error - if the value does not exist for the give hash.
+     * @emits get - if the value exists for the given hash.
+     */
+    get(hash) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
+                const serialized = yield this.db.get(hash);
+                yield this.ensureNotExpired(hash, serialized);
+                this.emit('get', hash);
+                return this.parseSerializedValue(serialized);
+            }));
+        });
+    }
+    /**
+     * Get a value for a given hash key or undefined if it does not exist or an error occurs.
+     * @param hash - The hash key.
+     * @emits get - if the value exists for the given hash.
+     */
+    getSafe(hash) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const serialized = yield this.db.get(hash);
+                yield this.ensureNotExpired(hash, serialized);
+                this.emit('get', hash);
+                return this.parseSerializedValue(serialized);
+            }
+            catch (error) {
+                return undefined;
+            }
+        });
+    }
+    /**
+     * Returns whether a value exists for a given key.
+     * @param hash - The hash key.
+     */
+    has(hash) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.db.get(hash);
+                return true;
+            }
+            catch (e) {
+                return false;
+            }
+        });
+    }
+    /**
+     * Set a given value for a given hash key.
+     * @param hash - The hash key.
+     * @param value - The value to store.
+     * @emits put - if insertion succeeds.
+     * @emits error - if insertion fails.
+     */
+    put(hash, value) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
+                const serialized = this.serializeValue(value);
+                yield this.db.put(hash, serialized);
+                this.emit('put', hash);
+                return value;
+            }));
+        });
+    }
+    /**
+     * Delete a given value for a given hash key if it exists.
+     * @remarks No error is thrown if no value exists for the given hash.
+     * @param hash - The hash key.
+     * @emits error - if deletion fails.
+     * @emits delete - if deletion succeeds.
+     */
+    delete(hash) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
+                yield this.db.del(hash);
+                this.emit('delete', hash);
+            }));
+        });
+    }
+    /**
+     * Delete all expired data.
+     */
+    deleteExpired() {
+        var _a, e_1, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
+                    _c = _f.value;
+                    _d = false;
+                    const _ = _c;
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (!_d && !_a && (_b = _e.return)) yield _b.call(_e);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
+            return this;
+        });
+    }
+    /**
+     * Delete all cached API responses.
+     * @emits delete - if deletion succeeds.
+     */
+    deleteEverything() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.orThrow(() => __awaiter(this, void 0, void 0, function* () {
+                yield this.db.clear();
+                this.emit('delete', 'All cache data was deleted.');
+            }));
+        });
+    }
+    /**
+     * Iterate over all [key, value] pairs in the cache.
+     * @remarks This data entries are expired, they are deleted and not yielded.
+     * @emits error - if iteration encounters an error.
+     */
+    entries() {
+        return __asyncGenerator(this, arguments, function* entries_1() {
+            var _a, e_2, _b, _c;
+            try {
+                try {
+                    for (var _d = true, _e = __asyncValues(this.db.iterator()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a; _d = true) {
+                        _c = _f.value;
+                        _d = false;
+                        const [hash, serialized] = _c;
+                        if (this.isExpired(serialized)) {
+                            this.db.del(hash).then(() => this.emit('expired', hash));
+                        }
+                        yield yield __await([hash, this.parseSerializedValue(serialized)]);
+                    }
+                }
+                catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                finally {
+                    try {
+                        if (!_d && !_a && (_b = _e.return)) yield __await(_b.call(_e));
+                    }
+                    finally { if (e_2) throw e_2.error; }
+                }
+            }
+            catch (error) {
+                throw this.emit('error', error);
+            }
+        });
+    }
+    /**
+     * Iterate over all keys in the cache.
+     * @emits error - if iteration encounters an error.
+     */
+    keys() {
+        return __asyncGenerator(this, arguments, function* keys_1() {
+            var _a, e_3, _b, _c;
+            try {
+                try {
+                    for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a; _d = true) {
+                        _c = _f.value;
+                        _d = false;
+                        const [hash] = _c;
+                        yield yield __await(hash);
+                    }
+                }
+                catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                finally {
+                    try {
+                        if (!_d && !_a && (_b = _e.return)) yield __await(_b.call(_e));
+                    }
+                    finally { if (e_3) throw e_3.error; }
+                }
+            }
+            catch (error) {
+                throw this.emit('error', error);
+            }
+        });
+    }
+    /**
+     * Iterate over all values in the cache.
+     * @emits error - if iteration encounters an error.
+     */
+    values() {
+        return __asyncGenerator(this, arguments, function* values_1() {
+            var _a, e_4, _b, _c;
+            try {
+                try {
+                    for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield __await(_e.next()), _a = _f.done, !_a; _d = true) {
+                        _c = _f.value;
+                        _d = false;
+                        const [_, value] = _c;
+                        yield yield __await(value);
+                    }
+                }
+                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                finally {
+                    try {
+                        if (!_d && !_a && (_b = _e.return)) yield __await(_b.call(_e));
+                    }
+                    finally { if (e_4) throw e_4.error; }
+                }
+            }
+            catch (error) {
+                throw this.emit('error', error);
+            }
+        });
+    }
+    /**
+     * Get the number of entries in the cache.
+     */
+    size() {
+        var _a, e_5, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            let size = 0;
+            try {
+                for (var _d = true, _e = __asyncValues(this.entries()), _f; _f = yield _e.next(), _a = _f.done, !_a; _d = true) {
+                    _c = _f.value;
+                    _d = false;
+                    const _ = _c;
+                    size++;
+                }
+            }
+            catch (e_5_1) { e_5 = { error: e_5_1 }; }
+            finally {
+                try {
+                    if (!_d && !_a && (_b = _e.return)) yield _b.call(_e);
+                }
+                finally { if (e_5) throw e_5.error; }
+            }
+            return size;
+        });
+    }
+    /**
+     * Deletes a value from the cache if it is expired.
+     * @param hash - The hash key.
+     * @param serialized - The serialized value.
+     * @emits expired - if the value is expired.
+     */
+    ensureNotExpired(hash, serialized) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.isExpired(serialized)) {
+                yield this.db.del(hash);
+                this.emit('expired', hash);
+                throw new Error('Expired');
+            }
+        });
+    }
+    /**
+     * Check if a still raw serialized value string is expired.
+     * @param serialized - The serialized value.
+     */
+    isExpired(serialized) {
+        if (!this.maxAgeMs)
+            return false;
+        return Date.now() - this.parseSerializedTimestamp(serialized) > this.maxAgeMs;
+    }
+    /**
+     * Custom JSON stringify function that prepends a timestamp to the stringified object.
+     * @param value - The value to serialize.
+     */
+    serializeValue(value) {
+        return Date.now() + JSON.stringify(value);
+    }
+    /**
+     * Parse the timestamp part of a raw serialized value string from the database.
+     * @param serialized - The serialized value.
+     */
+    parseSerializedTimestamp(serialized) {
+        return parseInt(serialized.substring(0, 13));
+    }
+    /**
+     * Parse the json part of a raw serialized value string from the database.
+     * @param serialized - The serialized value.
+     */
+    parseSerializedValue(serialized) {
+        return JSON.parse(serialized.substring(13));
+    }
+    /**
+     * Shorthand for try/catch block with error-handling.
+     * Wrap a function call in a try catch block and emit an error event if an error occurs.
+     * @param fn - The function to wrap.
+     * @emits error - if the provided function throws an error.
+     * @returns The return value of the provided function.
+     */
+    orThrow(fn) {
+        try {
+            return fn();
+        }
+        catch (error) {
+            throw this.emit('error', error);
+        }
+    }
+    /**
+     * Emit an event but this automatically adds 'this' as an extra argument.
+     * @param eventName - The event name.
+     */
+    emit(eventName, arg) {
+        this.events.emit(eventName, arg, this);
+        return arg;
+    }
+    /**
+     * Output all events to the console.
+     */
+    logAllEvents() {
+        log.logEmitterEvents(this.events, {
+            debug: ['options', 'put', 'get'],
+            info: ['expired', 'hit', 'miss'],
+            warn: ['delete'],
+            error: ['error'],
+            eventNamePrefix: Object.getPrototypeOf(this).constructor.name,
+        });
+    }
+    /**
+     * Output all 'warn' and 'error' events to the console.
+     */
+    logWarnErrorEvents() {
+        log.logEmitterEvents(this.events, {
+            warn: ['delete'],
+            error: ['error'],
+            eventNamePrefix: Object.getPrototypeOf(this).constructor.name,
+        });
+    }
+}
+/**
+ * Default options for creating new instances
+ */
+ApiReponseCache.optionsDefaults = {
+    name: 'default',
+    dirpath: getAppDataPath('ApiReponseCache'),
+    maxAgeMs: 0,
+    logAllEvents: undefined,
+};
+
+/**
+ * A class representing some kind of client retrieving resources over the internet, like an API or SQL server.
+ * @remarks
+ * In order to use this class, it must be extended first and then use the sendRequest method.
+ */
+class AbstractApiClient {
     /**
      * Create a new OpenaiApiClient instance.
      * @param options - The constructor options to use.
      */
     constructor(options = {}) {
+        var _a;
         /**
          * Event emitter for cache events
          */
         this.events = new EventEmitter();
+        /**
+         * Default options for async retry for api requests.
+         * Can be overriden in individual method calls.
+         */
+        this.retryDefaults = {
+            minTimeout: 1000,
+            retries: 5,
+            factor: 2.5,
+            randomize: true,
+        };
+        /**
+         * Default options for caching for api requests.
+         * Can be overriden in individual method calls.
+         */
+        this.cacheDefaults = {
+            overwrite: false,
+        };
+        // handle options
+        options = this.handleOptions(options);
+        // init cache instance if enabled
+        if ((_a = options === null || options === void 0 ? void 0 : options.cache) === null || _a === void 0 ? void 0 : _a.enable) {
+            this.cache = new ApiReponseCache(options.cache);
+        }
+        // function that wraps all api rqeuests and provides retry functionality, caching, concurrency control, etc.
+        const _sendRequest = (options) => __awaiter(this, void 0, void 0, function* () {
+            // options
+            const { apiRequest, args, retry, cache } = options;
+            const _retry = this.handleRetryOptions(retry);
+            const _cache = this.handleCacheOptions(cache);
+            // get data from cache if exists, otherwise make api request
+            const getFromCacheOrApi = (bail, attempt) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    if (!this.cache)
+                        return yield apiRequest();
+                    const hash = this.cache.hashKey({ args, task: apiRequest.toString() });
+                    if (_cache === null || _cache === void 0 ? void 0 : _cache.overwrite)
+                        yield this.cache.delete(hash);
+                    return yield this.cache.getOrElse(hash, apiRequest);
+                }
+                catch (error) {
+                    const data = { attempt, error, args };
+                    if (attempt > 1)
+                        this.emit('retry', data);
+                    else
+                        this.emit('error', data);
+                    throw error;
+                    // bail(error as Error)
+                }
+            });
+            // handle api request retries
+            const response = yield asyncRetry(getFromCacheOrApi, _retry);
+            this.emit('response', { response, args });
+            return response;
+        });
+        // add concurrency control
+        const [queue, sendRequest] = funAsyncRateLimit(_sendRequest.bind(this), options.concurrency);
+        this.queue = queue;
+        this.sendRequest = sendRequest;
+        this.emit('ready', this);
+    }
+    /**
+     * Handle the options passed to the constructor.
+     * @param options - The options to handle.
+     */
+    handleOptions(options) {
+        options = lodash.cloneDeep(options);
+        const Constructor = Object.getPrototypeOf(this).constructor;
+        if (!options.cache)
+            options.cache = {};
+        if (!options.cache.name)
+            options.cache.name = Constructor.name;
+        if (options.cache.logAllEvents === undefined) {
+            options.cache.logAllEvents = options.logAllEvents;
+        }
+        options.concurrency = Object.assign({}, Constructor.concurrencyDefaults, options.concurrency);
+        if (options.logAllEvents)
+            this.logAllEvents();
+        else if (options.logAllEvents === undefined)
+            this.logWarnErrorEvents();
+        Object.assign(this.retryDefaults, options.retryDefaults);
+        Object.assign(this.cacheDefaults, options.cacheDefaults);
+        this.emit('options', options);
+        return options;
+    }
+    /**
+     * Handle retry options.
+     * @param retryOptions - The retry options to handle.
+     */
+    handleRetryOptions(retryOptions) {
+        return retryOptions ? Object.assign({}, this.retryDefaults, retryOptions) : this.retryDefaults;
+    }
+    /**
+     * Handle cache options.
+     * @param cacheOptions - The cache options to handle.
+     */
+    handleCacheOptions(cacheOptions) {
+        return cacheOptions ? Object.assign({}, this.cacheDefaults, cacheOptions) : this.cacheDefaults;
+    }
+    /**
+     * Emit an event but adds 'this' as an extra trailing argument.
+     * @param event - The event name.
+     * @param arg - The argument to emit.
+     */
+    emit(event, arg) {
+        this.events.emit(event, arg, this);
+        return arg;
+    }
+    /**
+     * Output all events to the console.
+     */
+    logAllEvents() {
+        log.logEmitterEvents(this.events, {
+            debug: ['options', 'ready'],
+            info: ['response', 'retry'],
+            warn: ['concurrency'],
+            error: ['error'],
+            eventNamePrefix: Object.getPrototypeOf(this).constructor.name,
+        });
+        return this;
+    }
+    /**
+     * Output all 'warn' and 'error' events to the console.
+     */
+    logWarnErrorEvents() {
+        log.logEmitterEvents(this.events, {
+            warn: ['concurrency'],
+            error: ['error'],
+            eventNamePrefix: Object.getPrototypeOf(this).constructor.name,
+        });
+    }
+}
+/**
+ * Options for concurrency control. These affect all API requests.
+ */
+AbstractApiClient.concurrencyDefaults = {
+    // max requests
+    // intervalCap: 10000,
+    // per minute
+    // interval: 1000 * 60,
+    // Whether the task must finish in the given interval or will be carried over into the next interval count.
+    // carryoverConcurrencyCount: false,
+    // concurrent requests
+    concurrency: 100,
+    // whether to start immediately when pushed to queue
+    autoStart: true,
+};
+
+const openaiApiErrorCodes = new Map([
+    [401, 'Invalid Authentication. Ensure the correct API key and requesting organization are being used.'],
+    [429, 'Rate limit reached or hard limit quota reached. You can apply for a quota increase.'],
+    [
+        500,
+        'The server had an error. Retry your request after a brief wait and contact us if the issue persists. Check the status page.',
+    ],
+    [503, 'The engine is currently overloaded, please try again later. Please retry your requests after a brief wait.'],
+]);
+
+/**
+ * Asserts that the provided value is an integer. If the value is not an integer, a TypeError is thrown.
+ * @param int The value to be checked.
+ * @returns Returns the input value if it is an integer.
+ * @throws Throws an error if the input value is not an integer.
+ * @example ```ts
+ * assertInteger(5);;
+ * //=> 5
+ * assertInteger(5.5);;
+ * //=> throws TypeError
+ * ```
+ */
+function assertInteger(int) {
+    if (Number.isInteger(int))
+        return int;
+    throw new TypeError('Expected int to be an integer. Got: ' + int);
+}
+
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive).
+ * @param min The lower bound integer.
+ * @param max The upper bound integer.
+ * @throws if min is not an integer.
+ * @returns A random integer between min and max.
+ * @throws if max is not an integer.
+ * @example ```ts
+ * randomIntBetween(1, 10);;
+ * //=> {random integer between 1 and 10}
+ * ```
+ */
+function randomIntBetween(min, max) {
+    return Math.floor(Math.random() * (assertInteger(max) - assertInteger(min) + 1) + min);
+}
+
+/**
+ * Deletes the specified keys from an object in a mutable way.
+ * @param obj The object from which to delete the keys.
+ * @returns The modified object with the specified keys deleted.
+ * @typeparam V - The type of the values in the object.
+ * @param keys The keys to delete from the object.
+ * @example ```ts
+ * const obj = { a: 1, b: 2, c: 3 };
+ * objOmitKeysMutable(obj, 'a', 'c');
+ * //=> { b: 2 }
+ * ```
+ */
+function objOmitKeysMutable(obj, ...keys) {
+    for (const key of keys) {
+        Reflect.deleteProperty(obj, key);
+    }
+    return obj;
+}
+
+/**
+ * A class representing an OpenAI API client.
+ */
+class OpenaiApiClient extends AbstractApiClient {
+    /**
+     * Create a new OpenaiApiClient instance.
+     * @param options - The constructor options to use.
+     */
+    constructor(options = {}) {
+        super(options);
         /**
          * Defaults for API requests. Can be overriden in individual method calls.
          */
@@ -1355,69 +1615,11 @@ class OpenaiApiClientBase {
             chat3_8Model: 'gpt-3.5-turbo',
             chat3_16Model: 'gpt-3.5-turbo-16k',
             chat4_8Model: 'gpt-4',
-            editTextModel: 'text-davinci-edit-001',
-            editCodeModel: 'code-davinci-edit-001',
             choicesDelimiter: '\n---------------\n',
         };
-        /**
-         * Options for async-retry
-         */
-        this.retryDefaults = {
-            retries: 15,
-            factor: 1.5,
-            onRetry: (error) => this.emit('retry', error),
-        };
-        /**
-         * Options for whether to overwrite existing cached data by default for api requests
-         */
-        this.cacheDefaults = {
-            overwrite: false,
-        };
-        options = this.handleOptions(options);
-        this.client = new openai.OpenAIApi(new openai.Configuration({ apiKey: options.apiKey }));
-        this.cache = new ApiReponseCache(options.cacheInit);
-        this.emit('ready', void 0);
-        const [queue, apiRequest] = funAsyncRateLimit(((request, retry, cache, apiRequest) => __awaiter(this, void 0, void 0, function* () {
-            const hash = this.cache.hashKey(request);
-            const results = yield asyncRetry(() => __awaiter(this, void 0, void 0, function* () {
-                if (cache.overwrite)
-                    yield this.cache.delete(hash);
-                return yield this.cache.getOrElse(hash, apiRequest);
-            }), retry);
-            return this.emit('response', results.join(this.apiDefaults.choicesDelimiter));
-        })).bind(this), {
-            intervalCap: 3450,
-            interval: 1000 * 60,
-            // Whether the task must finish in the given interval or will be carried over into the next interval count.
-            carryoverConcurrencyCount: false,
-            concurrency: 50,
-            autoStart: true,
-            //timeout: 0,
-            //throwOnTimeout: false,
-        });
-        this.queue = queue;
-        this._apiRequest = apiRequest;
-        setNonEnumerable(this, '_apiRequest');
-    }
-    /**
-     * Handle the options passed to the constructor.
-     * @param options - The options to handle.
-     */
-    handleOptions(options) {
-        if (!options.cacheInit)
-            options.cacheInit = {};
-        if (!options.cacheInit.name)
-            options.cacheInit.name = 'OpenaiApiClient';
-        if (options.logAllEvents && options.cacheInit.logAllEvents === undefined) {
-            options.cacheInit.logAllEvents = true;
-        }
-        if (!options.apiKey)
-            options.apiKey = this.getDefaultApiKey();
-        if (options.logAllEvents)
-            this.logAllEvents();
-        this.emit('options', options);
-        objAssignDeep(this, objDeleteKeys(options, 'cacheInit', 'logAllEvents', 'apiKey'));
-        return options;
+        this.concurrencyJustReduced = false;
+        const apiKey = options.apiKey || process.env.OPENAI_API_KEY;
+        this.client = new openai.OpenAIApi(new openai.Configuration({ apiKey }));
     }
     /**
      * Send a completion request to the openai api.
@@ -1430,20 +1632,18 @@ class OpenaiApiClientBase {
     }
     /**
      * Send a chat completion request to the openai api with a max_tokens cap of 4096.
-     * Uses model: 'gpt-3.5-turbo'.
      * @param options - The options to use.
      */
-    chat3_8(options) {
+    gpt3_8k(options) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this._chat(...this.handleChatOptions(options));
         });
     }
     /**
      * Send a chat completion request to the openai api with a max_tokens cap of 16384.
-     * Uses model: 'gpt-3.5-turbo-16k'.
      * @param options - The options to use.
      */
-    chat3_16(options) {
+    gpt3_16k(options) {
         return __awaiter(this, void 0, void 0, function* () {
             options.model = this.apiDefaults.chat3_16Model;
             return yield this._chat(...this.handleChatOptions(options));
@@ -1451,48 +1651,22 @@ class OpenaiApiClientBase {
     }
     /**
      * Send a gpt4 chat completion request to the openai api with a max_tokens cap of 8k.
-     * Uses model: 'gpt-4'.
      * @param options - The options to use.
      */
-    chat4_8(options) {
+    gpt4_8k(options) {
         return __awaiter(this, void 0, void 0, function* () {
             options.model = this.apiDefaults.chat4_8Model;
             return yield this._chat(...this.handleChatOptions(options));
         });
     }
     /**
-     * Edit text.
+     * Send a transcribe completion request to the openai api.
      * @param options - The options to use.
      */
-    editText(options) {
+    transcribe(options) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this._edit(...this.handleEditOptions(options));
+            return yield this._transcribe(...this.handleTranscribeOptions(options));
         });
-    }
-    /**
-     * Edit code.
-     * @param options - The options to use.
-     */
-    editCode(options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!options.model)
-                options.model = this.apiDefaults.editCodeModel;
-            return yield this._edit(...this.handleEditOptions(options));
-        });
-    }
-    /**
-     * Encode a string into tokens.
-     * @param string - The string to encode.
-     */
-    stringTokens(string) {
-        return gpt3Encoder.encode(string);
-    }
-    /**
-     * Count the number of tokens in a string.
-     * @param string - The string to count tokens in.
-     */
-    countTokens(string) {
-        return gpt3Encoder.encode(string).length;
     }
     /**
      * Handle completion options.
@@ -1517,7 +1691,7 @@ class OpenaiApiClientBase {
                 options.max_tokens = 4096 - count;
             }
         }
-        options = objDeleteKeysMutable(options, 'retry', 'cache', 'instruction', 'response_max_tokens');
+        options = objOmitKeysMutable(options, 'retry', 'cache', 'instruction', 'response_max_tokens');
         const request = options;
         const retry = this.handleRetryOptions(options.retry);
         const cache = this.handleCacheOptions(options.cache);
@@ -1544,46 +1718,19 @@ class OpenaiApiClientBase {
             messages.push(...options.messages);
         if (!messages.length)
             messages.push({ role: 'user', content: '' });
-        options = objDeleteKeysMutable(options, 'prompt', 'instruction', 'retry', 'cache');
+        options = objOmitKeysMutable(options, 'prompt', 'instruction', 'retry', 'cache');
         const request = Object.assign(Object.assign({ model }, options), { messages });
         return this.emit('request', [request, retry, cache]);
     }
     /**
-     * Handle edit options.
+     * Handle transcribe options.
      * @param options - The options to handle.
      */
-    handleEditOptions(options) {
-        options = this.deleteDefaultOrUndefinedOptions(options, {});
+    handleTranscribeOptions(options) {
+        const request = options.request;
         const retry = this.handleRetryOptions(options.retry);
         const cache = this.handleCacheOptions(options.cache);
-        const model = this.apiDefaults.editTextModel;
-        const input = options.prompt;
-        const instruction = options.instruction;
-        const _options = objDeleteKeysMutable(options, 'prompt', 'retry', 'cache');
-        const request = Object.assign(Object.assign({ model }, _options), { instruction,
-            input });
         return this.emit('request', [request, retry, cache]);
-    }
-    /**
-     * Handle retry options.
-     * @param retryOptions - The retry options to handle.
-     */
-    handleRetryOptions(retryOptions) {
-        if (retryOptions === null || retryOptions === void 0 ? void 0 : retryOptions.onRetry) {
-            const onRetry = retryOptions.onRetry;
-            retryOptions.onRetry = (error, attempt) => {
-                this.emit('retry', error);
-                onRetry(error, attempt);
-            };
-        }
-        return retryOptions ? Object.assign({}, this.retryDefaults, retryOptions) : this.retryDefaults;
-    }
-    /**
-     * Handle cache options.
-     * @param cacheOptions - The cache options to handle.
-     */
-    handleCacheOptions(cacheOptions) {
-        return cacheOptions ? Object.assign({}, this.cacheDefaults, cacheOptions) : this.cacheDefaults;
     }
     /**
      * Send completion request to the openai API.
@@ -1594,27 +1741,16 @@ class OpenaiApiClientBase {
      */
     _completion(request, retry, cache) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this._apiRequest(request, retry, cache, () => __awaiter(this, void 0, void 0, function* () {
-                const { data } = yield this.client.createCompletion(request);
-                this.assertReponseDataComplete(data);
-                return this.parseChoices(data.choices);
-            }));
-        });
-    }
-    /**
-     * Send chat request to the openai API.
-     * This is used by all the preset methods, the public methods: chat3_8, chat3_16, and chat4_8.
-     * @param request - The request object to send to the openai api.
-     * @param retry - The retry options.
-     * @param cache - The cache options.
-     */
-    _transcribe(filepath, retry, cache) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // this.client.createTranscription(fs.createReadStream(filepath) as any, 'whisper-1', undefined, 'json', undefined, 'DA')
-            return yield this._apiRequest(filepath, retry, cache, () => __awaiter(this, void 0, void 0, function* () {
-                const { data } = yield this.client.createTranscription(fs.createReadStream(filepath), 'whisper-1', undefined, 'srt', undefined, 'DA');
-                return [JSON.stringify(data, null, 2)];
-            }));
+            return yield this.sendRequest({
+                apiRequest: () => __awaiter(this, void 0, void 0, function* () {
+                    const { data } = yield this.client.createCompletion(request);
+                    this.assertReponseDataComplete(data);
+                    return this.parseChoices(data.choices).join(this.apiDefaults.choicesDelimiter);
+                }),
+                args: [request],
+                retry,
+                cache,
+            });
         });
     }
     /**
@@ -1626,49 +1762,88 @@ class OpenaiApiClientBase {
      */
     _chat(request, retry, cache) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this._apiRequest(request, retry, cache, () => __awaiter(this, void 0, void 0, function* () {
-                const { data } = yield this.client.createChatCompletion(request);
-                this.assertReponseDataComplete(data);
-                return this.parseChoices(data.choices);
-            }));
+            return yield this.sendRequest({
+                apiRequest: () => __awaiter(this, void 0, void 0, function* () {
+                    let data;
+                    try {
+                        const response = yield this.client.createChatCompletion(request);
+                        data = response.data;
+                    }
+                    catch (error) {
+                        this.handleApiError(error);
+                    }
+                    this.assertReponseDataComplete(data);
+                    return this.parseChoices(data.choices)[0];
+                }),
+                args: [request],
+                retry,
+                cache,
+            });
         });
     }
     /**
-     * Send edit request to the openai API.
-     * This is used by all the preset methods, the public methods: editText, editCode
+     * Send transcribe (speech to text) request to the openai API.
      * @param request - The request object to send to the openai api.
      * @param retry - The retry options.
      * @param cache - The cache options.
      */
-    _edit(request, retry, cache) {
+    _transcribe(request, retry, cache) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this._apiRequest(request, retry, cache, () => __awaiter(this, void 0, void 0, function* () {
-                const { data } = yield this.client.createEdit(request);
-                return this.parseChoices(data.choices);
-            }));
+            return yield this.sendRequest({
+                apiRequest: () => __awaiter(this, void 0, void 0, function* () {
+                    try {
+                        const { data } = yield this.client.createTranscription(fs.createReadStream(request.filepath), 'whisper-1', undefined, request.format, undefined, request.language);
+                        return data.toString().trim();
+                    }
+                    catch (error) {
+                        console.error(error.toJSON());
+                    }
+                    return '';
+                }),
+                args: [request],
+                retry,
+                cache,
+            });
         });
     }
     /**
-     * Generic function for sending requests to the openai api.
-     * This is used for all the API endpoints.
-     * It handles retrying, cache, hashing, and emitting events.
-     * @param request - The request object to send to the openai api.
-     * @param retry - The retry options.
-     * @param cache - The cache options.
+     * Parses API error codes.
+     * When the error is a rate limit error, lowers the concurrency.
+     * @param error - The error to parse.
      */
-    // protected async _apiRequest(
-    //   request: openai.CreateEditRequest | openai.CreateCompletionRequest | openai.CreateChatCompletionRequest,
-    //   retry: AsyncRetryOptions,
-    //   cache: IResponseCacheOptions,
-    //   apiRequest: () => Promise<string[]>,
-    // ): Promise<string> {
-    //   const hash = this.cache.hashKey(request)
-    //   const results = await asyncRetry(async () => {
-    //     if (cache.overwrite) await this.cache.delete(hash)
-    //     return await this.cache.getOrElse(hash, apiRequest)
-    //   }, retry)
-    //   return this.emit('response', results.join(this.apiDefaults.choicesDelimiter))
-    // }
+    handleApiError(error) {
+        const json = error.toJSON();
+        const status = json.status;
+        if (status === 429)
+            this.lowerConcurrency();
+        const description = openaiApiErrorCodes.get(status);
+        if (description)
+            error = new Error('Error code ' + status + ': ' + description);
+        this.emit('error', json);
+        throw error;
+    }
+    /**
+     * Lower the concurrency to prevent rate limiting.
+     * Automatically raises the concurrency again after a delay.
+     * @param lowerBy - The amount to lower the concurrency by.
+     * @param raiseAgainBy - The amount to raise the concurrency by after a delay.
+     * @param delay - The delay to wait before raising the concurrency again. This is randomized by +/- 5 seconds to prevent multiple requests from affecting the concurrency at the same time.
+     */
+    lowerConcurrency(lowerBy = 7, raiseAgainBy = 6, delay = 1000 * 90) {
+        if (this.concurrencyJustReduced || this.queue.concurrency <= 20)
+            return;
+        this.concurrencyJustReduced = true;
+        setTimeout(() => {
+            this.concurrencyJustReduced = false;
+        }, 1000);
+        this.queue.concurrency -= lowerBy;
+        this.emit('concurrency', 'Reducing concurrency to ' + this.queue.concurrency + ' to prevent rate limiting.');
+        delay = randomIntBetween(5000, delay);
+        setTimeout(() => {
+            this.queue.concurrency += raiseAgainBy;
+            this.emit('concurrency', 'Trying to raise concurrency again to ' + this.queue.concurrency + '.');
+        }, delay);
+    }
     /**
      * Extract the actual concent from the 'choices' object from the response data.
      * @param choices - The choices object from the response data.
@@ -1718,38 +1893,25 @@ class OpenaiApiClientBase {
         }
     }
     /**
-     * Get the default api key from 'process.env.USERPROFILE/repos/apikeys/openai.txt'
+     * Encode a string into tokens.
+     * @param string - The string to encode.
      */
-    getDefaultApiKey() {
-        try {
-            const filepath = path.join(process.env.USERPROFILE || '', 'repos', 'apikeys', 'openai.txt');
-            return fs.existsSync(filepath) ? fs.readFileSync(filepath).toString() : '';
-        }
-        catch (error) {
-            return '';
-        }
+    stringTokens(string) {
+        return gpt3Encoder.encode(string);
     }
     /**
-     * Emit an event but adds 'this' as an extra trailing argument.
+     * Count the number of tokens in a string.
+     * @param string - The string to count tokens in.
      */
-    emit(event, arg) {
-        this.events.emit(event, arg, this);
-        return arg;
-    }
-    /**
-     * console.log all emitted events
-     */
-    logAllEvents() {
-        log.line(3);
-        _printEmitterEvents(this, this.events, {
-            info: ['options', 'ready', 'request', 'response'],
-            error: ['error', 'retry'],
-        });
-        return this;
+    countTokens(string) {
+        return gpt3Encoder.encode(string).length;
     }
 }
 
-class OpenaiApiClient extends OpenaiApiClientBase {
+/**
+ * A class representing an OpenAI API client but with already prompt-egineered utilities.
+ */
+class OpenaiApiClientExtended extends OpenaiApiClient {
     /**
      * Create a new OpenAiApiClient instance.
      * @example
@@ -1773,8 +1935,9 @@ class OpenaiApiClient extends OpenaiApiClientBase {
         return __awaiter(this, void 0, void 0, function* () {
             options.instruction =
                 (options.instruction ? options.instruction + '\n\n' : '') +
-                    `Proofread and correct ${titleCase.titleCase(language)}.\n\nRespond the corrected version.`;
-            return yield this.chat3_8(Object.assign(Object.assign({ temperature: 0 }, options), { prompt }));
+                    `You will be provided with statements, and your task is to convert them to standard ${titleCase.titleCase(language)}.\n\n` +
+                    `Respond with the corrected text and nothing else.`;
+            return yield this.gpt3_8k(Object.assign(Object.assign({ temperature: 0 }, options), { prompt }));
         });
     }
     /**
@@ -1787,9 +1950,7 @@ class OpenaiApiClient extends OpenaiApiClientBase {
      */
     proofreadEnglish(prompt, options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
-            options.instruction =
-                (options.instruction ? options.instruction + '\n\n' : '') + 'Proofread and correct English.\n\nRespond the corrected version.';
-            return yield this.chat3_8(Object.assign(Object.assign({ temperature: 0 }, options), { prompt }));
+            return yield this.proofread('English', prompt, options);
         });
     }
     /**
@@ -1803,8 +1964,9 @@ class OpenaiApiClient extends OpenaiApiClientBase {
     translateFromTo(fromLanguage, toLanguage, prompt, options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
             options.instruction =
-                (options.instruction ? options.instruction + '\n\n' : '') + `Translate from ${titleCase.titleCase(fromLanguage)} to ${titleCase.titleCase(toLanguage)}.`;
-            return yield this.chat3_8(Object.assign(Object.assign({ temperature: 0.3 }, options), { prompt }));
+                (options.instruction ? options.instruction + '\n\n' : '') +
+                    `Translate from ${titleCase.titleCase(fromLanguage)} to ${titleCase.titleCase(toLanguage)}.`;
+            return yield this.gpt3_8k(Object.assign(Object.assign({ temperature: 0.3 }, options), { prompt }));
         });
     }
     /**
@@ -2148,40 +2310,6 @@ function arrSwap(input, from, to) {
 }
 
 /**
- * Asserts that the provided value is an integer. If the value is not an integer, a TypeError is thrown.
- * @param int The value to be checked.
- * @returns Returns the input value if it is an integer.
- * @throws Throws an error if the input value is not an integer.
- * @example ```ts
- * assertInteger(5);;
- * //=> 5
- * assertInteger(5.5);;
- * //=> throws TypeError
- * ```
- */
-function assertInteger(int) {
-    if (Number.isInteger(int))
-        return int;
-    throw new TypeError('Expected int to be an integer. Got: ' + int);
-}
-
-/**
- * Returns a random integer between min (inclusive) and max (inclusive).
- * @param min The lower bound integer.
- * @param max The upper bound integer.
- * @throws if min is not an integer.
- * @returns A random integer between min and max.
- * @throws if max is not an integer.
- * @example ```ts
- * randomIntBetween(1, 10);;
- * //=> {random integer between 1 and 10}
- * ```
- */
-function randomIntBetween(min, max) {
-    return Math.floor(Math.random() * (assertInteger(max) - assertInteger(min) + 1) + min);
-}
-
-/**
  * Shuffle items in an array in-place. Guarantees changes.
  * @remarks This function does not guarantee that the order of the elements will be different after shuffling.
  * @typeparam T - The type of the elements in the input array.
@@ -2372,7 +2500,9 @@ function strReplaceAll(input, replace, replaceWith, flags = 'g') {
 function arrTableToCsv(input, delimiter = ';', replaceLinebreakWith = '|') {
     return input
         .map((row) => {
-        return row.map((item) => strReplaceAll(item + '', delimiter, '').replace(/\r*\n/g, replaceLinebreakWith)).join(delimiter);
+        return row
+            .map((item) => strReplaceAll(item + '', delimiter, '').replace(/\r*\n/g, replaceLinebreakWith))
+            .join(delimiter);
     })
         .join('\n');
 }
@@ -2600,6 +2730,38 @@ function asyncWithTimeout(timeout, task) {
         }, (error) => {
             reject(error);
         });
+    });
+}
+
+/**
+ * Asserts that the provided number is a positive integer.
+ * If the number is not a positive integer, a TypeError is thrown.
+ * @param int The number to be checked.
+ * @returns The same number if it is a positive integer.
+ * @throws Throws an error if the provided number is not a positive integer.
+ * @example ```ts
+ * assertPositiveInteger(5);;
+ * //=> 5
+ * assertPositiveInteger(-2);;
+ * //=> throws TypeError
+ * assertPositiveInteger(2.5);;
+ * //=> throws TypeError
+ * ```
+ */
+function assertPositiveInteger(int) {
+    if (Number.isInteger(int) && int >= 0)
+        return int;
+    throw new TypeError('Expected a positive integer. Got: ' + int);
+}
+
+/**
+ * This function waits for a specified number of seconds before resolving a promise.
+ * @returns A promise that resolves after the specified number of seconds.
+ */
+function wait(ms = 0) {
+    return new Promise((resolve) => {
+        assertPositiveInteger(ms);
+        setTimeout(resolve, ms);
     });
 }
 
@@ -3212,7 +3374,6 @@ class Queue extends MixinBase {
     }
 }
 
-var _SimpleTable_colIndexMap, _SimpleTable_headers, _SimpleTable_data;
 /**
  * Two-dimensional table class supporting column and row headers.
  * @template T The type of the data in the table.
@@ -3236,44 +3397,31 @@ class SimpleTable extends MixinBase {
         /**
          * Map from column names to column indices.
          */
-        _SimpleTable_colIndexMap.set(this, {}
-        /**
-         * The headers of the table.
-         */
-        );
-        /**
-         * The headers of the table.
-         */
-        _SimpleTable_headers.set(this, void 0);
+        this._colIndexMap = {};
         /**
          * The data of the table.
          */
-        _SimpleTable_data.set(this, []
-        /**
-         * Revive a stringified Table object.
-         * @param json a stringified Table object.
-         */
-        );
+        this._data = [];
         if (headers) {
-            __classPrivateFieldSet(this, _SimpleTable_headers, headers.slice(), "f");
-            __classPrivateFieldSet(this, _SimpleTable_data, data.map((row) => {
+            this._headers = headers.slice();
+            this._data = data.map((row) => {
                 this.assertRowValidLength(row);
                 return row.slice();
-            }), "f");
+            });
         }
         else {
-            __classPrivateFieldSet(this, _SimpleTable_headers, data[0].map((header) => '' + header), "f");
-            __classPrivateFieldSet(this, _SimpleTable_data, data.slice(1).map((row) => {
+            this._headers = data[0].map((header) => '' + header);
+            this._data = data.slice(1).map((row) => {
                 this.assertRowValidLength(row);
                 return row.slice();
-            }), "f");
+            });
         }
-        if (!__classPrivateFieldGet(this, _SimpleTable_headers, "f").length)
+        if (!this._headers.length)
             throw new Error('Table must have at least one column.');
-        if (!__classPrivateFieldGet(this, _SimpleTable_data, "f").length)
+        if (!this._data.length)
             throw new Error('Table must have at least one row.');
-        __classPrivateFieldGet(this, _SimpleTable_headers, "f").forEach((header, i) => {
-            __classPrivateFieldGet(this, _SimpleTable_colIndexMap, "f")[header] = i;
+        this._headers.forEach((header, i) => {
+            this._colIndexMap[header] = i;
         });
     }
     /**
@@ -3281,32 +3429,32 @@ class SimpleTable extends MixinBase {
      * @param row The row to check.
      */
     assertRowValidLength(row) {
-        if (row.length !== __classPrivateFieldGet(this, _SimpleTable_headers, "f").length)
+        if (row.length !== this._headers.length)
             throw new Error('Row length does not match headers length.');
     }
     /**
      * Gets the number of cols in the table, not including headers.
      */
     get numColumns() {
-        return __classPrivateFieldGet(this, _SimpleTable_data, "f")[0].length;
+        return this._data[0].length;
     }
     /**
      * Gets the number of rows in the table, not including headers.
      */
     get numRows() {
-        return __classPrivateFieldGet(this, _SimpleTable_data, "f").length;
+        return this._data.length;
     }
     /**
      * Gets the column headers.
      */
     get headers() {
-        return __classPrivateFieldGet(this, _SimpleTable_headers, "f").slice();
+        return this._headers.slice();
     }
     /**
      * Returns the table as a two-dimensional array, without column headers.
      */
     get data() {
-        return __classPrivateFieldGet(this, _SimpleTable_data, "f").slice().map((row) => row.slice());
+        return this._data.slice().map((row) => row.slice());
     }
     /**
      * Returns a value at a given (row, col) position.
@@ -3315,9 +3463,9 @@ class SimpleTable extends MixinBase {
      */
     get(column, row) {
         if (typeof column === 'string') {
-            column = __classPrivateFieldGet(this, _SimpleTable_colIndexMap, "f")[column];
+            column = this._colIndexMap[column];
         }
-        return __classPrivateFieldGet(this, _SimpleTable_data, "f")[row][column];
+        return this._data[row][column];
     }
     /**
      * Inserts a given value at a given (row, col) position.
@@ -3327,9 +3475,9 @@ class SimpleTable extends MixinBase {
      */
     set(column, row, value) {
         if (typeof column === 'string') {
-            column = __classPrivateFieldGet(this, _SimpleTable_colIndexMap, "f")[column];
+            column = this._colIndexMap[column];
         }
-        __classPrivateFieldGet(this, _SimpleTable_data, "f")[row][column] = value;
+        this._data[row][column] = value;
         return this;
     }
     /**
@@ -3344,12 +3492,11 @@ class SimpleTable extends MixinBase {
      */
     toJSON() {
         return {
-            headers: __classPrivateFieldGet(this, _SimpleTable_headers, "f"),
-            data: __classPrivateFieldGet(this, _SimpleTable_data, "f"),
+            headers: this._headers,
+            data: this._data,
         };
     }
 }
-_SimpleTable_colIndexMap = new WeakMap(), _SimpleTable_headers = new WeakMap(), _SimpleTable_data = new WeakMap();
 
 /**
  * Number comparator function (ascending)
@@ -3851,11 +3998,6 @@ function assertValidDateDay(day, month, year) {
 }
 
 /**
- * The number of milliseconds in a day.
- */
-const MS_IN_DAY = 1000 * 60 * 60 * 24;
-
-/**
  * The number of milliseconds in an hour.
  */
 const MS_IN_HOUR = 1000 * 60 * 60;
@@ -3899,6 +4041,11 @@ function dateDaysAgo(days) {
     date.setDate(date.getDate() - days);
     return date;
 }
+
+function dateWeekDayName(date) {
+    return names[date.getDay()];
+}
+const names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 /**
  * Calculates the number of milliseconds that have passed since the provided date.
@@ -3992,23 +4139,6 @@ function isoDateTimestamp(date = new Date()) {
 }
 
 /**
- * This function takes a date object and returns a string in ISO format suitable for filenames.
- * If no date is provided, it uses the current date and time.
- * @param date The date object to be converted. Defaults to the current date and time.
- * @returns A string in the format "YYYY-MM-DD-HH-MM-SS-SSS".
- * @example ```ts
- * isoDateTimestampForFilename(new Date('2022-01-01T00:00:00Z'));;
- * //=> "2022-01-01-00-00-00-000"
- * ```
- */
-function isoDateTimestampForFilename(date = new Date()) {
-    return date
-        .toISOString()
-        .replace(/[-:T.]/g, '-')
-        .replace('Z', '');
-}
-
-/**
  * Calculates the number of minutes that have passed since the given date.
  * @param date The date from which to calculate the number of minutes that have passed.
  * @returns The number of minutes that have passed since the given date.
@@ -4037,6 +4167,27 @@ function minutesSinceDate(date) {
 function monthsSinceDate(date) {
     return msSinceDate(date) / MS_IN_MONTH;
 }
+
+function prettyIsoDateString(iso, dateTimeSeparator = ' ', precision = 'millisecond') {
+    return iso.substring(0, map[precision]).replace(/T/, dateTimeSeparator).replace(/-|:/g, '.');
+}
+const map = {
+    year: 4,
+    month: 7,
+    day: 10,
+    hour: 13,
+    minute: 16,
+    second: 19,
+    millisecond: 23,
+};
+// const s = '2020-02-03T14:01:04.437Z'
+// console.log(prettyIsoDateString(s, ' ', 'year'))
+// console.log(prettyIsoDateString(s, ' ', 'month'))
+// console.log(prettyIsoDateString(s, ' ', 'day'))
+// console.log(prettyIsoDateString(s, ' ', 'hour'))
+// console.log(prettyIsoDateString(s, ' ', 'minute'))
+// console.log(prettyIsoDateString(s, ' ', 'second'))
+// console.log(prettyIsoDateString(s, ' ', 'millisecond'))
 
 /**
  * Returns the number of seconds that have passed since the given date.
@@ -4090,50 +4241,9 @@ function yearsSinceDate(date) {
  * ```
  */
 function absoluteToRelativePath(absolute, workingDirectory = process.cwd()) {
-    return path.normalize(absolute).replace(new RegExp(regexEscapeString(path.normalize(workingDirectory) + path.sep), 'i'), '');
-}
-
-/**
- * Create a directory at a given path if it does not exist.
- * Automatically creates parent directories if they do not exist.
- * @remarks This function uses the `mkdirp` package to create directories.
- * @param dirpath The path where the directory should be created.
- * @returns The path of the directory.
- * @throws Will throw an error if the directory cannot be created.
- * @example ```ts
- * createDirectory('/path/to/directory').then((dirpath) => {
- *   //=> `Directory created at ${dirpath}`
- * });
- * ```
- */
-function createDirectory(dirpath) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield mkdirp.mkdirp(dirpath);
-        return dirpath;
-    });
-}
-
-/**
- * Counts the number of occurrences of a specific character in a string.
- * @param input The string to search within.
- * @param char The character to count occurrences of. Must be a single character string of length 1.
- * @throws If the char parameter is not a single character string of length 1.
- * @example ```ts
- * strCountCharOccurances('hello world', 'o');;
- * //=> 2
- * ```
- */
-function strCountCharOccurances(input, char) {
-    if (char.length !== 1) {
-        throw new Error('Expected char to be a single character string of length 1.');
-    }
-    let result = 0;
-    for (const c of input) {
-        if (c === char) {
-            result++;
-        }
-    }
-    return result;
+    return path
+        .normalize(absolute)
+        .replace(new RegExp(regexEscapeString(path.normalize(workingDirectory) + path.sep), 'i'), '');
 }
 
 /**
@@ -4163,7 +4273,7 @@ function normalizeFileExtension(ext) {
     if (/[<>"|?*:]/g.test(ext)) {
         throw new Error(`Illegal characters in file extension: ${ext}  |  Illegal characters are: <>"|?:*`);
     }
-    if (strCountCharOccurances(ext, '.') === 0)
+    if (!ext.includes('.'))
         return '.' + ext;
     return ext.substring(ext.lastIndexOf('.'));
 }
@@ -4191,6 +4301,21 @@ function createFileExtensionFilter(...fileExtensions) {
         }
         return false;
     };
+}
+
+/**
+ * Joins the given path segments to the current working directory path, and normalizes the resulting path.
+ * @remarks
+ * The function uses the `path.join` method from the Node.js `path` module, and the `process.cwd` method from the Node.js `process` module.
+ * @param paths - The path segments to join to the current working directory path.
+ * @returns The resulting path.
+ * @example ```ts
+ * console.log(cwdpath('src', 'index.ts'));
+ * //=> '{working_directory}/src/index.ts'
+ * ```
+ */
+function cwdpath(...paths) {
+    return path.join(process.cwd(), ...paths);
 }
 
 /**
@@ -4292,7 +4417,7 @@ function ensureValidWindowsPath(path, options) {
     if (path.length === 0) {
         return throwOrFalse('Path string is length 0.');
     }
-    if (strCountCharOccurances(path, '/') > 0 && strCountCharOccurances(path, '\\') > 0) {
+    if (path.indexOf('/') !== -1 && path.indexOf('\\') !== -1) {
         return throwOrFalse('Path contains both backslash and forward slash.');
     }
     const maxLength = (options && options.extendedMaxLength ? 32767 : 260) - 12;
@@ -4313,47 +4438,523 @@ function ensureValidWindowsPath(path, options) {
 }
 
 /**
- * Represents a file in the filesystem.
+ * Abstract extension of the native String class, representing a path to a filesystem object, such as directory or file.
+ * Some of the classes extending this one are @see DirectoryPath or @see FilePath
  */
-class File {
+class AbstractFsPath extends String {
     /**
-     * Creates a new SourceFile instance.
-     * @param filepath The absolute path to the source file.
+     * @param absolute The absolute path to the filesystem object either as a string or an array of path segments.
+     * @param _unsafe Used internally changing it is not recommended. If true, the path is not checked for whether it is actually absolute, it is not normalized and it is assumed to be of type string.
+     * @throws If the path is not absolute.
      */
-    constructor(filepath) {
-        this.filepath = path.normalize(filepath);
+    constructor(absolute, _unsafe = false) {
+        if (_unsafe) {
+            super(absolute);
+            return;
+        }
+        if (typeof absolute !== 'string') {
+            absolute = path.join(...absolute);
+        }
+        if (!absolute || !path.isAbsolute(absolute)) {
+            throw new Error(`Expected absolute filepath. Got: ${absolute}`);
+        }
+        super(path.normalize(absolute));
+    }
+    get absolute() {
+        return super.toString();
     }
     /**
-     * The file extension of the source file.
-     * @returns The file extension, including the leading dot.
+     * The relative path to the filesystem object from the working directory.
      */
-    get fileExtension() {
-        return path.extname(this.filepath);
+    get relative() {
+        return absoluteToRelativePath(this.absolute);
     }
     /**
-     * The filename including the file extension.
+     * The root directory of the disk containing the filesystem object.
+     */
+    get root() {
+        return path.parse(this.absolute).root;
+    }
+    /**
+     * The file/directory name (for files, including the file extension).
+     */
+    get base() {
+        return path.basename(this.absolute);
+    }
+    /**
+     * The file/directory name (for files, not including the file extension).
+     */
+    get name() {
+        return path.parse(this.absolute).name;
+    }
+    /**
+     * The absolute path to the directory of the filesystem object.
+     */
+    get parentPath() {
+        return path.dirname(this.absolute);
+    }
+    /**
+     * Returns whether the file exists.
+     */
+    get exists() {
+        return fs.existsSync(this.absolute);
+    }
+    /**
+     * Get fs.Stats synchronously
+     */
+    statSync() {
+        return fs.statSync(this.absolute);
+    }
+    /**
+     * Get fs.Stats asynchronously
+     */
+    stat() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return fs.promises.stat(this.absolute);
+        });
+    }
+    /**
+     * Returns whether the path is valid on Windows.
+     * @param extendedMaxLength If true, we are assuming the OS configuration allows paths to be up to 32767 characters long.
+     */
+    isValidWindowsPath(extendedMaxLength = false) {
+        return ensureValidWindowsPath(this.absolute, { extendedMaxLength });
+    }
+    /**
+     * Split the absolute path into an array of path segments.
+     */
+    toArray() {
+        return this.absolute.split(path.sep);
+    }
+    /**
+     * Split the relative path into an array of path segments.
+     * @see relative
+     */
+    relativeToArray() {
+        return this.relative.split(path.sep);
+    }
+    /**
+     * Returns whether this is an DirectoryPath instance.
+     */
+    get isDirectoryPath() {
+        return false;
+    }
+    /**
+     * Returns whether this is an FilePath instance.
+     */
+    get isFilePath() {
+        return false;
+    }
+    /**
+     * Returns whether this is an BlockDevicePath instance.
+     */
+    get isBlockDevicePath() {
+        return false;
+    }
+    /**
+     * Returns whether this is an FsSymbolcLink instance.
+     */
+    get isSymbolicLinkPath() {
+        return false;
+    }
+    /**
+     * Returns whether this is an CharacterDevicePath instance.
+     */
+    get isCharacterDevicePath() {
+        return false;
+    }
+    /**
+     * Returns whether this is an FIFOPath instance.
+     */
+    get isFIFOPath() {
+        return false;
+    }
+    /**
+     * Returns whether this is an SocketPath instance.
+     */
+    get isSocketPath() {
+        return false;
+    }
+    /**
+     * Returns whether this actually is a path to a directory.
+     * @param stat The fs.Stats object to check. If not provided, it is retrieved synchronously.
+     * @throws If the path does not exist.
+     */
+    isDirectory(stat = this.statSync()) {
+        return stat.isDirectory();
+    }
+    /**
+     * Returns whether this actually is a path to a file.
+     * @param stat The fs.Stats object to check. If not provided, it is retrieved synchronously.
+     * @throws If the path does not exist.
+     */
+    isFile(stat = this.statSync()) {
+        return stat.isFile();
+    }
+    /**
+     * Returns whether this actually is a path to a block device.
+     * @param stat The fs.Stats object to check. If not provided, it is retrieved synchronously.
+     * @throws If the path does not exist.
+     */
+    isBlockDevice(stat = this.statSync()) {
+        return stat.isBlockDevice();
+    }
+    /**
+     * Returns whether this actually is a path to a symbolic link.
+     * @param stat The fs.Stats object to check. If not provided, it is retrieved synchronously.
+     * @throws If the path does not exist.
+     */
+    isSymbolicLink(stat = this.statSync()) {
+        return stat.isSymbolicLink();
+    }
+    /**
+     * Returns whether this actually is a path to a character device.
+     * @param stat The fs.Stats object to check. If not provided, it is retrieved synchronously.
+     * @throws If the path does not exist.
+     */
+    isCharacterDevice(stat = this.statSync()) {
+        return stat.isCharacterDevice();
+    }
+    /**
+     * Returns whether this actually is a path to a FIFO device.
+     * @param stat The fs.Stats object to check. If not provided, it is retrieved synchronously.
+     * @throws If the path does not exist.
+     */
+    isFIFO(stat = this.statSync()) {
+        return stat.isFIFO();
+    }
+    /**
+     * Returns whether this actually is a path to a socket.
+     * @param stat The fs.Stats object to check. If not provided, it is retrieved synchronously.
+     * @throws If the path does not exist.
+     */
+    isSocket(stat = this.statSync()) {
+        return stat.isSocket();
+    }
+}
+
+/**
+ * Extension class of AbstractFsObject, which extends the native String class, representing a path to a file.
+ * @see AbstractFsPath
+ */
+class FilePath extends AbstractFsPath {
+    /**
+     * Creates a new FilePath instance.
+     * @param filepath The absolute path
+     * @param _unsafe Used internally changing it is not recommended. If true, the path is not checked for whether it is actually absolute, it is not normalized and it is assumed to be of type string.
+     */
+    constructor(filepath, _unsafe = false) {
+        super(filepath, _unsafe);
+    }
+    /**
+     * Returns whether this is an FilePath instance.
+     */
+    get isFilePath() {
+        return true;
+    }
+    /**
+     * The absolute path to the directory of the filesystem object.
+     */
+    get parent() {
+        return new DirectoryPath(this.parentPath, true);
+    }
+    /**
+     * The absolute path to the file.
+     */
+    get filepath() {
+        return this.absolute;
+    }
+    /**
+     * The filename (including the file extension).
      */
     get filename() {
         return path.basename(this.filepath);
     }
     /**
-     * The name of the directory of the source file.
+     * The file extension of the source file.
+     * @returns The file extension, including the leading dot.
      */
-    get dirname() {
-        return path.basename(this.dirpath);
+    get extension() {
+        return path.extname(this.filepath);
     }
     /**
-     * The absolute path to the directory of the source file.
+     * Read the file synchronously with fs.readFileSync.
+     * @param encoding The encoding to use. If none is specified, a Buffer is returned.
+     */
+    readFileSync(encoding) {
+        return fs.readFileSync(this.filepath, encoding);
+    }
+    /**
+     * Read the file asynchronously with fs.promises.readFile.
+     * @param encoding The encoding to use. If none is specified, a Buffer is returned.
+     */
+    readFile(encoding) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return fs.promises.readFile(this.filepath, encoding);
+        });
+    }
+    /**
+     * Read the file synchronously as a string with fs.readFileSync.
+     * @param encoding The encoding to use. Defaults to 'utf8'.
+     */
+    readFileStringSync(encoding = 'utf8') {
+        return fs.readFileSync(this.filepath, encoding);
+    }
+    /**
+     * Read the file asynchronously as a string with fs.promises.readFile.
+     * @param encoding The encoding to use. Defaults to 'utf8'.
+     */
+    readFileString(encoding = 'utf8') {
+        return __awaiter(this, void 0, void 0, function* () {
+            return fs.promises.readFile(this.filepath, encoding);
+        });
+    }
+    /**
+     * Write or overwrite the file synchronously with fs.writeFileSync.
+     * If the directory path does not exist, it is created and no error is thrown.
+     * @param data A string or Buffer to write to the file.
+     * @param encoding The encoding to use. Defaults to 'utf8'.
+     */
+    writeFileSync(data, encoding = 'utf8') {
+        createDirectorySync(this.parentPath);
+        fs.writeFileSync(this.filepath, data, encoding);
+    }
+    /**
+     * Write or overwrite the file asynchronously with fs.promises.writeFile.
+     * If the directory path does not exist, it is created and no error is thrown.
+     * @param data A string or Buffer to write to the file.
+     * @param encoding The encoding to use. Defaults to 'utf8'.
+     */
+    writeFile(data, encoding = 'utf8') {
+        return __awaiter(this, void 0, void 0, function* () {
+            createDirectory(this.parentPath);
+            yield fs.promises.writeFile(this.filepath, data, encoding);
+        });
+    }
+}
+
+/**
+ * Extension class of AbstractFsObject, which extends the native String class, representing a path to a block device.
+ * @see AbstractFsPath
+ * @remarks
+ * This represents a device file that provides buffered I/O access in fixed-size blocks. Block devices usually correspond to devices with data storage like hard drives.
+ * This class has no special methods or properties. It is only used to distinguish between different types of filesystem objects.
+ */
+class BlockDevicePath extends AbstractFsPath {
+    /**
+     * Creates a new BlockDevicePath instance.
+     * @param abolsute The absolute path.
+     * @param _unsafe Used internally changing it is not recommended. If true, the path is not checked for whether it is actually absolute, it is not normalized and it is assumed to be of type string.
+     */
+    constructor(absolute, _unsafe = false) {
+        super(absolute, _unsafe);
+    }
+    /**
+     * Returns whether this is an BlockDevicePath instance.
+     */
+    get isBlockDevicePath() {
+        return true;
+    }
+}
+
+/**
+ * Extension class of AbstractFsObject, which extends the native String class, representing a path to a character device.
+ * @see AbstractFsPath
+ * @remarks
+ * This represents a device file that provides unbuffered I/O access in variable block sizes. Character devices might correspond to hardware like keyboards or mice.
+ * This class has no special methods or properties. It is only used to distinguish between different types of filesystem objects.
+ */
+class CharacterDevicePath extends AbstractFsPath {
+    /**
+     * Creates a new CharacterDevicePath instance.
+     * @param abolsute The absolute path.
+     * @param _unsafe Used internally changing it is not recommended. If true, the path is not checked for whether it is actually absolute, it is not normalized and it is assumed to be of type string.
+     */
+    constructor(absolute, _unsafe = false) {
+        super(absolute, _unsafe);
+    }
+    /**
+     * Returns whether this is an CharacterDevicePath instance.
+     */
+    get isCharacterDevicePath() {
+        return true;
+    }
+}
+
+/**
+ * Extension class of AbstractFsObject, which extends the native String class, representing a path to a FIFO.
+ * @see AbstractFsPath
+ * @remarks
+ * FIFO stands for First In, First Out and refers to a method for organizing and manipulating a data buffer. It's a special type of file which is used for interprocess communication.
+ * This class has no special methods or properties. It is only used to distinguish between different types of filesystem objects.
+ */
+class FIFOPath extends AbstractFsPath {
+    /**
+     * Creates a new FIFOPath instance.
+     * @param abolsute The absolute path.
+     * @param _unsafe Used internally changing it is not recommended. If true, the path is not checked for whether it is actually absolute, it is not normalized and it is assumed to be of type string.
+     */
+    constructor(absolute, _unsafe = false) {
+        super(absolute, _unsafe);
+    }
+    /**
+     * Returns whether this is an FIFOPath instance.
+     */
+    get isFIFOPath() {
+        return true;
+    }
+}
+
+/**
+ * Extension class of AbstractFsObject, which extends the native String class, representing a path to a socket.
+ * @see AbstractFsPath
+ * @remarks
+ * This is a special file used for inter-process communication. It provides a communication interface between a client process and a server process.
+ * This class has no special methods or properties. It is only used to distinguish between different types of filesystem objects.
+ */
+class SocketPath extends AbstractFsPath {
+    /**
+     * Creates a new SocketPath instance.
+     * @param abolsute The absolute path.
+     * @param _unsafe Used internally changing it is not recommended. If true, the path is not checked for whether it is actually absolute, it is not normalized and it is assumed to be of type string.
+     */
+    constructor(absolute, _unsafe = false) {
+        super(absolute, _unsafe);
+    }
+    /**
+     * Returns whether this is an SocketPath instance.
+     */
+    get isSocketPath() {
+        return true;
+    }
+}
+
+/**
+ * Extension class of AbstractFsObject, which extends the native String class, representing a path to a symbolic link.
+ * @see AbstractFsPath
+ * @remarks
+ * This is a file that points to another file or directory. It's a reference or shortcut.
+ * This class has no special methods or properties. It is only used to distinguish between different types of filesystem objects.
+ */
+class SymbolicLinkPath extends AbstractFsPath {
+    /**
+     * Creates a new SymbolicLinkPath instance.
+     * @param abolsute The absolute path.
+     * @param _unsafe Used internally changing it is not recommended. If true, the path is not checked for whether it is actually absolute, it is not normalized and it is assumed to be of type string.
+     */
+    constructor(absolute, _unsafe = false) {
+        super(absolute, _unsafe);
+    }
+    /**
+     * Returns whether this is an SymbolcLinkPath instance.
+     */
+    get isSymbolicLinkPath() {
+        return true;
+    }
+}
+
+/**
+ * Creates a new FsObject instance of the correct type.
+ * @param absolute The absolute path to the filesystem object.
+ * @param stat The fs.Stats object of the filesystem object.
+ * @returns an instance of the correct subclass of @see AbstractFsPath.
+ */
+function instantiateCorrectFsPathSubclass(absolute, stat) {
+    if (stat.isFile())
+        return new FilePath(absolute, true);
+    if (stat.isDirectory())
+        return new DirectoryPath(absolute, true);
+    if (stat.isSymbolicLink())
+        return new SymbolicLinkPath(absolute, true);
+    if (stat.isBlockDevice())
+        return new BlockDevicePath(absolute, true);
+    if (stat.isCharacterDevice())
+        return new CharacterDevicePath(absolute, true);
+    if (stat.isFIFO())
+        return new FIFOPath(absolute, true);
+    return new SocketPath(absolute, true);
+}
+
+/**
+ * Extension class of AbstractFsObject, which extends the native String class, representing a path to a directory.
+ * @see AbstractFsPath
+ */
+class DirectoryPath extends AbstractFsPath {
+    /**
+     * Creates a new DirectoryPath instance.
+     * @param dirpath The absolute path to the directory.
+     * @param _unsafe Used internally changing it is not recommended. If true, the path is not checked for whether it is actually absolute, it is not normalized and it is assumed to be of type string.
+     */
+    constructor(dirpath, _unsafe = false) {
+        super(dirpath, _unsafe);
+    }
+    /**
+     * The absolute path to the directory.
      */
     get dirpath() {
-        return path.dirname(this.filepath);
+        return this.absolute;
     }
     /**
-     * The relative path to the source file from the working directory.
+     * Returns whether this is an DirectoryPath instance.
      */
-    get relative() {
-        return absoluteToRelativePath(this.filepath);
+    get isDirectoryPath() {
+        return true;
     }
+    /**
+     * The absolute path to the directory of the filesystem object.
+     */
+    get parent() {
+        return new DirectoryPath(this.parentPath);
+    }
+    /**
+     * Returns a new DirectoryPath instance representing a subdirectory of this directory.
+     * @param paths The path segments to join to the directory path.
+     */
+    subdir(...paths) {
+        return new DirectoryPath(path.join(this.dirpath, ...paths), true);
+    }
+    /**
+     * Returns a new FilePath instance representing a file in this directory.
+     * @param filename The name (including extension) of the file.
+     */
+    file(filename) {
+        return new FilePath(path.join(this.dirpath, filename), true);
+    }
+    /**
+     * Synchronously reads the directory with fs.readdir and returns its contents as as FsObject instances.
+     * @throws If the path does not exist.
+     */
+    readdirSync() {
+        return fs.readdirSync(this.dirpath).map((filename) => {
+            const absolute = path.join(this.dirpath, filename);
+            const stat = fs.statSync(absolute);
+            return instantiateCorrectFsPathSubclass(absolute, stat);
+        });
+    }
+    /**
+     * Asynchronously reads the directory with fs.promises.readdir and returns its contents as as FsObject instances.
+     * @throws If the path does not exist.
+     */
+    readdir() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Promise.all((yield fs.promises.readdir(this.dirpath)).map((filename) => __awaiter(this, void 0, void 0, function* () {
+                const absolute = path.join(this.dirpath, filename);
+                const stat = yield fs.promises.stat(absolute);
+                return instantiateCorrectFsPathSubclass(absolute, stat);
+            })));
+        });
+    }
+}
+
+function getLastMofifiedFileIn(dirpath, filter) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const dir = new DirectoryPath(dirpath);
+        const children = yield dir.readdir();
+        const filtered = children.filter((p) => p.isFilePath && filter(p));
+        const withStat = yield Promise.all(filtered.map((filepath) => __awaiter(this, void 0, void 0, function* () { return [filepath, (yield filepath.stat()).mtimeMs]; })));
+        const sorted = withStat.sort((a, b) => b[1] - a[1]);
+        return sorted[0][0];
+    });
 }
 
 /**
@@ -4401,7 +5002,7 @@ function readExcelFile(filepath) {
  */
 function readJsonFile(filepath) {
     return __awaiter(this, void 0, void 0, function* () {
-        return JSON.parse((yield fs.promises.readFile(filepath)).toString());
+        return JSON.parse(yield fs.promises.readFile(filepath, 'utf8'));
     });
 }
 
@@ -4417,7 +5018,145 @@ function readJsonFile(filepath) {
  * ```
  */
 function readJsonFileSync(filepath) {
-    return JSON.parse(fs.readFileSync(filepath).toString());
+    return JSON.parse(fs.readFileSync(filepath, 'utf8'));
+}
+
+function removeIllegalFilenameCharacters(string) {
+    return string.replace(/[/\\?%*:|"<>]/g, '');
+}
+
+function unzipFile(filepath, outdir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield extract(filepath, { dir: outdir });
+    });
+}
+
+/**
+ * @param source Either a directory containing zip files or an array of zip file paths.
+ */
+function unzipMergeFiles(source, target) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (typeof source === 'string') {
+            source = fs.readdirSync(source).map((filename) => {
+                return path.join(source, filename);
+            });
+        }
+        for (const filepath of source) {
+            const stat = yield fs.promises.stat(filepath);
+            if (stat.isDirectory())
+                continue;
+            if (!filepath.endsWith('.zip'))
+                continue;
+            yield extract(filepath, { dir: target });
+        }
+    });
+}
+
+function convertFilter(filter) {
+    return (directory, files) => {
+        return files.filter((filename) => {
+            const absolute = path.join(directory, filename);
+            return filter(absolute, fs.statSync(absolute));
+        });
+    };
+}
+
+function findFile(dirpath, search, options = {}) {
+    return __awaiter(this, void 0, void 0, function* () {
+        search = search.replace(/\\|\//g, path.sep);
+        const regSearch = new RegExp(regexEscapeString(search), 'i');
+        const filter = options.filter ? convertFilter(options.filter) : undefined;
+        return yield new Promise((resolve, reject) => {
+            const emitter = walkdir(dirpath, Object.assign(Object.assign({}, options), { no_return: true, filter }));
+            emitter.on('file', (filepath) => {
+                if (regSearch.test(filepath)) {
+                    emitter.end();
+                    resolve(filepath);
+                }
+            });
+            emitter.on('end', () => resolve(undefined));
+            emitter.on('error', (error) => reject(error));
+        });
+    });
+}
+// export async function search(dirpath: string, search: string): Promise<string | undefined> {
+//   return await new Promise((resolve, reject) => {
+//     const emitter = walkdir(dirpath, {
+//       no_return: true,
+//       filter: (directory: string, files: string[]): string[] => {
+//         if (directory.endsWith('\\node_modules')) return []
+//         if (directory.endsWith('\\.git')) return []
+//         return files.filter((file) => {
+//           const stat = fs.statSync(path.join(directory, file))
+//           if (stat.isDirectory()) {
+//             if (file === 'node_modules') return false
+//             if (file.startsWith('.')) return false
+//             // console.log(file)
+//             return true
+//           } else {
+//             return file.endsWith('.ts') && !/\.\w+\.ts$/i.test(file)
+//           }
+//         })
+//       },
+//     }) as walkdir.WalkEmitter
+//     emitter.on('file', (filepath: string) => {
+//       findInFile(filepath, search).catch((error) => console.error(error))
+//     })
+//     emitter.on('end', () => resolve(undefined))
+//     emitter.on('error', (error) => reject(error))
+//   })
+// }
+// async function findInFile(filepath: string, search: string) {
+//   return await new Promise((resolve, reject) => {
+//     const regSearch = new RegExp(regexEscapeString(search), 'i')
+//     const stream = fs
+//       .createReadStream(filepath)
+//       .pipe(es.split())
+//       .on('data', (line) => {
+//         if (regSearch.test(line)) {
+//           console.log(filepath)
+//           stream.end()
+//           resolve(filepath)
+//         }
+//       })
+//       .on('error', function (err: any) {
+//         console.log(err)
+//         stream.end()
+//         resolve(undefined)
+//       })
+//       .on('end', function () {
+//         resolve(undefined)
+//       })
+//   })
+// }
+// search('C:/Users/bemoj/repos', "import fs from 'fs'")
+
+function walkDirectory(dirpath, options = {}, callback) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const no_return = !!callback;
+        const return_object = false;
+        const filter = options.filter ? convertFilter(options.filter) : undefined;
+        return yield walkdir.async(dirpath, Object.assign(Object.assign({}, options), { no_return, return_object, filter }), callback);
+    });
+}
+
+function walkDirectoryEmitter(dirpath, options = {}) {
+    const filter = options.filter ? convertFilter(options.filter) : undefined;
+    return walkdir(dirpath, Object.assign(Object.assign({}, options), { no_return: true, filter }));
+}
+
+function walkDirectorySync(dirpath, options = {}, callback) {
+    const no_return = !!callback;
+    const return_object = false;
+    const filter = options.filter ? convertFilter(options.filter) : undefined;
+    return walkdir.sync(dirpath, Object.assign(Object.assign({}, options), { no_return, return_object, filter }), callback);
+}
+
+function wipeDirectorySafe(dirpath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield deleteDirectorySafe(dirpath);
+        yield createDirectory(dirpath);
+    });
 }
 
 /**
@@ -4528,6 +5267,32 @@ class ExtensibleFunction extends Function {
         super(typeof f === 'string' ? f : f.toString());
         return Object.setPrototypeOf(f, new.target.prototype);
     }
+}
+
+function funAsyncAutoRateLimit(concurrency, func) {
+    let wasJustReduced = false;
+    const [queue, result] = funAsyncRateLimit(function (...args) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield func.call(queue, ...args);
+            }
+            catch (error) {
+                if (!wasJustReduced) {
+                    wasJustReduced = true;
+                    queue.concurrency = Math.max(1, Math.floor(queue.concurrency / 10));
+                    yield wait(250);
+                    wasJustReduced = false;
+                    const newValue = queue.concurrency * 9;
+                    queue.concurrency = newValue;
+                    if (newValue < concurrency / 10) {
+                        throw new Error('funAsyncAutoRateLimit: concurrency is below 10% of the original value.');
+                    }
+                }
+                return yield result(...args);
+            }
+        });
+    }, { concurrency });
+    return funSetName(result.name, result);
 }
 
 function funParseClass(ctor) {
@@ -4862,53 +5627,6 @@ const _HTML_ATTRIBUTES = new Set([
 ]);
 
 /**
- * Represents an HTML attribute.
- * @remarks Can be rendered as real html or converted to a real DOM attribute from the _HtmlElement class.
- */
-class _HtmlAttribute {
-    /**
-     * Creates an _HtmlAttribute instance.
-     * @param name The attribute's name
-     * @param value The attribute's value
-     */
-    constructor(name, value) {
-        this.name = name;
-        this.value = value;
-    }
-    /**
-     * Whether the attribute is a boolean attribute.
-     */
-    get isBoolean() {
-        return _HTML_BOOLEAN_ATTRIBUTES.has(this.name);
-    }
-    /**
-     * Render the HTML attribute as a string.
-     */
-    toString() {
-        return `${this.name}${this.isBoolean ? '' : `="${this.value || ''}"`}`;
-    }
-}
-
-/**
- * Attribute name to _HtmlAttribute instance map.
- * The common HTML attributes are instantiated on module initialization.
- */
-const attr = (() => {
-    const attributes = {};
-    for (const name of _HTML_ATTRIBUTES) {
-        attributes[name] = (value) => new _HtmlAttribute(name, value);
-    }
-    return attributes;
-})();
-
-/**
- * Render an HTML comment.
- */
-const comment = (comment) => {
-    return '<!-- ' + comment + ' -->';
-};
-
-/**
  * Elements that are void and do not have an end tag.
  * @example ```html
  * <br />
@@ -5075,6 +5793,34 @@ const _HTML_ELEMENTS = new Set([
 ]);
 
 /**
+ * Represents an HTML attribute.
+ * @remarks Can be rendered as real html or converted to a real DOM attribute from the _HtmlElement class.
+ */
+class _HtmlAttribute {
+    /**
+     * Creates an _HtmlAttribute instance.
+     * @param name The attribute's name
+     * @param value The attribute's value
+     */
+    constructor(name, value) {
+        this.name = name;
+        this.value = value;
+    }
+    /**
+     * Whether the attribute is a boolean attribute.
+     */
+    get isBoolean() {
+        return _HTML_BOOLEAN_ATTRIBUTES.has(this.name);
+    }
+    /**
+     * Render the HTML attribute as a string.
+     */
+    toString() {
+        return `${this.name}${this.isBoolean ? '' : `="${this.value || ''}"`}`;
+    }
+}
+
+/**
  * Represents an HTML element.
  * @remarks Can be rendered as real html or converted to a real DOM element.
  */
@@ -5143,11 +5889,53 @@ class _HtmlElement {
 }
 
 /**
+ * Attribute name to _HtmlAttribute instance map.
+ * The common HTML attributes are instantiated on module initialization.
+ */
+const attr = (() => {
+    const attributes = {};
+    for (const name of _HTML_ATTRIBUTES) {
+        attributes[name] = (value) => new _HtmlAttribute(name, value);
+    }
+    return attributes;
+})();
+/**
+ * Render an HTML comment.
+ */
+const comment = (comment) => {
+    return '<!-- ' + comment + ' -->';
+};
+/**
+ * Element tag to _HtmlElement instance map.
+ * The common HTML tags are instantiated on module initialization.
+ */
+const el = (() => {
+    const elements = {};
+    for (const tag of _HTML_ELEMENTS) {
+        elements[tag] = (...args) => new _HtmlElement(tag, ...args);
+    }
+    elements['html'] = (...args) => new _HtmlDocument('html', ...args);
+    return elements;
+})();
+/**
+ * Render an HTML table element from a 2D array table.
+ * @param rows The table's rows
+ * @param hasHeaders Whether the first row is a header row
+ */
+const tableFrom = (rows, hasHeaders = true) => {
+    const thead = el.thead();
+    if (hasHeaders) {
+        rows = rows.slice();
+        thead.children.push(el.tr((rows.shift() || []).map((cell) => el.th(cell))));
+    }
+    return el.table(attr.class('table table-striped table-hover table-sm'), thead, el.tbody(rows.map((row) => el.tr(row.map((cell) => el.td(cell))))));
+};
+
+/**
  * Represents an HTML document.
  * @remarks Can be rendered as real html.
  * @example ```ts
- * import { html } from './html'
- * const { el, attr, tableFrom, comment } = html
+ * import { attr, comment, el, tableFrom } from './html'
  *
  * const doc = _HtmlDocument.simple({
  *   title: 'index',
@@ -5180,12 +5968,15 @@ class _HtmlElement {
  *   ],
  *   scripts: [
  *     el.script(`function doit() { console.log('did it'); }`),
+ *     //
  *   ],
  * })
  *
  * console.dir(doc, { depth: null })
+ * //=> Shows a tree structure similar to a DOM.
+ *
  * console.log(doc.toString())
- * fs.writeFileSync(__filename + '.html', doc.toString())
+ * // => `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>index</title><!-- Bootstrap CSS --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" /><!-- Custom CSS --><style>body { margin: 50px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; }</style><style>.row { margin-top: 10px } .col { margin: 20px }</style></head><body><!-- Content --><div id="root" class="container"><!-- First row --><div class="row"><div class="col"><h3>Table</h3><table class="table table-striped table-hover table-sm"><thead><tr><th>A</th><th>B</th><th>C</th></tr></thead><tbody><tr><td>Abe</td><td>Ben</td><td>Citron</td></tr><tr><td>Ananas</td><td>Bongo</td><td>Cirkus</td></tr></tbody></table><div class="col"><h3>Text</h3><p>This is a paragraph.</p></div></div></div><!-- Second row --><div class="row"><div class="col"><h3>List</h3><ul><li contenteditable>one</li><li contenteditable>two</li><li contenteditable>three</li><li contenteditable>four</li></ul></div><div class="col"><h3>Button</h3><button class="btn btn-primary" onclick="doit()">Click me!</button></div></div></div><!-- Bootstrap JS --><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script><!-- Custom JS --><script>function doit() { console.log('did it'); }</script></body></html>`
  * ```
  */
 class _HtmlDocument extends _HtmlElement {
@@ -5209,51 +6000,6 @@ class _HtmlDocument extends _HtmlElement {
         return '<!DOCTYPE html>' + super.toString();
     }
 }
-
-/**
- * Element tag to _HtmlElement instance map.
- * The common HTML tags are instantiated on module initialization.
- */
-const el = (() => {
-    const elements = {};
-    for (const tag of _HTML_ELEMENTS) {
-        elements[tag] = (...args) => new _HtmlElement(tag, ...args);
-    }
-    elements['html'] = (...args) => new _HtmlDocument('html', ...args);
-    return elements;
-})();
-
-/**
- * Returns a table element's cell's textContent as a 2-dimensional array.
- * @remarks Requires a DOM to manipulate.
- * @param table The table element
- */
-function htmlTableToArray(table) {
-    var _a;
-    const result = [];
-    for (const tr of Array.from(table.querySelectorAll('tr'))) {
-        const row = [];
-        for (const td of Array.from(tr.querySelectorAll('th,td'))) {
-            row.push(((_a = td === null || td === void 0 ? void 0 : td.textContent) === null || _a === void 0 ? void 0 : _a.trim()) || '');
-        }
-        result.push(row);
-    }
-    return result;
-}
-
-/**
- * Render an HTML table element from a 2D array table.
- * @param rows The table's rows
- * @param hasHeaders Whether the first row is a header row
- */
-const tableFrom = (rows, hasHeaders = true) => {
-    const thead = el.thead();
-    if (hasHeaders) {
-        rows = rows.slice();
-        thead.children.push(el.tr((rows.shift() || []).map((cell) => el.th(cell))));
-    }
-    return el.table(attr.class('table table-striped table-hover table-sm'), thead, el.tbody(rows.map((row) => el.tr(row.map((cell) => el.td(cell))))));
-};
 
 /**
  * Returns a value from a map, while setting a given default value before returning it, if the key is not present.
@@ -5319,6 +6065,144 @@ function mapUpdate(map, key, fun) {
 }
 
 /**
+ * Checks if the provided value is a valid number.
+ * @remarks This function checks if the provided value is a finite number and not NaN.
+ * @param number The value to check.
+ * @returns A boolean indicating whether the provided value is a valid number.
+ * @example ```ts
+ * isValidNumber(123);
+ * //=> true
+ * isValidNumber(NaN);
+ * //=> false
+ * isValidNumber(Infinity);
+ * //=> false
+ * ```
+ */
+function isValidNumber(number) {
+    return isFinite(number) && !isNaN(number);
+}
+
+/**
+ * Asserts that the provided value is a valid number. If the value is not a valid number, it throws a TypeError.
+ * A valid number is a finite number and not NaN.
+ * @param number The number to be validated.
+ * @returns Returns the validated number if it is valid.
+ * @throws Throws an error if the provided number is not valid.
+ * @example ```ts
+ * assertValidNumber(5);;
+ * //=> 5
+ * assertValidNumber(NaN);;
+ * //=> throws TypeError
+ * ```
+ */
+function assertValidNumber(number) {
+    if (isValidNumber(number))
+        return number;
+    throw new TypeError('Expected number to be finite and not NaN. Got: ' + number);
+}
+
+/**
+ * Round a given number with a given precision and rounding function.
+ * Shifts with exponential notation to avoid floating-point issues.
+ * @param number the number to round.
+ * @param precision the number of decimal points.
+ * @param func the rounding function to use.
+ * @returns The rounded number.
+ * @throws if the given number is not finite or NaN.
+ * @example ```ts
+ * roundWith(1.2345, 2);;
+ * //=> 1.23
+ * roundWith(1.2345, 2, Math.ceil);;
+ * //=> 1.24
+ * ```
+ */
+function roundWith(number, precision, func = Math.round) {
+    const pair1 = (assertValidNumber(number) + 'e').split('e');
+    const pair2 = (func(+(pair1[0] + 'e' + (+pair1[1] + precision))) + 'e').split('e');
+    return +(pair2[0] + 'e' + (+pair2[1] - precision));
+}
+
+/**
+ * Round a given number with a given precision.
+ * Shifts with exponential notation to avoid floating-point issues.
+ * @param number the number to round.
+ * @param precision the number of decimal points.
+ * @param - The number of decimal places to round to. Defaults to 0 if not specified.
+ * @returns The rounded number.
+ * @throws if the given number is not finite or NaN.
+ * @example ```ts
+ * round(1.2345, 2);
+ * //=> 1.23
+ * round(1.2345);
+ * //=> 1
+ * ```
+ */
+function round(number, precision = 0) {
+    return roundWith(number, precision, Math.round);
+}
+
+new PrettyError().start();
+/**
+ * @typeparam TBase - The type of the base constructor.
+ * @param BaseConstructor The base constructor to extend.
+ * @returns A constructor for a class that extends the base constructor and includes an index and methods for getting unique identifiers.
+ * @example ```ts
+ * //
+ * ```
+ */
+function MixinEventEmitter(BaseConstructor) {
+    return class Emitter extends BaseConstructor {
+        constructor(...args) {
+            super(...args);
+            this.events = new EventEmitter();
+        }
+        taskSync(task, func) {
+            try {
+                this.emit('start', task, { task: 'started' });
+                const t0 = Date.now();
+                const returned = func();
+                if (returned !== undefined && returned !== '')
+                    this.emit('data', task, { data: returned });
+                const elapsed = round((Date.now() - t0) / 1000, 4) + ' sec';
+                this.emit('completed', task, { task: 'completed', elapsed });
+                return returned;
+            }
+            catch (error) {
+                this.emit('error', error);
+            }
+        }
+        task(task, func) {
+            return __awaiter(this, void 0, void 0, function* () {
+                try {
+                    this.emit('start', task, { task: 'started' });
+                    const t0 = Date.now();
+                    const returned = yield func();
+                    if (returned !== undefined && returned !== '')
+                        this.emit('data', task, { data: returned });
+                    const elapsed = round((Date.now() - t0) / 1000, 4) + ' sec';
+                    this.emit('completed', task, { task: 'completed', elapsed });
+                    return returned;
+                }
+                catch (error) {
+                    this.emit('error', error);
+                }
+            });
+        }
+        taskStatus(task, message) {
+            this.emit('status', task, { task: 'status', message });
+        }
+        emit(event, message, data) {
+            if (message instanceof Error) {
+                this.events.emit(event, message.stack, message, this);
+            }
+            else {
+                this.events.emit(event, message, data, this);
+            }
+        }
+    };
+}
+
+/**
  * Hash a string into a buffer with a given algorithm
  * @param string The string to hash
  * @param algorithm sha1 | sha256 | sha512 | md5 | etc...
@@ -5347,7 +6231,7 @@ function strHashToString(string, algorithm = 'sha256', encoding = 'base64') {
     return strHashToBuffer(string, algorithm).toString(encoding);
 }
 
-const nextClassIndex = new Map();
+const nextIndex = new Map();
 /**
  * This function is a mixin that adds an index to a class and provides several methods to get unique identifiers based on the class name and index.
  * @typeparam TBase - The type of the base constructor.
@@ -5362,12 +6246,12 @@ function MixinIndexed(BaseConstructor) {
         constructor(...args) {
             super(...args);
             const Class = this.getConstructor();
-            const i = nextClassIndex.get(Class);
+            const i = nextIndex.get(Class);
             if (i === undefined) {
-                nextClassIndex.set(Class, (this.i = 0));
+                nextIndex.set(Class, (this.i = 0));
             }
             else {
-                nextClassIndex.set(Class, (this.i = i + 1));
+                nextIndex.set(Class, (this.i = i + 1));
             }
         }
         get uid() {
@@ -5449,6 +6333,17 @@ function normalizeLineLengths(sentences, lowerBound, upperBound) {
     return newSentences;
 }
 
+function getHomeDirectory() {
+    const home = path.resolve(process.env['HOME'] || process.env['USERPROFILE'] || '');
+    if (!home)
+        throw new Error('Home directory not found');
+    return home;
+}
+
+function getDownloadsDirectory() {
+    return path.join(getHomeDirectory(), 'Downloads');
+}
+
 /**
  * @returns An object with the following properties:
  * - `processAllocationMB`: The amount of memory that Node.js has obtained from the system.
@@ -5479,48 +6374,25 @@ function memoryUsage() {
 }
 
 /**
- * Executes a shell command and returns a Promise that resolves with an object containing the command, stdout, and stderr.
- * The stdout and stderr are returned as arrays of strings, where each string represents a line of output.
- * If the command fails to execute, the Promise is rejected with an error.
- * @param command - The shell command to execute.
- * @returns A Promise that resolves with an object containing the command, stdout, and stderr.
- * @throws Will throw an error if the command fails to execute.
- * @example ```ts
- * shellCommand('ls -l').then(result => {
- *   console.log(result.cmd); // 'ls -l'
- *   console.log(result.stdout); // ['total 0', 'drwxr-xr-x  5 user  group  160 Jan 14 10:53 Documents', ...]
- *   console.log(result.stderr); // []
- * }).catch(error => {
- *   console.error(error);
- * });
- * ```
+ * @param command - The program to execute.
+ * @param args - The arguments to pass to the program.
  */
-function shellCommand(command) {
+function shellSpawnProgram(command, ...args) {
     return new Promise((resolve, reject) => {
-        var _a, _b;
-        const child = childProcess.exec(command);
-        const stdout = [];
-        const stderr = [];
-        (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.on('data', (data) => {
-            const string = data.toString().trim();
-            console.log(string);
-            stdout.push(string);
-        });
-        (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.on('data', (data) => {
-            const string = data.toString().trim();
-            console.error(string);
-            stderr.push(string);
-        });
+        let child;
+        const noInherit = args.indexOf('--no-inherit');
+        if (noInherit !== -1) {
+            args.splice(noInherit, 1);
+            child = childProcess.spawn(command, args);
+        }
+        else {
+            child = childProcess.spawn(command, args, { stdio: 'inherit' });
+        }
         child.on('error', (error) => {
             reject(error);
         });
         child.on('close', (code) => {
-            const data = {
-                cmd: command,
-                stdout,
-                stderr,
-            };
-            resolve(data);
+            resolve(command + ' ' + args.join(' '));
         });
     });
 }
@@ -5651,83 +6523,6 @@ function isOdd(n) {
     if (!Number.isInteger(n))
         throw new Error(`Expected integer. Got ${n}`);
     return n % 2 !== 0;
-}
-
-/**
- * Checks if the provided value is a valid number.
- * @remarks This function checks if the provided value is a finite number and not NaN.
- * @param number The value to check.
- * @returns A boolean indicating whether the provided value is a valid number.
- * @example ```ts
- * isValidNumber(123);
- * //=> true
- * isValidNumber(NaN);
- * //=> false
- * isValidNumber(Infinity);
- * //=> false
- * ```
- */
-function isValidNumber(number) {
-    return isFinite(number) && !isNaN(number);
-}
-
-/**
- * Asserts that the provided value is a valid number. If the value is not a valid number, it throws a TypeError.
- * A valid number is a finite number and not NaN.
- * @param number The number to be validated.
- * @returns Returns the validated number if it is valid.
- * @throws Throws an error if the provided number is not valid.
- * @example ```ts
- * assertValidNumber(5);;
- * //=> 5
- * assertValidNumber(NaN);;
- * //=> throws TypeError
- * ```
- */
-function assertValidNumber(number) {
-    if (isValidNumber(number))
-        return number;
-    throw new TypeError('Expected number to be finite and not NaN. Got: ' + number);
-}
-
-/**
- * Round a given number with a given precision and rounding function.
- * Shifts with exponential notation to avoid floating-point issues.
- * @param number the number to round.
- * @param precision the number of decimal points.
- * @param func the rounding function to use.
- * @returns The rounded number.
- * @throws if the given number is not finite or NaN.
- * @example ```ts
- * roundWith(1.2345, 2);;
- * //=> 1.23
- * roundWith(1.2345, 2, Math.ceil);;
- * //=> 1.24
- * ```
- */
-function roundWith(number, precision, func = Math.round) {
-    const pair1 = (assertValidNumber(number) + 'e').split('e');
-    const pair2 = (func(+(pair1[0] + 'e' + (+pair1[1] + precision))) + 'e').split('e');
-    return +(pair2[0] + 'e' + (+pair2[1] - precision));
-}
-
-/**
- * Round a given number with a given precision.
- * Shifts with exponential notation to avoid floating-point issues.
- * @param number the number to round.
- * @param precision the number of decimal points.
- * @param - The number of decimal places to round to. Defaults to 0 if not specified.
- * @returns The rounded number.
- * @throws if the given number is not finite or NaN.
- * @example ```ts
- * round(1.2345, 2);
- * //=> 1.23
- * round(1.2345);
- * //=> 1
- * ```
- */
-function round(number, precision = 0) {
-    return roundWith(number, precision, Math.round);
 }
 
 const locales = new Map([
@@ -5938,13 +6733,40 @@ function roundToNearestPow10(integer, nearest = 1) {
  * @throws if the given number is not finite or NaN.
  * @example ```ts
  * roundUp(1.2345, 2);;
- * //=> 1.24
+ * //=> 1.23
  * roundUp(1.2345);;
  * //=> 2
  * ```
  */
 function roundUp(number, precision = 0) {
     return roundWith(number, precision, Math.ceil);
+}
+
+/**
+ * Returns the constructor of the given object.
+ * @template T - The type of the object.
+ * @param o The object whose constructor is to be returned.
+ * @returns The constructor of the object.
+ * @example ```ts
+ * class MyClass {}
+ * getConstructor(new MyClass()) === MyClass;;
+ * //=> true
+ * ```
+ */
+function getConstructor(o) {
+    return Object.getPrototypeOf(o).constructor;
+}
+
+function getOrElse(obj, func) {
+    if (obj === undefined)
+        return func();
+    return obj;
+}
+
+function getOrThrow(obj, error) {
+    if (obj === undefined)
+        throw error;
+    return obj;
 }
 
 /**
@@ -6089,6 +6911,23 @@ function* iteratePrototypeChain(object) {
 }
 
 /**
+ * Merges two objects deeply, returning a new object that has the combined properties of both.
+ * If a property exists in both objects, the value from the source object will be used.
+ * @template T - The type of the target object.
+ * @template U - The type of the source object.
+ * @param target The target object to which properties will be added.
+ * @param source The source object from which properties will be copied.
+ * @returns A new object that has the combined properties of both the target and source objects.
+ * @example ```ts
+ * objAssignDeep({ a: 1, b: 2 }, { b: 3, c: 4 });;
+ * //=> { a: 1, b: 3, c: 4 }
+ * ```
+ */
+function objAssignDeep(target, source) {
+    return deepAssign(target, source);
+}
+
+/**
  * Deep freezes an object, making it immutable by recursively freezing all nested objects and functions.
  * @returns The same object, but deeply frozen.
  * @throws If the object is not an object or function.
@@ -6175,6 +7014,30 @@ function* objEntries(obj) {
  */
 function objEntriesArray(obj) {
     return Array.from(Object.entries(obj));
+}
+
+/**
+ * Filters the properties of an object based on a callback function.
+ * @param object The object to filter.
+ * @param callback The callback function used to filter the object properties.
+ * @template T - The type of the values in the object.
+ * @param - The function to get the keys of the object. Defaults to `Object.keys`.
+ * @returns A new object with the properties that passed the test. If no properties passed the test, an empty object will be returned.
+ * @param getKeys The function used to get the keys of the object.
+ * @example ```ts
+ * const obj = { a: 1, b: 2, c: 3 };
+ * objFilter(obj, (value, key) => value > 1);
+ * //=> { b: 2, c: 3 }
+ * ```
+ */
+function objFilter(object, callback, getKeys = Object.keys) {
+    const result = {};
+    for (const key of getKeys(object)) {
+        if (callback(object[key], key)) {
+            result[key] = object[key];
+        }
+    }
+    return result;
 }
 
 /**
@@ -6380,6 +7243,22 @@ function objMapMutable(object, callback, getKeys = Object.keys) {
         object[key] = callback(object[key], key);
     }
     return object;
+}
+
+/**
+ * Deletes specified keys from an object. This function takes an object and an array of keys to be deleted from the object. It returns a new object with the specified keys removed.
+ * @param obj The object from which keys are to be deleted.
+ * @template V - The type of the values in the object.
+ * @returns A new object with the specified keys deleted.
+ * @param keys The keys to be deleted from the object.
+ * @example ```ts
+ * const obj = { a: 1, b: 2, c: 3 };
+ * objOmitKeys(obj, 'a', 'c');
+ * //=> { b: 2 }
+ * ```
+ */
+function objOmitKeys(obj, ...keys) {
+    return objFilter(obj, (_, key) => !keys.includes(key));
 }
 
 /**
@@ -7399,7 +8278,6 @@ function timeStringToInt(string) {
     return timeArrayToIntUnsafe(timeStringToArray(string));
 }
 
-var _Time_ms;
 /**
  * Represents a time of day or a duration.
  * Precision is from hours to miliseconds.
@@ -7411,20 +8289,15 @@ class Time {
      * @throws if the time is invalid.
      */
     constructor(input) {
-        /**
-         * The time in millisecond representation.
-         * This is the only value stored internally.
-         */
-        _Time_ms.set(this, void 0);
         if (typeof input === 'number') {
             assertValidTimeInt(input);
-            __classPrivateFieldSet(this, _Time_ms, input, "f");
+            this.ms = input;
         }
         else if (typeof input === 'string') {
-            __classPrivateFieldSet(this, _Time_ms, timeStringToInt(input), "f");
+            this.ms = timeStringToInt(input);
         }
         else {
-            __classPrivateFieldSet(this, _Time_ms, timeArrayToInt(input), "f");
+            this.ms = timeArrayToInt(input);
         }
     }
     /**
@@ -7434,8 +8307,8 @@ class Time {
      * @throws if the time becomes invalid after the operation.
      */
     addHours(hours) {
-        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") + hours * 3600000, "f");
-        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        this.ms += hours * 3600000;
+        assertValidTimeInt(this.ms);
         return this;
     }
     /**
@@ -7445,8 +8318,8 @@ class Time {
      * @throws if the time becomes invalid after the operation.
      */
     addMinutes(minutes) {
-        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") + minutes * 60000, "f");
-        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        this.ms += minutes * 60000;
+        assertValidTimeInt(this.ms);
         return this;
     }
     /**
@@ -7456,8 +8329,8 @@ class Time {
      * @throws if the time becomes invalid after the operation.
      */
     addSeconds(seconds) {
-        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") + seconds * 1000, "f");
-        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        this.ms += seconds * 1000;
+        assertValidTimeInt(this.ms);
         return this;
     }
     /**
@@ -7467,8 +8340,8 @@ class Time {
      * @throws if the time becomes invalid after the operation.
      */
     addMilliseconds(milliseconds) {
-        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") + milliseconds, "f");
-        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        this.ms += milliseconds;
+        assertValidTimeInt(this.ms);
         return this;
     }
     /**
@@ -7478,8 +8351,8 @@ class Time {
      * @throws if the time becomes invalid after the operation.
      */
     subtractHours(hours) {
-        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") - hours * 3600000, "f");
-        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        this.ms -= hours * 3600000;
+        assertValidTimeInt(this.ms);
         return this;
     }
     /**
@@ -7489,8 +8362,8 @@ class Time {
      * @throws if the time becomes invalid after the operation.
      */
     subtractMinutes(minutes) {
-        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") - minutes * 60000, "f");
-        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        this.ms -= minutes * 60000;
+        assertValidTimeInt(this.ms);
         return this;
     }
     /**
@@ -7500,8 +8373,8 @@ class Time {
      * @throws if the time becomes invalid after the operation.
      */
     subtractSeconds(seconds) {
-        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") - seconds * 1000, "f");
-        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        this.ms -= seconds * 1000;
+        assertValidTimeInt(this.ms);
         return this;
     }
     /**
@@ -7511,15 +8384,15 @@ class Time {
      * @throws if the time becomes invalid after the operation.
      */
     subtractMilliseconds(milliseconds) {
-        __classPrivateFieldSet(this, _Time_ms, __classPrivateFieldGet(this, _Time_ms, "f") - milliseconds, "f");
-        assertValidTimeInt(__classPrivateFieldGet(this, _Time_ms, "f"));
+        this.ms -= milliseconds;
+        assertValidTimeInt(this.ms);
         return this;
     }
     /**
      * Returns the hours.
      */
     get hours() {
-        return Math.floor(__classPrivateFieldGet(this, _Time_ms, "f") / 3600000);
+        return Math.floor(this.ms / 3600000);
     }
     /**
      * Set the hours to a specified value.
@@ -7534,7 +8407,7 @@ class Time {
      * Returns the minutes.
      */
     get minutes() {
-        return Math.floor(__classPrivateFieldGet(this, _Time_ms, "f") / 60000) % 60;
+        return Math.floor(this.ms / 60000) % 60;
     }
     /**
      * Set the minutes to a specified value.
@@ -7549,7 +8422,7 @@ class Time {
      * Returns the seconds.
      */
     get seconds() {
-        return Math.floor(__classPrivateFieldGet(this, _Time_ms, "f") / 1000) % 60;
+        return Math.floor(this.ms / 1000) % 60;
     }
     /**
      * Set the seconds to a specified value.
@@ -7564,7 +8437,7 @@ class Time {
      * Returns the milliseconds.
      */
     get milliseconds() {
-        return __classPrivateFieldGet(this, _Time_ms, "f") % 1000;
+        return this.ms % 1000;
     }
     /**
      * Set the milliseconds to a specified value.
@@ -7573,32 +8446,32 @@ class Time {
      */
     set milliseconds(value) {
         assertValidMilliseconds(value);
-        this.addMilliseconds(value - __classPrivateFieldGet(this, _Time_ms, "f"));
+        this.addMilliseconds(value - this.ms);
     }
     /**
      * Returns the time as an array in the format [HH, MM, SS, mmm].
      */
     toArray() {
-        return timeIntToArrayUnsafe(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return timeIntToArrayUnsafe(this.ms);
     }
     /**
      * Returns the time as a string in the format "HH:MM:SS.mmm".
      * @param msDelimiter The delimiter between seconds and milliseconds.
      */
     toString(msDelimiter = '.') {
-        return timeIntToStringUnsafe(__classPrivateFieldGet(this, _Time_ms, "f"), msDelimiter);
+        return timeIntToStringUnsafe(this.ms, msDelimiter);
     }
     /**
      * Returns the time in millisecond representation.
      */
     toNumber() {
-        return __classPrivateFieldGet(this, _Time_ms, "f");
+        return this.ms;
     }
     /**
      * Returns the time in millisecond representation.
      */
     valueOf() {
-        return __classPrivateFieldGet(this, _Time_ms, "f");
+        return this.ms;
     }
     /**
      * Compares this instance to another by comparing millisecond representations.
@@ -7606,7 +8479,7 @@ class Time {
      * @param other The other Time instance to compare to.
      */
     compareTo(other) {
-        return __classPrivateFieldGet(this, _Time_ms, "f") - __classPrivateFieldGet(other, _Time_ms, "f");
+        return this.ms - other.ms;
     }
     /**
      * Returns a new Time instance that represents the time difference between this instance and another.
@@ -7620,10 +8493,9 @@ class Time {
      * Returns a new Time instance.
      */
     clone() {
-        return new Time(__classPrivateFieldGet(this, _Time_ms, "f"));
+        return new Time(this.ms);
     }
 }
-_Time_ms = new WeakMap();
 
 /**
  * Represents a time interval.
@@ -7924,7 +8796,9 @@ function compareArray(compareAt, descending = false) {
 function regexScopeTree(left, right) {
     function parseParam(param) {
         const isString = typeof param === 'string';
-        const reg = isString ? new RegExp(regexEscapeString(param), 'g') : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'));
+        const reg = isString
+            ? new RegExp(regexEscapeString(param), 'g')
+            : new RegExp(param.source, strRemoveDuplicateChars(param.flags + 'g'));
         const regValidate = new RegExp('^' + reg.source + '$', '');
         return [reg, regValidate];
     }
@@ -8439,6 +9313,29 @@ function colRowToA1(CR, zeroIndexed = false) {
 }
 
 /**
+ * Counts the number of occurrences of a specific character in a string.
+ * @param input The string to search within.
+ * @param char The character to count occurrences of. Must be a single character string of length 1.
+ * @throws If the char parameter is not a single character string of length 1.
+ * @example ```ts
+ * strCountCharOccurances('hello world', 'o');;
+ * //=> 2
+ * ```
+ */
+function strCountCharOccurances(input, char) {
+    if (char.length !== 1) {
+        throw new Error('Expected char to be a single character string of length 1.');
+    }
+    let result = 0;
+    for (const c of input) {
+        if (c === char) {
+            result++;
+        }
+    }
+    return result;
+}
+
+/**
  * Counts the number of occurrences of each character in a string and returns a Map where the keys are the characters and the values are their counts.
  * @param string The string to count characters in.
  * @example ```ts
@@ -8506,6 +9403,14 @@ function strEnsureEndsWith(string, endsWith) {
  */
 function strFirstCharToUpperCase(string) {
     return string.charAt(0).toUpperCase() + string.substring(1);
+}
+
+function strHashToStringDJB2(string) {
+    let hash = 5381;
+    for (let i = 0; i < string.length; i++) {
+        hash = (hash << 5) + hash + string.charCodeAt(i);
+    }
+    return hash;
 }
 
 /**
@@ -8853,7 +9758,9 @@ function strTrimLinesRight(string) {
  * ```
  */
 function strUnwrap(input, left, right, flags = '') {
-    return input.replace(new RegExp('^' + regexEscapeString(left), flags), '').replace(new RegExp(regexEscapeString(right) + '$', flags), '');
+    return input
+        .replace(new RegExp('^' + regexEscapeString(left), flags), '')
+        .replace(new RegExp(regexEscapeString(right) + '$', flags), '');
 }
 
 /**
@@ -10083,30 +10990,21 @@ function tsDocWrapExample(code) {
  * ```
  */
 function assertNegativeInteger(int) {
-    if (Number.isInteger(int) && int < 0)
+    if (Number.isInteger(int) && int <= 0)
         return int;
-    throw new TypeError('Expected int to be an integer. Got: ' + int);
+    throw new TypeError('Expected int to be a negative integer. Got: ' + int);
 }
 
-/**
- * Asserts that the provided number is a positive integer.
- * If the number is not a positive integer, a TypeError is thrown.
- * @param int The number to be checked.
- * @returns The same number if it is a positive integer.
- * @throws Throws an error if the provided number is not a positive integer.
- * @example ```ts
- * assertPositiveInteger(5);;
- * //=> 5
- * assertPositiveInteger(-2);;
- * //=> throws TypeError
- * assertPositiveInteger(2.5);;
- * //=> throws TypeError
- * ```
- */
-function assertPositiveInteger(int) {
+function assertNonZeroNegativeInteger(int) {
+    if (Number.isInteger(int) && int < 0)
+        return int;
+    throw new TypeError('Expected int to be a non-zero negative integer. Got: ' + int);
+}
+
+function assertNonZeroPositiveInteger(int) {
     if (Number.isInteger(int) && int > 0)
         return int;
-    throw new TypeError('Expected an integer. Got: ' + int);
+    throw new TypeError('Expected a non-zero positive integer. Got: ' + int);
 }
 
 /**
@@ -10224,22 +11122,6 @@ function isNumericString(string) {
 }
 
 /**
- * Checks if the provided value is an object.
- * @template T - The type of the value to check.
- * @param value The value to check.
- * @returns A boolean indicating whether the provided value is an object.
- * @example ```ts
- * isObject({});;
- * //=> true
- * isObject(123);;
- * //=> false
- * ```
- */
-function isObject(value) {
-    return value !== null && typeof value === 'object';
-}
-
-/**
  * Checks if a given number is a positive integer.
  * @remarks This function uses the `Number.isInteger` method and a simple greater than zero check.
  * @param int The number to check.
@@ -10306,9 +11188,16 @@ function isSocialSecurityNumberDK(ssn) {
 }
 
 exports.A1ToColRow = A1ToColRow;
+exports.AbstractApiClient = AbstractApiClient;
+exports.AbstractFsPath = AbstractFsPath;
 exports.ApiReponseCache = ApiReponseCache;
+exports.BlockDevicePath = BlockDevicePath;
+exports.CharacterDevicePath = CharacterDevicePath;
+exports.DirectoryPath = DirectoryPath;
 exports.ExtensibleFunction = ExtensibleFunction;
-exports.File = File;
+exports.FIFOPath = FIFOPath;
+exports.FilePath = FilePath;
+exports.Logger = Logger;
 exports.MS_IN_DAY = MS_IN_DAY;
 exports.MS_IN_HOUR = MS_IN_HOUR;
 exports.MS_IN_MINUTE = MS_IN_MINUTE;
@@ -10318,26 +11207,40 @@ exports.MS_IN_WEEK = MS_IN_WEEK;
 exports.MS_IN_YEAR = MS_IN_YEAR;
 exports.Matrix = Matrix;
 exports.MixinBase = MixinBase;
+exports.MixinEventEmitter = MixinEventEmitter;
 exports.MixinIndexed = MixinIndexed;
 exports.MixinTimestamped = MixinTimestamped;
 exports.NumberFormatter = NumberFormatter;
 exports.OpenaiApiClient = OpenaiApiClient;
-exports.OpenaiApiClientBase = OpenaiApiClientBase;
-exports.PQueue = PQueue;
+exports.OpenaiApiClientExtended = OpenaiApiClientExtended;
 exports.PriorityQueue = PriorityQueue;
+exports.PromiseQueue = PromiseQueue;
 exports.Queue = Queue;
 exports.SRTSubtitle = SRTSubtitle;
 exports.SRTSubtitles = SRTSubtitles;
 exports.SimpleTable = SimpleTable;
+exports.SocketPath = SocketPath;
 exports.SortedArray = SortedArray;
 exports.StringStream = StringStream;
+exports.SymbolicLinkPath = SymbolicLinkPath;
 exports.Time = Time;
 exports.TimeInterval = TimeInterval;
 exports.TsDoc = TsDoc;
 exports.TsDocTag = TsDocTag;
 exports.VTTSubtitle = VTTSubtitle;
 exports.VTTSubtitles = VTTSubtitles;
+exports._AbstractSubtitle = _AbstractSubtitle;
+exports._HTML_ATTRIBUTES = _HTML_ATTRIBUTES;
+exports._HTML_BOOLEAN_ATTRIBUTES = _HTML_BOOLEAN_ATTRIBUTES;
+exports._HTML_ELEMENTS = _HTML_ELEMENTS;
+exports._HTML_EVENT_ATTRIBUTES = _HTML_EVENT_ATTRIBUTES;
+exports._HTML_GLOBAL_ATTRIBUTES = _HTML_GLOBAL_ATTRIBUTES;
+exports._HTML_VOID_ELEMENTS = _HTML_VOID_ELEMENTS;
+exports._HtmlAttribute = _HtmlAttribute;
+exports._HtmlDocument = _HtmlDocument;
+exports._HtmlElement = _HtmlElement;
 exports.absoluteToRelativePath = absoluteToRelativePath;
+exports.appendLineToFile = appendLineToFile;
 exports.arrAverage = arrAverage;
 exports.arrEachToString = arrEachToString;
 exports.arrEvery = arrEvery;
@@ -10364,6 +11267,8 @@ exports.arrTableToCsv = arrTableToCsv;
 exports.arrTableToObjects = arrTableToObjects;
 exports.assertInteger = assertInteger;
 exports.assertNegativeInteger = assertNegativeInteger;
+exports.assertNonZeroNegativeInteger = assertNonZeroNegativeInteger;
+exports.assertNonZeroPositiveInteger = assertNonZeroPositiveInteger;
 exports.assertPositiveInteger = assertPositiveInteger;
 exports.assertPowerOfTen = assertPowerOfTen;
 exports.assertValidDate = assertValidDate;
@@ -10389,6 +11294,7 @@ exports.attr = attr;
 exports.btoa = btoa;
 exports.buildRegexBetween = buildRegexBetween;
 exports.bytesToInt = bytesToInt;
+exports.cleanDirectorySync = cleanDirectorySync;
 exports.colRowToA1 = colRowToA1;
 exports.colToLetter = colToLetter;
 exports.comment = comment;
@@ -10399,12 +11305,15 @@ exports.compareNumeric = compareNumeric;
 exports.compareNumericDescending = compareNumericDescending;
 exports.compareString = compareString;
 exports.compareStringDescending = compareStringDescending;
+exports.convertFilter = convertFilter;
 exports.createDirectory = createDirectory;
 exports.createDirectorySync = createDirectorySync;
 exports.createFileExtensionFilter = createFileExtensionFilter;
 exports.createObjectFactory = createObjectFactory;
 exports.csvParseStream = csvParseStream;
+exports.cwdpath = cwdpath;
 exports.dateDaysAgo = dateDaysAgo;
+exports.dateWeekDayName = dateWeekDayName;
 exports.daysSinceDate = daysSinceDate;
 exports.deleteDirectory = deleteDirectory;
 exports.deleteDirectorySafe = deleteDirectorySafe;
@@ -10412,6 +11321,8 @@ exports.deleteDirectorySafeSync = deleteDirectorySafeSync;
 exports.deleteDirectorySync = deleteDirectorySync;
 exports.el = el;
 exports.ensureValidWindowsPath = ensureValidWindowsPath;
+exports.findFile = findFile;
+exports.funAsyncAutoRateLimit = funAsyncAutoRateLimit;
 exports.funAsyncRateLimit = funAsyncRateLimit;
 exports.funParseClass = funParseClass;
 exports.funParseFunction = funParseFunction;
@@ -10419,10 +11330,15 @@ exports.funSetName = funSetName;
 exports.getCentury = getCentury;
 exports.getConstructor = getConstructor;
 exports.getCurrentYear = getCurrentYear;
+exports.getDownloadsDirectory = getDownloadsDirectory;
+exports.getHomeDirectory = getHomeDirectory;
+exports.getLastMofifiedFileIn = getLastMofifiedFileIn;
+exports.getOrElse = getOrElse;
+exports.getOrThrow = getOrThrow;
 exports.getPrototype = getPrototype;
 exports.hoursSinceDate = hoursSinceDate;
-exports.htmlTableToArray = htmlTableToArray;
 exports.inheritStaticMembers = inheritStaticMembers;
+exports.instantiateCorrectFsPathSubclass = instantiateCorrectFsPathSubclass;
 exports.intToArrayBytes = intToArrayBytes;
 exports.intToBuffer = intToBuffer;
 exports.intToBytes = intToBytes;
@@ -10481,8 +11397,6 @@ exports.numRange = numRange;
 exports.objAssignDeep = objAssignDeep;
 exports.objDeepFreeze = objDeepFreeze;
 exports.objDelete = objDelete;
-exports.objDeleteKeys = objDeleteKeys;
-exports.objDeleteKeysMutable = objDeleteKeysMutable;
 exports.objEntries = objEntries;
 exports.objEntriesArray = objEntriesArray;
 exports.objFilter = objFilter;
@@ -10496,6 +11410,8 @@ exports.objKeysArray = objKeysArray;
 exports.objMap = objMap;
 exports.objMapKeys = objMapKeys;
 exports.objMapMutable = objMapMutable;
+exports.objOmitKeys = objOmitKeys;
+exports.objOmitKeysMutable = objOmitKeysMutable;
 exports.objPropertyValueToGetter = objPropertyValueToGetter;
 exports.objReduce = objReduce;
 exports.objReverse = objReverse;
@@ -10508,6 +11424,7 @@ exports.objUpdatePropertyDescriptors = objUpdatePropertyDescriptors;
 exports.objValues = objValues;
 exports.objValuesArray = objValuesArray;
 exports.objWalk = objWalk;
+exports.openaiApiErrorCodes = openaiApiErrorCodes;
 exports.padArrayBytesLeft = padArrayBytesLeft;
 exports.padArrayBytesRight = padArrayBytesRight;
 exports.parseMarkdownCodeBlock = parseMarkdownCodeBlock;
@@ -10516,6 +11433,7 @@ exports.parseSocialSecurityNumberDK = parseSocialSecurityNumberDK;
 exports.pdfGetPages = pdfGetPages;
 exports.pdfIteratePages = pdfIteratePages;
 exports.pdfSplitPages = pdfSplitPages;
+exports.prettyIsoDateString = prettyIsoDateString;
 exports.randomIntBetween = randomIntBetween;
 exports.readExcelFile = readExcelFile;
 exports.readJsonFile = readJsonFile;
@@ -10545,6 +11463,7 @@ exports.regexIsValidFlags = regexIsValidFlags;
 exports.regexMatcherToValidater = regexMatcherToValidater;
 exports.regexScopeTree = regexScopeTree;
 exports.regexValidFlags = regexValidFlags;
+exports.removeIllegalFilenameCharacters = removeIllegalFilenameCharacters;
 exports.rexec = rexec;
 exports.rexecFirstMatch = rexecFirstMatch;
 exports.round = round;
@@ -10565,7 +11484,7 @@ exports.setNonWritable = setNonWritable;
 exports.setSymmetricDifference = setSymmetricDifference;
 exports.setUnion = setUnion;
 exports.setWritable = setWritable;
-exports.shellCommand = shellCommand;
+exports.shellSpawnProgram = shellSpawnProgram;
 exports.strCountCharOccurances = strCountCharOccurances;
 exports.strCountChars = strCountChars;
 exports.strCountWords = strCountWords;
@@ -10573,6 +11492,7 @@ exports.strEnsureEndsWith = strEnsureEndsWith;
 exports.strFirstCharToUpperCase = strFirstCharToUpperCase;
 exports.strHashToBuffer = strHashToBuffer;
 exports.strHashToString = strHashToString;
+exports.strHashToStringDJB2 = strHashToStringDJB2;
 exports.strHashToUint32Array = strHashToUint32Array;
 exports.strIsLowerCase = strIsLowerCase;
 exports.strIsMultiLine = strIsMultiLine;
@@ -10650,8 +11570,15 @@ exports.tsStripDeclSourceMapComments = tsStripDeclSourceMapComments;
 exports.tsStripExportKeyword = tsStripExportKeyword;
 exports.tsStripImports = tsStripImports;
 exports.tsStripInlineComments = tsStripInlineComments;
+exports.unzipFile = unzipFile;
+exports.unzipMergeFiles = unzipMergeFiles;
+exports.wait = wait;
 exports.waitSeconds = waitSeconds;
+exports.walkDirectory = walkDirectory;
+exports.walkDirectoryEmitter = walkDirectoryEmitter;
+exports.walkDirectorySync = walkDirectorySync;
 exports.weeksSinceDate = weeksSinceDate;
+exports.wipeDirectorySafe = wipeDirectorySafe;
 exports.writeExcelFile = writeExcelFile;
 exports.writeJsonFile = writeJsonFile;
 exports.writeJsonFileSync = writeJsonFileSync;

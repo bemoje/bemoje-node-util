@@ -4,7 +4,8 @@ import { Level } from 'level'
 import hash from 'object-hash'
 import path from 'path'
 import { createDirectorySync } from '../filesystem/createDirectorySync'
-import { _printEmitterEvents } from '../node/_printEmitterEvents'
+import { log } from '../node/logger/log'
+import { setNonEnumerable } from '../object/setNonEnumerable'
 import { IApiResponseCacheOptions } from './types/IApiResponseCacheOptions'
 
 /**
@@ -33,35 +34,41 @@ export class ApiReponseCache<V> {
     name: 'default',
     dirpath: getAppDataPath('ApiReponseCache'),
     maxAgeMs: 0,
-    logAllEvents: false,
+    logAllEvents: undefined,
   }
 
   /**
    * Create a new instance.
    * @param options - Options for creating a new instance.
+   * @emits options - the options used to create the instance.
    */
   constructor(options: IApiResponseCacheOptions) {
     const _options = Object.assign({}, ApiReponseCache.optionsDefaults, options)
     const { name, dirpath, maxAgeMs, logAllEvents } = _options
-    if (logAllEvents) this.logAllEvents()
+    if (logAllEvents === true) this.logAllEvents()
+    else if (logAllEvents === undefined) this.logWarnErrorEvents()
     this.emit('options', _options)
     this.maxAgeMs = maxAgeMs
     const dbpath = createDirectorySync(path.join(dirpath, name))
     this.db = new Level(dbpath)
+    setNonEnumerable(this, 'db')
   }
 
   /**
-   * Hash any type of key.
+   * Hash any type of key to a base64 string, using the SHA1 algorithm.
    * @param key - The key to hash.
    */
-  hashKey(key: unknown): string {
+  hashKey(key: any): string {
     return hash(key === undefined ? 'undefined' : key, { algorithm: 'sha1', encoding: 'base64' })
   }
 
   /**
-   * Get a value for a given hash key if it exists. Otherwise, get retrive a value with a given function and then store that value in the cache.
+   * Get a value for a given hash key if it exists.
+   * If the does not exist, returns a value from the api by invoking the provided function and then stores that value in the cache.
    * @param hash - The hash key.
    * @param apiRequest - function that returns a new value for a given key if it doesn't exist in the cache.
+   * @emits hit - if the value exists in the cache.
+   * @emits miss - if the value does not exist in the cache.
    */
   async getOrElse(hash: string, apiRequest: () => V | Promise<V>): Promise<V> {
     try {
@@ -78,10 +85,11 @@ export class ApiReponseCache<V> {
   /**
    * Get a value for a given hash key.
    * @param hash - The hash key.
-   * @throws if the value does not exist for the give hash.
+   * @emits error - if the value does not exist for the give hash.
+   * @emits get - if the value exists for the given hash.
    */
   async get(hash: string): Promise<V> {
-    return this.orThrow(async () => {
+    return await this.orThrow(async () => {
       const serialized = await this.db.get(hash)
       await this.ensureNotExpired(hash, serialized)
       this.emit('get', hash)
@@ -90,8 +98,9 @@ export class ApiReponseCache<V> {
   }
 
   /**
-   * Get a value for a given hash key.
+   * Get a value for a given hash key or undefined if it does not exist or an error occurs.
    * @param hash - The hash key.
+   * @emits get - if the value exists for the given hash.
    */
   async getSafe(hash: string): Promise<V | undefined> {
     try {
@@ -121,10 +130,11 @@ export class ApiReponseCache<V> {
    * Set a given value for a given hash key.
    * @param hash - The hash key.
    * @param value - The value to store.
-   * @throws if the value does not exist for the give hash.
+   * @emits put - if insertion succeeds.
+   * @emits error - if insertion fails.
    */
   async put(hash: string, value: V): Promise<V> {
-    return this.orThrow(async () => {
+    return await this.orThrow(async () => {
       const serialized = this.serializeValue(value)
       await this.db.put(hash, serialized)
       this.emit('put', hash)
@@ -134,10 +144,13 @@ export class ApiReponseCache<V> {
 
   /**
    * Delete a given value for a given hash key if it exists.
+   * @remarks No error is thrown if no value exists for the given hash.
    * @param hash - The hash key.
+   * @emits error - if deletion fails.
+   * @emits delete - if deletion succeeds.
    */
   async delete(hash: string): Promise<void> {
-    return this.orThrow(async () => {
+    return await this.orThrow(async () => {
       await this.db.del(hash)
       this.emit('delete', hash)
     })
@@ -148,16 +161,17 @@ export class ApiReponseCache<V> {
    */
   async deleteExpired(): Promise<this> {
     for await (const _ of this.entries()) {
-      // do nothing. Iterating over all entries deletes expired entries.
+      // do nothing. Iterating over all entries deletes expired entries automatically.
     }
     return this
   }
 
   /**
    * Delete all cached API responses.
+   * @emits delete - if deletion succeeds.
    */
   async deleteEverything(): Promise<void> {
-    return this.orThrow(async () => {
+    return await this.orThrow(async () => {
       await this.db.clear()
       this.emit('delete', 'All cache data was deleted.')
     })
@@ -165,6 +179,8 @@ export class ApiReponseCache<V> {
 
   /**
    * Iterate over all [key, value] pairs in the cache.
+   * @remarks This data entries are expired, they are deleted and not yielded.
+   * @emits error - if iteration encounters an error.
    */
   async *entries(): AsyncIterableIterator<[string, V]> {
     try {
@@ -181,6 +197,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Iterate over all keys in the cache.
+   * @emits error - if iteration encounters an error.
    */
   async *keys(): AsyncIterableIterator<string> {
     try {
@@ -194,6 +211,7 @@ export class ApiReponseCache<V> {
 
   /**
    * Iterate over all values in the cache.
+   * @emits error - if iteration encounters an error.
    */
   async *values(): AsyncIterableIterator<V> {
     try {
@@ -217,21 +235,10 @@ export class ApiReponseCache<V> {
   }
 
   /**
-   * Output all events to the console.
-   */
-  protected logAllEvents(): void {
-    _printEmitterEvents(this, this.events, {
-      info: ['options', 'hit', 'miss', 'put', 'get'],
-      warn: ['expired', 'delete'],
-      error: ['error'],
-    })
-  }
-
-  /**
    * Deletes a value from the cache if it is expired.
    * @param hash - The hash key.
    * @param serialized - The serialized value.
-   * @throws if the value is expired.
+   * @emits expired - if the value is expired.
    */
   protected async ensureNotExpired(hash: string, serialized: string): Promise<void> {
     if (this.isExpired(serialized)) {
@@ -275,9 +282,11 @@ export class ApiReponseCache<V> {
   }
 
   /**
-   * Shorthand for try/catch block with error-handling
-   * Wrap a function in a try catch block and emit an error event if an error occurs.
+   * Shorthand for try/catch block with error-handling.
+   * Wrap a function call in a try catch block and emit an error event if an error occurs.
    * @param fn - The function to wrap.
+   * @emits error - if the provided function throws an error.
+   * @returns The return value of the provided function.
    */
   protected orThrow<T>(fn: () => T | Promise<T>): T | Promise<T> {
     try {
@@ -294,5 +303,29 @@ export class ApiReponseCache<V> {
   protected emit<T>(eventName: string, arg: T): T {
     this.events.emit(eventName, arg, this)
     return arg
+  }
+
+  /**
+   * Output all events to the console.
+   */
+  protected logAllEvents(): void {
+    log.logEmitterEvents(this.events, {
+      debug: ['options', 'put', 'get'],
+      info: ['expired', 'hit', 'miss'],
+      warn: ['delete'],
+      error: ['error'],
+      eventNamePrefix: Object.getPrototypeOf(this).constructor.name,
+    })
+  }
+
+  /**
+   * Output all 'warn' and 'error' events to the console.
+   */
+  protected logWarnErrorEvents(): void {
+    log.logEmitterEvents(this.events, {
+      warn: ['delete'],
+      error: ['error'],
+      eventNamePrefix: Object.getPrototypeOf(this).constructor.name,
+    })
   }
 }

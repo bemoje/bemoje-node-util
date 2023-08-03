@@ -3,7 +3,9 @@ import { strTrimLinesLeft } from './strTrimLinesLeft'
 describe('strTrimLinesLeft', () => {
   it('trims all lines', () => {
     const str = ['list:', ' 1. some text', ' 2. some text', '   a. some text', '   b. some text'].join('\n')
-    expect(strTrimLinesLeft(str)).toBe(['list:', '1. some text', '2. some text', 'a. some text', 'b. some text'].join('\n'))
+    expect(strTrimLinesLeft(str)).toBe(
+      ['list:', '1. some text', '2. some text', 'a. some text', 'b. some text'].join('\n'),
+    )
   })
 
   it('should trim leading whitespace from each line in a string', () => {

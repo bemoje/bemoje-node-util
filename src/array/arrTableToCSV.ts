@@ -22,7 +22,9 @@ import { strReplaceAll } from '../string/strReplaceAll'
 export function arrTableToCsv<T>(input: T[][], delimiter = ';', replaceLinebreakWith = '|'): string {
   return input
     .map((row) => {
-      return row.map((item) => strReplaceAll(item + '', delimiter, '').replace(/\r*\n/g, replaceLinebreakWith)).join(delimiter)
+      return row
+        .map((item) => strReplaceAll(item + '', delimiter, '').replace(/\r*\n/g, replaceLinebreakWith))
+        .join(delimiter)
     })
     .join('\n')
 }

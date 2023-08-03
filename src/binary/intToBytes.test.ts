@@ -13,7 +13,9 @@ describe('intToBytes', () => {
     expect(() => intToBytes(-2)).toThrowError(`input must be a positive integer. Got -2`)
   })
   it('throws when passed an int larger than 256^5', () => {
-    expect(() => intToBytes(256 ** 5 + 1)).toThrowError(`input must be less than or equal to 256^5. Got ${256 ** 5 + 1}`)
+    expect(() => intToBytes(256 ** 5 + 1)).toThrowError(
+      `input must be less than or equal to 256^5. Got ${256 ** 5 + 1}`,
+    )
   })
   it('does not throw when passed an int of exactly 256^5', () => {
     expect(() => intToBytes(256 ** 5)).not.toThrowError()

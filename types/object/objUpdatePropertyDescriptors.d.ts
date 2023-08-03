@@ -13,5 +13,5 @@ import { ObjectKey } from '../types/ObjectKey';
  * });
  * ```
  */
-export declare function objUpdatePropertyDescriptors(object: Record<ObjectKey, any>, properties: string[], update: <T extends PropertyDescriptor>(descriptor: T, property: string) => T): void;
+export declare function objUpdatePropertyDescriptors<V>(object: Record<ObjectKey, V>, properties: string[], update: <T extends PropertyDescriptor>(descriptor: T, property: string) => T): void;
 //# sourceMappingURL=objUpdatePropertyDescriptors.d.ts.map

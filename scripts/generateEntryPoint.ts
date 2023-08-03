@@ -7,12 +7,10 @@ import { walkTsSourceFiles } from './lib/walkTsSourceFiles'
  */
 function generateEntryPoint(): void {
   const srcdir = path.join(process.cwd(), 'src')
-  const sourceFiles = walkTsSourceFiles(srcdir).filter((file) => !file.isPrivate)
-  const lines = sourceFiles
-    .filter((file) => !file.isPrivate)
-    .map((file) => {
-      return `export * from '${file.relative.replace('src', '.').replace(/\\/g, '/').replace(/\.ts$/i, '')}'`
-    })
+  const sourceFiles = walkTsSourceFiles(srcdir)
+  const lines = sourceFiles.map((file) => {
+    return `export * from '${file.relative.replace('src', '.').replace(/\\/g, '/').replace(/\.ts$/i, '')}'`
+  })
   const code = lines.join('\n') + '\n'
   const entrypoint = path.join(srcdir, 'index.ts')
   fs.writeFileSync(entrypoint, code, 'utf8')

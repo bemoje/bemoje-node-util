@@ -9,5 +9,5 @@
  * console.log(data);
  * ```
  */
-export declare function readJsonFileSync<T>(filepath: string): Promise<T>;
+export declare function readJsonFileSync<T>(filepath: string): T;
 //# sourceMappingURL=readJsonFileSync.d.ts.map

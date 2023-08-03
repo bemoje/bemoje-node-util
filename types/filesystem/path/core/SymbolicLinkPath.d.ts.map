@@ -1,0 +1,1 @@
+{"version":3,"file":"SymbolicLinkPath.d.ts","sourceRoot":"","sources":["../../../../src/filesystem/path/core/SymbolicLinkPath.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,kBAAkB,CAAA;AAEjD;;;;;;GAMG;AACH,qBAAa,gBAAiB,SAAQ,cAAc;IAClD;;;;OAIG;gBACS,QAAQ,EAAE,MAAM,EAAE,OAAO,UAAQ;IAI7C;;OAEG;IACH,IAAa,kBAAkB,IAAI,OAAO,CAEzC;CACF"}

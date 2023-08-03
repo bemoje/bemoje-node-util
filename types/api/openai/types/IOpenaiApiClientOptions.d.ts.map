@@ -1,0 +1,1 @@
+{"version":3,"file":"IOpenaiApiClientOptions.d.ts","sourceRoot":"","sources":["../../../../src/api/openai/types/IOpenaiApiClientOptions.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,yBAAyB,EAAE,MAAM,uCAAuC,CAAA;AAEjF,MAAM,WAAW,uBAAwB,SAAQ,yBAAyB;IACxE;;OAEG;IACH,MAAM,CAAC,EAAE,MAAM,CAAA;CAChB"}
