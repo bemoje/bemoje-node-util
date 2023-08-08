@@ -30,7 +30,7 @@ async function main() {
     const filepath = absoluteToRelativePath(result)
     log.info('Running: ' + filepath + '\n')
     const tsnode = 'C:/Users/bemoj/AppData/Roaming/npm/node_modules/ts-node/dist/bin.js'
-    await shellSpawnProgram('node', tsnode, result)
+    await shellSpawnProgram('node', tsnode, result, ...process.argv.slice(3))
   } else {
     log.warn('No files found matching: ' + search)
   }

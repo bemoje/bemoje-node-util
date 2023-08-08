@@ -1,1 +1,0 @@
-{"version":3,"file":"StringStream.d.ts","sourceRoot":"","sources":["../../src/node/StringStream.ts"],"names":[],"mappings":";AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,QAAQ,CAAA;AAEjC;;;GAGG;AACH,qBAAa,YAAa,SAAQ,QAAQ;IACxC,MAAM,EAAE,MAAM,CAAA;IACd,KAAK,EAAE,OAAO,CAAA;gBAEF,MAAM,EAAE,MAAM;IAM1B,KAAK,IAAI,IAAI;CASd"}

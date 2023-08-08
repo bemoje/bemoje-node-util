@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { tsExtractImports } from '../../src/tscode/tsExtractImports'
-import { WalkImportsResult } from '../../src/tscode/types/WalkImportsResult'
+import { WalkImportsResult } from '../types/WalkImportsResult'
 
 /**
  * Walks through the imports of a TypeScript file and its dependencies up to a specified depth.

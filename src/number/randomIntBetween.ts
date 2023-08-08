@@ -1,4 +1,4 @@
-import { assertInteger } from '../validation/assertInteger'
+import { assertion } from '../validation/assertion'
 
 /**
  * Returns a random integer between min (inclusive) and max (inclusive).
@@ -13,5 +13,5 @@ import { assertInteger } from '../validation/assertInteger'
  * ```
  */
 export function randomIntBetween(min: number, max: number): number {
-  return Math.floor(Math.random() * (assertInteger(max) - assertInteger(min) + 1) + min)
+  return Math.floor(Math.random() * (assertion(max, Number.isInteger) - assertion(min, Number.isInteger) + 1) + min)
 }

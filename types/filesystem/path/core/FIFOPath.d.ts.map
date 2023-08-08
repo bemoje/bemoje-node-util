@@ -1,1 +1,0 @@
-{"version":3,"file":"FIFOPath.d.ts","sourceRoot":"","sources":["../../../../src/filesystem/path/core/FIFOPath.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,cAAc,EAAE,MAAM,kBAAkB,CAAA;AAEjD;;;;;;GAMG;AACH,qBAAa,QAAS,SAAQ,cAAc;IAC1C;;;;OAIG;gBACS,QAAQ,EAAE,MAAM,EAAE,OAAO,UAAQ;IAI7C;;OAEG;IACH,IAAa,UAAU,IAAI,OAAO,CAEjC;CACF"}

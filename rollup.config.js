@@ -1,4 +1,8 @@
 // @ts-check
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import resolve from '@rollup/plugin-node-resolve'
+import minify from 'rollup-plugin-babel-minify'
 import typescript2 from 'rollup-plugin-typescript2'
 import PKG from './package.json'
 
@@ -12,46 +16,14 @@ const banner = `/*!
 
 export default {
   input: './src/index.ts',
-  external: [
-    'fs',
-    'path',
-    'stream',
-    'cli-color',
-    'format-number',
-    'sentence-splitter',
-    'lodash',
-    'crypto',
-    'mkdirp',
-    'pdf-lib',
-    'pdf-parse',
-    'exceljs',
-    'appdata-path',
-    'title-case',
-    'level',
-    'events',
-    'object-hash',
-    'async-retry',
-    'openai',
-    'gpt-3-encoder',
-    'util',
-    'child_process',
-    'deep-assign',
-    'esprima',
-    'csv-parser',
-    'strip-comments',
-    'blob',
-    'pretty-error',
-    'dotenv/config',
-    'extract-zip',
-    'walkdir',
-  ],
+  external: [...Array.from(Object.keys(PKG.dependencies)), 'fs', 'path', 'stream', 'events', 'crypto'],
   output: [
     {
       banner,
       name: 'util',
       exports: 'named',
       sourcemap: true,
-      file: './dist/index.js',
+      file: './dist/index.cjs.js',
       format: 'commonjs',
     },
     {
@@ -64,10 +36,14 @@ export default {
     },
   ],
   plugins: [
+    resolve(),
+    commonjs(),
+    json(),
     typescript2({
       clean: true,
       useTsconfigDeclarationDir: true,
       tsconfig: './tsconfig.bundle.json',
     }),
+    minify({ comments: false }),
   ],
 }

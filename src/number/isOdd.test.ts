@@ -13,6 +13,6 @@ describe('isOdd', () => {
     expect(isOdd(22)).toBe(false)
   })
   it('throws on invalid input.', () => {
-    expect(() => isOdd(2.1)).toThrowError(`Expected integer. Got 2.1`)
+    expect(() => isOdd(2.1)).toThrow()
   })
 })

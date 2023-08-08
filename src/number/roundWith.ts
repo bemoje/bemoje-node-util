@@ -1,4 +1,5 @@
-import { assertValidNumber } from '../validation/assertValidNumber'
+import { assertion } from '../validation/assertion'
+import { isValidNumber } from '../validation/numbers/isValidNumber'
 
 /**
  * Round a given number with a given precision and rounding function.
@@ -16,7 +17,7 @@ import { assertValidNumber } from '../validation/assertValidNumber'
  * ```
  */
 export function roundWith(number: number, precision: number, func: (n: number) => number = Math.round): number {
-  const pair1 = (assertValidNumber(number) + 'e').split('e')
+  const pair1 = (assertion(number, isValidNumber) + 'e').split('e')
   const pair2 = (func(+(pair1[0] + 'e' + (+pair1[1] + precision))) + 'e').split('e')
   return +(pair2[0] + 'e' + (+pair2[1] - precision))
 }

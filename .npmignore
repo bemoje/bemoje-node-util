@@ -3,6 +3,8 @@ logs
 node_modules
 notes
 scripts
+docs/html
+src
 .editorconfig
 .env
 .eslintignore
@@ -15,4 +17,5 @@ scripts
 jest.config.js
 prettier.config.js
 rollup.config.js
+tsconfig.bundle.json
 tsconfig.json

@@ -1,1 +1,0 @@
-{"version":3,"file":"_AbstractSubtitle.d.ts","sourceRoot":"","sources":["../../../src/parse/subtitles/_AbstractSubtitle.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,yBAAyB,CAAA;AAEtD;;GAEG;AACH,8BAAsB,iBAAiB;IACrC;;OAEG;IACI,QAAQ,EAAE,YAAY,CAAA;IAE7B;;OAEG;IACI,IAAI,EAAE,MAAM,CAAA;IAEnB;;;;OAIG;gBACS,QAAQ,EAAE,YAAY,EAAE,IAAI,EAAE,MAAM;CAIjD"}

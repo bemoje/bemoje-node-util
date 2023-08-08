@@ -1,7 +1,8 @@
 import { arrLast } from '../../../src/array/arrLast'
 import { prettyIsoDateString } from '../../../src/date/prettyIsoDateString'
 import { removeIllegalFilenameCharacters } from '../../../src/filesystem/removeIllegalFilenameCharacters'
-import { assertNonZeroPositiveInteger } from '../../../src/validation/assertNonZeroPositiveInteger'
+import { assertion } from '../../../src/validation/assertion'
+import { isNonZeroPositiveInteger } from '../../../src/validation/numbers/isNonZeroPositiveInteger'
 import { FBConversation } from './FBConversation'
 import { FBMessage } from './FBMessage'
 import { FBPerson } from './FBPerson'
@@ -127,8 +128,8 @@ export class FBThread {
   }
 
   *iterateConversations(maxMessageSpacingMinutes: number = 60 * 20, minMessageCount = 2): Generator<FBConversation> {
-    assertNonZeroPositiveInteger(maxMessageSpacingMinutes)
-    assertNonZeroPositiveInteger(minMessageCount)
+    assertion(maxMessageSpacingMinutes, isNonZeroPositiveInteger)
+    assertion(minMessageCount, isNonZeroPositiveInteger)
 
     const maxSpacing = 1000 * 60 * maxMessageSpacingMinutes
     let accum: FBMessage[] = []
@@ -139,7 +140,22 @@ export class FBThread {
       }
       const prevMessage = arrLast(accum)
       const spacing = Math.abs(prevMessage.time - message.time)
-      const _maxSpacing = accum.length < 20 ? maxSpacing : accum.length < 50 ? maxSpacing / 5 : maxSpacing / 10
+      const _maxSpacing =
+        accum.length < 20
+          ? maxSpacing
+          : accum.length < 50
+          ? maxSpacing / 5
+          : accum.length < 100
+          ? maxSpacing / 10
+          : accum.length < 200
+          ? maxSpacing / 25
+          : accum.length < 300
+          ? maxSpacing / 60
+          : accum.length < 400
+          ? maxSpacing / 180
+          : accum.length < 500
+          ? maxSpacing / 500
+          : maxSpacing / 5000
       if (spacing <= _maxSpacing) {
         accum.push(message)
         continue

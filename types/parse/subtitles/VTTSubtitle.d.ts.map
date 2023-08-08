@@ -1,1 +1,0 @@
-{"version":3,"file":"VTTSubtitle.d.ts","sourceRoot":"","sources":["../../../src/parse/subtitles/VTTSubtitle.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,yBAAyB,CAAA;AACtD,OAAO,EAAE,iBAAiB,EAAE,MAAM,qBAAqB,CAAA;AAEvD;;GAEG;AACH,qBAAa,WAAY,SAAQ,iBAAiB;IAChD;;;;OAIG;gBACS,QAAQ,EAAE,YAAY,EAAE,IAAI,EAAE,MAAM;IAIhD;;OAEG;IACH,QAAQ,IAAI,MAAM;CAGnB"}

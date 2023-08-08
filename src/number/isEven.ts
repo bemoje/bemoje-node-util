@@ -1,3 +1,5 @@
+import { assertion } from '../validation/assertion'
+
 /**
  * Checks if a number is even.
  * @remarks This function will throw an error if the provided value is not an integer.
@@ -12,6 +14,6 @@
  * ```
  */
 export function isEven(n: number): boolean {
-  if (!Number.isInteger(n)) throw new Error(`Expected integer. Got ${n}`)
+  assertion(n, Number.isInteger)
   return n % 2 === 0
 }

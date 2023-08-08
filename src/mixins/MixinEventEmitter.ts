@@ -1,8 +1,6 @@
 import EventEmitter from 'events'
-import PrettyError from 'pretty-error'
 import { round } from '../number/round'
 import { Constructor } from '../types/Constructor'
-new PrettyError().start()
 
 /**
  * @typeparam TBase - The type of the base constructor.

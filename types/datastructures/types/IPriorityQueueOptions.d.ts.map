@@ -1,1 +1,0 @@
-{"version":3,"file":"IPriorityQueueOptions.d.ts","sourceRoot":"","sources":["../../../src/datastructures/types/IPriorityQueueOptions.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,oCAAoC,CAAA;AAErE,MAAM,WAAW,qBAAsB,SAAQ,gBAAgB;IAC7D,QAAQ,CAAC,EAAE,MAAM,CAAA;CAClB"}
